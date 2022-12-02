@@ -11,7 +11,8 @@ jobs:
           - name: Compile XeLaTeX document
             uses: xu-cheng/latex-action@v2
             with:
-              root_file: CoLM-Latex/CoLM.tex
+              root_file: CoLM.tex
+              working_directory: CoLM-Latex/
               latexmk_use_xelatex: true
           - name: Upload PDF file
             uses: actions/upload-artifact@v3
