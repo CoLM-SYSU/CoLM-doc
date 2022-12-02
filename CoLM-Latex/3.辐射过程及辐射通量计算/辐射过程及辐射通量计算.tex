@@ -94,7 +94,7 @@ r_{3}=0.3
 \end{equation}
 其中$I^{\uparrow}$, $I^{\downarrow}$表示向上和向下的漫射通量，为相对于总的入射(直射、漫射)辐射通量归一化值。
 $\mu$为太阳天顶角余弦，$\bar{\mu}$为漫射辐射在单位叶面积上的光学厚度倒数平均值。$\beta$、$\beta_{0}$为漫射辐射和直射辐射向上散射(upscatter)系数，
-$\omega$为叶片单次散射反照率，等于叶片反射率$\rho_{l}$和透射率$\tau_{l}$之和。$K$为直射光在单位也面积上的光学厚度，
+$\omega$为叶片单次散射反照率，等于叶片反射率$\rho_{l}$和透射率$\tau_{l}$之和。$K$为直射光在单位叶面积上的光学厚度，
 计算为$G(\mu) / \mu$，其中$G(\mu)$为叶子在入射辐射方向上的投影面积。
 $x$表示植被从冠层顶部($x=0$)往下($x=LAI$)累积的叶面积指数。
 
@@ -799,7 +799,7 @@ P_{\mathrm{sun}}=I_{n} / S_{n}
      \\ I_{\uparrow, 3}^{*}=I_{3} \alpha_{3}+\left(I_{\downarrow, 3}^{*}+I_{g}\right) r_{g} S_{3}^{*} T_{i, 3}^{*}+\left(I_{\downarrow, 3}^{*}+I_{g}\right) r_{g}\left(1-S_{3}^{*}\right)+I_{\downarrow, 2}^{*} S_{3}^{*} \alpha_{3}^{*} 
      \\ I_{\downarrow, 3}^{*}=I_{3} T_{i, 3}+I_{\downarrow, 2}^{*} S_{3}^{*} T_{i, 3}^{*}+I_{\downarrow, 2}^{*}\left(1-S_{3}^{*}\right)+\left(I_{\downarrow, 3}^{*}+I_{g}\right) r_{g} S_{3}^{*} \alpha_{3}^{*}\end{array}
 \end{equation}
-进过简单的变换，可以得到在直射入射辐射情况下：
+经过简单的变换，可以得到在直射入射辐射情况下：
 \begin{equation}
 \left(\begin{matrix}1&&-{\widetilde{T}}_1&&&\\&1&-{\widetilde{\alpha}}_1&&&\\&-{\widetilde{\alpha}}_2&1&&-{\widetilde{T}}_2&\\&-{\widetilde{T}}_2&&1&-{\widetilde{\alpha}}_2&\\&&&-{\widetilde{\alpha}}_3&1&-{\widetilde{T}}_3r_g\\&&&-{\widetilde{T}}_3&&1-r_g{\widetilde{\alpha}}_3\\\end{matrix}\right)\left(\begin{matrix}I_{\uparrow,1}^\ast\\I_{\downarrow,1}^\ast\\I_{\uparrow,2}^\ast\\I_{\downarrow,2}^\ast\\I_{\uparrow,3}^\ast\\I_{\downarrow,3}^\ast\\\end{matrix}\right)=\left(\begin{matrix}I_1\alpha_1\\I_1T_{i,1}\\I_2\alpha_2\\I_2T_{i,2}\\I_3\alpha_3+I_gr_g{\widetilde{T}}_3\\I_3T_{i,3}+I_gr_g{\widetilde{\alpha}}_3\\\end{matrix}\right)
 \end{equation}
