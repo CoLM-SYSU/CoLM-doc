@@ -1,0 +1,123 @@
+\chapter{气孔导度和光合作用}
+%\addcontentsline{toc}{chapter}{气孔导度和光合作用}
+
+%\begin{气孔导度和光合作用}
+
+\section{气孔导度}\label{气孔导度}
+气孔导度曾在地表湍流水通量的计算中作为一个重要的参数 (见章节4.3)，控制着植物水分蒸腾。
+气孔导度在CoLM植物生理模块中，与光合作用相耦合，分别计算阳叶和阴叶的气孔导度 ($g_{s,sun}$和$g_{s,sha}$) 与碳水交换。
+
+
+CoLM的气孔导度计算仍沿用Ball-Berry模型。Ball-Berry模型根据叶片净光合作用速率 
+($A_n$，单位: $\rm mol CO_2 m^{-2}s^{-1}$)、叶表水汽压 ($e_s$，单位: Pa)、叶表二氧化碳浓度 ($c_s$，单位: Pa) 
+计算气孔导度 ($g_s$, 单位: $\rm mol CO_2 m^{-2}s^{-1}$)： 
+\begin{equation}\label{rs_a1}
+\frac{1}{r_{s}}=g_{s}=m \frac{A_{n}}{c_{s}} \frac{e_{s}}{e_{i}} p_{s}+b
+\end{equation}
+$r_s$代表叶片气孔阻抗，单位: $\rm s m^{-1}$；$m$是无量纲经验参数；$b$是最小气孔导度，
+单位: $\rm mol\ CO_2\ m^{-2}s^{-1}$，$m$和$b$由数据拟合得到；$e_i$是饱和水蒸气压，
+为气温的函数，单位: Pa；$p_s$是大气压强，单位: Pa。
+\section{植物的光合作用}\label{植物的光合作用}
+$C3$植物的光合作用速率计算是基于 \citet{farquhar1980biochemical} ，
+$C4$植物则是基于\citet{collatz1992} 发展的光合作用模型。
+叶片净光合作用速率表示为三种限制下的羧化作用最小值减去呼吸速率 ($R_d$)：
+\begin{equation}\label{An1}
+A_{n}=\min \left(A_{c}, A_{j}, A_{e}\right)-R_{d}
+\end{equation}
+这三种限制包括RuBP羧化酶限制下的最大羧化率 ($A_c$) ，表达为Michaelis-Menten函数：
+\begin{equation}\label{A_C1}
+A_{c}=\left\{\begin{array}{ll}\frac{V_{c \max }\left(c_{i}-\Gamma\right)}{c_{i}+\frac{\digamma_{c}\left(1+o_{i}\right)}{K_{o}}}
+     & { for } \mathrm{C}_{3} { plants } \\ V_{c \max } & { for } \mathrm{C}_{4} { plants }\end{array}\right.
+\end{equation}
+$C_3$植物：\\
+\begin{equation}\label{V_cmax_a}
+V_{c \max }\left(T_{{leaf }}\right)=V_{c \max 25} \cdot \frac{2.1^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{1}\left(T_{{leaf }}-T_{{high }}\right)}} \cdot \beta
+\end{equation}
+\begin{equation}\label{S_max_a}
+S_{\max }=\frac{V_{c \max 25}}{2} \cdot \frac{1.8^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{2}\left(T_{{leaf }}-T_{{low }}\right)}} \cdot \beta
+\end{equation}
+$C_4$植物：\\
+\begin{equation}\label{V_cmax_b}
+V_{c \max }\left(T_{{leaf }}\right)=V_{c \max 25} \cdot \frac{2.1^{\frac{T_{{leaf }}-T_{o p}}{10}}}{\left(1+e^{s_{2}\left(T_{{low }}
+ - T_{{leaf }}\right)}\right)\left(1+e^{s_{1}\left(T_{{leaf }}-T_{h i g h}\right)}\right)} \cdot \beta
+\end{equation}
+\begin{equation}\label{S_max_b}
+S_{\max }=\frac{V_{c \max 25}}{5} \cdot 1.8^{\frac{T_{{leaf }}-298.16}{10}} \cdot \beta
+\end{equation}
+$V_{c\ max25}$是25$\deg$C下的最大羧化速率，单位: $mol m^{-2}s^{-1}$；$T_{op}$是参考温度298K；$T_{low}$和$T_{high}$为温度相应参数，
+取值根据植被类型而变化，范围分别为: 278K$\sim$288K，303$\sim$313K；$\beta$是植物水分胁迫，取值范围0$\sim$1，详见章节 \ref{气孔导度的水分胁迫}。
+
+$J_x$主要决定于有效光合辐射(PAR，单位: $\rm W m^{-2}$)，受RuBP再生速率的限制，并受温度调节：
+\begin{equation}
+J_{x}\left(T_{{leaf }}\right)=\min \left(\alpha\left(4.6 e^{-6} \cdot P A R\right), J_{\max 25}
+ \cdot e^{\frac{37000\left(T_{{leaf }}-T_{o p}\right)}{T_{o p} \cdot T_{{leaf }} \cdot R} \cdot \frac{1+e^{\frac{710 \cdot T_{o p}-220000}
+ {R \cdot T_{o p}}}}{\frac{710 \cdot T_{{leaf }}-220000}{R \cdot T_{{leaf }}}}}\right) \cdot \beta
+\end{equation}
+其中$\alpha$是量子效率 (0.05 mol CO2 $\rm mol^-1$ photon)；PAR是有效光合辐射，单位: $\rm W m^{-2}$，详细计算见章节\ref{短波吸收辐射通量}；
+$4.6e^{-6}$代表单位从$\rm W m^{-2}$转换到$mol\ photon\ m^{-2}$的转换系数；
+$J_{max25}$是25$\rm ^{circ}$C下的最大电子传输速率，单位: $mol\ m^{-2}s^{-1}$，$J_{max25}=1.97 \cdot V_{cmax25}$； 
+$R$是通用气体常数，$R=8.314467591 mol m^{-2}s^{-1}$。
+
+
+呼吸速率对温度的响应曲线可表示为$V_{cmax}$的函数：
+\begin{equation}\label{R_d1}
+R_{d}=r_{{base }} \cdot V_{cmax 25} \cdot \frac{2 \cdot 0^{\frac{T_{leaf}-T_{op}}{10}}}{1+e^{s_3 \cdot\left(T_{leaf}-T_{d m}\right)}} \cdot \beta
+\end{equation}
+其中$T_{dm}$是高温抑制温度参数，单位K。
+
+
+
+在求解最小值的计算中，我们将求解三值最小问题拆分为求解两值最小问题：
+\begin{equation}\label{min_Ac_Aj_Ae}
+\min \left(A_{c}, A_{j}, A_{e}\right)=\min \left(\min \left(A_{c}, A_{j}\right), A_{e}\right)
+\end{equation}
+引入形状参数$\theta$，构造一元二次方程，将求解最小值问题转换成求一元二次方程较小根的问题，以此避免最小值随环境变化引起的结果突变 \citep{collatz1991,collatz1992}：
+\begin{equation}\label{theta_cj}
+\theta_{c j} \cdot A_{i1}^{2}-\left(A_{c}+A_{j}\right) A_{i1}+A_{c} A_{j}=0
+\end{equation}
+\begin{equation}\label{theta_cje}
+\theta_{c j e} \cdot A_{i2}^{2}-\left(A_{i1}+A_{e}\right) A_{i2}+A_{i1} A_{e}=0
+\end{equation}
+其中形状参数$\theta_{cj}=0.877$，$\theta_{cje}=0.95$。$A_{i1}$为方程(\ref{theta_cj})的较小根，代表$A_c$和$A_j$的最小值。$A_{i2}$为方程(\ref{theta_cje})的较小根，代表$A_{i1}$和$A_e$的最小值。
+
+
+另外，气孔导度方程(图\ref{fig:叶片气孔光合作用导度模型示意图})仍然存在$c_i$，$cs$，$es$等未知变量，
+耦合气孔导度和光合作用模型需要求解叶片内外的$\rm CO_2$、水汽浓度与气孔导度的关系。
+忽略$\rm CO_2$和水汽的叶片表面存储，叶表$\rm CO_2$分压 ($c_s$，单位: Pa) ，水汽分压 ($e_s$，单位: Pa) ，胞间$\rm CO_2$分压 ($c_i$，单位: Pa) 和水气分压 ($e_i$，单位: Pa) 存在关于气孔导度的梯度方程：
+\begin{equation}\label{A_n2}
+A_{n}=\left(c_{a}-c_{s}\right) /\left(\frac{1.37}{g_{b}} p_{s}\right)=\left(c_{s}-c_{i}\right) /\left(\frac{1.6}{g_{s}} p_{s}\right)
+\end{equation}
+\begin{equation}\label{ea_ei}
+\left(e_{a}-e_{i}\right) /\left(\frac{1}{g_{b}}+\frac{1}{g_{s}}\right)=\left(e_{s}-e_{i}\right) / \frac{1}{g_{s}}
+\end{equation}
+$c_a$是冠层大气$\rm CO_2$分压，单位: Pa；$g_b$是叶片边界层导度，单位: mol$\rm m^{-2}s^{-1}$；$e_a$是冠层大气水汽分压，单位: Pa。
+
+由方程(\ref{A_n2})可知：
+\begin{equation}\label{cs_a1}
+c_{s}=c_{a}-\frac{1.37 A_{n}}{g_{b}} p_{s}
+\end{equation}
+由方程(\ref{ea_ei})可知：
+\begin{equation}\label{e_s1}
+e_{s}=\left(\frac{e_{a}}{g_{s}}+\frac{e_{i}}{g_{b}}\right) /\left(\frac{1}{g_{b}}+\frac{1}{g_{s}}\right)
+\end{equation}
+将方程(\ref{e_s1})代入方程(\ref{rs_a1})中，得到关于$g_s$的一元二次方程：
+\begin{equation}\label{ei_cs}
+\frac{e_{i} c_{s}}{m A_{n} p_{s}} g_{s}^{2}+\left(g_{b} \frac{e_{i} c_{s}}{m A_{n} p_{s}}-e_{i}-b \frac{e_{i} c_{s}}{m A_{n} p_{s}}\right) g_{s}
+-\left(e_{a} g_{b}+b g_{b} \frac{e_{i} c_{s}}{m A_{n} p_{s}}\right)=0
+\end{equation}
+气孔导度 ($g_s$) 的解即为一元二次方程的正根，其中叶片表层$\rm CO_2$分压($c_s$)由方程(\ref{cs_a1})得出，$A_n$由光合作用模块公式(\ref{An1})得出，
+但仍然包含未知变量胞间$\rm CO_2$分压 ($c_i$)，完整求解光合气孔模式还需根据(\ref{A_n2})得出：
+\begin{equation}\label{ci_1}
+c_{i}=c_{a}-\frac{1.37 A_{n} p_{s}}{g_{b}}
+\end{equation}
+联立(\ref{An1})，(\ref{cs_a1})，(\ref{ei_cs})和(\ref{ci_1})可以求解$g_s$，$c_i$，$c_s$和$A_n$。
+数值解法通过牛顿迭代法，对胞间$\rm CO_2$分压$c_i$求收敛，从而求解所有未知量。
+
+{
+\begin{figure}[]
+\centering
+\includegraphics{Figures/气孔导度和光合作用/叶片气孔光合作用导度模型示意图.png}
+\caption{叶片气孔光合作用导度模型示意图。}
+\label{fig:叶片气孔光合作用导度模型示意图}
+\end{figure}
+}

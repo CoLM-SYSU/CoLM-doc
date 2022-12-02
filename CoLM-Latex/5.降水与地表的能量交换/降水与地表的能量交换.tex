@@ -1,0 +1,51 @@
+\chapter{降水与地表的能量交换}
+%\addcontentsline{toc}{chapter}{降水与地表的能量交换}
+
+%\begin{降水与地表的能量交换}
+雨水与地表/植被之间存在温度差异，当降水发生时，它们之间可发生能量交换(雨水感热)。
+\citet{wei2014impact} 表明，虽然在气候尺度上此能量交换的量级很小，但它可通过改变大气环流影响不同地区的气候特征，
+故在气候模式中不可被忽略。下面给出雨水感热的计算方案。
+
+\section{雨水温度}\label{雨水温度}
+已有研究(如\citet{anderson1998moored})表明，
+雨水温度非常接近于大气湿球温度，故这里雨水温度由湿球温度近似。根据湿球温度定义有如下关系：
+\begin{equation}
+C_{p a}\left(T_{w b}-T\right)=\lambda_{v}\left(r-r_{s a t}^{T_{w b}}\right)
+\end{equation}
+其中$C_{pa}$表示干空气的比热容(J/kg/K)，$T_{wb}$表示大气湿球温度(K)，
+$T$表示大气环境温度(K)，$r$表示混合比，$r_{sat}^{T_{wb}}$表示$T_{wb}$温度下的饱和混合比，
+$\lambda_v$表示液态水的蒸发潜热(J/kg)。于是，取$T_{wb}$的初始值$T_{wb}^{\left(0\right)}=T$，
+$T_{wb}$可通过如下过程进行迭代求解：
+\begin{enumerate}
+    \item 由章节 \ref{饱和水汽压(比湿)及其随温度的变化} 计算$T_{wb}^{\left(n\right)}$温度下的饱和比湿$q_{sat}^{T_{wb}^{\left(n\right)}}$；
+    \item 通过混合比和比湿的换算关系($r=\frac{q}{1-q}$)，计算混合比$r$与$r_{sat}^{T_{wb}^{\left(n\right)}}$；
+    \item 由上述关系更新湿球温度：$T_{wb}^{\left(n\right)\ast}=T+\frac{\lambda_v}{C_{pa}}\left(r-r_{sat}^{T_{wb}^{\left(n\right)}}\right)$；
+    \item 取更新前后湿球温度的平均值作为新一步的湿球温度：$T_{wb}^{\left(n+1\right)}=\left(T_{wb}^{\left(n\right)}+T_{wb}^{\left(n\right)\ast}\right)/2.0$。
+\end{enumerate}
+将上述过程迭代6次($n=0$,$\ldots$,5)，作为最终的湿球温度$T_{wb}$。
+
+
+当$T>T_f+2.5$K时，降水完全为液态水，可取雨水温度$T_p=T_{wb}$，否则$T_p$需根据降水的固态与液态比例进行调整。
+根据“Snow Hydrology”(1956)中的实验结果，液态水占总降水的比例$f_{pl}$可按如下方式定义：
+当$T_f+2.0K<T\le T_f+2.5K$时，$f_{pl}=0.4$ \\
+当$T_f<T\le T_f+2.0K$时，$f_{pl}=-54.632+0.2T$ \\
+当$T\le T_f$时，$f_{pl}=0$ \\
+于是，当$T\le T_f+2.5K$且$f_{pl}>0$时，$T_p=T_f-\sqrt{\frac{1}{f_{pl}}-1}/100$，
+否则当降水完全为固态时，$T_p=min{\left(T_f,T_{wb}\right)}$。\\
+\section{植被/地表的雨水感热}\label{植被地表的雨水感热}
+当地表有植被覆盖时，植被叶片与雨水的能量交换 ($\rm W/m^2$) 分别计算如下：
+\begin{equation}
+H_{p r c v}=C_{p l} q_{p l}\left(T_{p}-T_{v}\right)+C_{p i} q_{p i}\left(T_{p}-T_{v}\right)
+\end{equation}
+
+其中$C_{pl}$与$C_pi$分别表示液态水与固态水的比热容(J/kg/K)，
+$q_{pl}$与$q_{pi}$分别表示植被冠层对液态水和固态水的截流率(mm H2O/s)(计算见章节\ref{植被冠层截留})。
+
+
+地表与雨水的能量交换 ($\rm W/m^2$) 为：
+\begin{equation}
+H_{p r c g}=C_{p l} p_{l}\left(T_{p}-T_{g}\right)+C_{p i} p_{i}\left(T_{p}-T_{g}\right)
+\end{equation}
+其中$p_l$与$p_i$分别表示落到地面的液态水与固态水降水率(mm H2O/s)，
+当有植被覆盖时，$p_l$与$p_i$为直接穿透植被冠层的降水率与沿叶茎流出冠层的降水率之和(计算见章节\ref{植被冠层截留})。
+
