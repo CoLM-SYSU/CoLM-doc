@@ -397,7 +397,7 @@ E_{p}=-f_{\text {sig }} \rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 f_{sun}=\frac{1-\exp p(-K \cdot LAI)}{K \cdot LAI}
 \end{equation}
 其中$LAI$为叶面积指数，$K$为太阳辐射消光系数(见章节 \ref{短波吸收辐射通量})，${10}^{-6}\le K \cdot LAI\le40$。
-当白天植被吸收的太阳辐射小于1 W/m2或白天结束时，$f_{sun}=0$。叶面积指数也对应表达为两部分：
+当白天植被吸收的太阳辐射小于1 W/m$^2$ 或白天结束时，$f_{sun}=0$。叶面积指数也对应表达为两部分：
 \begin{equation}
 \begin{array}{c}LAI_{sun}=LAI \cdot f_{sun} \\ LAI_{sha}=LAI \cdot \left(1-f_{sun}\right)\end{array}
 \end{equation}
@@ -455,7 +455,7 @@ $q_g$表示地表空气比湿(kg/kg，其表达见章节 \ref{无植被覆盖地
 $r_{total}$表示植被表面与植被冠层顶空气之间水汽交换的总阻抗(s/m)，
 它来自叶面边界层阻抗$r_b$和气孔阻抗$r_{s,sun}\left(r_{s,sha}\right)$的双重贡献。
 植被表面与植被冠层空气之间的水汽交换包含两部分：湿的叶面与茎面的蒸发水汽与干叶表面的蒸腾水汽。
-湿的叶面茎面积占总叶面茎面积的比例 \citet{dickinson1993biosphere} 为：
+湿的叶面茎面积占总叶面茎面积的比例 \citep{dickinson1993biosphere} 为：
 \begin{equation}
 f_{w e t}=\left(\frac{W_{c a n}}{W_{c a n, \max }}\right)^{2 / 3} \leq 1.0
 \end{equation}
@@ -505,11 +505,11 @@ r_{a h}^{\prime}=r_{a w}^{\prime}=\frac{1}{C_{s} u_{*}}:=r_{\mathrm{d}}
 其中$C_s$表示地表与植被冠层空气之间的湍流交换系数，它由裸土表面的数值与浓密植被覆盖时的数值进行线性组合得到 \citep{zeng2005vegetation}：
 $C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\frac{1}{exp{\left(LAI+SAI\right)}}$，
 浓密植被覆盖时的湍流交换系数$C_{s,dense}=0.004$，裸土表面的湍流交换系数$C_{s,bare}=\frac{k}{0.13}\left(\frac{z_{0m,g}u_\ast}{\upsilon}\right)^{-0.45}$，
-其中空气动力学粘性系数$\upsilon=1.5\ast{10}^{-5}$m2/s，地表粗糙度$z_{0m,g}=0.01$。再次，对于叶面边界层阻抗$r_b$，计算公式为：
+其中空气动力学粘性系数$\upsilon=1.5\times{10}^{-5}$m$^2$/s，地表粗糙度$z_{0m,g}=0.01$。再次，对于叶面边界层阻抗$r_b$，计算公式为：
 \begin{equation}
 r_{b}=\frac{1}{c_{v}}\left(u_{*} / d_{{leaf }}\right)^{-0.5}
 \end{equation}
-其中$C_v=0.01m/s^0.5$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$表示叶片在风向的特征值。
+其中$C_v=0.01\rm m/s^{0.5}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$表示叶片在风向的特征值。
 最后，气孔阻抗系数$r_{s,sun}$和$r_{s,sha}$的计算将在光合作用部分介绍。
 在计算地表温度并基于该温度对地表感热与水汽通量进行更新时，需给出地表感热与水汽通量及其针对地表温度的变化率：
 \begin{equation}
@@ -532,7 +532,7 @@ $\frac{q_{sat}^{T_g}}{dT_g}$的计算见章节 \ref{饱和水汽压(比湿)及�
 \section{三维植被湍流交换模型}
 三维植被湍流交换模型是考虑植被树冠水平空间分布以及不同植被类型垂直分层(同三维植被辐射传输模型植被结构假设)，
 以一维植被湍流交换过程为基础，同样采用Monin–Obukhov相似性理论进行计算。为了与一维植被湍流计算相统一，
-与CoLM2014相比，本版本模型在零平面位移($d$)、粗糙度($z_0$)、叶片空气动力学阻抗($r_b$)以对地的空气动力学阻抗($r_d$)计算上有所更新。
+与CoLM2014相比，本版本模型在零平面位移($d$)、粗糙度($z_0$)、叶片空气动力学阻抗($r_b$)以及对地的空气动力学阻抗($r_d$)计算上有所更新。
 \subsection{100\%覆盖植被情景}
 CoLM2014假设$d$和$z_0$与植被高度成固定比例，即$d=\frac{2}{3}h$，$z_0=\frac{1}{10}h$，
 这对于稀疏植被可能并不成立\citep{zeng2007consistent}。在本版本，$d$的计算采用\citet{choudhury1988}的方案，
@@ -563,10 +563,10 @@ K(z)=\min \left(K_{\exp }(z), K_{{comb}}(z)\right)
 \end{equation}
 其中$u_{exp}$ 和 $K_{exp}$为指数衰减函数：
 \begin{equation}
-u(z)=u(h) \exp \left(-a\left(1-\frac{z}{h}\right)\right)
+u_{\exp}(z)=u(h) \exp \left(-a\left(1-\frac{z}{h}\right)\right)
 \end{equation}
 \begin{equation}
-K(z)=K(h) \exp \left(-a\left(1-\frac{z}{h}\right)\right)
+K_{\exp}(z)=K(h) \exp \left(-a\left(1-\frac{z}{h}\right)\right)
 \end{equation}
 上式中的$a$表示衰减系数，计算为 \citep{inoue1963turbulent,cowan1968mass,kondo1971relationship}：
 \begin{equation}
@@ -623,7 +623,7 @@ u(z)=f_{c} \cdot \min \left(u_{\exp }(z), u_{comb}(z)\right)+\left(1-f_{c}\right
 \begin{equation}
 \frac{1}{K(z)}=f_{c} \cdot \frac{1}{\min \left(K_{\exp}(z), K_{comb}(z)\right)}+\left(1-f_{c}\right) \cdot \frac{1}{K_{comb}}
 \end{equation}
-$u_{comb}$和$K_{comb}$同公式 (\ref{ucomb}) 和 (ref{kcomb})。
+$u_{comb}$和$K_{comb}$同公式 (\ref{ucomb}) 和 (\ref{kcomb})。
 \subsection{多层植被湍流交换}
 多层植被湍流计算是以单层植被计算为基础，总体阻抗网络如图\ref{fig:三层植被湍流交换示意图}所示。
 风速$u$和湍流交换系数$K$廓线从最上层植被往下进行计算。上一层底部的廓线值作为下层植被顶部的值。
@@ -658,7 +658,7 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 
 
 \section{饱和水汽压(比湿)及其随温度的变化}\label{饱和水汽压(比湿)及其随温度的变化}
-饱和水汽压 ($e_{sat}^T$， Pa) 与饱和比湿 ($q_{sat}^T$， kg/kg) 只依赖于温度 ($T$， $^{\circ}C$) 的变化，
+饱和水汽压 ($e_{sat}^T$， Pa) 与饱和比湿 ($q_{sat}^T$， kg/kg) 只依赖于温度 ($T$，\textcelsius) 的变化，
 其计算方案采用\citet{flatau1992polynomial} 提出的八阶多项式拟合法：
 \begin{equation}
 e_{s a t}^{T}=100\left[a_{0}+a_{1} T+\cdots+a_{n} T^{n}\right]
@@ -672,13 +672,14 @@ q_{s a t}^{T}=\frac{0.622 e_{s a t}^{T}}{P_{atm}-0.378 e_{s a t}^{T}}
 \begin{equation}
 \frac{d q_{{sat }}^{T}}{d T}=\frac{0.622 P_{atm}}{\left(P_{atm}-0.378 e_{{sat }}^{T}\right)^{2}} \frac{d e_{{sat }}^{T}}{d T}
 \end{equation}
-其中固态水($-75^{\circ}C\le T<0^{\circ}C$)与液态水($0^{\circ}C\le T\le100^{\circ}C$)情形对应的拟合系数见
-下表\ref{tab:三维植被湍流交换模型计算流程图}和
+其中固态水($-75$\textcelsius$\le T<0$\textcelsius)与液态水($0$\textcelsius $\le T\le100$\textcelsius)情形对应的拟合系数见
+表 \ref{tab:e_sat_T的拟合系数} 和 \ref{tab:de_sat_dT的拟合系数}。
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
 \caption{$e_{sat}^T$的拟合系数。}
+\label{tab:e_sat_T的拟合系数}
 \begin{tabular}{@{}lcc@{}}
 \toprule
      &  液态水  & 固态水                         \\ \midrule
@@ -698,7 +699,8 @@ $a_8$ & $\rm 2.09339997 \times 10^{-16}$  & $\rm 2.62655803 \times 10^{-15}$ \\ 
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{$e_{sat}^T$的拟合系数。}
+\caption{$\frac{d e_{sat}^T}{d T}$ 的拟合系数。}
+\label{tab:de_sat_dT的拟合系数}
 \begin{tabular}{@{}lcc@{}}
 \toprule
      &  液态水  & 固态水                         \\ \midrule

@@ -1,0 +1,21 @@
+name: Build XeLaTeX document
+on: 
+    push:
+    pull_request:
+jobs:
+    build_xelatex:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Set up Git repository
+            uses: actions/checkout@v3
+          - name: Compile XeLaTeX document
+            uses: xu-cheng/latex-action@v2
+            with:
+              root_file: CoLM.tex
+              working_directory: CoLM-Latex/
+              latexmk_use_xelatex: true
+          - name: Upload PDF file
+            uses: actions/upload-artifact@v3
+            with:
+              name: CoLM-doc
+              path: CoLM-Latex/CoLM.pdf
