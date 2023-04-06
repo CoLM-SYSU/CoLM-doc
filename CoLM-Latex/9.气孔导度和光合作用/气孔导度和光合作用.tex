@@ -9,30 +9,29 @@
 
 
 CoLM的气孔导度计算仍沿用Ball-Berry模型。Ball-Berry模型根据叶片净光合作用速率 
-($A_n$，单位: $\rm mol CO_2 m^{-2}s^{-1}$)、叶表水汽压 ($e_s$，单位: Pa)、叶表二氧化碳分压 ($c_s$，单位: Pa) 
-基于气孔导度的观测回归经验关系，计算气孔导度 ($g_s$, 单位: $\rm mol CO_2 m^{-2}s^{-1}$)： 
+($A_n$，单位: $\rm mol\ CO_2\ m^{-2}s^{-1}$)、叶表水汽压 ($e_s$，单位: Pa)、叶表二氧化碳分压 ($c_s$，单位: Pa) 
+基于气孔导度的观测回归经验关系，计算气孔导度 ($g_s$, 单位: $\rm mol\ CO_2\ m^{-2}s^{-1}$)： 
 \begin{equation}\label{rs_a1}
 \frac{1}{r_{s}}=g_{s}=m \frac{A_{n}}{c_{s}} \frac{e_{s}}{e_{i}} p_{s}+b
 \end{equation}
-$r_s$代表叶片气孔阻抗，单位: $\rm s m^{-1}$；$m$是无量纲经验参数；$b$是最小气孔导度，
+$r_s$代表叶片气孔阻抗，单位: $\rm s\ m^{-1}$；$m$是无量纲经验参数；$b$是最小气孔导度，
 单位: $\rm mol\ CO_2\ m^{-2}s^{-1}$，$m$和$b$是观测拟合的经验系数；$e_i$是饱和水蒸气压，
 是气温的函数，单位: Pa；$p_s$是大气压强，单位: Pa。
 \section{植物的光合作用}\label{植物的光合作用}
 C3植物的光合作用模拟是基于Farquhar光合作用模型 \citep{farquhar1980biochemical} ，
 C4植物则是基于\citet{collatz1992} 的改进光合作用模型。
-叶片净光合作用速率受到三方面的限制，并减去叶呼吸速率 ($R_d$)：
+光合作用受到三方面的限制，即RuBP羧化酶的限制，RuBP再生速率的限制和羧化产物速率的限制，相应的受限羧化速率分别为：$A_{c}$, $A_{j}$, $A_{e}$。叶片净光合作用速率 ($A_{n}$) 等于受限光合羧化速率减去叶呼吸速率 ($R_d$)：
 \begin{equation}\label{An1}
 A_{n}=\min \left(A_{c}, A_{j}, A_{e}\right)-R_{d}
 \end{equation}
-这三方面的限制包括RuBP羧化酶的限制，RuBP再生速率的限制和羧化产物速率的限制，相应的受限羧化速率分别表达为：$A_{c}$, $A_{j}$, $A_{e}$。
 
 
-RuBP羧化酶限制主要指当羧化酶浓度不足时，光合作用最大羧化速率$V_{c \max }$受限。RuBP羧化酶限制下的最大羧化率 ($A_c$) 可表达为$V_{c \max }$的函数，其中C3植物羧化速率受到胞间$CO_2$分压$c_i$的调节，并表达为Michaelis-Menten函数：
+RuBP羧化酶限制主要指当羧化酶浓度不足时，光合作用最大羧化速率$V_{c \max }$受限。RuBP羧化酶限制下的最大羧化率 ($A_c$) 可表达为$V_{c \max }$的函数，其中C3植物羧化速率受到胞间CO$_2$分压$c_i$的调节，并表达为Michaelis-Menten函数：
 \begin{equation}\label{A_C1}
 A_{c}=\left\{\begin{array}{ll}\frac{V_{c \max }\left(c_{i}-\Gamma\right)}{c_{i}+K_{c}\left(1+\frac{o_{i}}{K_{o}}\right)}
-     & { for } \mathrm{ C3 } { plants } \\ V_{c \max } & { for } \mathrm{ C4 } { plants }\end{array}\right.
+     & { for\ } \mathrm{ C3\ } \mathrm{ plants } \\ V_{c \max } & { for\ } \mathrm{ C4\ } \mathrm{ plants }\end{array}\right.
 \end{equation}
-其中，$\Gamma$是CO$_2$补偿点，$K_c$和$K_o$分别是对于CO$_2$和O$_2$的Michaelis-Menten常数(Pa)，$o_i$是氧气分压(Pa)。
+其中，$\Gamma$是CO$_2$补偿点，$K_c$和$K_o$分别是对于CO$_2$和O$_2$的Michaelis-Menten常数(Pa)，$o_i$是氧气分压(Pa)。\\
 C3植物：\\
 \begin{equation}\label{V_cmax_a}
 V_{c \max }\left(T_{{leaf }}\right)=V_{c \max 25} \cdot \frac{2.1^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{1}\left(T_{{leaf }}-T_{{high }}\right)}} \cdot \beta
@@ -42,17 +41,17 @@ $C_4$植物：\\
 V_{c \max }\left(T_{{leaf }}\right)=V_{c \max 25} \cdot \frac{2.1^{\frac{T_{{leaf }}-T_{o p}}{10}}}{\left(1+e^{s_{2}\left(T_{{low }}
  - T_{{leaf }}\right)}\right)\left(1+e^{s_{1}\left(T_{{leaf }}-T_{h i g h}\right)}\right)} \cdot \beta
 \end{equation}
-$V_{c \max 25}$是25$\textcelsius$下的最大羧化速率，单位: $mol \mathrm{ }\ m^{-2}s^{-1}$；$T_{op}$是参考温度298K；$T_{low}$和$T_{high}$分别为羧化速率的低温和高温响应参数，
-取值根据植被类型而变化，范围分别为: 278K$\sim$288K，303$\sim$313K；$\beta$是植物水分胁迫因子，取值范围0$\sim$1，详见章节 \ref{气孔导度的水分胁迫}。
+$V_{c \max 25}$是25$\textcelsius$下的最大羧化速率，单位: $mol \mathrm{ }\ m^{-2}s^{-1}$；$T_{op}$是参考温度298K；$s_1$和$s_2$分别为高温和低温的温度敏感性参数；$T_{low}$和$T_{high}$分别为羧化速率的低温和高温响应参数，
+取值根据植被类型而变化，范围分别为: 278K$\sim$288K，303$\sim$313K；$T_{leaf}$是叶片温度，通过对叶片能量平衡方程进行牛顿迭代方法而求解得到 \ref{植被叶片温度计算}，$\beta$是植物水分胁迫因子，取值范围0$\sim$1，详见章节 \ref{气孔导度的水分胁迫}。
 
 当光照不足时，RuBP再生速率下降，成为制约光合作用开尔文循环的最主要因素。因此，RuBP再生速率限制下的羧化速率 ($A_j$) 可表达为有效光合辐射 ($PAR$) 的函数：
 \begin{equation}\label{A_J1}
 A_{J}=\left\{\begin{array}{ll}\frac{J_x\left(PAR\right)\left(c_{i}-\Gamma\right)}{4c_{i}+8\Gamma}
-     & { for } \mathrm{ C3 } { plants } \\ \alpha\left(4.6\phi\right) & { for } \mathrm{ C4 } { plants }\end{array}\right.
+     & { for\ } \mathrm{ C3\ } \mathrm{ plants } \\ \alpha\left(4.6\phi\right) & { for\ } \mathrm{ C4\ } \mathrm{ plants }\end{array}\right.
 \end{equation}
 
      
-$J_x$是有效光合辐射(PAR)的函数，并受温度调节：
+$J_x$是有效光合辐射(PAR)的函数，并受叶片温度调节：
 \begin{equation}
 J_{x}\left(T_{{leaf }}\right)=\min \left(\alpha\left(4.6 e^{-6} \cdot P A R\right), J_{\max 25}
  \cdot e^{\frac{37000\left(T_{{leaf }}-T_{o p}\right)}{T_{o p} \cdot T_{{leaf }} \cdot R} \cdot \frac{1+e^{\frac{710 \cdot T_{o p}-220000}
@@ -60,11 +59,11 @@ J_{x}\left(T_{{leaf }}\right)=\min \left(\alpha\left(4.6 e^{-6} \cdot P A R\righ
 \end{equation}
 其中$\alpha$是量子效率 (0.05 mol CO$_2$ $\rm mol^{-1}$ photon)；$PAR$是有效光合辐射，单位: $\rm W m^{-2}$，详细计算见章节\ref{短波吸收辐射通量}；
 $4.6e^{-6}$代表单位从$\rm W m^{-2}$转换到$mol\ photon\ m^{-2}$的转换系数；
-$J_{max25}$是25$\rm \textcelsius$下的最大电子传输速率，单位: $mol\ m^{-2}s^{-1}$，$J_{max25}=1.97 \cdot V_{cmax25}$； 
+$J_{\max 25}$是25$\rm \textcelsius$下的最大电子传输速率，单位: $mol\ m^{-2}s^{-1}$，$J_{\max 25}=1.97 \cdot V_{c \max 25}$； 
 $R$是通用气体常数，$R=8.314467591$ $mol$ $m^{-2}s^{-1}$。
 
 
-羧化产物速率的限制是最大羧化速率的函数，并且受到叶温和水分胁迫因子的调控：
+羧化产物速率限制下的羧化速率 ($A_e$) 是25$\textcelsius$最大羧化速率常数 ($V_{c \max}$) 的函数，并且受到叶温和水分胁迫因子的调控：、\\
 C3植物：\\
 \begin{equation}\label{A_e_a}
 A_e=\frac{V_{c \max 25}}{2} \cdot \frac{1.8^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{2}\left(T_{{leaf }}-T_{{low }}\right)}} \cdot \beta
@@ -73,10 +72,10 @@ $C_4$植物：\\
 \begin{equation}\label{A_e_b}
 A_e=\frac{V_{c \max 25}}{5} \cdot 1.8^{\frac{T_{{leaf }}-298.16}{10}} \cdot \beta
 \end{equation}
-三方面限制下的羧化速率在其温度响应的参数化中，均共用同一套温度响应常数 ($T_{op}$，$T_{low}$和$T_{high}$)
+三方面限制下的羧化速率均共用同一套温度响应常数 ($T_{op}$，$T_{low}$和$T_{high}$)
 
 
-呼吸速率对温度的响应曲线可表示为$V_{cmax}$的函数：
+呼吸速率对温度的响应曲线可表示为$V_{c \max25}$的函数：
 \begin{equation}\label{R_d1}
 R_{d}=r_{{base }} \cdot V_{cmax 25} \cdot \frac{2 \cdot 0^{\frac{T_{leaf}-T_{op}}{10}}}{1+e^{s_3 \cdot\left(T_{leaf}-T_{d m}\right)}} \cdot \beta
 \end{equation}
@@ -99,7 +98,7 @@ R_{d}=r_{{base }} \cdot V_{cmax 25} \cdot \frac{2 \cdot 0^{\frac{T_{leaf}-T_{op}
 
 
 另外，气孔导度方程(图\ref{fig:叶片气孔光合作用导度模型示意图})仍然存在胞间CO$_2$分压$c_i$ (Pa)，叶表CO$_2$分压$c_s$ (Pa)，叶表水汽分压$e_s$ (Pa)等未知变量，
-耦合气孔导度和光合作用模型需要求解气孔内外关于$\rm CO_2$和水汽浓度扩散方程：
+耦合光合作用模型对气孔导度方程求解，需要包括气孔内外的扩散方程：
 \begin{equation}\label{A_n2}
 A_{n}=\left(c_{a}-c_{s}\right) /\left(\frac{1.37}{g_{b}} p_{s}\right)=\left(c_{s}-c_{i}\right) /\left(\frac{1.6}{g_{s}} p_{s}\right)
 \end{equation}
