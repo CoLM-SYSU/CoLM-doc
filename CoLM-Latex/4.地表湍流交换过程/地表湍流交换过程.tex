@@ -3,10 +3,10 @@
 
 %\begin{地表湍流交换过程}
 \section{基本理论}\label{基本理论}
-在近地面层(距离地面几米到几十米高度)中，地面与大气在垂直方向存在显著的湍流输运，且输运通量与风向几乎不随高度变化(亦称常通量层)。
-引入尺度因子，则近地面层的动量$\left|\tau\right|$ ($\rm kg/m/s^2$)、热量 $H$ ($\rm W/m^2$)与水汽 $E$ ($\rm kg/m^2/s$)的湍流输送通量可表示为：
+在近地层(距离地面几米到几十米高度)中，地面与大气在垂直方向存在显著的湍流输送，且湍流输送通量与风向几乎不随高度变化(固亦称常通量近地层)。
+引入尺度因子，则近地层的动量通量$\left|\tau\right|$ ($\rm kg/m/s^2$)、热量通量$H$ ($\rm W/m^2$)和水汽通量$E$ ($\rm kg/m^2/s$)可分别表示为：
 \begin{equation}
-|\tau|=\rho_{atm} \sqrt{\left(\overline{\left.u^{\prime} w^{\prime}\right)^{2}}+\overline{\left(\overline{v^{\prime} w^{\prime}}\right)^{2}}\right.}=\rho_{atm} u_{*}^{2}
+|\tau|=\rho_{atm} \sqrt{ \left(\overline{u^{\prime} w^{\prime}}\right)^{2} + \left(\overline{v^{\prime} w^{\prime}}\right)^{2} }=\rho_{atm} u_{*}^{2}
 \end{equation}
 (分量形式：$\tau_{x}=\rho_{atm} \overline{u^{\prime} w^{\prime}}, \quad \tau_{y}=\rho_{atm} \overline{v^{\prime} w^{\prime}}$)
 \begin{equation}
@@ -20,12 +20,12 @@ $C_{pa}$表示干空气的比热容(J/kg/K)，$\rho_{atm}$表示大气密度($\r
 $q_\ast$表示特征比湿(kg/kg)。$\rho_{atm}$可由公式$\rho_{atm}=\frac{P_{atm}-0.378e_{atm}}{R_{da}T_{atm}}$计算得到，
 其中$P_{atm}$表示大气压(Pa)，$\ T_{atm}$表示大气温度(K)，$R_{da}$表示干空气气体常数(J/kg/K)，
 $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa)，$q_{atm}$表示大气比湿(kg/kg)。
-由常通量性可知$u_\ast$、$\theta_\ast$、$q_\ast$均不随高度而变化。
+由常通量性可知$u_\ast$、$\theta_\ast$、$q_\ast$均不随高度变化。
 
 
-湍流输运通量(动量、感热和水汽)的计算(即$u_\ast$，$\theta_\ast$，$q_\ast$的表达)来自于近地面层Monin-Obukhov相似性理论。
-基于该理论的因次分析，无量纲平均风速($\left|u\right|/u_\ast$)、位温($\theta/\theta_\ast$)、比湿($q/q_\ast$)的
-垂直梯度可共同依赖于参数$\zeta=\frac{z-d}{L}$的函数：
+近地层湍流通量(动量、感热和水汽等)的计算(即$u_\ast$，$\theta_\ast$，$q_\ast$的表达)主要以Monin-Obukhov相似理论为基础。
+根据Monin-Obukhov相似理论，无量纲平均风速($\left|u\right|/u_\ast$)、位温($\theta/\theta_\ast$)、比湿($q/q_\ast$)的
+垂直梯度可分别表达为仅依赖于参数$\zeta=\frac{z-d}{L}$的函数：
 
 \begin{equation}\label{kz_u}
 \frac{k(z-d)}{u_{*}} \frac{\partial|u|}{\partial z}=\phi_{m}(\zeta)
@@ -36,7 +36,7 @@ $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa
 \begin{equation}\label{kz_q}
 \frac{k(z-d)}{q_{*}} \frac{\partial q}{\partial z}=\phi_{w}(\zeta)
 \end{equation}
-其中$k$表示von Karman常数，$z$表示常通量层中的高度(m)，$d$表示零平面位移(m)，$L$表示Monin-Obukhov长度(m)：
+其中$k$为von Karman常数，$z$为离地面高度(m)，$d$为零平面位移(m)，$L$为Monin-Obukhov长度(m)：
 \begin{equation}
 L=-\frac{u_{*}^{3}}{k\left(\frac{g}{\theta_{v, atm}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{k g \theta_{v *}}
 \end{equation}
