@@ -15,9 +15,9 @@ H=C_{p a} \rho_{atm} \overline{\theta^{\prime} w^{\prime}}=-C_{p a} \rho_{atm} \
 \begin{equation}
 E=\rho_{atm} \overline{q^{\prime} w^{\prime}}=-\rho_{atm} q_{*} u_{*}
 \end{equation}
-其中$u^\prime$、$v^\prime$、$w^\prime$、$\theta^\prime$、$q^\prime$表示纬向速度、经向速度、垂直速度、位温与比湿的湍流脉动，
-$C_{pa}$表示干空气的比热容(J/kg/K)，$\rho_{atm}$表示大气密度($\rm kg/m^3$)，$u_\ast$表示摩擦速度(m/s)，$\theta_\ast$表示特征位温(K)，
-$q_\ast$表示特征比湿(kg/kg)。$\rho_{atm}$可由公式$\rho_{atm}=\frac{P_{atm}-0.378e_{atm}}{R_{da}T_{atm}}$计算得到，
+其中$u^\prime$、$v^\prime$、$w^\prime$、$\theta^\prime$、$q^\prime$分别为纬向风速度、经向风速、垂直风速、位温和比湿的湍流脉动，
+$C_{pa}$表示干空气的比热容(J/kg/K)，$\rho_{atm}$表示大气密度($\rm kg/m^3$)；$u_\ast$为速度尺度(即摩擦速度)(m/s)，$\theta_\ast$为位温尺度(K)，
+$q_\ast$为湿度尺度(kg/kg)。$\rho_{atm}$可由公式$\rho_{atm}=\frac{P_{atm}-0.378e_{atm}}{R_{da}T_{atm}}$计算得到，
 其中$P_{atm}$表示大气压(Pa)，$\ T_{atm}$表示大气温度(K)，$R_{da}$表示干空气气体常数(J/kg/K)，
 $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa)，$q_{atm}$表示大气比湿(kg/kg)。
 由常通量性可知$u_\ast$、$\theta_\ast$、$q_\ast$均不随高度变化。
@@ -40,16 +40,17 @@ $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa
 \begin{equation}
 L=-\frac{u_{*}^{3}}{k\left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{k g \theta_{v *}}
 \end{equation}
-其中$\overline{\theta_{v,atm}}=\overline{\theta_{atm}}(1+0.61\overline{q_{atm}})$表示大气虚位温(K)，$\theta_{v\ast}$表示特征虚位温(K)
- $\theta_{v\ast}=\theta_\ast\left(1+0.61\bar{q_{atm}}\right)+0.61\bar{\theta_{atm}}q_\ast$。
- 大气位温$\theta_{atm}$由其定义的一阶展开近似给出$\theta_{atm}=T_{atm}+0.0098z_{atm}$。$L$可表征边界层的大气层结稳定度：
- 在稳定层结下，湍流输运热量$\bar{\theta_v^\prime w^\prime}<0$，$L>0$；在不稳定层结下，
- $\bar{\theta_v^\prime w^\prime}>0$，$L<0$；在中性层结下，$\bar{\theta_v^\prime w^\prime}=0$，$L\rightarrow\infty$。
- $\phi_x$($x$可表示动量$m$，感热$h$和水汽$w$的对应量)是可用于任何下垫面条件的普适相似性函数，
- 它将近地面层的湍流输运通量与$\left|u\right|$、$\theta$和$q$的垂直梯度联系起来，构成了对湍流输运通量进行参数化的理论基础。在中性条件下，$\phi_m=\phi_h=\phi_w=1$。
+其中$\overline{\theta_{v,atm}}=\overline{\theta_{atm}}(1+0.61\overline{q_{atm}})$表示参考大气虚位温(K)，
+ $\theta_{v\ast}=\theta_\ast\left(1+0.61\bar{q_{atm}}\right)+0.61\bar{\theta_{atm}}q_\ast$表示虚温尺度(K)。
+ 大气位温$\theta_{atm}$由其定义的一阶展开近似给出$\theta_{atm}=T_{atm}+0.0098z_{atm}$。$L$可表征近地层的大气层结稳定度：
+ 在稳定条件下，湍流热通量$\overline{\theta_v^\prime w^\prime}<0$，$L>0$；在不稳定条件下，
+ $\overline{\theta_v^\prime w^\prime}>0$，$L<0$；在中性条件下，$\overline{\theta_v^\prime w^\prime}=0$，$L\rightarrow\infty$。
 
-为得到$u_\ast$、$\theta_\ast$、$q_\ast$的表达，将上述关于$\phi_m\left(\zeta\right)$，$\phi_h\left(\zeta\right)$，
-$\phi_w(\zeta)$的微分方程(公式\ref{kz_u}-\ref{kz_q})在近地层的两个任意高度$z_1$和$z_2\ (z_2>z_1)$进行积分，得到如下结果：
+相似性函数$\phi_x$($x=m$、$h$和$w$分别对应动量、感热和水汽)适用于任何下垫面条件(固亦称通用相似性函数)，
+ 它将近地层的湍流通量与$\left|u\right|$、$\theta$和$q$等的垂直梯度联系起来，构成了近地层湍流通量参数化的基础。在中性条件下，$\phi_m=\phi_h=\phi_w=1$。
+
+为计算得到$u_\ast$、$\theta_\ast$、$q_\ast$，通常将上述关于$\phi_m\left(\zeta\right)$、$\phi_h\left(\zeta\right)$、
+$\phi_w(\zeta)$的微分方程(公式\ref{kz_u}-\ref{kz_q})在近地层的两个任意高度$z_1$和$z_2\ (z_2>z_1)$进行积分，积分结果如下：
 \begin{equation}
 |u|_{2}-|u|_{1}=\frac{u_{*}}{k}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{m}\left(\frac{z_{2}-d}{L}\right)+\psi_{m}\left(\frac{z_{1}-d}{L}\right)\right]
 \end{equation}
@@ -63,9 +64,9 @@ q_{2}-q_{1}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{
 \end{equation}
 其中函数$\psi_x\left(y\right)\ (x=m,\ h,\ w)$定义为
 \begin{equation}
-\psi_{x}(y)=\int_{\frac{z_{0 x}}{L}}^{y} \frac{1-\phi_{x}(s)}{s} d s
+\psi_{x}(y)=\int_{\frac{z_{0x}}{L}}^{y} \frac{1-\phi_{x}(s)}{s} d s
 \end{equation}
-$z_{0x}\ (x=m,\ h,\ w)$分别表示动量、感热和水汽的粗糙度。这里取$z_1$为地表高度，$z_2$为大气强迫参考（观测）高度，则有如下边界条件：
+$z_{0x}\ (x=m,\ h,\ w)$分别表示动量、感热和水汽的粗糙长度(m)。这里取$z_1$为地表高度，$z_2$为大气强迫参考（观测）高度，则有如下边界条件：
 \begin{equation}
 \begin{array}{cl}z_{1}=z_{0 m}+d:|u|_{1}=0 \quad z_{2}=z_{atm, m}: & |u|_{2}=V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geq 0.1 \\ 
      z_{1}=z_{0 h}+d: \theta_{1}=\theta_{s} & z_{2}=z_{atm, h}: \theta_{2}=\theta_{atm} \\ 
