@@ -6,7 +6,7 @@
 \subsection{USGS地表覆盖数据}\label{USGS地表覆盖数据}
 USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global Land Cover Characterization (GLCC) data base Version 2.0 
 (https://www.usgs.gov/centers/eros/science\\/usgs-eros-archive-land-cover-products-global-land-cover-characterization-glcc)。
-数据为全球30"(1公里)分辨率，经纬度网格，单时次数据，划分类型如 表 \ref{tab:USGS覆盖类型} 所示。
+数据为全球30"(约1公里)分辨率，经纬度网格，单时次数据，划分类型如 表 \ref{tab:USGS覆盖类型} 所示。
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[]
@@ -44,17 +44,17 @@ USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global 
 \end{table}
 
 
-由于USGS地表覆盖数据为单时次且年代稍远(主要数据源自AVHRR 92-93年间)，因此辅以其他特定类型地表覆盖数据对USGS地表覆盖进行更新。
+由于USGS地表覆盖数据为单时次且年代稍远(主要数据源自AVHRR 1992-1993年间)，因此辅以其他特定类型地表覆盖数据对USGS地表覆盖进行更新。
 包括全球1公里水体和湿地数据(Global Lakes and Wetlands Database: Lakes and Wetlands Grid (Level 3)) \citep{lehner2004development}、
 全球1公里冰川数据(RGI Consortium, 2017)、全球1公里城市覆盖数据(MODIS) \citep{schneider2009new} 和全球1公里高程数据(USGS)。
-替换方式是将以上辅助数据中水体、冰川和城市标识直接对USGS地表数据进行替换。USGS高程数据用于判断海洋，即将海平面高度低于0米的地方设置为海洋格点。
+替换方式是将以上辅助数据中水体、冰川和城市网格直接对USGS地表数据进行替换。USGS高程数据用于判断海洋，即将高程低于0米的地方设置为海洋格点。
 如采用USGS地表覆盖类型进行模拟(LCT方案)，其不同类型相关参数请参考附录 \ref{USGS地表覆盖类型相关参数}。
 
 \subsection{IGBP地表覆盖数据}\label{IGBP地表覆盖数据}
 IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging Spectroradiometer 
 （MODIS）MCD12Q1 Version 6（The Terra and Aqua combined MODIS Land Cover Type data product）
 的数据（$https://lpdaac.usgs.gov/products/mcd12q1v006/$），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生 
- \citep{Friedl2019}。数据为全球15秒（500m）分辨率，经纬度网格(经转投影)，年覆盖数据，时间范围从2001至今，分类如表 \ref{tab:IGBP覆盖类型} 所示。
+ \citep{Friedl2019}。数据为全球15秒（约500m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表 \ref{tab:IGBP覆盖类型} 所示。
 
 \begin{table}[]
 \centering
@@ -87,11 +87,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \section{土壤数据}\label{土壤数据}
 \subsection{土壤基础数据}\label{土壤基础数据}
 土壤基础属性数据采用Global Soil Dataset for Earth System Modeling（GSDE，http://globalchange.bnu.edu.cn/research/soilw） \citep{shangguan2014global}
-和SoilGrids （https:\\//www.soilgrids.org/）\citep{poggio2021soilgrids} 两套数据。GSDE基于土壤剖面和土壤图采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，
-空间分辨率为1公里。其垂直层次为8层 （0-0.045, 0.045-0.091, 0.091-0.166, 0.166-0.289, 0.289-0.493, 0.493-0.829, 0.829-1.383, 1.383-2.296 m），
-这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于剖面和数百个环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为250m。
-其垂直层次为6层（0-0.05，0.05-0.15，0.15-0.3，0.3-0.6，0.6-1，1-2m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。
-其中第十层无数据，则用第九层填补。
+和SoilGrids （https:\\//www.soilgrids.org/）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0-0.045, 0.045-0.091, 0.091-0.166, 0.166-0.289, 0.289-0.493, 0.493-0.829, 0.829-1.383, 1.383-2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250m。其垂直层次为6层（0-0.05，0.05-0.15，0.15-0.3，0.3-0.6，0.6-1，1-2m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。
 
 \subsection{土壤水热特征参数及尺度转换}\label{土壤水热特征参数及尺度转换}
 
@@ -100,8 +96,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \citet{cote2005} 方案，\citet{balland2005}方案，\citet{lu2007improved} 方案，\citet{tarnawski2012series} 方案和 \citet{de1963thermal} 方案。
 根据\citet{dai2019evaluation}的评估结果，\citet{balland2005} 方案的计算结果与土壤导热率观测数据的均方根误差最小，在CoLM中模拟的土壤温度和地表湍流通量与观测数据最为接近
 。因此，\citet{balland2005} 方案为CoLM使用的默认方案。土壤热容量可由固体土壤、液态水和固态水的热容量根据其质量百分比加权得到。
-在土壤水力参数方面，CoLM基于两个经典的土壤水分特征曲线模型 \citet{campbell1974} 和 \citet{van1980closed}，
-选取了针对其中参数的超过30种高被引用或新近开发的土壤转换函数(PTF)，对模型参数进行最优拟合 \citet{balland2005,campbell1974} 模型为例，两个待定参数通过解下列极值问题得到：
+在土壤水力参数方面，CoLM基于两个经典的土壤水分特征曲线模型 \citet{campbell1974} 和 \citet{van1980closed}，选取了针对模型参数的超过30种高被引用或新近开发的土壤转换函数(PTF， Pedotransfer Function)，对模型参数进行最优拟合 \citet{balland2005,campbell1974} 模型为例，两个待定参数通过解下列极值问题得到：
 \begin{equation}
 \chi\left(\hat{\psi}_{s}, \hat{\lambda}\right)=\min \sum_{i=1}^{N}\left[\psi\left(\hat{\psi}_{s}, \hat{\lambda}\right)-\psi\left(\psi_{s i}, \lambda_{i}\right)\right]^{2}
 \end{equation}
@@ -120,20 +115,15 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \begin{equation}
 \begin{array}{l}\psi=[-1,-5,-10,-20,-30,-40,-50,-60,-70,-90,-110,-130,-150,-170,\\-210,-300,-345  -690,-1020,-5100,-15300,-20000,-100000,-1000000]\end{array}
 \end{equation}
-其次，基于以上土壤水势向量对所有细网格的土壤含水量向量做面积加权平均，得到可以表征粗网格土壤水分特征曲线的土壤含水量向量；
-最后，在粗网格中利用\citet{campbell1974}土壤水分特征曲线关系拟合上述土壤水势向量和平均后的土壤含水量向量，
-得到粗网格中 \citet{campbell1974} 土壤水分特征曲线关系中的待定参数$\hat{\psi}_{s}$, $\hat{\lambda}$。
-\citet{van1980closed} 土壤水力特征曲线参数在粗网格中的获取可通过上述升尺度方法类似得到。
+其次，基于以上土壤水势向量对所有细网格的土壤含水量向量做面积加权平均，得到可以表征粗网格土壤水分特征曲线的土壤含水量向量；最后，在粗网格中利用\citet{campbell1974}土壤水分特征曲线关系拟合上述土壤水势向量和平均后的土壤含水量向量，得到粗网格中 \citet{campbell1974} 土壤水分特征曲线关系中的待定参数$\hat{\psi}_{s}$, $\hat{\lambda}$。粗网格的\citet{van1980closed} 土壤水力特征曲线参数可通过上述升尺度方法类似得到。
 
 
-升尺度土壤导热率计算方案中Kersten数-饱和度曲线中的参数采用的方法与上述方法略有区别。
-粗网格的Kersten数由于其计算的非线性性不可直接由细网格的Kersten数平均得到，
-故升尺度Kersten数-饱和度曲线中的参数可通过解下列极值问题得到：
+升尺度土壤导热率计算方案中Kersten数-饱和度曲线参数采用的方法与上述方法略有区别。粗网格的Kersten数由于其计算的非线性性不可直接由细网格的Kersten数平均得到，故升尺度Kersten数-饱和度曲线参数可通过解下列极值问题得到：
 
 \begin{equation}
 (\hat{\alpha}, \hat{\beta})=\min \sum_{i=1}^{N}\left[K_{e}(\hat{\alpha}, \hat{\beta})-K_{e}\left(\alpha_{i}, \beta_{i}\right)\right]^{2}
 \end{equation}
-其中$\alpha_{i}$,  $\beta_{i}$为每一个细网格中Kersten数-饱和度曲线中的参数，
+其中$\alpha_{i}$,  $\beta_{i}$为每一个细网格中Kersten数-饱和度曲线参数，
 $\hat{\alpha}$, $\hat{\beta}$为表征粗网格曲线的参数。
 通过此方法得到的粗网格参数是最为接近全部细网格计算结果的参数。
 
@@ -142,23 +132,19 @@ $\hat{\alpha}$, $\hat{\beta}$为表征粗网格曲线的参数。
 该方法最大优势为升尺度后的参数之间在原有曲线关系中可保持物理关系与细网格的一致性。
 \subsection{土壤颜色}\label{土壤颜色}
 
-土壤颜色数据来自NCAR CLM5.0模式(mksrf\_soilcolor\_histclm52deg025\_earths\\tatmirca\_2005.c210808 版)，
+土壤颜色（反照率）数据来自NCAR CLM5.0模式(mksrf\_soilcolor\_histclm52deg025\_earths\\tatmirca\_2005.c210808 版)，
 共20种土壤颜色分类，为全球30"(1公里)分辨率，经纬度网格。每种土壤分类提供可见光、
 近红外波段在土壤干旱时和湿润时(土壤水饱和时)的反照率查找表，其数值同NCAR-CLM技术报告表3.3 (2020年3月23日版) \citep{lawrence2018}。
 
 
 \subsection{基岩深度}\label{基岩深度}
 
-模式的层数可以根据基岩深度数据集进行设定，使得空间上每个格点有不同层数。采用的基岩深度数据为Global Depth to Bedrock Dataset for Earth System Modeling 
-(GDBDESM，http://globalchange.bnu.edu.cn/research/dtb.jsp, \citet{shangguan2017mapping})。
-该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。
+模式的土壤层数可以根据基岩深度数据集进行设定，使得空间上每个格点有不同土壤层数。采用的基岩深度数据为Global Depth to Bedrock Dataset for Earth System Modeling (GDBDESM，http://globalchange.bnu.edu.cn/research/dtb.jsp, \citet{shangguan2017mapping})。该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。
 
 
 \section{植被结构及属性数据}\label{植被结构及属性数据}
 \subsection{叶面积指数数据}\label{叶面积指数数据}
-叶面积指数数据来自重处理MODIS LAI数据 \citep{yuan20143d}。目前模式提供MODIS第5版和第6.1版数据。
-其中MODIS第5版数据(MOD15A2)为全球30"(1公里)分辨率，经纬度网格，时间覆盖2000-2016年，分辨率为每8天。
-MODIS第6.1版数据(MCD15A2H)，为全球15"(500米)分辨率，经纬度网格，时间覆盖从2000年至今，分辨率每8天或每月数据。
+叶面积指数数据来自重处理的MODIS LAI数据 \citep{yuan20143d}。目前模式提供MODIS第5版和第6.1版数据。其中MODIS第5版数据(MOD15A2)为全球30"(1公里)分辨率，经纬度网格，时间覆盖2000-2016年，时间分辨率为每8天。MODIS第6.1版数据(MCD15A2H)，空间分辨率为全球15"(约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
 
 \subsection{树高数据}\label{树高数据}
 树高数据来自2005年Geoscience Laser Altimeter System (GLAS) aboard ICESat 
@@ -241,7 +227,7 @@ Canopy height                                                   & Global 1 km fo
 
 
 \section{湖泊深度数据}\label{湖泊深度数据}
-湖泊深度数据来自Lake-depth data set Version 2.0 \citep{kourzeneva2012global}，数据为全球30"(1公里)分辨率，经纬度网格，单时次数据。
+湖泊深度数据来自Lake-depth data set Version 2.0 \citep{kourzeneva2012global}，数据为全球30"(约1公里)分辨率，经纬度网格，单时次数据。
 
 \section{城市数据}\label{城市数据}
 \subsection{城市地表覆盖}\label{城市地表覆盖}
@@ -266,7 +252,7 @@ Canopy height                                                   & Global 1 km fo
 模式对于传统的城市类型分类与NCAR CLM-Urban Model \citep{oleson2020parameterization} 相同，
 根据 \citet{jackson2013parameterization} 的城市分类数据对全球城市化程度进行分类。该数据集中，城市化有三个水平，
 及TBD、HD和MD，每1km格点被划分为三个密度类别之一，通过该数据集对urban patch分为3类。其中，
-TBD类城市指至少为1平方公里内，建筑高度全部大于或等于10层楼高且透水面比例较小(5$\sim$15\%)；HD类城市建筑高度为3$\sim$10层，
+TBD类城市指至少在1平方公里内，建筑高度全部大于或等于10层楼高且透水面比例较小(5$\sim$15\%)；HD类城市建筑高度为3$\sim$10层，
 透水面比例通常为5$\sim$25\%，这些地区通常为商业、住宅或工业区；MD类城市建筑高度通常为1$\sim$3层，且透水面比例较高，为20$\sim$60\%。
 LCZ数据目前使用的 \citet{demuzere2022global} 全球LCZ分类数据，该数据空间分辨率为100米，
 通过向轻量级随机森林模型输入大量标记训练区域和地球观测图像来生成，并对150个选定的功能城市地区采用自助交叉验证和专题基准测试评估了其质量。
@@ -290,18 +276,17 @@ thesis/thesis-urbanproperties-tool.html)为模式生成各类城市形态以及�
 而LCZ分类本身包含了一些建筑材料信息，不同地区的同类LCZ虽然有差别但是可能不会太大，
 因此LCZ形态参数目前采用典型值设定，该部分数据一部分来源于 \citet{stewart2014evaluation}，另一部分参考了WRF中的参数设置。
 \subsection{城市树覆盖数据}\label{城市树覆盖数据}
-NCAR CLM城市数据集比较全面的描述了全球城市的形态特征和物理性质，但是他们的城市数据缺少关于植被(树)和水体描述，
+NCAR CLM城市数据集比较全面的描述了全球城市的形态特征和物理性质，但是其城市数据缺少关于植被(树)和水体的描述，
 LCZ分类虽然有植被描述但通常是一个范围值。由于城市只占全球陆地的1\%左右，相比于自然地表，在大尺度上城市占比仍然比较小，
-因此在补充城市内部的植被覆盖数据时，需要尽量选择高分辨率的数据。否则分辨率过低城市中的植被等信息很可能无法识别。
+因此在补充城市内部的植被覆盖数据时，需要尽量选择高分辨率的数据。否则，如果分辨率过低，城市中的植被等信息很可能无法识别。
 GFCC Tree Cover (https://lpdaac.usgs.gov/products/gfcc30tcv003/)提供了
 2000年、2005年、2010年和2015年四个年代的全球树木覆盖度信息，分辨率为30m，可用于了解森林变化。
-该数据的投影方式为UTM，与陆面模式使用的等经纬度网格不同，需对数据进行投影转换，由UTM投影转换为等经纬度投影 (~0.00025$^\circ$)。
+该数据的投影方式为UTM，与陆面模式使用的等经纬度网格不同，需对数据进行投影转换，由UTM投影转换为经纬度投影 (~0.00025$^\circ$)。
 经过投影转换后，通过对全球数据每个区域的文件进行读取，并统计500m (\~0.0041667$^\circ$)分辨率下30m高分辨网格植被总占比，
-求平均得到500m分辨率下城市格点的树覆盖数据作为城市模式的基础输入数据。
+对四个年份求平均得到500m分辨率下城市格点的树覆盖数据作为城市模式的基础输入数据。
 \subsection{城市内水体数据}\label{城市内水体数据}
-基于同样的原因，水体数据也需要尽量选择高分辨率数据，30米全球地表覆盖数据GlobeLand30是中国研制的30米空间分辨率全球地表覆盖数据，
-2014年发布GlobeLand30 2000和2010版。自然资源部于2017年启动对该数据的更新，
-目前，GlobeLand30 2020版已发布(http://www.globallandcover.com/)。
+基于与城市树覆盖同样的原因，水体数据也需要尽量选择高分辨率数据，30米全球地表覆盖数据GlobeLand30是中国研制的30米空间分辨率全球地表覆盖数据，
+2014年发布GlobeLand30 2000和2010版。自然资源部于2017年启动对该数据的更新。目前，GlobeLand30 2020版已发布(http://www.globallandcover.com/)。
 除极地地区外，GlobeLand30同样采用了UTM投影，因此需要进行投影转换，
 其中数据覆盖如图 \ref{fig:GlobeLand30数据覆盖示意图} 所示(除2020年外，其他年份不包含极地地区数据)。
 该数据集水体精度最高，达到了92.09\% \citep{陈军2017}，且时空分辨率高，
@@ -316,11 +301,10 @@ GFCC Tree Cover (https://lpdaac.usgs.gov/products/gfcc30tcv003/)提供了
 }
 \subsection{城市树高数据}\label{城市树高数据}
 树高数据使用的 \citet{simard2011mapping} 全球树高数据，分辨率为1km。除该数据外， \citep{potapov2021mapping} 
-利用GEDI卫星数据反演的30m树高数据也同样作为模式树高数据，但由于卫星运行轨道限制，
+利用GEDI卫星数据反演的30m树高数据也同样作为模式树高数据。但由于卫星运行轨道限制，
 该数据目前只发布了51.6$^\circ$N$\sim$51.6$^\circ$S范围内的数据，北半球高纬度地区数据缺失，因此目前该数据集仅作为备用数据。
 \subsection{城市LAI/SAI数据}\label{城市LAISAI数据}
-由于城市中建筑物的遮掩，卫星反演数据中城市$LAI$存在一定问题，目前模式中城市$LAI$数据利用以下公式根据格点内(0.5$^\circ$)其它PFT
- (只考虑树，即1-9类PFT)的$LAI$/$SAI$通过插值并加权平均的办法为城市地区$LAI$/$SAI$赋值：
+由于城市中建筑物的遮掩，卫星反演数据中城市$LAI$存在一定问题，目前模式中城市$LAI$数据利用以下公式根据0.5$^\circ$范围内的其它PFT (只考虑树，即1-9类PFT)的$LAI$/$SAI$，通过插值并加权平均的办法为城市地区$LAI$/$SAI$赋值：
 \begin{equation}
 L A I_{u r}=\sum_{i=1}^{9} L A I_{P F T_{-} i} \cdot \frac{H T O P_{u r}}{H T O P_{P F T_{-} i}} \cdot P C T_{P F T_{-} i}
 \end{equation}
