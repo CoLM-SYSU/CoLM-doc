@@ -9,11 +9,11 @@ CoLM的土壤和凋落物存在垂直分层结构，碳氮动态变化根据平�
 \begin{equation}
 \begin{array}{r}\frac{\partial C_{i}(z)}{\partial t}=R_{i}(z)+\sum_{i \neq j}\left(1-r f_{j}\right) T_{j i} k_{j}(z) C_{j}(z)-k_{i}(z) C_{i}(z) \\ +\frac{\partial}{\partial z}\left(D(z) \frac{\partial C_{i}}{\partial z}\right)+\frac{\partial}{\partial z}\left(A(z) C_{i}(z)\right)\end{array}
 \end{equation}
-其中，$C_i\left(z\right)$是第z层的土壤碳密度($\rm gC m^{-3}$); $R_i\left(z\right)$是第$z$层土壤的凋落物碳输入，
-$\sum_{i\neq j}{\left(1-{rf}_j\right)T_{ji}k_j\left(z\right)C_j\left(z\right)}$代表土壤碳库j到碳库i的碳转变；
+其中，$C_i\left(z\right)$是第$z$层的土壤碳密度($\rm gC m^{-3}$); $R_i\left(z\right)$是第$z$层土壤的凋落物碳输入，
+$\sum_{i\neq j}{\left(1-{rf}_j\right)T_{ji}k_j\left(z\right)C_j\left(z\right)}$代表土壤碳库$j$到碳库$i$的碳转变；
 $k_j\left(z\right)$是第$z$层碳库$j$的周转速率；${rf}_j$是$j$库在转换中呼吸掉的碳的比例；
 $\left(1-{rf}_j\right)$是微生物对库$j$分解的碳利用效率，$T_{ji}$是碳转换途径$j$到$i$在所有离开$j$库碳通量
-(不包括因呼吸作用离开$j$库)的比例；$k_i\left(z\right)C_i\left(z\right)$代表库i的碳分解；
+(不包括因呼吸作用离开$j$库)的比例；$k_i\left(z\right)C_i\left(z\right)$代表库$i$的碳分解；
 $\frac{\partial}{\partial z}\left(D\left(z\right)\frac{\partial C_i}{\partial z}\right)+\frac{\partial}{\partial z}\left(A\left(z\right)C_i\left(z\right)\right)$代表碳垂直传输。
 
 \section{土壤凋落物分解}\label{土壤凋落物分解}
@@ -31,7 +31,7 @@ CoLM生物地球化学模块，控制土壤分解的环境因子包括土壤温�
 其中，$\xi_{tsoil}\left(z\right)$是第$z$层的土壤温度因子；$T_{soil}\left(z\right)$是第$z$层的土壤温度 (K)，$Q_{10}$是温度敏感性参数。
 
 
-当土壤温度低于$\rm 0^{\circ}C$，土壤完全结冰，土壤分解速率迅速下降。土壤温度因子使用另一个关系：
+当土壤温度低于0\textcelsius，土壤完全结冰，土壤分解速率迅速下降。土壤温度因子使用另一个关系：
 \begin{equation}
 \xi_{t s o i l}(z)=0.82 \cdot Q_{10}^{-2.5} \cdot 1.5^{\frac{T_{{soil }}(z)-273.15}{10}}
 \end{equation}
@@ -49,7 +49,8 @@ $\Psi_{min}$是最小土壤水势；$\Psi_{max}$是最大土壤水势。当土�
 \begin{equation}
 \xi_{d e p t h}=e^{-\frac{z}{10}}
 \end{equation}
-其中z是土壤深度(m)。
+其中$z$是土壤深度(m)。
+
 \subsection{土壤分解的氮限制}\label{土壤分解的氮限制}
 土壤分解速率同样会受到土壤中无机氮含量的限制，但量化氮限制对土壤分解速率的影响，需要先计算无氮限制条件下的潜在土壤分解，其中土壤/凋落物库i (第$z$层)的潜在土壤分解为：
 \begin{equation}
@@ -65,7 +66,7 @@ C F_{pot, i \rightarrow j}=C_{i}(z) k_{i}(z) \cdot\left(1-r f_{i}\right) \cdot T
      =\frac{C_{i}(z) k_{i}(z) \cdot T_{i j} \cdot \frac{C N_{j}}{C N_{i}}-C_{i}(z) k_{i}(z) \cdot T_{i j} \cdot\left(1-r f_{i}\right)}{C N_{j}}=
      -\frac{C i_{i}(z) k_{i}(z) T_{i j}\left(1-r f_{i}-\frac{C N_{j}}{C N_{i}}\right)}{C N_{j}}\end{array}
 \end{equation}
-如图 11 2所示共有10个土壤/凋落物之间的碳氮传输，所有10个传输引起的潜在净无机氮增加可具体表示为：
+如图\ref{fig:CoLM土壤凋落物碳氮循环网络示意图}所示共有10个土壤/凋落物之间的碳氮传输，所有10个传输引起的潜在净无机氮增加可具体表示为：
 \begin{equation}\label{NF_pot_minmet}
     N F_{{pot}_{min,met} \rightarrow {soil1,vr}}(z)=-\frac{C_{{met}}(z) k_{{met}}(z) T_{met, soil1}\left(1-r f_{met}-\frac{C N_{{soil1 }}}{C N_{met}}\right)}{C N_{{soil1 }}}
 \end{equation}
@@ -127,7 +128,7 @@ CoLM在每层土壤中分别考虑无机氮的供需关系及其和每层无机�
 \begin{equation}
     f_{plant_{demand}}=\frac{\sum_{z=1}^{n=10}{f_{plant_{demand},vr}\left(z\right)\cdot N\ F_{plant_{demand_{soil}},vr}\left(z\right)}}{NF_{plant_{demand_{soil}}}}
 \end{equation}
-实际氮吸收$(NF_{sminn_{alloc}}$)可以由公式(\label{NF_sminn_alloc})求出，至此，章节 \ref{植被碳氮分配} 的所有变量可解。
+实际氮吸收$(NF_{sminn_{alloc}}$)可以由公式(\ref{NF_sminn_alloc})求出，至此，章节 \ref{植被碳氮分配} 的所有变量可解。
 实际碳传输，也可根据氮限制因子($f_{immob_{demand},vr}\left(z\right))$进一步得出：
 \begin{equation}
 C F_{met \rightarrow { soil1,vr }}(z)=\left\{\begin{array}{ll}C F_{pot, met \rightarrow soil1, vr}(z) \cdot f_{{immob }_{d} { emand }, vr}(z) & N F_{pot_{m in }, { met } \rightarrow { soil } 1}<0 \\ C F_{pot, met \rightarrow { soil1,vr }}(z) & N F_{pot_{m in }, { met } \rightarrow { soil } 1} \geq 0\end{array}\right.
@@ -225,4 +226,4 @@ NF_{immob,vr}\left(z\right)=NF_{immob,demand,vr}\left(z\right)\cdot\ f_{immob_{d
 土壤凋落物的碳氮循环的垂直结构在章节 \ref{垂直分层结构} 已经被大致介绍。地上凋落物和地下凋落物组成了地下碳循环的输入，存在显著的垂直变化。
 此外，土壤碳氮分解存在深度因子的影响，也是影响土壤碳氮模拟垂直分布的重要因子。除此之外，碳氮的垂直混合也是影响土壤碳氮浓度垂直剖面曲线的关键。
 CoLM考虑土壤碳氮传输仅存在扩散作用下，和求解土壤湿度的垂直分布解法类似。
-详细土壤垂直扩散方程的参数化方案见\citep{koven2011permafrost,koven2009formation,koven2013effect,koven2015permafrost} 。
+详细土壤垂直扩散方程的参数化方案见\citet{koven2011permafrost,koven2009formation,koven2013effect,koven2015permafrost} 。
