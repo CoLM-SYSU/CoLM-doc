@@ -128,7 +128,7 @@ CoLM在每层土壤中分别考虑无机氮的供需关系及其和每层无机�
 \begin{equation}
     f_{plant_{demand}}=\frac{\sum_{z=1}^{n=10}{f_{plant_{demand},vr}\left(z\right)\cdot N\ F_{plant_{demand_{soil}},vr}\left(z\right)}}{NF_{plant_{demand_{soil}}}}
 \end{equation}
-实际氮吸收$(NF_{sminn_{alloc}}$)可以由公式(\label{NF_sminn_alloc})求出，至此，章节 \ref{植被碳氮分配} 的所有变量可解。
+实际氮吸收$(NF_{sminn_{alloc}}$)可以由公式(\ref{NF_sminn_alloc})求出，至此，章节 \ref{植被碳氮分配} 的所有变量可解。
 实际碳传输，也可根据氮限制因子($f_{immob_{demand},vr}\left(z\right))$进一步得出：
 \begin{equation}
 C F_{met \rightarrow { soil1,vr }}(z)=\left\{\begin{array}{ll}C F_{pot, met \rightarrow soil1, vr}(z) \cdot f_{{immob }_{d} { emand }, vr}(z) & N F_{pot_{m in }, { met } \rightarrow { soil } 1}<0 \\ C F_{pot, met \rightarrow { soil1,vr }}(z) & N F_{pot_{m in }, { met } \rightarrow { soil } 1} \geq 0\end{array}\right.
@@ -226,4 +226,4 @@ NF_{immob,vr}\left(z\right)=NF_{immob,demand,vr}\left(z\right)\cdot\ f_{immob_{d
 土壤凋落物的碳氮循环的垂直结构在章节 \ref{垂直分层结构} 已经被大致介绍。地上凋落物和地下凋落物组成了地下碳循环的输入，存在显著的垂直变化。
 此外，土壤碳氮分解存在深度因子的影响，也是影响土壤碳氮模拟垂直分布的重要因子。除此之外，碳氮的垂直混合也是影响土壤碳氮浓度垂直剖面曲线的关键。
 CoLM考虑土壤碳氮传输仅存在扩散作用下，和求解土壤湿度的垂直分布解法类似。
-详细土壤垂直扩散方程的参数化方案见\citep{koven2011permafrost,koven2009formation,koven2013effect,koven2015permafrost} 。
+详细土壤垂直扩散方程的参数化方案见\citet{koven2011permafrost,koven2009formation,koven2013effect,koven2015permafrost} 。
