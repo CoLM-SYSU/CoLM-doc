@@ -424,9 +424,9 @@ N F_{leaf,retrans}=\left(\frac{CF_{leaf,litter }}{CN_{leaf}}\right)-N F_{leaf,li
 \begin{equation}
 GDD _{sum}^{n}=\left\{\begin{array}{ll}GDD _{sum}^{n-1}+T_{s, 3} \cdot \Delta t \cdot 86400 & T_{s, 3} \geq 0^{\circ}{C} \\ GDD _{sum}^{n-1} & T_{s, 3}<0^{\circ}{C}\end{array}\right.
 \end{equation}
-其中$GDD_{sum}^n$是第$n$天后的积温，积温通过对高于0oC的第三层土壤温度($T_{s,3}$) ($^{\circ}$C)进行累加。
+其中$GDD_{sum}^n$是第$n$天后的积温，积温通过对高于0 \textcelsius 的第三层土壤温度($T_{s,3}$) (\textcelsius)进行累加。
 当$GDD_{sum}^n>{GDD}_{sum_{crit}}$时，季节性落叶树开始发芽展叶期。${GDD}_{sum_{crit}}$为发芽物候关键参量，
-与前一年的温度($T_{2m,ann_{avg}}$) ($^{\circ}$C)有关：
+与前一年的温度($T_{2m,ann_{avg}}$) (\textcelsius)有关：
 \begin{equation}
 GDD _{sum_{c r i t}}=\exp \left(4.8+0.13 \cdot T_{2 m, ann_{avg}}\right)
 \end{equation}
@@ -506,7 +506,7 @@ t_{onset}^n=t_{onset}^{n-1}-\Delta t
 
 当温度暖和，干旱成为触发胁迫的主要条件。当上一次落叶期结束后，土壤水分因子就开始从0累加：
 \begin{equation}
-SWI_{sum}^{n}=\left\{\begin{array}{ll}SWI_{sum}^{n-1}+f_{d a y} &  { 当 } \Psi_{s, 3} \geq-0.6 M P a \\ SWI_{sum}^{n} &  { 当 } \Psi_{s, 3}<-0.6 M P a\end{array}\right.
+SWI_{sum}^{n}=\left\{\begin{array}{ll}SWI_{sum}^{n-1}+f_{d a y} & \text{ 当 } \Psi_{s, 3} \geq-0.6 M P a \\ SWI_{sum}^{n} &  \text{ 当 } \Psi_{s, 3}<-0.6 M P a\end{array}\right.
 \end{equation}
 其中$\Psi_{s,3}$是第三层土壤的水势，当土壤水势高于-0.6MPa时，土壤足够湿润，土壤水分因子就开始累加。
 当土壤水分因子高于15，同时过去十天有至少20mm的降水，并且冷温胁迫没有触发，日照时长超过6小时，植被进入发芽展叶期。
@@ -514,7 +514,8 @@ SWI_{sum}^{n}=\left\{\begin{array}{ll}SWI_{sum}^{n-1}+f_{d a y} &  { 当 } \Psi_
 
 同时，因为土壤温度过低($FD_{sum}^n>15$)，需要应用冷气候标准
 \begin{equation}
-F D_{sum}^{n}=\left\{\begin{array}{ll}F D_{sum}^{n-1}+f_{d a y} &  { 当 } T_{s, 3}>0^{\circ}{C} \\ F D_{sum}^{n-1} &  { 当 } T_{s, 3} \leq 0^{\circ}{C}\end{array}\right.
+F D_{sum}^{n}=\left\{\begin{array}{ll}F D_{sum}^{n-1}+f_{d a y} &  \text{ 当 } T_{s, 3} > \text{0 \textcelsius} \\ 
+F D_{sum}^{n-1} &  \text{ 当 } T_{s, 3} \leq \text{0 \textcelsius}\end{array}\right.
 \end{equation}
 即当气温低，发芽展叶期的触发需要土壤温度和土壤湿度同时满足条件：
 $SWI_{sum}>15,\ GDD_{sum}>GDD_{sum_crit}$，和日照时长大于6小时。
@@ -525,12 +526,14 @@ t_{o n s e t}^{n}=t_{o n s e t}^{n-1}-\Delta t
 当持续土壤干旱或持续低温或日照长度低于6小时，胁迫落叶期就将触发。
 土壤干旱用累积落叶土壤水分因子($OSWI_{sum}^n$)来量化：
 \begin{equation}
-OSWI_{sum}^{n}=\left\{\begin{array}{ll}OSWI_{sum}^{n-1}+f_{d a y}, &  { 当 } \Psi_{s, 3}<-2 M P a \\ \max \left(OSWI_{sum}^{n-1}-f_{d a y}, 0\right) &  { 当 } \Psi_{s, 3}>-2 M P a\end{array}\right.
+OSWI_{sum}^{n}=\left\{\begin{array}{ll}OSWI_{sum}^{n-1}+f_{d a y}, &  \text{ 当 } \Psi_{s, 3}<-2 M P a \\ 
+\max \left(OSWI_{sum}^{n-1}-f_{d a y}, 0\right) &  \text{ 当 } \Psi_{s, 3}>-2 M P a\end{array}\right.
 \end{equation}
 当前面一个发芽展叶期已经完成时，且$OSWI_{sum}^n\geq15$，即触发落叶期。
 冷温胁迫用累积落叶冷冻天数来量化：
 \begin{equation}
-OFD_{sum}^{n}=\left\{\begin{array}{ll}OFD_{sum}^{n-1}+f_{d a y} &  { 当 }{T}_{s, 3} \leq 0^{\circ}{C} \\ \max \left(OFD_{sum}^{n-1}-f_{d a y}, 0\right) &  { 当 }{T}_{s, 3}>0^{\circ}{C}\end{array}\right.
+OFD_{sum}^{n}=\left\{\begin{array}{ll}OFD_{sum}^{n-1}+f_{d a y} &  \text{ 当 }{T}_{s, 3} \leq \text{0 \textcelsius} \\ 
+\max \left(OFD_{sum}^{n-1}-f_{d a y}, 0\right) & \text{ 当 }{T}_{s, 3}> \text{0 \textcelsius}\end{array}\right.
 \end{equation}
 当前面一个发芽展叶期已经完成时，且$OFD_{sum}^n\geq15$，即触发落叶期。
 
