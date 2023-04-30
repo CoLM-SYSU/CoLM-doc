@@ -66,11 +66,11 @@ q_{2}-q_{1}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{
 \begin{equation}
 \psi_{x}(y)=\int_{\frac{z_{0x}}{L}}^{y} \frac{1-\phi_{x}(s)}{s} d s
 \end{equation}
-$z_{0x}\ (x=m,\ h,\ w)$分别表示动量、感热和水汽的粗糙长度(m)。这里取$z_1$为地表高度，$z_2$为大气强迫参考（观测）高度，则有如下边界条件：
+$z_{0x}\ (x=m,\ h,\ w)$分别表示动量、感热和水汽的粗糙长度(m)。这里取$z_1$为地表高度，$z_2$为大气强迫参考（观测）高度，则有如下积分边界条件：
 \begin{equation}
-\begin{array}{cl}z_{1}=z_{0 m}+d:|u|_{1}=0 \quad z_{2}=z_{atm, m}: & |u|_{2}=V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geq 0.1 \\ 
-     z_{1}=z_{0 h}+d: \theta_{1}=\theta_{s} & z_{2}=z_{atm, h}: \theta_{2}=\theta_{atm} \\ 
-     z_{1}=z_{0 w}+d: q_{1}=q_{s} & z_{2}=z_{atm, w}: q_{2}=q_{atm}\end{array}
+\begin{array}{ll}z_{1}=z_{0 m}+d:|u|_{1}=0, \quad & z_{2}=z_{atm, m}: |u|_{2}=V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geq 0.1 \\ 
+     z_{1}=z_{0 h}+d: \theta_{1}=\theta_{s}, & z_{2}=z_{atm, h}: \theta_{2}=\theta_{atm} \\ 
+     z_{1}=z_{0 w}+d: q_{1}=q_{s}, & z_{2}=z_{atm, w}: q_{2}=q_{atm}\end{array}
 \end{equation}
 则方程(\ref{kz_u}-\ref{kz_q})由$z_1$到$z_2$的积分结果为：
 \begin{equation}\label{Va}
@@ -82,15 +82,15 @@ V_{a}=\frac{u_{*}}{k}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m
 \begin{equation}\label{q_atm-qs}
 q_{atm}-q_{s}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]
 \end{equation}
-这里限制$V_a\geq0.1$是为了避免太小的风速使得感热与潜热过小导致数值溢出。对流速度$U_c$表示对流边界层中的大涡对近地层通量的贡献，计算方案为：
+这里限制$V_a\geq0.1$是为了避免太小的风速使得感热与潜热过小导致数值溢出。对流速度$U_c$表示对流边界层中的大涡对近地层湍流通量的贡献，计算方案为：
 \begin{equation}
-U_{c}=0 \quad \zeta=\frac{z_{atm, m}-d}{L} \geq 0 \text { 时(即稳定条件下) }
+\begin{array}{ll} U_{c}=0, \quad & \text { 当 } \zeta_{atm}=\frac{z_{atm, m}-d}{L} \geq 0 \text { 时(即稳定条件下) } \\
+       U_{c}=\beta w_{*}, \quad & \text { 当 } \zeta_{atm}<0 \text { 时 (即不稳定条件下) }\end{array}
 \end{equation}
-\begin{equation}
-U_{c}=\beta w_{*} \quad \zeta<0 \text { 时 (即不稳定条件下) }
-\end{equation}
-其中$w_\ast$表示特征垂直速度$w_\ast={(\frac{-gu_\ast\theta_{v\ast}z_i}{\bar{\theta_{v,atm}}})}^{1/3}$，$z_i=1000m$表示对流边界层高度，
-参数$\beta=1$。因为$L$是依赖于$u_\ast$、$\theta_\ast$、$q_\ast$的函数，
+其中$w_\ast={(\frac{-gu_\ast\theta_{v\ast}z_i}{\bar{\theta_{v,atm}}})}^{1/3}$为垂直速度尺度(m/s)，$z_i=1000m$代表对流边界层高度(这里设为常数)，
+参数$\beta=1$。
+
+因$L$是依赖于$u_\ast$、$\theta_\ast$、$q_\ast$的函数，
 故方程(\ref{Va})-(\ref{q_atm-qs})可视为如下形式的方程组：
 \begin{equation}\label{FGH}
 \left\{\begin{array}{l}F\left(u_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\right)=0 \\
@@ -101,40 +101,49 @@ U_{c}=\beta w_{*} \quad \zeta<0 \text { 时 (即不稳定条件下) }
 初始场提供的$\theta_s$、$q_s$，以及对地表参数$d$和$z_{0x}$的估计，$u_\ast$、$\theta_\ast$、$q_\ast$可通过方程组(\ref{FGH})
 进行迭代求解，进而求出动量、感热和水汽通量。
 
-根据\citet{zeng1998effect}的结果，相似性函数$\phi_x$可按照如下方式给出：
+根据\citet{zeng1998intercomparison}，通用函数$\phi_x$有如下表达式：
 \begin{equation}
-\left\{\begin{array}{lr}\phi_{m}(\zeta)=0.7 k^{\frac{2}{3}}(-\zeta)^{\frac{1}{3}} & \zeta<-1.574 \text { 时 (即非常不稳定条件下) } \\
-      \phi_{m}(\zeta)=(1-16 \zeta)^{-\frac{1}{4}} & -1.574 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\
-       \phi_{m}(\zeta)=1+5 \zeta & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\ 
-       \phi_{m}(\zeta)=5+\zeta & \zeta>1 \text { 时 (即非常稳定条件下) }\end{array}\right.
+\left\{\begin{array}{lr}\phi_{m}(\zeta)=0.7 k^{\frac{2}{3}}(-\zeta)^{\frac{1}{3}}, & \zeta<-1.574 \text { 时 (即非常不稳定条件下) } \\
+      \phi_{m}(\zeta)=(1-16 \zeta)^{-\frac{1}{4}}, & -1.574 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\
+       \phi_{m}(\zeta)=1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\ 
+       \phi_{m}(\zeta)=5+\zeta, & \zeta>1 \text { 时 (即非常稳定条件下) }\end{array}\right.
 \end{equation}
 \begin{equation}
-\left\{\begin{array}{lr}\phi_{h}(\zeta)=\phi_{w}(\zeta)=0.9 k^{\frac{4}{3}}(-\zeta)^{-\frac{1}{3}} & \zeta<-0.465 \text { 时 (即非常不稳定条件下) } \\ 
-     \phi_{h}(\zeta)=\phi_{w}(\zeta)=(1-16 \zeta)^{-\frac{1}{2}} & -0.465 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\ 
-     \phi_{h}(\zeta)=\phi_{w}(\zeta)=1+5 \zeta & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\
-      \phi_{h}(\zeta)=\phi_{w}(\zeta)=5+\zeta & \zeta>1 \text { 时 (即非常稳定条件下) }\end{array}\right.
+\left\{\begin{array}{lr}\phi_{h}(\zeta)=\phi_{w}(\zeta)=0.9 k^{\frac{4}{3}}(-\zeta)^{-\frac{1}{3}}, & \zeta<-0.465 \text { 时 (即非常不稳定条件下) } \\ 
+     \phi_{h}(\zeta)=\phi_{w}(\zeta)=(1-16 \zeta)^{-\frac{1}{2}}, & -0.465 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\ 
+     \phi_{h}(\zeta)=\phi_{w}(\zeta)=1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\
+      \phi_{h}(\zeta)=\phi_{w}(\zeta)=5+\zeta, & \zeta>1 \text { 时 (即非常稳定条件下) }\end{array}\right.
 \end{equation}
-将$\phi_m$代入风速廓线方程(\ref{Va})，即可得到具体形式：
-非常不稳定条件下($\zeta_a=\frac{z_{atm,m}-d}{L}<-1.574$)
+
+将$\phi_m$代入风速廓线方程(\ref{Va})，即可得到风速廓线在不同条件下的具体形式：
+
+\noindent 非常不稳定条件下($\zeta_{atm}=\frac{z_{atm,m}-d}{L}<-1.574$)
 \begin{equation}
 V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{-1.574 L}{z_{0 m}}-\psi_{m}(-1.574)+
-1.14\left[\left(-\zeta_{a}\right)^{\frac{1}{3}}-(1.574)^{\frac{1}{3}}\right]+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
+1.14\left[\left(-\zeta_{atm}\right)^{\frac{1}{3}}-(1.574)^{\frac{1}{3}}\right]+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
-不稳定条件下($-1.574\le\zeta_a<0$)
+不稳定条件下($-1.574\le\zeta_{atm}<0$)
 \begin{equation}
-V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{m}\left(\zeta_{a}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
+V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{m}\left(\zeta_{atm}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
-稳定条件下($0\le\zeta_a\le1$)
+稳定条件下($0\le\zeta_{atm}\le1$)
 \begin{equation}
-V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}+5 \zeta_{a}-5 \frac{z_{0 m}}{L}\right\}
+V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}+5 \zeta_{atm}-5 \frac{z_{0 m}}{L}\right\}
 \end{equation}
-非常稳定条件下($\zeta_a>1$)
+非常稳定条件下($\zeta_{atm}>1$)
 \begin{equation}
-V_{a}=\frac{u_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \ln \zeta_{a}+\zeta_{a}-1\right]-5 \frac{z_{0 m}}{L}\right\}
+V_{a}=\frac{u_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 m}}{L}\right\}
 \end{equation}
-其中$\psi_m\left(\zeta\right)=2\ln{(\frac{1+x}{2})}+\ln{\left(\frac{1+x^2}{2}\right)-2}\tan^{-1}{x}+\frac{\pi}{2}，x={(1-16\zeta)}^{1/4}$。
-将$\phi_h$,$\phi_w$代入温度廓线方程(\ref{theta_atm-theta_s})和水汽廓线方程(\ref{q_atm-qs})，即可得到具体形式：
-非常不稳定条件下($\zeta_a=\frac{z_{atm,h}-d}{L}$ 或$ \ \frac{z_{atm,w}-d}{L}\ <-0.465$)
+
+\noindent 其中
+\begin{equation}
+\begin{array}{c}\psi_m\left(\zeta\right)=2\ln{(\frac{1+x}{2})}+\ln{\left(\frac{1+x^2}{2}\right)-2}\tan^{-1}{x}+\frac{\pi}{2} \\
+      x={(1-16\zeta)}^{1/4}\end{array}
+\end{equation}
+
+将$\phi_h$和$\phi_w$代入温度廓线方程(\ref{theta_atm-theta_s})和水汽廓线方程(\ref{q_atm-qs})，即可得：
+
+\noindent 非常不稳定条件下($\zeta_a=\frac{z_{atm,h}-d}{L}$ 或$ \ \frac{z_{atm,w}-d}{L}\ <-0.465$)
 \begin{equation}
 \begin{array}{l}\theta_{atm}-\theta_{s}= \\ 
      \frac{\theta_{*}}{k}\left\{\ln \frac{-0.465 L}{z_{0 h}}-\psi_{h}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-\left(-\zeta_{a}\right)^{-\frac{1}{3}}\right]
