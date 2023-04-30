@@ -172,7 +172,7 @@ $D=0.663$为臭氧和水蒸气的扩散比，$t$是作物暴露在臭氧污染�
 
 
 \section{冬小麦春化现象}
-春化响应$V$(0$~$1)采用\citet{streck2003incorporating}方案：
+春化响应$V$(0$\sim$1)采用\citet{streck2003incorporating}方案：
 \begin{equation}
 V=\frac{D_{v}{ }^{5}}{22.5^{5}+D_{v}^{5}}
 \end{equation}
@@ -186,7 +186,7 @@ R_{v}=\left\{\begin{array}{c}\frac{\left[2\left(T-T_{\min }\right)^{a}\left(T_{{
  0   \ \ \  \ \ \ \ \ \ \ \ \ \    \ \ \ \ \   \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \    T<T_{\min } \quad  { or } \quad T>T_{\max }
 \end{array}\right.
 \end{equation}
-其中，$T_{min}$= –1.3 $^{\circ}$C, $T_{opt}$= 4.9 $^{\circ}$C, and $T_{max}$= 15.7 $^{\circ}$C。$ R_v$ 的取值从 0 (当$ T\leq Tmin$ or $ \geq  Tmax$) 到 1 (when $T=T_{opt}$)。
+其中，$T_{min}$= –1.3 \textcelsius, $T_{opt}$= 4.9 \textcelsius, $T_{max}$= 15.7 \textcelsius。$ R_v$ 的取值从 0 (当$ T\leq Tmin$ or $ \geq  Tmax$) 到 1 ( 当$T=T_{opt}$)。
 \begin{equation}
 a=\frac{\ln 2}{\ln \left[\left(T_{\max }-T_{\min }\right) /\left(T_{o p t}-T_{\min }\right)\right]}
 \end{equation}
@@ -204,7 +204,7 @@ a_{ {grain }}=a_{ {grain,unadjusted }} \times V_{f}
 \begin{equation}
 l=\left\{\begin{array}{cc}1-\left(\frac{4.3}{10.4}\right)^{\frac{\Delta t}{3600^{*} 21}}, & T>T_{c} \\ 0, & T \leq T_{c}\end{array}\right.
 \end{equation}
-其中，$\Delta t$ 是时步长，$T$是该时步的温度；$T_c$是临界温度：$T_c$=34$^{\circ}$C (水稻，玉米，冬小麦)，31$^{\circ}$C(春小麦)，37$^{\circ}$C (大豆)。
+其中，$\Delta t$ 是时步长，$T$是该时步的温度；$T_c$是临界温度：$T_c$=34 \textcelsius (水稻，玉米，冬小麦)，31 \textcelsius (春小麦)，37 \textcelsius (大豆)。
 每个时步考虑了热胁迫后的叶$C_{leaf}$库为：
 \begin{equation}
 C_{leaf}=C_{leaf,  {unadjusted}} \times l
@@ -224,7 +224,7 @@ $C_{ab,litter}$是地上凋落物碳库， $CC=0.8$是燃烧完全因子。
 \begin{equation}
 E_{i}=EF_{i} \times CE /[{C}]
 \end{equation}
-$EF_i$(g species (kg dry matter (DM)) -1)是排放因子，见表\ref{tab:秸秆焚烧排放因子取值}。$[C]=0.5×10^3$ $\rm g C (kg DM)^{-1}$是单位转换因子。
+$EF_i$(g species (kg dry matter (DM))$^{-1}$)是排放因子，见表\ref{tab:秸秆焚烧排放因子取值}。$[C]=0.5×10^3$ $\rm g C (kg DM)^{-1}$是单位转换因子。
 
 
 % Please add the following required packages to your document preamble:
@@ -268,7 +268,7 @@ $EF_i$(g species (kg dry matter (DM)) -1)是排放因子，见表\ref{tab:秸秆
 \begin{equation}
 LAI=C_{leaf} \times SLA
 \end{equation}
-SLA为比叶面积($\rm m^2 leaf g^{-1} C$)(表\ref{tab:结构形态参数})。
+SLA为比叶面积 ($\rm m^2 leaf g^{-1} C$)(表\ref{tab:结构形态参数})。
 
 茎叶面积为：
 \begin{equation}
@@ -276,7 +276,7 @@ SAI=\left\{\begin{array}{lcc}0.1 LAI, & \text { for } & \text { maize } \\
    0.2 LAI, & \text { for } & \text {others}\end{array}\right.
 \end{equation}
 
-冠层顶高度$z_{top}$(米)和冠层底高度$z_{bottom}$(米)为：
+冠层顶高度$z_{top}$(米)和冠层底高度$z_{bot}$(米)为：
 \begin{equation}
 z_{top}=\max \left[0.05, z_{\max} \min \left(\frac{GDD_{base}}{f_{GE} G D D_{mat}}, 1.0\right)\right]
 \end{equation}
