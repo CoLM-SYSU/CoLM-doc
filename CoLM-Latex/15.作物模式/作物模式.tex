@@ -15,7 +15,7 @@ GPAM1可以模拟作物生长发育的关键过程及其对天气/气候、近�
 }
 \section{作物功能类型(CFT)}
 GPAM1包含10个作物功能类型(Crop Functional Type, CFT)，模拟4种作物类型: 小麦、水稻、玉米、大豆(图\ref{fig:作物功能类型覆盖率的空间分布})。
-每种作物类型各分雨养(rainfed)和灌溉(irrigated)CFT，小麦又分冬小麦和春小麦。每个CFT占用一个水热独立的陆表单元(patch)。
+每种作物类型各分雨养(rainfed)和灌溉(irrigated) CFT，小麦又分冬小麦和春小麦。每个CFT占用一个水热独立的陆表单元(patch)。
 {
 \begin{figure}[]
 \centering
@@ -43,7 +43,7 @@ GPAM1的物候包括三个阶段: (1)播种->抽芽; (2)抽芽到开始灌浆(gr
   当$HUI$达到$f_{GF}$时，开始灌浆。
   \item 成熟\\
   当$HUI$达到1时或生长季达到最长生长季长度$GSL_{max}$时，作物成熟。其中，$GDD_{mat}$是$GDD_{base}$ 
-  10年滑动平均的一元线性方程(表\label{tab:作物物候方案相关参数})。
+  10年滑动平均的一元线性方程(表\ref{tab:作物物候方案相关参数})。
   \begin{equation}
     GDD_{mat}=a GDD_{10yr}+b
   \end{equation}
@@ -80,7 +80,8 @@ GPAM1的物候包括三个阶段: (1)播种->抽芽; (2)抽芽到开始灌浆(gr
   a_{leaf}=\left(1-a_{root}\right) a_{leaf_i} \frac{{e}^{-{b}}-{e}^{-b \frac{H U I}{f_{GF}}}}{{e}^{-{b}}-1}   \\
   a_{stem}=1-a_{ {grain }}-a_{ {root }}-a_{ {leaf }}\end{array}\right.
 \end{equation}
-其中，下标$i$和$f$表示该分配系数的初值和终值,$b=0.1$。
+其中，下标$i$和$f$表示该分配系数的初值和终值，$b=0.1$。
+
 (2)	物候期3 \\
 \begin{equation}
   \left\{\begin{array}{c}
@@ -114,8 +115,11 @@ $d_stem$    & 1    & 1    & 2    & 5   \\\bottomrule
 {C}_{ {food }}={C}_{ {grain }}-{C}_{ {seed }}
 \end{equation}
 其中，种子库$C_{seed}$在下一个生长季出叶期的第一时步转移到叶库$C_{leaf}$。叶和茎的碳库进入地上凋落物库。根的碳库进入地下凋落物库。
+
+
 \section{氮循环}
-作物的氮循环和自然植被类似，但碳氮比(CN)不同，且要考虑大豆生物固氮的特殊性和施肥。\\
+作物的氮循环和自然植被类似，但碳氮比(CN)不同，且要考虑大豆生物固氮的特殊性和施肥。
+
 (1) 碳氮比(CN)\\
 表\ref{tab:作物碳氮比}中，碳氮比$CN_{leaf}$,$ CN_{stem}$, $CN_{root}$用于灌浆前，其余碳氮比用于灌浆开始后。\\
 % Please add the following required packages to your document preamble:
@@ -136,15 +140,19 @@ $CN_{root_f}$  & 40  & 40  & 0   & 0   \\
 $CN_{grain_f}$ & 50  & 50  & 50  & 50  \\ \bottomrule
 \end{tabular}
 \end{table}
+
 (2) 大豆共生固氮 (SNF)\\
 考虑大豆根瘤中的根瘤菌与大豆共生固氮，大豆共生固氮能力设为自然植物的4倍，假设其余作物类型无生物共生固氮能力。生物共生固定的氮直接被植物吸收。\\
+
 (3) 施肥\\
 氮肥考虑了工业氮肥和粪肥。工业氮肥是输入场。粪肥设为2 g $\rm N/m^2/yr$。
 施肥时直接将氮肥输入土壤$NH_4^{+}$库，从出叶开始，以匀速的方式施肥20天。
 
+
 \section{光合作用和气孔导度}
 大豆、小麦、水稻采用C3植物光合方案；玉米采用C4植物光合方案。
 在基于Medlyn方案计算气孔导度时，玉米的参数取值$g_1=1.8$，低于自然植被，其余作物的参数取值$g_1=5.8$，高于自然植被。该参数越大，气孔导度越高。
+
 
 \section{臭氧污染胁迫}
 考虑臭氧对光合速率和气孔导度的影响因子 $F_{O3_A}$ 以及$F_{O3_{gs}}$:
@@ -161,6 +169,7 @@ POD_{0.5}=\sum_{t}\left(\left[{O}_{3}\right] \times g_{s} \times D-0.5\right)
 在公式(15.10)中，$\left[{O}_{3}\right]$为陆面大气的臭氧浓度，$g_{s}$为叶气孔导度，
 $D=0.663$为臭氧和水蒸气的扩散比，$t$是作物暴露在臭氧污染的时间，从抽芽开始。
 上面计算的$F_{{O3}_A}$ 以及$F_{O3_{gs}}$分别作用在Farquhar-Collatz方案计算的光合速率以及Medlyn或Ball-Berry方案计算出的气孔导度。
+
 
 \section{冬小麦春化现象}
 春化响应$V$(0$~$1)采用\citet{streck2003incorporating}方案：
@@ -188,6 +197,8 @@ G D D_{b a s e}=G D D_{b a s e,  { unadjusted }} \times V
 \begin{equation}
 a_{ {grain }}=a_{ {grain,unadjusted }} \times V_{f}
 \end{equation}
+
+
 \section{热胁迫}
 作物对热胁迫的敏感期大约是在开花前后及灌浆期，在GPAM1里设为$HUI $满足$0.5 \leq HUI \leq 0.8$的时段。在每个发生热胁迫的时步，采用场数损失率$l$:
 \begin{equation}
@@ -198,6 +209,8 @@ l=\left\{\begin{array}{cc}1-\left(\frac{4.3}{10.4}\right)^{\frac{\Delta t}{3600^
 \begin{equation}
 C_{leaf}=C_{leaf,  {unadjusted}} \times l
 \end{equation}
+
+
 \section{秸秆焚烧及排放}
 年燃烧面积百分率BAF来自GFED4s农田燃烧面积百分率观测数据，为输入场。火发生是根据GFED4s的3小时数据找到的燃烧顶峰时步中心点，为输入场。
 
@@ -243,6 +256,7 @@ $EF_i$(g species (kg dry matter (DM)) -1)是排放因子，见表\ref{tab:秸秆
   \end{tabular}
   \end{table}
 
+
 \section{灌溉}
 灌溉水直接进入到达地表的水，不经过截流。灌溉包括两个方案：
 \begin{enumerate}
@@ -282,4 +296,4 @@ z_{b o t}=0.02
   $SLA$  & 0.05 & 0.035 & 0.05 & 0.035 \\
   $zmax$ & 1    & 1.5   & 3    & 1     \\ \bottomrule
   \end{tabular}
-  \end{table}
+\end{table}
