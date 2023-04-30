@@ -180,25 +180,29 @@ q_{atm}-q_{s}=\frac{q_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 w}}+5\right]
 +\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 w}}{L}\right\}
 \end{equation}
 其中$\psi_h\left(\zeta\right)=\psi_w\left(\zeta\right)=2\ln{\left(\frac{1+x^2}{2}\right)}$，$x={(1-16\zeta)}^{1/4}$。
+
 事实上，$L$的初始猜测可由总体理查德森数$R_{ib}$与$\zeta$的关系得到\citep{arya2001introduction}。$R_{ib}$表达为
 \begin{equation}
-R_{i b}=\frac{\theta_{v, atm}-\theta_{v, s}}{\theta_{v, atm}} \frac{g\left(z_{atm, m}-d\right)}{v_{a}^{2}}
+R_{i b}=\frac{\theta_{v, atm}-\theta_{v, s}}{\overline{\theta_{v, atm}}} \frac{g\left(z_{atm, m}-d\right)}{V_{a}^{2}}
 \end{equation}
-$R_{ib}$与$\zeta$的关系为$R_{ib}=\zeta[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}\right)-\psi_h(\zeta)}][lnzatm,m-dz0m-ψm(ζ)]-2$。
-$\psi_m(\zeta)$与$\psi_h(\zeta)$由不稳定条件下$\phi_h\left(\zeta\right)=\phi_m^2\left(\zeta\right)=\left(1-16\zeta\right)^{-\frac{1}{2}}$ 
-与稳定条件下$\phi_h\left(\zeta\right)=\phi_m\left(\zeta\right)=1+5\zeta$确定。将$\zeta$表达为$R_{ib}$的函数，即得到
+$R_{ib}$与$\zeta$的关系为
 \begin{equation}
-\left\{\begin{array}{c}\zeta=\frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)} \ \ \ \ \ \ \  10^{-6} \leq \zeta \leq 2 R_{i b} \geq 0 \text{（即中性或稳定条件下）}
-    \\ \zeta=R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right) \ \ \ \ \ \ \ \ -100 \leq \zeta \leq-10^{-6} R_{i b}<0 \text{（即中性或稳定条件下）}\end{array}\right.
+R_{ib}=\zeta[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}\right)-\psi_h(\zeta)}] [\ln{\left(\frac{z_{atm,m}-d}{z_{0m}}\right)-\psi_m(\zeta)}]^{-2}
 \end{equation}
-通过$R_{ib}$计算得到$\zeta$即可求得$L=\frac{z_{atm,m}-d}{\zeta}$。
-以上给出了$u_\ast$、$\theta_\ast$、$q_\ast$的求解过程，于是大气强迫参考高度与地表的动量、感热和水汽通量即可通过其定义求得。
+其中$\psi_m(\zeta)$与$\psi_h(\zeta)$由不稳定条件下$\phi_h\left(\zeta\right)=\phi_m^2\left(\zeta\right)=\left(1-16\zeta\right)^{-\frac{1}{2}}$ 
+与稳定条件下$\phi_h\left(\zeta\right)=\phi_m\left(\zeta\right)=1+5\zeta$确定，从而$\zeta$进而$L$可以通过以下反算关系式得到初始猜测值
+\begin{equation}
+\left\{\begin{array}{lll}\zeta=\frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)}, \quad & 10^{-6} \leq \zeta \leq 2, \quad & \text{当} R_{i b} \geq 0 \text{（即中性或稳定条件下）} \\
+      \zeta=R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right), \quad & -100 \leq \zeta \leq-10^{-6}, \quad & \text{当} R_{i b}<0 \text{（即中性或稳定条件下）}\end{array}\right.
+\end{equation}
+
+以上给出了$u_\ast$、$\theta_\ast$、$q_\ast$的求解过程，于是地表与大气参考高度之间的动量、感热和水汽通量即可通过其定义求得。
 事实上，根据$u_\ast$、$\theta_\ast$、$q_\ast$的表达形式，动量通量$\tau$、感热通量$H$和水汽通量$E$可写为如下阻抗形式：
 \begin{equation}
 \tau_{x}=-\frac{u_{atm}}{V_{a}} \rho_{atm} u_{*}^{2}=-\rho_{atm} \frac{u_{atm}}{r_{a m}}
 \end{equation}
 \begin{equation}
-\tau_{y}=-\frac{v_{atm}}{v_{a}} \rho_{atm} u_{*}^{2}=-\rho_{atm} \frac{v_{atm}}{r_{a m}}
+\tau_{y}=-\frac{v_{atm}}{V_{a}} \rho_{atm} u_{*}^{2}=-\rho_{atm} \frac{v_{atm}}{r_{a m}}
 \end{equation}
 \begin{equation}
 H=-C_{p a} \rho_{atm} \theta_{*} u_{*}=-\rho_{atm} C_{p a} \frac{\left(\theta_{atm}-\theta_{s}\right)}{r_{a h}}
@@ -206,7 +210,7 @@ H=-C_{p a} \rho_{atm} \theta_{*} u_{*}=-\rho_{atm} C_{p a} \frac{\left(\theta_{a
 \begin{equation}
 E=-\rho_{atm} q_{*} u_{*}=-\rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 \end{equation}
-其中，空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$(s/m)表达为
+其中，空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$(s/m)为
 \begin{equation}
 r_{a m}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]^{2}
 \end{equation}
@@ -216,8 +220,8 @@ r_{a m}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)
 \begin{equation}
 \begin{array}{c}r_{a w}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]}\end{array}
 \end{equation}
-因此湍流通量可认为由此阻抗模型计算而来。
-为方便与地表观测资料进行比较，下面给出地表高度$z_{0x}+d$以上2m的温度比湿和10m的风速计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ ($z_{0x}+d+10$) 进行积分)如下：
+
+为方便与地面观测资料进行比较，可定义2m温度和湿度、以及10m风速，它们实际上为$z_{0x}+d$以上2m高度的温度、比湿和10m高度的风速，计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ (或$z_{0x}+d+10$) 进行积分)如下：
 \begin{equation}
 T_{2 m}=\theta_{s}+\frac{\theta_{*}}{k}\left[\ln \left(\frac{2+z_{0 h}}{z_{0 h}}\right)-\psi_{h}\left(\frac{2+z_{0 h}}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]
 \end{equation}
