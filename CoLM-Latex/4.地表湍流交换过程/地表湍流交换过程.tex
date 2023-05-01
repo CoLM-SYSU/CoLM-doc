@@ -127,16 +127,16 @@ V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{-1.574 L}{z_{0 m}}-\psi_{m}(-1.574)+
 V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{m}\left(\zeta_{atm}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 稳定条件下($0\le\zeta_{atm}\le1$)
-\begin{equation}
+\begin{equation}\label{Va_S}
 V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}+5 \zeta_{atm}-5 \frac{z_{0 m}}{L}\right\}
 \end{equation}
 非常稳定条件下($\zeta_{atm}>1$)
-\begin{equation}
+\begin{equation}\label{Va_VS}
 V_{a}=\frac{u_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 m}}{L}\right\}
 \end{equation}
 
 \noindent 其中
-\begin{equation}
+\begin{equation}\label{Psim}
 \begin{array}{c}\psi_m\left(\zeta\right)=2\ln{(\frac{1+x}{2})}+\ln{\left(\frac{1+x^2}{2}\right)-2}\tan^{-1}{x}+\frac{\pi}{2} \\
       x={(1-16\zeta)}^{1/4}\end{array}
 \end{equation}
@@ -237,16 +237,37 @@ u_{10 m}=\frac{u_{*}}{k}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\psi_{
 不稳定边界层的大涡对地表湍流交换具有重要影响，随着研究和认识的不断深入，本团队近年来在考虑大涡影响的基本理论方面有了新进展。\citet{liu2019further,liu2022surface}
 通过引入边界层高度$z_i$，提出了包含大涡影响的动量通量-梯度关系通用函数形式：
 \begin{equation}
-     \begin{array}{c}\phi_{m}(\zeta)=C_{m} (-\zeta)^{-1/2} \\
-          C_{m}=0.0047(-\frac{z_{i}}{L})+0.1854
+     \begin{array}{c}\phi_{m}(\zeta)=B_{m} (-\zeta)^{-1/2} \\
+          B_{m}=0.0047(-\frac{z_{i}}{L})+0.1854
      \end{array}
 \end{equation}
 该方案(称为LZD2022方案)适用于不稳定条件($\zeta \leq -0.13$)。在弱不稳定条件下($\zeta > -0.13$)，则仍然采用方程(\ref{phim_zeng})(即Zeng1998方案)所列形式，确保
 通用函数在由不稳定过渡到中性条件的连续性。
 
 LZD2022方案曲线与Zeng1998方案的不稳定条件曲线相交(图 \ref{fig:LZD2022方案与Zeng1998方案曲线比较图}(a))，相交点的位置$\zeta_{m}$与${z_{i}}/{L}$
-有关(图 \ref{fig:LZD2022方案与Zeng1998方案曲线比较图}(b))，即$\zeta_{m}$依赖于边界层稳定度${z_{i}}/{L}$。如图 \ref{fig:LZD2022方案与Zeng1998方案曲线比较图}所示，
+有关(图 \ref{fig:LZD2022方案与Zeng1998方案曲线比较图}(b))，即$\zeta_{m}$依赖于边界层稳定度${z_{i}}/{L}$，形式如下：
+\begin{equation}
+     \zeta_{m}=\frac{-16-\sqrt{256+4 \left(B_{m}\right)^{-4}}}{2 \left(B_{m}\right)^{-4}}
+\end{equation}
 
+结合LZD2022和Zeng1998方案，不稳定条件下($\zeta<0$)通用函数$\phi_{m}$有如下表达式：
+\begin{equation}
+\left\{\begin{array}{lr}\phi_{m}(\zeta)=B_{m}(-\zeta)^{-1/2}, & \zeta<\zeta_{m2} \text {时} \\
+      \phi_{m}(\zeta)=(1-16 \zeta)^{-1/4}, & \zeta_{m2} \leq \zeta<0 \text {时} \\
+       \end{array}\right.
+\end{equation}
+其中$\zeta_{m2}=\min(\zeta_{m},-0.13)$，稳定条件下的$\phi_{m}$则直接采用方程(\ref{phim_zeng})中形式。结合风速廓线方程(\ref{Va})，即可得到风速廓线在
+不同稳定条件下的具体形式：
+
+\noindent 当$\zeta_{atm}=\frac{z_{atm,m}-d}{L}<\zeta_{m2}$时
+\begin{equation}
+V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{m}\left(\zeta_{atm}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
+\end{equation}
+\noindent 当$ \zeta_{m2} \leq \zeta_{atm}<0$时
+\begin{equation}
+V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{m}\left(\zeta_{atm}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
+\end{equation}
+其中$\psi_{m}$的定义同方程(\ref{Psim})，稳定条件下的风速积分则同方程(\ref{Va_S})和(\ref{Va_VS})。
 {
 \begin{figure}[]
 \centering
