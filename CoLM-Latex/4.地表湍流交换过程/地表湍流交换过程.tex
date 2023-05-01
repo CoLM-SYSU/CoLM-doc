@@ -102,7 +102,7 @@ q_{atm}-q_{s}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)
 进行迭代求解，进而求出动量、感热和水汽通量。
 
 根据\citet{zeng1998intercomparison}，通用函数$\phi_x$有如下表达式：
-\begin{equation}
+\begin{equation}\label{phim_zeng}
 \left\{\begin{array}{lr}\phi_{m}(\zeta)=0.7 k^{\frac{2}{3}}(-\zeta)^{\frac{1}{3}}, & \zeta<-1.574 \text { 时 (即非常不稳定条件下) } \\
       \phi_{m}(\zeta)=(1-16 \zeta)^{-\frac{1}{4}}, & -1.574 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\
        \phi_{m}(\zeta)=1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\ 
@@ -231,6 +231,17 @@ q_{2 m}=q_{s}+\frac{q_{*}}{k}\left[\ln \left(\frac{2+z_{0 w}}{z_{0 w}}\right)-\p
 \begin{equation}
 u_{10 m}=\frac{u_{*}}{k}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\psi_{m}\left(\frac{10+z_{0 m}}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]
 \end{equation}
+
+
+\section{考虑大涡影响的新理论}\label{考虑大涡影响的新理论}
+不稳定边界层的大涡对地表湍流交换具有重要影响，随着研究和认识的不断深入，近年来在考虑大涡影响的基本理论方面有了新进展。\citet{liu2019further,liu2022surface}
+通过引入边界层高度$z_i$，提出了包含大涡影响的动量通量通用函数形式：
+\begin{equation}
+     \begin{array}{c}\phi_{m}(\zeta)=C_{m} (-\zeta)^{-1/2} \\
+          C_{m}=0.0047(-\frac{z_{i}}{L})+0.1854
+     \end{array}
+\end{equation}
+该方案适用于不稳定条件($\zeta \leq -0.13$)。在弱不稳定条件下，通用函数则继续采用方程(\ref{phim_zeng})所列形式。
 
 
 \section{无植被覆盖地表湍流通量的计算方案}\label{无植被覆盖地表湍流通量的计算方案}
