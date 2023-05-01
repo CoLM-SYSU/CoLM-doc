@@ -31,7 +31,7 @@ CoLM生物地球化学模块，控制土壤分解的环境因子包括土壤温�
 其中，$\xi_{tsoil}\left(z\right)$是第$z$层的土壤温度因子；$T_{soil}\left(z\right)$是第$z$层的土壤温度 (K)，$Q_{10}$是温度敏感性参数。
 
 
-当土壤温度低于0\textcelsius，土壤完全结冰，土壤分解速率迅速下降。土壤温度因子使用另一个关系：
+当土壤温度低于0 \textcelsius，土壤完全结冰，土壤分解速率迅速下降。土壤温度因子使用另一个关系：
 \begin{equation}
 \xi_{t s o i l}(z)=0.82 \cdot Q_{10}^{-2.5} \cdot 1.5^{\frac{T_{{soil }}(z)-273.15}{10}}
 \end{equation}
@@ -115,7 +115,7 @@ CoLM将植被的氮需求($NF_{plant_{demand_{soil}}}$)按无机氮含量的垂�
 \begin{equation}
     NF_{plant_{demand_{soil}},vr}\left(z\right)=NF_{plant_{demand_{soil}}}\cdot\frac{NS_{sminn,vr}\left(z\right)}{NS_{sminn}}
 \end{equation}
-结合公式(\label{NF_pot_minmet})-(\ref{NF_immob_demand_vr})计算土壤氮固化作用的需求，可以得出每层土壤无机氮的总需求
+结合公式(\ref{NF_pot_minmet})-(\ref{NF_immob_demand_vr})计算土壤氮固化作用的需求，可以得出每层土壤无机氮的总需求
 \begin{equation}
     NF_{total_{demand_{soil}},vr}\left(z\right)=NF_{plant_{demand_{soil}},vr}\left(z\right)+NF_{immob,demand,vr}\left(z\right)
 \end{equation}

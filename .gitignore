@@ -6,4 +6,5 @@
 *.bbl
 *.synctex.gz
 *.blg
+*.pdf
 .DS_Store
