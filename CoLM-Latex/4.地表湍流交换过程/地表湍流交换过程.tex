@@ -234,14 +234,27 @@ u_{10 m}=\frac{u_{*}}{k}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\psi_{
 
 
 \section{考虑大涡影响的新理论}\label{考虑大涡影响的新理论}
-不稳定边界层的大涡对地表湍流交换具有重要影响，随着研究和认识的不断深入，近年来在考虑大涡影响的基本理论方面有了新进展。\citet{liu2019further,liu2022surface}
-通过引入边界层高度$z_i$，提出了包含大涡影响的动量通量通用函数形式：
+不稳定边界层的大涡对地表湍流交换具有重要影响，随着研究和认识的不断深入，本团队近年来在考虑大涡影响的基本理论方面有了新进展。\citet{liu2019further,liu2022surface}
+通过引入边界层高度$z_i$，提出了包含大涡影响的动量通量-梯度关系通用函数形式：
 \begin{equation}
      \begin{array}{c}\phi_{m}(\zeta)=C_{m} (-\zeta)^{-1/2} \\
           C_{m}=0.0047(-\frac{z_{i}}{L})+0.1854
      \end{array}
 \end{equation}
-该方案适用于不稳定条件($\zeta \leq -0.13$)。在弱不稳定条件下，通用函数则继续采用方程(\ref{phim_zeng})所列形式。
+该方案(称为LZD2022方案)适用于不稳定条件($\zeta \leq -0.13$)。在弱不稳定条件下($\zeta > -0.13$)，则仍然采用方程(\ref{phim_zeng})(即Zeng1998方案)所列形式，确保
+通用函数在由不稳定过渡到中性条件的连续性。
+
+LZD2022方案曲线与Zeng1998方案的不稳定条件曲线相交(图 \ref{fig:LZD2022方案与Zeng1998方案曲线比较图}(a))，相交点的位置$\zeta_{m}$与${z_{i}}/{L}$
+有关(图 \ref{fig:LZD2022方案与Zeng1998方案曲线比较图}(b))，即$\zeta_{m}$依赖于边界层稳定度${z_{i}}/{L}$。如图 \ref{fig:LZD2022方案与Zeng1998方案曲线比较图}所示，
+
+{
+\begin{figure}[]
+\centering
+\includegraphics[scale=0.7]{Figures/地表湍流交换过程/LZD2022方案与Zeng1998方案曲线比较图.png}
+\caption{LZD2022方案与Zeng1998方案曲线比较图。}
+\label{fig:LZD2022方案与Zeng1998方案曲线比较图}
+\end{figure}
+}
 
 
 \section{无植被覆盖地表湍流通量的计算方案}\label{无植被覆盖地表湍流通量的计算方案}
