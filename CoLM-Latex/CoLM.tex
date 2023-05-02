@@ -1,11 +1,15 @@
 % !TEX encoding = UTF-8 Unicode
 \documentclass[a4paper,12pt,twoside]{report}
 \usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{xcolor}
 \usepackage[UTF8,heading=true,scheme=chinese]{ctex}
 \ctexset{
+    chapter/number = \arabic{chapter},
+    chapter/numberformat = \color{blue}\zihao{1},
     appendix={
-       name={附录},
-       number={\Alpha{thechapter}}
+    %   name={附录},
+       %numbering=false,
+       number={\Alph{chapter}}
        }
    }
    
@@ -34,7 +38,7 @@
 \usepackage{longtable}
 
 \begin{document}
-\include{uhead.sty}
+%\include{uhead.sty}
 
 \title{\huge {\bf 通用陆面模式 202X版科学技术报告}\\[3em]
 %\vspace{2mm}
@@ -58,7 +62,6 @@
 \maketitle
 
 \preface
-
 
 %\input{acknowledgements/acknowledgements}
 %\input{symbols/symbols}

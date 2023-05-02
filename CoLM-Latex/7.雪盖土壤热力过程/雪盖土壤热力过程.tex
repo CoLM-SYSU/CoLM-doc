@@ -4,26 +4,26 @@
 %\begin{雪盖土壤热力过程}
 
 在雪盖和土壤中，热力过程主要根据热传导第二定律进行描述。假设雪盖土壤无水平物质能量交换，则其垂直方向上的一维能量平衡方程如下：
-\begin{equation}
+\begin{equation}\label{eq:1d_energy_balance}
 c \frac{\partial T}{\partial t}=-\frac{\partial F}{\partial z}
 \end{equation}
 其中$c$表示雪盖或土壤的体积热容量(J/m3/K)，$T$表示雪盖土壤温度(K)，$t$表示时间(s)，$z$表示雪盖高度或土壤深度(m)，
 F表示垂直方向的热传导通量，方向向上为正($\rm W/m^2$)，表达式为$F=-\lambda\frac{\partial T}{\partial z}$，$\lambda$表示热力传导率(W/m/K)。
-将方程(7.1)进行离散，并结合上边界由大气输送到雪盖土壤表面的热通量$h_s$以及下边界土壤底层的零热通量，
+将方程(\ref{eq:1d_energy_balance})进行离散，并结合上边界由大气输送到雪盖土壤表面的热通量$h_s$以及下边界土壤底层的零热通量，
 即可求出雪盖土壤的温度扩线，之后再根据相态变化条件对温度进行进一步调整。
 \section{温度求解的数值格式}\label{温度求解的数值格式}
 在离散上述能量平衡方程时，土壤被划分为10层。每一层土壤的中心深度$z_i$(m)定义为：
 \begin{equation}
 z_{i}=f_{s} \exp [0.5(i-0.5)]-1
 \end{equation}
-
+%
 其中尺度因子$f_s=0.025$。这里采用指数定义可以保证土壤接近表面时得到更细的分层，因为土壤水梯度在接近表面时非常大。基于此定义，每一层土壤的厚度$\Delta z_i$(m)可计算为：
 \begin{equation}
-\Delta z_{i}=\left\{\begin{array}{lr}0.5\left(z_{1}+z_{2}\right) & i=1 \\ 0.5\left(z_{i+1}-z_{i-1}\right) & i=2 \ldots 9 \\ z_{10}-z_{9} & i=10\end{array}\right.
+\Delta z_{i}=\left\{\begin{array}{ll}0.5\left(z_{1}+z_{2}\right) & i=1 \\ 0.5\left(z_{i+1}-z_{i-1}\right) & i=2 \ldots 9 \\ z_{10}-z_{9} & i=10\end{array}\right.
 \end{equation}
 相邻两层土壤交界处的深度$z_{h,i}$(m)可计算为：
 \begin{equation}
-z_{h, i}=\left\{\begin{array}{lr}0.5\left(z_{i}+z_{i+1}\right) & i=1 \ldots 9 \\ z_{10}+0.5 \Delta z_{10} & i=10\end{array}\right.
+z_{h, i}=\left\{\begin{array}{ll}0.5\left(z_{i}+z_{i+1}\right) & i=1 \ldots 9 \\ z_{10}+0.5 \Delta z_{10} & i=10\end{array}\right.
 \end{equation}
 
 
@@ -171,10 +171,10 @@ L_{g} \uparrow=\varepsilon_{g} \sigma T_{g}^{4}
 \begin{equation}
 \lambda=\left\{\begin{array}{lr}\lambda_{s} & \text { 当 } w_{liq, s n l+1}=0 \text { 并且 } w_{ice, s n l+1}>0 \\ \lambda_{v} & \text { 其他情况 }\end{array}\right.
 \end{equation}
-其中$w_{liq,snl+1}$和$wice$,$snl+1$分别表示雪盖土壤顶层的液态水和固态水含量(kg/m2，其计算见章节8.3)。
+其中$w_{liq,snl+1}$和$w_{ice,snl+1}$分别表示雪盖土壤顶层的液态水和固态水含量(kg/m2，其计算见章节~\ref{sec:土壤水的运动})。
 
 在模式中，地表温度$T_g$与$T_{snl+1}$取为同一值，但$T_{snl+1}$表示第一层雪盖或土壤的平均温度，与实际的$T_g$相比具有减弱的日变化幅度。
-为改进这一缺陷，在求解第一层能量平衡方程时，其厚度$\Delta zi$作以下调整，以求得更接近实际的$T_g$：
+为改进这一缺陷，在求解第一层能量平衡方程时，其厚度$\Delta z_i$作以下调整，以求得更接近实际的$T_g$：
 \begin{equation}
 \Delta z_{i}=0.5\left[z_{i}-z_{h, i-1}+c_{a}\left(z_{i+1}-z_{h, i-1}\right)\right]
 \end{equation}
@@ -189,13 +189,12 @@ L_{g} \uparrow=\varepsilon_{g} \sigma T_{g}^{4}
 \end{equation}
 
 
-
 下面给出各层雪盖土壤的热力传导率$\lambda_i$与体积热容量$c_i$的计算方案：\\
 
 根据\citet{farouki1981thermal}，土壤热力传导率$\lambda_i$(W/m/K, $i=1,..,10$)的计算公式如下：
 
 \begin{equation}
-\lambda_{i}=\left\{\begin{array}{ll}K_{e, i} \lambda_{sat, i}+\left(1-K_{e, i}\right) \lambda_{d r y, i} & S_{r, i}>1 * 10^{-7} \\ \lambda_{d r y, i} & S_{r, i} \leq 1 * 10^{-7}\end{array}\right.
+\lambda_{i}=\left\{\begin{array}{ll}K_{e, i} \lambda_{sat, i}+\left(1-K_{e, i}\right) \lambda_{d r y, i} & S_{r, i}>1 \times 10^{-7} \\ \lambda_{d r y, i} & S_{r, i} \leq 1 \times10^{-7}\end{array}\right.
 \end{equation}
 其中，$\lambda_{sat,i}$与$\lambda_{dry,i}$分别是饱和土壤和干土壤的热力传导率，由地表参数数据集提供，$S_{r,i}$表示土壤相对于其饱和状态的潮湿程度：
 \begin{equation}
@@ -203,11 +202,11 @@ S_{r, i}=\left(\frac{w_{liq, i}}{\rho_{liq} \Delta z_{i}}+\frac{w_{ice, i}}{\rho
 \end{equation}
 $K_{e,i}$表示Kersten数，它是$S_{r,i}$的函数：
 \begin{equation}
-K_{e, i}=\left\{\begin{array}{ll}\log _{10} S_{r, i}+1 \geq 0 & \text { 当 } T_{i} \geq T_{f} \text { 时 } \\ S_{r, i} & \text { 当 } T_{i}<T_{f} \text { 时 }\end{array}\right.
+K_{e, i}=\left\{\begin{array}{ll}\log _{10} S_{r, i}+1 \geq 0 & \text{ 当 } T_{i} \geq T_{f} \text{ 时 } \\ S_{r, i} & \text{ 当 } T_{i}<T_{f} \text{ 时 }\end{array}\right.
 \end{equation}
-当$T_i<T_f$时，饱和土壤热力传导率$\lambda_{sat,i}$需根据已有$\lambda_{sat,i}$结合水和冰的热力传导率$\lambda_{liq}$,$\lambda_{ice}$进行调整：
+当$T_i<T_f$时，饱和土壤热力传导率$\lambda_{sat,i}$需根据已有$\lambda_{sat,i}$结合水和冰的热力传导率$\lambda_{liq}$，$\lambda_{ice}$进行调整：
 \begin{equation}
-\lambda_{\text {sat }, i}=\lambda_{\text {sat }, i}\left(\frac{\lambda_{\text {ice }}}{\lambda_{\text {liq }}}\right)^{\theta_{\text {sat }, i}\left(1-\frac{w_{liq, i}}{w_{liq}, i+w_{ice, i}}\right)}
+\lambda_{\text {sat}, i}=\lambda_{\text {sat}, i}\left(\frac{\lambda_{\text {ice}}}{\lambda_{\text {liq}}}\right)^{\theta_{\text {sat}, i}\left(1-\frac{w_{liq, i}}{w_{liq}, i+w_{ice, i}}\right)}
 \end{equation}
 $\theta_{sat,i}$表示第$ i $层土壤的孔隙度。
 
@@ -235,6 +234,8 @@ c_{i}=c_{s,i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{p
 \begin{equation}
 c_{i}=\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{pl}
 \end{equation}
+
+
 \section{温度的相态变化调整}
 通过解能量平衡方程组计算出下一时刻的雪盖土壤温度后，需要考虑相态变化过程对温度进行调整。在模式中，相态变化发生的条件为：\\
 若$T_i^{n+1}>T_f$并且$w_{ice,i}>0$ \ \   \ \  \ \   固态水融化\\
@@ -244,10 +245,9 @@ c_{i}=\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{
 以上三种情况下，$T_i^{n+1}$被调整为$T_f$。
 
 
-
 相态变化的程度是由$T_i^{n+1}$调整为$T_f$后产生的能量冗余或亏损决定的。温度调整后，能量的冗余或亏损$H_i$($\rm W/m^2$)计算如下：
 \begin{equation}
-H_{i}=\left\{\begin{array}{lr}h_{s}^{n}+\frac{\partial h_{s}}{\partial T_{i}}\left(T_{f}-T_{i}^{n}\right)+\alpha F_{i}^{n}+(1-\alpha) F_{i}^{n+1}-\frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{f}-T_{i}^{n}\right) \quad i=s n l+1 \\ \alpha\left(F_{i}^{n}-F_{i-1}^{n}\right)+(1-\alpha)\left(F_{i}^{n+1}-F_{i-1}^{n+1}\right)-\frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{f}-T_{i}^{n}\right) s n l+1<i<10 \\ -\alpha F_{i-1}^{n}-(1-\alpha) F_{i-1}^{n+1}-\frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{f}-T_{i}^{n}\right) & i=10\end{array}\right.
+H_{i}=\left\{\begin{array}{lr}h_{s}^{n}+\frac{\partial h_{s}}{\partial T_{i}}\left(T_{f}-T_{i}^{n}\right)+\alpha F_{i}^{n}+(1-\alpha) F_{i}^{n+1}-\frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{f}-T_{i}^{n}\right) & i=s n l+1 \\ \alpha\left(F_{i}^{n}-F_{i-1}^{n}\right)+(1-\alpha)\left(F_{i}^{n+1}-F_{i-1}^{n+1}\right)-\frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{f}-T_{i}^{n}\right) & s n l+1<i<10 \\ -\alpha F_{i-1}^{n}-(1-\alpha) F_{i-1}^{n+1}-\frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{f}-T_{i}^{n}\right) & i=10\end{array}\right.
 \end{equation}
 对应地，相态变化的质量调整量为$H_{m}=\frac{H_{i} \Delta t}{L_{f}}$，其中$L_f$表示固态水液化潜热(J/kg)。当固态水融化条件被满足且$H_m>0$时，固态水含量被调整为：
 \begin{equation}
