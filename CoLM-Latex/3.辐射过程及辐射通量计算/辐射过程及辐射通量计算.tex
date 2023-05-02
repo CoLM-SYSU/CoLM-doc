@@ -2,9 +2,10 @@
 %\addcontentsline{toc}{chapter}{辐射过程及辐射通量计算}
 %\begin{辐射过程及辐射通量计算}
 \section{土壤表面反照率}
-反照率的计算3.1-3.6对应的代码文件为ALBEDO.F90。
+反照率的计算公式(\ref{eq:soil_albedo1})--(\ref{eq:soil_albedo2})对应的代码文件为ALBEDO.F90。
+
 土壤表面反照率采用陆面模式BATS方案 \citep{dickinson1986biosphere,dickinson1993biosphere}，利用土壤颜色和土壤表层含水量计算得到，可表示为：
-\begin{equation}
+\begin{equation}\label{eq:soil_albedo1}
 \alpha_{soi,vis,dir}=\operatorname{Min}\left(\alpha_{sat, vis}+\operatorname{Max}\left(0,0.11-0.40 \theta_{l}\right), \alpha_{dry, vis}\right)
 \end{equation}
 \begin{equation}
@@ -30,7 +31,7 @@
 \end{equation}   
 \begin{equation}\label{alpha_sno_vis_dif}
 \alpha_{sno,vis,dif}=0.85\left(1-0.2 F_{age}\right)
-\end{equation}
+\end{equation}\label{eq:soil_albedo6}
 \begin{equation}\label{alpha_sno_nir_dif}
 \alpha_{sno,nir,dif}=0.65\left(1-0.5 F_{age}\right)
 \end{equation}
@@ -456,6 +457,7 @@ s_{2}^{\prime}}{h-K^{\prime}}\right]+h_{6}\left[\frac{1 / s_{1} / s_{2}^{\prime}
 
 \section{短波吸收辐射通量}\label{短波吸收辐射通量}
 此部分对应代码为netsolar.F90。
+
 在计算得到地表反照率后，地表总的太阳短波辐射通量(包括地面和植被)吸收为
 \begin{equation}
 F_{v g}=F_{vis,dir}\left(1-\alpha_{vis,dir}\right)+F_{vis,dif}\left(1-\alpha_{vis,dif}\right)+
@@ -484,6 +486,7 @@ P A R_{s h a}=F_{vi s, dir} I_{\text {sha,vis,dir }}+F_{vis, dif} I_{\text {sha,
 
 \section{长波净辐射通量}\label{长波净辐射通量}
 此部分对应代码为THERMAL.F90。
+
 地表发射的长波辐射是基于斯蒂芬-玻尔兹曼定律来计算。
 当为土壤时，地面发射率$\varepsilon_g$设置为0.96；对于冰川时，设置为0.97。
 裸土覆盖下，地面的长波净辐射通量计算为
@@ -508,6 +511,7 @@ L W_{v}=\varepsilon_{v}\left(F_{a}-2 \sigma T_{l}^{4}+\varepsilon_{g} \sigma T_{
 
 \section{三维植被辐射传输模型}\label{三维植被辐射传输模型}
 此部分对应的代码为ThreeDCanopy.F90。
+
 三维植被辐射传输模型\citep{yuan20143d}是在单棵树冠模型\citep{dickinson2008determination,dickinson2008three}的基础上建立起来的（图\ref{fig:三维植被辐射传输模型的基本框架}）。
 利用单棵树冠模型来建立单层植被模型，考虑了植被阴影的影响、植被树冠之间的散射吸收及低入射角度(太阳高度角)对反照率的影响。通过考虑层与层之间阴影相互重叠；
 并利用单层植被模型的结果对三层植被辐射传输进行计算，来构建三层植被模型。
