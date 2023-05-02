@@ -37,20 +37,25 @@ $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa
 \frac{k(z-d)}{q_{*}} \frac{\partial q}{\partial z}=\phi_{w}(\zeta)
 \end{equation}
 其中$k$为von Karman常数，$z$为离地面高度(m)，$d$为零平面位移(m)，$L$为Monin-Obukhov长度(m)：
-\begin{equation}
+\begin{equation}\label{ObukL}
 L=-\frac{u_{*}^{3}}{k\left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{k g \theta_{v *}}
 \end{equation}
 其中$\overline{\theta_{v,atm}}=\overline{\theta_{atm}}(1+0.61\overline{q_{atm}})$表示参考大气虚位温(K)，
- $\theta_{v\ast}=\theta_\ast\left(1+0.61\bar{q_{atm}}\right)+0.61\bar{\theta_{atm}}q_\ast$表示虚温尺度(K)。
  大气位温$\theta_{atm}$由其定义的一阶展开近似给出$\theta_{atm}=T_{atm}+0.0098z_{atm}$。$L$可表征近地层的大气层结稳定度：
  在稳定条件下，湍流热通量$\overline{\theta_v^\prime w^\prime}<0$，$L>0$；在不稳定条件下，
  $\overline{\theta_v^\prime w^\prime}>0$，$L<0$；在中性条件下，$\overline{\theta_v^\prime w^\prime}=0$，$L\rightarrow\infty$。
+$\theta_{v\ast}$为虚温尺度(K)，定义为：
+\begin{equation}\label{thvstar}
+\theta_{v\ast}=\theta_\ast+0.61\overline{\theta_{atm}}q_\ast
+\end{equation}
 
-相似性函数$\phi_x$($x=m$、$h$和$w$分别对应动量、感热和水汽)适用于任何下垫面条件(固亦称通用相似性函数)，
- 它将近地层的湍流通量与$\left|u\right|$、$\theta$和$q$等的垂直梯度联系起来，构成了近地层湍流通量参数化的基础。在中性条件下，$\phi_m=\phi_h=\phi_w=1$。
+相似性函数$\phi_x$($x=m$、$h$和$w$分别对应动量、感热和水汽)适用于任何下垫面条件，固亦称通用相似性函数，或简称通用函数，
+它将近地层的湍流通量与$\left|u\right|$、$\theta$和$q$等的垂直梯度联系起来，构成了近地层湍流通量参数化的基础。在中性条件下，$\phi_m=\phi_h=\phi_w=1$。
+
+
 
 为计算得到$u_\ast$、$\theta_\ast$、$q_\ast$，通常将上述关于$\phi_m\left(\zeta\right)$、$\phi_h\left(\zeta\right)$、
-$\phi_w(\zeta)$的微分方程(公式\ref{kz_u}-\ref{kz_q})在近地层的两个任意高度$z_1$和$z_2\ (z_2>z_1)$进行积分，积分结果如下：
+$\phi_w(\zeta)$的微分方程(公式(\ref{kz_u})-(\ref{kz_q}))在近地层的两个任意高度$z_1$和$z_2\ (z_2>z_1)$进行积分，积分结果如下：
 \begin{equation}
 |u|_{2}-|u|_{1}=\frac{u_{*}}{k}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{m}\left(\frac{z_{2}-d}{L}\right)+\psi_{m}\left(\frac{z_{1}-d}{L}\right)\right]
 \end{equation}
@@ -67,7 +72,7 @@ q_{2}-q_{1}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{
 \psi_{x}(y)=\int_{{z_{0x}}/{L}}^{y} \frac{1-\phi_{x}(s)}{s} d s
 \end{equation}
 $z_{0x}\ (x=m,\ h,\ w)$分别表示动量、感热和水汽的粗糙长度(m)。这里取$z_1$为地表高度，$z_2$为大气强迫参考（观测）高度，则有如下积分边界条件：
-\begin{equation}
+\begin{equation}\label{VaIni}
 \begin{array}{ll}z_{1}=z_{0 m}+d:|u|_{1}=0, \quad & z_{2}=z_{atm, m}: |u|_{2}=V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geq 0.1 \\ 
      z_{1}=z_{0 h}+d: \theta_{1}=\theta_{s}, & z_{2}=z_{atm, h}: \theta_{2}=\theta_{atm} \\ 
      z_{1}=z_{0 w}+d: q_{1}=q_{s}, & z_{2}=z_{atm, w}: q_{2}=q_{atm}\end{array}
@@ -118,12 +123,12 @@ q_{atm}-q_{s}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)
 将$\phi_m$代入风速廓线方程(\ref{Va})，即可得到风速廓线在不同条件下的具体形式：
 
 \noindent 非常不稳定条件下($\zeta_{atm}=\frac{z_{atm,m}-d}{L}<-1.574$)
-\begin{equation}
+\begin{equation}\label{Va_VU}
 V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{-1.574 L}{z_{0 m}}-\psi_{mu}(-1.574)+
 1.14\left[\left(-\zeta_{atm}\right)^{\frac{1}{3}}-(1.574)^{\frac{1}{3}}\right]+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 不稳定条件下($-1.574\le\zeta_{atm}<0$)
-\begin{equation}
+\begin{equation}\label{Va_U}
 V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 稳定条件下($0\le\zeta_{atm}\le1$)
@@ -144,12 +149,12 @@ V_{a}=\frac{u_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \ln \ze
 将$\phi_h$和$\phi_w$代入温度廓线方程(\ref{theta_atm-theta_s})和水汽廓线方程(\ref{q_atm-qs})，即可得：
 
 \noindent 非常不稳定条件下($\zeta_{atm}=\frac{z_{atm,h}-d}{L}$ 或$ \ \frac{z_{atm,w}-d}{L}\ <-0.465$)
-\begin{equation}
+\begin{equation}\label{theta_VU}
 \begin{array}{l}\theta_{atm}-\theta_{s}= \\ 
      \frac{\theta_{*}}{k}\left\{\ln \frac{-0.465 L}{z_{0 h}}-\psi_{hu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-\left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]
      +\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right\}\end{array}
 \end{equation}
-\begin{equation}
+\begin{equation}\label{q_VU}
 \begin{array}{l}q_{atm}-q_{s}= \\ 
      \quad \frac{q_{*}}{k}\left\{\ln \frac{-0.465 L}{z_{0 w}}-\psi_{wu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-
      \left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right\}\end{array}
@@ -171,18 +176,18 @@ q_{atm}-q_{s}=\frac{q_{*}}{k}\left\{\ln \frac{z_{atm, w}-d}{z_{0 w}}-
 q_{atm}-q_{s}=\frac{q_{*}}{k}\left\{\left[\ln \frac{z_{atm, w}-d}{z_{0 w}}+5 \zeta_{atm}\right]-5 \frac{z_{0 w}}{L}\right\}
 \end{equation}
 非常稳定条件下($\zeta_{atm}>1$)
-\begin{equation}
+\begin{equation}\label{theta_VS}
 \theta_{atm}-\theta_{s}=\frac{\theta_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 h}}+5\right]
 +\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 h}}{L}\right\}
 \end{equation}
-\begin{equation}
+\begin{equation}\label{q_VS}
 q_{atm}-q_{s}=\frac{q_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 w}}+5\right]
 +\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 w}}{L}\right\}
 \end{equation}
 其中$\psi_{hu}\left(\zeta\right)=\psi_{wu}\left(\zeta\right)=2\ln{\left(\frac{1+x}{2}\right)}$，$x={(1-16\zeta)}^{1/2}$。
 
 事实上，$L$的初始猜测可由总体理查德森数$R_{ib}$与$\zeta$的关系得到\citep{arya2001introduction}。$R_{ib}$表达为
-\begin{equation}
+\begin{equation}\label{Rib}
 R_{i b}=\frac{\theta_{v, atm}-\theta_{v, s}}{\overline{\theta_{v, atm}}} \frac{g\left(z_{atm, m}-d\right)}{V_{a}^{2}}
 \end{equation}
 $R_{ib}$与$\zeta$的关系为
@@ -191,7 +196,7 @@ R_{ib}=\zeta[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}\right)-\psi_h(\zeta)}] [\ln{\l
 \end{equation}
 其中$\psi_m(\zeta)$与$\psi_h(\zeta)$由不稳定条件下$\phi_h\left(\zeta\right)=\phi_m^2\left(\zeta\right)=\left(1-16\zeta\right)^{-\frac{1}{2}}$ 
 与稳定条件下$\phi_h\left(\zeta\right)=\phi_m\left(\zeta\right)=1+5\zeta$确定，从而$\zeta$进而$L$可以通过以下反算关系式得到初始猜测值
-\begin{equation}
+\begin{equation}\label{ZetaRib}
 \left\{\begin{array}{lll}\zeta=\frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)}, \quad & 10^{-6} \leq \zeta \leq 2, \quad & \text{当} R_{i b} \geq 0 \text{（即中性或稳定条件下）} \\
       \zeta=R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right), \quad & -100 \leq \zeta \leq-10^{-6}, \quad & \text{当} R_{i b}<0 \text{（即中性或稳定条件下）}\end{array}\right.
 \end{equation}
@@ -211,21 +216,21 @@ H=-C_{p a} \rho_{atm} \theta_{*} u_{*}=-\rho_{atm} C_{p a} \frac{\left(\theta_{a
 E=-\rho_{atm} q_{*} u_{*}=-\rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 \end{equation}
 其中，空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$(s/m)为
-\begin{equation}
+\begin{equation}\label{ram}
 r_{a m}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]^{2}
 \end{equation}
-\begin{equation}
+\begin{equation}\label{rah}
 \begin{array}{c}r_{a h}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, h}-d}{z_{0 h}}\right)-\psi_{h}\left(\frac{z_{atm, h}-d}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]}\end{array}
 \end{equation}
-\begin{equation}
+\begin{equation}\label{raw}
 \begin{array}{c}r_{a w}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]}\end{array}
 \end{equation}
 
-为方便与地面观测资料进行比较，可定义2m温度和湿度、以及10m风速，它们实际上为$z_{0x}+d$以上2m高度的温度、比湿和10m高度的风速，计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ (或$z_{0x}+d+10$) 进行积分)如下：
-\begin{equation}
+为方便与地面观测资料进行比较，可定义2m温度和湿度、以及10m风速，它们实际上为$z_{0x}+d$以上2m高度的温度、比湿，和10m高度的风速(模式暂未计算)，计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ (或$z_{0x}+d+10$) 进行积分)如下：
+\begin{equation}\label{T2m}
 T_{2 m}=\theta_{s}+\frac{\theta_{*}}{k}\left[\ln \left(\frac{2+z_{0 h}}{z_{0 h}}\right)-\psi_{h}\left(\frac{2+z_{0 h}}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]
 \end{equation}
-\begin{equation}
+\begin{equation}\label{q2m}
 q_{2 m}=q_{s}+\frac{q_{*}}{k}\left[\ln \left(\frac{2+z_{0 w}}{z_{0 w}}\right)-\psi_{w}\left(\frac{2+z_{0 w}}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]
 \end{equation}
 \begin{equation}
@@ -267,11 +272,11 @@ $\zeta_{atm}=\frac{z_{atm,m}-d}{L}<\zeta_{m2}$时，方程(\ref{Va})中的$\psi_
 可得到风速廓线在不稳定条件下的具体形式：
 
 \noindent 当$\zeta_{atm}<\zeta_{m2}$时
-\begin{equation}
+\begin{equation}\label{Va_U_LZD1}
 V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{L\zeta_{m2}}{z_{0 m}}-\psi_{mu}\left(\zeta_{m2}\right)-2B_{m}\left[(-\zeta_{atm})^{-1/2}-(-\zeta_{m2})^{-1/2}\right]+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 \noindent 当$ \zeta_{m2} \leq \zeta_{atm}<0$时
-\begin{equation}
+\begin{equation}\label{Va_U_LZD2}
 V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 其中$\psi_{mu}$的定义同方程(\ref{Psim})，这里同样限制$V_a\geq0.1$以避免风速过小问题，但参考高度风速不用引入对流速度$U_c$(注意与\ref{基本理论}节不同)，即
@@ -373,17 +378,18 @@ f_{{sno }}^{(n+1)}=1-\left(1-\tanh \left(0.1 p_{i} \Delta t\right)\right)\left(1
 f_{sno}^{(n+1)}=\tanh \frac{100 z_{s n o}^{2}}{2.5 z_{0 m, s o i} W_{sno}}
 \end{equation}
 其中$W_{sno}$为雪水当量(mm)，$z_{0m,soi}$为未被积雪覆盖时的地表粗糙度。
-对于无植被覆盖部分的陆地表面，湍流输运通量只存在于地表与大气之间。此时动量通量$\tau_b$、感热通量$H_b$和水汽通量$E_b$表达为：
-\begin{equation}
+
+对于无植被覆盖部分的陆地表面，湍流通量只存在于地表与大气之间，此部分动量通量$\tau_b$、感热通量$H_b$和水汽通量$E_b$表达为：
+\begin{equation}\label{taub_x}
 \tau_{b, x}=-\left(1-f_{sig}\right)\left(\rho_{atm} \frac{u_{atm}}{r_{a m}}\right)
 \end{equation}
-\begin{equation}
+\begin{equation}\label{taub_y}
 \tau_{b, y}=-\left(1-f_{sig}\right)\left(\rho_{atm} \frac{v_{atm}}{r_{a m}}\right)
 \end{equation}
-\begin{equation}
+\begin{equation}\label{Hb}
 H_{b}=-\left(1-f_{sig}\right) \rho_{atm} C_{p a} \frac{\left(\theta_{atm}-T_{g}\right)}{r_{a h}}
 \end{equation}
-\begin{equation}
+\begin{equation}\label{Eb}
 E_{b}=-\left(1-f_{sig}\right) \rho_{atm} \frac{\left(q_{atm}-q_{g}\right)}{r_{a w}}
 \end{equation}
 其中$T_g$表示地表温度(K)(当有积雪覆盖(即$f_{sno}>0$)时，$T_g$为最上层积雪的温度$T_{snl+1}$；
@@ -392,14 +398,15 @@ E_{b}=-\left(1-f_{sig}\right) \rho_{atm} \frac{\left(q_{atm}-q_{g}\right)}{r_{a 
 q_{g}=\left(1-f_{{sno }}\right) q_{{soil }}+f_{{sno }} q_{{sno }}
 \end{equation}
 其中积雪表面的比湿$q_{sno}$为温度在$T_{snl+1}$时的饱和比湿$q_{sno}=q_{sat}^{T_{snl+1}}$
-(计算方案见章节 \ref{饱和水汽压(比湿)及其随温度的变化})，土壤表面的比湿$q_{soil}$视为正比于温度在$T_1$时的饱和比湿$q_{sat}^{T_1}：q_{soil}=\alpha_{soil}q_{sat}^{T_1}$，
-比例系数$\alpha_{soil}$为表层土壤水势$\psi_1$(mm)的函数\citep{philip1957theory}：$\alpha_{soil}=exp\left(\frac{\psi_1g}{{10}^3R_{wv}T_1}\right)$，
+(计算方案见章节 \ref{饱和水汽压(比湿)及其随温度的变化})，土壤表面的比湿$q_{soil}$视为正比于温度在$T_1$时的饱和比湿：$q_{sat}^{T_1}：q_{soil}=\alpha_{soil}q_{sat}^{T_1}$，
+比例系数$\alpha_{soil}$为表层土壤水势$\psi_1$(mm)的函数\citep{philip1957theory}：$\alpha_{soil}=\exp \left(\frac{\psi_1g}{{10}^3R_{wv}T_1}\right)$，
 其中$R_{wv}$表示水汽气体常数(J/kg/K)。表层土壤水势$\psi_1$的计算公式为$\psi_1=\psi_{sat,1}s_1^{-B_1}\geq-1\ast{10}^8$，
 $\psi_{sat,1}$表示表层饱和土壤水势(mm)，$B_1$表示表层土壤\citet{clapp1978empirical}参数(均由地表参数数据集提供)。$s_1$表示表层土壤对于饱和状态时的相对湿度：
 \begin{equation}
-\begin{array}{c}s_{1}=0.001 \quad \text { if } \theta_{{sat }, 1}<1 * 10^{-6} \\ s_{1}=\frac{1}{\Delta z_{1} \theta_{{sat }, 1}}\left[\frac{w_{l i q, 1}}{\rho_{l i q}}+\frac{w_{i c e, 1}}{\rho_{{ice }}}\right] \quad 0.001 \leq s_{1} \leq 1.0 \text { if } \theta_{\text {sat }, 1} \geq 1 * 10^{-6}\end{array}
+\begin{array}{c}s_{1}=0.001, \quad \text { if } \theta_{{sat }, 1}<1 * 10^{-6} \\ 
+     s_{1}=\frac{1}{\Delta z_{1} \theta_{{sat }, 1}}\left[\frac{w_{l i q, 1}}{\rho_{l i q}}+\frac{w_{i c e, 1}}{\rho_{{ice }}}\right]  \text{且}  0.001 \leq s_{1} \leq 1.0, \quad \text { if } \theta_{\text {sat }, 1} \geq 1 * 10^{-6}\end{array}
 \end{equation}
-其中$∆z1$为表层土壤厚度(m)，$\rho_{liq}$和$\rho_{ice}$分别为液态水和固态水密度($\rm kg/m^3$)，
+其中$\Delta z_{1}$为表层土壤厚度(m)，$\rho_{liq}$和$\rho_{ice}$分别为液态水和固态水密度($\rm kg/m^3$)，
 $w_{liq,1}$和$w_{ice,1}$分别为表层土壤液态水和固态水含量($\rm kg/m^2$)，
 $\theta_{sat,1}$表示表层土壤体积含水量(即孔隙度，$\rm mm^3/mm^3$)。
 注：为避免土壤水含量极低时轻微的土壤水变化会导致$q_{soil}$变化过大，
@@ -408,43 +415,44 @@ $\theta_{sat,1}$表示表层土壤体积含水量(即孔隙度，$\rm mm^3/mm^3$
 
 由于地表无植被覆盖，在计算阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$时，零平面位移取为$d=0$。
 动量粗糙度在有积雪覆盖(即$f_{sno}>0$)时取为$z_{0m}=0.0024$，无积雪覆盖时取为$z_{0m}=0.01$。
-由于动量输运会受到湍流波中气压波动的影响，而热量与水汽输运只受到分子扩散的影响，
-故感热与水汽粗糙度不同于动量粗糙度如下\citep{zeng1998effect}：
-\begin{equation}
-z_{0 h}=z_{0 w}=z_{0 m} \exp \left(-0.13\left(u_{*} \cdot z_{0 m} / v\right)^{0.45}\right)
+由于动量输送会受到粗糙物后面湍流波中气压波动的影响，而热量和水汽的输送过程不涉及这种动力学机制，热量和水汽必须通过界面的分子扩散进行传输，
+故感热和水汽的粗糙度不同于动量粗糙度，根据\citep{zeng1998effect}：
+\begin{equation}\label{z0hw}
+z_{0 h}=z_{0 w}=z_{0 m} \exp \left[-0.13\left(u_{*} \cdot z_{0 m} / v\right)^{0.45}\right]
 \end{equation}
-其中$\upsilon=1.5\times{10}^{-5}$（$\rm m^2/s$）表示空气的动力粘性系数。
+其中$u_{*} \cdot z_{0 m} / v$为粗糙雷诺数(可理解为最小湍涡的雷诺数)，$\upsilon=1.5\times{10}^{-5}$（$\rm m^2/s$）为空气的动力粘性系数。
 
 
-结合以上计算方案，无植被覆盖部分的地表湍流输运通量可按如下流程计算：
+综上，无植被覆盖部分的地表湍流通量的数值计算过程可总结如下：
 \begin{enumerate}
-     \item 给出$U_c$的初始猜测如下：
+     \item 根据公式(\ref{VaIni})给出风速$V_{a}$的初始猜测，当采用LZD2022方案时，对流速度$U_c$设为0，否则$U_c$的初始猜测如下：
      \begin{equation}
           \begin{array}{cc}U_{c}=0 & \theta_{v, atm}-\theta_{v, s} \geq 0(\text { 即稳定条件下 }) \\ U_{c}=0.5 & \theta_{v, atm}-\theta_{v, s}<0(\text { 即不稳定条件下 })\end{array}
           \end{equation}
-     \item 通过$R_{ib}$给出$L$的初始猜测;
-     \item 以下过程迭代6次，以求得$u_\ast$，$\theta_\ast$，$q_\ast$：\\
-     a. 通过风速、温度、比湿的微分方程积分结果求得$u_\ast$,$\theta_\ast$,$q_\ast$ \\
-     b. 更新感热与水汽粗糙度$z_{0h}$,$z_{0w}$ \\
-     c. 计算特征虚位温$\theta_{v\ast}$ \\
-     d. 更新大气风速$V_a\left(U_c\right)$ \\
-     e. 计算新一步L，并计算$\zeta$，根据稳定性条件限制$\zeta$的取值范围 \\
-     f. 根据限制条件后的$\zeta$重新计算$L=\frac{z_{atm,m}}{\zeta}$ \\
-     每次迭代完成后，判断L是否改变符号，若改变符号超过4次，则视为中性条件，跳出迭代过程，以避免在稳定与不稳定条件之间来回变化；
-     \item 计算空气动力学阻抗系数$r_{am}$，$r_{ah}$，$r_{aw}$
-     \item 计算动量通量$\tau_b$、感热通量$H_b$和水汽通量$E_b$
-     \item 计算2m温度与比湿$T_{2m}$，$q_{2m}$
-     \item 在计算地表温度并基于该温度对感热与水汽通量进行更新时，需给出感热与水汽通量针对地表温度的变化率：
-     \begin{equation}
-          \frac{\partial H_{b}}{\partial T_{g}}=\left(1-f_{sig}\right) \frac{\rho_{atm} C_{p a}}{r_{a h}}
-          \end{equation}
-          \begin{equation}
-          \frac{\partial E_{b}}{\partial T_{g}}=\left(1-f_{sig}\right) \frac{\rho_{atm}}{r_{a w}} \frac{d q_{g}}{d T_{g}}
-     \end{equation}
-     其中$\frac{dq_g}{dT_g}=\left[\left(1-f_{sno}\right)\alpha_{soil}+f_{sno}\right]\frac{q_{sat}^{T_g}}{dT_g}$，$\frac{q_{sat}^{T_g}}{dT_g}$的计算见章节 \ref{饱和水汽压(比湿)及其随温度的变化}。
-     阻抗系数$r_{ah}$、$r_{aw}$对于温度的变化率无法解析给出，故暂时忽略。
-
+     \item 基于$R_{ib}$，根据公式(\ref{Rib})和(\ref{ZetaRib})，给出Monin-Obukhov长度$L$的初始猜测;
+     \item 以下过程迭代6次：\\
+     a. 计算$u_\ast$ (Zeng1998方案：公式(\ref{Va_VU})-(\ref{Va_VS})；LZD2022方案：公式(\ref{Va_U_LZD1})、(\ref{Va_U_LZD2})、(\ref{Va_S})-(\ref{Va_VS})) \\
+     b. 计算$\theta_\ast$ (公式(\ref{theta_VU})-(\ref{theta_VS})) \\
+     c. 计算$q_\ast$ (公式(\ref{q_VU})-(\ref{q_VS})) \\
+     b. 更新感热和水汽粗糙度$z_{0h}$、$z_{0w}$ (公式(\ref{z0hw})) \\
+     c. 计算虚位温尺度$\theta_{v\ast}$ (公式(\ref{thvstar})) \\
+     d. 更新大气风速$V_a$(公式(\ref{VaIni}))，如采用LZD2022方案则不需要\\
+     e. 计算新一步$L$ (公式(\ref{ObukL})) \\
+     注：每次迭代完成后，判断$L$是否改变符号，若改变符号超过4次，则视为中性条件，跳出迭代过程，以避免在稳定与不稳定条件之间来回变化；
+     \item 计算空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ (公式(\ref{ram})-(\ref{raw}))
+     \item 计算动量通量$\tau_{b,x}$和$\tau_{b,y}$、感热通量$H_b$、水汽通量$E_b$ (公式(\ref{taub_x})-(\ref{Eb}))
+     \item 计算2m气温$T_{2m}$和比湿$q_{2m}$(公式(\ref{T2m})和(\ref{q2m}))
  \end{enumerate}
+
+ 在计算地表温度并基于该温度对感热和水汽通量进行更新时，需给出感热和水汽通量针对地表温度的变化率：
+\begin{equation}
+     \frac{\partial H_{b}}{\partial T_{g}}=\left(1-f_{sig}\right) \frac{\rho_{atm} C_{p a}}{r_{a h}}
+\end{equation}
+\begin{equation}
+     \frac{\partial E_{b}}{\partial T_{g}}=\left(1-f_{sig}\right) \frac{\rho_{atm}}{r_{a w}} \frac{d q_{g}}{d T_{g}}
+\end{equation}
+其中$\frac{dq_g}{dT_g}=\left[\left(1-f_{sno}\right)\alpha_{soil}+f_{sno}\right]\frac{q_{sat}^{T_g}}{dT_g}$，$\frac{q_{sat}^{T_g}}{dT_g}$的计算见章节 \ref{饱和水汽压(比湿)及其随温度的变化}。
+阻抗系数$r_{ah}$、$r_{aw}$对于温度的变化率无法解析给出，故暂时忽略。
 
 
 \section{一维植被湍流交换模型}\label{一维植被湍流交换模型}

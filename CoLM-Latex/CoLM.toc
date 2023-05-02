@@ -159,7 +159,7 @@
 \contentsline {subsection}{\numberline {17.7.2}人体代谢热}{251}{subsection.17.7.2}%
 \contentsline {subsection}{\numberline {17.7.3}交通热}{251}{subsection.17.7.3}%
 \contentsline {chapter}{\numberline {18}土地利用与土地覆盖变化模拟}{253}{chapter.18}%
-\contentsline {chapter}{附录}{254}{Item.77}%
+\contentsline {chapter}{附录}{254}{Item.76}%
 \contentsline {chapter}{\numberline {A}模式相关物理常数/参数}{255}{chapter.1}%
 \contentsline {chapter}{\numberline {B}USGS地表覆盖类型相关参数}{257}{chapter.2}%
 \contentsline {chapter}{\numberline {C}IGBP地表覆盖类型相关参数}{267}{chapter.3}%
