@@ -3,7 +3,8 @@
 
 %\begin{地表湍流交换过程}
 \section{基本理论}\label{基本理论}
-本部分的对应代码为groundfluxes.F90和FRICTION_VELOCITY.F90。
+本部分的对应代码为\texttt{groundfluxes.F90}和\texttt{FRICTION\_VELOCITY.F90}。
+
 在近地面层(距离地面几米到几十米高度)中，地面与大气在垂直方向存在显著的湍流输运，且输运通量与风向几乎不随高度变化(亦称常通量性)。计算中引入了尺度因子，则近地面层的动量$\left|\tau\right|$ ($\rm kg/m/s^2$)、热量 $H$ ($\rm W/m^2$)与水汽 $E$ ($\rm kg/m^2/s$)的湍流输运通量可表示为：
 \begin{equation}
 |\tau|=\rho_{atm} \sqrt{\left(\overline{\left.u^{\prime} w^{\prime}\right)^{2}}+\overline{\left(\overline{v^{\prime} w^{\prime}}\right)^{2}}\right.}=\rho_{atm} u_{*}^{2}
@@ -230,13 +231,13 @@ wt=\frac{0.1 z_{{sno}}}{z_{v m}+0.1 z_{{sno}}}
 固态水比热容             & $C_{pi}$                       & 2117.27    & J/kg/K  \\
 von Karman常数       & $k$                               & 0.4        &    -     \\
 重力加速度              & $g$                               & 9.80616    & $\rm m/s^2$    \\
-Stefan-Boltzmann常数 & $\sigma$           & 5.67*$\rm 10^{-8}$  & $\rm W/m^2/K^4$ \\
+Stefan-Boltzmann常数 & $\sigma$           & $5.67\times\rm 10^{-8}$  & $\rm W/m^2/K^4$ \\
 液态水凝结温度            & $T_f$                            & 273.16     & K       \\
 液态水密度              & $\rho_{liq}$    & 1000       & $\rm Kg/m^3$   \\
 固态水密度              & $\rho_{ice}$    & 917        & $\rm Kg/m^3$   \\
-液态水蒸发潜热            & $\lambda_v$       & 2.5104*$\rm 10^{6}$ & J/kg    \\
-固态水升华潜热            & $\lambda_s$       & 2.8440*$\rm 10^{6}$ & J/kg    \\
-固态水液化潜热            & $L_f$                           & 0.3336*10^6 & J/kg    \\
+液态水蒸发潜热            & $\lambda_v$       & $2.5104\times\rm 10^{6}$ & J/kg    \\
+固态水升华潜热            & $\lambda_s$       & $2.8440\times\rm 10^{6}$ & J/kg    \\
+固态水液化潜热            & $L_f$                           & $0.3336\times10^6$ & J/kg    \\
 液态水热力传导率           & $\lambda_{liq}$ & 0.57       & W/m/K   \\
 固态水热力传导率           & $\lambda_{ice}$ & 2.29       & W/m/K   \\
 空气热力传导率            & $\lambda_a$       & 0.023      & W/m/K      \\\bottomrule
