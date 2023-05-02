@@ -1,8 +1,14 @@
 % !TEX encoding = UTF-8 Unicode
 \documentclass[a4paper,12pt,twoside]{report}
 \usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
-\usepackage[UTF8]{ctex}
-
+\usepackage[UTF8,heading=true,scheme=chinese]{ctex}
+\ctexset{
+    appendix={
+       name={附录},
+       number={\Alpha{thechapter}}
+       }
+   }
+   
 %\usepackage[T1]{fontenc}
 \newcommand{\arial}[1]{{\fontencoding{T1}\usefont{T1}{phv}{m}{n}{#1}}}
 \newcommand{\courier}[1]{{\fontencoding{T1}\usefont{T1}{pcr}{m}{n}{#1}}}
@@ -82,8 +88,8 @@
 \addcontentsline{toc}{chapter}{附录}
 \input{附录/附录}
 
-\renewcommand{\bibname}{References}
-\addcontentsline{toc}{chapter}{References}
+\renewcommand{\bibname}{参考文献}
+\addcontentsline{toc}{chapter}{参考文献}
 \bibliographystyle{agufull08}
 \bibliography{References/References}
 
