@@ -451,7 +451,7 @@ z_{0 h}=z_{0 w}=z_{0 m} \exp \left[-0.13\left(u_{*} \cdot z_{0 m} / v\right)^{0.
 \begin{equation}
      \frac{\partial E_{b}}{\partial T_{g}}=\left(1-f_{sig}\right) \frac{\rho_{atm}}{r_{a w}} \frac{d q_{g}}{d T_{g}}
 \end{equation}
-其中$\frac{dq_g}{dT_g}=\left[\left(1-f_{sno}\right)\alpha_{soil}+f_{sno}\right]\frac{q_{sat}^{T_g}}{dT_g}$，$\frac{q_{sat}^{T_g}}{dT_g}$的计算见章节 \ref{饱和水汽压(比湿)及其随温度的变化}。
+其中$\frac{dq_g}{dT_g}=\left[\left(1-f_{sno}\right)\alpha_{soil}+f_{sno}\right]\frac{dq_{sat}^{T_g}}{dT_g}$，$\frac{dq_{sat}^{T_g}}{dT_g}$的计算见章节 \ref{饱和水汽压(比湿)及其随温度的变化}。
 阻抗系数$r_{ah}$、$r_{aw}$对于温度的变化率无法解析给出，故暂时忽略。
 
 
@@ -469,38 +469,38 @@ H_{p}=-f_{sig} \rho_{atm} C_{p a} \frac{\left(\theta_{atm}-T_{s}\right)}{r_{a h}
 \begin{equation}
 E_{p}=-f_{\text {sig }} \rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 \end{equation}
-由于此时湍流通量与叶片温度相互耦合，故阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$与植被冠层顶空气温度和比湿$T_s$、$q_s$将随叶片温度一起采用牛顿迭代法进行求解(见章节 \ref{植被叶片温度计算})。
+由于此时湍流通量与叶片温度相互耦合，故阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$与植被冠层顶空气温度$T_s$和比湿$q_s$将随叶片温度一起采用牛顿迭代法进行求解(见章节 \ref{植被叶片温度计算})。
 本节就感热与水汽通量先给出其求解的理论表达。
 
 
-假设植被冠层空气的比热容为0，则它与大气之间的热量与水汽交换可被两部分通量抵消平衡：
+假设植被冠层空气的比热容为0，则它与大气之间的热量和水汽交换可被两部分通量抵消平衡：
 一是地表与植被冠层顶空气之间的湍流通量，二是植被表面(茎、叶等)与植被冠层顶空气之间的湍流通量。
 对于植被的描述，植被生理过程采用\citet{dai2004two}提出的双大叶模型，即将叶片分为阴叶(无阳光照射)与阳叶(有阳光照射)两部分。
 阳叶的比例表达为：
 \begin{equation}
-f_{sun}=\frac{1-\exp p(-K \cdot LAI)}{K \cdot LAI}
+f_{sun}=\frac{1-\exp (-K \cdot \text {LAI})}{K \cdot \text {LAI}}
 \end{equation}
-其中$LAI$为叶面积指数，$K$为太阳辐射消光系数(见章节 \ref{短波吸收辐射通量})，${10}^{-6}\le K \cdot LAI\le40$。
+其中LAI为叶面积指数，$K$为太阳辐射消光系数(见章节 \ref{短波吸收辐射通量})，${10}^{-6}\le K \cdot \text {LAI}\le40$。
 当白天植被吸收的太阳辐射小于1 W/m$^2$ 或白天结束时，$f_{sun}=0$。叶面积指数也对应表达为两部分：
 \begin{equation}
-\begin{array}{c}LAI_{sun}=LAI \cdot f_{sun} \\ LAI_{sha}=LAI \cdot \left(1-f_{sun}\right)\end{array}
+\begin{array}{c} \text {LAI}_{sun}= \text {LAI} \cdot f_{sun} \\ \text {LAI}_{sha}=\text {LAI} \cdot \left(1-f_{sun}\right)\end{array}
 \end{equation}
 植被能量平衡过程，即植被的湍流通量与叶片温度仍采用单叶模型计算。主要过程描述如下：
 
 
-当地表有植被覆盖时，假设植被树冠水平空间分布均匀且为单层结构(即一维植被结构)，则植被冠层顶空气与大气之间的感热通量$H_p$可与下列三项平衡：
-\begin{equation}
+当地表有植被覆盖时，假设植被树冠水平空间分布均匀且为单层结构(即一维植被结构)，则植被冠层顶空气与大气之间的感热通量$H_p$必须与另外两项之和平衡：
+\begin{equation}\label{HV_balance}
 H_{p}=H_{p g}+H_{p v}
 \end{equation}
-其中$H_{pg}$表示地表与植被冠层空气顶之间的感热，$H_{pv,sun}$表示叶片表面与植被冠层空气顶之间的感热：
+其中$H_{pg}$表示地表与植被冠层空气顶之间的感热，$H_{pv,sun}$表示叶片表面与植被冠层空气顶之间的感热，计算表达式如下：
 \begin{equation}
 H_{p g}=-f_{sig} \rho_{atm} C_{pa} \frac{\left(T_{s}-T_{g}\right)}{r_{a h}^{\prime}}
 \end{equation}
 \begin{equation}
-H_{p v}=-f_{sig} \rho_{atm} C_{pa}(LAI+S A I) \frac{\left(T_{s}-T_{v}\right)}{r_{b}}
+H_{p v}=-f_{sig} \rho_{atm} C_{pa}(\text {LAI}+\text {SAI}) \frac{\left(T_{s}-T_{v}\right)}{r_{b}}
 \end{equation}
-其中$T_v$表示叶片温度(K)，$T_s$表示定义在高度$z_{0h}+d$上的植被冠层顶空气温度(K)，$SAI$表示茎面积指数，$r_b$表示叶面边界层阻抗(s/m)，
-$r_{ah}^\prime$表示地表与植被冠层顶空气之间的感热阻抗(s/m)。示意图如下(图 \ref{fig:有植被覆盖部分的陆地表面感热通量示意图})：
+其中$T_v$表示叶片温度(K)，$T_s$表示定义在高度$z_{0h}+d$上的植被冠层顶空气温度(K)，SAI表示茎面积指数，$r_b$表示叶面边界层阻抗(s/m)，
+$r_{ah}^\prime$表示地表与植被冠层顶空气之间的感热阻抗(s/m)，各部分过程如图 \ref{fig:有植被覆盖部分的陆地表面感热通量示意图}所示。
 {
 \begin{figure}[]
 \centering
@@ -509,11 +509,11 @@ $r_{ah}^\prime$表示地表与植被冠层顶空气之间的感热阻抗(s/m)。
 \label{fig:有植被覆盖部分的陆地表面感热通量示意图}
 \end{figure}
 }
-将$H_p$、$H_{pg}$、$H_{pv}$的表达式代入平衡方程，即可解出$T_s$如下：
+将$H_p$、$H_{pg}$、$H_{pv}$的表达式代入平衡方程(\ref{HV_balance})，即可解得$T_s$形式如下：
 \begin{equation}
 T_{s}=\frac{c_{a}^{h} \theta_{atm}+c_{g}^{h} T_{g}+c_{v}^{h} T_{v}}{c_{a}^{h}+c_{g}^{h}+c_{v}^{h}}
 \end{equation}
-其中$c_a^h=\frac{1}{r_{ah}}$，$c_g^h=\frac{1}{r_{ah}^\prime}$，$c_v^h=\frac{LAI+SAI}{r_b}$，
+其中$c_a^h=\frac{1}{r_{ah}}$，$c_g^h=\frac{1}{r_{ah}^\prime}$，$c_v^h=\frac{\text {LAI}+\text {SAI}}{r_b}$，
 将$T_s$的表达式代回，即可将$H_p$、$H_{pg}$、$H_{pv}$全部写为$\theta_{atm}$、$T_g$、$T_v$的函数，例如：
 \begin{equation}
 H_{p v}=-f_{sig} \rho_{atm} C_{p a}\left[c_{a}^{h} \theta_{atm}+c_{g}^{h} 
@@ -522,8 +522,8 @@ T_{v}\right] \frac{c_{v}^{h}}{c_{a}^{h}+c_{g}^{h}+c_{v}^{h}}
 \end{equation}
 
 
-同样地，植被冠层顶空气与大气之间的水汽通量$E_p$可与下列三项平衡：
-\begin{equation}
+同样地，植被冠层顶空气与大气之间的水汽通量$E_p$也可与另外两项平衡：
+\begin{equation}\label{EV_balance}
 E_{p}=E_{p g}+E_{p v}
 \end{equation}
 其中$E_{pg}$表示地表与植被冠层顶空气之间的水汽通量，$E_{pv}$表示叶片表面与植被冠层顶空气之间的水汽通量：
@@ -538,14 +538,14 @@ E_{pv}=-f_{sig} \rho_{atm} \frac{\left(q_{s}-q_{s a t}^{T v}\right)}{r_{t o t a 
 $q_g$表示地表空气比湿(kg/kg，其表达见章节 \ref{无植被覆盖地表湍流通量的计算方案})，$r_{aw}^\prime$表示地表与植被冠层顶空气之间的水汽交换阻抗(s/m)。
 $r_{total}$表示植被表面与植被冠层顶空气之间水汽交换的总阻抗(s/m)，
 它来自叶面边界层阻抗$r_b$和气孔阻抗$r_{s,sun}\left(r_{s,sha}\right)$的双重贡献。
-植被表面与植被冠层空气之间的水汽交换包含两部分：湿的叶面与茎面的蒸发水汽与干叶表面的蒸腾水汽。
+植被表面与植被冠层空气之间的水汽交换包含两部分：湿的叶面及茎面的蒸发水汽和干叶表面的蒸腾水汽。
 湿的叶面茎面积占总叶面茎面积的比例 \citep{dickinson1993biosphere} 为：
 \begin{equation}
 f_{w e t}=\left(\frac{W_{c a n}}{W_{c a n, \max }}\right)^{2 / 3} \leq 1.0
 \end{equation}
 其中$W_{can}$表示植被表面储水量($\rm kg/m^2$，其计算见章节 \ref{植被冠层截留})，$W_{can,max}$表示植被表面最大储水量
-($\rm kg/m^2$)，$W_{can,max}=0.1f_{sig}\left(LAI+SAI\right)$。
-有植被覆盖部分的陆地表面水热通量示意图见图\ref{fig:有植被覆盖部分的陆地表面水汽通量示意图}：
+($\rm kg/m^2$)，$W_{can,max}=0.1f_{sig}\left(\text {LAI}+ \text {SAI}\right)$。
+有植被覆盖部分的陆地表面水汽通量交换过程如图\ref{fig:有植被覆盖部分的陆地表面水汽通量示意图}所示。
 {
 \begin{figure}[]
 \centering
@@ -554,7 +554,7 @@ f_{w e t}=\left(\frac{W_{c a n}}{W_{c a n, \max }}\right)^{2 / 3} \leq 1.0
 \label{fig:有植被覆盖部分的陆地表面水汽通量示意图}
 \end{figure}
 }
-将$E_p$、$E_{pg}$、$E_{pv}$的表达式代入平衡方程，即可解出$q_s$如下：
+将$E_p$、$E_{pg}$、$E_{pv}$的表达式代入平衡方程(\ref{EV_balance})，即可解得$q_s$形式如下：
 \begin{equation}
 q_{s}=\frac{c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}+c_{v}^{w} q_{s a t}^{T_{v}}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}}
 \end{equation}
@@ -564,20 +564,20 @@ q_{s}=\frac{c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}+c_{v}^{w} q_{s a t}^{T_{v}}}{c_{a}
 E_{p v}=-f_{sig} \rho_{atm}\left[c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}+c_{v}^{w} q_{s a t}^{T_{v}}-
 \left(c_{a}^{w}+c_{g}^{w}+c_{v}^{w}\right) q_{s a t}^{T_{v}}\right] \frac{c_{v}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}}
 \end{equation}
-根据植被表面与植被冠层空气之间的水汽交换为湿的叶面与茎面的蒸发水汽与干叶表面的蒸腾水汽之和，$c_v^w$可由下式导出。
+根据植被表面与植被冠层空气之间的水汽交换为湿的叶面与茎面的蒸发水汽和干叶表面的蒸腾水汽之和，$c_v^w$可由下式导出。
 当$q_{sat}^{T_v}>q_s$即叶片蒸散发可以发生时，总水汽通量为叶片蒸发通量和叶片蒸腾通量之和：
 \begin{equation}
 -\rho_{atm} \frac{\left(q_{s}-q_{s a t}^{T_{v}}\right)}{r_{{total }}}=-\rho_{atm} 
-\frac{\left(q_{s}-q_{s a t}^{T_{v}}\right)}{\frac{r_{b}}{(LAI+S A I) \cdot f_{{wet }}}}-\rho_{atm} \frac{\left(q_{s}-q_{s a t}^{T_{v}}\right)}{\frac{r_{b}+r_{s}}{LAI *\left(1-f_{{wet }}\right)}}
+\frac{\left(q_{s}-q_{s a t}^{T_{v}}\right)}{\frac{r_{b}}{(\text {LAI}+\text {SAI}) \cdot f_{{wet }}}}-\rho_{atm} \frac{\left(q_{s}-q_{s a t}^{T_{v}}\right)}{\frac{r_{b}+r_{s}}{\text {LAI} *\left(1-f_{{wet }}\right)}}
 \end{equation}
 于是，
 \begin{equation}
-c_{v}^{w}=\frac{1}{r_{{total }}}=\frac{(LAI+SAI) \cdot f_{{wet }}}{r_{b}}+\frac{LAI \cdot \left(1-f_{{wet}}\right)}{r_{b}+r_{s}}
+c_{v}^{w}=\frac{1}{r_{{total }}}=\frac{(\text {LAI}+\text {SAI}) \cdot f_{{wet }}}{r_{b}}+\frac{\text {LAI} \cdot \left(1-f_{{wet}}\right)}{r_{b}+r_{s}}
 \end{equation}
 当$q_{sat}^{T_v}\le q_s$即植被冠层空气中的水蒸气可以发生液化时，
-$-\rho_{atm}\frac{\left(q_s-q_{sat}^{T_v}\right)}{r_{total}}\ =-\rho_{atm}\frac{\left(q_s-q_{sat}^{T_v}\right)}{r_b/\left(LAI+SAI\right)}$，于是
+$-\rho_{atm}\frac{\left(q_s-q_{sat}^{T_v}\right)}{r_{total}}\ =-\rho_{atm}\frac{\left(q_s-q_{sat}^{T_v}\right)}{r_b/\left(\text {LAI}+\text {SAI}\right)}$，于是
 \begin{equation}
-c_{v}^{w}=\frac{1}{r_{{total }}}=\frac{(LAI+SAI)}{r_{b}}
+c_{v}^{w}=\frac{1}{r_{{total }}}=\frac{(\text {LAI}+\text {SAI})}{r_{b}}
 \end{equation}
 下面给出各个阻抗系数的计算方案。首先，植被冠层空气与大气的湍流阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$的计算方案同章节 \ref{无植被覆盖地表湍流通量的计算方案}，
 动量、热量与水汽通量的零平面位移$d$与粗糙度$z_{0m}$、$z_{0h}$、$z_{0w}$均按土地覆盖类型给出(见
@@ -587,30 +587,25 @@ c_{v}^{w}=\frac{1}{r_{{total }}}=\frac{(LAI+SAI)}{r_{b}}
 r_{a h}^{\prime}=r_{a w}^{\prime}=\frac{1}{C_{s} u_{*}}:=r_{\mathrm{d}}
 \end{equation}
 其中$C_s$表示地表与植被冠层空气之间的湍流交换系数，它由裸土表面的数值与浓密植被覆盖时的数值进行线性组合得到 \citep{zeng2005vegetation}：
-$C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\frac{1}{exp{\left(LAI+SAI\right)}}$，
+$C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\exp {-\left(LAI+SAI\right)}$，
 浓密植被覆盖时的湍流交换系数$C_{s,dense}=0.004$，裸土表面的湍流交换系数$C_{s,bare}=\frac{k}{0.13}\left(\frac{z_{0m,g}u_\ast}{\upsilon}\right)^{-0.45}$，
 其中空气动力学粘性系数$\upsilon=1.5\times{10}^{-5}$m$^2$/s，地表粗糙度$z_{0m,g}=0.01$。再次，对于叶面边界层阻抗$r_b$，计算公式为：
 \begin{equation}
 r_{b}=\frac{1}{c_{v}}\left(u_{*} / d_{{leaf }}\right)^{-0.5}
 \end{equation}
-其中$C_v=0.01\rm m/s^{0.5}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$表示叶片在风向的特征值。
+其中$C_v=0.01$ m/s $^{0.5}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$表示叶片在风向的特征值。
 最后，气孔阻抗系数$r_{s,sun}$和$r_{s,sha}$的计算将在光合作用部分介绍。
-在计算地表温度并基于该温度对地表感热与水汽通量进行更新时，需给出地表感热与水汽通量及其针对地表温度的变化率：
+在计算地表温度并基于该温度对地表感热和水汽通量进行更新时，需给出地表感热和水汽通量对地表温度的变化率：
 \begin{equation}
-\begin{array}{c}H_{p g}=-f_{{sig }} \rho_{atm} C_{p a}\left[c_{a}^{h} \theta_{atm}+c_{v}^{h} T_{v}-\left(c_{a}^{h}+c_{v}^{h}\right) 
-     T_{g}\right] \frac{c_{g}^{h}}{c_{a}^{h}+c_{g}^{h}+c_{v}^{h}} \\ 
-     \frac{\partial H_{p g}}{\partial T_{g}}=f_{sig} \frac{\rho_{atm} c_{p a}}{r_{a h}^{\prime}} 
+\begin{array}{c} \frac{\partial H_{p g}}{\partial T_{g}}=f_{sig} \frac{\rho_{atm} c_{p a}}{r_{a h}^{\prime}} 
      \frac{c_{a}^{h}+c_{v}^{h}}{c_{a}^{h}+c_{g}^{h}+c_{v}^{h}}\end{array}
 \end{equation}
 \begin{equation}
-\begin{array}{c}E_{p g}=-f_{sig} \rho_{atm}\left[c_{a}^{w} q_{atm}+c_{v}^{w} q_{s a t}^{T_{v}}-\left(c_{a}^{w}+c_{v}^{w}\right)
-      q_{g}\right] \frac{c_{g}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \\ \frac{\partial E_{p g}}{\partial T_{g}}=f_{sig}
+\begin{array}{c}\frac{\partial E_{p g}}{\partial T_{g}}=f_{sig}
       \frac{\rho_{atm}}{r_{a w}^{\prime}} \frac{c_{a}^{w}+c_{v}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{d q_{g}}{d T_{g}}\end{array}
 \end{equation}
-其中$\frac{dq_g}{dT_g}=\left[\left(1-f_{sno}\right)\alpha_{soil}+f_{sno}\right]\frac{q_{sat}^{T_g}}{dT_g}$，
-$\frac{q_{sat}^{T_g}}{dT_g}$的计算见章节 \ref{饱和水汽压(比湿)及其随温度的变化}。阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$对于温度的变化率无法解析给出，故暂时忽略。
-
-
+其中$\frac{dq_g}{dT_g}=\left[\left(1-f_{sno}\right)\alpha_{soil}+f_{sno}\right]\frac{dq_{sat}^{T_g}}{dT_g}$，
+$\frac{dq_{sat}^{T_g}}{dT_g}$的计算见章节 \ref{饱和水汽压(比湿)及其随温度的变化}，阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$对于温度的变化率无法解析给出，故暂时忽略。
 
 
 \section{三维植被湍流交换模型}
