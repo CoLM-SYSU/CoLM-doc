@@ -100,11 +100,10 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \begin{equation}
 \chi\left(\hat{\psi}_{s}, \hat{\lambda}\right)=\min \sum_{i=1}^{N}\left[\psi\left(\hat{\psi}_{s}, \hat{\lambda}\right)-\psi\left(\psi_{s i}, \lambda_{i}\right)\right]^{2}
 \end{equation}
-
+%
 其中的$\psi_{s i}$, $\lambda_{i}$为每一组PTF的预报结果。通过此方法得到的参数$\hat{\psi}_{s}$, $\hat{\lambda}$是最为接近PTF集合内全部PTF预报结果的参数，
 即集合内的最优参数。van Genuchten模型的参数同理可得。饱和土壤导水率的估计仍采用传统的PTF集合中位值法。基于以上方法利用GSDE和SoilGrids陆面基础数据集，
-即可生成全球高分辨率(1 km)全球土壤水热特征参数 \citet{dai2019evaluation}，直接用于陆面过程模拟。
-
+即可生成全球高分辨率(1 km)全球土壤水热特征参数 \citep{dai2019evaluation}，直接用于陆面过程模拟。
 
 
 为使得CoLM可应用于不同分辨率的模拟，针对全球1 km土壤水热参数开发了升尺度算法。在具体实施中，CoLM将针对 \citet{campbell1974} 和 \citet{van1980closed} 建立的
@@ -132,8 +131,8 @@ $\hat{\alpha}$, $\hat{\beta}$为表征粗网格曲线的参数。
 该方法最大优势为升尺度后的参数之间在原有曲线关系中可保持物理关系与细网格的一致性。
 \subsection{土壤颜色}\label{土壤颜色}
 
-土壤颜色（反照率）数据来自NCAR CLM5.0模式(mksrf\_soilcolor\_histclm52deg025\_earths\\tatmirca\_2005.c210808 版)，
-共20种土壤颜色分类，为全球30"(1公里)分辨率，经纬度网格。每种土壤分类提供可见光、
+土壤颜色（反照率）数据来自NCAR CLM5.0模式(mksrf\_soilcolor\-\_histclm52deg025\-\_earthstatmirca\-\_2005.c210808 版)，
+共20种土壤颜色分类，为全球$30''$ (1公里)分辨率，经纬度网格。每种土壤分类提供可见光、
 近红外波段在土壤干旱时和湿润时(土壤水饱和时)的反照率查找表，其数值同NCAR-CLM技术报告表3.3 (2020年3月23日版) \citep{lawrence2018}。
 
 
@@ -229,15 +228,18 @@ Canopy height                                                   & Global 1 km fo
 \section{湖泊深度数据}\label{湖泊深度数据}
 湖泊深度数据来自Lake-depth data set Version 2.0 \citep{kourzeneva2012global}，数据为全球30$''$ (约1公里)分辨率，经纬度网格，单时次数据。
 
+
 \section{城市数据}\label{城市数据}
+
 \subsection{城市地表覆盖}\label{城市地表覆盖}
 城市地表覆盖数据采用MODIS-IGBP地表覆盖数据(章节 \ref{IGBP地表覆盖数据})中的城市覆盖类型作为判别依据。
 模式利用该数据集区分不同年份网格城市覆盖类型，获得城市在网格中的覆盖度，反应不同年份的城市覆盖变化。
+
 \subsection{城市类型划分}\label{城市类型划分}
 模式对城市覆盖地区不同城市类型进行细分。城市类型分类数据目前采取两种方案：
 \begin{enumerate}
-    \item 传统的3类城市——高建筑街区 (Tall Building Distinct，TBD)、高密度(High Density , HD) 和中密度 (Medium Density , MD);
-    \item 10类Local Climate Zone (LCZ)分类，如图 \ref{fig:LCZ分类图示}  所示。
+    \item 传统的3类城市——高建筑街区 (Tall Building Distinct, TBD)、高密度(High Density, HD) 和中密度 (Medium Density, MD);
+    \item 10类Local Climate Zone (LCZ)分类，如图~\ref{fig:LCZ分类图示}  所示。
 \end{enumerate}
 {
 \begin{figure}[]
@@ -249,7 +251,7 @@ Canopy height                                                   & Global 1 km fo
 }
 
 
-模式对于传统的城市类型分类与NCAR CLM-Urban Model \citep{oleson2020parameterization} 相同，
+模式对于传统的城市类型分类与NCAR CLM--Urban Model \citep{oleson2020parameterization} 相同，
 根据 \citet{jackson2013parameterization} 的城市分类数据对全球城市化程度进行分类。该数据集中，城市化有三个水平，
 及TBD、HD和MD，每1km格点被划分为三个密度类别之一，通过该数据集对urban patch分为3类。其中，
 TBD类城市指至少在1平方公里内，建筑高度全部大于或等于10层楼高且透水面比例较小(5$\sim$15\%)；HD类城市建筑高度为3$\sim$10层，
@@ -275,6 +277,7 @@ thesis/thesis-urbanproperties-tool.html)为模式生成各类城市形态以及�
 }
 而LCZ分类本身包含了一些建筑材料信息，不同地区的同类LCZ虽然有差别但是可能不会太大，
 因此LCZ形态参数目前采用典型值设定，该部分数据一部分来源于 \citet{stewart2014evaluation}，另一部分参考了WRF中的参数设置。
+
 \subsection{城市树覆盖数据}\label{城市树覆盖数据}
 NCAR CLM城市数据集比较全面的描述了全球城市的形态特征和物理性质，但是其城市数据缺少关于植被(树)和水体的描述，
 LCZ分类虽然有植被描述但通常是一个范围值。由于城市只占全球陆地的1\%左右，相比于自然地表，在大尺度上城市占比仍然比较小，
@@ -282,13 +285,14 @@ LCZ分类虽然有植被描述但通常是一个范围值。由于城市只占�
 GFCC Tree Cover (https://lpdaac.usgs.gov/products/gfcc30tcv003/)提供了
 2000年、2005年、2010年和2015年四个年代的全球树木覆盖度信息，分辨率为30m，可用于了解森林变化。
 该数据的投影方式为UTM，与陆面模式使用的等经纬度网格不同，需对数据进行投影转换，由UTM投影转换为经纬度投影 (~0.00025$^\circ$)。
-经过投影转换后，通过对全球数据每个区域的文件进行读取，并统计500m (\~0.0041667$^\circ$)分辨率下30m高分辨网格植被总占比，
+经过投影转换后，通过对全球数据每个区域的文件进行读取，并统计500m (\~0.0041667\textdegree)分辨率下30m高分辨网格植被总占比，
 对四个年份求平均得到500m分辨率下城市格点的树覆盖数据作为城市模式的基础输入数据。
+
 \subsection{城市内水体数据}\label{城市内水体数据}
 基于与城市树覆盖同样的原因，水体数据也需要尽量选择高分辨率数据，30米全球地表覆盖数据GlobeLand30是中国研制的30米空间分辨率全球地表覆盖数据，
 2014年发布GlobeLand30 2000和2010版。自然资源部于2017年启动对该数据的更新。目前，GlobeLand30 2020版已发布(http://www.globallandcover.com/)。
 除极地地区外，GlobeLand30同样采用了UTM投影，因此需要进行投影转换，
-其中数据覆盖如图 \ref{fig:GlobeLand30数据覆盖示意图} 所示(除2020年外，其他年份不包含极地地区数据)。
+其中数据覆盖如图~\ref{fig:GlobeLand30数据覆盖示意图} 所示(除2020年外，其他年份不包含极地地区数据)。
 该数据集水体精度最高，达到了92.09\% \citep{陈军2017}，且时空分辨率高，
 因此投影转换后用同样的方法生成了水体覆盖度数据作为城市模式的原始数据。
 {
@@ -299,19 +303,18 @@ GFCC Tree Cover (https://lpdaac.usgs.gov/products/gfcc30tcv003/)提供了
 \label{fig:GlobeLand30数据覆盖示意图}
 \end{figure}
 }
+
 \subsection{城市树高数据}\label{城市树高数据}
-树高数据使用的 \citet{simard2011mapping} 全球树高数据，分辨率为1km。除该数据外， \citep{potapov2021mapping} 
+树高数据使用的 \citet{simard2011mapping} 全球树高数据，分辨率为1km。除该数据外， \citet{potapov2021mapping} 
 利用GEDI卫星数据反演的30m树高数据也同样作为模式树高数据。但由于卫星运行轨道限制，
-该数据目前只发布了51.6$^\circ$N$\sim$51.6$^\circ$S范围内的数据，北半球高纬度地区数据缺失，因此目前该数据集仅作为备用数据。
+该数据目前只发布了51.6\textdegree N$\sim$51.6\textdegree S范围内的数据，北半球高纬度地区数据缺失，因此目前该数据集仅作为备用数据。
+
 \subsection{城市LAI/SAI数据}\label{城市LAISAI数据}
-由于城市中建筑物的遮掩，卫星反演数据中城市$LAI$存在一定问题，目前模式中城市$LAI$数据利用以下公式根据0.5$^\circ$范围内的其它PFT (只考虑树，即1-9类PFT)的$LAI$/$SAI$，通过插值并加权平均的办法为城市地区$LAI$/$SAI$赋值：
+由于城市中建筑物的遮掩，卫星反演数据中城市 LAI 存在一定问题，目前模式中城市 LAI 数据利用以下公式根据 0.5\textdegree 范围内的其它PFT (只考虑树，即1-9类PFT)的 LAI/SAI，通过插值并加权平均的办法为城市地区LAI/SAI赋值：
 \begin{equation}
 L A I_{u r}=\sum_{i=1}^{9} L A I_{P F T_{-} i} \cdot \frac{H T O P_{u r}}{H T O P_{P F T_{-} i}} \cdot P C T_{P F T_{-} i}
 \end{equation}
 其中$LAI_{PFT_{-}i}$为PFT的LAI(SAI)，$HTOP_{ur}$和 $HTOP_{PFT_{-} i}$分别为城市树高和PFT树高，$PCT_{PFT_{-} i}$为PFT占比。城市树木SAI数据采用同样的方法进行计算。
-
-
-
 
 
 %\end{地表输入数据}

@@ -15,7 +15,7 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{etoolbox}
-\usepackage[hidelinks]{hyperref}
+
 \makeatletter
 \patchcmd{\NAT@test}{\else\NAT@nm}{\else\NAT@nmfmt{\NAT@nm}}{}{}
 \let\NAT@up\itshape
@@ -37,6 +37,7 @@
 %\input{uhead.sty}
 \input{boxit.sty}
 \input{icthesis.sty}
+\usepackage[hidelinks]{hyperref}
 
 \setCJKfamilyfont{jamspmi}{MS PMincho}
 \setCJKfamilyfont{jaIPAmi}{IPAMincho}

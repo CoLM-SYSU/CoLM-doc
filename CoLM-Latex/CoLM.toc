@@ -1,3 +1,6 @@
+\contentsline {chapter}{目录}{i}{chapter*.1}%
+\contentsline {chapter}{表格}{ix}{chapter*.2}%
+\contentsline {chapter}{插图}{xiii}{chapter*.3}%
 \contentsline {chapter}{\numberline {第1章\hspace {.3em}}模式结构}{1}{chapter.1}%
 \contentsline {chapter}{\numberline {第2章\hspace {.3em}}地表输入数据}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}地表覆盖数据}{3}{section.2.1}%
@@ -159,10 +162,10 @@
 \contentsline {subsection}{\numberline {17.7.2}人体代谢热}{250}{subsection.17.7.2}%
 \contentsline {subsection}{\numberline {17.7.3}交通热}{250}{subsection.17.7.3}%
 \contentsline {chapter}{\numberline {第18章\hspace {.3em}}土地利用与土地覆盖变化模拟}{252}{chapter.18}%
-\contentsline {chapter}{附录}{253}{Item.80}%
+\contentsline {chapter}{附录}{254}{Item.80}%
 \contentsline {chapter}{\numberline {附录 A\hspace {.3em}}模式相关物理常数/参数}{254}{appendix.A}%
 \contentsline {chapter}{\numberline {附录 B\hspace {.3em}}USGS地表覆盖类型相关参数}{256}{appendix.B}%
 \contentsline {chapter}{\numberline {附录 C\hspace {.3em}}IGBP地表覆盖类型相关参数}{266}{appendix.C}%
 \contentsline {chapter}{\numberline {附录 D\hspace {.3em}}植被功能型(PFT)相关参数}{275}{appendix.D}%
 \contentsline {chapter}{\numberline {附录 E\hspace {.3em}}植物群落(PC)次网格PFT相关参数}{281}{appendix.E}%
-\contentsline {chapter}{参考文献}{281}{table.caption.95}%
+\contentsline {chapter}{参考文献}{283}{appendix*.96}%
