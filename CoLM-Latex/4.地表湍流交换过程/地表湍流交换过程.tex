@@ -254,26 +254,27 @@ LZD2022方案曲线与Zeng1998方案的不稳定条件曲线相交(图 \ref{fig:
 \begin{equation}
      \zeta_{m}=\frac{-16-\sqrt{256+4 \left(B_{m}\right)^{-4}}}{2 \left(B_{m}\right)^{-4}}
 \end{equation}
+当相交点$\zeta_{m}=-0.13$时，$B_{m}=0.2722$。
 
 结合LZD2022和Zeng1998方案，不稳定条件下($\zeta<0$)通用函数$\phi_{m}$有如下表达式：
 \begin{equation}
-\left\{\begin{array}{lr}\phi_{m}(\zeta)=B_{m}(-\zeta)^{-1/2}, & \zeta<\zeta_{m2} \text {时} \\
+\left\{\begin{array}{lr}\phi_{m}(\zeta)=B_{m2}(-\zeta)^{-1/2}, & \zeta<\zeta_{m2} \text {时} \\
       \phi_{m}(\zeta)=(1-16 \zeta)^{-1/4}, & \zeta_{m2} \leq \zeta<0 \text {时} \\
        \end{array}\right.
 \end{equation}
-其中$\zeta_{m2}=\min(\zeta_{m},-0.13)$，稳定条件下的$\phi_{m}$则直接采用方程(\ref{phim_zeng})中形式。基于风速廓线方程(\ref{Va})，注意当
+其中$B_{m2}=\max(B_{m},0.2722)$，$\zeta_{m2}=\min(\zeta_{m},-0.13)$，稳定条件下的$\phi_{m}$则直接采用方程(\ref{phim_zeng})中形式。基于风速廓线方程(\ref{Va})，注意当
 $\zeta_{atm}=\frac{z_{atm,m}-d}{L}<\zeta_{m2}$时，方程(\ref{Va})中的$\psi_{m}\left(\zeta_{atm}\right)$为：
 \begin{align}
 \psi_{m}\left(\zeta_{atm}\right) =& \int_{{z_{0x}}/{L}}^{\zeta_{atm}} \frac{1-\phi_{m}(s)}{s} d s  \nonumber \\
  =& \int_{{z_{0x}}/{L}}^{\zeta_{m2}} \frac{1-\phi_{m}(s)}{s} d s + \int_{\zeta_{m2}}^{\zeta_{atm}} \frac{1-\phi_{m}(s)}{s} d s  \nonumber \\
- =& \psi_{mu}(\zeta_{m2}) + \int_{\zeta_{m2}}^{\zeta_{atm}} \frac{1-B_{m}(-s)^{-1/2}}{s} d s  \nonumber \\
- =& \psi_{mu}(\zeta_{m2}) + \ln \frac{\zeta_{atm}}{\zeta_{m2}} + 2B_{m}\left[(-\zeta_{atm})^{-1/2}-(-\zeta_{m2})^{-1/2}\right]
+ =& \psi_{mu}(\zeta_{m2}) + \int_{\zeta_{m2}}^{\zeta_{atm}} \frac{1-B_{m2}(-s)^{-1/2}}{s} d s  \nonumber \\
+ =& \psi_{mu}(\zeta_{m2}) + \ln \frac{\zeta_{atm}}{\zeta_{m2}} + 2B_{m2}\left[(-\zeta_{atm})^{-1/2}-(-\zeta_{m2})^{-1/2}\right]
 \end{align}
 可得到风速廓线在不稳定条件下的具体形式：
 
 \noindent 当$\zeta_{atm}<\zeta_{m2}$时
 \begin{equation}\label{Va_U_LZD1}
-V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{L\zeta_{m2}}{z_{0 m}}-\psi_{mu}\left(\zeta_{m2}\right)-2B_{m}\left[(-\zeta_{atm})^{-1/2}-(-\zeta_{m2})^{-1/2}\right]+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
+V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{L\zeta_{m2}}{z_{0 m}}-\psi_{mu}\left(\zeta_{m2}\right)-2B_{m2}\left[(-\zeta_{atm})^{-1/2}-(-\zeta_{m2})^{-1/2}\right]+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 \noindent 当$ \zeta_{m2} \leq \zeta_{atm}<0$时
 \begin{equation}\label{Va_U_LZD2}
@@ -587,7 +588,7 @@ c_{v}^{w}=\frac{1}{r_{{total }}}=\frac{(\text {LAI}+\text {SAI})}{r_{b}}
 r_{a h}^{\prime}=r_{a w}^{\prime}=\frac{1}{C_{s} u_{*}}:=r_{\mathrm{d}}
 \end{equation}
 其中$C_s$表示地表与植被冠层空气之间的湍流交换系数，它由裸土表面的数值与浓密植被覆盖时的数值进行线性组合得到 \citep{zeng2005vegetation}：
-$C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\exp {-\left(LAI+SAI\right)}$，
+$C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\exp {-\left(\text{LAI}+\text{SAI}\right)}$，
 浓密植被覆盖时的湍流交换系数$C_{s,dense}=0.004$，裸土表面的湍流交换系数$C_{s,bare}=\frac{k}{0.13}\left(\frac{z_{0m,g}u_\ast}{\upsilon}\right)^{-0.45}$，
 其中空气动力学粘性系数$\upsilon=1.5\times{10}^{-5}$m$^2$/s，地表粗糙度$z_{0m,g}=0.01$。再次，对于叶面边界层阻抗$r_b$，计算公式为：
 \begin{equation}
