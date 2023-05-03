@@ -49,26 +49,26 @@ CF_{gr,total}=NPP \cdot 0.11
 CoLM碳分配首先满足维持呼吸($CF_{mr,total}$)的需求，其次碳分配需要填补由于夜间或冬天光合作用少于维持呼吸所造成的碳存储亏缺，
 最后剩余碳分配才能用于植被各营养器官库的生长。所以由光合作用支持的维持呼吸碳供给($CF_{GPP,mr}$)可以表达为：
 \begin{equation}\label{F_GPP_mr}
-CF_{GPP,mr}=\left\{\begin{array}{c}CF_{mr, total}\left(CF_{mr, total} \leq CF_{GPP}\right) \\ CF_{GPP}\left(CF_{mr,total}>CF_{GPP}\right)\end{array}\right.
+CF_{GPP,mr}=\left\{\begin{array}{cl}CF_{mr, total} & \text{当}\quad CF_{mr, total} \leq CF_{GPP} \\ CF_{GPP} & \text{当}\quad CF_{mr,total}>CF_{GPP} \end{array}\right.
 \end{equation}
 其中，$CF_{GPP}$代表实际光合作用碳收入，正常情况，$CF_{GPP}\geq CF_{mr,\ total}$,
 维持呼吸的消耗($CF_{mr,total}$)可以完全由光合作用($CF_{GPP}$)提供。
 但夜间和冬天光合作用的碳收入通常会低于呼吸作用的碳消耗，维持呼吸仅部分由光合作用支持，另外一部分($CF_{xs,mr}$)由植被呼吸碳储存库($CS_{xs}$)支持：
 \begin{equation}\label{CF_xs_mr}
-CF_{xs, mr}=\left\{\begin{array}{c}0\left(CF_{mr, total} \leq CF_{GPP}\right) \\ CF_{mr, total}-CF_{GPP}\left(CF_{mr, total}>CF_{GPP}\right)\end{array}\right.
+CF_{xs, mr}=\left\{\begin{array}{cl}0 & \text{当}\quad CF_{mr, total} \leq CF_{GPP} \\ CF_{mr, total}-CF_{GPP} & \text{当}\quad CF_{mr, total}>CF_{GPP}\end{array}\right.
 \end{equation}
 联合公式(\ref{F_GPP_mr})和(\ref{CF_xs_mr})，可以保证维持呼吸的碳平衡关系：
 \begin{equation}
 CF_{GPP, mr}+CF_{xs, mr}=CF_{mr, total}
 \end{equation}
+
+
 \subsection{用于植被呼吸的碳储存库}
 植被呼吸的碳储存库($CS_{xs}$)会根据光合作用对维持呼吸的亏缺和补充进行更新，其每个时间步长的变化量($\Delta CS_{xs}$)可表示为：
 \begin{equation}
 \Delta CS_{xs}=\left(CF_{GPP, xs}-CF_{xs, mr}\right) \cdot \Delta t
 \end{equation}
 $\Delta t$代表模型时间步长，$CF_{GPP,xs}$是光合作用对植被的呼吸碳储存库($CS_{xs}$)的补充。
-
-
 
 由于光合作用对维持呼吸存在亏缺的可能性，植被的呼吸碳储存库($CS_{xs}$)也存在负值。
 光合作用对植被呼吸碳存储库($CS_{xs}$)的补充($CF_{GPP,xs}$)仅当该库为负值时存在，并且须首先满足维持呼吸的需要。
@@ -77,7 +77,9 @@ CF_{GPP, xs}=\left\{\begin{array}{ll}0 & CS_{xs} \geq 0 \\ \min \left(-\frac{CS_
 \end{equation}
 其中$\tau_{xs}=30$天，$-\frac{CS_{xs}}{86400 \tau_{xs}}$代表如果光合作用碳收入充足，最快需要30天将亏缺的植被呼吸碳存储库($CS_{xs}$)填补上。
 当然，如果扣除维持呼吸后的碳收入不足以维持$-\frac{CS_{xs}}{86400 \tau_{xs}}$，其补充的碳通量为光合作用扣除维持呼吸后的剩余碳收入，
-即$max{\left(CF_{GPP}-CF_{GPP,mr},0\right)}$。
+即$\max{\left(CF_{GPP}-CF_{GPP,mr},0\right)}$。
+
+
 \subsection{植被的碳氮生长分配比例}
 用于植被生长的碳收入，即可分配碳($CF_{avail_alloc}$)，是光合作用碳通量($CF_{GPP}$)扣除维持呼吸($CF_{GPP,mr}$)和对植被呼吸碳存储的补充($CF_{GPP,xs}$)后的剩余碳收入：
 \begin{equation}
@@ -97,8 +99,6 @@ CF_{ {availalloc }}=CF_{GPP}-CF_{GPP, mr}-CF_{GPP, xs}
 \end{enumerate}
 
 因此，随着$NPP$增加，植被倾向于将更多的碳分配给茎 \citep{allen2005,vanninen2005carbon}。
-
-
 因此叶片的单位碳生长需要植被的总碳输入是：
 \begin{equation}\label{C_allom}
 C_{ {allom }}=\left\{\begin{array}{lr}\left(1+g_{l}\right)\left(1+a_{1}+a_{3}\left(1+a_{2}\right)\right) &  \text{ woody } \text{PFT} \\ 
@@ -262,10 +262,16 @@ $deadstem$，$deadsteam_{storage}$，$livecroot$，$livecroot_{storage}$，$dead
  和$deadcroot_{storage}$分别代表叶库、叶存储库、细根库、细根存储库、活茎库、
  活茎存储库、死茎库、死茎存储库、活粗根库、活粗根存储库、死粗根库和死粗根存储库的新生长氮含量。
 
+
 \section{植被物候过程的耦合预报方案}\label{植被物候过程的耦合预报方案}
 CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，模拟叶面积指数的季节变化特征。
+
+
 \subsection{模型中的基本物候变量和概念}\label{模型中的基本物候变量和概念}
-a.	发芽展叶期\\
+
+\begin{enumerate}
+\renewcommand{\theenumi}{\alph{enumi}}
+\item 发芽展叶期\\
 CoLM物候过程模块假设落叶植被功能型存在发芽展叶期，即叶面积指数伴随着叶碳库在10多天的发芽展叶期内逐渐增加。发芽初期，非结构存储库将其一半的碳存储转给碳传输库，
 在随后10多天时间里，碳传输库逐渐将碳转移给组织库，以模拟叶碳含量在此期间逐渐升高的发芽现象。模拟上通过控制从传输库$CS_{i_{xfer}}$
 到组织库$CS_i$的碳转移通量$CF_{i_{xfer}\rightarrow i}$来实现
@@ -310,18 +316,18 @@ $deadcroot$分别代表叶、细根、活茎、死茎、活粗根和死粗根)�
 \end{equation}
 其中，$r_{{xfer}_{on}}$是控制传输库碳转移到组织库速率的变量($s-1$)，是随时间变化的变量。
 \begin{equation}
-r_{xfer_{o} n}=\left\{\begin{array}{ll}\frac{2}{t_{ {onset}}} &  { 当 } t_{ {onset}} \neq \Delta t \\ \frac{1}{\Delta t} &  { 当 } t_{onset}=\Delta t\end{array}\right.
+r_{xfer_{o} n}=\left\{\begin{array}{ll}\frac{2}{t_{ {onset}}} &  \text{ 当 }  t_{ {onset}} \neq \Delta t \\ \frac{1}{\Delta t} &  \text{ 当 }  t_{onset}=\Delta t\end{array}\right.
 \end{equation}
 $t_{onset}$以倒计时的形式记录发芽展叶期还剩多少秒，$\Delta t$是模型时间步长$t_{onset}\neq\Delta t$时，
 $\frac{2}{t_{onset}}$随着时间的推移转移速率，
 即叶片生长速率逐渐加快；$t_{onset}=\Delta t$时为发芽展叶期最后一个时间步长，所有传输库都将转移给组织库。\\
-b.落叶期 \\
+\item 落叶期 \\
 CoLM物候模块同样假设落叶植被功能型存在落叶期，在落叶期内，叶碳库和细根碳库在为期10多天时间里逐渐降为0：
 \begin{equation}
-CF_{ {leaf,litter }}^{n}=\left\{\begin{array}{ll}CF_{ {leaf,litter }}^{n-1}+r_{xfer_{off}}\left(CS_{ {leaf }}-CF_{ {leaf }}^{n-1} t_{ {offset }}\right) &  { 当 } t_{ {offset }} \neq \Delta t \\ \frac{CS_{ {leaf }}}{\Delta t}+CF_{ {alloc,leaf }} &  { 当 } t_{offset}=\Delta t\end{array}\right.
+CF_{ {leaf,litter }}^{n}=\left\{\begin{array}{ll}CF_{ {leaf,litter }}^{n-1}+r_{xfer_{off}}\left(CS_{ {leaf }}-CF_{ {leaf }}^{n-1} t_{ {offset }}\right) & \text{ 当 }  t_{ {offset }} \neq \Delta t \\ \frac{CS_{ {leaf }}}{\Delta t}+CF_{ {alloc,leaf }} &  \text{ 当 }  t_{offset}=\Delta t\end{array}\right.
 \end{equation}
 \begin{equation}
-CF_{ {froot },  { litter }}^{n}=\left\{\begin{array}{ll}CF_{ {froot }, l i t t e r}^{n-1}+r_{xfer_{o} f f}\left(CS_{ {froot }}-CF_{ {froot }}^{n-1} t_{offset}\right) &  { 当 } t_{offset} \neq \Delta t \\ \frac{CS_{ {froot }}}{\Delta t}+CF_{ {alloc,froot }} &  { 当 } t_{offset}=\Delta t\end{array}\right.
+CF_{ {froot },  { litter }}^{n}=\left\{\begin{array}{ll}CF_{ {froot }, litter}^{n-1}+r_{xfer_{o} f f}\left(CS_{ {froot }}-CF_{ {froot }}^{n-1} t_{offset}\right) &  \text{ 当 }  t_{offset} \neq \Delta t \\ \frac{CS_{ {froot }}}{\Delta t}+CF_{ {alloc,froot }} &  \text{ 当 }  t_{offset}=\Delta t\end{array}\right.
 \end{equation}
 \begin{equation}
 r_{xfer_{o} f f}=\frac{2 \Delta t}{t_{offset}^{2}}
@@ -331,7 +337,6 @@ $CF_{froot,litter}^{n-1}$和$CF_{froot,litter}^n$分别代表上一个模拟时�
 $t_{offset}$以倒计时的形式记录落叶期还剩多少秒。$CS_{leaf}$和$CS_{froot}$代表组织库的叶碳和细根碳含量，将随着落叶期的推进逐渐下降。
 另外，落叶期的凋落速率参数($r_{{xfer}_{off}}$)将随时间逐渐增加。$t_{offset}=\Delta t$时为落叶期最后一个时间步长，
 所有叶和细根组织库内的所有碳氮都将凋落。
-
 
 叶氮和细根氮库在落叶期的凋落通量($NF_{leaf,litter}$,$NF_{froot,litter}$)
 还与叶和根的碳氮比($CN_{leaf}$和$CN_{froot}$)息息相关，同时，
@@ -347,7 +352,6 @@ N F_{froot,litter}=\frac{CF_{froot,litter}}{CN_{froot}}
 N F_{leaf, retrans}=\frac{CF_{leaf,litter}}{CN_{leaf}}-NF_{leaf,litter}
 \end{equation}
 
-
 落叶植被功能型的发芽展叶期和落叶期一般成对出现，其触发条件和温度、
 土壤湿度以及落叶植被类型有关，详细描述在章节 \ref{季节落叶植被的物候} 和 \ref{物候凋落物} 中介绍。物候示意图如图\ref{fig:CoLM物候示意图}。\\
 
@@ -359,7 +363,8 @@ N F_{leaf, retrans}=\frac{CF_{leaf,litter}}{CN_{leaf}}-NF_{leaf,litter}
 \label{fig:CoLM物候示意图}
 \end{figure}
 }
-c. 活茎周转\\
+
+\item 活茎周转\\
 CoLM物候模块中，在活茎的周转过程中，活茎细胞或活粗根最终死亡后变成死茎库或死粗根库的组成部分，
 因此，活茎或活粗根碳每年固定比例($r_{lwt}$)进入死茎库或死粗根库：
 \begin{equation}
@@ -383,7 +388,6 @@ N F_{livecroot,deadcroot}=CS_{livecroot} r_{lwt} / CN_{d w}
 其中，$NF_{livestem,deadstem}$是活茎死亡变成死茎的氮，
 $NF_{livecroot,deadcroot}$是活粗根死亡变成死粗根的氮，$CN_{dw}$是死茎和死粗根的碳氮比。
 
-
 由于活茎和活粗根的碳氮比低于死茎和死粗根的碳氮比，所以从活茎或活粗根到死茎或死粗根的氮将会有一部分结余，存入植被再利用氮库：
 \begin{equation}
 N F_{ {livestem,retrans }}=\left(\frac{CF_{ {livestem,deadstem }}}{CN_{lw}}\right)-N F_{ {livestem,deadstem }}
@@ -392,6 +396,10 @@ N F_{ {livestem,retrans }}=\left(\frac{CF_{ {livestem,deadstem }}}{CN_{lw}}\righ
 N F_{ {livecroot,retrans }}=\left(\frac{CF_{ {livecroot,deadcroot }}}{CN_{lw}}\right)-N F_{ {livecroot,deadcroot }}
 \end{equation}
 其中，$NF_{livestem,retrans}$是活茎死亡时回收再利用的氮，$NF_{livecroot,retrans}$是活粗根死亡时回收再利用的氮。
+
+\end{enumerate}
+
+
 \subsection{常绿植被的物候}\label{常绿植被的物候}
 常绿植被功能型假设光合作用的净碳收入以及从土壤中的氮摄取直接分配给叶、细根、活茎和活粗茎的组织库。
 代表非结构碳库的存储库和传输库将不会有任何碳存储。常绿植被功能型不存在特别的发芽展叶期和落叶期，
@@ -417,18 +425,20 @@ N F_{froot,litter}=CS_{froot,litter} / CN_{froot}
 \begin{equation}
 N F_{leaf,retrans}=\left(\frac{CF_{leaf,litter }}{CN_{leaf}}\right)-N F_{leaf,litter}
 \end{equation}
+
+
 \subsection{季节落叶植被的物候}\label{季节落叶植被的物候}
 季节落叶植被功能型根据积温计算植被物候的发芽展叶期和落叶期，CoLM定义季节性落叶植被功能型仅存在于纬度大于19.5度非赤道区域。
 季节性落叶植被功能型假设植被每年仅存在一次发芽展叶期和落叶期。由于南北半球冬夏反季，
 所以，通过白昼时长的变化判断冬季转变节点，积温($GDD$)的计算在冬季转变节点开始累积\citep{white1997continental}：
 \begin{equation}
-GDD _{sum}^{n}=\left\{\begin{array}{ll}GDD _{sum}^{n-1}+T_{s, 3} \cdot \Delta t \cdot 86400 & T_{s, 3} \geq 0^{\circ}{C} \\ GDD _{sum}^{n-1} & T_{s, 3}<0^{\circ}{C}\end{array}\right.
+GDD _{sum}^{n}=\left\{\begin{array}{ll}GDD _{sum}^{n-1}+T_{s, 3} \cdot \Delta t \cdot 86400 & T_{s, 3} \geq \text{0 \textcelsius} \\ GDD _{sum}^{n-1} & T_{s, 3}< \text{0 \textcelsius}\end{array}\right.
 \end{equation}
 其中$GDD_{sum}^n$是第$n$天后的积温，积温通过对高于0 \textcelsius 的第三层土壤温度($T_{s,3}$) (\textcelsius)进行累加。
 当$GDD_{sum}^n>{GDD}_{sum_{crit}}$时，季节性落叶树开始发芽展叶期。${GDD}_{sum_{crit}}$为发芽物候关键参量，
 与前一年的温度($T_{2m,ann_{avg}}$) (\textcelsius)有关：
 \begin{equation}
-GDD _{sum_{c r i t}}=\exp \left(4.8+0.13 \cdot T_{2 m, ann_{avg}}\right)
+GDD _{sum_{crit}}=\exp \left(4.8+0.13 \cdot T_{2 m, ann_{avg}}\right)
 \end{equation}
 当发芽展叶期开始时，积温${GDD}_{sum}$重设为0，发芽展叶期倒计时重设：
 \begin{equation}
@@ -549,7 +559,7 @@ t_{offset}^{n}=t_{offset}^{n-1}-\Delta t
 \end{equation}
 
 \begin{equation}
-L G S=\left\{\begin{array}{cc}0 &  { 当 } n_{ {days }_{active}}<365 \\ \left.\frac{n_{ {days_{active}}}}{365}-1\right) &  { 当 } 365 \leq n_{ {days }_{active} }<730 \\ 1 &  { 当 } n_{ {days}_{active}} \geq 730\end{array}\right.
+L G S=\left\{\begin{array}{cc}0 &  \text{ 当 } n_{ {days }_{active}}<365 \\ \left.\frac{n_{ {days_{active}}}}{365}-1\right) &  \text{ 当 } 365 \leq n_{ {days }_{active} }<730 \\ 1 & \text{ 当 } n_{ {days}_{active}} \geq 730\end{array}\right.
 \end{equation}
 $n_{days_{active}}$是植被只从上次发芽开始的天数。
 

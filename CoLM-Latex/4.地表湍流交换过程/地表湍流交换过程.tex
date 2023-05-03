@@ -519,9 +519,7 @@ r_{b}=\frac{1}{c_{v}}\left(u_{*} / d_{{leaf }}\right)^{-0.5}
       \frac{\rho_{atm}}{r_{a w}^{\prime}} \frac{c_{a}^{w}+c_{v}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{d q_{g}}{d T_{g}}\end{array}
 \end{equation}
 其中$\frac{dq_g}{dT_g}=\left[\left(1-f_{sno}\right)\alpha_{soil}+f_{sno}\right]\frac{q_{sat}^{T_g}}{dT_g}$，
-$\frac{q_{sat}^{T_g}}{dT_g}$的计算见章节 \ref{饱和水汽压(比湿)及其随温度的变化}。阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$对于温度的变化率无法解析给出，故暂时忽略。
-
-
+$\frac{q_{sat}^{T_g}}{dT_g}$的计算见章节~\ref{饱和水汽压(比湿)及其随温度的变化}。阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$对于温度的变化率无法解析给出，故暂时忽略。
 
 
 \section{三维植被湍流交换模型}
@@ -546,7 +544,7 @@ CoLM2014假设$d$和$z_0$与植被高度成固定比例，即$d=\frac{2}{3}h$，
 其中$C_S=0.003$，为无植被情况时$h$高度的拖曳系数；$C_R$为植被覆盖区域的拖曳系数。$\lambda$表示植被迎风面积($FAI$)，计算为$1-\exp{\left(-0.5 \cdot LSAI\right)}$。
 
 
-CoLM2014假设$r_b$和$r_d$分别与$u_\ast^{0.5}$和$u_\ast$成正比例关系，
+CoLM2014 假设$r_b$和$r_d$分别与$u_\ast^{0.5}$和$u_\ast$成正比例关系，
 但这不一定适合稀疏植被，本版本中$r_b$和$r_d$是通过对冠层下的风速($u$)和湍流交换系数($K$)剖面积分计算得到 \citep{dai2019different}。
 $u$和$K$的廓线是基于指数衰减假设\citep{inoue1963turbulent,cowan1968mass}。
 另外对近地表廓线进行了一定的订正，保证$u$和$K$满足到达地面时趋于0 \citep{dai2019different}。$u$和$K$的廓线函数分别表示为：
@@ -619,11 +617,13 @@ u(z)=f_{c} \cdot \min \left(u_{\exp }(z), u_{comb}(z)\right)+\left(1-f_{c}\right
 \frac{1}{K(z)}=f_{c} \cdot \frac{1}{\min \left(K_{\exp}(z), K_{comb}(z)\right)}+\left(1-f_{c}\right) \cdot \frac{1}{K_{comb}}
 \end{equation}
 $u_{comb}$和$K_{comb}$同公式 (\ref{ucomb}) 和 (\ref{kcomb})。
+
+
 \subsection{多层植被湍流交换}
-多层植被湍流计算是以单层植被计算为基础，总体阻抗网络如图\ref{fig:三层植被湍流交换示意图}所示。
+多层植被湍流计算是以单层植被计算为基础，总体阻抗网络如图~\ref{fig:三层植被湍流交换示意图}所示。
 风速$u$和湍流交换系数$K$廓线从最上层植被往下进行计算。上一层底部的廓线值作为下层植被顶部的值。
 $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
-但积分区间对应到每层植被的等效交换高度(图 \ref{fig:三层植被湍流交换示意图} 中$T_{s1}$、$T_{s2}$、$T_{s3}$位置所示)。
+但积分区间对应到每层植被的等效交换高度(图~\ref{fig:三层植被湍流交换示意图} 中$T_{s1}$、$T_{s2}$、$T_{s3}$位置所示)。
 该交换高度计算为该层植被100\%覆盖时的$d+z_0$值。在每一层等效交换高度，建议通量(感热H和潜热$\lambda E$)守恒方程，
 即该点与上层通量交换量等于下层交换量加上该层植被的通量交换量。联立每层在等效高度建立的方程，迭代求解每种植被叶片温度。
 {
@@ -638,8 +638,8 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 
 通过以上介绍可以看出，三维植被湍流交换与一维植被湍流交换最大的不同在于其计算的对象由原来单一植被扩展到多个分层植被，
 阻抗网络发生变化，多种植被在同一环境下同时求解。在计算时，同一维植被一样，需要用到植被短波辐射吸收量和长波辐射吸收量，
-此时利用章节 \ref{三维植被辐射传输模型} 和 \ref{三维植被长波辐射传输} 对三维植被辐射传输计算结果。整个植被冠层与大气的湍流交换同样采用相似性理论进行求解，
-其求解过程如图 \ref{fig:三维植被湍流交换模型计算流程图}所示。
+此时利用章节~\ref{三维植被辐射传输模型} 和 \ref{三维植被长波辐射传输} 对三维植被辐射传输计算结果。整个植被冠层与大气的湍流交换同样采用相似性理论进行求解，
+其求解过程如图~\ref{fig:三维植被湍流交换模型计算流程图}所示。
 {
 \begin{figure}[]
 \centering
@@ -648,8 +648,6 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 \label{fig:三维植被湍流交换模型计算流程图}
 \end{figure}
 }
-
-
 
 
 \section{饱和水汽压(比湿)及其随温度的变化}\label{饱和水汽压(比湿)及其随温度的变化}
@@ -667,7 +665,7 @@ q_{s a t}^{T}=\frac{0.622 e_{s a t}^{T}}{P_{atm}-0.378 e_{s a t}^{T}}
 \begin{equation}
 \frac{d q_{{sat }}^{T}}{d T}=\frac{0.622 P_{atm}}{\left(P_{atm}-0.378 e_{{sat }}^{T}\right)^{2}} \frac{d e_{{sat }}^{T}}{d T}
 \end{equation}
-其中固态水($-75$\textcelsius$\le T<0$\textcelsius)与液态水($0$\textcelsius $\le T\le100$\textcelsius)情形对应的拟合系数见
+其中固态水($-75$ \textcelsius $\le T < 0$ \textcelsius)与液态水($0$ \textcelsius $\le T\le100$ \textcelsius)情形对应的拟合系数见
 表 \ref{tab:e_sat_T的拟合系数} 和 \ref{tab:de_sat_dT的拟合系数}。
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
