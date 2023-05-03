@@ -3,7 +3,7 @@
 
 %\begin{地表湍流交换过程}
 \section{基本理论}\label{基本理论}
-本部分的对应代码为\texttt{groundfluxes.F90}、\texttt{FRICTION\_VELOCITY.F90}和\texttt{LEAF\_temperature.F90}。
+本部分的对应代码为\texttt{groundfluxes.F90}、\texttt{FRICTION\-\_VELOCITY.F90}和\texttt{LEAF\-\_temper\-ature.F90}。
 
 在近地面层(距离地面几米到几十米高度)中，地面与大气在垂直方向存在显著的湍流输运，且输运通量与风向几乎不随高度变化(亦称常通量性)。计算中引入了尺度因子，则近地面层的动量$\left|\tau\right|$ ($\rm kg/m/s^2$)、热量 $H$ ($\rm W/m^2$)与水汽 $E$ ($\rm kg/m^2/s$)的湍流输运通量可表示为：
 \begin{equation}
@@ -166,10 +166,12 @@ $R_{ib}$与$\zeta$的关系为$R_{ib}=\zeta[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}
 $\psi_m(\zeta)$与$\psi_h(\zeta)$由不稳定条件下$\phi_h\left(\zeta\right)=\phi_m^2\left(\zeta\right)=\left(1-16\zeta\right)^{-\frac{1}{2}}$ 
 与稳定条件下$\phi_h\left(\zeta\right)=\phi_m\left(\zeta\right)=1+5\zeta$确定。将$\zeta$表达为$R_{ib}$的函数，即得到
 \begin{equation}
-\left\{\begin{array}{c}\zeta=\frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)} \ \ \ \ \ \ \  10^{-6} \leq \zeta \leq 2 R_{i b} \geq 0 \text{（即中性或稳定条件下）}
-    \\ \zeta=R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right) \ \ \ \ \ \ \ \ -100 \leq \zeta \leq-10^{-6} R_{i b}<0 \text{（即中性或稳定条件下）}\end{array}\right.
+\zeta=
+\left\{\begin{array}{ll}\frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)} & 10^{-6} \leq \zeta \leq 2, R_{i b} \geq 0  \, \text{（即中性或稳定条件下）}
+    \\ R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right) & -100 \leq \zeta \leq-10^{-6}, R_{i b}<0 \, \text{（即中性或稳定条件下）}\end{array}\right.
 \end{equation}
 通过$R_{ib}$计算得到$\zeta$即可求得$L=\frac{z_{atm,m}-d}{\zeta}$。
+
 以上给出了$u_\ast$、$\theta_\ast$、$q_\ast$的求解过程，于是大气强迫参考高度与地表的动量、感热和水汽通量即可通过其定义求得。
 事实上，根据$u_\ast$、$\theta_\ast$、$q_\ast$的表达形式，动量通量$\tau$、感热通量$H$和水汽通量$E$可写为如下阻抗形式：
 \begin{equation}
@@ -208,7 +210,7 @@ u_{10 m}=\frac{u_{*}}{k}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\psi_{
 
 
 \section{无植被覆盖地表湍流通量的计算方案}\label{无植被覆盖地表湍流通量的计算方案}
-当陆地表面没有植被覆盖(即裸土、冰川、水体等表面)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算（表\ref{tab:物理常数} ）。
+当陆地表面没有植被覆盖(即裸土、冰川、水体等表面)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算（表~\ref{tab:物理常数chap4} ）。
 对于任一地表类型斑块，植被所占比例为$f_{veg}$(当前取值为0或1)，植被粗糙度为$z_{vm}$
 (表\ref{tab:USGS地表粗糙度和零平面位移}给出了按照USGS分类下的24种土地覆盖类型的对应参数值)，则被积雪掩埋的植被占总植被的比例为
 \begin{equation}
@@ -220,7 +222,7 @@ wt=\frac{0.1 z_{{sno}}}{z_{v m}+0.1 z_{{sno}}}
 \begin{table}[]
 \centering
 \caption{物理常数}
-\label{tab:物理常数}
+\label{tab:物理常数chap4}
 \begin{tabular}{lccc}
 \toprule
 变量名&缩写&数值&单位 \\\midrule

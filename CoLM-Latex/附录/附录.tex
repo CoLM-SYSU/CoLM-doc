@@ -225,7 +225,7 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
 % \usepackage{booktabs}
 \begin{sidewaystable}[]
     \centering
-    \caption{USGS植被光合作用参数。$V_{cmax}$表示植被冠层顶部25$\deg$C时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
+    \caption{USGS植被光合作用参数。$V_{cmax}$表示植被冠层顶部 25\textcelsius 时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
     $r_{base}$为叶基础呼吸速率系数(unitless)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，$s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
     \label{tab:USGS植被光合作用参数1}
     \begin{tabular}{@{}lccccccccccccccccccc@{}}
@@ -250,7 +250,7 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
 % \usepackage{booktabs}
 \begin{sidewaystable}[]
     \centering
-    \caption{USGS植被光合作用参数 (续)。$V_{cmax}$表示植被冠层顶部25$\deg$C时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2\ mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
+    \caption{USGS植被光合作用参数 (续)。$V_{cmax}$表示植被冠层顶部 25\textcelsius 时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2\ mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
     $r_{base}$为叶基础呼吸速率系数(unitless)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，$s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
     \label{tab:USGS植被光合作用参数2}
     \begin{tabular}{@{}lccccccccccccccccccc@{}}
@@ -313,7 +313,7 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{USGS植被根分布参数 (\citet{zeng2001global}方案)，$a$,$b$为用于计算根分布经验系数。}
+\caption{USGS植被根分布参数 (\citet{zeng2001global}方案)，$a$、$b$为用于计算根分布经验系数。}
 \label{tab:USGS植被根分布参数}
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -351,7 +351,7 @@ USGS地表覆盖类型     & $a$ & $b$ \\ \midrule
 % \usepackage{booktabs}
 \begin{table}[]
     \centering
-    \caption{IGBP地表覆盖植被顶部高度和底部高度值(当无植被高度数据读入时的默认高度)。}
+    \caption{IGBP地表覆盖植被顶部高度和底部高度值 (当无植被高度数据读入时的默认高度)。}
     \label{tab:IGBP地表覆盖植被顶部高度和底部高度值}
     \begin{tabular}{@{}lcc@{}}
     \toprule
@@ -381,11 +381,11 @@ USGS地表覆盖类型     & $a$ & $b$ \\ \midrule
 % \usepackage{booktabs}
 \begin{table}[]
     \centering
-    \caption{IGBP地表覆盖植被茎面积指数(当无植被茎面积指数数据读入时的默认值)。}
+    \caption{IGBP地表覆盖植被茎面积指数 (当无植被茎面积指数数据读入时的默认值)。}
     \label{tab:IGBP地表覆盖植被茎面积指数}
 \begin{tabular}{@{}lcc@{}}
 \toprule
-IGBP地表覆盖类型    & \text{茎面积指数}(m) & \text{植被底部高度}(m) \\ \midrule
+IGBP地表覆盖类型    & 茎面积指数 (m) & 植被底部高度 (m) \\ \midrule
 0 水体          & 2                   & 8.5                 \\
 1 常绿针叶林       & 2                   & 1                   \\
 2 常绿阔叶林       & 2                   & 8.5                 \\
@@ -410,7 +410,7 @@ IGBP地表覆盖类型    & \text{茎面积指数}(m) & \text{植被底部高度
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{IGBP地表覆盖粗糙度及零平面位移与植被高度比值 (为CoLM2014默认方案，目前版本使用公式(4.79), (4.80)和(4.92)。)。}
+\caption{IGBP地表覆盖粗糙度及零平面位移与植被高度比值 (为CoLM2014默认方案，目前版本使用公式 (\ref{dOh}), (\ref{zOh}) 和 (\ref{dooh})。}
 \label{tab:IGBP地表覆盖粗糙度及零平面位移与植被高度比值}
 \begin{tabular}{@{}lcc@{}}
 \toprule
