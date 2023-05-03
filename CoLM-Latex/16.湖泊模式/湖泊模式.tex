@@ -278,7 +278,7 @@ $A$,$B$分别表示来自湖泊风浪区长度$F$与湖泊深度$d$的限制：
 $A=-\left(\frac{Fg}{u^2}\right)^{1/3}/f_c，B=-\frac{\sqrt{dg}}{u}$，
 其中$u$表示大气参考高度风速(m/s)，$f_c=22$，$F(m)$依赖于湖泊深度，
 假定浅湖具有较小的湖泊风浪区，
-计算公式为：$F=\left\{\begin{array}{ll}100.0 & d<4.0 \\ 25.0 * d & d \geq 4.0\end{array}\right.$。
+计算公式为：$$F=\left\{\begin{array}{ll}100.0 & d<4.0 \\ 25.0 * d & d \geq 4.0\end{array}\right.$$
 
 
 根据 \citet{Zilitinkevich2001}，非冻结湖泊的热力和水汽粗糙度表达为：
@@ -288,8 +288,8 @@ z_{0 h}=z_{0 m} \exp \left\{-\frac{k}{P_{r}}\left(4 \sqrt{R_{0}}-3.2\right)\righ
 \begin{equation}
 z_{0 w}=z_{0 m} \exp \left\{-\frac{k}{s_{c}}\left(4 \sqrt{R_{0}}-4.2\right)\right\} \geq 10^{-5}
 \end{equation}
-其中$k$表示von Karman常数，$P_r=0.713$表示空气分子的$Prandtl$数，
-$S_c=0.66$表示空气中水分子的$Schmidt$数，
+其中$k$表示von Karman常数，$P_r=0.713$表示空气分子的 Prandtl 数，
+$S_c=0.66$表示空气中水分子的 Schmidt 数，
 $R_0=\frac{z_{0m}u_\ast}{\upsilon}\geq0.1$表示近地面大气雷诺数，$\upsilon$的计算方式同上。
 
 
@@ -301,7 +301,7 @@ G=\frac{2 \lambda_{s n l+1}}{\Delta z_{s n l+1}}\left(T_{g}-T_{s n l+1}\right)
 $\lambda_{snl+1}$表示湖泊顶层的热力传导率(W/m/K)。
 若顶层为雪层，$\lambda_{snl+1}$需考虑雪层的固态和液态含水量，计算见 \ref{温度求解的数值格式} 节；
 若顶层为湖泊层且湖泊层已冻结($T_g\le T_f$)，则$\lambda_{snl+1}=\lambda_{ice}$(见表 \ref{tab:物理常数})；
-若顶层为湖泊层且湖泊层未冻结($T_g>T_f$)，则$\lambda_{snl+1}$需同时考虑分子与大涡扩散率，计算见 \ref{雪层湖泊层土壤层温度的计算} 节。
+若顶层为湖泊层且湖泊层未冻结($T_g>T_f$)，则$\lambda_{snl+1}$需同时考虑分子与大涡扩散率，计算见~\ref{雪层湖泊层土壤层温度的计算} 节。
 
 
 湖泊表面吸收的净长波辐射$L_g$ ($\rm W/m^2$)可达表为：
@@ -314,7 +314,7 @@ L_{g} \uparrow=\left(1-\varepsilon_{g}\right) L \downarrow+\varepsilon_{g}
 \sigma\left(T_{g}^{(n)}\right)^{4}+4 \varepsilon_{g} 
 \sigma\left(T_{g}^{(n)}\right)^{3}\left(T_{g}^{(n+1)}-T_{g}^{(n)}\right)
 \end{equation}
-其中$\varepsilon_g=0.97$表示湖泊表面的长波辐射发射率，$\sigma$表示$Stefan-Boltzmann$常数(见表 \ref{tab:物理常数})，
+其中$\varepsilon_g=0.97$表示湖泊表面的长波辐射发射率，$\sigma$表示 Stefan-Boltzmann 常数(见表~\ref{tab:物理常数})，
 $T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$表示$T_g$在使用牛顿迭代法求解时相邻两次迭代结果的差别，
 过程见下面叙述。
 
@@ -325,15 +325,15 @@ $T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$表示$T_g$在使用牛顿迭代法
 -\lambda E_{g}\left(T_{g}\right)-G\left(T_{g}\right)}{-\frac{\partial L_{g}}{\partial T_{g}}
 +\frac{\partial H g}{\partial T_{g}}+\frac{\partial \lambda E_{g}}{\partial T_{g}}+\frac{\partial G}{\partial T_{g}}}
 \end{equation}
-其中$\Delta Tg=Tg^{n+1}-Tg^{n}$。在迭代求解$T_g$的过程中，除短波辐射外的其他能量通量均可同时求解。
+其中$\Delta T_g=T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$。在迭代求解$T_g$的过程中，除短波辐射外的其他能量通量均可同时求解。
 此外，根据之前描述，湖泊表面粗糙度依赖于摩擦速度$u_\ast$，所以粗糙度的计算也同时结合$T_g$的求解过程进行迭代计算。
-能量平衡方程的求解过程大致如下(参考章节 \ref{植被地表的雨水感热})：
+能量平衡方程的求解过程大致如下(参考章节~\ref{植被地表的雨水感热})：
 \begin{enumerate}
     \item 给出计算风速$V_a$时$U_c$的初始猜测：
         \begin{equation}
-        \begin{array}{cc}
-            U_{c}=0 & \theta_{v, atm}-\theta_{v, s} \geq 0(\text { 即稳定条件下 }) \\
-            U_{c}=0.5 & \theta_{v, atm}-\theta_{v, s}<0(\text { 即不稳定条件下 })
+        \begin{array}{ll}
+            U_{c}=0 & \theta_{v, atm}-\theta_{v, s} \geq 0 \text{(即稳定条件下)} \\
+            U_{c}=0.5 & \theta_{v, atm}-\theta_{v, s}<0 \text{(即不稳定条件下)}
         \end{array}
         \end{equation}
     \item 给出湖泊表面粗糙度$z_{0m}$，$z_{0h}$，$z_{0w}$的初始猜测:\\
@@ -344,15 +344,15 @@ $T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$表示$T_g$在使用牛顿迭代法
         \begin{equation}
         u_{*}=k V_{a} / \ln \frac{z_{atm, m}-d}{z_{0 m}}
         \end{equation}
-        其中$k$表示$von Karman$常数，$z_{atm,m}$表示风速观测高度(m)，$d=0$表示湖泊表面零平面位移，
+        其中$k$表示 von K\'arman常数，$z_{atm,m}$表示风速观测高度(m)，$d=0$表示湖泊表面零平面位移，
         $\upsilon$表示通过下式计算的空气动力学粘性系数($\rm m^2/s$)\citep{andreas1989thermal}：
         \begin{equation}
-            \begin{array}{cc}
-            \upsilon=1.326\times{10}^{-5}\left(1+6.542\times{10}^{-3}\left(T_{atm}-T_f\right)\right.\\
-            \left.            +8.301\times{10}^{-6}\left(T_{atm}-T_f\right)^2-4.84\times{10}^{-9}\left(T_{atm}-T_f\right)^3\right)
+            \begin{array}{cl}
+            \upsilon=&1.326\times{10}^{-5}\left[1+6.542\times{10}^{-3}\left(T_{atm}-T_f\right)\right.\\
+                           & \left. +8.301\times{10}^{-6}\left(T_{atm}-T_f\right)^2-4.84\times{10}^{-9}\left(T_{atm}-T_f\right)^3\right]
             \end{array}
         \end{equation}
-    \item 之通过$R_{ib}$给出L的初始猜测。
+    \item 通过$R_{ib}$给出L的初始猜测。
     \item 迭代以下过程以求得$T_g$以及湖泊表面的能量通量：\\
     a. 根据湖泊表面条件(积雪、冻结或未冻结)判断湖泊表面升华/蒸发潜热系数$\lambda$，并计算湖泊顶层的热力传导率$\lambda_{snl+1}$ \\
     b. 通过风速、温度、比湿的微分方程积分结果求得$u_\ast$，$\theta_\ast$，$q_\ast$ \\
