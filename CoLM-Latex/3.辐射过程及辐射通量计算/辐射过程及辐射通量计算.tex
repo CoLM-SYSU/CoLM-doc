@@ -37,7 +37,7 @@
 \end{equation}
 其中下标$sno$表示雪盖，$f(\mu)$是一用来表征雪盖反照率与太阳高度角关系的参数化函数
 \begin{equation}\label{fmu}
-f(\mu)=\operatorname{Max}\left[0,\left(\frac{1.5}{1+4 \mu}-0.5\right)\right]
+f(\mu)=\max\left[0,\left(\frac{1.5}{1+4 \mu}-0.5\right)\right]
 \end{equation}
 公式(\ref{alpha_sno_vis_dif}),(\ref{alpha_sno_nir_dif})中0.85和0.65分别表示可见光和近红外波段新雪反照率，
 $F_{age}$表示雪龄，使得雪的反照率随着雪盖中雪晶颗粒的增长和灰尘等杂质的积累而减少，其计算为
@@ -48,7 +48,7 @@ $\tau_{sno}$是一预报变量，它随时间的增量函数为
 \begin{equation}
 \Delta \tau_{sno}=1 \times 10^{-6}\left(r_{1}+r_{2}+r_{3}\right) \Delta t
 \end{equation}
-其中$\Delta t$是积分时间步长($s$)，
+其中$\Delta t$是积分时间步长(s)，
 \begin{equation}
 r_{1}=\exp \left[5000\left(\frac{1}{273.16}-\frac{1}{T_{g}}\right)\right]
 \end{equation}
@@ -63,7 +63,7 @@ r_{3}=0.3
 \begin{equation}
 \tau_{sno}^{N+1}=\left(\tau_{sno}^{N}+\Delta \tau_{sno}\right)\left(1-100 \Delta p_{s}\right)
 \end{equation}
-其中$\Delta p_{s}$为在$t^(N+1)$-$t^N$时间内的降雪量(m)，$N$为积分的时间步数。
+其中$\Delta p_{s}$为在$t^{(N+1)}$-$t^N$时间内的降雪量 (m)，$N$为积分的时间步数。
 
 
 对于部分雪覆盖的地表，其反照率为雪覆盖度($f_{sno}$，参见章节 \ref{无植被覆盖地表湍流通量的计算方案})的加权函数，表示为：
@@ -91,7 +91,7 @@ r_{3}=0.3
 \label{fig:二流近似模型示意图}
 \end{figure}
 }
-植被反照率采用二流近似方法(two-stream approximation， \citet{dickinson1983land,sellers1985canopy} )进行求解。在此基础上，利用双大叶模型(two-big-leaf model) \citep{dai2004two} 对阴阳叶分别计算辐射吸收量。二流近似方法是把植被冠层内的辐射场看成是上下两个辐射流组成(图 \ref{fig:二流近似模型示意图})，这样可以把描述辐射传输的微分方程简化为两个联立的常微分方程组：
+植被反照率采用二流近似方法(two-stream approximation，\citet{dickinson1983land,sellers1985canopy} )进行求解。在此基础上，利用双大叶模型(two-big-leaf model) \citep{dai2004two} 对阴阳叶分别计算辐射吸收量。二流近似方法是把植被冠层内的辐射场看成是上下两个辐射流组成(图 \ref{fig:二流近似模型示意图})，这样可以把描述辐射传输的微分方程简化为两个联立的常微分方程组：
 \begin{equation}\label{di_dx1}
 -\bar{\mu} \frac{d I^{\uparrow}}{d x}+\{1-(1-\beta) \omega\} I^{\uparrow}-\omega \beta I^{\downarrow}=\omega \bar{\mu} K \beta_{0} \exp (-K x)
 \end{equation}
