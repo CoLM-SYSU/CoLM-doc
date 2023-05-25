@@ -295,7 +295,7 @@ $V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}} \geq 0.1$。稳定条件下的风速积分
 
 
 \section{无植被覆盖地表湍流通量的计算方案}\label{无植被覆盖地表湍流通量的计算方案}
-当陆地表面没有植被覆盖(即裸土、冰川、水体等表面)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算（表\ref{tab:物理常数} ）。
+当陆地表面没有植被覆盖(即裸土、冰川、水体等表面)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算（表~\ref{tab:物理常数chap4} ）。
 对于任一地表类型斑块，植被所占比例为$f_{veg}$(当前取值为0或1)，植被粗糙度为$z_{vm}$
 (表\ref{tab:USGS地表粗糙度和零平面位移}给出了按照USGS分类下的24种土地覆盖类型的对应参数值)，则被积雪掩埋的植被占总植被的比例为
 \begin{equation}
@@ -307,24 +307,24 @@ wt=\frac{0.1 z_{{sno}}}{z_{v m}+0.1 z_{{sno}}}
 \begin{table}[]
 \centering
 \caption{物理常数}
-\label{tab:物理常数}
+\label{tab:物理常数chap4}
 \begin{tabular}{lccc}
 \toprule
 变量名&缩写&数值&单位 \\\midrule
 干空气气体常数            & $R_{da}$                       & 287.04     & J/kg/K  \\ 
-水汽气体常数             & $R_{wv}$                       & 461.50     & J/kg/K  \\
+水汽气体常数             & $R_{wv}$                       & 461.296     & J/kg/K  \\
 干空气比热容             & $C_{pa} $                      & 1004.64    & J/kg/K  \\
 液态水比热容             & $C_{pl}$                       & 4188.0     & J/kg/K  \\
 固态水比热容             & $C_{pi}$                       & 2117.27    & J/kg/K  \\
 von Karman常数       & $k$                               & 0.4        &    -     \\
 重力加速度              & $g$                               & 9.80616    & $\rm m/s^2$    \\
-Stefan-Boltzmann常数 & $\sigma$           & 5.67*$\rm 10^{-8}$  & $\rm W/m^2/K^4$ \\
+Stefan-Boltzmann常数 & $\sigma$           & $5.67\times\rm 10^{-8}$  & $\rm W/m^2/K^4$ \\
 液态水凝结温度            & $T_f$                            & 273.16     & K       \\
 液态水密度              & $\rho_{liq}$    & 1000       & $\rm Kg/m^3$   \\
 固态水密度              & $\rho_{ice}$    & 917        & $\rm Kg/m^3$   \\
-液态水蒸发潜热            & $\lambda_v$       & 2.5104*$\rm 10^{6}$ & J/kg    \\
-固态水升华潜热            & $\lambda_s$       & 2.8440*$\rm 10^{6}$ & J/kg    \\
-固态水液化潜热            & $L_f$                           & 0.3336*106 & J/kg    \\
+液态水蒸发潜热            & $\lambda_v$       & $2.5104\times\rm 10^{6}$ & J/kg    \\
+固态水升华潜热            & $\lambda_s$       & $2.8440\times\rm 10^{6}$ & J/kg    \\
+固态水液化潜热            & $L_f$                           & $0.3336\times10^6$ & J/kg    \\
 液态水热力传导率           & $\lambda_{liq}$ & 0.57       & W/m/K   \\
 固态水热力传导率           & $\lambda_{ice}$ & 2.29       & W/m/K   \\
 空气热力传导率            & $\lambda_a$       & 0.023      & W/m/K      \\\bottomrule
@@ -411,7 +411,7 @@ $\psi_{sat,1}$表示表层饱和土壤水势(mm)，$B_1$表示表层土壤\citet
 $w_{liq,1}$和$w_{ice,1}$分别为表层土壤液态水和固态水含量($\rm kg/m^2$)，
 $\theta_{sat,1}$表示表层土壤体积含水量(即孔隙度，$\rm mm^3/mm^3$)。
 注：为避免土壤水含量极低时轻微的土壤水变化会导致$q_{soil}$变化过大，
-当$q_{sat}^{T_1}>q_{atm}$且$q_{atm}>q_{soil}$时，取$q_{soil}=q_{atm}$且$\frac{dq_{soil}}{dT_1}=0$。
+当$q_{sat}^{T_1}>q_{atm}$且$q_{atm}>q_{soil}$时，取$q_{soil} = q_{atm}$且$\frac{dq_{soil}}{dT_1} = 0$。
 
 
 由于地表无植被覆盖，在计算阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$时，零平面位移取为$d=0$。
@@ -419,7 +419,7 @@ $\theta_{sat,1}$表示表层土壤体积含水量(即孔隙度，$\rm mm^3/mm^3$
 由于动量输送会受到粗糙物后面湍流波中气压波动的影响，而热量和水汽的输送过程不涉及这种动力学机制，热量和水汽必须通过界面的分子扩散进行传输，
 故感热和水汽的粗糙度不同于动量粗糙度，根据\citep{zeng1998effect}：
 \begin{equation}\label{z0hw}
-z_{0 h}=z_{0 w}=z_{0 m} \exp \left[-0.13\left(u_{*} \cdot z_{0 m} / v\right)^{0.45}\right]
+z_{0 h} = z_{0 w} = z_{0 m} \exp \left[-0.13\left(u_{*} \cdot z_{0 m} / v\right)^{0.45}\right]
 \end{equation}
 其中$u_{*} \cdot z_{0 m} / v$为粗糙雷诺数(可理解为最小湍涡的雷诺数)，$\upsilon=1.5\times{10}^{-5}$（$\rm m^2/s$）为空气的动力粘性系数。
 
@@ -631,7 +631,7 @@ CoLM2014假设$d$和$z_0$与植被高度成固定比例，即$d=\frac{2}{3}h$，
 其中$C_S=0.003$，为无植被情况时$h$高度的拖曳系数；$C_R$为植被覆盖区域的拖曳系数。$\lambda$表示植被迎风面积($FAI$)，计算为$1-\exp{\left(-0.5 \cdot LSAI\right)}$。
 
 
-CoLM2014假设$r_b$和$r_d$分别与$u_\ast^{0.5}$和$u_\ast$成正比例关系，
+CoLM2014 假设$r_b$和$r_d$分别与$u_\ast^{0.5}$和$u_\ast$成正比例关系，
 但这不一定适合稀疏植被，本版本中$r_b$和$r_d$是通过对冠层下的风速($u$)和湍流交换系数($K$)剖面积分计算得到 \citep{dai2019different}。
 $u$和$K$的廓线是基于指数衰减假设\citep{inoue1963turbulent,cowan1968mass}。
 另外对近地表廓线进行了一定的订正，保证$u$和$K$满足到达地面时趋于0 \citep{dai2019different}。$u$和$K$的廓线函数分别表示为：
@@ -704,11 +704,13 @@ u(z)=f_{c} \cdot \min \left(u_{\exp }(z), u_{comb}(z)\right)+\left(1-f_{c}\right
 \frac{1}{K(z)}=f_{c} \cdot \frac{1}{\min \left(K_{\exp}(z), K_{comb}(z)\right)}+\left(1-f_{c}\right) \cdot \frac{1}{K_{comb}}
 \end{equation}
 $u_{comb}$和$K_{comb}$同公式 (\ref{ucomb}) 和 (\ref{kcomb})。
+
+
 \subsection{多层植被湍流交换}
-多层植被湍流计算是以单层植被计算为基础，总体阻抗网络如图\ref{fig:三层植被湍流交换示意图}所示。
+多层植被湍流计算是以单层植被计算为基础，总体阻抗网络如图~\ref{fig:三层植被湍流交换示意图}所示。
 风速$u$和湍流交换系数$K$廓线从最上层植被往下进行计算。上一层底部的廓线值作为下层植被顶部的值。
 $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
-但积分区间对应到每层植被的等效交换高度(图 \ref{fig:三层植被湍流交换示意图} 中$T_{s1}$、$T_{s2}$、$T_{s3}$位置所示)。
+但积分区间对应到每层植被的等效交换高度(图~\ref{fig:三层植被湍流交换示意图} 中$T_{s1}$、$T_{s2}$、$T_{s3}$位置所示)。
 该交换高度计算为该层植被100\%覆盖时的$d+z_0$值。在每一层等效交换高度，建议通量(感热H和潜热$\lambda E$)守恒方程，
 即该点与上层通量交换量等于下层交换量加上该层植被的通量交换量。联立每层在等效高度建立的方程，迭代求解每种植被叶片温度。
 {
@@ -723,8 +725,8 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 
 通过以上介绍可以看出，三维植被湍流交换与一维植被湍流交换最大的不同在于其计算的对象由原来单一植被扩展到多个分层植被，
 阻抗网络发生变化，多种植被在同一环境下同时求解。在计算时，同一维植被一样，需要用到植被短波辐射吸收量和长波辐射吸收量，
-此时利用章节 \ref{三维植被辐射传输模型} 和 \ref{三维植被长波辐射传输} 对三维植被辐射传输计算结果。整个植被冠层与大气的湍流交换同样采用相似性理论进行求解，
-其求解过程如图 \ref{fig:三维植被湍流交换模型计算流程图}所示。
+此时利用章节~\ref{三维植被辐射传输模型} 和 \ref{三维植被长波辐射传输} 对三维植被辐射传输计算结果。整个植被冠层与大气的湍流交换同样采用相似性理论进行求解，
+其求解过程如图~\ref{fig:三维植被湍流交换模型计算流程图}所示。
 {
 \begin{figure}[]
 \centering
@@ -733,8 +735,6 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 \label{fig:三维植被湍流交换模型计算流程图}
 \end{figure}
 }
-
-
 
 
 \section{饱和水汽压(比湿)及其随温度的变化}\label{饱和水汽压(比湿)及其随温度的变化}
@@ -752,7 +752,7 @@ q_{s a t}^{T}=\frac{0.622 e_{s a t}^{T}}{P_{atm}-0.378 e_{s a t}^{T}}
 \begin{equation}
 \frac{d q_{{sat }}^{T}}{d T}=\frac{0.622 P_{atm}}{\left(P_{atm}-0.378 e_{{sat }}^{T}\right)^{2}} \frac{d e_{{sat }}^{T}}{d T}
 \end{equation}
-其中固态水($-75$\textcelsius$\le T<0$\textcelsius)与液态水($0$\textcelsius $\le T\le100$\textcelsius)情形对应的拟合系数见
+其中固态水($-75$ \textcelsius $\le T < 0$ \textcelsius)与液态水($0$ \textcelsius $\le T\le100$ \textcelsius)情形对应的拟合系数见
 表 \ref{tab:e_sat_T的拟合系数} 和 \ref{tab:de_sat_dT的拟合系数}。
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}

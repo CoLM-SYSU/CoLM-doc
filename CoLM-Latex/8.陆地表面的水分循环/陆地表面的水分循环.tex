@@ -54,7 +54,7 @@ $K_p$通过叶角分布的经验参数$\chi_L$的变化来控制，
 \begin{figure}[]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/穿透系数与叶面积指数.png}
-\caption{1 穿透系数$\delta_P$与叶面积指数的关系及其变动范围。}
+\caption{穿透系数$\delta_P$与叶面积指数的关系及其变动范围。}
 \label{fig:穿透系数与叶面积指数}
 \end{figure}
 }
@@ -66,7 +66,7 @@ $K_p$通过叶角分布的经验参数$\chi_L$的变化来控制，
 $xsc$的相位首先由冠层温度决定。如果冠层温度大于冰点温度，CoLM假定所有过量的水都处于液相，否则处于冰雪相。
 
 
-CoLM假设网格内的降水的分布是不均匀的。其中对流降水面积的网格占比$I_c$可以由下式给出
+CoLM 假设网格内的降水的分布是不均匀的。其中对流降水面积的网格占比$I_c$可以由下式给出
 \begin{equation}
 I_{c}(x)=a_{c} e^{-b x}+c_{c}
 \end{equation}
@@ -113,6 +113,7 @@ E_{c i} / \rho_{w}=\min \left(\frac{\left(q_{s}-q_{sat}^{T_{c}}\right)}{r_{b} /\
 \end{equation}
 这里$r_b$是平均边界层阻力，由冠层顶部的风速和特征叶片尺寸确定；$q_{sat}^{T_c} $(kg/kg)是冠层温度下的饱和比湿度；$q_s$为表层参考高度处的比湿度，$\Delta t$为时间步长。
 
+
 \section{地表径流}
 地表径流的参数化方案考虑了地形、地下水位、降水和入渗速度等因素。
 模式网格内饱和区域的面积$f_{sat}$通过以下方案估算，
@@ -135,7 +136,9 @@ q_{i n, \max }=\min _{i=1,2,3} 10^{-6.0 \times f_{i c e, i} \times K_{sat, i}}
 \begin{equation}
 q_{infl}={G}_{water}-r_{surface}
 \end{equation}
-\section{土壤水的运动}
+
+
+\section{土壤水的运动}\label{sec:土壤水的运动}
 土壤水的状态和垂直运动主要取决于地表入渗、地下径流、土水势的梯度、重力和植被根部对水的吸收等过程。模式中仅考虑土壤水在垂直方向上的运动。
 
 
@@ -242,7 +245,6 @@ q_{i+\frac{1}{2}}^{n+1}=-K_{i+\frac{1}{2}}^{n+1}\left(\frac{\psi_{i+1}^{n+1}-\ps
 求解上述方程组，即可得到土壤水含量的变化量。方程组的系数矩阵为三对角阵，可用追赶法快速求解。
 
 
-
 在系数矩阵中，需要对土水势和导水率函数求导数。对土水势，容易计算得到
 \begin{equation}
 \frac{\partial \psi_{i}}{\partial \theta_{i}}=-B \frac{\psi_{i}}{\theta_{i}}
@@ -294,7 +296,6 @@ K_{i+1 / 2}=K_{ {sat }}\left(\frac{\theta_{i}}{\theta_{ {sat }}}\right)^{2 B+3},
 {W}_{{LT}}[{i}]=\frac{\psi_{\max }-\psi_{i}}{\psi_{\max }-\psi_{sat}}
 \end{equation}
 其中，$\psi_{max}$为植物叶片干枯前的最大水势。
-
 
 
 叶面蒸腾表示为：
@@ -352,6 +353,7 @@ Z_{w t}=z_{w t}-\frac{q_{charge} \times \Delta t}{s_{y}}
 当地下水位位于最下层土壤之下时，地下径流造成地下水位的下降；当地下水位位于分层土壤区域之内时，
 自地下水位所在分层开始，向下逐层排出土壤中的水分，直到排出的总量等于$q_{drai}$为止。
 
+
 \section{可变饱和流数值算法}
 可变饱和流数值算法将地表入渗、土壤水运动和土壤水与地下水的相互交换这三个垂直方向的水流运动进行统一求解(图 \ref{fig:可变饱和流数值算法预报区域空间结构示意图})。
 {
@@ -380,25 +382,25 @@ Z_{w t}=z_{w t}-\frac{q_{charge} \times \Delta t}{s_{y}}
 }
 
 
-预报变量($θ_i$)的预报方程为
+预报变量($\theta_i$)的预报方程为
 \begin{equation}\label{si_in1}
 \left(\Delta z_{i}-w_{f, i}^{n+1}-w_{t, i}^{n+1}\right) \cdot\left(\theta_{i}^{n+1}-\theta_{i}^{n}\right)=\Delta t \cdot\left(q_{ {uin,i }}^{n+1}-q_{ {out }, i}^{n+1}\right)
 \end{equation}
-其中，$\Delta z_i$ 为第$ i $层土壤的厚度，$\Delta t$ 为时间步长，$q_(uin,i)^(n+1)$为非饱和区域上边界处的水流通量，$q_(out,i)^(n+1)$为非饱和区域下边界处的水流通量。
+其中，$\Delta z_i$ 为第$ i $层土壤的厚度，$\Delta t$ 为时间步长，$q_{uin,i}^{n+1}$为非饱和区域上边界处的水流通量，$q_{out,i}^{n+1}$为非饱和区域下边界处的水流通量。
 
 
-预报变量($w_(f,i)$)表示土壤层上部饱和区域的厚度，其预报方程为
+预报变量($w_{f,i}$)表示土壤层上部饱和区域的厚度，其预报方程为
 \begin{equation}\label{si_in2}
 \left(\theta_{s, i}-\theta_{i}^{n}\right) \cdot\left(w_{f, i}^{n+1}-w_{f, i}^{n}\right)=\Delta t \cdot\left(q_{i-1 / 2}^{n+1}-q_{w f, i}^{n+1}\right)
 \end{equation}
-其中，$θ_(s,i)$ 为第$ i$ 层土壤的饱和体积含水量，$ q_{(i-1\/2)}^{(n+1)}$为第$ i $层土壤上边界处的水流通量，$q_(wf,i)^{(n+1)}$为饱和区域下边界处的水流通量。
+其中，$\theta_{s,i}$ 为第$ i$ 层土壤的饱和体积含水量，$ q_{(i-1\/2)}^{(n+1)}$为第$ i $层土壤上边界处的水流通量，$q_{wf,i}^{(n+1)}$为饱和区域下边界处的水流通量。
 
 
-预报变量($w_(t,i)$)表示土壤层下部饱和区域的厚度，其预报方程为
+预报变量($w_{t,i}$)表示土壤层下部饱和区域的厚度，其预报方程为
 \begin{equation}\label{si_in3}
 \left(\theta_{s, i}-\theta_{i}^{n}\right) \cdot\left(w_{t, i}^{n+1}-w_{t, i}^{n}\right)=\Delta t \cdot\left(q_{w t, i}^{n+1}-q_{i+1 / 2}^{n+1}\right)
 \end{equation}
-其中，$q_(wt,i)^(n+1)$  为饱和区域上边界处的水流通量，$q_(i+1\/2)^(n+1)$为第$i$层土壤下边界处的水流通量。
+其中，$q_{wt,i}^{n+1}$  为饱和区域上边界处的水流通量，$q_{i+1/2}^{n+1}$为第$i$层土壤下边界处的水流通量。
 
 
 在未饱和的土壤层，模式使用预报方程(\ref{si_in1})预报体积含水量的变化；
@@ -414,8 +416,8 @@ Z_{w t}=z_{w t}-\frac{q_{charge} \times \Delta t}{s_{y}}
 \begin{equation}\label{hpond}
 h_{ {pond }}^{n+1}-h_{ {pond }}^{n}=\Delta t \cdot\left(q_{ {surf }}^{n+1}-q_{ {infl }}^{n+1}\right)
 \end{equation}
-其中，$q_surf^(n+1) $ 为从地表水上部进入的水流通量，
-其可以是降水、蒸发、或者地表水与积雪的液态水交换，$q_{infl}^(n+1)$为从地表进入土壤的水流通量。
+其中，$q_{surf}^{n+1} $ 为从地表水上部进入的水流通量，
+其可以是降水、蒸发、或者地表水与积雪的液态水交换，$q_{infl}^{n+1}$为从地表进入土壤的水流通量。
 
 
 当地表有积水，或者由于进入地表的水流通量大于入渗到土壤中的通量而形成积水时，积水深度的预报方程(\ref{hpond})也加入到土壤水的方程组中，进行统一求解。
@@ -512,28 +514,27 @@ W_{a}^{n+1}-W_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
 此问题采用Gauss-Newton迭代算法进行求解。
 
 \section{基于河道径流模式CaMa-Flood的汇流模拟}
-汇流计算是通过耦合Dai Yamazaki等人于2011年提出的大尺度分布式汇流模型CaMa-Flood (Catchment-based Macro-scale Floodplain) 实现的\citep{yamazaki2011physically}。
+汇流计算是通过耦合 Dai Yamazaki 等人于2011年提出的大尺度分布式汇流模型 CaMa-Flood (Catchment-based Macro-scale Floodplain) 实现的\citep{yamazaki2011physically}。
 CaMa-Flood将全球河流网络分割为称为流域单元 (unit catchment) 的水文单元，在各单元集水区内利用河道 (river channel) 和漫滩 (floodplain) 的次网格 (subgrid) 
 地形参数以及陆面模式生成的产流量 (total runoff)，对总蓄水量 (total storage) 以及总流量 (total discharge) 进行预测，
 并进一步实现对河道及漫滩流量 (river discharge and flood discharge)，漫滩面积 (flood area) 以及平均漫滩水深 (flood depth) 
-等日常所需的诊断量的高速计算。总蓄水量和总流量的时间演变通过求解局部惯性方程 \citep{bates2010}得出。
+等日常所需的诊断量的高速计算。总蓄水量和总流量的时间演变通过求解局部惯性方程 \citep{bates2010} 得出。
 CaMa-Flood同时考虑了上游单元的入流、下游单元的流出和每个流域单元的径流强迫输入，是目前高速求解河道水动力方程-圣维南方程最为高速有效的方法之一。
 关于CaMa-Flood模型的详细描述可以从相关文献获取\citep{yamazaki2011physically,yamazaki2013improving,yamazaki2014regional,yamazaki2014development}。
 
 
-
-CaMa-Flood模型的主要优势之一在于除了能够精确描述河道径流以外，还能够模拟包括漫滩水位和漫滩面积变化等洪泛过程。
+CaMa-Flood 模型的主要优势之一在于除了能够精确描述河道径流以外，还能够模拟包括漫滩水位和漫滩面积变化等洪泛过程。
 因此，对模拟结果的验证不仅仅局限于传统测量河流流量，还可以直接将模拟结果与卫星高度计对水面高程的观测以及微波成像仪对洪泛面积的估算进行比较；
 能够有效加强全球河流模型各个输出的校准/验证\citep{yamazaki2012adjustment,yamazaki2012analysis}。
-CaMa-Flood模型的另一个优势在于它具有极高的模拟计算效率。通过引入次网格地形参数，复杂的漫滩淹没物理过程被合理地简化。
+CaMa-Flood 模型的另一个优势在于它具有极高的模拟计算效率。通过引入次网格地形参数，复杂的漫滩淹没物理过程被合理地简化。
 与此同时，通过实现局部惯性方程和自适应时间步长等物理方案\citep{bates2010}，
 河流流量和蓄水量的预测计算成本得到压缩,有利于进行集成/长期实验等计算要求高的实验或者与陆面模式之间的动态耦合。
-以下对CaMa-Flood内部各个模块进行详细的介绍。目前耦合版本陆面过程模式分系统已经包含CaMa-Flood v4.07版本。
+以下对 CaMa-Flood 内部各个模块进行详细的介绍。目前耦合版本陆面过程模式分系统已经包含 CaMa-Flood v4.07版本。
 
 
 \subsection{自适应时间步长的估算}
 为避免固定时间步长计算所产生的数值振荡，提高数值方案稳定性，
-CaMa-Flood 采用了\citet{bates2010}提出的基于局部惯性方程并满足Courant-Friedrichs-Lewy ($CFL$) 
+CaMa-Flood 采用了\citet{bates2010}提出的基于局部惯性方程并满足 Courant-Friedrichs-Lewy (CFL) 
 条件的自适应时间步长 ($DT_{adp}$) 的估算方法:
 \begin{equation}
 {DT}_{\max }=\boldsymbol{\alpha} \frac{\Delta x}{\sqrt{g h_{t}}}
@@ -551,15 +552,17 @@ $\alpha$是稳定性系数设为0.9，$h_t$是该流域单元在时刻t的水流
 \label{fig:自适应时间步长的估算}
 \end{figure}
 }
+
+
 \subsection{诊断洪泛状态}\label{诊断洪泛状态}
-在CaMa-Flood中指定网格的漫滩 (洪泛) 状态是通过计算该网格的蓄水总量得出的。如图\ref{fig:CaMa-Flood流域单位示意图}
+在 CaMa-Flood 中指定网格的漫滩 (洪泛) 状态是通过计算该网格的蓄水总量得出的。如图~\ref{fig:CaMa-Flood流域单位示意图}
 所示，河流河道蓄水量$S_r$，漫滩蓄水量$S_f$，河道水深度$D_r$, 漫滩淹没深度$D_f$，漫滩面积$A_f$等均通过求解基于总蓄水量的水量方程得出。
 首先，模式中引发当前流域单元洪水蓄水量$S_{ini}$由如下公式进行确定：
 \begin{equation}
 S_{ ini }=B WL
 \end{equation}
 其中$B$是河道深度，$W$是河道宽度，及$L$是河道长度。如果总蓄水量$S$小于等于引发洪水蓄水量$S_ini$，
-CaMa-Flood假设不存在漫滩 (洪泛) 事件，上述参数则通过如下方程计算得出：
+CaMa-Flood 假设不存在漫滩 (洪泛) 事件，上述参数则通过如下方程计算得出：
 \begin{equation}
     \begin{array}{l}S_r=S \\ D_r=\frac{S_r}{WL} \\ S_f=0 \\ D_f=0 \\ A_f=0 \\ S_f=0\end{array}
 \end{equation}
@@ -568,7 +571,7 @@ CaMa-Flood假设不存在漫滩 (洪泛) 事件，上述参数则通过如下方
 \begin{array}{l}S_r=S-S_f \\ D_r=\frac{S_r}{W L} \\ S_f=\int_{0}^{A_f}(D_f-D(A)) d_A \\ D_f=D_r-B \\ A_f=D^{-1}(D_f)\end{array}
 \end{equation}
 上式中的$D_f$=$D_r$-$B$表示河道与漫滩的水面高度相同。该方程是基于河道与漫滩之间的水量瞬间完成交换的假设。
-函数$D^{-1}(Df)$是漫滩高程剖面$D(A_f)$的反函数，它将泛滥地区$A_f$描述为漫滩水深$D_f$的函数 (见图\ref{fig:CaMa-Flood流域单位示意图})。
+函数$D^{-1}(Df)$是漫滩高程剖面$D(A_f)$的反函数，它将泛滥地区$A_f$描述为漫滩水深$D_f$的函数 (见图~\ref{fig:CaMa-Flood流域单位示意图})。
 
 
 {
@@ -581,8 +584,8 @@ CaMa-Flood假设不存在漫滩 (洪泛) 事件，上述参数则通过如下方
 }
 
 \subsection{河道径流流量计算}
-CaMa-Flood分别计算了各流域单元向其下游单元的河流径流量和漫滩流量。
-二者的计算均通过忽略如下St. Venant动量方程式第二项，得到径流计算所使用的局部惯性方程 \cite{bates2010}:
+CaMa-Flood 分别计算了各流域单元向其下游单元的河流径流量和漫滩流量。
+二者的计算均通过忽略如下 St. Venant 动量方程式第二项，得到径流计算所使用的局部惯性方程 \cite{bates2010}:
 \begin{equation}
 \frac{\partial Q}{\partial t}+\frac{\partial}{\partial x}\left[\frac{Q^{2}}{A}\right]+\frac{g A \partial(h+z)}{\partial x}+\frac{g n^{2} Q^{2}}{R^{4 / 3} A}=0
 \end{equation}
@@ -593,9 +596,10 @@ $x$和$t$分别为流动距离和时间。第一项、第二项、第三项和�
 \begin{equation}
 Q^{t+\Delta t}=\frac{Q^{t}+\Delta t g A i S}{1+\frac{\Delta t g n^{2}\left|Q^{t \mid}\right|}{R^{4 / 3} A}}
 \end{equation}
-其中$S$是水面坡度，$Q^t$为当前时刻的流量, $Q^{t+\Delta t}$是单位时间间隔$\Delta t$之后的流量。水力半径$R$近似为水流深度。曼宁系数默认设置为$n=0.03$。
+其中$S$是水面坡度，$Q^t$为当前时刻的流量, $Q^{t+\Delta t}$是单位时间间隔 $\Delta t$ 之后的流量。水力半径 $R$ 近似为水流深度。曼宁系数默认设置为$n=0.03$。
 在局部惯性方程计算中可能出现的负向河流量，代表了下游流域单元向当前流域单元的反向水流(回水)。同时为防止当前网格的总的流出量超过蓄水量，
-CaMa-Flood引入限流器的概念：当总出水量大于网格的总库存量时，CaMa-Flood使用修正系数对径流流量进行修正。
+CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量时，CaMa-Flood 使用修正系数对径流流量进行修正。
+
 
 \subsection{河道径流流量计算}
 漫滩流量计算与河道径流流量计算方法相同。
@@ -603,7 +607,6 @@ CaMa-Flood引入限流器的概念：当总出水量大于网格的总库存量�
 水流深度$h$为漫滩深度；漫滩流量的曼宁系数被设置为$n=0.10$。
 
 \subsection{蓄水量变化计算}
-
 {
 \begin{figure}[]
 \centering
@@ -612,21 +615,22 @@ CaMa-Flood引入限流器的概念：当总出水量大于网格的总库存量�
 \label{fig:蓄水量变化计算流程图}
 \end{figure}
 }
-蓄水量随时间的变化的计算流程如图\ref{fig:蓄水量变化计算流程图}所示，指定流域单元的蓄水量变化的计算基于质量平衡方程：
+蓄水量随时间的变化的计算流程如图~\ref{fig:蓄水量变化计算流程图}所示，指定流域单元的蓄水量变化的计算基于质量平衡方程：
 \begin{equation}
 S_{i}^{t+\Delta t}=S_{i}^{t}+\sum_{k}^{Upstream} Q_{k}^{t} \Delta t-Q_{i}^{t} \Delta t+A c_{i} R_{i}^{t} \Delta t
 \end{equation}
 式中$S_{i}^{t}$和$S_{i}^{t+\Delta t}$分别代表单元$i$在时间$t$到时间$t+\Delta t$蓄水量的变化，$Q_i^t$代表在时间$t$该单元河流径流出流量 (河道内+漫滩)，
-$Q_k^t$代表在时间t该单元从上游网格接收的河流径流流入流量 (河道内+漫滩)，$A_{ci}$ 是单元i的面积，$R_i^t$ 代表流域单元$i$的产流量。
+$Q_k^t$代表在时间 $t$ 该单元从上游网格接收的河流径流流入流量 (河道内+漫滩)，$A_{ci}$ 是单元i的面积，$R_i^t$ 代表流域单元 $i$ 的产流量。
 
 \subsection{河网地图}
-CaMa-Flood模拟所需的相关次网格地形参数是由90m超高精细分辨率的全球流动方向地图 (MERIT Hydro)\citep{yamazaki2019merit}，
+CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分辨率的全球流动方向地图 (MERIT-Hydro)\citep{yamazaki2019merit}，
 水文调整高程$DEM$\citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据\citep{yamazaki2014development}; 
-使用 \citet{yamazaki2009deriving} 开发的升尺度模式Flexible Location of Waterways (FLOW) 计算得出。
-相关数据以纯“二进制”格式 ($nx*ny$)存储于在map/目录下。默认的数据存储顺序是从180W到180E，从90N到90S；数据的字节顺序是 “little endian”。
+使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。
+相关数据以纯“二进制”格式 ($nx*ny$)存储于在 \texttt{map/} 目录下。默认的数据存储顺序是从180\textdegree W到180\textdegree E，
+从 90\textdegree N 到 90\textdegree S；数据的字节顺序是 “little endian”。
 具体而言，除了需要陆面模式计算得出的产流量 ($runoff$) 之外，CaMa-Flood还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，
 漫滩 (洪水淹没) 面积，以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河流的宽度和深度以外，
-所有的地形相关参数均可由MERIT-hydro水文地形数据中获取。以下以全球0.25度的河网为例进行详细介绍。
+所有的地形相关参数均可由 MERIT-hydro 水文地形数据中获取。以下以全球 0.25\textdegree 的河网为例进行详细介绍。
 {
 \begin{figure}[]
 \centering
@@ -655,22 +659,22 @@ CaMa-Flood模拟所需的相关次网格地形参数是由90m超高精细分辨�
     \begin{tabular}[h]{p{2.5cm}p{1.5cm}p{2.5cm}p{4cm}p{2cm}p{1cm}}  %{@{}cccccc@{}}
     \toprule
     File              & Variable & Symbol                        & Description                                  & Unit    & Format  \\ \midrule
-    params.txt        & -        & -                             & Map parameters                               & -       & text    \\
-    nextxy.bin        & nextx    & jx                            & DownstreamX (rec=1)                         & -       & integer \\
-    nexty             & jy       & Downstream Y (rec=2)          & -                                            & integer &         \\
-    downxy.bin        & downx    & dx                            & Relative DownstreamX (rec=1)                & -       & integer \\
-    downy             & dy       & Relative Downstream Y (rec=2) & -                                            & integer &         \\
-    ctmare.bin        & ctmare   & Ac                            & Unit-catchment Area                          & m2      & real    \\
-    elevtn.bin        & elevtn   & Z                             & Base Elevation                               & m       & real    \\
-    rivlen.bin        & rivlen   & L                             & Channel Length                               & m       & real    \\
-    rivhgt.bin        & rivhgt   & B                             & Channel Depth                                & m       & real    \\
-    rivwth.bin        & rivwth   & W                             & Channel Width                                & m       & real    \\
-    rivwth\_gwdlr.bin & rivwth   & W                             & Combined With (recommended)                  & m       & real    \\
-    nxtdst.bin        & nxtdst   & X                             & Downstream Distance                          & m       & real    \\
-    fldhgt.bin        & fldhgt   & Df                            & Floodplain Elevation profile (rec=1$\sim$10) & m       & real    \\
-    rivman.bin        & rivman   & -                             & Manning’s Roughness                          & -       & real    \\
-    bifori.txt        & -        & -                             & Bifurcation Channel Original Data            & -       & text    \\
-    bifprm.txt        & -        & -                             & Bifurcation channel parameters               & -       & text    \\ \bottomrule
+    \texttt{params.txt}        & -        & -                             & Map parameters                     & -         & text    \\
+    \texttt{nextxy.bin}        & nextx    & jx                            & DownstreamX (rec=1)         & -         & integer \\
+                                       & nexty    & jy                         & Downstream Y (rec=2)            & -        & integer \\
+    \texttt{downxy.bin}      & downx   & dx                        & Relative DownstreamX (rec=1)   & -   & integer \\
+                                       & downy   & dy                      & Relative Downstream Y (rec=2)   & -    & integer \\
+    \texttt{ctmare.bin}       & ctmare   & Ac                     & Unit-catchment Area                     & m2   & real    \\
+    \texttt{elevtn.bin}        & elevtn    & Z                        & Base Elevation                         & m       & real    \\
+    \texttt{rivlen.bin}         & rivlen    & L                         & Channel Length                        & m       & real    \\
+    \texttt{rivhgt.bin}         & rivhgt   & B                         & Channel Depth                          & m       & real    \\
+    \texttt{rivwth.bin}        & rivwth   & W                        & Channel Width                           & m       & real    \\
+    \texttt{rivwth\_gwdlr.bin} & rivwth   & W                    & Combined With (recommended)    & m       & real    \\
+    \texttt{nxtdst.bin}        & nxtdst   & X                             & Downstream Distance                          & m       & real    \\
+    \texttt{fldhgt.bin}        & fldhgt   & Df                            & Floodplain Elevation profile (rec=1$\sim$10) & m       & real    \\
+    \texttt{rivman.bin}        & rivman   & -                             & Manning’s Roughness                          & -       & real    \\
+    \texttt{bifori.txt}        & -        & -                             & Bifurcation Channel Original Data            & -       & text    \\
+    \texttt{bifprm.txt}        & -        & -                             & Bifurcation channel parameters               & -       & text    \\ \bottomrule
     \end{tabular}
     \end{table}
 
@@ -684,31 +688,30 @@ CaMa-Flood模拟所需的相关次网格地形参数是由90m超高精细分辨�
     \begin{tabular}[h]{p{2.5cm}p{1.5cm}p{2.5cm}p{4cm}p{2cm}p{1cm}} %{@{}cccccc@{}}
     \toprule
     File             & Variable & Symbol                             & Description                                          & Unit     & Format  \\ \midrule
-    grdare.bin       & grdare   & -                                  & Rectangular grid area (optional)                     & m2       & real    \\
-    nxtdst\_grid.bin &          &                                    &                                                      &          &         \\
-    rivlen\_grid.bin & nxtdst   & X                                  & Downstream Distance (grid center)                    & m        & real    \\
-    rivlen           & L        & Channel Length (grid center)       & m                                                    & real     &         \\
-    inpmat.bin       & inpx     & -                                  & Corresponding input grid X (rec=1)                   & -        & integer \\
-    inpy             & -        & Corresponding input grid Y (rec=2) & -                                                    & integer  &         \\
-    ctmare.bin       & inpa     & Aij                                & Area of input grid XY (rec=3)                        & m2       & real    \\
-    diminfo.txt      & -        & -                                  & Dimension infomation                                 & text     &         \\
-    lsmask.bin       & -        & -                                  & Land ID of corresponding hi resolution area Basin ID & -        & integer \\
-    basin.bin        & -        & -                                  & Basin ID                                             & -        & integer \\
-    bsncol.bin       & -        & -                                  & Basin Color Pattern for Visualization                & -        & integer \\
-    lonlat.bin       & lon      & -                                  & Longitude, catchment outlet (rec=1)                  & deg      & real    \\
-    lat              & -        & Latitude, catchment outlet (rec=2) & deg                                                  & real     &         \\
-    uparea.bin       & uparea   & -                                  & Upstream Drainage Area                               & {[}m2{]} & real    \\ \bottomrule
+    \texttt{grdare.bin}       & grdare   & -                                  & Rectangular grid area (optional)                     & m2       & real    \\
+    \texttt{nxtdst\_grid.bin} &          &                                    &                                                      &          &         \\
+    \texttt{rivlen\_grid.bin} & nxtdst   & X                                  & Downstream Distance (grid center)                    & m        & real    \\
+                                        & rivlen    & L                            & Channel Length (grid center)       &    m                             & real        \\
+    \texttt{inpmat.bin}       & inpx     & -                                  & Corresponding input grid X (rec=1) & -        & integer \\
+                                       & inpy     & -                               & Corresponding input grid Y (rec=2)    & -        & integer  \\
+    \texttt{ctmare.bin}       & inpa     & Aij                            & Area of input grid XY (rec=3)              & m2     & real    \\
+    \texttt{diminfo.txt}      & -        & -                                  & Dimension infomation                         & text     &         \\
+    \texttt{lsmask.bin}       & -        & -                                  & Land ID of corresponding hi resolution area Basin ID & -        & integer \\
+    \texttt{basin.bin}        & -        & -                                  & Basin ID                                             & -        & integer \\
+    \texttt{bsncol.bin}       & -        & -                                  & Basin Color Pattern for Visualization                & -        & integer \\
+    \texttt{lonlat.bin}       & lon      & -                                  & Longitude, catchment outlet (rec=1)     & deg      & real    \\
+                                     & lat       & -                                 & Latitude, catchment outlet (rec=2)        & deg       & real    \\
+    \texttt{uparea.bin}       & uparea   & -                           & Upstream Drainage Area                       & {[}m2{]} & real    \\ \bottomrule
     \end{tabular}
     \end{table}
 
 
-
 假设任意网格的洪水事件是从高程低的区域到高程高的区域发生淹没，
-任意流域单元(图\ref{fig:河网图及地形参数文件列表2})的漫滩面积可以由漫滩水深$D_f$ (m) 
+任意流域单元(图\ref{fig:基于流域单元的漫滩高程剖面函数})的漫滩面积可以由漫滩水深$D_f$ (m) 
 以及累积分布函数 (CDF) 的经验函数生成 (图\ref{tab:河网图及地形参数文件列表2})。
-每个网格的CDF函数的第10百分位数的10个值 (图\ref{tab:河网图及地形参数文件列表2}，红色圆点)分别存储在$fldhgt.bin$的十个参数之中
- (见表\ref{tab:河网图及地形参数文件列表}和 表\ref{tab:河网图及地形参数文件列表2})，文件格式与上述的$nextxy.bin$相同。
-例如，$fldhgt.bin$的第三个参数表示流域单元30\%的面积被淹没时的该流域单元的平均洪水深度 (m)。
+每个网格的CDF函数的第10百分位数的10个值 (图\ref{tab:河网图及地形参数文件列表2}，红色圆点)分别存储在 \texttt{fldhgt.bin} 的十个参数之中
+ (见表\ref{tab:河网图及地形参数文件列表}和 表\ref{tab:河网图及地形参数文件列表2})，文件格式与上述的 \texttt{nextxy.bin} 相同。
+例如，\texttt{fldhgt.bin} 的第三个参数表示流域单元 30\% 的面积被淹没时的该流域单元的平均洪水深度 (m)。
 {
 \begin{figure}[]
 \centering
@@ -717,7 +720,6 @@ CaMa-Flood模拟所需的相关次网格地形参数是由90m超高精细分辨�
 \label{fig:基于流域单元的漫滩高程剖面函数}
 \end{figure}
 }
-
 
 
 河道断面参数(河道长度$W$(m)和河道深度$ B$(m))是水动力模拟的主要参数之一。在CaMa-Flood中的该参数是流域产流量的气候态的经验函数，由以下公式推导得出：
@@ -744,7 +746,7 @@ CaMa-Flood推荐使用通过$set_gwdlr.F90$子程序生成组合宽度参数 (�
 }
 
 
-如图\ref{fig:CaMa-Flood流域单位示意图}所示，由于CaMa-Flood是基于流域单元进行计算的，而陆面模式是基于规则的经纬度网格，
+如图\ref{fig:CaMa-Flood流域单位示意图}所示，由于 CaMa-Flood 是基于流域单元进行计算的，而陆面模式是基于规则的经纬度网格，
 流域单元在当前陆面模式分辨率 (经纬度网格) 投影下呈现不规则的形状。
 因此在流域边缘有可能出现一个网格分属于不同流域，以及多个经纬度网格单元同属于一个流域单元的情况。
 这就需要强制插值分割这些陆面模式经纬度网格生成的产流量到不同的流域。
@@ -752,20 +754,20 @@ CaMa-Flood推荐使用通过$set_gwdlr.F90$子程序生成组合宽度参数 (�
 \begin{equation}
 F_{i}=\sum_{N} A_{i, j} R_{j}
 \end{equation}
-其中$F_i$为进入流域单元i在单位时间 [$\rm m^3s^{-1}$]的输入水量，$A_i$, $j $是陆面模式的经纬度网格单元$j$在属于指定流域单元的面积大小,
- $N$是指属于指定流域单元陆面模式的经纬度网格的数量。该映射信息被存储在$test_***.bin$($***$是网格分辨率
- ，例如 $test_1deg.bin$)。同时，还需准备一个文本文件 (比如说$diminfo_test-1deg.txt$) 用来指定模拟的维度
-  (比如说区域，分辨率，流域单元数量，输入经纬度网格数量，输入的映射文件名$test_***.bin$)。
+其中$F_i$为进入流域单元i在单位时间 [$\rm m^3s^{-1}$]的输入水量，$A_i$, $j$是陆面模式的经纬度网格单元$j$在属于指定流域单元的面积大小,
+ $N$是指属于指定流域单元陆面模式的经纬度网格的数量。该映射信息被存储在 \texttt{test\_***.bin} (\texttt{***} 是网格分辨率
+ ，例如 \texttt{test\_1deg.bin})。同时，还需准备一个文本文件 (比如说 \texttt{diminfo\_test-1deg.txt}) 用来指定模拟的维度
+  (比如说区域，分辨率，流域单元数量，输入经纬度网格数量，输入的映射文件名 \texttt{test\_***.bin})。
 
-
-
-在map目录中，CaMa-Flood还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据，如 (3sec，1min，15min，3min等目录之下)。
-高分辨率数据被划分为$\$(TILE).\$(VAR).bin$，每个TILE的区域记录在“location.txt”文件之中；
+在 \texttt{map} 目录中，CaMa-Flood 还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据 (如 \texttt{3sec}，\texttt{1min}，\texttt{15min}，
+\texttt{3min} 等目录之下)。
+高分辨率数据被划分为$\$(TILE).\$(VAR).bin$，每个TILE的区域记录在 \texttt{location.txt} 文件之中；
 具体提供的参数$\$(VAR)$如表 8 2所示。其中$\$(TILE).flwdir.bin$和
 $\$(TILE).downxy.bin$分别以基于D8格式和downstreamXY格式描述了河流流向；$\$(TILE).catmzy.bin$表示流域单元内的网格 (ix,iy) 
 在高分辨率经纬度网格(iXX,iYY)上的映射；$\$(TILE).catmzz.bin$表示每个网格对应的漫滩层；$\$(TILE).flddif.bin$表示每个网格堤坝平均高度[m]，
-用于对粗分辨率的漫滩水深进行降尺度；$\$(TILE).visual.bin$用于高分辨率流域边界可视化，其中数值上体现为海洋=0, 
-陆地 (未调整) =1, 陆地 (调整并在CaMa中使用) =2, 通常网格=3，流域边界=5, 河道=10, 内陆流域出口=20, 与海洋连接的河口=25。具体文件列表见表\ref{tab:河网各数据文件}。
+用于对粗分辨率的漫滩水深进行降尺度；$\$(TILE).visual.bin$用于高分辨率流域边界可视化，其中数值上体现为海洋 = 0, 
+陆地 (未调整) = 1, 陆地 (调整并在CaMa中使用) = 2, 通常网格 = 3，流域边界 = 5, 河道 = 10, 内陆流域出口 = 20, 与海洋连接的河口 = 25。
+具体文件列表见表\ref{tab:河网各数据文件}。
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -798,13 +800,13 @@ $\$(TILE).downxy.bin$分别以基于D8格式和downstreamXY格式描述了河流
     根据水库运行规则计算水库流出量，构建考虑大坝影响的河道汇流参数化方案，
     以刻画水库对陆面水文循环过程的影响。
 \subsection{水库数据集和水库参数估计}\label{水库数据集和水库参数估计}
-大坝水库的基本信息来自全球大坝水库数据集GRanD\citet{lehner2011high}，GRanD version1.3包含全球7320座大坝及其相关水库的数据。
+大坝水库的基本信息来自全球大坝水库数据集GRanD\citep{lehner2011high}，GRanD version1.3包含全球7320座大坝及其相关水库的数据。
 本模块需使用数据库中的大坝名称、坝体坐标、总库容和流域面积等信息，然后在CaMa-Flood河网上定位水库，并估算水库特征参数。
 水库的定位程序包括以下几个步骤：首先根据水库的地理参考坐标计算相应的网格坐标，然后使用河网数据对水库位置进行了校正，
 具体来说，将初始水库网格的集水面积与实际值进行比较，如果相对误差大于10\%，
 则对网格的位置进行调整，在周围八个网格进行搜索将流域面积误差降至最低，以此类推直到误差小于10\%。
 此外，如果多个水库位于河网中的单个网格中，则模型只选择总蓄水量最大的水库而删除其他水库。通过上述步骤，
-在0.25$^{cicle}$河网中共计识别到2169座水库，在0.05$^{cicle}$河网中共计识别到5715座水库(图\ref{fig:水库分布})。
+在0.25\textdegree 河网中共计识别到2169座水库，在0.05\textdegree 河网中共计识别到5715座水库(图\ref{fig:水库分布})。
 
 {
 \begin{figure}[]
@@ -859,13 +861,13 @@ Q=\max \left(Q_{f}, I\right)
 \end{equation}
 防洪区：
 \begin{equation}
-\left\{\begin{array}{ll}Q=Q_{f}+k \frac{V-V_{f}}{V_{e}-V_{f}}\left(I-Q_{f}\right), & I \geq Q_{f} \\
-     Q=Q_{n} \times 0.5+\left(\frac{V-V_{c}}{V_{e}-V_{c}}\right)^{2}\left(Q_{f}-Q_{n}\right), & I<Q_{f}\end{array}\right.
+\left\{\begin{array}{ll}Q=Q_{f}+k \frac{V-V_{f}}{V_{e}-V_{f}}\left(I-Q_{f}\right), & \text{当}\quad I \geq Q_{f} \\
+     Q=Q_{n} \times 0.5+\left(\frac{V-V_{c}}{V_{e}-V_{c}}\right)^{2}\left(Q_{f}-Q_{n}\right), & \text{当}\quad I<Q_{f}\end{array}\right.
 \end{equation}
 兴利区：
 \begin{equation}
-\left\{\begin{array}{ll}Q=Q_{n} \times 0.5+\left(\frac{V-V_{c}}{V_{f}-V_{c}}\right)\left(Q_{f}-Q_{n}\right), & I \geq Q_{f} \\
-     Q=Q_{n} \times 0.5+\left(\frac{V-V_{c}}{V_{e}-V_{c}}\right)^{2}\left(Q_{f}-Q_{n}\right), & I<Q_{f}\end{array}\right.
+\left\{\begin{array}{ll}Q=Q_{n} \times 0.5+\left(\frac{V-V_{c}}{V_{f}-V_{c}}\right)\left(Q_{f}-Q_{n}\right), & \text{当}\quad I \geq Q_{f} \\
+     Q=Q_{n} \times 0.5+\left(\frac{V-V_{c}}{V_{e}-V_{c}}\right)^{2}\left(Q_{f}-Q_{n}\right), & \text{当}\quad I<Q_{f}\end{array}\right.
 \end{equation}
 控制区：
 \begin{equation}
@@ -873,7 +875,7 @@ Q=Q_{n} \times\left(\frac{V}{V_{f}}\right)
 \end{equation}
 其中：$I$表示入库流量，$Q$表示出库流量，$V$表示实际库容，$V_e$表示警戒库容，
 $V_f$表示防洪库容，$V_c$表示正常库容，$Q_f$表示防洪流量，$Q_n$表示正常流量，$k$表示出流调节系数，
-取值为$max(1-(V_t-V_f)/A,0)$，$A$为水库上游面积，$V_t$为水库总库容。特征库容和特征流量的提取如章节 \ref{水库数据集和水库参数估计}所述。
+取值为$\max(1-(V_t-V_f)/A,0)$，$A$为水库上游面积，$V_t$为水库总库容。特征库容和特征流量的提取如章节 \ref{水库数据集和水库参数估计}所述。
 
 
 需水调度方案则根据水库下游需水量、入库流量、实时库容大小调节出流，以满足水库服务区域内的用水需求\citep{hanasaki2006reservoir,shin2019high}：\\
@@ -883,9 +885,11 @@ Q=\max \left(Q_{f}, I\right)
 \end{equation}
 防洪/兴利区：
 \begin{equation}
-\left\{\begin{array}{c}Q=(1-R) I+R \times \frac{V-V_{c}}{V_{f}-V_{c}} \times\left(Q_{n}+D-\bar{D}\right), 
-    \bar{D} / Q_{n}<1-M \\ Q=(1-R) I+R \times \frac{V-V_{c}}{V_{f}-V_{c}} \times Q_{n}\left(M+\frac{(1-M) D}{\bar{D}}\right),
-     \bar{D} / Q_{n}>M\end{array}\right.
+\left\{\begin{array}{ll}Q=(1-R) I+R \times \frac{V-V_{c}}{V_{f}-V_{c}} \times\left(Q_{n}+D-\bar{D}\right) & \text{当}\quad
+    \bar{D} / Q_{n}<1-M \\ 
+    Q=(1-R) I+R \times \frac{V-V_{c}}{V_{f}-V_{c}} \times Q_{n}\left(M+\frac{(1-M) D}{\bar{D}}\right)      &  \text{当}\quad
+    \bar{D} / Q_{n}>M
+    \end{array}\right.
 \end{equation}
 控制区：
 \begin{equation}

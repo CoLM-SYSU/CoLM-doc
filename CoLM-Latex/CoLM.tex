@@ -1,8 +1,20 @@
 % !TEX encoding = UTF-8 Unicode
 \documentclass[a4paper,12pt,twoside]{report}
 \usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
-\usepackage[UTF8]{ctex}
-
+\usepackage{xcolor}
+\usepackage[UTF8,heading=true,scheme=chinese]{ctex}
+\ctexset{
+    chapter/number = \arabic{chapter},
+    chapter/numberformat = \color{blue}\zihao{1},
+    appendix={
+    %   name={附录},
+       %numbering=false,
+       number={\Alph{chapter}}
+       }
+   }
+   
+\usepackage{tocbibind} % used to add bibliography to toc with correct bookmark and page number
+   
 %\usepackage[T1]{fontenc}
 \newcommand{\arial}[1]{{\fontencoding{T1}\usefont{T1}{phv}{m}{n}{#1}}}
 \newcommand{\courier}[1]{{\fontencoding{T1}\usefont{T1}{pcr}{m}{n}{#1}}}
@@ -21,6 +33,7 @@
 \usepackage{lscape}
 \usepackage{xr}
 \usepackage{color}
+\usepackage{textcomp}
 
 \raggedbottom
 
@@ -28,31 +41,30 @@
 \usepackage{longtable}
 
 \begin{document}
-\include{uhead.sty}
+%\include{uhead.sty}
 
 \title{\huge {\bf 通用陆面模式 202X版科学技术报告}\\[3em]
 %\vspace{2mm}
 \fontsize {22}{24}
-\bf{ The Common Land Model Technical Report }\\[3in]
+\bf{ The Common Land Model 202X Technical Report }\\[3in]
 \fontsize {20}{23}%\\[3in]
 % \vskip 3in
 }
 
 \author{
- \large{ SYSU }\\[0.1in]
+ \large{ 中山大学 }\\[0.1in]
  {\bf 大气科学学院}\\[1in]
 % \vskip 1in
  \upshape
  \large%\\[0.5in]
 % \vskip 0.5in
- Octorber 2022
+2023 年 5 月
 }
 
 \normallinespacing
 \maketitle
 
 \preface
-
 
 %\input{acknowledgements/acknowledgements}
 %\input{symbols/symbols}
@@ -78,12 +90,14 @@
 \input{16.湖泊模式/湖泊模式}
 \input{17.城市模式/城市模式}
 \input{18.土地利用与土地覆盖变化模拟/土地利用与土地覆盖变化模拟}
+
 \appendix
+\clearpage
 \addcontentsline{toc}{chapter}{附录}
 \input{附录/附录}
 
-\renewcommand{\bibname}{References}
-\addcontentsline{toc}{chapter}{References}
+\renewcommand{\bibname}{参考文献}
+%\addcontentsline{toc}{chapter}{参考文献}
 \bibliographystyle{agufull08}
 \bibliography{References/References}
 

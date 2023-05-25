@@ -1,8 +1,11 @@
-\contentsline {chapter}{\numberline {1}模式结构}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}地表输入数据}{3}{chapter.2}%
+\contentsline {chapter}{目录}{i}{chapter*.1}%
+\contentsline {chapter}{表格}{ix}{chapter*.2}%
+\contentsline {chapter}{插图}{xiii}{chapter*.3}%
+\contentsline {chapter}{\numberline {第1章\hspace {.3em}}模式结构}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {第2章\hspace {.3em}}地表输入数据}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}地表覆盖数据}{3}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}USGS地表覆盖数据}{3}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}IGBP地表覆盖数据}{5}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.2}IGBP地表覆盖数据}{3}{subsection.2.1.2}%
 \contentsline {section}{\numberline {2.2}土壤数据}{5}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}土壤基础数据}{5}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}土壤水热特征参数及尺度转换}{6}{subsection.2.2.2}%
@@ -10,7 +13,7 @@
 \contentsline {subsection}{\numberline {2.2.4}基岩深度}{8}{subsection.2.2.4}%
 \contentsline {section}{\numberline {2.3}植被结构及属性数据}{8}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}叶面积指数数据}{8}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}树高数据}{9}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.2}树高数据}{8}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}PFT/PC数据及其依赖数据}{9}{subsection.2.3.3}%
 \contentsline {section}{\numberline {2.4}湖泊深度数据}{12}{section.2.4}%
 \contentsline {section}{\numberline {2.5}城市数据}{12}{section.2.5}%
@@ -21,21 +24,22 @@
 \contentsline {subsection}{\numberline {2.5.5}城市内水体数据}{15}{subsection.2.5.5}%
 \contentsline {subsection}{\numberline {2.5.6}城市树高数据}{15}{subsection.2.5.6}%
 \contentsline {subsection}{\numberline {2.5.7}城市LAI/SAI数据}{16}{subsection.2.5.7}%
-\contentsline {chapter}{\numberline {3}辐射过程及辐射通量计算}{17}{chapter.3}%
+\contentsline {chapter}{\numberline {第3章\hspace {.3em}}辐射过程及辐射通量计算}{17}{chapter.3}%
 \contentsline {section}{\numberline {3.1}土壤表面反照率}{17}{section.3.1}%
 \contentsline {section}{\numberline {3.2}永久性冰川反照率}{17}{section.3.2}%
 \contentsline {section}{\numberline {3.3}内陆水体反照率}{18}{section.3.3}%
 \contentsline {section}{\numberline {3.4}雪盖表面反照率}{18}{section.3.4}%
-\contentsline {section}{\numberline {3.5}植被反照率-二流近似模型}{19}{section.3.5}%
-\contentsline {section}{\numberline {3.6}改进的二流近似植被辐射传输模型}{26}{section.3.6}%
-\contentsline {section}{\numberline {3.7}短波吸收辐射通量}{29}{section.3.7}%
-\contentsline {section}{\numberline {3.8}长波净辐射通量}{30}{section.3.8}%
-\contentsline {section}{\numberline {3.9}三维植被辐射传输模型}{30}{section.3.9}%
-\contentsline {subsection}{\numberline {3.9.1}单棵树冠模型}{31}{subsection.3.9.1}%
-\contentsline {subsection}{\numberline {3.9.2}单层植被模型}{33}{subsection.3.9.2}%
-\contentsline {subsection}{\numberline {3.9.3}三层植被模型}{38}{subsection.3.9.3}%
-\contentsline {subsection}{\numberline {3.9.4}三维植被长波辐射传输}{42}{subsection.3.9.4}%
-\contentsline {chapter}{\numberline {4}地表湍流交换过程}{50}{chapter.4}%
+\contentsline {section}{\numberline {3.5}海洋和海冰反照率}{19}{section.3.5}%
+\contentsline {section}{\numberline {3.6}植被反照率-二流近似模型}{20}{section.3.6}%
+\contentsline {section}{\numberline {3.7}改进的二流近似植被辐射传输模型}{26}{section.3.7}%
+\contentsline {section}{\numberline {3.8}短波吸收辐射通量}{29}{section.3.8}%
+\contentsline {section}{\numberline {3.9}长波净辐射通量}{30}{section.3.9}%
+\contentsline {section}{\numberline {3.10}三维植被辐射传输模型}{31}{section.3.10}%
+\contentsline {subsection}{\numberline {3.10.1}单棵树冠模型}{32}{subsection.3.10.1}%
+\contentsline {subsection}{\numberline {3.10.2}单层植被模型}{34}{subsection.3.10.2}%
+\contentsline {subsection}{\numberline {3.10.3}三层植被模型}{38}{subsection.3.10.3}%
+\contentsline {subsection}{\numberline {3.10.4}三维植被长波辐射传输}{43}{subsection.3.10.4}%
+\contentsline {chapter}{\numberline {第4章\hspace {.3em}}地表湍流交换过程}{50}{chapter.4}%
 \contentsline {section}{\numberline {4.1}基本理论}{50}{section.4.1}%
 \contentsline {section}{\numberline {4.2}考虑大涡影响的新理论}{56}{section.4.2}%
 \contentsline {section}{\numberline {4.3}无植被覆盖地表湍流通量的计算方案}{58}{section.4.3}%

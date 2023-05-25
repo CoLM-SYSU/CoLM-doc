@@ -2,16 +2,16 @@
 %\addcontentsline{toc}{chapter}{辐射过程及辐射通量计算}
 %\begin{辐射过程及辐射通量计算}
 \section{土壤表面反照率}
+反照率的计算公式(\ref{eq:soil_albedo1})--(\ref{alpha_sno_nir_dif})对应的代码文件为\texttt{ALBEDO.F90}。
+
 土壤表面反照率采用陆面模式BATS方案 \citep{dickinson1986biosphere,dickinson1993biosphere}，利用土壤颜色和土壤表层含水量计算得到，可表示为：
-\begin{equation}
+\begin{equation}\label{eq:soil_albedo1}
 \alpha_{soi,vis,dir}=\operatorname{Min}\left(\alpha_{sat, vis}+\operatorname{Max}\left(0,0.11-0.40 \theta_{l}\right), \alpha_{dry, vis}\right)
 \end{equation}
 \begin{equation}
 \alpha_{soi,nir,dir}=\operatorname{Min}\left(\alpha_{sat, nir}+\operatorname{Max}\left(0,0.11-0.40 \theta_{l}\right), \alpha_{dry, nir}\right)
 \end{equation}
-其中下标$soi$表示土壤，$vis$和$nir$分别表示可见光和近红外波段，$dir$表示直射光，$\alpha_{sat}$和$\alpha_{d r y}$是根据土壤颜色分类，
-通过查找表得到的饱和($sat$)和干($dry$)土壤的反照率数值，$\theta_{l}$为表层土壤体积含水量。
-目前土壤颜色数据采用CLM4.5全球20种颜色分类数据，包括可见光波段和近红外波段。对于漫射光(下标$dif$)，假设其计算方法跟直射光相应波段一样。
+其中下标$soi$表示土壤，$vis$和$nir$分别表示可见光和近红外波段，$dir$表示直射光，$\alpha_{sat}$和$\alpha_{d r y}$是根据土壤颜色分类，通过查找表得到的饱和($sat$)和干($dry$)土壤的反照率数值，$\theta_{l}$为表层土壤体积含水量。目前土壤颜色数据采用CLM4.5全球20种颜色分类数据，包括可见光波段和近红外波段。漫射光与直射光相应波段一致。
 
 \section{永久性冰川反照率}
 对于永久性冰川覆盖地表，简单将可见光波段反照率设置为0.8，近红外波段设置为0.55，直射光与漫射光一致。
@@ -37,7 +37,7 @@
 \end{equation}
 其中下标$sno$表示雪盖，$f(\mu)$是一用来表征雪盖反照率与太阳高度角关系的参数化函数
 \begin{equation}\label{fmu}
-f(\mu)=\operatorname{Max}\left[0,\left(\frac{1.5}{1+4 \mu}-0.5\right)\right]
+f(\mu)=\max\left[0,\left(\frac{1.5}{1+4 \mu}-0.5\right)\right]
 \end{equation}
 公式(\ref{alpha_sno_vis_dif}),(\ref{alpha_sno_nir_dif})中0.85和0.65分别表示可见光和近红外波段新雪反照率，
 $F_{age}$表示雪龄，使得雪的反照率随着雪盖中雪晶颗粒的增长和灰尘等杂质的积累而减少，其计算为
@@ -48,7 +48,7 @@ $\tau_{sno}$是一预报变量，它随时间的增量函数为
 \begin{equation}
 \Delta \tau_{sno}=1 \times 10^{-6}\left(r_{1}+r_{2}+r_{3}\right) \Delta t
 \end{equation}
-其中$\Delta t$是积分时间步长($s$)，
+其中$\Delta t$是积分时间步长(s)，
 \begin{equation}
 r_{1}=\exp \left[5000\left(\frac{1}{273.16}-\frac{1}{T_{g}}\right)\right]
 \end{equation}
@@ -63,7 +63,7 @@ r_{3}=0.3
 \begin{equation}
 \tau_{sno}^{N+1}=\left(\tau_{sno}^{N}+\Delta \tau_{sno}\right)\left(1-100 \Delta p_{s}\right)
 \end{equation}
-其中$\Delta p_{s}$为在$t^(N+1)$-$t^N$时间内的降雪量(m)，$N$为积分的时间步数。
+其中$\Delta p_{s}$为在$t^{(N+1)}$-$t^N$时间内的降雪量 (m)，$N$为积分的时间步数。
 
 
 对于部分雪覆盖的地表，其反照率为雪覆盖度($f_{sno}$，参见章节 \ref{无植被覆盖地表湍流通量的计算方案})的加权函数，表示为：
@@ -71,6 +71,16 @@ r_{3}=0.3
 \alpha_{g}=\left(1-f_{sno}\right) * \alpha_{g}+f_{sno} \alpha_{sno}
 \end{equation}
 其中$\alpha_{g}$表示土壤、冰川或水体地表覆盖时的反照率。对可见光和近红外波段均按上式计算。
+
+\section{海洋和海冰反照率}\label{海洋和海冰反照率}
+对应代码为\texttt{ALBEDO.F90}。注：需进一步补充
+
+对于海冰，根据冰和雪的反照率综合计算。计算公式如下（待补充）：
+
+对于无冰海洋，采用太阳高度角计算直射入射反照率，漫射反射率则设为常数。计算中，假设反照率与波段和海表面风速等其他物理量无关。可见光和近红外波段的漫射反射率均设为0.06；而两个波段的直射反照率均通过以下公式计算：
+\begin{equation}
+\alpha_{s}= \frac{0.026}{\mu^{1.7}+0.065}+0.15*(\mu-0.1)*(\mu-0.5)*(\mu-1) 
+\end{equation}
 
 \section{植被反照率-二流近似模型}\label{植被反照率二流近似模型}
 {
@@ -81,22 +91,14 @@ r_{3}=0.3
 \label{fig:二流近似模型示意图}
 \end{figure}
 }
-植被反照率采用二流近似方法(two-stream approximation) \citet{dickinson1983land,sellers1985canopy} 进行求解。
-在此基础上，利用双大叶模型(two-big-leaf model) \citep{dai2004two} 对阴阳叶分别计算辐射吸收量。
-二流近似方法是把植被冠层内的辐射场看成是上下两个辐射流组成(图 \ref{fig:二流近似模型示意图})，
-
-这样可以把描述辐射传输的微分方程简化为两个联立的常微分方程组：
+植被反照率采用二流近似方法(two-stream approximation，\citet{dickinson1983land,sellers1985canopy} )进行求解。在此基础上，利用双大叶模型(two-big-leaf model) \citep{dai2004two} 对阴阳叶分别计算辐射吸收量。二流近似方法是把植被冠层内的辐射场看成是上下两个辐射流组成(图 \ref{fig:二流近似模型示意图})，这样可以把描述辐射传输的微分方程简化为两个联立的常微分方程组：
 \begin{equation}\label{di_dx1}
 -\bar{\mu} \frac{d I^{\uparrow}}{d x}+\{1-(1-\beta) \omega\} I^{\uparrow}-\omega \beta I^{\downarrow}=\omega \bar{\mu} K \beta_{0} \exp (-K x)
 \end{equation}
 \begin{equation}\label{di_dx2}
 \bar{\mu} \frac{d I^{\downarrow}}{d x}+\{1-(1-\beta) \omega\} I^{\downarrow}-\omega \beta I^{\uparrow}=\omega \bar{\mu} K\left(1-\beta_{0}\right) \exp (-K x)
 \end{equation}
-其中$I^{\uparrow}$, $I^{\downarrow}$表示向上和向下的漫射通量，为相对于总的入射(直射、漫射)辐射通量归一化值。
-$\mu$为太阳天顶角余弦，$\bar{\mu}$为漫射辐射在单位叶面积上的光学厚度倒数平均值。$\beta$、$\beta_{0}$为漫射辐射和直射辐射向上散射(upscatter)系数，
-$\omega$为叶片单次散射反照率，等于叶片反射率$\rho_{l}$和透射率$\tau_{l}$之和。$K$为直射光在单位叶面积上的光学厚度，
-计算为$G(\mu) / \mu$，其中$G(\mu)$为叶子在入射辐射方向上的投影面积。
-$x$表示植被从冠层顶部($x=0$)往下($x=LAI$)累积的叶面积指数。
+其中$I^{\uparrow}$, $I^{\downarrow}$表示向上和向下的漫射通量，为相对于总入射辐射通量(含直射和漫射)的归一化值。$\mu$为太阳天顶角余弦，$\bar{\mu}$为漫射辐射在单位叶面积上的光学厚度倒数平均值。$\beta$、$\beta_{0}$为漫射辐射和直射辐射向上散射(upscatter)系数，$\omega$为叶片单次散射反照率，等于叶片反射率$\rho_{l}$和透射率$\tau_{l}$之和。$K$为直射光在单位叶面积上的光学厚度，计算为$G(\mu) / \mu$，其中$G(\mu)$为叶子在入射辐射方向上的投影面积。$x$表示植被从冠层顶部($x=0$)往下($x=LAI$)累积的叶面积指数。
 
 $G(\mu) / \mu$函数采用 \citet{goudriaan1977crop} 方案，它使用一个参数$\chi_{L}  $\citep{ross1975radiative} 去描述植被的叶倾角分布：
 \begin{equation}\label{Gmu}
@@ -348,7 +350,7 @@ a_{2}=h_{9}\left[\frac{1-s_{2} s_{1}}{K+h}\right]+h_{10}\left[\frac{1-s_{2} / s_
 \begin{equation}\label{alpha1}
 \alpha=\left(1-f_{veg}\right) \alpha_{g}+f_veg \alpha_{veg}
 \end{equation}
-同样，以上公式作用于可见光/近红外波段，以及直射和漫射入射辐射情况。
+同样，以上公式适用于可见光和近红外波段，以及直射和漫射入射辐射情况。
 
 
 \section{改进的二流近似植被辐射传输模型}
@@ -455,6 +457,8 @@ s_{2}^{\prime}}{h-K^{\prime}}\right]+h_{6}\left[\frac{1 / s_{1} / s_{2}^{\prime}
 
 
 \section{短波吸收辐射通量}\label{短波吸收辐射通量}
+此部分对应代码为\texttt{netsolar.F90}。
+
 在计算得到地表反照率后，地表总的太阳短波辐射通量(包括地面和植被)吸收为
 \begin{equation}
 F_{v g}=F_{vis,dir}\left(1-\alpha_{vis,dir}\right)+F_{vis,dif}\left(1-\alpha_{vis,dif}\right)+
@@ -482,6 +486,8 @@ P A R_{s h a}=F_{vi s, dir} I_{\text {sha,vis,dir }}+F_{vis, dif} I_{\text {sha,
 
 
 \section{长波净辐射通量}\label{长波净辐射通量}
+此部分对应代码为\texttt{THERMAL.F90}。
+
 地表发射的长波辐射是基于斯蒂芬-玻尔兹曼定律来计算。
 当为土壤时，地面发射率$\varepsilon_g$设置为0.96；对于冰川时，设置为0.97。
 裸土覆盖下，地面的长波净辐射通量计算为
@@ -505,6 +511,8 @@ L W_{v}=\varepsilon_{v}\left(F_{a}-2 \sigma T_{l}^{4}+\varepsilon_{g} \sigma T_{
 如叶温区分阴阳叶时，长波净辐射根据其各自叶片温度分开计算。格点植被有效覆盖面积不为100\%时，其长波净辐射通量按地面和植被面积比例进行加权平均。
 
 \section{三维植被辐射传输模型}\label{三维植被辐射传输模型}
+此部分对应的代码为\texttt{ThreeDCanopy.F90}。
+
 三维植被辐射传输模型\citep{yuan20143d}是在单棵树冠模型\citep{dickinson2008determination,dickinson2008three}的基础上建立起来的（图\ref{fig:三维植被辐射传输模型的基本框架}）。
 利用单棵树冠模型来建立单层植被模型，考虑了植被阴影的影响、植被树冠之间的散射吸收及低入射角度(太阳高度角)对反照率的影响。通过考虑层与层之间阴影相互重叠；
 并利用单层植被模型的结果对三层植被辐射传输进行计算，来构建三层植被模型。
@@ -651,7 +659,7 @@ A=1-\alpha-T_{i}-T_{d}
 对于漫射辐射入射，同样考虑等效为直射入射为60$^\circ$的情形。
 以上的推导均基于正球体和球形叶倾角分布函数情况下。对于椭球体树冠(图\ref{fig:椭球体树冠} a)，其对辐射计算的影响主要有3个方面(均可等效看成对光学厚度$\tau$的影响)：
 \begin{enumerate}
-    \item 椭球相对与正球的拉升/压缩影响单位长度的光学厚度(因叶密度改变)；
+    \item 椭球相对于正球的拉升/压缩影响单位长度的光学厚度(因叶密度改变)；
     \item 几何形状的改变造成光学路径的长度的改变；
     \item 阴影面积重合部分改变对光学厚度的影响。
 \end{enumerate}

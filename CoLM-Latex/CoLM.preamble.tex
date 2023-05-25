@@ -7,7 +7,6 @@
 \usepackage{mathchars}
 \usepackage{amsmath}
 \usepackage{setspace}
-\usepackage{xeCJK}
 \usepackage[square]{natbib}
 \usepackage{rotating}
 \usepackage{caption}
@@ -16,17 +15,31 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{etoolbox}
-\usepackage[hidelinks]{hyperref}
+
 \makeatletter
 \patchcmd{\NAT@test}{\else\NAT@nm}{\else\NAT@nmfmt{\NAT@nm}}{}{}
 \let\NAT@up\itshape
 \makeatother
 %\usepackage[none]{hyphenat}
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyhead[RO]{\textnormal{\kaishu\rightmark}}
+\fancyhead[LE]{\textnormal{\kaishu\leftmark}}
+\fancyhead[RE,LO]{--\ \thepage\ --}
+\pagestyle{fancy}
+% \sectionmark 的重定义需要在 \pagestyle 之后生效
+%\renewcommand\sectionmark[1]{%
+%    \markboth{\CTEXifname{\CTEXthesection}{}#1}}
+%\renewcommand\chaptermark[1]{%
+%    \markright{\CTEXifname{\CTEXthechapter}{}#1}}
+\setlength{\headheight}{15pt}
+\addtolength{\topmargin}{-2.5pt}
 
 \input{blocked.sty}
-\input{uhead.sty}
+%\input{uhead.sty}
 \input{boxit.sty}
 \input{icthesis.sty}
+\usepackage[hidelinks]{hyperref}
 
 \setCJKfamilyfont{jamspmi}{MS PMincho}
 \setCJKfamilyfont{jaIPAmi}{IPAMincho}

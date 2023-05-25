@@ -3,7 +3,9 @@
 *.lot
 *.lof
 *.out
+*.toc
 *.bbl
 *.synctex.gz
 *.blg
+*.pdf
 .DS_Store
