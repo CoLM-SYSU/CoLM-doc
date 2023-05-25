@@ -198,7 +198,7 @@ R_{ib}=\zeta[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}\right)-\psi_h(\zeta)}] [\ln{\l
 与稳定条件下$\phi_h\left(\zeta\right)=\phi_m\left(\zeta\right)=1+5\zeta$确定，从而$\zeta$进而$L$可以通过以下反算关系式得到初始猜测值
 \begin{equation}\label{ZetaRib}
 \left\{\begin{array}{lll}\zeta=\frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)}, \quad & 10^{-6} \leq \zeta \leq 2, \quad & \text{当} R_{i b} \geq 0 \text{（即中性或稳定条件下）} \\
-      \zeta=R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right), \quad & -100 \leq \zeta \leq-10^{-6}, \quad & \text{当} R_{i b}<0 \text{（即不稳定条件下）}\end{array}\right.
+      \zeta=R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right), \quad & -100 \leq \zeta \leq-10^{-6}, \quad & \text{当} R_{i b}<0 \text{（即中性或稳定条件下）}\end{array}\right.
 \end{equation}
 
 以上给出了$u_\ast$、$\theta_\ast$、$q_\ast$的求解过程，于是地表与大气参考高度之间的动量、感热和水汽通量即可通过其定义求得。
@@ -226,7 +226,7 @@ r_{a m}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)
 \begin{array}{c}r_{a w}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]}\end{array}
 \end{equation}
 
-为方便与地面观测资料进行比较，可定义2m温度和湿度、以及10m风速，它们实际上为$z_{0x}+d$以上2m高度的温度、比湿，和10m高度的风速，计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ (或$z_{0x}+d+10$) 进行积分)如下：
+为方便与地面观测资料进行比较，可定义2m温度和湿度、以及10m风速，它们实际上为$z_{0x}+d$以上2m高度的温度、比湿，和10m高度的风速(模式暂未计算)，计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ (或$z_{0x}+d+10$) 进行积分)如下：
 \begin{equation}\label{T2m}
 T_{2 m}=\theta_{s}+\frac{\theta_{*}}{k}\left[\ln \left(\frac{2+z_{0 h}}{z_{0 h}}\right)-\psi_{h}\left(\frac{2+z_{0 h}}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]
 \end{equation}
@@ -439,7 +439,7 @@ z_{0 h}=z_{0 w}=z_{0 m} \exp \left[-0.13\left(u_{*} \cdot z_{0 m} / v\right)^{0.
      c. 计算虚位温尺度$\theta_{v\ast}$ (公式(\ref{thvstar})) \\
      d. 更新大气风速$V_a$(公式(\ref{VaIni}))，如采用LZD2022方案则不需要\\
      e. 计算新一步$L$ (公式(\ref{ObukL})) \\
-     注：每次迭代完成后，判断$L$是否改变符号，若改变符号超过4次，则视为中性条件，跳出迭代过程，以避免在稳定与不稳定条件之间来回变化(\textcolor{magenta}{\underline{似乎跳出时的条件有点随机}})；
+     注：每次迭代完成后，判断$L$是否改变符号，若改变符号超过4次，则视为中性条件，跳出迭代过程，以避免在稳定与不稳定条件之间来回变化；
      \item 计算空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ (公式(\ref{ram})-(\ref{raw}))
      \item 计算动量通量$\tau_{b,x}$和$\tau_{b,y}$、感热通量$H_b$、水汽通量$E_b$ (公式(\ref{taub_x})-(\ref{Eb}))
      \item 计算2m气温$T_{2m}$和比湿$q_{2m}$(公式(\ref{T2m})和(\ref{q2m}))

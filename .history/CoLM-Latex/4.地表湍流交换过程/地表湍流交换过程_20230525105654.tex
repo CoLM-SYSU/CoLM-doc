@@ -439,7 +439,7 @@ z_{0 h}=z_{0 w}=z_{0 m} \exp \left[-0.13\left(u_{*} \cdot z_{0 m} / v\right)^{0.
      c. 计算虚位温尺度$\theta_{v\ast}$ (公式(\ref{thvstar})) \\
      d. 更新大气风速$V_a$(公式(\ref{VaIni}))，如采用LZD2022方案则不需要\\
      e. 计算新一步$L$ (公式(\ref{ObukL})) \\
-     注：每次迭代完成后，判断$L$是否改变符号，若改变符号超过4次，则视为中性条件，跳出迭代过程，以避免在稳定与不稳定条件之间来回变化(\textcolor{magenta}{\underline{似乎跳出时的条件有点随机}})；
+     注：每次迭代完成后，判断$L$是否改变符号，若改变符号超过4次，则视为中性条件，跳出迭代过程，以避免在稳定与不稳定条件之间来回变化(\color{magenta}\underline{似乎跳出时的条件有点随机})；
      \item 计算空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ (公式(\ref{ram})-(\ref{raw}))
      \item 计算动量通量$\tau_{b,x}$和$\tau_{b,y}$、感热通量$H_b$、水汽通量$E_b$ (公式(\ref{taub_x})-(\ref{Eb}))
      \item 计算2m气温$T_{2m}$和比湿$q_{2m}$(公式(\ref{T2m})和(\ref{q2m}))
