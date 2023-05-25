@@ -1,0 +1,91 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[a4paper,12pt,twoside]{report}
+\usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[UTF8]{ctex}
+
+%\usepackage[T1]{fontenc}
+\newcommand{\arial}[1]{{\fontencoding{T1}\usefont{T1}{phv}{m}{n}{#1}}}
+\newcommand{\courier}[1]{{\fontencoding{T1}\usefont{T1}{pcr}{m}{n}{#1}}}
+\newcommand{\Times}[1]{{\fontencoding{T1}\usefont{T1}{ptm}{m}{n}{#1}}}
+\newcommand{\Rom}[1]{{\fontencoding{T1}\usefont{T1}{cmr}{m}{n}{#1}}}
+% \usepackage{wasysym}
+
+\include{CoLM.preamble}
+\setlength{\parskip}{0em}
+\setcounter{secnumdepth}{3}
+\usepackage{enumerate}
+\usepackage{wasysym}
+\usepackage{textcomp}
+\usepackage{rotating}
+\usepackage{amssymb}
+\usepackage{lscape}
+\usepackage{xr}
+\usepackage{color}
+
+\raggedbottom
+
+
+\usepackage{longtable}
+
+\begin{document}
+\include{uhead.sty}
+
+\title{\huge {\bf 通用陆面模式 202X版科学技术报告}\\[3em]
+%\vspace{2mm}
+\fontsize {22}{24}
+\bf{ The Common Land Model Technical Report }\\[3in]
+\fontsize {20}{23}%\\[3in]
+% \vskip 3in
+}
+
+\author{
+ \large{ SYSU }\\[0.1in]
+ {\bf 大气科学学院}\\[1in]
+% \vskip 1in
+ \upshape
+ \large%\\[0.5in]
+% \vskip 0.5in
+ Octorber 2022
+}
+
+\normallinespacing
+\maketitle
+
+\preface
+
+
+%\input{acknowledgements/acknowledgements}
+%\input{symbols/symbols}
+%\input{dedication/dedication}
+%\input{quotes/quotes}
+
+\body
+\input{1.模式结构/模式结构}
+\input{2.地表输入数据/地表输入数据}
+\input{3.辐射过程及辐射通量计算/辐射过程及辐射通量计算}
+\input{4.地表湍流交换过程/地表湍流交换过程}
+\input{5.降水与地表的能量交换/降水与地表的能量交换}
+\input{6.植被叶片温度计算/植被叶片温度计算}
+\input{7.雪盖土壤热力过程/雪盖土壤热力过程}
+\input{8.陆地表面的水分循环/陆地表面的水分循环}
+\input{9.气孔导度和光合作用/气孔导度和光合作用}
+\input{10.植被水力模式/植被水力模式}
+\input{11.碳氮库结构/碳氮库结构}
+\input{12.植被生物地球化学循环过程/植被生物地球化学循环过程}
+\input{13.土壤凋落物生物地球化学循环过程/土壤凋落物生物地球化学循环过程}
+\input{14.生物地球化学循环预热加速/生物地球化学循环预热加速}
+\input{15.作物模式/作物模式}
+\input{16.湖泊模式/湖泊模式}
+\input{17.城市模式/城市模式}
+\input{18.土地利用与土地覆盖变化模拟/土地利用与土地覆盖变化模拟}
+\appendix
+\addcontentsline{toc}{chapter}{附录}
+\input{附录/附录}
+
+\renewcommand{\bibname}{References}
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{agufull08}
+\bibliography{References/References}
+
+
+\end{document}
