@@ -49,23 +49,19 @@ W_{sno}=W_{sno}+p_{i} \Delta t
 \textbf {(1)未达到第一层雪产生条件(即$z_{sno}<0.01$且$snl=0$)}\\
 此情形下，降水视为与第一层湖泊表面充分接触并立即发生能量转移，并且当降水与湖泊表层的相态不同时，相态变化过程同时发生。
 此过程的演变由以下八个能量组份($\rm J/m^2$)决定：
-液态降水冷却到$T_f$释放的能量:
-\begin{equation}
-a=C_{pl} p_{l} \Delta t\left(T_{p}-T_{f}\right)
-\end{equation}
-液态降水凝结为固态释放的能量:
-\begin{equation}
-b=L_{f} p_{l} \Delta t
-\end{equation}
-$c=C_{p i} \rho_{liq} \Delta z_{lake, 1} I_{1}\left(T_{f}-T_{lake, 1}\right)$ 第一层湖泊固态下加热到$T_f$吸收的能量\\
-$d=L_{f} \rho_{liq} \Delta z_{lake, 1} I_{1}$ 第一层湖泊固态下完全融化吸收的能量\\
-$e=C_{p i} p_{i} \Delta t\left(T_{f}-T_{p}\right)$ 固态降水加热到$T_f$吸收的能量\\
-$f=L_{f} p_{i} \Delta t$ 固态降水融化为液态吸收的能量\\
-$g=C_{pl} \rho_{liq} \Delta z_{lake, 1}\left(1-I_{1}\right)\left(T_{lake, 1}-T_{f}\right)$ 第一层湖泊液态下冷却到$T_f$释放的能量\\
-$h=L_{f} \rho_{liq} \Delta z_{lake, 1}\left(1-I_{1}\right)$ 第一层湖泊液态下完全冻结释放的能量\\
+\begin{align*}
+a &= C_{pl} p_{l} \Delta t\left(T_{p}-T_{f}\right)   & \text{液态降水冷却到$T_f$释放的能量} \\
+b &= L_f p_l \Delta t                                           & \text{液态降水凝结为固态释放的能量} \\
+c &= C_{pi} \rho_{liq} \Delta z_{lake, 1} I_{1}\left(T_f-T_{lake, 1}\right)  & \text{第一层湖泊固态下加热到$T_f$吸收的能量} \\
+d &= L_f \rho_{liq} \Delta z_{lake, 1} I_{1}         & \text{第一层湖泊固态下完全融化吸收的能量} \\
+e &= C_{pi} p_i \Delta t\left(T_f -T_p\right)        & \text{固态降水加热到$T_f$吸收的能量} \\
+f &= L_f p_i \Delta t                                           & \text{固态降水融化为液态吸收的能量} \\
+g &= C_{pl} \rho_{liq} \Delta z_{lake, 1}\left(1-I_{1}\right)\left(T_{lake, 1}-T_f\right)  & \text{第一层湖泊液态下冷却到$T_f$释放的能量} \\
+h &= L_f \rho_{liq} \Delta z_{lake, 1}\left(1-I_{1}\right)  & \text{第一层湖泊液态下完全冻结释放的能量}
+\end{align*}
 其中，$p_l$、$p_i$分别为液态与固态降水率($\rm kg/m^2$/s)，$C_{pl}$、$C_{pi}$分别为液态水与固态水的比热容(J/kg/K)，
 $T_p$、$T_f$分别为雨水温度与液态水凝结温度(K)，$\Delta t$表示时间积分步长(s)，$L_f$表示液态水凝结潜热(J/kg)，
-$\rho_{liq}$表示液态水密度($\rm kg/m^3$)，$T_{lake,1}$,$\Delta z_{lake,1}$,$I1$分别为第一层湖泊的温度，
+$\rho_{liq}$表示液态水密度($\rm kg/m^3$)，$T_{lake,1}$，$\Delta z_{lake,1}$，$I_1$分别为第一层湖泊的温度，
 厚度与冻结部分所占的质量比。为表述清晰，此过程将按照第一层湖泊的不同相态分别考虑，计算如下：\\
 
 A. 第一层湖泊完全冻结($I_1>0.999$)\\
@@ -79,7 +75,12 @@ C_{pi} \rho_{liq} \Delta z_{lake,1} I_{1}\left(T_{lake, 1}^{(n+1)}-T_{\text {lak
 解出$T_{lake,1}^{\left(n+1\right)}$即为此时更新的第一层湖泊温度。
 同时后续计算中，液态降水可视为固态降水，雪水当量与积雪厚度随之更新：
 \begin{equation}
-\begin{array}{c}W_{sno}=W_{sno}+p_{l} \Delta t \\ z_{sno}=z_{sno}+\frac{p_{l} \Delta t}{\rho_{sno,new}} \\ p_{i}=p_{i}+p_{l} \\ p_{l}=0.0\end{array}
+\begin{aligned}
+W_{sno} &= W_{sno}+p_l \Delta t \\ 
+z_{sno} &= z_{sno}+\frac{p_l \Delta t}{\rho_{sno,new}} \\ 
+p_i &= p_i + p_l \\ 
+p_l &= 0.0
+\end{aligned}
 \end{equation}
 
 
@@ -87,7 +88,12 @@ C_{pi} \rho_{liq} \Delta z_{lake,1} I_{1}\left(T_{lake, 1}^{(n+1)}-T_{\text {lak
 则第一层湖泊温度更新为$T_{lake,1}=T_f$。于是湖泊吸收的来自降水凝结的有效能量为$c-a$，
 液态降水转为固态降水的量以及雪水当量和积雪厚度可更新为：
 \begin{equation}
-\begin{array}{c}W_{sno}=W_{sno}+(c-a) / L_{f} \\ z_{sno}=z_{sno}+\frac{c-a}{L_{f} \rho_{sno,new}} \\ p_{i}=p_{i}+\frac{c-a}{L_{f} \Delta t} \\ p_{l}=p_{l}-\frac{c-a}{L_{f} \Delta t}\end{array}
+\begin{aligned}
+W_{sno} &= W_{sno} + (c-a) / L_f \\ 
+z_{sno} &= z_{sno} + \frac{c-a}{L_f \rho_{sno,new}} \\ 
+p_i &= p_i + \frac{c-a}{L_f \Delta t} \\ 
+p_l &= p_l - \frac{c-a}{L_f \Delta t}
+\end{aligned}
 \end{equation}
 若表层湖泊需要部分融化才可将液态降水冷却到$T_f$而降水无需发生相态变化，即$c<a\le c+d$，
 则第一层湖泊温度仍更新为$T_{lake,1}=T_f$。于是降水冷却用于融化湖泊的有效能量为$a-c$，
@@ -105,15 +111,15 @@ C_{pl} p_{l} \Delta t\left(T_{p}-T_{lake, 1}^{(n+1)}\right)=c+d+C_{pl} \rho_{liq
 注意，经过以上情况讨论后，若发生液态降水冻结为固态降水，则雪水当量与积雪厚度将会增加。
 此时若$z_{sno}\geq0.01$m，则第一层雪立即生成，且相应的状态变量设置为：
 \begin{equation}
-\begin{array}{c}
-    snl=-1 \\ 
-    \Delta z_{0}=z_{sno} \\ 
-    z_{0}=-0.5 z_{sno} \\
-    z_{h,-1}=-\Delta z_{0} \\ 
-    T_{0}=T_{lake, 1} \\
-    w_{ice, 0}=W_{sno} \\
-    w_{liq, 0}=0
-\end{array}
+\begin{aligned}
+    snl &= -1 \\ 
+    \Delta z_{0} &= z_{sno} \\ 
+    z_{0} &= -0.5 z_{sno} \\
+    z_{h,-1} &= -\Delta z_{0} \\ 
+    T_{0} &= T_{lake, 1} \\
+    w_{ice, 0} &= W_{sno} \\
+    w_{liq, 0} &= 0
+\end{aligned}
 \end{equation}
 
 B. 第一层湖泊为冰水混合态($0.001\le I_1\le0.999$)\\
@@ -153,23 +159,23 @@ e+f+C_{p l} p_{i} \Delta t\left(T_{lake, 1}^{(n+1)}-T_{f}\right)
 解出$T_{lake,1}^{\left(n+1\right)}$即为此时更新的第一层湖泊温度。
 同时后续计算中，固态降水可视为液态降水，雪水当量与积雪厚度随之更新：
 \begin{equation}
-\begin{array}{c}
-    W_{sno}=W_{sno}-p_{i} \Delta t \\ 
-    z_{sno}=z_{sno}-\frac{p_{i} \Delta t}{\rho_{sno,new}} \\
-    p_{l}=p_{i}+p_{l} \\ 
-    p_{i}=0.0
-\end{array}
+\begin{aligned}
+    W_{sno} &= W_{sno}-p_{i} \Delta t \\ 
+    z_{sno} &= z_{sno}-\frac{p_i \Delta t}{\rho_{sno,new}} \\
+    p_l &= p_i + p_l \\ 
+    p_i &= 0.0
+\end{aligned}
 \end{equation}
 若表层湖泊将固态降水加热到$T_f$后不足以融化所有降水，即$g-f<e\le g$，
 则第一层湖泊温度更新为$T_{lake,1}=T_f$。于是湖泊释放的用于降水融化的有效能量为$g-e$，
 固态降水转为液态降水的量以及雪水当量和积雪厚度可更新为：
 \begin{equation}
-\begin{array}{c}
-    W_{sno}=W_{sno}-(g-e) / L_{f} \\ 
-    z_{sno}=z_{sno}-\frac{g-e}{L_{f} \rho_{sno,new}} \\
-    p_{l}=p_{l}+\frac{g-e}{L_{f} \Delta t} \\ 
-    p_{i}=p_{i}-\frac{g-e}{L_{f} \Delta t}
-\end{array}
+\begin{aligned}
+    W_{sno} &= W_{sno}-(g-e) / L_{f} \\ 
+    z_{sno} &= z_{sno}-\frac{g-e}{L_f \rho_{sno,new}} \\
+    p_{l} &= p_{l}+\frac{g-e}{L_f \Delta t} \\ 
+    p_{i} &= p_{i}-\frac{g-e}{L_f \Delta t}
+\end{aligned}
 \end{equation}
 若表层湖泊需要部分冻结才可将固态降水加热到$T_f$而降水无需发生相态变化，即$g<e\le g+h$，
 则第一层湖泊温度仍更新为$T_{lake,1}=T_f$。于是湖泊冻结用于加热降水的有效能量为$e-g$，
@@ -189,34 +195,34 @@ C_{p i} p_{i} \Delta t\left(T_{lake, 1}^{(n+1)}-T_{p}\right)=g+h+C_{p i} \rho_{l
 \textbf {(2) 已达到第一层雪产生条件但之前无雪层(即$z_{sno}\geq0.01$且$snl=0$)}\\
 此情形下，第一层雪立即生成，且相应的状态变量设置为：
 \begin{equation}
-\begin{array}{c}
-    s n l=-1 \\
-    \Delta z_{0}=z_{sno} \\
-    z_{0}=-0.5 z_{sno} \\
-    z_{h,-1}=-\Delta z_{0} \\
-    T_{0}=\min \left(T_{p}, T_{f}\right) \\
-    w_{ice, 0}=W_{sno} \\
-    w_{liq, 0}=0
-\end{array}
+\begin{aligned}
+    snl &= -1 \\
+    \Delta z_{0} &= z_{sno} \\
+    z_{0} &= -0.5 z_{sno} \\
+    z_{h,-1} &= -\Delta z_{0} \\
+    T_{0} &= \min \left(T_{p}, T_{f}\right) \\
+    w_{ice, 0} &= W_{sno} \\
+    w_{liq, 0} &= 0
+\end{aligned}
 \end{equation}
 
 
 \textbf {(3) 之前已存在雪层(即$snl<0$)}\\
 此情形下，降水与第一层雪将达到一个平衡温度，能量平衡关系为：
 \begin{equation}
-\left(C_{p l} p_{l}+C_{p i} p_{i}\right) \Delta t\left(T_{s n l+1}^{(n+1)}-T_{p}\right)=
-\left(C_{p l} w_{liq, s n l+1}+C_{p i} w_{ice, s n l+1}\right)\left(T_{s n l+1}^{(n)}-T_{s n l+1}^{(n+1)}\right)
+\left(C_{pl} p_{l}+C_{pi} p_{i}\right) \Delta t\left(T_{snl+1}^{(n+1)}-T_{p}\right)=
+\left(C_{pl} w_{liq, snl+1}+C_{p i} w_{ice, snl+1}\right)\left(T_{snl+1}^{(n)}-T_{snl+1}^{(n+1)}\right)
 \end{equation}
 解出$T_{snl+1}^{\left(n+1\right)}\le T_f$即为此时更新的第一层雪的温度。
 同时，类似雪盖土壤含水量的计算方案，固态降水先加到第一层雪的固态含水量中，
 液态降水将在蒸发液化的能量过程计算之后加入到第一层雪的液态含水量：
 \begin{equation}
-\begin{array}{c}
-    w_{ice, s n l+1}=w_{ice, s n l+1}+p_{i} \Delta t \\
-    \Delta z_{s n l+1}=\Delta z_{s n l+1}+\frac{p_{i} \Delta t}{\rho_{sno,new}} \\
-    z_{s n l+1}=z_{h, s n l+1}-0.5 \Delta z_{s n l+1} \\ 
-    z_{h, s n l}=z_{h, s n l+1}-\Delta z_{s n l+1}
-\end{array}
+\begin{aligned}
+    w_{ice, snl+1} &=  w_{ice, snl+1}+p_{i} \Delta t \\
+    \Delta z_{snl+1} &= \Delta z_{snl+1}+\frac{p_{i} \Delta t}{\rho_{sno,new}} \\
+    z_{h, snl+1} &= z_ {h, snl+1}-0.5 \Delta z_{snl+1} \\ 
+    z_{h, snl} &= z_{h, snl+1}-\Delta z_{snl+1}
+\end{aligned}
 \end{equation}
 
 \section{湖泊温度计算方案}
@@ -255,7 +261,7 @@ E_{g}=-\rho_{atm} \frac{\left(q_{atm}-q_{g}\right)}{r_{a w}}
 $r_{aw}$表示水汽通量的空气动力学阻抗(s/m)(计算见章节 \ref{基本理论})。
 计算空气动力学阻抗系数需估算湖泊表面动力、热力和水汽粗糙度，他们依赖于湖泊表面的状态。
 若湖泊冻结($T_g\le T_f$)且湖泊之上存在雪层，则动力粗糙度$z_{0m}=0.0024$m，
-热力与水汽粗糙度$z_{0h}=z_{0w}=z_{0m}\exp{\left\{-0.13R_0^{0.45}\right\}}$\citep{zilitinkevich1972dynamics}，
+热力与水汽粗糙度$z_{0h}=z_{0w}=z_{0m}\exp{\left(-0.13R_0^{0.45}\right)}$~\citep{zilitinkevich1972dynamics}，
 其中$R_0$表示近地面大气雷诺数$R_0=\frac{z_{0m}u_\ast}{\upsilon}$，
 $\upsilon=1.5\times{10}^{-5}$ $\rm m^2/s$表示空气动力学粘性系数。
 若湖泊冻结但湖泊之上不存在雪层，则动力粗糙度$z_{0m}=0.001$m \citep{subin2012improved}，
@@ -273,8 +279,8 @@ $P_{ref}$表示大气参考高度气压。$z_{0m}$的计算中$C$表示有效Cha
 \begin{equation}
 C=C_{\min }+\left(C_{\max }-C_{\min }\right) \exp \max (A, B)
 \end{equation}
-其中$C_{max}=0.11$,$C_{min}=0.01$分别表示最大与最小Charnock系数，
-$A$,$B$分别表示来自湖泊风浪区长度$F$与湖泊深度$d$的限制：
+其中$C_{max}=0.11$，$C_{min}=0.01$分别表示最大与最小Charnock系数，
+$A$、$B$分别表示来自湖泊风浪区长度$F$与湖泊深度$d$的限制：
 $A=-\left(\frac{Fg}{u^2}\right)^{1/3}/f_c，B=-\frac{\sqrt{dg}}{u}$，
 其中$u$表示大气参考高度风速(m/s)，$f_c=22$，$F(m)$依赖于湖泊深度，
 假定浅湖具有较小的湖泊风浪区，
@@ -288,16 +294,16 @@ z_{0 h}=z_{0 m} \exp \left\{-\frac{k}{P_{r}}\left(4 \sqrt{R_{0}}-3.2\right)\righ
 \begin{equation}
 z_{0 w}=z_{0 m} \exp \left\{-\frac{k}{s_{c}}\left(4 \sqrt{R_{0}}-4.2\right)\right\} \geq 10^{-5}
 \end{equation}
-其中$k$表示von Karman常数，$P_r=0.713$表示空气分子的 Prandtl 数，
+其中$k$表示von K\'arman常数，$P_r=0.713$表示空气分子的 Prandtl 数，
 $S_c=0.66$表示空气中水分子的 Schmidt 数，
 $R_0=\frac{z_{0m}u_\ast}{\upsilon}\geq0.1$表示近地面大气雷诺数，$\upsilon$的计算方式同上。
 
 
 输入到湖泊表面以下的地表热通量$G$($\rm W/m^2$)表达为
 \begin{equation}
-G=\frac{2 \lambda_{s n l+1}}{\Delta z_{s n l+1}}\left(T_{g}-T_{s n l+1}\right)
+G=\frac{2 \lambda_{snl+1}}{\Delta z_{snl+1}}\left(T_{g}-T_{snl+1}\right)
 \end{equation}
-其中$T_{snl+1}$，$\Delta zsnl+1$分别表示湖泊顶层(雪层或湖泊层)的温度(K)与厚度(m)，
+其中$T_{snl+1}$，$\Delta z_{snl+1}$分别表示湖泊顶层(雪层或湖泊层)的温度(K)与厚度(m)，
 $\lambda_{snl+1}$表示湖泊顶层的热力传导率(W/m/K)。
 若顶层为雪层，$\lambda_{snl+1}$需考虑雪层的固态和液态含水量，计算见 \ref{温度求解的数值格式} 节；
 若顶层为湖泊层且湖泊层已冻结($T_g\le T_f$)，则$\lambda_{snl+1}=\lambda_{ice}$(见表 \ref{tab:物理常数})；
@@ -352,7 +358,7 @@ $T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$表示$T_g$在使用牛顿迭代法
                            & \left. +8.301\times{10}^{-6}\left(T_{atm}-T_f\right)^2-4.84\times{10}^{-9}\left(T_{atm}-T_f\right)^3\right]
             \end{array}
         \end{equation}
-    \item 通过$R_{ib}$给出L的初始猜测。
+    \item 通过$R_{ib}$给出$L$的初始猜测。
     \item 迭代以下过程以求得$T_g$以及湖泊表面的能量通量：\\
     a. 根据湖泊表面条件(积雪、冻结或未冻结)判断湖泊表面升华/蒸发潜热系数$\lambda$，并计算湖泊顶层的热力传导率$\lambda_{snl+1}$ \\
     b. 通过风速、温度、比湿的微分方程积分结果求得$u_\ast$，$\theta_\ast$，$q_\ast$ \\
@@ -441,23 +447,23 @@ m_{d}=\left\{\begin{array}{ll}1 & d<25 m \\ 5 & d \geq 25 m\end{array}\right.
 \kappa_{e, i}=\left\{\begin{array}{ll}\frac{k w^{*} z_{lake, i}}{P_{0}\left(1+37 R_{i}^{2}\right)} 
     \exp \left(-k^{*} z_{lake, i}\right) & T_{g}>T_{f} \\ 0 & T_{g} \leq T_{f}\end{array}\right.
 \end{equation}
-其中$k$表示$von Karman$常数(见表 \ref{tab:物理常数})，$P_0=1$表示中性条件下的湍流$Prandtl$数，
+其中$k$表示 von K\'arman 常数(见表 \ref{tab:物理常数})，$P_0=1$表示中性条件下的湍流$Prandtl$数，
 $z_{lake,i}$表示第i层湖泊的中心深度，$w^\ast$表示表层摩擦速度$w^\ast=0.0012u_2$，
 $k^\ast$随着纬度$\phi$的变化而变化$k^\ast=6.6u_2^{-1.84}\sqrt{\left|sin\phi\right|}$。
 根据 \citet{hostetler1990simulation}，计算$w^\ast$与$k^\ast$时，
-使用2m风速$u_2$比使用10m风速模拟的效果要好，故这里使用2m风速$u_2$进行计算$u_2=\frac{u_\ast}{k}ln{\left(\frac{2}{z_{0m}}\right)}\geq0.1$。
+使用2m风速$u_2$比使用10m风速模拟的效果要好，故这里使用2m风速$u_2$进行计算$u_2=\frac{u_\ast}{k}\ln{\left(\frac{2}{z_{0m}}\right)}\geq0.1$。
 $R_i$表示理查德森数，计算公式为
 \begin{equation}
-R_{i}=\frac{-1+\sqrt{\left.1+\frac{40 N^{2} k^{2} z_{lake, i}^{2}}{w^{* 2} \exp \left(-2 k^{*} z lake, i\right.}\right)}}{20}
+R_{i}=\frac{-1+\sqrt{\left.1+\frac{40 N^{2} k^{2} z_{lake, i}^{2}}{w^{* 2} \exp \left(-2 k^{*} z_{lake, i}\right)}\right.}}{20}
 \end{equation}
 其中$N^2=\frac{g}{\rho_i}\frac{\rho_{i+1}-\rho_i}{z_{i+1}-z_i}\geq7.5\times{10}^{-5}$，
 $g$表示重力加速度，$\rho_i$表示第$i$层湖泊的密度\citep{hostetler1990simulation}：
 \begin{equation}\label{rho_i}
-\rho_{i}=\left(1-I_{i}\right) \rho_{liq}\left(1-1.9549 * 10^{-5}\left|T_{lake, i}-277\right|^{1.68}\right)+I_{i} \rho_{ice}
+\rho_{i}=\left(1-I_{i}\right) \rho_{liq}\left(1-1.9549 \times 10^{-5}\left|T_{lake, i}-277\right|^{1.68}\right)+I_{i} \rho_{ice}
 \end{equation}
 其中$I_i$表示湖泊冻结部分的质量比。增强扩散率$K_{ed}$的计算公式为\citep{fang1996long}：
 \begin{equation}
-K_{e d}=1.039 * 10^{-8}\left(N^{2}\right)^{-0.43}
+K_{e d}=1.039 \times 10^{-8}\left(N^{2}\right)^{-0.43}
 \end{equation}
 综上，非冻结部分的热力传导率$\tau_{lake,i,liq}$即由上述三部分组成
 $\tau_{lake,i,liq}=K_wC_{pl}\rho_{liq}=m_d\left(\kappa_e+K_{ed}+\kappa_m\right)C_{pl}\rho_{liq}$。
@@ -584,7 +590,7 @@ M_{liq}=\left\{\begin{array}{cc}\left(1-I_{i}\right) \rho_{liq} \Delta z_{lake, 
 
 特殊地，若湖泊处于非冻结状态($T_{lake,1}>T_f$)，其表面不存在雪层，但雪水当量$W_{sno}>0$，
 则湖泊表层可用于融化的能量$Q_{\text {avail }}=c_{lake, 1} \Delta z_{lake, 1}\left(T_{lake, 1}-T_{f}\right)$将首先用于融化积雪，
-融化质量$M=min{\left(W_{sno},\frac{Q_{avail}}{L_f}\right)}$。若可用能量完全消耗，
+融化质量$M=\min{\left(W_{sno},\frac{Q_{avail}}{L_f}\right)}$。若可用能量完全消耗，
 则湖泊表层温度调整为$T_f$；若积雪被完全融化而有能量结余，则剩余能量为$Q_{rem}=Q_{avail}-ML_f$，
 它将返回湖泊表层对湖泊重新进行加热，其温度调整为$T_{lake, 1}=T_{f}+\frac{Q_{rem}}{c_{lake, 1} \Delta z_{lake, 1}}$。
 最后，积雪厚度$z_{sno}$与雪水当量$W_{sno}$调整为
@@ -668,10 +674,12 @@ w_{ice, i}=\left(\theta_{sat,i} \Delta z_{i}-\frac{w_{liq, i}}{\rho_{liq}}\right
 \end{equation}
 同样，若水发生冻结使得$\theta_i>\theta_{sat,i}$，此时将从液态水中进行削减，土壤液态含水量调整为：
 \begin{equation}
+%\begin{align}
 w_{liq, i}=w_{liq, i}-\left(\theta_{i}-\theta_{sat,i}\right) \Delta z_{i} \rho_{liq} \geq 0.0
 \end{equation}
 \begin{equation}
 w_{ice, i}=\left(\theta_{sat,i} \Delta z_{i}-\frac{w_{liq, i}}{\rho_{liq}}\right) \rho_{ice} \geq 0.0
+%\end{align}
 \end{equation}
 特殊地，若过量的冰融化使得$w_{liq,i}>\theta_{sat,i}\rho_{liq}\Delta z_i$，则土壤液态含水量被重置为：
 \begin{equation}

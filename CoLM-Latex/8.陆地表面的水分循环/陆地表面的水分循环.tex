@@ -40,7 +40,7 @@ D_{d}=\delta_{P} \cdot P=\delta_{P} \cdot\left(R_{c}+S_{c}+R_{l}+S_{l s}\right)
 \end{equation}
 其中$\delta_P$是冠层穿透系数, 等于
 \begin{equation}
-\delta_{P}=1.0-\alpha \times\left(1-\exp \left(-K_{p} \times LSAI\right)\right)
+\delta_{P}=1.0-\alpha \times\left[1-\exp \left(-K_{p} \times LSAI\right)\right]
 \end{equation}
 该公式中反映叶片集水能力的经验系数$\alpha$被设定为0.25 \citep{lawrence2011parameterization}。
 $LSAI$是$SAI$和$LAI$之和 ($LAI$和$SAI$分别是叶指数和茎面积指数)；$K_p$是消光系数，与辐射在冠层中的穿透计算相同：
@@ -109,7 +109,7 @@ w t=\frac{0.1 Z_{sno}}{z_{vm}+0.1 Z_{sno}}
 \end{equation}
 其中$Z_{sno}$代表积雪厚度 (m)，$Z_{vm}$代表植被粗糙度 (m)。因此，树冠蒸发量计算如下:
 \begin{equation}
-E_{c i} / \rho_{w}=\min \left(\frac{\left(q_{s}-q_{sat}^{T_{c}}\right)}{r_{b} /\left(LSAI \times f_{w e t} t\right.}, \frac{L_{d e w_{d} t}}{\Delta t}\right)
+E_{ci} / \rho_{w}=\min \left(\frac{\left(q_{s}-q_{sat}^{T_{c}}\right)}{r_{b} /\left(LSAI \times f_{wet}\right)}, \frac{L_{dew_{d} t}}{\Delta t}\right)
 \end{equation}
 这里$r_b$是平均边界层阻力，由冠层顶部的风速和特征叶片尺寸确定；$q_{sat}^{T_c} $(kg/kg)是冠层温度下的饱和比湿度；$q_s$为表层参考高度处的比湿度，$\Delta t$为时间步长。
 
@@ -118,7 +118,7 @@ E_{c i} / \rho_{w}=\min \left(\frac{\left(q_{s}-q_{sat}^{T_{c}}\right)}{r_{b} /\
 地表径流的参数化方案考虑了地形、地下水位、降水和入渗速度等因素。
 模式网格内饱和区域的面积$f_{sat}$通过以下方案估算，
 \begin{equation}
-f_{sat}=f_{w t} \times e^{-0.5 * fff \times z_{w t}}
+f_{sat}=f_{w t} \times e^{-0.5 \times fff \times z_{wt}}
 \end{equation}
 其中，$f_{wt}$为网格内地下水位较高的区域的面积百分比，$fff$为径流的衰减因子，$z_{wt}$为地下水位的位置。
 
@@ -195,14 +195,16 @@ q_{i+\frac{1}{2}}^{n+1}=-K_{i+\frac{1}{2}}^{n+1}\left(\frac{\psi_{i+1}^{n+1}-\ps
 \end{equation}
 记$\Delta \theta_i=\theta_i^{n+1}-\theta_i^n$，则
 \begin{equation}
-\begin{aligned} q_{i+\frac{1}{2}}^{n+1}=-\left(K_{i+\frac{1}{2}}^{n}+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i}} 
-    \Delta \theta_{i}\right.\\ &\left.+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}} \Delta \theta_{i+1}\right)
-    \left(\frac{1}{\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}+\frac{\partial \psi_{i+1}}{\partial \theta_{i+1}} \Delta \theta_{i+1}-\psi_{i}^{n}-\frac{\partial \psi_{i}}
-    {\partial \theta_{i}} \Delta \theta_{i}\right)-1\right) \\ \approx &-K_{i+\frac{1}{2}}^{n}\left(\frac{1}{\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right) \\
-     &-\left(-\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} \frac{\partial \psi_{i}}{\partial \theta_{i}}\right)+\frac{\partial K_{i+\frac{1}{2}}}{\partial 
+\begin{split} 
+q_{i+\frac{1}{2}}^{n+1} =&-\left(K_{i+\frac{1}{2}}^{n}+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i}} \Delta \theta_{i} + \frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}} \Delta \theta_{i+1}\right)  \\
+    & \times \left(\frac{1}{\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}+\frac{\partial \psi_{i+1}}{\partial \theta_{i+1}} \Delta \theta_{i+1}-\psi_{i}^{n}-\frac{\partial \psi_{i}}
+    {\partial \theta_{i}} \Delta \theta_{i}\right)-1\right) \\ 
+    \approx & -K_{i+\frac{1}{2}}^{n}\left(\frac{1}{\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right) \\
+    &-\left(-\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} \frac{\partial \psi_{i}}{\partial \theta_{i}}\right)+\frac{\partial K_{i+\frac{1}{2}}}{\partial 
      \theta_{i}}\left(\frac{1}{\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \Delta \theta_{i} \\ 
-     &-\left(\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} \frac{\partial \psi_{i+1}}{\partial \theta_{i+1}}\right)+\frac{\partial K_{i+\frac{1}{2}}}{\partial
-      \theta_{i+1}}\left(\frac{1}{\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \Delta \theta_{i+1} \end{aligned}
+    &-\left(\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} \frac{\partial \psi_{i+1}}{\partial \theta_{i+1}}\right)+\frac{\partial K_{i+\frac{1}{2}}}{\partial
+      \theta_{i+1}}\left(\frac{1}{\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \Delta \theta_{i+1} 
+\end{split}
 \end{equation}
 对$q_{i-\frac{1}{2}}^{n+1}$也可做同样的近似。从而，完全离散后的Richards方程可表达为，
 \begin{equation}
@@ -271,7 +273,7 @@ K_{i+1 / 2}=K_{ {sat }}\left(\frac{\theta_{i}}{\theta_{ {sat }}}\right)^{2 B+3},
 \end{equation}
 有冰存在的时候，需考虑冰对导水率的影响，使用如下经验公式，
 \begin{equation}
-    {f}_{{imped}, {i}+1 / 2}=10^{-e_{i c e^{*} 0.5 }*\left(f_{i c e, i}+f_{i c e, i+1}\right)}
+    {f}_{{imped}, {i}+1 / 2}=10^{-e_{ice}\times 0.5\times\left(f_{i c e, i}+f_{i c e, i+1}\right)}
 \end{equation}
 其中$e_{ice}=6.0$为冰的阻抗因子。对导水率及其导数的调整为
 \begin{equation}
@@ -319,11 +321,11 @@ K_{i+1 / 2}=K_{ {sat }}\left(\frac{\theta_{i}}{\theta_{ {sat }}}\right)^{2 B+3},
 \begin{equation}
 {S}_{{y}}=\theta_{s}\left(1-\left(1-\frac{z_{w t}}{\psi_{s}}\right)^{-1 / b}\right)
 \end{equation}
-含水层水量的变化为，
+含水层水量的变化为
 \begin{equation}
 w_{a}=w_{a}+q_{charge} \times \Delta t
 \end{equation}
-若地下水位位于最下层土壤之下，则水位的变化为，
+若地下水位位于最下层土壤之下，则水位的变化为
 \begin{equation}
 Z_{w t}=z_{w t}-\frac{q_{charge} \times \Delta t}{s_{y}}
 \end{equation}
@@ -367,9 +369,9 @@ Z_{w t}=z_{w t}-\frac{q_{charge} \times \Delta t}{s_{y}}
 
 \subsection{土壤水预报方程}
 在每个土壤层内，有三个预报变量来描述土壤中液态水的分布情况。
-土壤体积含水量为固定的预报变量($θ_i$)。为了追踪土壤中饱和水层的变化(包括地下水、滞水层和入渗情况下由地表向下发展的饱和水层)，
-每层土壤中引入了另外两个潜在的预报变量($w_(f,i)$和$w_(t,i)$)，
-分别代表土壤层内上部饱和区域的厚度，和土壤层内下部饱和区域的厚度(图 \ref{fig:可变饱和流数值算法预报区域空间结构示意图})，
+土壤体积含水量为固定的预报变量($\theta_i$)。为了追踪土壤中饱和水层的变化(包括地下水、滞水层和入渗情况下由地表向下发展的饱和水层)，
+每层土壤中引入了另外两个潜在的预报变量($w_{f,i}$和$w_{t,i}$)，
+分别代表土壤层内上部饱和区域的厚度，和土壤层内下部饱和区域的厚度(图~\ref{fig:可变饱和流数值算法预报区域空间结构示意图})，
 当某层土壤部分饱和时，这两个变量被激活。
 {
 \begin{figure}[]
@@ -391,9 +393,9 @@ Z_{w t}=z_{w t}-\frac{q_{charge} \times \Delta t}{s_{y}}
 
 预报变量($w_{f,i}$)表示土壤层上部饱和区域的厚度，其预报方程为
 \begin{equation}\label{si_in2}
-\left(\theta_{s, i}-\theta_{i}^{n}\right) \cdot\left(w_{f, i}^{n+1}-w_{f, i}^{n}\right)=\Delta t \cdot\left(q_{i-1 / 2}^{n+1}-q_{w f, i}^{n+1}\right)
+\left(\theta_{s, i}-\theta_{i}^{n}\right) \cdot\left(w_{f, i}^{n+1}-w_{f, i}^{n}\right)=\Delta t \cdot\left(q_{i-1/2}^{n+1}-q_{w f, i}^{n+1}\right)
 \end{equation}
-其中，$\theta_{s,i}$ 为第$ i$ 层土壤的饱和体积含水量，$ q_{(i-1\/2)}^{(n+1)}$为第$ i $层土壤上边界处的水流通量，$q_{wf,i}^{(n+1)}$为饱和区域下边界处的水流通量。
+其中，$\theta_{s,i}$ 为第$ i$ 层土壤的饱和体积含水量，$ q_{{i-1/2}}^{n+1}$为第$i$层土壤上边界处的水流通量，$q_{wf,i}^{n+1}$为饱和区域下边界处的水流通量。
 
 
 预报变量($w_{t,i}$)表示土壤层下部饱和区域的厚度，其预报方程为
@@ -404,9 +406,9 @@ Z_{w t}=z_{w t}-\frac{q_{charge} \times \Delta t}{s_{y}}
 
 
 在未饱和的土壤层，模式使用预报方程(\ref{si_in1})预报体积含水量的变化；
-若未饱和的土壤层内上部有饱和区域，模式联合预报方程(\ref{si_in1})(\ref{si_in2})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化；
-若未饱和的土壤层内下部有饱和区域，模式联合预报方程(\ref{si_in1})(\ref{si_in3})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化；
-若未饱和的土壤层内上下部分均有饱和区域，模式联合预报方程(\ref{si_in1})(\ref{si_in2})(\ref{si_in3})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化。
+若未饱和的土壤层内上部有饱和区域，模式联合预报方程(\ref{si_in1})和(\ref{si_in2})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化；
+若未饱和的土壤层内下部有饱和区域，模式联合预报方程(\ref{si_in1})和(\ref{si_in3})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化；
+若未饱和的土壤层内上下部分均有饱和区域，模式联合预报方程(\ref{si_in1})--(\ref{si_in3})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化。
 
 
 在地下部分，所有未饱和土壤层内的上述预报方程联合在一起组成一个方程组，来进行统一求解。
@@ -485,7 +487,7 @@ W_{a}^{n+1}-W_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
         \begin{equation}
         r_{0}=\frac{1}{3 \lambda+2}
         \end{equation}
-        对van Genuchten - Mualem模型，
+        对van Genuchten--Mualem模型，
         \begin{equation}
         r_{0}=\frac{1}{L(n-1)+2 n}
         \end{equation}
@@ -502,16 +504,22 @@ W_{a}^{n+1}-W_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
 
 
 \subsection{预报方程的求解}
-预报方程(\ref{si_in1})(\ref{si_in2})(\ref{si_in3})(\ref{hpond})(\ref{wa_n1_n})的左边均代表水量的变化，右边均代表土壤层边界上的水流通量，若在某时刻，
+预报方程(\ref{si_in1})--(\ref{hpond})和(\ref{wa_n1_n})的左边均代表水量的变化，右边均代表土壤层边界上的水流通量，若在某时刻，
 活动预报变量的个数为$A$，则可将第$\alpha$个变量对应的方程表达为
 \begin{equation}\label{m_alpha_x}
 \delta m_{\alpha}(\vec{x})=\Delta t \cdot \delta q_{\alpha}(\vec{x})
 \end{equation}
 其中$\vec{x}$⃗代表活动预报变量组成的向量，由(\ref{m_alpha_x})可得带约束的非线性最小二乘问题
 \begin{equation}
-\begin{aligned} \min _{\vec{x}} f_{2}(\vec{x})=& \min _{\vec{x}} \sum_{\alpha=1}^{A}\left(\delta m_{\alpha}(\vec{x})-\Delta t \cdot \delta q_{\alpha}(\vec{x})\right)^{2} \\ & \theta_{r, i}<\theta_{i} \leq \theta_{s, i}, \quad \forall \theta_{i} \in \vec{x} \\ & 0 \leq w_{f, i} \leq \Delta z_{i}, \quad \forall w_{f, i} \in \vec{x} \\ & 0 \leq w_{t, i} \leq \Delta z_{i}, \quad \forall w_{t, i} \in \vec{x} \\ & h_{ {pond }} \geq 0,  { if } h_{ {pond }} \in \vec{x} \end{aligned}
+\begin{aligned}
+\min _{\vec{x}} f_{2}(\vec{x})=& \min _{\vec{x}} \sum_{\alpha=1}^{A}\left(\delta m_{\alpha}(\vec{x})-\Delta t \cdot \delta q_{\alpha}(\vec{x})\right)^{2} \\ 
+& \theta_{r, i}<\theta_{i} \leq \theta_{s, i}, & \forall \theta_{i} \in \vec{x} \\ 
+& 0 \leq w_{f, i} \leq \Delta z_{i},               & \forall w_{f, i} \in \vec{x} \\ 
+& 0 \leq w_{t, i} \leq \Delta z_{i},               & \forall w_{t, i} \in \vec{x} \\ 
+& h_{ {pond }} \geq 0,                               & \text{ if } h_{ {pond }} \in \vec{x} 
+\end{aligned}
 \end{equation}
-此问题采用Gauss-Newton迭代算法进行求解。
+此问题采用Gauss--Newton迭代算法进行求解。
 
 \section{基于河道径流模式CaMa-Flood的汇流模拟}
 汇流计算是通过耦合 Dai Yamazaki 等人于2011年提出的大尺度分布式汇流模型 CaMa-Flood (Catchment-based Macro-scale Floodplain) 实现的\citep{yamazaki2011physically}。
