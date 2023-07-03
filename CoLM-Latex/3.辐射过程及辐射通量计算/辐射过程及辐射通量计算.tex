@@ -93,28 +93,28 @@ r_{3}=0.3
 }
 植被反照率采用二流近似方法(two-stream approximation，\citet{dickinson1983land,sellers1985canopy} )进行求解。在此基础上，利用双大叶模型(two-big-leaf model) \citep{dai2004two} 对阴阳叶分别计算辐射吸收量。二流近似方法是把植被冠层内的辐射场看成是上下两个辐射流组成(图 \ref{fig:二流近似模型示意图})，这样可以把描述辐射传输的微分方程简化为两个联立的常微分方程组：
 \begin{equation}\label{di_dx1}
--\bar{\mu} \frac{d I^{\uparrow}}{d x}+\{1-(1-\beta) \omega\} I^{\uparrow}-\omega \beta I^{\downarrow}=\omega \bar{\mu} K \beta_{0} \exp (-K x)
+-\bar{\mu} \frac{d I^{\uparrow}}{d x}+\left[1-(1-\beta) \omega\right] I^{\uparrow}-\omega \beta I^{\downarrow}=\omega \bar{\mu} K \beta_{0} \exp (-K x)
 \end{equation}
 \begin{equation}\label{di_dx2}
-\bar{\mu} \frac{d I^{\downarrow}}{d x}+\{1-(1-\beta) \omega\} I^{\downarrow}-\omega \beta I^{\uparrow}=\omega \bar{\mu} K\left(1-\beta_{0}\right) \exp (-K x)
+\bar{\mu} \frac{d I^{\downarrow}}{d x}+\left[1-(1-\beta) \omega\right] I^{\downarrow}-\omega \beta I^{\uparrow}=\omega \bar{\mu} K\left(1-\beta_{0}\right) \exp (-K x)
 \end{equation}
-其中$I^{\uparrow}$, $I^{\downarrow}$表示向上和向下的漫射通量，为相对于总入射辐射通量(含直射和漫射)的归一化值。$\mu$为太阳天顶角余弦，$\bar{\mu}$为漫射辐射在单位叶面积上的光学厚度倒数平均值。$\beta$、$\beta_{0}$为漫射辐射和直射辐射向上散射(upscatter)系数，$\omega$为叶片单次散射反照率，等于叶片反射率$\rho_{l}$和透射率$\tau_{l}$之和。$K$为直射光在单位叶面积上的光学厚度，计算为$G(\mu) / \mu$，其中$G(\mu)$为叶子在入射辐射方向上的投影面积。$x$表示植被从冠层顶部($x=0$)往下($x=LAI$)累积的叶面积指数。
+其中$I^{\uparrow}$, $I^{\downarrow}$表示向上和向下的漫射通量，为相对于总入射辐射通量(含直射和漫射)的归一化值。$\mu$为太阳天顶角余弦，$\bar{\mu}$为漫射辐射在单位叶面积上的光学厚度倒数平均值。$\beta$、$\beta_{0}$为漫射辐射和直射辐射向上散射(upscatter)系数，$\omega$为叶片单次散射反照率，等于叶片反射率$\rho_{l}$和透射率$\tau_{l}$之和。$K$为直射光在单位叶面积上的光学厚度，计算为$G(\mu) / \mu$，其中$G(\mu)$为叶子在入射辐射方向上的投影面积。$x$表示植被从冠层顶部($x=0$)往下($x=L_{AI}$)累积的叶面积指数。
 
 $G(\mu) / \mu$函数采用 \citet{goudriaan1977crop} 方案，它使用一个参数$\chi_{L}  $\citep{ross1975radiative} 去描述植被的叶倾角分布：
 \begin{equation}\label{Gmu}
 G(\mu)=\phi_{1}+\phi_{2} \mu
 \end{equation}
-其中$\phi_{1}=0.5-0.633 \chi_{L}-0.33 \chi_{L}^{2}, \phi_{2}=0.877\left(1-2 \phi_{1}\right)$,
+其中$\phi_{1}=0.5-0.633 \chi_{L}-0.33 \chi_{L}^{2}$，$\phi_{2}=0.877\left(1-2 \phi_{1}\right)$，
 \begin{equation}
 \chi_{L}=\pm \int_{0}^{\frac{\pi}{2}}\left|\sin \theta_{L}-f_{S}\left(\theta_{L}\right)\right| d \theta_{L}
 \end{equation}
 上式中$\sin \theta_{L}$为球形叶倾角分布函数，$f_{S}\left(\theta_{L}\right)$为植被的叶倾角分布函数。
-因此，对于球形分布来说，$\chi_{L}=0$。 一般来讲，$-0.4≤\chi_{L}≤0.6$，分别对应竖直型和平面型叶倾角分布。
+因此，对于球形分布来说，$\chi_{L}=0$。 一般来讲，$-0.4 \leq \chi_{L} \leq 0.6$，分别对应竖直型和平面型叶倾角分布。
 模型中实际应用时采用通过查找表得到的不同植被类型$\chi_{L}$设定值。根据$G(\mu)$的表达式，$\bar{\mu}$可以计算为
 \begin{equation}
 \bar{\mu}=\int_{0}^{1} \frac{\mu^{\prime}}{G\left(\mu^{\prime}\right)}
- d \mu^{\prime}=\frac{1}{\phi_{2}}\left\{1-\frac{\phi_{1}}{\phi_{2}}
- \ln \left(\frac{\phi_{1}+\phi_{2}}{\phi_{1}}\right)\right\}
+ d \mu^{\prime}=\frac{1}{\phi_{2}}\left[1-\frac{\phi_{1}}{\phi_{2}}
+ \ln \left(\frac{\phi_{1}+\phi_{2}}{\phi_{1}}\right)\right]
 \end{equation}
 上面计算表达式是假设$\phi_{1} \neq 0$以及$\phi_{2} \neq 0$，但实际上两者均可为0 \citep{dai2004two}。当$\phi_{1}$、$\phi_{2}$为0时，计算为
 \begin{equation}
@@ -131,7 +131,7 @@ G(\mu)=\phi_{1}+\phi_{2} \mu
 \beta_{0}=\frac{1+\bar{\mu} K}{\omega \bar{\mu} K} a_{s}(\mu)
 \end{equation}
 其中$\rho_l$和$\tau_l$表示叶片的反射率和透射率，
-并依赖于波段，$\omega=\rho_l+\tau_l$。$a_s$为当植被为无穷厚时($LAI\rightarrow\infty$)，
+并依赖于波段，$\omega=\rho_l+\tau_l$。$a_s$为当植被为无穷厚时($L_{AI}\rightarrow\infty$)，
 整个植被的单次散射反照率，计算为
 \begin{equation}
 \begin{aligned} a_{s} &=\frac{\omega}{2} \int_{0}^{1} \frac{\mu G\left(\mu^{\prime}\right)}{\mu G\left(\mu^{\prime}\right)+\mu^{\prime} 
@@ -143,7 +143,7 @@ G(\mu)} d \mu^{\prime} \\ &=\frac{\omega}{2} \frac{G(\mu)}{G(\mu)+\mu \phi_{2}}\
 I^{\downarrow}=0 \text {, 当 } x=0 \text { 时 }
 \end{equation}
 \begin{equation}
-I^{\uparrow}=\alpha_{g, dif} I^{\downarrow}+\alpha_{g, dir} \exp \left(-K LAI \right) \text {, 当 } x=LAI \text { 时 }
+I^{\uparrow}=\alpha_{g, dif} I^{\downarrow}+\alpha_{g, dir} \exp \left(-K L_{AI} \right) \text {, 当 } x=L_{AI} \text { 时 }
 \end{equation}
 方程的解为
 \begin{equation}
@@ -180,7 +180,7 @@ I^{\downarrow}=h_{9} e^{-h x}+h_{10} e^{h x}
 \end{equation}
 到达地面的漫射辐射通量为
 \begin{equation}
-\tau_{veg, dif}=I^{\downarrow}\left(L_{A I}\right)=h_{9} e^{-h L_{A I}}+h_{10} e^{h L_{A I}}
+\tau_{veg, dif}=I^{\downarrow}\left(L_{A I}\right)=h_{9} e^{-h L_{AI}}+h_{10} e^{h L_{AI}}
 \end{equation}
 以上$\sigma,h_1,h_2,\ldots,h_{10}$计算为[参考\citet{sellers1985canopy}附录，注$h_4$在原文中有误，下面为修改后计算式]
 \begin{equation}
@@ -211,10 +211,10 @@ u_{2}=b-c \alpha_{g, dif}
 u_{3}=f+c \alpha_{g, dif}
 \end{equation}
 \begin{equation}
-s_{1}=\exp \left\{-\min \left[h L_{A I}, 50\right]\right\}
+s_{1}=\exp \left\{-\min \left[h L_{AI}, 50\right]\right\}
 \end{equation}
 \begin{equation}
-s_{2}=\exp \left\{-\min \left[K L_{A I}, 50\right]\right\}
+s_{2}=\exp \left\{-\min \left[K L_{AI}, 50\right]\right\}
 \end{equation}
 \begin{equation}
 p_{1}=b+\bar{\mu} h
@@ -273,8 +273,8 @@ h_{10}=\frac{-s_{1}\left(u_{2}-\bar{\mu} h\right)}{d_{2}}
 I^{\uparrow}=h_{2}^{\prime} e^{-K x}+h_{3}^{\prime} e^{K x}-\frac{h 1}{\bar{\mu}^{2}}\left(x+\frac{1}{2 K}\right) e^{-K x}
 \end{equation}
 \begin{equation}
-I^{\downarrow}=h_{5}^{\prime} e^{-K x}+h_{6}^{\prime} e^{K x}+\frac{1}{c}\left\{-\frac{1}{2 K}
- \frac{h_{1}}{\overline{\mu^{2}}}\left(p_{3} x+p_{4} \frac{1}{2 K}\right)-d\right\} e^{-K x}
+I^{\downarrow}=h_{5}^{\prime} e^{-K x}+h_{6}^{\prime} e^{K x}+\frac{1}{c}\left[-\frac{1}{2 K}
+ \frac{h_{1}}{\overline{\mu^{2}}}\left(p_{3} x+p_{4} \frac{1}{2 K}\right)-d\right] e^{-K x}
 \end{equation}
 其中
 \begin{equation}
@@ -296,26 +296,28 @@ m_{1}=\left(1-\alpha_{g, dif} p_{1} / c\right) s_{1}
 m_{2}=\left(1-\alpha_{g, dif } p_{2} / c\right) s_{1}
 \end{equation}
 \begin{equation}
-\begin{aligned} m_{3} &=\frac{h_{1}}{\bar{\mu}^{2}}\left(L_{A I}+\frac{1}{2 K}\right) s_{2} \\ &+\alpha_{g, \text { dif }}
- \frac{1}{c}\left\{-\frac{1}{2 K} \frac{h_{1}}{\bar{\mu}^{2}}\left(p_{3} L_{A I}+p_{4} \frac{1}{2 K}\right)-d\right\} s_{2} \\ 
- &+\alpha_{g, \text { dir }} s_{2} \end{aligned}
+\begin{aligned} 
+m_{3} &=\frac{h_{1}}{\bar{\mu}^{2}}\left(L_{AI}+\frac{1}{2 K}\right) s_{2} \\ 
+           &+\alpha_{g, dif}\frac{1}{c}\left[-\frac{1}{2 K} \frac{h_{1}}{\bar{\mu}^{2}}\left(p_{3} L_{AI}+p_{4} \frac{1}{2 K}\right)-d\right] s_{2} \\ 
+           &+\alpha_{g, dir} s_{2} 
+ \end{aligned}
 \end{equation}
 \begin{equation}
 n_{3}=\frac{1}{4 K^{2}} \frac{h_{1}}{\bar{\mu}^{2}} p_{4}+d
 \end{equation}
 植被吸收的辐射通量为
 \begin{equation}
-I_{veg, dir}=1-\alpha_{veg, dir}-\left(1-\alpha_{g, dif}\right) \tau_{veg, dir}-\left(1-\alpha_{g, \text { dir }}\right) s_{2}
+I_{veg, dir}=1-\alpha_{veg, dir}-\left(1-\alpha_{g, dif}\right) \tau_{veg, dir}-\left(1-\alpha_{g, dir}\right) s_{2}
 \end{equation}
 \begin{equation}
-I_{veg, dif}=1-\alpha_{veg, dif}-\left(1-\alpha_{g,dif}\right) \tau_{veg, dif}
+I_{veg, dif}=1-\alpha_{veg, dif}-\left(1-\alpha_{g, dif}\right) \tau_{veg, dif}
 \end{equation}
 \citet{dai2004two} 将植被分为阴叶和阳叶来计算其各自辐射通量吸收，对于直射入射光，阳叶、阴叶吸收辐射通量分别如下
 \begin{equation}
-I_{\text {sun,dir }}=(1-\omega)\left[1-s_{2}+\frac{1}{\bar{\mu}}\left(a_{1}+a_{2}\right)\right]
+I_{sun, dir}=(1-\omega)\left[1-s_{2}+\frac{1}{\bar{\mu}}\left(a_{1}+a_{2}\right)\right]
 \end{equation}
 \begin{equation}
-I_{\text {sha,dir }}=I_{\text {veg,dir }}-I_{\text {sun,dir }}
+I_{sha, dir}=I_{veg, dir}-I_{sun, dir}
 \end{equation}
 其中
 \begin{equation}
@@ -329,7 +331,7 @@ a_{2}=\frac{h_{4}}{\sigma}\left[\frac{1-s_{2}^{2}}{2 K}\right]+h_{5}\left[\frac{
 I_{sun,dif}=\left[\frac{1-\omega}{\bar{\mu}}\right]\left(a_{1}+a_{2}\right)
 \end{equation}
 \begin{equation}
-I_{\text {sha,dir }}=I_{veg, dir}-I_{\text {sun,dir }}
+I_{sha, dir}=I_{veg, dir}-I_{sun, dir}
 \end{equation}
 其中
 \begin{equation}
@@ -348,7 +350,7 @@ a_{2}=h_{9}\left[\frac{1-s_{2} s_{1}}{K+h}\right]+h_{10}\left[\frac{1-s_{2} / s_
 不同波段及直射/漫射情景均按以上加权方式计算。考虑植被覆盖度($f_{veg}$)时的地表反照率为
 
 \begin{equation}\label{alpha1}
-\alpha=\left(1-f_{veg}\right) \alpha_{g}+f_veg \alpha_{veg}
+\alpha=\left(1-f_{veg}\right) \alpha_{g}+f_{veg} \alpha_{veg}
 \end{equation}
 同样，以上公式适用于可见光和近红外波段，以及直射和漫射入射辐射情况。
 
@@ -362,7 +364,7 @@ a_{2}=h_{9}\left[\frac{1-s_{2} s_{1}}{K+h}\right]+h_{10}\left[\frac{1-s_{2} / s_
 
 对于球形叶倾角分布($\chi_L=0$)情景，植被在漫射光入射时的透射率表示为
 \begin{equation}
-T_{d}^{*}=2 \int_{0}^{1} \exp \left(-\frac{G(\mu) LAI}{\mu}\right) \mu d \mu, G(\mu)=0.5
+T_{d}^{*}=2 \int_{0}^{1} \exp \left(-\frac{G(\mu) LAI}{\mu}\right) \mu d \mu, \qquad G(\mu)=0.5
 \end{equation}
 由于以上公式没有解析解，通过不完全伽玛函数展开式，以上公式可近似表达为
 \begin{equation}
@@ -477,11 +479,11 @@ F_{g}=F_{v g}-F_{s u n}-F_{s h a}
 \end{equation}
 单位面积阳叶、阴叶有效光合辐射吸收通量为
 \begin{equation}
-P A R_{\text {sun }}=F_{vi s, dir} I_{\text {sun,vis,dir }}+F_{vis, dif} I_{s u n, vis, dif}
+P A R_{sun}=F_{vi s, dir} I_{sun, vis, dir}+F_{vis, dif} I_{sun, vis, dif}
 \end{equation}
 
 \begin{equation}
-P A R_{s h a}=F_{vi s, dir} I_{\text {sha,vis,dir }}+F_{vis, dif} I_{\text {sha,vis,dif }}
+P A R_{sha}=F_{vi s, dir} I_{sha, vis, dir}+F_{vis, dif} I_{sha, vis, dif}
 \end{equation}
 
 
@@ -489,7 +491,7 @@ P A R_{s h a}=F_{vi s, dir} I_{\text {sha,vis,dir }}+F_{vis, dif} I_{\text {sha,
 此部分对应代码为\texttt{THERMAL.F90}。
 
 地表发射的长波辐射是基于斯蒂芬-玻尔兹曼定律来计算。
-当为土壤时，地面发射率$\varepsilon_g$设置为0.96；对于冰川时，设置为0.97。
+当为土壤时，地面发射率$\varepsilon_g$设置为0.96；对于冰川，设置为0.97。
 裸土覆盖下，地面的长波净辐射通量计算为
 \begin{equation}
 L W_{g}=\varepsilon_{g} F_{a}
@@ -581,19 +583,20 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
 \begin{equation}
 \Phi_{f}(\tau)=\frac{\omega}{4 \pi} \Phi_{1 f}(\tau)+\frac{\omega^{2}}{4 \pi}\left[\Phi_{2 f}(\tau)+\Phi_{3+}(\tau)\right]
 \end{equation}
-假设散射相函数的分布由后向到前向，沿天顶角呈线性变化(方位角水平均一)，对任意散射出射角度$\theta_{out}$(天顶角方向，$\mu_{out}=\cos{\theta_{out}}$)，其总的散射相函数计算为：
+假设散射相函数的分布由后向到前向，沿天顶角呈线性变化(方位角水平均一)，对任意散射出射角度$\theta_{out}$ (天顶角方向，$\mu_{out}=\cos{\theta_{out}}$)，其总的散射相函数计算为：
 \begin{equation}
 \Phi_{\mu_{\mathrm{out}}}(\tau)=\Phi_{a}(\tau)+\mu_{\mathrm{out}} \Phi_{d}(\tau)
 \end{equation}
 其中$\Phi_a\left(\tau\right)=0.5\left[\Phi_b\left(\tau\right)+\Phi_f\left(\tau\right)\right]$，$\Phi_d\left(\tau\right)=0.5\left[\Phi_b\left(\tau\right)-\Phi_f\left(\tau\right)\right]$。
-对太阳入射天顶角为$\theta(\mu=\cos{\theta})$时，对$\Phi_{\mu_{out}}\left(\tau\right)$进行积分计算，得到单株植物的反照率($\alpha_s\left(\mu,\tau\right)$)及漫射透射率($T_{i,s}\left(\mu,\tau\right)$)为：
+对太阳入射天顶角为$\theta$ ($\mu=\cos{\theta}$)时，对$\Phi_{\mu_{out}}\left(\tau\right)$进行积分计算，得到单株植物的反照率($\alpha_s\left(\mu,\tau\right)$)及漫射透射率($T_{i,s}\left(\mu,\tau\right)$)为：
 \begin{equation}
 \alpha_{s}(\mu, \tau)=2 \pi\left[\Phi_{a}(\tau)+0.5 \mu \Phi_{d}(\tau)\right]
 \end{equation}
 \begin{equation}
 T_{i, s}(\mu, \tau)=2 \pi\left[\Phi_{a}(\tau)-0.5 \mu \Phi_{d}(\tau)\right]
 \end{equation}
-对于漫射辐射入射，模型考虑等效为直射入射为60$\deg$时的情形。
+对于漫射辐射入射，模型考虑等效为直射入射为 60\textdegree 时的情形。
+
 \subsection{单层植被模型}
 单层植被模型假设球形树冠在水平方向上随机分布，但垂直投影不重叠。在植被覆盖率为$f_c$时，不考虑重叠的植被阴影面积为：
 \begin{equation}
@@ -656,8 +659,8 @@ T_{i}=T_{i, s}(\mu, \tau)-0.5 \alpha_{L}-0.5 A_{c}
 \begin{equation}
 A=1-\alpha-T_{i}-T_{d}
 \end{equation}
-对于漫射辐射入射，同样考虑等效为直射入射为60$^\circ$的情形。
-以上的推导均基于正球体和球形叶倾角分布函数情况下。对于椭球体树冠(图\ref{fig:椭球体树冠} a)，其对辐射计算的影响主要有3个方面(均可等效看成对光学厚度$\tau$的影响)：
+对于漫射辐射入射，同样考虑等效为直射入射为 60\textdegree 的情形。
+以上的推导均基于正球体和球形叶倾角分布函数情况下。对于椭球体树冠(图~\ref{fig:椭球体树冠}a)，其对辐射计算的影响主要有3个方面(均可等效看成对光学厚度$\tau$的影响)：
 \begin{enumerate}
     \item 椭球相对于正球的拉升/压缩影响单位长度的光学厚度(因叶密度改变)；
     \item 几何形状的改变造成光学路径的长度的改变；
@@ -715,7 +718,8 @@ y^{\prime}=\frac{R}{c} y, \text { and } x^{\prime}=x
 \end{equation}
 再考虑对单层植被辐射散射/吸收特性的改变之外，树冠的形状改变还影响地面的阴影计算，对于单层植被，
 可以利用等效的$\cos{\theta_s^\prime}$值(即$\cos{\theta_s}\sqrt{\frac{1}{{cr}^2\sin^2{\theta_s}+\cos^2{\theta_s}}}$)。 
-若考虑植被与地面之间的多次散射，初次透射到地面的辐射$T$($T=1-S+S\left(T_d+T_i\right)$)经过地面的反射(地表反射率$r_g$)，再次与植被冠层反射到达地面，
+若考虑植被与地面之间的多次散射，初次透射到地面的辐射$T$ ($T=1-S+S\left(T_d+T_i\right)$) 经过地面的反射(地表反射率$r_g$)，
+再次与植被冠层反射到达地面，
 如此反复。到达地面的辐射为一等比数列，其比例因子为$q=r_gS^\ast\alpha^\ast$，上标“$\ast$”表示漫射辐射入射时相应变量值(下同)。
 由于地表与植被之间多次散射的植被吸收$A^m=\frac{Tr_gS^\ast A^\ast}{1-q}$，
 总的植被吸收($\left[A\right]$)，透射率($\left[T\right]$)，地表吸收($\left[G\right]$)和地表$albedo$($\left[\alpha\right]$)计算如下
@@ -733,7 +737,7 @@ y^{\prime}=\frac{R}{c} y, \text { and } x^{\prime}=x
 \end{equation}
 \subsection{三层植被模型}
 三层植被模型的假设在单株植物模型和单层植被模型的基础上，认为层与层之间的树冠垂直投影不重叠，
-每层植被树冠半径$(R$)和树冠中心高度($h$)相同(图\ref{fig:三层植被结构示意图})。
+每层植被树冠半径$(R$)和树冠中心高度($h$)相同(图~\ref{fig:三层植被结构示意图})。
 若某层植被含有多种PFT，则该层的$f_c$为所含PFT各自$f_c$的累加，
 植被参数的层属性(包括$LAI$、$R$、$h$及叶片光学属性)为所含PFT的$f_c$加权平均。
 
@@ -741,7 +745,7 @@ y^{\prime}=\frac{R}{c} y, \text { and } x^{\prime}=x
 
 层与层之间的阴影重叠对直射辐射的吸收影响很大，特别是对于较高吸收率的可见光波段。
 对于阴影的重叠，3D模型假设高层树冠的“自身阴影”(在低层植被的阴影与其自身垂直投影的重叠区域)
-不与低层树冠的阴影重叠(如图\ref{fig:三层植被结构示意图}所示的$S_{12}$、$S_{13}$和$S_{23}$)。除此之外，层与层之间的阴影可以随机重叠。
+不与低层树冠的阴影重叠(如图~\ref{fig:三层植被结构示意图}所示的$S_{12}$、$S_{13}$和$S_{23}$)。除此之外，层与层之间的阴影可以随机重叠。
 {
 \begin{figure}[]
 \centering
@@ -754,7 +758,7 @@ y^{\prime}=\frac{R}{c} y, \text { and } x^{\prime}=x
 $S[n]$表示第$n$层植被的阴影面积，$Td$,$[n]$为第$n$层植被的直射辐射直射透射率，可以计算从天空($sky$)，
 不穿过植被，到达每层植被及地面的初始直射辐射为(为了与三维植被辐射传输模型引文 \citep{yuan20143d} 吻合
 ，这里保留了植被分层计数从上到下1-3的方式，但之后三维植被长波辐射传输
-、三维植被湍流交换过程等采用从上至下3-1的编号，与代码一致。) ：
+、三维植被湍流交换过程等采用从上至下3-1的编号，与代码一致)：
 \begin{equation}
 \begin{aligned} I_{0 \rightarrow 1} &=S_{1} \\ I_{0 \rightarrow 2} &=\left(1-S_{1}+S_{12}\right) S_{2} \\ 
     I_{0 \rightarrow 3} &=\left[1-\left(S_{1}-S_{13}\right)-\left(S_{2}-S_{23}\right)+\left(S_{1}-S_{12}\right)\left(S_{2}-S_{23}\right)\right] S_{3} \\ 
@@ -786,7 +790,7 @@ I_{n}\left(1-T_{d, n}\right)(1-\omega)
 \end{equation}
 第n层植被的太阳直射照射面积($p_{sun}$)计算为：
 \begin{equation}
-P_{\mathrm{sun}}=I_{n} / S_{n}
+P_{sun}=I_{n} / S_{n}
 \end{equation}
 上式表明每层植被并不是100\%的被太阳直射照射，该参数将会用于修正植被光照叶面积指数（图 \ref{fig:三层植被辐射传输计算示意图}）。
 {
@@ -827,11 +831,11 @@ P_{\mathrm{sun}}=I_{n} / S_{n}
 \begin{equation}
 \begin{array}{l}{\left[\alpha^{*}\right]=I_{\uparrow, 1}^{*}} \\ {\left[A_{1}^{*}\right]=S_{1}^{*} A_{1}^{*}+I_{\uparrow, 2}^{*} S_{1}^{*} A_{1}^{*}} \\ {\left[A_{2}^{*}\right]=\left(I_{\downarrow, 1}^{*}+I_{\uparrow, 3}^{*}\right) S_{2}^{*} A_{2}^{*}} \\ {\left[A_{3}^{*}\right]=\left(I_{\downarrow, 2}^{*}+I_{\downarrow, 3}^{*} r_{g}\right) S_{3}^{*} A_{3}^{*}} \\ {\left[G^{*}\right]=I_{\downarrow, 3}^{*}\left(1-r_{g}\right)}\end{array}
 \end{equation}
-所有的PFT(包括裸土)共享同样的反照率，同样的地面吸收率。对每一PFT，考虑其单独存在时，利用单层植被模型计算其吸收，
+所有的PFT (包括裸土)共享同样的反照率，同样的地面吸收率。对每一PFT，考虑其单独存在时，利用单层植被模型计算其吸收，
 并将其作为权重，把每层的植被辐射吸收分配到其所包含的PFT中去(包括上面计算的直射辐射直射吸收)。
 
 \subsection{三维植被长波辐射传输}\label{三维植被长波辐射传输}
-为了说明三维植被情况下长波辐射传输与一维情况下最大的不同，我们举一个极端的例子加以说明，如图\ref{fig:单颗树冠长波辐射传输示意图}所示：
+为了说明三维植被情况下长波辐射传输与一维情况下最大的不同，我们举一个极端的例子加以说明，如图~\ref{fig:单颗树冠长波辐射传输示意图}所示,
 {
 \begin{figure}[]
 \centering
@@ -840,8 +844,8 @@ P_{\mathrm{sun}}=I_{n} / S_{n}
 \label{fig:单颗树冠长波辐射传输示意图}
 \end{figure}
 }
-
-若采用一维长波辐射传输方式进行计算，则到达地面的大气长波辐射量即为$f_c\left(1-\varepsilon_v\right)\\L_{atm}\downarrow+\left(1-f_c\right)L_{atm}\downarrow$。
+%
+若采用一维长波辐射传输方式进行计算，则到达地面的大气长波辐射量即为$f_c\left(1-\varepsilon_v\right)L_{atm}\downarrow+\left(1-f_c\right)L_{atm}\downarrow$。
 但实际上，由于长波辐射是朝各个方向发射的，一般认为各向均一，能到达树冠表面(或称为阴影)的长波辐射并不仅仅限于其正上方的部分，
 简单的计算公式可以表示为：
 \begin{equation}
@@ -858,9 +862,11 @@ $f_c\rightarrow0$，$S\rightarrow2$，同上述单棵树冠情况一样；
 对从地面发射的长波辐射，其情况同向下大气长波辐射一样，在稀疏情况下，植被能截获更多的长波辐射。
 下面我们对一层植被(植被覆盖度为$f_c$)进行整个长波辐射传输过程推导。植被冠层下的长波辐射计算为：
 \begin{equation}
-\begin{aligned} L_{v} \downarrow &=S\left(1-\varepsilon_{v}\right) L_{atm} \downarrow+(1-S) L_{atm} \downarrow+f_{c} 
-    \varepsilon_{v} \sigma T_{v}^{4} \\ &=\left(S-S \varepsilon_{v}+1-S\right) L_{atm} \downarrow+f_{c} \varepsilon_{v} 
-    \sigma T_{v}^{4} \\ &=\left(1-S \varepsilon_{v}\right) L_{atm} \downarrow+f_{c} \varepsilon_{v} \sigma T_{v}^{4} \end{aligned}
+\begin{aligned} 
+L_{v} \downarrow &=S\left(1-\varepsilon_{v}\right) L_{atm} \downarrow+(1-S) L_{atm} \downarrow+f_{c} \varepsilon_{v} \sigma T_{v}^{4} \\ 
+  &=\left(S-S \varepsilon_{v}+1-S\right) L_{atm} \downarrow+f_{c} \varepsilon_{v} \sigma T_{v}^{4} \\ 
+  &=\left(1-S \varepsilon_{v}\right) L_{atm} \downarrow+f_{c} \varepsilon_{v} \sigma T_{v}^{4} 
+\end{aligned}
 \end{equation}
 土壤向上的长波辐射(包括自身发射和反射部分)计算为：
 \begin{equation}
@@ -872,9 +878,10 @@ L_{g} \uparrow=\left(1-\varepsilon_{g}\right) L_{v} \downarrow+\varepsilon_{g} \
 \end{equation}
 \begin{equation}
 \begin{aligned} \overrightarrow{L_{v}} &=-S \varepsilon_{v} L_{atm} \downarrow-S \varepsilon_{v} L_{g} 
-    \uparrow+2 f_{c} \varepsilon_{v} \sigma T_{v}^{4} \\ &=-S \varepsilon_{v} L_{atm} \downarrow-S 
-    \varepsilon_{v}\left(1-\varepsilon_{g}\right)\left(1-S \varepsilon_{v}\right) L_{atm} \\ & 
-    \downarrow-S \varepsilon_{v}\left(1-\varepsilon_{g}\right) f_{c} \varepsilon_{v} \sigma T_{v}^{4}+S
+    \uparrow+2 f_{c} \varepsilon_{v} \sigma T_{v}^{4} \\ 
+    &=-S \varepsilon_{v} L_{atm} \downarrow-S 
+    \varepsilon_{v}\left(1-\varepsilon_{g}\right)\left(1-S \varepsilon_{v}\right) L_{atm}\downarrow \\ 
+    &\mathrel{\phantom{=}} -S \varepsilon_{v}\left(1-\varepsilon_{g}\right) f_{c} \varepsilon_{v} \sigma T_{v}^{4}+S
      \varepsilon_{v} \varepsilon_{g} \sigma T_{g}^{4}+2 f_{c} \varepsilon_{v} \sigma T_{v}^{4} \\ 
      &=\left[2-S \varepsilon_{v}\left(1-\varepsilon_{g}\right)\right] f_{c} \varepsilon_{v} 
      \sigma T_{v}^{4}-S \varepsilon_{v}\left[1+\left(1-\varepsilon_{g}\right)\left(1-S \varepsilon_{v}\right)\right]
@@ -884,8 +891,8 @@ L_{g} \uparrow=\left(1-\varepsilon_{g}\right) L_{v} \downarrow+\varepsilon_{g} \
 \begin{equation}
 \begin{aligned} L \uparrow=&(1-S) L_{g} \uparrow+S\left(1-\varepsilon_{v}\right) L_{g} 
     \uparrow+f_{c} \varepsilon_{v} \sigma T_{v}^{4} \\=&\left(1-S \varepsilon_{v}\right) L_{g}
-     \uparrow+f_{c} \varepsilon_{v} \sigma T_{v}^{4} \\=&\left(1-S \varepsilon_{v}\right)\left(1-\varepsilon_{g}\right)\left(1-S \varepsilon_{v}\right) L_{atm} \\
-      & \quad \downarrow+\left(1-S \varepsilon_{v}\right)\left(1-\varepsilon_{g}\right) f_{c} \varepsilon_{v} \sigma T_{v}^{4}+\left(1-S \varepsilon_{v}\right) 
+     \uparrow+f_{c} \varepsilon_{v} \sigma T_{v}^{4} \\=&\left(1-S \varepsilon_{v}\right)\left(1-\varepsilon_{g}\right)\left(1-S \varepsilon_{v}\right) L_{atm}\downarrow \\
+      & \quad +\left(1-S \varepsilon_{v}\right)\left(1-\varepsilon_{g}\right) f_{c} \varepsilon_{v} \sigma T_{v}^{4}+\left(1-S \varepsilon_{v}\right) 
       \varepsilon_{g} \sigma T_{g}^{4}+f_{c} \varepsilon_{v} \sigma T_{v}^{4} \end{aligned}
 \end{equation}
 以上计算还需要考虑植被温度变化所带来的长波辐射量的改变，
@@ -896,8 +903,8 @@ $L\uparrow$增加$4 f_{c} \varepsilon_{v} \sigma T_{v}^{3} \Delta T_{v}+\left(1-
 
 
 
-我们将这种逻辑应用到之前阐述的三层植被中，如图\ref{fig:三层植被长波辐射传输示意图}所示：
-
+我们将这种逻辑应用到之前阐述的三层植被中，如图~\ref{fig:三层植被长波辐射传输示意图}所示。
+%
 {
 \begin{figure}[]
 \centering
@@ -906,9 +913,7 @@ $L\uparrow$增加$4 f_{c} \varepsilon_{v} \sigma T_{v}^{3} \Delta T_{v}+\left(1-
 \label{fig:三层植被长波辐射传输示意图}
 \end{figure}
 }
-
-
-
+%
 从计算示意图来看，仿佛有点复杂，因为需要计算每两层之间的辐射传输量，其实不然。我们把计算式子写出来如下。
 从天空下行的长波辐射到达每一层的量为：
 \begin{equation}
