@@ -19,9 +19,9 @@
     固态水液化潜热 {[}J/kg{]}                               & $0.3336\times 10^6$  \\
     液态水蒸发潜热 {[}J/kg{]}                               & $2.5104\times 10^6$  \\
     固态水升华潜热 {[}J/kg{]}                               & $2.8440\times 10^6$  \\
-    空气热力传导率 {[}W/m/k{]}                              & 0.023       \\
-    固态水热力传导率 {[}W/m/k{]}                             & 2.290       \\
-    液态水热力传导率 {[}W/m/k{]}                             & 0.6         \\
+    空气热力传导率 {[}W/m/K{]}                              & 0.023       \\
+    固态水热力传导率 {[}W/m/K{]}                             & 2.290       \\
+    液态水热力传导率 {[}W/m/K{]}                             & 0.6         \\
     液态水凝结温度 {[}K{]}                                  & 273.16      \\
     干空气气体常数 {[}J/kg/K{]}                             & 287.04      \\
     rw/g = (8.3144/0.018)/(9.80616)*1000. {[}mm/K{]} & $4.71047\times 10^4$ \\
@@ -53,8 +53,8 @@ Crank Nicholson隐式格式权重因子 {[}-{]}           & 0.5      \\
 地面最大积水深度 {[}mm{]}                         & 10.0     \\
 萎焉点土壤水势 {[}mm{]}                          & $-1.5\times 10^5$ \\
 最小土壤水势 {[}mm{]}                           & $-1\times 10^8$   \\
-最大蒸腾速率 {[}$\rm mm s-1${]}                         & $2\times 10^{-4}$   \\
-确定雨/雪临界温度 {[} {]}                         & 2.5      \\ \bottomrule
+最大蒸腾速率 {[}$\rm mm/s${]}                         & $2\times 10^{-4}$   \\
+确定雨/雪临界温度 {[}\textcelsius {]}                         & 2.5      \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -178,7 +178,7 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
 \label{tab:USGS植被特征尺寸叶倾角分布及叶片光学属性参数1}
     \begin{tabular}{@{}lcccccccccc@{}}
     \toprule
-    USGS地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, v i s}$  &$\rho_{l,  nir}$ &$\tau_{l,  nir}$ & $\rho_{s, v i s}$ &$\tau_{s, v i s}$ &$\rho_{s,  nir}$ &$\tau_{s,ir}$\\ \midrule
+    USGS地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, vis}$  &$\rho_{l, nir}$ &$\tau_{l, nir}$ & $\rho_{s, vis}$ &$\tau_{s, vis}$ &$\rho_{s, nir}$ &$\tau_{s,nir}$\\ \midrule
     1 城市           & 4.0        & -0.3                                                                         & 0.105                                                                                                           & 0.07                                                                                                            & 0.58                                                                                                            & 0.25                                                                                                            & 0.36                                                                                                            & 0.22                                                                                                            & 0.58                                                                                                            & 0.38                                                                                                            \\
     2 干旱农田与牧场      & 4.0        & -0.3                                                                         & 0.105                                                                                                           & 0.07                                                                                                            & 0.58                                                                                                            & 0.25                                                                                                            & 0.36                                                                                                            & 0.22                                                                                                            & 0.58                                                                                                            & 0.38                                                                                                            \\
     3 灌溉农田与牧场      & 4.0        & -0.3                                                                         & 0.105                                                                                                           & 0.07                                                                                                            & 0.58                                                                                                            & 0.25                                                                                                            & 0.36                                                                                                            & 0.22                                                                                                            & 0.58                                                                                                            & 0.38                                                                                                            \\
@@ -190,20 +190,19 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
     9 草地灌木地混合带     & 4.0        & 0.01                                                                         & 0.1                                                                                                             & 0.07                                                                                                            & 0.45                                                                                                            & 0.25                                                                                                            & 0.16                                                                                                            & 0.001                                                                                                           & 0.39                                                                                                            & 0.001                                                                                                           \\
     10 稀疏草原        & 4.0        & -0.3                                                                         & 0.105                                                                                                           & 0.07                                                                                                            & 0.58                                                                                                            & 0.25                                                                                                            & 0.36                                                                                                            & 0.22                                                                                                            & 0.58                                                                                                            & 0.38                                                                                                            \\
     11 落叶阔叶林       & 4.0        & 0.25                                                                         & 0.1                                                                                                             & 0.05                                                                                                            & 0.45                                                                                                            & 0.25                                                                                                            & 0.16                                                                                                            & 0.001                                                                                                           & 0.39                                                                                                            & 0.001                                                                                                           \\
-    12 落叶针叶林       & 4.0        & 0.01                                                                         & 0.07                                                                                                            & 0.05                                                                                                            & 0.35                                                                                                            & 0.1                                                                                                             & 0.16                                                                                                            & 0.001                                                                                                           & 0.39                                                                                                            & 0.001                                                                                                           \\\bottomrule
-    \end{tabular}
-\end{sidewaystable}
-
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{sidewaystable}[]
-    \centering
-    \caption{USGS植被特征尺寸、叶倾角分布及叶片光学属性参数 (续)。$\chi_L$为叶倾角分布参数，$\rho$表示反射率，$\tau$表示透射率，下标$l$表示叶片，$s$表示茎，$vis$表示可见光波段，$nir$表示近红外波段。}
-    \label{tab:USGS植被特征尺寸叶倾角分布及叶片光学属性参数2}
-        \begin{tabular}{@{}lcccccccccc@{}}
-        \toprule
-        USGS地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, v i s}$  &$\rho_{l,  nir}$ &$\tau_{l,  nir}$ & $\rho_{s, v i s}$ &$\tau_{s, v i s}$ &$\rho_{s,  nir}$ &$\tau_{s,ir}$\\ \midrule
+    12 落叶针叶林       & 4.0        & 0.01                                                                         & 0.07                                                                                                            & 0.05                                                                                                            & 0.35                                                                                                            & 0.1                                                                                                             & 0.16                                                                                                            & 0.001                                                                                                           & 0.39                                                                                                            & 0.001                                                                                                           \\ %\bottomrule
+%    \end{tabular}
+%\end{sidewaystable}
+%
+%% Please add the following required packages to your document preamble:
+%% \usepackage{booktabs}
+%\begin{sidewaystable}[]
+%    \centering
+%    \caption{USGS植被特征尺寸、叶倾角分布及叶片光学属性参数 (续)。$\chi_L$为叶倾角分布参数，$\rho$表示反射率，$\tau$表示透射率，下标$l$表示叶片，$s$表示茎，$vis$表示可见光波段，$nir$表示近红外波段。}
+%    \label{tab:USGS植被特征尺寸叶倾角分布及叶片光学属性参数2}
+%        \begin{tabular}{@{}lcccccccccc@{}}
+%        \toprule
+%        USGS地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, vis}$  &$\rho_{l, nir}$ &$\tau_{l, nir}$ & $\rho_{s, vis}$ &$\tau_{s, vis}$ &$\rho_{s, nir}$ &$\tau_{s, nir}$\\ \midrule
         13 常绿阔叶林   & 4.0        & 0.1                                                                          & 0.1                                                                                                             & 0.05                                                                                                            & 0.45                                                                                                            & 0.25                                                                                                            & 0.16                                                                                                            & 0.001                                                                                                           & 0.39                                                                                                            & 0.001                                                                                                           \\
         14 常绿针叶林   & 4.0        & 0.01                                                                         & 0.07                                                                                                            & 0.05                                                                                                            & 0.35                                                                                                            & 0.1                                                                                                             & 0.16                                                                                                            & 0.001                                                                                                           & 0.39                                                                                                            & 0.001                                                                                                           \\
         15 混合森林    & 4.0        & 0.125                                                                        & 0.07                                                                                                            & 0.05                                                                                                            & 0.4                                                                                                             & 0.15                                                                                                            & 0.16                                                                                                            & 0.001                                                                                                           & 0.39                                                                                                            & 0.001                                                                                                           \\
@@ -225,12 +224,12 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
 % \usepackage{booktabs}
 \begin{sidewaystable}[]
     \centering
-    \caption{USGS植被光合作用参数。$V_{cmax}$表示植被冠层顶部 25\textcelsius 时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
-    $r_{base}$为叶基础呼吸速率系数(unitless)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，$s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
+    \caption{USGS植被光合作用参数。$V_{cmax}$表示植被冠层顶部 25~\textcelsius 时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
+    $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，$s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
     \label{tab:USGS植被光合作用参数1}
     \begin{tabular}{@{}lccccccccccccccccccc@{}}
     \toprule
-    USGS地表覆盖类型     &$ V_{cmax}$ & $\alpha$ & $m$& $b$ & $r_{base}$ & $s_1$ & $s_2$ & $s_3$ & $T_dm$ & $T_{op}$ & $T_{low}$ & $T_{high}$ & $K_n$  \\ \midrule
+    USGS地表覆盖类型     &$ V_{cmax}$ & $\alpha$ & $m$& $b$ & $r_{base}$ & $s_1$ & $s_2$ & $s_3$ & $T_{dm}$ & $T_{op}$ & $T_{low}$ & $T_{high}$ & $K_n$  \\ \midrule
     1 城市           & 100                                                               & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 308                                                              & 281                                                               & 0.5                                                          \\
     2 干旱农田与牧场      & 57                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 308                                                              & 281                                                               & 0.5                                                          \\
     3 灌溉农田与牧场      & 57                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 308                                                              & 281                                                               & 0.5                                                          \\
@@ -242,20 +241,20 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
     9 草地灌木地混合带     & 52                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 313                                                              & 283                                                               & 0.5                                                          \\
     10 稀疏草原        & 52                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 308                                                              & 281                                                               & 0.5                                                          \\
     11 落叶阔叶林       & 52                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 311                                                              & 283                                                               & 0.5                                                          \\
-    12 落叶针叶林       & 57                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 303                                                              & 278                                                               & 0.5                                                          \\ \bottomrule
-    \end{tabular}
-\end{sidewaystable}
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{sidewaystable}[]
-    \centering
-    \caption{USGS植被光合作用参数 (续)。$V_{cmax}$表示植被冠层顶部 25\textcelsius 时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2\ mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
-    $r_{base}$为叶基础呼吸速率系数(unitless)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，$s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
-    \label{tab:USGS植被光合作用参数2}
-    \begin{tabular}{@{}lccccccccccccccccccc@{}}
-    \toprule
-    USGS地表覆盖类型     &$ V_{cmax}$ & $\alpha$ & $m$& $b$ & $r_{base}$ & $s_1$ & $s_2$ & $s_3$ & $T_dm$ & $T_{op}$ & $T_{low}$ & $T_{high}$ & $K_n$  \\ \midrule
+    12 落叶针叶林       & 57                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 303                                                              & 278                                                               & 0.5                                                          \\ %\bottomrule
+%    \end{tabular}
+%\end{sidewaystable}
+%
+%% Please add the following required packages to your document preamble:
+%% \usepackage{booktabs}
+%\begin{sidewaystable}[]
+%    \centering
+%    \caption{USGS植被光合作用参数 (续)。$V_{cmax}$表示植被冠层顶部 25\textcelsius 时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2\ mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
+%    $r_{base}$为叶基础呼吸速率系数(unitless)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，$s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
+%    \label{tab:USGS植被光合作用参数2}
+%    \begin{tabular}{@{}lccccccccccccccccccc@{}}
+%    \toprule
+%    USGS地表覆盖类型     &$ V_{cmax}$ & $\alpha$ & $m$& $b$ & $r_{base}$ & $s_1$ & $s_2$ & $s_3$ & $T_dm$ & $T_{op}$ & $T_{low}$ & $T_{high}$ & $K_n$  \\ \midrule
     13 常绿阔叶林   & 72                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 313                                                              & 288                                                               & 0.5                                                          \\
     14 常绿针叶林   & 54                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 303                                                              & 278                                                               & 0.5                                                          \\
     15 混合森林    & 52                                                                & 0.08                                                                                                   & 9                                                                                  & 0.01                                                                               & 0.015                                                               & 0.3                                                       & 0.2                                                       & 1.3                                                       & 328                                                             & 298                                                             & 307                                                              & 281                                                               & 0.5                                                          \\
@@ -344,6 +343,7 @@ USGS地表覆盖类型     & $a$ & $b$ \\ \midrule
 24 雪盖或冰川       & 10.74      & 2.608      \\ \bottomrule
 \end{tabular}
 \end{table}
+
 
 \chapter{IGBP地表覆盖类型相关参数}\label{IGBP地表覆盖类型相关参数}
 
@@ -444,7 +444,7 @@ IGBP地表覆盖类型    & \text{粗糙度与植被高度比值} & \text{零平
     \label{tab:IGBP植被特征尺寸叶倾角分布及叶片光学属性参数1}
         \begin{tabular}{@{}lcccccccccc@{}}
         \toprule
-        IGBP地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, v i s}$  &$\rho_{l,  nir}$ &$\tau_{l,  nir}$ & $\rho_{s, v i s}$ &$\tau_{s, v i s}$ &$\rho_{s,  nir}$ &$\tau_{s,ir}$\\ \midrule
+        IGBP地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, vis}$  &$\rho_{l, nir}$ &$\tau_{l, nir}$ & $\rho_{s, vis}$ &$\tau_{s, vis}$ &$\rho_{s, nir}$ &$\tau_{s, nir}$\\ \midrule
         0 水体          & 4.0        & 0.01  & 0.07  & 0.05 & 0.35 & 0.1  & 0.16 & 0.001 & 0.39 & 0.001 \\
         1 常绿针叶林       & 4.0        & 0.1   & 0.1   & 0.05 & 0.45 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\
         2 常绿阔叶林       & 4.0        & 0.01  & 0.07  & 0.05 & 0.35 & 0.1  & 0.16 & 0.001 & 0.39 & 0.001 \\
@@ -455,20 +455,19 @@ IGBP地表覆盖类型    & \text{粗糙度与植被高度比值} & \text{零平
         7 稀疏灌丛        & 4.0        & 0.01  & 0.105 & 0.05 & 0.58 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\
         8 稀疏大草原(木本为主) & 4.0        & 0.01  & 0.105 & 0.05 & 0.58 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\
         9 稀疏大草原       & 4.0        & -0.3  & 0.105 & 0.07 & 0.58 & 0.25 & 0.36 & 0.001 & 0.58 & 0.38  \\
-        10草地          & 4.0        & 0.1   & 0.105 & 0.05 & 0.45 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\\bottomrule
-        \end{tabular}
-    \end{sidewaystable}
- 
-
+        10草地          & 4.0        & 0.1   & 0.105 & 0.05 & 0.45 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\ %\bottomrule
+%        \end{tabular}
+%    \end{sidewaystable}
+% 
     % Please add the following required packages to your document preamble:
     % \usepackage{booktabs}
-    \begin{sidewaystable}[]
-        \centering
-        \caption{IGBP植被特征尺寸、叶倾角分布及叶片光学属性参数 (续)。$\chi_L$为叶倾角分布参数，$\rho$表示反射率，$\tau$表示透射率，下标$l$表示叶片，$s$表示茎，$vis$表示可见光波段，$nir$表示近红外波段。}
-        \label{tab:IGBP植被特征尺寸叶倾角分布及叶片光学属性参数2}
-            \begin{tabular}{@{}lcccccccccc@{}}
-            \toprule
-            USGS地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, v i s}$  &$\rho_{l,  nir}$ &$\tau_{l,  nir}$ & $\rho_{s, v i s}$ &$\tau_{s, v i s}$ &$\rho_{s, nir}$ &$\tau_{s,ir}$\\ \midrule
+%    \begin{sidewaystable}[]
+%        \centering
+%        \caption{IGBP植被特征尺寸、叶倾角分布及叶片光学属性参数 (续)。$\chi_L$为叶倾角分布参数，$\rho$表示反射率，$\tau$表示透射率，下标$l$表示叶片，$s$表示茎，$vis$表示可见光波段，$nir$表示近红外波段。}
+%        \label{tab:IGBP植被特征尺寸叶倾角分布及叶片光学属性参数2}
+%            \begin{tabular}{@{}lcccccccccc@{}}
+%            \toprule
+%            USGS地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, vis}$  &$\rho_{l, nir}$ &$\tau_{l, nir}$ & $\rho_{s, vis}$ &$\tau_{s, vis}$ &$\rho_{s, nir}$ &$\tau_{s,nir}$\\ \midrule
             11 永久性湿地      & 4.0         & -0.3         & 0.105          & 0.07          & 0.58          & 0.25          & 0.36          & 0.001          & 0.58           & 0.38 \\
             12 耕地         & 4.0          & 0.01          & 0.105          & 0.05          & 0.45          & 0.25          & 0.16          & 0.001          & 0.39          & 0.001         \\
             13 城市         & 4.0          & -0.3          & 0.105          & 0.07          & 0.58          & 0.25          & 0.36          & 0.001          & 0.58          & 0.38          \\
@@ -483,15 +482,15 @@ IGBP地表覆盖类型    & \text{粗糙度与植被高度比值} & \text{零平
     % \usepackage{booktabs}
     \begin{sidewaystable}[]
         \centering
-        \caption{IGBP植被光合作用参数。$V_{cmax}$表示植被冠层顶部25$\deg$C时光合最大羧化速率($\rm mol\ m^{-2}\ s{-1}$)，
+        \caption{IGBP植被光合作用参数。$V_{cmax}$表示植被冠层顶部 25~\textcelsius 时光合最大羧化速率($\rm mol\ m^{-2}\ s{-1}$)，
         $\alpha$为量子转化效率(0.05 $\rm mol CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，
         $b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
-        $r_{base}$为叶基础呼吸速率系数(unitless)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，
+        $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，
         $s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
         \label{tab:IGBP植被光合作用参数1}
         \begin{tabular}{@{}lccccccccccccccccccc@{}}
         \toprule
-        USGS地表覆盖类型     &$ V_{cmax}$ & $\alpha$ & $m$& $b$ & $r_{base}$ & $s_1$ & $s_2$ & $s_3$ & $T_dm$ & $T_{op}$ & $T_{low}$ & $T_{high}$ & $K_n$  \\ \midrule
+        USGS地表覆盖类型     &$ V_{cmax}$ & $\alpha$ & $m$& $b$ & $r_{base}$ & $s_1$ & $s_2$ & $s_3$ & $T_{dm}$ & $T_{op}$ & $T_{low}$ & $T_{high}$ & $K_n$  \\ \midrule
         0 水体          & 54 & 0.08 & 9 & 0.01 & 0.015 & 0.3 & 0.2 & 1.3 & 328 & 298 & 303 & 278 & 0.5 \\
         1 常绿针叶林       & 72          & 0.08          & 9          & 0.01          & 0.015          & 0.3          & 0.2          & 1.3          & 328          & 298          & 313          & 288          & 0.5          \\
         2 常绿阔叶林       & 57          & 0.08          & 9          & 0.01          & 0.015          & 0.3          & 0.2          & 1.3          & 328          & 298          & 303          & 278          & 0.5          \\
@@ -503,23 +502,23 @@ IGBP地表覆盖类型    & \text{粗糙度与植被高度比值} & \text{零平
         8 稀疏大草原(木本为主) & 52          & 0.08          & 9          & 0.01          & 0.015          & 0.3          & 0.2          & 1.3          & 328          & 298          & 313          & 288          & 0.5          \\
         9 稀疏大草原       & 52          & 0.08          & 9          & 0.01          & 0.015          & 0.3          & 0.2          & 1.3          & 328          & 298          & 308          & 281          & 0.5          \\
         10草地          & 52          & 0.08          & 9          & 0.01          & 0.015          & 0.3          & 0.2          & 1.3          & 328          & 298          & 313          & 283          & 0.5          \\
-        11 永久性湿地      & 57          & 0.08          & 9          & 0.01          & 0.015          & 0.3          & 0.2          & 1.3          & 328          & 298          & 308          & 281          & 0.5        \\\bottomrule
-                \end{tabular}
-    \end{sidewaystable}
-    
+        11 永久性湿地      & 57          & 0.08          & 9          & 0.01          & 0.015          & 0.3          & 0.2          & 1.3          & 328          & 298          & 308          & 281          & 0.5        \\ %\bottomrule
+%                \end{tabular}
+%    \end{sidewaystable}
+%    
     % Please add the following required packages to your document preamble:
     % \usepackage{booktabs}
-    \begin{sidewaystable}[]
-        \centering
-        \caption{IGBP植被光合作用参数 (续)。$V_{cmax}$表示植被冠层顶部25$\deg$C时光合最大羧化速率($\rm mol\ m^{-2}\ s{-1}$)，
-        $\alpha$为量子转化效率(0.05 $\rm mol CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，
-        $b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
-        $r_{base}$为叶基础呼吸速率系数(unitless)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，
-        $s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
-        \label{tab:IGBP植被光合作用参数2}
-        \begin{tabular}{@{}lccccccccccccccccccc@{}}
-        \toprule
-        USGS地表覆盖类型     &$ V_{cmax}$ & $\alpha$ & $m$& $b$ & $r_{base}$ & $s_1$ & $s_2$ & $s_3$ & $T_dm$ & $T_{op}$ & $T_{low}$ & $T_{high}$ & $K_n$  \\ \midrule
+%    \begin{sidewaystable}[]
+%        \centering
+%        \caption{IGBP植被光合作用参数 (续)。$V_{cmax}$表示植被冠层顶部25$\deg$C时光合最大羧化速率($\rm mol\ m^{-2}\ s{-1}$)，
+%        $\alpha$为量子转化效率(0.05 $\rm mol CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，
+%        $b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
+%        $r_{base}$为叶基础呼吸速率系数(unitless)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，
+%        $s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
+%        \label{tab:IGBP植被光合作用参数2}
+%        \begin{tabular}{@{}lccccccccccccccccccc@{}}
+%        \toprule
+%        USGS地表覆盖类型     &$ V_{cmax}$ & $\alpha$ & $m$& $b$ & $r_{base}$ & $s_1$ & $s_2$ & $s_3$ & $T_dm$ & $T_{op}$ & $T_{low}$ & $T_{high}$ & $K_n$  \\ \midrule
         12 耕地         & 100 & 0.08 & 9 & 0.01 & 0.015 & 0.3 & 0.2 & 1.3 & 328 & 298 & 308 & 281 & 0.5 \\
         13 城市         & 57  & 0.08 & 9 & 0.01 & 0.015 & 0.3 & 0.2 & 1.3 & 328 & 298 & 308 & 281 & 0.5 \\
         14 耕地和自然植被混合带 & 52  & 0.08 & 9 & 0.01 & 0.015 & 0.3 & 0.2 & 1.3 & 328 & 298 & 303 & 278 & 0.5 \\
@@ -532,7 +531,7 @@ IGBP地表覆盖类型    & \text{粗糙度与植被高度比值} & \text{零平
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{IGBP植被根分布参数 (\citet{zeng2001global}方案)，$a$,$b$为用于计算根分布经验系数。}
+\caption{IGBP植被根分布参数 (\citet{zeng2001global}方案)，$a$、$b$为用于计算根分布经验系数。}
 \label{tab:IGBP植被根分布参数}
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -598,7 +597,7 @@ USGS地表覆盖类型     & $a$ & $b$ \\ \midrule
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{IGBP植被根分布参数 (\citet{zeng2001global}方案)，$a$,$b$为用于计算根分布经验系数。}
+\caption{IGBP植被根分布参数 (\citet{zeng2001global}方案)，$a$、$b$为用于计算根分布经验系数。}
 \label{tab:IGBP植被根分布参数zeng方案}
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -622,6 +621,7 @@ IGBP地表覆盖类型     & $a$ & $b$ \\ \midrule
 16 裸土或稀疏植被覆盖  & 10.74          & 2.608          \\ \bottomrule
 \end{tabular}
 \end{table}
+
 
 \chapter{植被功能型(PFT)相关参数}\label{植被功能型PFT相关参数}
 
@@ -723,7 +723,7 @@ IGBP地表覆盖类型     & $a$ & $b$ \\ \midrule
     \label{tab:PFT植被特征尺寸叶倾角分布及叶片光学属性参数1}
         \begin{tabular}{@{}lcccccccccc@{}}
         \toprule
-        IGBP地表覆盖类型   & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, v i s}$  &$\rho_{l,  nir}$ &$\tau_{l,  nir}$ & $\rho_{s, v i s}$ &$\tau_{s, v i s}$ &$\rho_{s,  nir}$ &$\tau_{s,ir}$\\ \midrule
+        IGBP地表覆盖类型   & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, vis}$  &$\rho_{l, nir}$ &$\tau_{l, nir}$ & $\rho_{s, vis}$ &$\tau_{s, vis}$ &$\rho_{s, nir}$ &$\tau_{s,nir}$\\ \midrule
         0 裸土           & 4.0        & -0.3 & 0.11 & 0.05 & 0.35 & 0.34 & 0.31 & 0.12  & 0.53 & 0.25  \\
         1 温带常绿针叶树   & 4.0        & 0.01 & 0.07 & 0.05 & 0.35 & 0.1  & 0.16 & 0.001 & 0.39 & 0.001 \\
         2 北方常绿针叶树   & 4.0        & 0.01 & 0.07 & 0.05 & 0.35 & 0.1  & 0.16 & 0.001 & 0.39 & 0.001 \\
@@ -735,20 +735,20 @@ IGBP地表覆盖类型     & $a$ & $b$ \\ \midrule
         8 北方落叶阔叶林   & 4.0        & 0.25 & 0.1  & 0.05 & 0.45 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\
         9 常绿阔叶灌木    & 4.0        & 0.01 & 0.07 & 0.05 & 0.35 & 0.1  & 0.16 & 0.001 & 0.39 & 0.001 \\
         10 温带落叶阔叶灌木 & 4.0        & 0.25 & 0.1  & 0.05 & 0.45 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\
-        11 北方落叶阔叶灌木 & 4.0        & 0.25 & 0.1  & 0.05 & 0.45 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\\bottomrule
-        \end{tabular}
-    \end{sidewaystable}
- 
-
-    % Please add the following required packages to your document preamble:
-    % \usepackage{booktabs}
-    \begin{sidewaystable}[]
-        \centering
-        \caption{PFT植被特征尺寸、叶倾角分布及叶片光学属性参数 (续)。$\chi_L$为叶倾角分布参数，$\rho$表示反射率，$\tau$表示透射率，下标$l$表示叶片，$s$表示茎，$vis$表示可见光波段，$nir$表示近红外波段。}
-        \label{tab:PFT植被特征尺寸叶倾角分布及叶片光学属性参数2}
-            \begin{tabular}{@{}lcccccccccc@{}}
-            \toprule
-            PFT地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, v i s}$  &$\rho_{l,  nir}$ &$\tau_{l,  nir}$ & $\rho_{s, v i s}$ &$\tau_{s, v i s}$ &$\rho_{s,  nir}$ &$\tau_{s,ir}$\\ \midrule
+        11 北方落叶阔叶灌木 & 4.0        & 0.25 & 0.1  & 0.05 & 0.45 & 0.25 & 0.16 & 0.001 & 0.39 & 0.001 \\ %\bottomrule
+%        \end{tabular}
+%    \end{sidewaystable}
+% 
+%
+%    % Please add the following required packages to your document preamble:
+%    % \usepackage{booktabs}
+%    \begin{sidewaystable}[]
+%        \centering
+%        \caption{PFT植被特征尺寸、叶倾角分布及叶片光学属性参数 (续)。$\chi_L$为叶倾角分布参数，$\rho$表示反射率，$\tau$表示透射率，下标$l$表示叶片，$s$表示茎，$vis$表示可见光波段，$nir$表示近红外波段。}
+%        \label{tab:PFT植被特征尺寸叶倾角分布及叶片光学属性参数2}
+%            \begin{tabular}{@{}lcccccccccc@{}}
+%            \toprule
+%            PFT地表覆盖类型     & 叶片特征尺寸(cm) & $\chi_L$ &$\rho_{l, vis}$ & $\tau_{l, vis}$  &$\rho_{l, nir}$ &$\tau_{l, nir}$ & $\rho_{s, vis}$ &$\tau_{s, vis}$ &$\rho_{s, nir}$ &$\tau_{s, nir}$\\ \midrule
             12 极地C3草 & 4.0 & -0.3 & 0.11 & 0.05 & 0.35 & 0.34 & 0.31 & 0.12 & 0.53 & 0.25 \\
             13 C3草   & 4.0 & -0.3 & 0.11 & 0.05 & 0.35 & 0.34 & 0.31 & 0.12 & 0.53 & 0.25   \\
             14 C4草   & 4.0 & -0.3 & 0.11 & 0.05 & 0.35 & 0.34 & 0.31 & 0.12 & 0.53 & 0.25   \\
@@ -792,7 +792,7 @@ IGBP地表覆盖类型     & $a$ & $b$ \\ \midrule
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{PFT植被根分布参数 (\citet{zeng2001global}方案)，$a$,$b$为用于计算根分布经验系数。}
+\caption{PFT植被根分布参数 (\citet{zeng2001global}方案)，$a$、$b$为用于计算根分布经验系数。}
 \label{tab:PFT植被根分布参数}
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -815,6 +815,7 @@ PFT地表覆盖类型     & $a$ & $b$ \\ \midrule
 15 C3作物     & 6  & 3  \\ \bottomrule
 \end{tabular}
 \end{table}
+
 
 \chapter{植物群落(PC)次网格PFT相关参数}\label{植物群落PC次网格PFT相关参数}
 % Please add the following required packages to your document preamble:

@@ -69,16 +69,20 @@ c_{v}^{w}=\frac{1}{r_{total}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](
 \begin{enumerate}
     \item 给出植被冠层空气温度和比湿的初始猜测：$T_s=\frac{T_g+\theta_{atm}}{2}$，$q_s=\frac{q_g+q_{atm}}{2}$；
     \item 给出$U_c$的初始猜测如下：\\
-    $U_c=0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \theta_{v,atm}-\theta_{v,s}\geq0$ 即稳定条件下；\\
-    $U_c=0.5\ \ \ \ \ \ \ \ \ \ \theta_{v,atm}-\theta_{v,s}<0$ 即不稳定条件下；
-    \item 通过$R_{ib}$给出L的初始猜测；
+    \begin{equation*}
+    U_c= \begin{cases}
+      0,  & \theta_{v,atm}-\theta_{v,s}\geq0 \text{ 即稳定条件下；} \\
+      0.5, & \theta_{v,atm}-\theta_{v,s}<0 \text{ 即不稳定条件下；}
+     \end{cases}
+    \end{equation*}
+    \item 通过$R_{ib}$给出$L$的初始猜测；
     \item 迭代以下过程以求得$T_v$以及植被湍流通量：\\
     a. 通过风速、温度、比湿的微分方程积分结果求得$u_\ast$、$\theta_\ast$、$q_\ast$ \\
     b. 计算植被冠层空气与大气之间的阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ \\
     c. 计算叶面边界层阻抗$r_b$ \\
     d. 计算植被冠层空气与地表之间的阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$ \\
     e. 计算气孔阻抗$r_s$ \\
-    f. 分别计算叶片吸收的长波辐射、感热通量、潜热通量和雨水感热$L_v$,$H_{pv}$、$\lambda_vE_{pv}$、$H_{prcv}$ \\
+    f. 分别计算叶片吸收的长波辐射、感热通量、潜热通量和雨水感热$L_v$、$H_{pv}$、$\lambda_vE_{pv}$、$H_{prcv}$ \\
     g. 若前后两次迭代过程中潜热通量的符号发生变化($\lambda_vE_{pv}^{\left(n\right)}\times\lambda_vE_{pv}^{\left(n+1\right)}<0$)，
     则在该次迭代计算温度时，潜热通量的量级限制为原量级的10\%，由此产生的能量差最后将加到感热通量中 \\
     h. 计算温度变化$\Delta T_v$，并由此更新$T_v^{\left(n+1\right)}=\Delta T_v^{\left(n\right)}+T_v^{\left(n\right)}$。在每次迭代过程中，对于温度的变化作出如下两个限制：
@@ -107,7 +111,7 @@ c_{v}^{w}=\frac{1}{r_{total}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](
     \begin{equation}
     \begin{array}{c}\tau_{x}=\tau_{b,x}-f_{sig} \rho_{atm} \frac{u_{atm}}{r_{a m}} \\ 
         \tau_{y}=\tau_{b,y}-f_{sig} \rho_{atm} \frac{v_{atm}}{r_{am}}\end{array}
-    \end{equation}。
+    \end{equation}
     \item 计算有植被覆盖下的地表感热通量$H_{pg}$和潜热通量$\lambda_{vE_{pg}}$及其对地表温度的变化率，
     并给出地表总感热通量$H_g$和潜热通量$\lambda_{vE_g}$：
     \begin{equation}

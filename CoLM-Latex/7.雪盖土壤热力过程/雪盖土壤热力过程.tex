@@ -73,20 +73,24 @@ $z_{h,0}=0$为雪盖底层与土壤表层交界处的高度。将此交界面以
 \end{equation}
 其中$\rho_{sno,new}$表示新降的干雪密度($\rm kg/m^3$)，计算方案为 \citet{anderson1976point}：
 \begin{equation}
-\rho_{\text {sno,new }}=\left\{\begin{array}{lr}169 & \text { 当 } T_{a t m}>T_{f}+2.0 \\ 50+1.7\left(T_{a t m}-T_{f}+15\right)^{1.5} & \text { 当 } T_{f}-15.0<T_{a t m} \leq T_{f}+2.0 \\ 50 & \text { 当 } T_{a t m} \leq T_{f}-15.0\end{array}\right.
+\rho_{sno, new}=\begin{cases}
+169 & \text { 当 } T_{atm}>T_{f}+2.0 \\ 
+50+1.7\left(T_{atm}-T_{f}+15\right)^{1.5}  & \text { 当 } T_{f}-15.0<T_{atm} \leq T_{f}+2.0 \\ 
+50 & \text { 当 } T_{atm} \leq T_{f}-15.0
+\end{cases}
 \end{equation}
 若此时$z_{sno} \geq 0.01$，则按如上方式对积雪进行分层，且每一层雪的温度取为$T_p$，液态水含量取为0，固态水含量按雪层厚度权重分配$W_{sno}$。若之前已有雪层且此时有降雪发生，则第一层雪的相关物理量作如下更新：
 \begin{equation}
-w_{ice, s n l+1}=w_{ice, s n l+1}+p_{i} \Delta t
+w_{ice, snl+1}=w_{ice, snl+1}+p_{i} \Delta t
 \end{equation}
 \begin{equation}
-\Delta z_{\text {snl+1 }}=\Delta z_{\text {snl+1 }}+\frac{p_{i} \Delta t}{\rho_{\text {sno,new }}}
+\Delta z_{snl+1}=\Delta z_{snl+1}+\frac{p_{i} \Delta t}{\rho_{sno, new}}
 \end{equation}
 \begin{equation}
-z_{s n l+1}=z_{h, s n l+1}-0.5 \Delta z_{s n l+1}
+z_{snl+1}=z_{h, snl+1}-0.5 \Delta z_{snl+1}
 \end{equation}
 \begin{equation}
-z_{h, s n l}=z_{h, s n l+1}-\Delta z_{s n l+1}
+z_{h, snl}=z_{h, snl+1}-\Delta z_{snl+1}
 \end{equation}
 雪盖土壤垂直分层及其热传导过程示意图见图 \ref{fig:雪盖土壤垂直分层及其热传导过程示意图}。其中土壤热力学状态变量
 (如雪盖土壤温度$T_i$，热力传导率$\lambda_i$，体积比热容$c_i$等)定义在每一层的中间深度，从第$i+1$层到第$ i $层的热传导通量$F_i$定义在两层的交界处，它可离散为：
@@ -100,7 +104,10 @@ F_{i}=\lambda\left[z_{h, i}\right] \frac{T_{i}-T_{i+1}}{z_{i}-z_{i+1}}
 \end{equation}
 即可通过后两项解出第$i+1$层与第$i$层交界处的温度$T_m$；再将$T_m$代回，通过前两项即可解出$\lambda\left[z_{h,i}\right]$为：
 \begin{equation}
-\lambda\left[z_{h, i}\right]=\left\{\begin{array}{cc}\frac{\lambda_{i} \lambda_{i+1}\left(z_{i}-z_{i+1}\right)}{\lambda_{i}\left(z_{h, i}-z_{i+1}\right)+\lambda_{i+1}\left(z_{i}-z_{h, i}\right)} & i=\operatorname{snl}+1, \ldots, 9 \\ 0 & i=10\end{array}\right.
+\lambda\left[z_{h, i}\right]=\begin{cases}
+\frac{\lambda_{i} \lambda_{i+1}\left(z_{i}-z_{i+1}\right)}{\lambda_{i}\left(z_{h, i}-z_{i+1}\right)+\lambda_{i+1}\left(z_{i}-z_{h, i}\right)} & i=snl+1, \ldots, 9 \\ 
+0 & i=10
+\end{cases}
 \end{equation}
 特殊地，对于土壤与雪盖的交界面，为防止最下层雪盖厚度过大导致$\lambda\left[z_{h,i}\right]$计算不准，
 当$i=0$且$\left(z_{i+1}-z_{h,i}\right)<\left(z_{h,i}-z_i\right)$时，$\lambda\left[z_{h,i}\right]$重新计算为：
@@ -171,7 +178,7 @@ L_{g} \uparrow=\varepsilon_{g} \sigma T_{g}^{4}
 \begin{equation}
 \lambda=\left\{\begin{array}{lr}\lambda_{s} & \text { 当 } w_{liq, s n l+1}=0 \text { 并且 } w_{ice, s n l+1}>0 \\ \lambda_{v} & \text { 其他情况 }\end{array}\right.
 \end{equation}
-其中$w_{liq,snl+1}$和$w_{ice,snl+1}$分别表示雪盖土壤顶层的液态水和固态水含量(kg/m2，其计算见章节~\ref{sec:土壤水的运动})。
+其中$w_{liq,snl+1}$和$w_{ice,snl+1}$分别表示雪盖土壤顶层的液态水和固态水含量 ($\rm kg/m^2$，其计算见章节~\ref{sec:土壤水的运动})。
 
 在模式中，地表温度$T_g$与$T_{snl+1}$取为同一值，但$T_{snl+1}$表示第一层雪盖或土壤的平均温度，与实际的$T_g$相比具有减弱的日变化幅度。
 为改进这一缺陷，在求解第一层能量平衡方程时，其厚度$\Delta z_i$作以下调整，以求得更接近实际的$T_g$：
@@ -191,7 +198,7 @@ L_{g} \uparrow=\varepsilon_{g} \sigma T_{g}^{4}
 
 下面给出各层雪盖土壤的热力传导率$\lambda_i$与体积热容量$c_i$的计算方案：\\
 
-根据\citet{farouki1981thermal}，土壤热力传导率$\lambda_i$(W/m/K, $i=1,..,10$)的计算公式如下：
+根据\citet{farouki1981thermal}，土壤热力传导率$\lambda_i$ (W/m/K, $i=1,..,10$)的计算公式如下：
 
 \begin{equation}
 \lambda_{i}=\left\{\begin{array}{ll}K_{e, i} \lambda_{sat, i}+\left(1-K_{e, i}\right) \lambda_{d r y, i} & S_{r, i}>1 \times 10^{-7} \\ \lambda_{d r y, i} & S_{r, i} \leq 1 \times10^{-7}\end{array}\right.
@@ -211,7 +218,7 @@ K_{e, i}=\left\{\begin{array}{ll}\log _{10} S_{r, i}+1 \geq 0 & \text{ 当 } T_{
 $\theta_{sat,i}$表示第$ i $层土壤的孔隙度。
 
 
-根据\citet{jordan1991one}，雪盖热力传导率$\lambda_i$(W/m/K, $i=snl+1,..,0$)的计算公式如下：
+根据 \citet{jordan1991one}，雪盖热力传导率$\lambda_i$ (W/m/K, $i=snl+1,..,0$)的计算公式如下：
 \begin{equation}
 \lambda_{i}=\lambda_{a}+\left(7.75 \times 10^{-5} \rho_{sno, i}+1.105 \times 10^{-6} \rho_{sno, i}^{2}\right)\left(\lambda_{ice}-\lambda_{a}\right)
 \end{equation}
@@ -222,7 +229,7 @@ $\theta_{sat,i}$表示第$ i $层土壤的孔隙度。
 
 
 
-根据\citet{de1963thermal}，土壤体积热容量$c_i$(J/m3/K, $i=1,..,10$)的计算公式如下：
+根据 \citet{de1963thermal}，土壤体积热容量$c_i$(J/m3/K, $i=1,..,10$)的计算公式如下：
 \begin{equation}
 c_{i}=c_{s, i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{p l}
 \end{equation}
@@ -230,7 +237,7 @@ c_{i}=c_{s, i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{
 \begin{equation}
 c_{i}=c_{s,i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq,i}}{\Delta z_{i}} C_{pl}+\frac{W_{sno}}{\Delta z_{i}} C_{pi}
 \end{equation}
-对于雪盖体积热容量$c_i$(J/m3/K, $i=snl+1,..,0$)，其计算公式为：
+对于雪盖体积热容量$c_i$ (J/m3/K, $i=snl+1,..,0$)，其计算公式为：
 \begin{equation}
 c_{i}=\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{pl}
 \end{equation}
