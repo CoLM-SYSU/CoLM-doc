@@ -6,10 +6,10 @@
 
 土壤表面反照率采用陆面模式BATS方案 \citep{dickinson1986biosphere,dickinson1993biosphere}，利用土壤颜色和土壤表层含水量计算得到，可表示为：
 \begin{equation}\label{eq:soil_albedo1}
-\alpha_{soi,vis,dir}=\operatorname{Min}\left(\alpha_{sat, vis}+\operatorname{Max}\left(0,0.11-0.40 \theta_{l}\right), \alpha_{dry, vis}\right)
+\alpha_{soi,vis,dir}=\min\left(\alpha_{sat, vis}+\max\left(0,0.11-0.40 \theta_{l}\right), \alpha_{dry, vis}\right)
 \end{equation}
 \begin{equation}
-\alpha_{soi,nir,dir}=\operatorname{Min}\left(\alpha_{sat, nir}+\operatorname{Max}\left(0,0.11-0.40 \theta_{l}\right), \alpha_{dry, nir}\right)
+\alpha_{soi,nir,dir}=\min\left(\alpha_{sat, nir}+\max\left(0,0.11-0.40 \theta_{l}\right), \alpha_{dry, nir}\right)
 \end{equation}
 其中下标$soi$表示土壤，$vis$和$nir$分别表示可见光和近红外波段，$dir$表示直射光，$\alpha_{sat}$和$\alpha_{d r y}$是根据土壤颜色分类，通过查找表得到的饱和($sat$)和干($dry$)土壤的反照率数值，$\theta_{l}$为表层土壤体积含水量。目前土壤颜色数据采用CLM4.5全球20种颜色分类数据，包括可见光波段和近红外波段。漫射光与直射光相应波段一致。
 
