@@ -128,7 +128,7 @@ F_{i}=\lambda\left[z_{h, i}\right] \frac{T_{i}-T_{i+1}}{z_{i}-z_{i+1}}
 \begin{equation}
 \frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{i}^{n+1}-T_{i}^{n}\right)=F_{i}-F_{i-1}
 \end{equation}
-
+%
 其中$\Delta t$表示积分时间步长，$n$表示积分步数。此方程采用Crank-Nicholson半隐式格式求解，既包含前一时刻已有的温度与热通量信息，又包含后一时刻的预报信息。于是此方程可写为如下形式：
 \begin{equation}
 \frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{i}^{n+1}-T_{i}^{n}\right)=\alpha\left(F_{i}^{n}-F_{i-1}^{n}\right)+(1-\alpha)\left(F_{i}^{n+1}-F_{i-1}^{n+1}\right)
@@ -138,7 +138,7 @@ F_{i}=\lambda\left[z_{h, i}\right] \frac{T_{i}-T_{i+1}}{z_{i}-z_{i+1}}
 \begin{aligned} \frac{c_{i} \Delta z_{i}}{\Delta t}\left(T_{i}^{n+1}-T_{i}^{n}\right)=& 0.5\left\{\lambda\left[z_{h, i}\right] \frac{T_{i}^{n}-T_{i+1}^{n}}{z_{i}-z_{i+1}}-\lambda\left[z_{h, i-1}\right] \frac{T_{i-1}^{n}-T_{i}^{n}}{z_{i-1}-z_{i}}\right.\\ &\left.+\lambda\left[z_{h, i}\right] \frac{T_{i}^{n+1}-T_{i+1}^{n+1}}{z_{i}-z_{i+1}}-\lambda\left[z_{h, i-1}\right] \frac{T_{i-1}^{n+1}-T_{i}^{n+1}}{z_{i-1}-z_{i}}\right\} \end{aligned}
 \end{equation}
 将所有层雪盖土壤能量平衡方程联立，可形成关于预报变量$T_{i-1}^{n+1},T_i^{n+1}$和$T_{i+1}^{n+1}$的三对角方程组形式：$r_i=a_iT_{i-1}^{n+1}+b_iT_i^{n+1}+c_iT_{i+1}^{n+1}$，
-其中$a_i$,$b_i$,$c_i$分别为三对角矩阵中上三角、对角线和下三角位置中的元素。用追赶法解此方程组即可快速求得每一层雪盖土壤的温度$T_i^{n+1}$。
+其中$a_i$, $b_i$, $c_i$分别为三对角矩阵中上三角、对角线和下三角位置中的元素。用追赶法解此方程组即可快速求得每一层雪盖土壤的温度$T_i^{n+1}$。
 
 
 对于雪盖土壤的中间层($snl+1<i<10$)，三对角矩阵中的系数表达如下：
@@ -213,9 +213,9 @@ K_{e, i}=\left\{\begin{array}{ll}\log _{10} S_{r, i}+1 \geq 0 & \text{ 当 } T_{
 \end{equation}
 当$T_i<T_f$时，饱和土壤热力传导率$\lambda_{sat,i}$需根据已有$\lambda_{sat,i}$结合水和冰的热力传导率$\lambda_{liq}$，$\lambda_{ice}$进行调整：
 \begin{equation}
-\lambda_{\text {sat}, i}=\lambda_{\text {sat}, i}\left(\frac{\lambda_{\text {ice}}}{\lambda_{\text {liq}}}\right)^{\theta_{\text {sat}, i}\left(1-\frac{w_{liq, i}}{w_{liq}, i+w_{ice, i}}\right)}
+\lambda_{sat, i}=\lambda_{sat, i}\left(\frac{\lambda_{ice}}{\lambda_{liq}}\right)^{\theta_{sat, i}\left(1-\frac{w_{liq, i}}{w_{liq, i}+w_{ice, i}}\right)}
 \end{equation}
-$\theta_{sat,i}$表示第$ i $层土壤的孔隙度。
+$\theta_{sat, i}$表示第$ i $层土壤的孔隙度。
 
 
 根据 \citet{jordan1991one}，雪盖热力传导率$\lambda_i$ (W/m/K, $i=snl+1,..,0$)的计算公式如下：
@@ -229,7 +229,7 @@ $\theta_{sat,i}$表示第$ i $层土壤的孔隙度。
 
 
 
-根据 \citet{de1963thermal}，土壤体积热容量$c_i$(J/m3/K, $i=1,..,10$)的计算公式如下：
+根据 \citet{de1963thermal}，土壤体积热容量$c_i$ (J/$\rm m^3$/K, $i=1,..,10$)的计算公式如下：
 \begin{equation}
 c_{i}=c_{s, i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{p l}
 \end{equation}
@@ -237,7 +237,7 @@ c_{i}=c_{s, i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{
 \begin{equation}
 c_{i}=c_{s,i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq,i}}{\Delta z_{i}} C_{pl}+\frac{W_{sno}}{\Delta z_{i}} C_{pi}
 \end{equation}
-对于雪盖体积热容量$c_i$ (J/m3/K, $i=snl+1,..,0$)，其计算公式为：
+对于雪盖体积热容量$c_i$ (J/$\rm m^3$/K, $i=snl+1,..,0$)，其计算公式为：
 \begin{equation}
 c_{i}=\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{pl}
 \end{equation}

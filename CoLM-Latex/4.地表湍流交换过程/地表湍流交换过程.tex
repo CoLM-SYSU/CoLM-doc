@@ -36,7 +36,7 @@ $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa
 \begin{equation}\label{kz_q}
 \frac{k(z-d)}{q_{*}} \frac{\partial q}{\partial z}=\phi_{w}(\zeta)
 \end{equation}
-其中$k$为von Karman常数，$z$为离地面高度(m)，$d$为零平面位移(m)，$L$为Monin-Obukhov长度(m)：
+其中$k$为von K\'arman常数，$z$为离地面高度(m)，$d$为零平面位移(m)，$L$为Monin-Obukhov长度(m)：
 \begin{equation}\label{ObukL}
 L=-\frac{u_{*}^{3}}{k\left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{k g \theta_{v *}}
 \end{equation}
@@ -92,7 +92,7 @@ q_{atm}-q_{s}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)
 \begin{array}{ll} U_{c}=0, \quad & \text { 当 } \zeta_{atm}=\frac{z_{atm, m}-d}{L} \geq 0 \text { 时(即稳定条件下) } \\
        U_{c}=\beta w_{*}, \quad & \text { 当 } \zeta_{atm}<0 \text { 时 (即不稳定条件下) }\end{array}
 \end{equation}
-其中$w_\ast={(\frac{-gu_\ast\theta_{v\ast}z_i}{\bar{\theta_{v,atm}}})}^{1/3}$为垂直速度尺度(m/s)，$z_i=1000m$代表对流边界层高度(这里设为常数)，
+其中$w_\ast={(\frac{-gu_\ast\theta_{v\ast}z_i}{\bar{\theta_{v,atm}}})}^{1/3}$为垂直速度尺度 ($\rm m\,s^{-1}$)，$z_i=1000$ m代表对流边界层高度(这里设为常数)，
 参数$\beta=1$。
 
 因$L$是依赖于$u_\ast$、$\theta_\ast$、$q_\ast$的函数，
@@ -102,7 +102,7 @@ q_{atm}-q_{s}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)
       G\left(\theta_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\right)=0 \\ 
       H\left(q_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\right)=0\end{array}\right.
 \end{equation}
-若给$U_c$与$L$一个初始猜测，结合大气强迫场提供的$u_{atm}$、$v_{atm}$、$\theta_{atm}$、$q_{atm}$及对应的观测高度$z_{atm,x}(x=m,h,w)$，
+若给$U_c$与$L$一个初始猜测，结合大气强迫场提供的$u_{atm}$、$v_{atm}$、$\theta_{atm}$、$q_{atm}$及对应的观测高度$z_{atm,x}\, (x=m,h,w)$，
 初始场提供的$\theta_s$、$q_s$，以及对地表参数$d$和$z_{0x}$的估计，$u_\ast$、$\theta_\ast$、$q_\ast$可通过方程组(\ref{FGH})
 进行迭代求解，进而求出动量、感热和水汽通量。
 
@@ -192,7 +192,7 @@ R_{i b}=\frac{\theta_{v, atm}-\theta_{v, s}}{\overline{\theta_{v, atm}}} \frac{g
 \end{equation}
 $R_{ib}$与$\zeta$的关系为
 \begin{equation}
-R_{ib}=\zeta[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}\right)-\psi_h(\zeta)}] [\ln{\left(\frac{z_{atm,m}-d}{z_{0m}}\right)-\psi_m(\zeta)}]^{-2}
+R_{ib}=\zeta\left[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}\right)-\psi_h(\zeta)}\right] \left[\ln{\left(\frac{z_{atm,m}-d}{z_{0m}}\right)-\psi_m(\zeta)}\right]^{-2}
 \end{equation}
 其中$\psi_m(\zeta)$与$\psi_h(\zeta)$由不稳定条件下$\phi_h\left(\zeta\right)=\phi_m^2\left(\zeta\right)=\left(1-16\zeta\right)^{-\frac{1}{2}}$ 
 与稳定条件下$\phi_h\left(\zeta\right)=\phi_m\left(\zeta\right)=1+5\zeta$确定，从而$\zeta$进而$L$可以通过以下反算关系式得到初始猜测值
@@ -215,7 +215,7 @@ H=-C_{p a} \rho_{atm} \theta_{*} u_{*}=-\rho_{atm} C_{p a} \frac{\left(\theta_{a
 \begin{equation}
 E=-\rho_{atm} q_{*} u_{*}=-\rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 \end{equation}
-其中，空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$(s/m) (结合方程(\ref{Va})-(\ref{q_atm-qs}))为
+其中，空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ ($\rm s\,m^{-1}$) (结合方程(\ref{Va})-(\ref{q_atm-qs}))为
 \begin{equation}\label{ram}
 r_{a m}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]^{2}
 \end{equation}
@@ -404,8 +404,10 @@ q_{g}=\left(1-f_{{sno }}\right) q_{{soil }}+f_{{sno }} q_{{sno }}
 其中$R_{wv}$表示水汽气体常数(J/kg/K)。表层土壤水势$\psi_1$的计算公式为$\psi_1=\psi_{sat,1}s_1^{-B_1}\geq-1\ast{10}^8$，
 $\psi_{sat,1}$表示表层饱和土壤水势(mm)，$B_1$表示表层土壤\citet{clapp1978empirical}参数(均由地表参数数据集提供)。$s_1$表示表层土壤对于饱和状态时的相对湿度：
 \begin{equation}
-\begin{array}{c}s_{1}=0.001, \quad \text { if } \theta_{{sat }, 1}<1 * 10^{-6} \\ 
-     s_{1}=\frac{1}{\Delta z_{1} \theta_{{sat }, 1}}\left[\frac{w_{l i q, 1}}{\rho_{l i q}}+\frac{w_{i c e, 1}}{\rho_{{ice }}}\right]  \text{且}  0.001 \leq s_{1} \leq 1.0, \quad \text { if } \theta_{\text {sat }, 1} \geq 1 * 10^{-6}\end{array}
+s_{1}= \begin{cases}
+   0.001, & \text { if } \theta_{sat, 1}<1 \times 10^{-6} \\ 
+   frac{1}{\Delta z_{1} \theta_{sat, 1}}\left[\frac{w_{liq, 1}}{\rho_{liq}}+\frac{w_{ice, 1}}{\rho_{ice}}\right]  \text{且}  0.001 \leq s_{1} \leq 1.0, &\text {if } \theta_{sat, 1} \geq 1 \times 10^{-6}
+   \end{cases}
 \end{equation}
 其中$\Delta z_{1}$为表层土壤厚度(m)，$\rho_{liq}$和$\rho_{ice}$分别为液态水和固态水密度($\rm kg/m^3$)，
 $w_{liq,1}$和$w_{ice,1}$分别为表层土壤液态水和固态水含量($\rm kg/m^2$)，
@@ -588,13 +590,13 @@ c_{v}^{w}=\frac{1}{r_{{total }}}=\frac{(\text {LAI}+\text {SAI})}{r_{b}}
 r_{a h}^{\prime}=r_{a w}^{\prime}=\frac{1}{C_{s} u_{*}}:=r_{\mathrm{d}}
 \end{equation}
 其中$C_s$表示地表与植被冠层空气之间的湍流交换系数，它由裸土表面的数值与浓密植被覆盖时的数值进行线性组合得到 \citep{zeng2005vegetation}：
-$C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\exp {-\left(\text{LAI}+\text{SAI}\right)}$，
+$C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\exp {\left[-(\text{LAI}+\text{SAI})\right]}$，
 浓密植被覆盖时的湍流交换系数$C_{s,dense}=0.004$，裸土表面的湍流交换系数$C_{s,bare}=\frac{k}{0.13}\left(\frac{z_{0m,g}u_\ast}{\upsilon}\right)^{-0.45}$，
-其中空气动力学粘性系数$\upsilon=1.5\times{10}^{-5}$m$^2$/s，地表粗糙度$z_{0m,g}=0.01$。再次，对于叶面边界层阻抗$r_b$，计算公式为：
+其中空气动力学粘性系数$\upsilon=1.5\times{10}^{-5}\,\rm m^2\,s^{-1}$，地表粗糙度$z_{0m,g}=0.01$。再次，对于叶面边界层阻抗$r_b$，计算公式为：
 \begin{equation}
 r_{b}=\frac{1}{c_{v}}\left(u_{*} / d_{{leaf }}\right)^{-0.5}
 \end{equation}
-其中$C_v=0.01$ m/s $^{0.5}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$表示叶片在风向的特征值。
+其中$C_v=0.01\ \rm m\,s^{-1/2}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$表示叶片在风向的特征值。
 最后，气孔阻抗系数$r_{s,sun}$和$r_{s,sha}$的计算将在光合作用部分介绍。
 在计算地表温度并基于该温度对地表感热和水汽通量进行更新时，需给出地表感热和水汽通量对地表温度的变化率：
 \begin{equation}
@@ -656,12 +658,12 @@ $u_{comb}$计算为对数廓线和裸土情况下相似性理论计算的风速�
 \begin{equation}\label{ucomb}
 u_{\mathrm{comb}}(z)=\zeta u_{\log }(z)+(1-\zeta) u_{{bare }}(z)
 \end{equation}
-其中$\zeta$是一个$logistic$函数$\zeta=\frac{1}{1+\exp{\left(-\frac{d/h-0.4}{0.08}\right)}}$。
+其中$\zeta$是一个 logistic 函数$\zeta=\frac{1}{1+\exp{\left(-\frac{d/h-0.4}{0.08}\right)}}$。
 $K_{comb}$计算为线性衰减剖面和裸土情况下相似性理论计算的交换系数剖面的线性组合：
 \begin{equation}\label{kcomb}
 K_{\mathrm{comb}}(z)=\zeta K_{\mathrm{lin}}(z)+(1-\zeta) K_{{bare }}(z)
 \end{equation}
-$\zeta$的计算同上。方程 (\ref{uz}) 和 (\ref{Kz}) 中的“min”函数表示取其小。
+$\zeta$的计算同上。方程 (\ref{uz}) 和 (\ref{Kz}) 中的 min 函数表示取其小。
 这样无论是植被浓密或者稀疏时，既能考虑到植被中上层部分的风速和湍流交换系数的指数衰减，
 又能考虑到近地面裸土对风速和湍流减缓系数的影响，避免了到达土壤表面时，$u$和$K$非0的问题。
 
@@ -670,7 +672,7 @@ $r_b$是对植被冠层内风速廓线的积分：
 \begin{equation}
 r_{b}^{-1}=C_{f} \frac{\int_{0}^{h}(u(z))^{1 / 2} d z}{D_{f}^{1 / 2} h}
 \end{equation}
-上式表示单位叶面积的阻抗，其中$C_f=0.01\ m\ s^{-1/2}$，$D_f$为叶片的平均尺寸，设置为0.04米。$r_d$计算为：
+上式表示单位叶面积的阻抗，其中$C_f=0.01\ \rm m\ s^{-1/2}$，$D_f$为叶片的平均尺寸，设置为0.04米。$r_d$计算为：
 \begin{equation}\label{r_d1}
 r_{d}=\int_{z_{0 \mathrm{hg}}}^{d+z_{0}} \frac{1}{K(z)} d z
 \end{equation}
