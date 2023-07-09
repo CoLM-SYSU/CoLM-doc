@@ -99,7 +99,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 土壤热容量可由固体土壤、液态水和固态水的热容量根据其质量百分比加权得到。
 在土壤水力参数方面，CoLM基于两个经典的土壤水分特征曲线模型 \citet{campbell1974} 和 \citet{van1980closed}，
 选取了针对模型参数的超过30种高被引用或新近开发的土壤转换函数 (PTF， Pedotransfer Function)，对模型参数进行最优拟合。
-以\citet{balland2005,campbell1974} 模型为例，两个待定参数通过解下列极值问题得到：
+以\citet{balland2005} 和 \citet{campbell1974} 模型为例，两个待定参数通过解下列极值问题得到：
 \begin{equation}
 \chi\left(\hat{\psi}_{s}, \hat{\lambda}\right)=\min \sum_{i=1}^{N}\left[\psi\left(\hat{\psi}_{s}, \hat{\lambda}\right)-\psi\left(\psi_{s i}, \lambda_{i}\right)\right]^{2}
 \end{equation}
@@ -117,7 +117,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \begin{equation}
 \begin{array}{l}\psi=[-1,-5,-10,-20,-30,-40,-50,-60,-70,-90,-110,-130,-150,-170,\\-210,-300,-345  -690,-1020,-5100,-15300,-20000,-100000,-1000000]\end{array}
 \end{equation}
-其次，基于以上土壤水势向量对所有细网格的土壤含水量向量做面积加权平均，得到可以表征粗网格土壤水分特征曲线的土壤含水量向量；最后，在粗网格中利用\citet{campbell1974}土壤水分特征曲线关系拟合上述土壤水势向量和平均后的土壤含水量向量，得到粗网格中 \citet{campbell1974} 土壤水分特征曲线关系中的待定参数$\hat{\psi}_{s}$, $\hat{\lambda}$。粗网格的\citet{van1980closed} 土壤水力特征曲线参数可通过上述升尺度方法类似得到。
+其次，基于以上土壤水势向量对所有细网格的土壤含水量向量做面积加权平均，得到可以表征粗网格土壤水分特征曲线的土壤含水量向量；最后，在粗网格中利用\citet{campbell1974}土壤水分特征曲线关系拟合上述土壤水势向量和平均后的土壤含水量向量，得到粗网格中 \citet{campbell1974} 土壤水分特征曲线关系中的待定参数$\hat{\psi}_{s}$ 和 $\hat{\lambda}$。粗网格的\citet{van1980closed} 土壤水力特征曲线参数可通过上述升尺度方法类似得到。
 
 
 升尺度土壤导热率计算方案中Kersten数-饱和度曲线参数采用的方法与上述方法略有区别。粗网格的Kersten数由于其计算的非线性性不可直接由细网格的Kersten数平均得到，故升尺度Kersten数-饱和度曲线参数可通过解下列极值问题得到：

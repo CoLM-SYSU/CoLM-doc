@@ -90,7 +90,7 @@ c_{v}^{w}=\frac{1}{r_{total}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](
     (2)若本次迭代温度变化的方向与上一次变化的方向相反，则本次温度的变化将取为两次变化的平均值(若$\Delta T_v^{\left(n-1\right)} \cdot \Delta T_v^{\left(n\right)}<0$，则$\Delta T_v^{\left(n\right)}=\left(\Delta T_v^{\left(n-1\right)}+\Delta T_v^{\left(n\right)}\right)/2$)。\\
     由温度调整所带来的能量平衡误差最后将加到感热通量中；\\
     i. 更新饱和比湿$q_{sat}^{T_v}$及其对$T_v$的变化率 \\
-    j. 更新植被冠层空气温度和比湿$T_s$,$q_s$ \\ 
+    j. 更新植被冠层空气温度和比湿$T_s$, $q_s$ \\ 
     k. 更新特征位温$\theta_\ast$和特征比湿$q_\ast$ \\
     l. 更新特征虚位温$\theta_{v\ast}$ \\
     m. 更新大气风速$V_a\left(U_c\right)$ \\
@@ -100,7 +100,8 @@ c_{v}^{w}=\frac{1}{r_{total}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](
     $L$取固定值$L=\frac{z_{atm,m}-d}{\left(-0.01\right)}$，以避免在稳定与不稳定条件之间来回变化。\\
     q. 判断迭代停止条件：若迭代过程中满足下列全部条件或迭代次数已超过40次，则迭代停止：
     \begin{equation}
-        \begin{array}{c}\max \sqrt{\left[F^{(n+1)}+G^{(n+1)}-F^{(n)}-G^{(n)}\right]^{2}}, \sqrt{\left[F^{(n)}+G^{(n)}-F^{(n-1)}-G^{(n-1)}\right]^{2}} \\ \leq 0.1 \\ \max \sqrt{\left(\Delta T_{v}^{(n)}\right)^{2}}, \sqrt{\left(\Delta T_{v}^{(n-1)}\right)^{2}} \leq 0.01\end{array}
+        \begin{array}{c}\max\left( \sqrt{\left[F^{(n+1)}+G^{(n+1)}-F^{(n)}-G^{(n)}\right]^{\ast\ast2}}, \sqrt{\left[F^{(n)}+G^{(n)}-F^{(n-1)}-G^{(n-1)}\right]^{\ast\ast2}} \right) \\ \leq 0.1 \\ 
+        \max\left( \sqrt{\left(\Delta T_{v}^{(n)}\right)^{2}}, \sqrt{\left(\Delta T_{v}^{(n-1)}\right)^{2}} \right) \leq 0.01\end{array}
     \end{equation}
     其中$\left[\bullet\right]^{\ast\ast2}$表示各个相同能量项合并后的平方和；
     \item 由最终叶片温度更新植被表面与植被冠层空气之间的潜热通量，其中蒸发率不得超过最大蒸发率$W_{can} \Delta t$，蒸腾率不得超过最大蒸腾率$f_{sig}\ast E_{pvt,max}$，
