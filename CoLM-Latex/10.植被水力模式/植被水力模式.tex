@@ -66,7 +66,7 @@ $E_{sun}$代表阳叶蒸腾速率，$E_{sha}$代表阴叶蒸腾速率。它们�
  \begin{equation}
 k_{i \leftarrow j}=k_{\max } \cdot 2^{-\left(\frac{\Psi_{\mathbf{j}}}{p 50}\right)^{c_{k}}}
 \end{equation}
-其中$k_{max}$表示最大水力导度 ($s-1$)。$\Psi_j$代表节点j的水势 (mm H2O)，$P_{50}$代表水力导度降低50\%时的水势 (mm H2O)，$c_k$代表脆弱性曲线的形状参数。
+其中$k_{max}$表示最大水力导度 ($\mathrm{s^{-1}}$)。$\Psi_j$代表节点$j$的水势 ($\mathrm{mm\  H_2O}$)，$p50$代表水力导度降低 50\% 时的水势 ($\mathrm{mm\ H_2O}$)，$c_k$代表脆弱性曲线的形状参数。
 
 
 
@@ -84,7 +84,7 @@ $E_{sun,max} $和$E_{sha,max}$分别表示无水分胁迫情况下的阳叶、�
 水力重分配是重要的植物地下水力过程，它描述了水分通过地下根系从湿润土壤层向干燥土壤层的传输。
 它被认为是一个被动的受水势梯度所驱动的水分传输过程。基于该物理原理，Amenu水力重分配模型 \citep{amenu2008}被CoLM采用 \citep{zhu2017incorporating}，
 并与土壤水文过程和植被地上水力过程相耦合 \citep{li2021new}，考虑包括在根、茎和叶等地上节点外的， 
-$n$个代表不同土壤深度的根系水力节点和n个土壤水力节点 (如图\ref{fig:CoLM植物水力模型示意图})。模式中的水力传导包括轴向水力传导和径向水力传导。
+$n$个代表不同土壤深度的根系水力节点和$n$个土壤水力节点 (如图~\ref{fig:CoLM植物水力模型示意图})。模式中的水力传导包括轴向水力传导和径向水力传导。
 轴向水力传导由Darcy定律所表示：
 \begin{equation}\label{k_axi}
 k_{ax,i}\left(\Psi_{r,i}-\Psi_{r,i+1}\right)=q_{ax,i}
@@ -96,7 +96,7 @@ $\Psi_{r,i}$代表第$i$层根节点的水势。$i$取值1到$n-1$，$n$代表�
 k_{rad,i}\left(\Psi_{soil,i}-\Psi_{r,i}\right)=q_{rad,i}
 \end{equation}
 其中$k_{rad,i}$代表第$i$层土壤节点到根节点间的径向水力导度，
-$q_{rad,i}$代表相应的径向水分传输速率，$\Psi_{soil,i}$代表第$i$层土壤节点的水势。$i$取值1到$n$。
+$q_{rad,i}$代表相应的径向水分传输速率，$\Psi_{soil,i}$代表第$i$层土壤节点的水势，$i$取值1到$n$。
 
 
 
@@ -104,7 +104,7 @@ $q_{rad,i}$代表相应的径向水分传输速率，$\Psi_{soil,i}$代表第$i$
 \begin{equation}\label{q_axi}
 q_{a x, i}+q_{r a d, i}=q_{a x, i-1}
 \end{equation}
-其中$i=2, n$，方程(\ref{q_axi})实际上是$n-1$个方程组。
+其中$i=2, \ldots, n$，方程~\eqref{q_axi} 实际上是$n-1$个方程组。
 
 
 另外，由表层根节点的水分平衡方程可得：
@@ -116,11 +116,11 @@ q_{ax,1}+q_{rad, 1}=q_{root,0}
 其输出包括根水势垂直分布 ($\Psi_{r,i}$) 和根吸水速率垂直分布 ($q_{rad,i}$)。因此，地下植物水力过程可以被简化地表示为公式(\ref{Psi_root_0})。
 
 \section{气孔导度的水分胁迫}\label{气孔导度的水分胁迫}
-土壤水分亏缺对植物生理的影响被表现在水分胁迫因子上，水分胁迫因子作为取值0~1的无量纲变量，作用在光合作用各限制因子上，见公式(\ref{V_cmax_a})-(\ref{R_d1})。
+土壤水分亏缺对植物生理的影响被表现在水分胁迫因子上，水分胁迫因子作为取值 $0\sim 1$ 的无量纲变量，作用在光合作用各限制因子上，见公式(\ref{V_cmax_a})-(\ref{R_d1})。
 
 植物水力模式未开启时，水分胁迫因子 ($\beta$) 决定于根的垂直分布比例和土壤水势，其计算不区分阴叶和阳叶：
 \begin{equation}\label{beta_0}
-\beta=\sum_{i=1}^{n} \operatorname{froot}_{i} \beta_{i}
+\beta=\sum_{i=1}^{n} froot_i \beta_{i}
 \end{equation}
 
 \begin{equation}\label{beta_i}
@@ -192,8 +192,8 @@ g_{s, sha}=E^{-1}\left(E_{s h a}\right)
     
 \section{数值计算方案}\label{数值计算方案}
 求解植物水势、水分胁迫、气孔导度和叶片蒸腾速率，需要耦合植物水力模式、光合气孔模式和地表冠层参数化方案。
-耦合描述植物水势变化的动力方程组(公式(\ref{q_sunstem})-( \ref{q_stemroot} ), (\ref{e_sun_a} )和(\ref{e_sha_a}))，
-地表冠层参数化方案 (公式(\ref{E_sunmax})(\ref{E_shamax})(\ref{g_ssun})(\ref{g_ssha}))，
+耦合描述植物水势变化的动力方程组(公式(\ref{q_sunstem})--(\ref{q_stemroot}), (\ref{e_sun_a}) 和(\ref{e_sha_a}))，
+地表冠层参数化方案 (公式(\ref{E_sunmax})--(\ref{g_ssha}))，
 光合气孔模式的最大气孔导度计算 (公式(\ref{gs_sunmax})和(\ref{gs_shamax})), 植物水分胁迫计算(公式(\ref{beta_sun})和(\ref{beta_sha}))，共18个方程，
 求解包括4个植物地上水势节点 ($\Psi_{sunleaf}$, $\Psi_{shaleaf}$, $\Psi_{stem}$和$\Psi_{root,0}$)，8个水分传输速率 
 ($q_{sun-stem}$，$q_{sha-stem}$，$q_{stem-root}$，$q_{root,0}$，$E_{sun}$，$E_{sun,max}$和$E_{sun,max}$) ，4个气孔导度变量
@@ -201,7 +201,7 @@ g_{s, sha}=E^{-1}\left(E_{s h a}\right)
 
 然而，由于以上18个方程中存在隐形方程，我们求解该问题时，引入三重嵌套数值求解办法。其主要步骤如下（图 \ref{fig:植物水力模式的数值模拟流程图}）：
 \begin{enumerate}
-    \item 利用冠层模型，计算叶片温度 ($T_{l,sun}$,$T_{l,sha}$)；
+    \item 利用冠层模型，计算叶片温度 ($T_{l,sun}$，$T_{l,sha}$)；
     \item 利用光合气孔模式，计算最大气孔导度 ($g_{s,sun,max}$和$g_{s,sun,max}$)；
     \item 根据最大气孔导度，计算叶片最大蒸腾速率 ($E_{sun,max}$和$E_{sun,max}$)；
     \item 将叶片最大蒸腾速率输入植物水力模式，计算水分胁迫 ($\beta_{sun}$，$\beta_{sha}$)；
