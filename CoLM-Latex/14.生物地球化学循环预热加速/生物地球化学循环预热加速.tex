@@ -17,8 +17,8 @@ CoLM植被碳氮循环可以表示为21个碳库和22个氮库的碳氮平衡方
 \begin{equation}
 \frac{d N_{\text {veg}}}{dt}=B I_{Nin}+\left(A_{phn}(t) K_{phn}+A_{gmn}(t) K_{gmn}\right) N_{\text {veg }}(t)
 \end{equation}
-$C_{veg}$ 和$N_{veg}$ 是植被碳氮库的状态变量 ($\rm g C m^{-2}$ and $\rm g N m^{-2}$)，是长度分别为21和22的列向量，
-具体内容见章节11.1对植被碳氮库的详细介绍。$I_{Cin}$ 和$I_{Nin}$ 分别是植被的碳氮输入($\rm g C m^{-2} s^{-1}$ and $\rm g N m^{-2} s^{-1}$)，
+$C_{veg}$ 和$N_{veg}$ 是植被碳氮库的状态变量 ($\mathrm{g\ C\ m^{-2}}$ 和 $\mathrm{ g\ N\  m^{-2}}$)，是长度分别为21和22的列向量，
+具体内容见章节11.1对植被碳氮库的详细介绍。$I_{Cin}$ 和$I_{Nin}$ 分别是植被的碳氮输入($\mathrm{g\ C\ m^{-2} s^{-1}}$ and $\mathrm{g\ N\ m^{-2} s^{-1}}$)，
 是标量。其中，碳输入来源于净第一性生产力，氮输入来源于生物固氮和植被被动氮吸收。
 $B$是分配系数向量，代表植被碳氮输入分配到每个植被碳氮库的比例。  
 $K_{phc}$和$K_{gmc}$是21$\times$21的对角矩阵，分别代表植被每个库因为物候过程和自然死亡过程产生的碳周转速率($\rm s^{-1}$)。
@@ -131,9 +131,9 @@ $A_{phc}$和$A_{phn}$分别是碳氮传输系数矩阵，代表不同植被碳�
 其中，矩阵的非对角元素 $a_{(i,j)}$, 代表从$j$到$i$的碳氮传输在$j$库总周转掉的碳氮中的比例。
 
 
-当碳氮平衡方程中$(dC_{veg})/dt=0$和 $(dN_{veg})/dt=0$，则碳氮处于平衡状态，所以可以解得植被碳氮的平衡状态($C_{(veg,ss)}$,$N_{(veg,ss)}$)是：
+当碳氮平衡方程中$(dC_{veg})/dt=0$和 $(dN_{veg})/dt=0$，则碳氮处于平衡状态，所以可以解得植被碳氮的平衡状态($C_{(veg,ss)}$, $N_{(veg,ss)}$)是：
 \begin{equation}
-C_{veg, s s}=\left(A_{p h c}(t) K_{p h c}+A_{gmc}(t) K_{gmc}\right)^{-1} B I_{\text {Cin }}
+C_{veg, s s}=\left(A_{p h c}(t) K_{p h c}+A_{gmc}(t) K_{gmc}\right)^{-1} B I_{{Cin }}
 \end{equation}
 \begin{equation}
 N_{veg, s s}=\left(A_{phn}(t) K_{phn}+A_{gmn}(t) K_{gmn}\right)^{-1} B I_{Nin}
@@ -148,7 +148,7 @@ CoLM土壤凋落物的碳氮循环可以表示为7个碳库和7个氮库的碳�
 \begin{equation}
 \frac{d N_{\text {soil }}}{dt}=I_{N s o i l}+\left(A_{h n} \xi(t) K_{h}+V(t)\right) N_{\text {soil }}(t)
 \end{equation}
-$C_{soil}$和$N_{soil}$是CoLM土壤凋落物有机碳氮库的状态变量($\rm gC m^{-3}$ and $\rm gN m^{-3}$),是向量。
+$C_{soil}$和$N_{soil}$是CoLM土壤凋落物有机碳氮库的状态变量($\mathrm{g\ C\ m^{-3}}$ 和 $\mathrm{g\ N\ m^{-3}}$), 是向量。
 $I_{Csoil}$和$I_{Nsoil}$同样是长度为70的向量，代表进入土壤碳氮库中不同分层的凋落物输入。
  $A_{hc}$ 和$A_{hn}$代表土壤碳氮在同一层内不同库之间的传输系数。$V$土壤碳氮在不同层之间的传输系数：
 \begin{equation}
@@ -193,7 +193,7 @@ V(t)=\left(\begin{array}{ccccccc}v & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & v & 0 & 0 & 0 
 其中$dz$代表每层土壤的厚度，$g$和$h$是土壤碳氮的上行和下行垂直传输系数。
 
 当碳氮平衡方程中$(dC_{soil})/dt=0$和 $(dN_{soil})/dt=0$，则碳氮处于平衡状态，
-所以可以解得植被碳氮的平衡状态($C_{(soil,ss)}$,$N_{(soil,ss)}$)是：
+所以可以解得植被碳氮的平衡状态($C_{(soil,ss)}$, $N_{(soil,ss)}$)是：
 
 \begin{equation}
 C_{veg, s s}=\left(A_{h c} \xi(t) K_{h}+V(t)\right)^{-1} I_{C s o i l}

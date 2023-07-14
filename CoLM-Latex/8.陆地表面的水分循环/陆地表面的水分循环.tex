@@ -628,17 +628,18 @@ CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量
 S_{i}^{t+\Delta t}=S_{i}^{t}+\sum_{k}^{Upstream} Q_{k}^{t} \Delta t-Q_{i}^{t} \Delta t+A c_{i} R_{i}^{t} \Delta t
 \end{equation}
 式中$S_{i}^{t}$和$S_{i}^{t+\Delta t}$分别代表单元$i$在时间$t$到时间$t+\Delta t$蓄水量的变化，$Q_i^t$代表在时间$t$该单元河流径流出流量 (河道内+漫滩)，
-$Q_k^t$代表在时间 $t$ 该单元从上游网格接收的河流径流流入流量 (河道内+漫滩)，$A_{ci}$ 是单元i的面积，$R_i^t$ 代表流域单元 $i$ 的产流量。
+$Q_k^t$代表在时间 $t$ 该单元从上游网格接收的河流径流流入流量 (河道内+漫滩)，$Ac_i$ 是单元$i$的面积，$R_i^t$ 代表流域单元 $i$ 的产流量。
 
 \subsection{河网地图}
 CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分辨率的全球流动方向地图 (MERIT-Hydro)\citep{yamazaki2019merit}，
 水文调整高程 DEM \citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据\citep{yamazaki2014development}; 
 使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。
-相关数据以纯``二进制''格式 ($nx*ny$)存储于在 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，
+相关数据以纯``二进制''格式 ($nx*ny$)存储于 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，
 从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是 ``little endian''。
-具体而言，除了需要陆面模式计算得出的产流量 ($runoff$) 之外，CaMa-Flood还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，
+具体而言，除了需要陆面模式计算得出的产流量 (runoff) 之外，CaMa-Flood还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，
 漫滩 (洪水淹没) 面积，以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河流的宽度和深度以外，
 所有的地形相关参数均可由 MERIT-hydro 水文地形数据中获取。以下以全球 0.25\textdegree 的河网为例进行详细介绍。
+
 {
 \begin{figure}[]
 \centering
@@ -668,7 +669,7 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
     \toprule
     File              & Variable & Symbol                        & Description                                  & Unit    & Format  \\ \midrule
     \texttt{params.txt}        & -        & -                             & Map parameters                     & -         & text    \\
-    \texttt{nextxy.bin}        & \texttt{nextx}    & $jx$                            & DownstreamX (rec=1)         & -         & integer \\
+    \texttt{nextxy.bin}        & \texttt{nextx}    & $jx$                         & Downstream X (rec=1)         & -         & integer \\
                                        & \texttt{nexty}    & $jy$                         & Downstream Y (rec=2)            & -        & integer \\
     \texttt{downxy.bin}      & \texttt{downx}   & $dx$                        & Relative DownstreamX (rec=1)   & -   & integer \\
                                        & \texttt{downy}   & $dy$                      & Relative Downstream Y (rec=2)   & -    & integer \\
@@ -679,7 +680,7 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
     \texttt{rivwth.bin}        & \texttt{rivwth}   & $W$                        & Channel Width                           & m       & real    \\
     \texttt{rivwth\_gwdlr.bin} & \texttt{rivwth}   & $W$                    & Combined Width (recommended)    & m       & real    \\
     \texttt{nxtdst.bin}        & \texttt{nxtdst}   & $X$                             & Downstream Distance                          & m       & real    \\
-    \texttt{fldhgt.bin}        & \texttt{fldhgt}   & $Df$                            & Floodplain Elevation profile (rec=1$\sim$10) & m       & real    \\
+    \texttt{fldhgt.bin}        & \texttt{fldhgt}   & $D_f$                            & Floodplain Elevation profile (rec=1$\sim$10) & m       & real    \\
     \texttt{rivman.bin}        & \texttt{rivman}   & -                             & Manning’s Roughness                          & -       & real    \\
     \texttt{bifori.txt}        & -        & -                             & Bifurcation Channel Original Data            & -       & text    \\
     \texttt{bifprm.txt}        & -        & -                             & Bifurcation channel parameters               & -       & text    \\ \bottomrule
@@ -720,6 +721,7 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
 每个网格的CDF函数的第10百分位数的10个值 (图~\ref{tab:河网图及地形参数文件列表2}，红色圆点)分别存储在 \texttt{fldhgt.bin} 的十个参数之中
  (见表~\ref{tab:河网图及地形参数文件列表}和表~\ref{tab:河网图及地形参数文件列表2})，文件格式与上述的 \texttt{nextxy.bin} 相同。
 例如，\texttt{fldhgt.bin} 的第三个参数表示流域单元 30\% 的面积被淹没时的该流域单元的平均洪水深度 (m)。
+
 {
 \begin{figure}[]
 \centering
@@ -737,7 +739,7 @@ W=\max \left(W_{min}, c_{w} * Q_{ave}{}^{p_{w}}+W_{0}\right)
 \begin{equation}
 B=\max \left(B_{min}, c_{H} * Q_{ave}{}^{p_{H}}+B_{0}\right)
 \end{equation}
-其中$Q_{ave}$是由陆面模式计算得出的产流量 ($total runoff$) ($\rm m^3\,s^{-1}$)。
+其中$Q_{ave}$是由陆面模式计算得出的产流量 (total runoff) ($\rm m^3\,s^{-1}$)。
 河道宽度计算所使用的经验系数 $c_w$，$p_w$，$W_0$，$W_{min}$ 分别设置为 2.5，0.6，0.0 以及5.0；
 河道深度计算所使用的经验系数 $c_H$，$p_H$，$B_0$ 和 $B_{min}$ 分别设置为 0.1，0.5，0.0 以及1.0。
 值得注意的是这些经验系数存在着极大的不确定性，在使用之时需要对其进行对应的率定和调参。
@@ -769,7 +771,7 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 在 \texttt{map} 目录中，CaMa-Flood 还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据 (如 \texttt{3sec}，\texttt{1min}，\texttt{15min}，
 \texttt{3min} 等目录之下)。
 高分辨率数据被划分为\texttt{\$(TILE).\$(VAR).bin}，每个TILE的区域记录在 \texttt{location.txt} 文件之中；
-具体提供的参数 \$(VAR) 如表~\ref{tab:河网图及地形参数文件列表2} 所示。其中 \texttt{\$(TILE).flwdir.bin} 和
+具体提供的参数 \texttt{\$(VAR)} 如表~\ref{tab:河网图及地形参数文件列表2} 所示。其中 \texttt{\$(TILE).flwdir.bin} 和
 \texttt{\$(TILE).downxy.bin} 分别以基于 D8 格式和 downstreamXY 格式描述了河流流向；\texttt{\$(TILE).catmzy.bin} 表示流域单元内的网格 (ix, iy) 
 在高分辨率经纬度网格 (iXX, iYY)上的映射；\texttt{\$(TILE).catmzz.bin} 表示每个网格对应的漫滩层；\texttt{\$(TILE).flddif.bin} 表示每个网格堤坝平均高度 [m]，
 用于对粗分辨率的漫滩水深进行降尺度；\texttt{\$(TILE).visual.bin} 用于高分辨率流域边界可视化，其中数值上体现为海洋 = 0, 
