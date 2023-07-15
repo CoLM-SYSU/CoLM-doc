@@ -7,7 +7,7 @@
 \begin{equation}\label{eq:1d_energy_balance}
 c \frac{\partial T}{\partial t}=-\frac{\partial F}{\partial z}
 \end{equation}
-其中$c$表示雪盖或土壤的体积热容量(J/m3/K)，$T$表示雪盖土壤温度(K)，$t$表示时间(s)，$z$表示雪盖高度或土壤深度(m)，
+其中$c$表示雪盖或土壤的体积热容量($\mathrm{J/m^3/K}$)，$T$表示雪盖土壤温度 (K)，$t$表示时间(s)，$z$表示雪盖高度或土壤深度 (m)，
 F表示垂直方向的热传导通量，方向向上为正($\rm W/m^2$)，表达式为$F=-\lambda\frac{\partial T}{\partial z}$，$\lambda$表示热力传导率(W/m/K)。
 将方程(\ref{eq:1d_energy_balance})进行离散，并结合上边界由大气输送到雪盖土壤表面的热通量$h_s$以及下边界土壤底层的零热通量，
 即可求出雪盖土壤的温度扩线，之后再根据相态变化条件对温度进行进一步调整。
@@ -17,18 +17,18 @@ F表示垂直方向的热传导通量，方向向上为正($\rm W/m^2$)，表达
 z_{i}=f_{s} \exp [0.5(i-0.5)]-1
 \end{equation}
 %
-其中尺度因子$f_s=0.025$。这里采用指数定义可以保证土壤接近表面时得到更细的分层，因为土壤水梯度在接近表面时非常大。基于此定义，每一层土壤的厚度$\Delta z_i$(m)可计算为：
+其中尺度因子$f_s=0.025$。这里采用指数定义可以保证土壤接近表面时得到更细的分层，因为土壤水梯度在接近表面时非常大。基于此定义，每一层土壤的厚度$\Delta z_i$ (m)可计算为：
 \begin{equation}
 \Delta z_{i}=\left\{\begin{array}{ll}0.5\left(z_{1}+z_{2}\right) & i=1 \\ 0.5\left(z_{i+1}-z_{i-1}\right) & i=2 \ldots 9 \\ z_{10}-z_{9} & i=10\end{array}\right.
 \end{equation}
-相邻两层土壤交界处的深度$z_{h,i}$(m)可计算为：
+相邻两层土壤交界处的深度$z_{h,i}$ (m)可计算为：
 \begin{equation}
 z_{h, i}=\left\{\begin{array}{ll}0.5\left(z_{i}+z_{i+1}\right) & i=1 \ldots 9 \\ z_{10}+0.5 \Delta z_{10} & i=10\end{array}\right.
 \end{equation}
 
 
 雪盖位于土壤之上，可根据其厚度划分为至多5层。为与土壤层编号一致，
-这里与土壤表层相邻的雪层记为第0层，逐渐向上依次记为第-1层直至至多为第-4层。
+这里与土壤表层相邻的雪层记为第0层，逐渐向上依次记为第 -1 层直至至多为第 -4 层。
 记$snl$为划分的雪层总层数的相反数，则最上层雪层即为第$snl+1$层。雪层划分方案如下：\\
 当$z_{sno}<0.01$时，$snl=0$，这时积雪较少，不单独划分为层；\\
 当$0.01\le z_{sno}\le0.03$时，\\
@@ -272,7 +272,7 @@ w_{liq, i}^{n+1}=w_{liq, i}^{n}+w_{ice, i}^{n}-w_{ice, i}^{n+1} \geq 0
 则在相态变化过程之后再次进行能量结余计算：$ H_{i *}=H_{i}+\frac{L_{f}\left(w_{ice, i}^{n+1}-w_{ice, i}^{n}\right)}{\Delta t}$。
 若$\left|H_{i\ast}\right|>0$，则此部分能量可用来再次暖化或冷却雪盖土壤层，温度调整如下：
 \begin{equation}
-T_{i}^{n+1}=\left\{\begin{array}{lr}T_{f}+\frac{\Delta t}{c_{i} \Delta z_{i}} H_{i *} /\left(1-\frac{\Delta t}{c_{i} \Delta z_{i}} \frac{\partial T_{s}}{\partial T_{i}}\right) & i=s n l+1 \\ T_{f}+\frac{\Delta t}{c_{i} \Delta z_{i}} H_{i *} & i \neq s n l+1 \\ T_{f} & w_{liq, i}^{n+1} * w_{ice, i}^{n+1}>0\end{array}\right.
+T_{i}^{n+1}=\left\{\begin{array}{lr}T_{f}+\frac{\Delta t}{c_{i} \Delta z_{i}} H_{i *} /\left(1-\frac{\Delta t}{c_{i} \Delta z_{i}} \frac{\partial T_{s}}{\partial T_{i}}\right) & i=s n l+1 \\ T_{f}+\frac{\Delta t}{c_{i} \Delta z_{i}} H_{i *} & i \neq s n l+1 \\ T_{f} & w_{liq, i}^{n+1} \cdot w_{ice, i}^{n+1}>0\end{array}\right.
 \end{equation}
 对于特殊的土壤表面积雪融化的情形，当$H_m>0$时，雪水当量减少为
 \begin{equation}
