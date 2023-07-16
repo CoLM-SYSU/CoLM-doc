@@ -50,6 +50,22 @@
 \input{boxit.sty}
 \input{icthesis.sty}
 
+\usepackage[framemethod=default]{mdframed}
+
+\global\mdfdefinestyle{exampledefault}{%
+linecolor=lightgray,linewidth=1pt,%
+leftmargin=1cm,rightmargin=1cm,
+}
+
+\newenvironment{mymdframed}[1]{%
+\mdfsetup{%
+frametitle={\colorbox{lightgray}{\kaishu\,#1\,}},
+frametitleaboveskip=-0.5\ht\strutbox,
+frametitlealignment=\raggedright
+}%
+\begin{mdframed}[style=exampledefault]
+}{\end{mdframed}}
+
 \setCJKfamilyfont{jamspmi}{MS PMincho}
 \setCJKfamilyfont{jaIPAmi}{IPAMincho}
 \newcommand\JapMSPMi{\CJKfamily{jamspmi}\CJKnospace}

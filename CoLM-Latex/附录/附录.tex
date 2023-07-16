@@ -36,7 +36,7 @@
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{其他全局参数设定值}
+\caption{其他全局参数设定值。}
 \label{tab:其他全局参数设定值}
 \begin{tabular}{@{}lc@{}}
 \toprule
@@ -65,7 +65,7 @@ Crank Nicholson隐式格式权重因子 {[}-{]}           & 0.5      \\
 % \usepackage{booktabs}
 \begin{table}[]
     \centering
-    \caption{USGS地表覆盖植被顶部高度和底部高度值（当无植被高度数据读入时的默认高度）}
+    \caption{USGS地表覆盖植被顶部高度和底部高度值（当无植被高度数据读入时的默认高度）。}
     \label{tab:USGS地表覆盖植被顶部高度和底部高度值}
     \begin{tabular}{@{}lcc@{}}
     \toprule
@@ -137,7 +137,7 @@ USGS地表覆盖类型     & 茎面积指数 ($\rm m^2/m^2$ ) \\ \midrule
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{USGS地表覆盖粗糙度及零平面位移与植被高度比值（为CoLM2014默认方案，目前版本使用公式(4.79), (4.80)和(4.92)）。}
+\caption{USGS地表覆盖粗糙度及零平面位移与植被高度比值（为CoLM2014默认方案，目前版本使用公式 \eqref{dOh}, \eqref{zOh} 和 \eqref{dooh}）。}
 \label{tab:USGS地表覆盖粗糙度及零平面位移与植被高度比值}
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -225,7 +225,7 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
 \begin{sidewaystable}[]
     \centering
     \caption{USGS植被光合作用参数。$V_{cmax}$表示植被冠层顶部 25~\textcelsius 时光合最大羧化速率($\rm mol\ m^{-2}\ s^{-1}$)，$\alpha$为量子转化效率(0.05 $\rm mol\ CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
-    $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，$s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
+    $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，$s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)，$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
     \label{tab:USGS植被光合作用参数1}
     \begin{tabular}{@{}lccccccccccccccccccc@{}}
     \toprule
@@ -410,7 +410,7 @@ IGBP地表覆盖类型    & 茎面积指数 (m) & 植被底部高度 (m) \\ \mid
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
-\caption{IGBP地表覆盖粗糙度及零平面位移与植被高度比值 (为CoLM2014默认方案，目前版本使用公式 (\ref{dOh}), (\ref{zOh}) 和 (\ref{dooh}))。}
+\caption{IGBP地表覆盖粗糙度及零平面位移与植被高度比值（为 CoLM2014 默认方案，目前版本使用公式 \eqref{dOh}, \eqref{zOh} 和 \eqref{dooh}）。}
 \label{tab:IGBP地表覆盖粗糙度及零平面位移与植被高度比值}
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -486,7 +486,7 @@ IGBP地表覆盖类型    & \text{粗糙度与植被高度比值} & \text{零平
         $\alpha$为量子转化效率(0.05 $\rm mol CO_2 mol^{-1}$ photon)，$m$为气孔导度经验拟合经验参数(无量纲)，
         $b$为最小气孔导度($\rm mol\ CO_2\ m^{-2}s^{-1}$) ，
         $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数($\rm K^{-1}$)，$s_2$是低温抑制系数($\rm K^{-1}$)，
-        $s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)和$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
+        $s_3$是叶呼吸高温抑制系数($\rm K^{-1}$)，$T_{dm}$是叶呼吸高温抑制温度参数(K)。}
         \label{tab:IGBP植被光合作用参数1}
         \begin{tabular}{@{}lccccccccccccccccccc@{}}
         \toprule
@@ -629,7 +629,7 @@ IGBP地表覆盖类型     & $a$ & $b$ \\ \midrule
 % \usepackage{booktabs}
 \begin{table}[]
     \centering
-    \caption{PFT分类植被顶部高度和底部高度值（当无植被高度数据读入时的默认高度）}
+    \caption{PFT分类植被顶部高度和底部高度值（当无植被高度数据读入时的默认高度）。}
     \label{tab:PFT分类植被顶部高度和底部高度值}
     \begin{tabular}{@{}lcc@{}}
     \toprule
@@ -660,7 +660,7 @@ IGBP地表覆盖类型     & $a$ & $b$ \\ \midrule
 % \usepackage{booktabs}
 \begin{table}[]
     \centering
-    \caption{PFT茎面积指数 (当无植被茎面积指数数据读入时的默认值。)}
+    \caption{PFT茎面积指数 (当无植被茎面积指数数据读入时的默认值)。}
     \label{tab:PFT茎面积指数}
     \begin{tabular}{@{}lc@{}}
     \toprule
@@ -689,7 +689,7 @@ IGBP地表覆盖类型     & $a$ & $b$ \\ \midrule
 % \usepackage{booktabs}
 \begin{table}[]
     \centering
-    \caption{PFT粗糙度及零平面位移与植被高度比值（为CoLM2014默认方案，目前版本使用公式(4.79), (4.80)和(4.92)。）}
+    \caption{PFT粗糙度及零平面位移与植被高度比值（为CoLM2014默认方案，目前版本使用公式\eqref{dOh}, \eqref{zOh} 和 \eqref{dooh}）。}
     \label{tab:PFT粗糙度及零平面位移与植被高度比值}
     \begin{tabular}{@{}lcc@{}}
     \toprule

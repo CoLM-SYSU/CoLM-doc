@@ -283,7 +283,7 @@ V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zet
 其中$\psi_{mu}$的定义同方程(\ref{Psim})，这里同样限制$V_a\geq0.1$以避免风速过小问题，但参考高度风速不用引入对流速度$U_c$(注意与\ref{基本理论}节不同)，即
 $V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}} \geq 0.1$。稳定条件下的风速积分形式则同方程(\ref{Va_S})和(\ref{Va_VS})。
 
-后续的迭代求解过程参见\ref{基本理论}节内容，所得空气动力学阻抗系数$r_{am}$、$r_{ah}$和$r_{aw}$，以及诊断量2m温度和湿度、10m风速等的形式都和\ref{基本理论}节完全一致。
+后续的迭代求解过程参见~\ref{基本理论} 节内容，所得空气动力学阻抗系数$r_{am}$、$r_{ah}$和$r_{aw}$，以及诊断量2m温度和湿度、10m风速等的形式都和~\ref{基本理论} 节完全一致。
 {
 \begin{figure}[]
 \centering
@@ -295,9 +295,9 @@ $V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}} \geq 0.1$。稳定条件下的风速积分
 
 
 \section{无植被覆盖地表湍流通量的计算方案}\label{无植被覆盖地表湍流通量的计算方案}
-当陆地表面没有植被覆盖(即裸土、冰川、水体等表面)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算（表~\ref{tab:物理常数chap4} ）。
+当陆地表面没有植被覆盖(即裸土、冰川、水体等表面)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算（表~\ref{tab:物理常数chap4}）。
 对于任一地表类型斑块，植被所占比例为$f_{veg}$(当前取值为0或1)，植被粗糙度为$z_{vm}$
-(表\ref{tab:USGS地表粗糙度和零平面位移}给出了按照USGS分类下的24种土地覆盖类型的对应参数值)，则被积雪掩埋的植被占总植被的比例为
+(表~\ref{tab:USGS地表覆盖粗糙度及零平面位移与植被高度比值} 给出了按照USGS分类下的24种土地覆盖类型的对应参数值)，则被积雪掩埋的植被占总植被的比例为
 \begin{equation}
 wt=\frac{0.1 z_{{sno}}}{z_{v m}+0.1 z_{{sno}}}
 \end{equation}
@@ -335,50 +335,50 @@ Stefan-Boltzmann常数 & $\sigma$           & $5.67\times\rm 10^{-8}$  & $\rm W/
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
-\centering
-\caption{基于USGS分类的24种土地覆盖类型的地表粗糙度和零平面位移}
-\label{tab:USGS地表粗糙度和零平面位移}
-\begin{tabular}{@{}lcc@{}}
-\toprule
-土地覆盖类型    & 植被粗糙度($z_{0x}$) & 零平面位移($d$) \\ \midrule
-城市        & 0.1              & 0.667    \\
-干旱农田与牧场   & 0.1              & 0.667    \\
-灌溉农田与牧场   & 0.1              & 0.667    \\
-干湿混合农田与牧场 & 0.1              & 0.667    \\
-农田草地过渡带   & 0.1              & 0.667    \\
-农田林地过渡带   & 0.1              & 0.667    \\
-草地        & 0.1              & 0.667    \\
-灌木地       & 0.05             & 0.333    \\
-草地灌木地混合带  & 0.05             & 0.333    \\
-稀树草原      & 0.1              & 0.667    \\
-落叶阔叶林     & 2.0              & 13.333   \\
-落叶针叶林     & 1.7              & 11.333   \\
-常绿阔叶林     & 3.5              & 23.333   \\
-常绿针叶林     & 1.7              & 11.333   \\
-混合森林      & 2.0              & 13.333   \\
-内陆水体      & 0.1              & 0.667    \\
-草本湿地      & 0.1              & 0.667    \\
-森林湿地      & 3.5              & 23.333   \\
-贫瘠稀疏植被    & 0.05             & 0.333    \\
-草本苔原      & 0.1              & 0.667    \\
-森林苔原      & 0.1              & 0.667    \\
-混合苔原      & 0.1              & 0.667    \\
-裸土苔原      & 0.1              & 0.667    \\
-雪盖或冰川     & 0.1              & 0.667    \\ \bottomrule
-\end{tabular}
-\end{table}
+%\begin{table}[]
+%\centering
+%\caption{基于USGS分类的24种土地覆盖类型的地表粗糙度和零平面位移}
+%\label{tab:USGS地表粗糙度和零平面位移}
+%\begin{tabular}{@{}lcc@{}}
+%\toprule
+%土地覆盖类型    & 植被粗糙度($z_{0x}$) & 零平面位移($d$) \\ \midrule
+%城市        & 0.1              & 0.667    \\
+%干旱农田与牧场   & 0.1              & 0.667    \\
+%灌溉农田与牧场   & 0.1              & 0.667    \\
+%干湿混合农田与牧场 & 0.1              & 0.667    \\
+%农田草地过渡带   & 0.1              & 0.667    \\
+%农田林地过渡带   & 0.1              & 0.667    \\
+%草地        & 0.1              & 0.667    \\
+%灌木地       & 0.05             & 0.333    \\
+%草地灌木地混合带  & 0.05             & 0.333    \\
+%稀树草原      & 0.1              & 0.667    \\
+%落叶阔叶林     & 2.0              & 13.333   \\
+%落叶针叶林     & 1.7              & 11.333   \\
+%常绿阔叶林     & 3.5              & 23.333   \\
+%常绿针叶林     & 1.7              & 11.333   \\
+%混合森林      & 2.0              & 13.333   \\
+%内陆水体      & 0.1              & 0.667    \\
+%草本湿地      & 0.1              & 0.667    \\
+%森林湿地      & 3.5              & 23.333   \\
+%贫瘠稀疏植被    & 0.05             & 0.333    \\
+%草本苔原      & 0.1              & 0.667    \\
+%森林苔原      & 0.1              & 0.667    \\
+%混合苔原      & 0.1              & 0.667    \\
+%裸土苔原      & 0.1              & 0.667    \\
+%雪盖或冰川     & 0.1              & 0.667    \\ \bottomrule
+%\end{tabular}
+%\end{table}
 
-陆地表面可分为被积雪覆盖与未被积雪覆盖两部分。根据\citet{swenson2012new}提供的方法，
+陆地表面可分为被积雪覆盖与未被积雪覆盖两部分。根据 \citet{swenson2012new}提供的方法，
 被积雪覆盖的地表面积比例$f_{sno}$可分为两步计算：在积分开始时若有降雪发生，则新一步的$f_{sno}$更新为
 \begin{equation}
-f_{{sno }}^{(n+1)}=1-\left(1-\tanh \left(0.1 p_{i} \Delta t\right)\right)\left(1-f_{{sno }}^{(n)}\right) \leq 1.0
+f_{{sno }}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{i} \Delta t\right)\right]\left(1-f_{{sno }}^{(n)}\right) \leq 1.0
 \end{equation}
-其中$p_i$为降雪率($\rm kg/m^2/s$)，$\Delta t$为积分步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{sno}$更新为
+其中$p_i$为降雪率($\mathrm{kg\ m^{-2}\ s^{-1}}$)，$\Delta t$为积分步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{sno}$更新为
 \begin{equation}
 f_{sno}^{(n+1)}=\tanh \frac{100 z_{s n o}^{2}}{2.5 z_{0 m, s o i} W_{sno}}
 \end{equation}
-其中$W_{sno}$为雪水当量(mm)，$z_{0m,soi}$为未被积雪覆盖时的地表粗糙度。
+其中$W_{sno}$为雪水当量(mm)，$z_{0m,soi}$ 为未被积雪覆盖时的地表粗糙度。
 
 对于无植被覆盖部分的陆地表面，湍流通量只存在于地表与大气之间，此部分动量通量$\tau_b$、感热通量$H_b$和水汽通量$E_b$表达为：
 \begin{equation}\label{taub_x}
@@ -401,12 +401,12 @@ q_{g}=\left(1-f_{{sno }}\right) q_{{soil }}+f_{{sno }} q_{{sno }}
 其中积雪表面的比湿$q_{sno}$为温度在$T_{snl+1}$时的饱和比湿$q_{sno}=q_{sat}^{T_{snl+1}}$
 (计算方案见章节 \ref{饱和水汽压(比湿)及其随温度的变化})，土壤表面的比湿$q_{soil}$视为正比于温度在$T_1$时的饱和比湿：$q_{sat}^{T_1}：q_{soil}=\alpha_{soil}q_{sat}^{T_1}$，
 比例系数$\alpha_{soil}$为表层土壤水势$\psi_1$(mm)的函数\citep{philip1957theory}：$\alpha_{soil}=\exp \left(\frac{\psi_1g}{{10}^3R_{wv}T_1}\right)$，
-其中$R_{wv}$表示水汽气体常数(J/kg/K)。表层土壤水势$\psi_1$的计算公式为$\psi_1=\psi_{sat,1}s_1^{-B_1}\geq-1\ast{10}^8$，
-$\psi_{sat,1}$表示表层饱和土壤水势(mm)，$B_1$表示表层土壤\citet{clapp1978empirical}参数(均由地表参数数据集提供)。$s_1$表示表层土壤对于饱和状态时的相对湿度：
+其中$R_{wv}$表示水汽气体常数(J/kg/K)。表层土壤水势$\psi_1$的计算公式为$\psi_1=\psi_{sat,1}s_1^{-B_1}\geq-1\times{10}^8$，
+$\psi_{sat,1}$表示表层饱和土壤水势(mm)，$B_1$表示表层土壤\citep{clapp1978empirical}参数(均由地表参数数据集提供)。$s_1$表示表层土壤对于饱和状态时的相对湿度：
 \begin{equation}
 s_{1}= \begin{cases}
    0.001, & \text { if } \theta_{sat, 1}<1 \times 10^{-6} \\ 
-   frac{1}{\Delta z_{1} \theta_{sat, 1}}\left[\frac{w_{liq, 1}}{\rho_{liq}}+\frac{w_{ice, 1}}{\rho_{ice}}\right]  \text{且}  0.001 \leq s_{1} \leq 1.0, &\text {if } \theta_{sat, 1} \geq 1 \times 10^{-6}
+   \frac{1}{\Delta z_{1} \theta_{sat, 1}}\left[\frac{w_{liq, 1}}{\rho_{liq}}+\frac{w_{ice, 1}}{\rho_{ice}}\right]  \text{ 且  }\  0.001 \leq s_{1} \leq 1.0, &\text {if } \theta_{sat, 1} \geq 1 \times 10^{-6}
    \end{cases}
 \end{equation}
 其中$\Delta z_{1}$为表层土壤厚度(m)，$\rho_{liq}$和$\rho_{ice}$分别为液态水和固态水密度($\rm kg/m^3$)，
@@ -429,9 +429,12 @@ z_{0 h} = z_{0 w} = z_{0 m} \exp \left[-0.13\left(u_{*} \cdot z_{0 m} / v\right)
 综上，无植被覆盖部分的地表湍流通量的数值计算过程可总结如下：
 \begin{enumerate}
      \item 根据公式(\ref{VaIni})给出风速$V_{a}$的初始猜测，当采用LZD2022方案时，对流速度$U_c$设为0，否则$U_c$的初始猜测如下：
-     \begin{equation}
-          \begin{array}{cc}U_{c}=0 & \theta_{v, atm}-\theta_{v, s} \geq 0(\text { 即稳定条件下 }) \\ U_{c}=0.5 & \theta_{v, atm}-\theta_{v, s}<0(\text { 即不稳定条件下 })\end{array}
-          \end{equation}
+       \begin{equation}
+          U_{c}= \begin{cases}
+           0, & \theta_{v, atm}-\theta_{v, s} \geq 0\ \text { (即稳定条件下) } \\ 
+           0.5, & \theta_{v, atm}-\theta_{v, s}<0\ \text { (即不稳定条件下) }
+          \end{cases}
+       \end{equation}
      \item 基于$R_{ib}$，根据公式(\ref{Rib})和(\ref{ZetaRib})，给出Monin-Obukhov长度$L$的初始猜测;
      \item 以下过程迭代6次：\\
      a. 计算$u_\ast$ (Zeng1998方案：公式(\ref{Va_VU})-(\ref{Va_VS})；LZD2022方案：公式(\ref{Va_U_LZD1})、(\ref{Va_U_LZD2})、(\ref{Va_S})-(\ref{Va_VS})) \\
@@ -478,7 +481,7 @@ E_{p}=-f_{\text {sig }} \rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 
 假设植被冠层空气的比热容为0，则它与大气之间的热量和水汽交换可被两部分通量抵消平衡：
 一是地表与植被冠层顶空气之间的湍流通量，二是植被表面(茎、叶等)与植被冠层顶空气之间的湍流通量。
-对于植被的描述，植被生理过程采用\citet{dai2004two}提出的双大叶模型，即将叶片分为阴叶(无阳光照射)与阳叶(有阳光照射)两部分。
+对于植被的描述，植被生理过程采用 \citet{dai2004two}提出的双大叶模型，即将叶片分为阴叶(无阳光照射)与阳叶(有阳光照射)两部分。
 阳叶的比例表达为：
 \begin{equation}
 f_{sun}=\frac{1-\exp (-K \cdot \text {LAI})}{K \cdot \text {LAI}}
@@ -503,7 +506,7 @@ H_{p g}=-f_{sig} \rho_{atm} C_{pa} \frac{\left(T_{s}-T_{g}\right)}{r_{a h}^{\pri
 H_{p v}=-f_{sig} \rho_{atm} C_{pa}(\text {LAI}+\text {SAI}) \frac{\left(T_{s}-T_{v}\right)}{r_{b}}
 \end{equation}
 其中$T_v$表示叶片温度(K)，$T_s$表示定义在高度$z_{0h}+d$上的植被冠层顶空气温度(K)，SAI表示茎面积指数，$r_b$表示叶面边界层阻抗(s/m)，
-$r_{ah}^\prime$表示地表与植被冠层顶空气之间的感热阻抗(s/m)，各部分过程如图 \ref{fig:有植被覆盖部分的陆地表面感热通量示意图}所示。
+$r_{ah}^\prime$表示地表与植被冠层顶空气之间的感热阻抗(s/m)，各部分过程如图 \ref{fig:有植被覆盖部分的陆地表面感热通量示意图} 所示。
 {
 \begin{figure}[]
 \centering
@@ -728,7 +731,7 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 通过以上介绍可以看出，三维植被湍流交换与一维植被湍流交换最大的不同在于其计算的对象由原来单一植被扩展到多个分层植被，
 阻抗网络发生变化，多种植被在同一环境下同时求解。在计算时，同一维植被一样，需要用到植被短波辐射吸收量和长波辐射吸收量，
 此时利用章节~\ref{三维植被辐射传输模型} 和 \ref{三维植被长波辐射传输} 对三维植被辐射传输计算结果。整个植被冠层与大气的湍流交换同样采用相似性理论进行求解，
-其求解过程如图~\ref{fig:三维植被湍流交换模型计算流程图}所示。
+其求解过程如图~\ref{fig:三维植被湍流交换模型计算流程图} 所示。
 {
 \begin{figure}[]
 \centering
