@@ -54,7 +54,7 @@ USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global 
 IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging Spectroradiometer 
 （MODIS）MCD12Q1 Version 6（The Terra and Aqua combined MODIS Land Cover Type data product）
 的数据（$https://lpdaac.usgs.gov/products/mcd12q1v006/$），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生 
- \citep{Friedl2019}。数据为全球15秒（约500m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表 \ref{tab:IGBP覆盖类型} 所示。
+ \citep{Friedl2019}。数据为全球15$''$（约500 m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表 \ref{tab:IGBP覆盖类型} 所示。
 
 \begin{table}[]
 \centering
@@ -87,7 +87,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \section{土壤数据}\label{土壤数据}
 \subsection{土壤基础数据}\label{土壤基础数据}
 土壤基础属性数据采用Global Soil Dataset for Earth System Modeling（GSDE，http://globalchange.bnu.edu.cn/research/soilw） \citep{shangguan2014global}
-和SoilGrids （https:\\//www.soilgrids.org/）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0-0.045, 0.045-0.091, 0.091-0.166, 0.166-0.289, 0.289-0.493, 0.493-0.829, 0.829-1.383, 1.383-2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250m。其垂直层次为6层（0-0.05，0.05-0.15，0.15-0.3，0.3-0.6，0.6-1，1-2m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。
+和SoilGrids （https:\\//www.soilgrids.org/）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0-0.045, 0.045-0.091, 0.091-0.166, 0.166-0.289, 0.289-0.493, 0.493-0.829, 0.829-1.383, 1.383-2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0-0.05，0.05-0.15，0.15-0.3，0.3-0.6，0.6-1，1-2m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。
 
 \subsection{土壤水热特征参数及尺度转换}\label{土壤水热特征参数及尺度转换}
 

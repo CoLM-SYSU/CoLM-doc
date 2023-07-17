@@ -58,12 +58,12 @@ $K_p$通过叶角分布的经验参数$\chi_L$的变化来控制，
 \label{fig:穿透系数与叶面积指数}
 \end{figure}
 }
-为防止升华或冷凝水超过最大树冠储存量，CoLM在计算冠层截留之前首先更新树叶上的水深 ($Ldew$) (mm)：
+为防止升华或冷凝水超过最大树冠储存量，CoLM在计算冠层截留之前首先更新树叶上的水深 ($L_{dew}$) (mm)：
 \begin{equation}
 \begin{array}{c}L_{d e w}=L_{d e w}-x_{s c} \\ x_{s c}=\max \left(0 ., L_{d e w}-x_{s c}\right)\end{array}
 \end{equation}
 其中 $x_{sc}$ 是超过最大树冠储存量的水(mm)，$S_c=0.1f_{sig}\left(LAI+SAI\right)$代表最大蓄水量(mm)。
-$xsc$的相位首先由冠层温度决定。如果冠层温度大于冰点温度，CoLM 假定所有过量的水都处于液相，否则处于冰雪相。
+$x_{sc}$的相位首先由冠层温度决定。如果冠层温度大于冰点温度，CoLM 假定所有过量的水都处于液相，否则处于冰雪相。
 
 
 CoLM 假设网格内的降水的分布是不均匀的。其中对流降水面积的网格占比$I_c$可以由下式给出
@@ -113,7 +113,7 @@ E_{ci} / \rho_{w}=\min \left(\frac{\left(q_{s}-q_{sat}^{T_{c}}\right)}{r_{b} /\l
 \end{equation}
 这里$r_b$是平均边界层阻力，由冠层顶部的风速和特征叶片尺寸确定；$q_{sat}^{T_c}$ (kg/kg) 是冠层温度下的饱和比湿度；$q_s$为表层参考高度处的比湿度，$\Delta t$为时间步长。
 \begin{mymdframed}{\color{red}{注意}}
-此处符号 $L_{dew_{d} t}$ 未定义，应该是 $L_{dew\_{p}}$ 的误写。
+此处符号 $L_{dew_{d} t}$ 未定义，可能是 $L_{dew,{p}}$ 的误写。
 \end{mymdframed}
 
 
@@ -262,19 +262,17 @@ q_{i+\frac{1}{2}}^{n+1} =&-\left(K_{i+\frac{1}{2}}^{n}+\frac{\partial K_{i+\frac
 \end{equation}
 则导数为
 \begin{equation}
-\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i}}=
-\left\{\begin{aligned}
+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i}}=\begin{cases}
   (2 B+3) K_{ {sat }}\left(\frac{\theta_{i}}{\theta_{sat}}\right)^{2 B+2} 
-    \frac{1}{\theta_{s a}}, &-\left(\frac{\psi_{i+1}-\psi_{i}}{\Delta z}-1\right) & \geq 0 \\ 
-    0, & -\left(\frac{\psi_{i+1}-\psi_{i}}{\Delta z}-1\right) &<0 
-    \end{aligned}\right.
+    \frac{1}{\theta_{s a}}, & -\left(\frac{\psi_{i+1}-\psi_{i}}{\Delta z}-1\right) \geq 0 \\ 
+   0, & -\left(\frac{\psi_{i+1}-\psi_{i}}{\Delta z}-1\right) < 0 
+  \end{cases}
 \end{equation}
 \begin{equation}
-\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}}
-=\left\{\begin{aligned} 
+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}}=\begin{cases}
      0, & -\left(\frac{\psi_{i+1}-\psi_{i}}{\Delta z}-1\right) \geq 0 \\
      (2 B+3) K_{ {sat }}\left(\frac{\theta_{i+1}}{\theta_{ {sat }}}\right)^{2 B+2} \frac{1}{\theta_{ {sat }}}, & -\left(\frac{\psi_{i+1}-\psi_{i}}{\Delta z}-1\right) <0 
-     \end{aligned}\right.
+   \end{cases}
 \end{equation}
 对计算区域的底部，
 \begin{equation}

@@ -83,7 +83,7 @@ r_{3}=0.3
 
 对于无冰海洋，采用太阳高度角计算直射入射反照率，漫射反射率则设为常数。计算中，假设反照率与波段和海表面风速等其他物理量无关。可见光和近红外波段的漫射反射率均设为0.06；而两个波段的直射反照率均通过以下公式计算：
 \begin{equation}
-\alpha_{s}= \frac{0.026}{\mu^{1.7}+0.065}+0.15*(\mu-0.1)*(\mu-0.5)*(\mu-1) 
+\alpha_{s}= \frac{0.026}{\mu^{1.7}+0.065}+0.15\times(\mu-0.1)\times(\mu-0.5)\times(\mu-1) 
 \end{equation}
 
 \section{植被反照率-二流近似模型}\label{植被反照率二流近似模型}
@@ -215,10 +215,10 @@ u_{2}=b-c \alpha_{g, dif}
 u_{3}=f+c \alpha_{g, dif}
 \end{equation}
 \begin{equation}
-s_{1}=\exp \left\{-\min \left[h L_{AI}, 50\right]\right\}
+s_{1}=\exp \left[-\min \left(h L_{AI}, 50\right)\right]
 \end{equation}
 \begin{equation}
-s_{2}=\exp \left\{-\min \left[K L_{AI}, 50\right]\right\}
+s_{2}=\exp \left[-\min \left(K L_{AI}, 50\right)\right]
 \end{equation}
 \begin{equation}
 p_{1}=b+\bar{\mu} h
@@ -374,7 +374,7 @@ T_{d}^{*}=2 \int_{0}^{1} \exp \left(-\frac{G(\mu) LAI}{\mu}\right) \mu d \mu, \q
 \begin{equation}
 T_{d}^{*} \approx \frac{\exp (-0.5 a LAI)}{1+0.5 b LAI}
 \end{equation}
-通过与数值积分结果拟合得到$a=0.87$, $b=0.92$ (对于$0<LAI<8$，$RSME=0.002$)。因此，等效的漫射辐射入射角度(类似于直射辐射入射角度)可表示为：
+通过与数值积分结果拟合得到$a=0.87$, $b=0.92$ (对于$0<LAI<8$，RMSE=0.002)。因此，等效的漫射辐射入射角度(类似于直射辐射入射角度)可表示为：
 \begin{equation}
 \exp \left(-\frac{0.5 LAI}{\mu^{*}}\right)=\frac{\exp (-0.5 a LAI)}{1+0.5 b LAI}
 \end{equation}
@@ -1018,7 +1018,8 @@ $L_{\ast\rightarrow n}$即为到达每一层的辐射，即为$L[n]$。注意上
 或者说是在整个土壤$column$上的计算，单位面积上的吸收还需要除以各自的覆盖度$f_{ci}$。
 
 
-在湍流迭代求解植被温度时，我们还需要用到$\overrightarrow{L_{vl}}$对自身温度的偏导数。PFT吸收的长波辐射来自身发射的部分可计算如下
+在湍流迭代求解植被温度时，我们还需要用到$\overrightarrow{L_{vl}}$对自身温度的偏导数。PFT吸收的长波辐射来自自身发射的部分可计算如下: \\
+%
 对于第1层植被：
 \begin{equation}
 f_{ci} \varepsilon_{vi} \sigma T_{vi}^{4}\left(1-\varepsilon_{g}\right) S_{i} \varepsilon_{vi}
