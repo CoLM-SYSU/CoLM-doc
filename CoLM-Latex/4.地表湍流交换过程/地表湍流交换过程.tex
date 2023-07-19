@@ -49,7 +49,7 @@ $\theta_{v\ast}$为虚温尺度(K)，定义为：
 \theta_{v\ast}=\theta_\ast+0.61\overline{\theta_{atm}}q_\ast
 \end{equation}
 
-相似性函数$\phi_x$($x=m$、$h$和$w$分别对应动量、感热和水汽)适用于任何下垫面条件，固亦称通用相似性函数，或简称通用函数，
+相似性函数$\phi_x$($x=m$、$h$和$w$分别对应动量、感热和水汽)适用于任何下垫面条件，故亦称通用相似性函数，或简称通用函数，
 它将近地层的湍流通量与$\left|u\right|$、$\theta$和$q$等的垂直梯度联系起来，构成了近地层湍流通量参数化的基础。在中性条件下，$\phi_m=\phi_h=\phi_w=1$。
 
 
@@ -89,8 +89,10 @@ q_{atm}-q_{s}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)
 \end{equation}
 这里限制$V_a\geq0.1$是为了避免太小的风速使得感热与潜热过小导致数值溢出。对流速度$U_c$表示对流边界层中的大涡对近地层湍流通量的贡献，计算方案为：
 \begin{equation}
-\begin{array}{ll} U_{c}=0, \quad & \text { 当 } \zeta_{atm}=\frac{z_{atm, m}-d}{L} \geq 0 \text { 时(即稳定条件下) } \\
-       U_{c}=\beta w_{*}, \quad & \text { 当 } \zeta_{atm}<0 \text { 时 (即不稳定条件下) }\end{array}
+U_{c}= \begin{cases}
+ 0, & \text { 当 } \zeta_{atm}=\frac{z_{atm, m}-d}{L} \geq 0 \text { 时(即稳定条件下) } \\
+\beta w_{*}, & \text { 当 } \zeta_{atm}<0 \text { 时 (即不稳定条件下) }
+\end{cases}
 \end{equation}
 其中$w_\ast={(\frac{-gu_\ast\theta_{v\ast}z_i}{\bar{\theta_{v,atm}}})}^{1/3}$为垂直速度尺度 ($\rm m\,s^{-1}$)，$z_i=1000$ m代表对流边界层高度(这里设为常数)，
 参数$\beta=1$。
@@ -108,16 +110,20 @@ q_{atm}-q_{s}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)
 
 根据\citet{zeng1998intercomparison}，通用函数$\phi_x$有如下表达式：
 \begin{equation}\label{phim_zeng}
-\left\{\begin{array}{lr}\phi_{m}(\zeta)=0.7 k^{\frac{2}{3}}(-\zeta)^{\frac{1}{3}}, & \zeta<-1.574 \text { 时 (即非常不稳定条件下) } \\
-      \phi_{m}(\zeta)=(1-16 \zeta)^{-\frac{1}{4}}, & -1.574 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\
-       \phi_{m}(\zeta)=1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\ 
-       \phi_{m}(\zeta)=5+\zeta, & \zeta>1 \text { 时 (即非常稳定条件下) }\end{array}\right.
+   \phi_{m}(\zeta)=\begin{cases}
+     0.7 k^{\frac{2}{3}}(-\zeta)^{\frac{1}{3}}, & \zeta<-1.574 \text { 时 (即非常不稳定条件下) } \\
+     (1-16 \zeta)^{-\frac{1}{4}}, & -1.574 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\
+     1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\ 
+     5+\zeta, & \zeta>1 \text { 时 (即非常稳定条件下) }
+   \end{cases}
 \end{equation}
 \begin{equation}
-\left\{\begin{array}{lr}\phi_{h}(\zeta)=\phi_{w}(\zeta)=0.9 k^{\frac{4}{3}}(-\zeta)^{-\frac{1}{3}}, & \zeta<-0.465 \text { 时 (即非常不稳定条件下) } \\ 
-     \phi_{h}(\zeta)=\phi_{w}(\zeta)=(1-16 \zeta)^{-\frac{1}{2}}, & -0.465 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\ 
-     \phi_{h}(\zeta)=\phi_{w}(\zeta)=1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\
-      \phi_{h}(\zeta)=\phi_{w}(\zeta)=5+\zeta, & \zeta>1 \text { 时 (即非常稳定条件下) }\end{array}\right.
+  \phi_{h}(\zeta)=\phi_{w}(\zeta)=\begin{cases}
+     0.9 k^{\frac{4}{3}}(-\zeta)^{-\frac{1}{3}}, & \zeta<-0.465 \text { 时 (即非常不稳定条件下) } \\ 
+     (1-16 \zeta)^{-\frac{1}{2}}, & -0.465 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\ 
+     1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\
+     5+\zeta, & \zeta>1 \text { 时 (即非常稳定条件下) }
+   \end{cases}
 \end{equation}
 
 将$\phi_m$代入风速廓线方程(\ref{Va})，即可得到风速廓线在不同条件下的具体形式：
@@ -197,8 +203,10 @@ R_{ib}=\zeta\left[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}\right)-\psi_h(\zeta)}\rig
 其中$\psi_m(\zeta)$与$\psi_h(\zeta)$由不稳定条件下$\phi_h\left(\zeta\right)=\phi_m^2\left(\zeta\right)=\left(1-16\zeta\right)^{-\frac{1}{2}}$ 
 与稳定条件下$\phi_h\left(\zeta\right)=\phi_m\left(\zeta\right)=1+5\zeta$确定，从而$\zeta$进而$L$可以通过以下反算关系式得到初始猜测值
 \begin{equation}\label{ZetaRib}
-\left\{\begin{array}{lll}\zeta=\frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)}, \quad & 10^{-6} \leq \zeta \leq 2, \quad & \text{当} R_{i b} \geq 0 \text{（即中性或稳定条件下）} \\
-      \zeta=R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right), \quad & -100 \leq \zeta \leq-10^{-6}, \quad & \text{当} R_{i b}<0 \text{（即不稳定条件下）}\end{array}\right.
+  \zeta=\begin{cases}
+    \frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)}, \qquad 10^{-6} \leq \zeta \leq 2, & \text{ 当 } R_{i b} \geq 0\ \text{（即中性或稳定条件下）} \\
+    R_{ib} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right),  \quad -100 \leq \zeta \leq-10^{-6}, & \text{ 当 } R_{i b}<0\ \text{（即不稳定条件下）}
+  \end{cases}
 \end{equation}
 
 以上给出了$u_\ast$、$\theta_\ast$、$q_\ast$的求解过程，于是地表与大气参考高度之间的动量、感热和水汽通量即可通过其定义求得。
@@ -258,9 +266,10 @@ LZD2022方案曲线与Zeng1998方案的不稳定条件曲线相交(图 \ref{fig:
 
 结合LZD2022和Zeng1998方案，不稳定条件下($\zeta<0$)通用函数$\phi_{m}$有如下表达式：
 \begin{equation}
-\left\{\begin{array}{lr}\phi_{m}(\zeta)=B_{m2}(-\zeta)^{-1/2}, & \zeta<\zeta_{m2} \text {时} \\
-      \phi_{m}(\zeta)=(1-16 \zeta)^{-1/4}, & \zeta_{m2} \leq \zeta<0 \text {时} \\
-       \end{array}\right.
+\phi_{m}(\zeta)= \begin{cases}
+   B_{m2}(-\zeta)^{-1/2}, & \zeta<\zeta_{m2} \text { 时} \\
+   (1-16 \zeta)^{-1/4}, & \zeta_{m2} \leq \zeta<0 \text { 时} \\
+\end{cases}
 \end{equation}
 其中$B_{m2}=\max(B_{m},0.2722)$，$\zeta_{m2}=\min(\zeta_{m},-0.13)$，稳定条件下的$\phi_{m}$则直接采用方程(\ref{phim_zeng})中形式。基于风速廓线方程(\ref{Va})，注意当
 $\zeta_{atm}=\frac{z_{atm,m}-d}{L}<\zeta_{m2}$时，方程(\ref{Va})中的$\psi_{m}\left(\zeta_{atm}\right)$为：
@@ -296,7 +305,7 @@ $V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}} \geq 0.1$。稳定条件下的风速积分
 
 \section{无植被覆盖地表湍流通量的计算方案}\label{无植被覆盖地表湍流通量的计算方案}
 当陆地表面没有植被覆盖(即裸土、冰川、水体等表面)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算（表~\ref{tab:物理常数chap4}）。
-对于任一地表类型斑块，植被所占比例为$f_{veg}$(当前取值为0或1)，植被粗糙度为$z_{vm}$
+对于任一地表类型斑块，植被所占比例为$f_{veg}$ (当前取值为0或1)，植被粗糙度为$z_{vm}$
 (表~\ref{tab:USGS地表覆盖粗糙度及零平面位移与植被高度比值} 给出了按照USGS分类下的24种土地覆盖类型的对应参数值)，则被积雪掩埋的植被占总植被的比例为
 \begin{equation}
 wt=\frac{0.1 z_{{sno}}}{z_{v m}+0.1 z_{{sno}}}
@@ -585,9 +594,10 @@ $-\rho_{atm}\frac{\left(q_s-q_{sat}^{T_v}\right)}{r_{total}}\ =-\rho_{atm}\frac{
 \begin{equation}
 c_{v}^{w}=\frac{1}{r_{{total }}}=\frac{(\text {LAI}+\text {SAI})}{r_{b}}
 \end{equation}
-下面给出各个阻抗系数的计算方案。首先，植被冠层空气与大气的湍流阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$的计算方案同章节 \ref{无植被覆盖地表湍流通量的计算方案}，
+
+下面给出各个阻抗系数的计算方案。首先，植被冠层空气与大气的湍流阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$的计算方案同章节~\ref{无植被覆盖地表湍流通量的计算方案}，
 动量、热量与水汽通量的零平面位移$d$与粗糙度$z_{0m}$、$z_{0h}$、$z_{0w}$均按土地覆盖类型给出(见
-表 \ref{tab:USGS地表粗糙度和零平面位移})。
+表~\ref{tab:USGS地表覆盖粗糙度及零平面位移与植被高度比值})。
 其次，对于地表与植被冠层空气的湍流阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$，计算公式为：
 \begin{equation}
 r_{a h}^{\prime}=r_{a w}^{\prime}=\frac{1}{C_{s} u_{*}}:=r_{\mathrm{d}}
@@ -655,7 +665,7 @@ K_{\exp}(z)=K(h) \exp \left(-a\left(1-\frac{z}{h}\right)\right)
 \end{equation}
 上式中的$a$表示衰减系数，计算为 \citep{inoue1963turbulent,cowan1968mass,kondo1971relationship}：
 \begin{equation}
-a=\frac{1}{h-d} \frac{h}{\ln \left\{(h-d) / z_{0}\right\}}
+a=\frac{1}{h-d} \frac{h}{\ln \left[(h-d) / z_{0}\right]}
 \end{equation}
 $u_{comb}$计算为对数廓线和裸土情况下相似性理论计算的风速廓线组合：
 \begin{equation}\label{ucomb}
