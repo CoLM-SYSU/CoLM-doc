@@ -28,17 +28,17 @@ $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa
 垂直梯度可分别表达为仅依赖于参数$\zeta=\frac{z-d}{L}$的函数：
 
 \begin{equation}\label{kz_u}
-\frac{k(z-d)}{u_{*}} \frac{\partial|u|}{\partial z}=\phi_{m}(\zeta)
+\frac{\kappa (z-d)}{u_{*}} \frac{\partial|u|}{\partial z}=\phi_{m}(\zeta)
 \end{equation}
 \begin{equation}\label{kz_theta}
-\frac{k(z-d)}{\theta_{*}} \frac{\partial \theta}{\partial z}=\phi_{h}(\zeta)
+\frac{\kappa (z-d)}{\theta_{*}} \frac{\partial \theta}{\partial z}=\phi_{h}(\zeta)
 \end{equation}
 \begin{equation}\label{kz_q}
-\frac{k(z-d)}{q_{*}} \frac{\partial q}{\partial z}=\phi_{w}(\zeta)
+\frac{\kappa (z-d)}{q_{*}} \frac{\partial q}{\partial z}=\phi_{w}(\zeta)
 \end{equation}
-其中$k$为von K\'arman常数，$z$为离地面高度(m)，$d$为零平面位移(m)，$L$为Monin-Obukhov长度(m)：
+其中 $\kappa$ 为 von K\'arman 常数，$z$为离地面高度(m)，$d$为零平面位移(m)，$L$为Monin-Obukhov长度(m)：
 \begin{equation}\label{ObukL}
-L=-\frac{u_{*}^{3}}{k\left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{k g \theta_{v *}}
+L=-\frac{u_{*}^{3}}{\kappa \left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{k g \theta_{v *}}
 \end{equation}
 其中$\overline{\theta_{v,atm}}=\overline{\theta_{atm}}(1+0.61\overline{q_{atm}})$表示参考大气虚位温(K)，
  大气位温$\theta_{atm}$由其定义的一阶展开近似给出$\theta_{atm}=T_{atm}+0.0098z_{atm}$。$L$可表征近地层的大气层结稳定度：
@@ -49,7 +49,7 @@ $\theta_{v\ast}$为虚温尺度(K)，定义为：
 \theta_{v\ast}=\theta_\ast+0.61\overline{\theta_{atm}}q_\ast
 \end{equation}
 
-相似性函数$\phi_x$($x=m$、$h$和$w$分别对应动量、感热和水汽)适用于任何下垫面条件，故亦称通用相似性函数，或简称通用函数，
+相似性函数$\phi_x$ ($x=m$、$h$和$w$分别对应动量、感热和水汽)适用于任何下垫面条件，故亦称通用相似性函数，或简称通用函数，
 它将近地层的湍流通量与$\left|u\right|$、$\theta$和$q$等的垂直梯度联系起来，构成了近地层湍流通量参数化的基础。在中性条件下，$\phi_m=\phi_h=\phi_w=1$。
 
 
@@ -57,15 +57,15 @@ $\theta_{v\ast}$为虚温尺度(K)，定义为：
 为计算得到$u_\ast$、$\theta_\ast$、$q_\ast$，通常将上述关于$\phi_m\left(\zeta\right)$、$\phi_h\left(\zeta\right)$、
 $\phi_w(\zeta)$的微分方程(公式(\ref{kz_u})-(\ref{kz_q}))在近地层的两个任意高度$z_1$和$z_2\ (z_2>z_1)$进行积分，积分结果如下：
 \begin{equation}
-|u|_{2}-|u|_{1}=\frac{u_{*}}{k}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{m}\left(\frac{z_{2}-d}{L}\right)+\psi_{m}\left(\frac{z_{1}-d}{L}\right)\right]
+|u|_{2}-|u|_{1}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{m}\left(\frac{z_{2}-d}{L}\right)+\psi_{m}\left(\frac{z_{1}-d}{L}\right)\right]
 \end{equation}
 
 \begin{equation}
-\theta_{2}-\theta_{1}=\frac{\theta_{*}}{k}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{h}\left(\frac{z_{2}-d}{L}\right)+\psi_{h}\left(\frac{z_{1}-d}{L}\right)\right]
+\theta_{2}-\theta_{1}=\frac{\theta_{*}}{\kappa}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{h}\left(\frac{z_{2}-d}{L}\right)+\psi_{h}\left(\frac{z_{1}-d}{L}\right)\right]
 \end{equation}
 
 \begin{equation}
-q_{2}-q_{1}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{w}\left(\frac{z_{2}-d}{L}\right)+\psi_{w}\left(\frac{z_{1}-d}{L}\right)\right]
+q_{2}-q_{1}=\frac{q_{*}}{\kappa}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{w}\left(\frac{z_{2}-d}{L}\right)+\psi_{w}\left(\frac{z_{1}-d}{L}\right)\right]
 \end{equation}
 其中函数$\psi_x\left(y\right)\ (x=m,\ h,\ w)$定义为
 \begin{equation}
@@ -79,13 +79,13 @@ $z_{0x}\ (x=m,\ h,\ w)$分别表示动量、感热和水汽的粗糙长度(m)。
 \end{equation}
 则方程(\ref{kz_u}-\ref{kz_q})由$z_1$到$z_2$的积分结果为：
 \begin{equation}\label{Va}
-V_{a}=\frac{u_{*}}{k}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]
+V_{a}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]
 \end{equation}
 \begin{equation}\label{theta_atm-theta_s}
-\theta_{atm}-\theta_{s}=\frac{\theta_{*}}{k}\left[\ln \left(\frac{z_{atm, h}-d}{z_{0 h}}\right)-\psi_{h}\left(\frac{z_{atm, h}-d}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]
+\theta_{atm}-\theta_{s}=\frac{\theta_{*}}{\kappa}\left[\ln \left(\frac{z_{atm, h}-d}{z_{0 h}}\right)-\psi_{h}\left(\frac{z_{atm, h}-d}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]
 \end{equation}
 \begin{equation}\label{q_atm-qs}
-q_{atm}-q_{s}=\frac{q_{*}}{k}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]
+q_{atm}-q_{s}=\frac{q_{*}}{\kappa}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]
 \end{equation}
 这里限制$V_a\geq0.1$是为了避免太小的风速使得感热与潜热过小导致数值溢出。对流速度$U_c$表示对流边界层中的大涡对近地层湍流通量的贡献，计算方案为：
 \begin{equation}
@@ -94,7 +94,7 @@ U_{c}= \begin{cases}
 \beta w_{*}, & \text { 当 } \zeta_{atm}<0 \text { 时 (即不稳定条件下) }
 \end{cases}
 \end{equation}
-其中$w_\ast={(\frac{-gu_\ast\theta_{v\ast}z_i}{\bar{\theta_{v,atm}}})}^{1/3}$为垂直速度尺度 ($\rm m\,s^{-1}$)，$z_i=1000$ m代表对流边界层高度(这里设为常数)，
+其中$w_\ast={(\frac{-gu_\ast\theta_{v\ast}z_i}{\bar{\theta_{v,atm}}})}^{1/3}$为垂直速度尺度 ($\rm m\,s^{-1}$)，$z_i=1000$ m 代表对流边界层高度(这里设为常数)，
 参数$\beta=1$。
 
 因$L$是依赖于$u_\ast$、$\theta_\ast$、$q_\ast$的函数，
@@ -108,7 +108,7 @@ U_{c}= \begin{cases}
 初始场提供的$\theta_s$、$q_s$，以及对地表参数$d$和$z_{0x}$的估计，$u_\ast$、$\theta_\ast$、$q_\ast$可通过方程组(\ref{FGH})
 进行迭代求解，进而求出动量、感热和水汽通量。
 
-根据\citet{zeng1998intercomparison}，通用函数$\phi_x$有如下表达式：
+根据\citet{zeng1998intercomparison}，通用函数 $\phi_x$ 有如下表达式：
 \begin{equation}\label{phim_zeng}
    \phi_{m}(\zeta)=\begin{cases}
      0.7 k^{\frac{2}{3}}(-\zeta)^{\frac{1}{3}}, & \zeta<-1.574 \text { 时 (即非常不稳定条件下) } \\
@@ -130,20 +130,20 @@ U_{c}= \begin{cases}
 
 \noindent 非常不稳定条件下($\zeta_{atm}=\frac{z_{atm,m}-d}{L}<-1.574$)
 \begin{equation}\label{Va_VU}
-V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{-1.574 L}{z_{0 m}}-\psi_{mu}(-1.574)+
+V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{-1.574 L}{z_{0 m}}-\psi_{mu}(-1.574)+
 1.14\left[\left(-\zeta_{atm}\right)^{\frac{1}{3}}-(1.574)^{\frac{1}{3}}\right]+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 不稳定条件下($-1.574\le\zeta_{atm}<0$)
 \begin{equation}\label{Va_U}
-V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
+V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 稳定条件下($0\le\zeta_{atm}\le1$)
 \begin{equation}\label{Va_S}
-V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}+5 \zeta_{atm}-5 \frac{z_{0 m}}{L}\right\}
+V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}+5 \zeta_{atm}-5 \frac{z_{0 m}}{L}\right\}
 \end{equation}
 非常稳定条件下($\zeta_{atm}>1$)
 \begin{equation}\label{Va_VS}
-V_{a}=\frac{u_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 m}}{L}\right\}
+V_{a}=\frac{u_{*}}{\kappa}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 m}}{L}\right\}
 \end{equation}
 
 \noindent 其中
@@ -157,37 +157,37 @@ V_{a}=\frac{u_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \ln \ze
 \noindent 非常不稳定条件下($\zeta_{atm}=\frac{z_{atm,h}-d}{L}$ 或$ \ \frac{z_{atm,w}-d}{L}\ <-0.465$)
 \begin{equation}\label{theta_VU}
 \begin{array}{l}\theta_{atm}-\theta_{s}= \\ 
-     \frac{\theta_{*}}{k}\left\{\ln \frac{-0.465 L}{z_{0 h}}-\psi_{hu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-\left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]
+     \frac{\theta_{*}}{\kappa}\left\{\ln \frac{-0.465 L}{z_{0 h}}-\psi_{hu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-\left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]
      +\psi_{hu}\left(\frac{z_{0 h}}{L}\right)\right\}\end{array}
 \end{equation}
 \begin{equation}\label{q_VU}
 \begin{array}{l}q_{atm}-q_{s}= \\ 
-     \quad \frac{q_{*}}{k}\left\{\ln \frac{-0.465 L}{z_{0 w}}-\psi_{wu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-
+     \quad \frac{q_{*}}{\kappa}\left\{\ln \frac{-0.465 L}{z_{0 w}}-\psi_{wu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-
      \left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]+\psi_{wu}\left(\frac{z_{0 w}}{L}\right)\right\}\end{array}
 \end{equation}
 不稳定条件下($-0.465\le\zeta_{atm}<0$)
 \begin{equation}
-\theta_{atm}-\theta_{s}=\frac{\theta_{*}}{k}\left\{\ln \frac{z_{atm, h}-d}{z_{0 h}}-\psi_{hu}
+\theta_{atm}-\theta_{s}=\frac{\theta_{*}}{\kappa}\left\{\ln \frac{z_{atm, h}-d}{z_{0 h}}-\psi_{hu}
 \left(\zeta_{atm}\right)+\psi_{hu}\left(\frac{z_{0 h}}{L}\right)\right\}
 \end{equation}
 \begin{equation}
-q_{atm}-q_{s}=\frac{q_{*}}{k}\left\{\ln \frac{z_{atm, w}-d}{z_{0 w}}-
+q_{atm}-q_{s}=\frac{q_{*}}{\kappa}\left\{\ln \frac{z_{atm, w}-d}{z_{0 w}}-
 \psi_{wu}\left(\zeta_{atm}\right)+\psi_{wu}\left(\frac{z_{0 w}}{L}\right)\right\}
 \end{equation}
 稳定条件下($0\le\zeta_{atm}\le1$)
 \begin{equation}
-\theta_{atm}-\theta_{s}=\frac{\theta_{*}}{k}\left\{\left[\ln \frac{z_{atm, h}-d}{z_{0 h}}+5 \zeta_{atm}\right]-5 \frac{z_{0 h}}{L}\right\}
+\theta_{atm}-\theta_{s}=\frac{\theta_{*}}{\kappa}\left\{\left[\ln \frac{z_{atm, h}-d}{z_{0 h}}+5 \zeta_{atm}\right]-5 \frac{z_{0 h}}{L}\right\}
 \end{equation}
 \begin{equation}
-q_{atm}-q_{s}=\frac{q_{*}}{k}\left\{\left[\ln \frac{z_{atm, w}-d}{z_{0 w}}+5 \zeta_{atm}\right]-5 \frac{z_{0 w}}{L}\right\}
+q_{atm}-q_{s}=\frac{q_{*}}{\kappa}\left\{\left[\ln \frac{z_{atm, w}-d}{z_{0 w}}+5 \zeta_{atm}\right]-5 \frac{z_{0 w}}{L}\right\}
 \end{equation}
 非常稳定条件下($\zeta_{atm}>1$)
 \begin{equation}\label{theta_VS}
-\theta_{atm}-\theta_{s}=\frac{\theta_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 h}}+5\right]
+\theta_{atm}-\theta_{s}=\frac{\theta_{*}}{\kappa}\left\{\left[\ln \frac{L}{z_{0 h}}+5\right]
 +\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 h}}{L}\right\}
 \end{equation}
 \begin{equation}\label{q_VS}
-q_{atm}-q_{s}=\frac{q_{*}}{k}\left\{\left[\ln \frac{L}{z_{0 w}}+5\right]
+q_{atm}-q_{s}=\frac{q_{*}}{\kappa}\left\{\left[\ln \frac{L}{z_{0 w}}+5\right]
 +\left[5 \ln \zeta_{atm}+\zeta_{atm}-1\right]-5 \frac{z_{0 w}}{L}\right\}
 \end{equation}
 其中$\psi_{hu}\left(\zeta\right)=\psi_{wu}\left(\zeta\right)=2\ln{\left(\frac{1+x}{2}\right)}$，$x={(1-16\zeta)}^{1/2}$。
@@ -225,24 +225,24 @@ E=-\rho_{atm} q_{*} u_{*}=-\rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 \end{equation}
 其中，空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ ($\rm s\,m^{-1}$) (结合方程(\ref{Va})-(\ref{q_atm-qs}))为
 \begin{equation}\label{ram}
-r_{a m}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]^{2}
+r_{a m}=\frac{1}{\kappa^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]^{2}
 \end{equation}
 \begin{equation}\label{rah}
-\begin{array}{c}r_{a h}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, h}-d}{z_{0 h}}\right)-\psi_{h}\left(\frac{z_{atm, h}-d}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]}\end{array}
+\begin{array}{c}r_{a h}=\frac{1}{\kappa^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, h}-d}{z_{0 h}}\right)-\psi_{h}\left(\frac{z_{atm, h}-d}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]}\end{array}
 \end{equation}
 \begin{equation}\label{raw}
-\begin{array}{c}r_{a w}=\frac{1}{k^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]}\end{array}
+\begin{array}{c}r_{a w}=\frac{1}{\kappa^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]}\end{array}
 \end{equation}
 
 为方便与地面观测资料进行比较，可定义2m温度和湿度、以及10m风速，它们实际上为$z_{0x}+d$以上2m高度的温度、比湿，和10m高度的风速，计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ (或$z_{0x}+d+10$) 进行积分)如下：
 \begin{equation}\label{T2m}
-T_{2 m}=\theta_{s}+\frac{\theta_{*}}{k}\left[\ln \left(\frac{2+z_{0 h}}{z_{0 h}}\right)-\psi_{h}\left(\frac{2+z_{0 h}}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]
+T_{2 m}=\theta_{s}+\frac{\theta_{*}}{\kappa}\left[\ln \left(\frac{2+z_{0 h}}{z_{0 h}}\right)-\psi_{h}\left(\frac{2+z_{0 h}}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]
 \end{equation}
 \begin{equation}\label{q2m}
-q_{2 m}=q_{s}+\frac{q_{*}}{k}\left[\ln \left(\frac{2+z_{0 w}}{z_{0 w}}\right)-\psi_{w}\left(\frac{2+z_{0 w}}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]
+q_{2 m}=q_{s}+\frac{q_{*}}{\kappa}\left[\ln \left(\frac{2+z_{0 w}}{z_{0 w}}\right)-\psi_{w}\left(\frac{2+z_{0 w}}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]
 \end{equation}
 \begin{equation}
-u_{10 m}=\frac{u_{*}}{k}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\psi_{m}\left(\frac{10+z_{0 m}}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]
+u_{10 m}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\psi_{m}\left(\frac{10+z_{0 m}}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]
 \end{equation}
 
 
@@ -283,11 +283,11 @@ $\zeta_{atm}=\frac{z_{atm,m}-d}{L}<\zeta_{m2}$时，方程(\ref{Va})中的$\psi_
 
 \noindent 当$\zeta_{atm}<\zeta_{m2}$时
 \begin{equation}\label{Va_U_LZD1}
-V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{L\zeta_{m2}}{z_{0 m}}-\psi_{mu}\left(\zeta_{m2}\right)-2B_{m2}\left[(-\zeta_{atm})^{-1/2}-(-\zeta_{m2})^{-1/2}\right]+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
+V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{L\zeta_{m2}}{z_{0 m}}-\psi_{mu}\left(\zeta_{m2}\right)-2B_{m2}\left[(-\zeta_{atm})^{-1/2}-(-\zeta_{m2})^{-1/2}\right]+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 \noindent 当$ \zeta_{m2} \leq \zeta_{atm}<0$时
 \begin{equation}\label{Va_U_LZD2}
-V_{a}=\frac{u_{*}}{k}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
+V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 其中$\psi_{mu}$的定义同方程(\ref{Psim})，这里同样限制$V_a\geq0.1$以避免风速过小问题，但参考高度风速不用引入对流速度$U_c$(注意与\ref{基本理论}节不同)，即
 $V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}} \geq 0.1$。稳定条件下的风速积分形式则同方程(\ref{Va_S})和(\ref{Va_VS})。
@@ -320,23 +320,23 @@ wt=\frac{0.1 z_{{sno}}}{z_{v m}+0.1 z_{{sno}}}
 \begin{tabular}{lccc}
 \toprule
 变量名&缩写&数值&单位 \\\midrule
-干空气气体常数            & $R_{da}$                       & 287.04     & J/kg/K  \\ 
-水汽气体常数             & $R_{wv}$                       & 461.296     & J/kg/K  \\
-干空气比热容             & $C_{pa} $                      & 1004.64    & J/kg/K  \\
-液态水比热容             & $C_{pl}$                       & 4188.0     & J/kg/K  \\
-固态水比热容             & $C_{pi}$                       & 2117.27    & J/kg/K  \\
-von Karman常数       & $k$                               & 0.4        &    -     \\
-重力加速度              & $g$                               & 9.80616    & $\rm m/s^2$    \\
-Stefan-Boltzmann常数 & $\sigma$           & $5.67\times\rm 10^{-8}$  & $\rm W/m^2/K^4$ \\
+干空气气体常数            & $R_{da}$                       & 287.04     & $\mathrm{J\,kg^{-1}\,K^{-1}}$  \\ 
+水汽气体常数             & $R_{wv}$                       & 461.296     & $\mathrm{J\,kg^{-1}\,K^{-1}}$  \\
+干空气比热容             & $C_{pa} $                      & 1004.64    & $\mathrm{J\,kg^{-1}\,K^{-1}}$  \\
+液态水比热容             & $C_{pl}$                       & 4188.0     & $\mathrm{J\,kg^{-1}\,K^{-1}}$  \\
+固态水比热容             & $C_{pi}$                       & 2117.27    & $\mathrm{J\,kg^{-1}\,K^{-1}}$  \\
+von K\'arman常数       & $\kappa$                               & 0.4        &    -     \\
+重力加速度              & $g$                               & 9.80616    & $\rm m\,s^{-2}$    \\
+Stefan-Boltzmann常数 & $\sigma$           & $5.67\times\rm 10^{-8}$  & $\rm W\,m^{-2}\,K^{-4}$ \\
 液态水凝结温度            & $T_f$                            & 273.16     & K       \\
-液态水密度              & $\rho_{liq}$    & 1000       & $\rm Kg/m^3$   \\
-固态水密度              & $\rho_{ice}$    & 917        & $\rm Kg/m^3$   \\
-液态水蒸发潜热            & $\lambda_v$       & $2.5104\times\rm 10^{6}$ & J/kg    \\
-固态水升华潜热            & $\lambda_s$       & $2.8440\times\rm 10^{6}$ & J/kg    \\
-固态水液化潜热            & $L_f$                           & $0.3336\times10^6$ & J/kg    \\
-液态水热力传导率           & $\lambda_{liq}$ & 0.57       & W/m/K   \\
-固态水热力传导率           & $\lambda_{ice}$ & 2.29       & W/m/K   \\
-空气热力传导率            & $\lambda_a$       & 0.023      & W/m/K      \\\bottomrule
+液态水密度              & $\rho_{liq}$    & 1000       & $\rm kg\,m^{-3}$   \\
+固态水密度              & $\rho_{ice}$    & 917        & $\rm kg\,m^{-3}$   \\
+液态水蒸发潜热            & $\lambda_v$       & $2.5104\times\rm 10^{6}$ & $\mathrm{J\,kg^{-1}}$    \\
+固态水升华潜热            & $\lambda_s$       & $2.8440\times\rm 10^{6}$ & $\mathrm{J\,kg^{-1}}$    \\
+固态水液化潜热            & $L_f$                           & $0.3336\times10^6$ & $\mathrm{J\,kg^{-1}}$    \\
+液态水热力传导率           & $\lambda_{liq}$ & 0.57       & $\mathrm{W\,m^{-1}\,K^{-1}}$   \\
+固态水热力传导率           & $\lambda_{ice}$ & 2.29       & $\mathrm{W\,m^{-1}\,K^{-1}}$   \\
+空气热力传导率            & $\lambda_a$       & 0.023      & $\mathrm{W\,m^{-1}\,K^{-1}}$      \\\bottomrule
 \end{tabular}
 \end{table}
 
@@ -428,11 +428,11 @@ $\theta_{sat,1}$表示表层土壤体积含水量(即孔隙度，$\rm mm^3/mm^3$
 由于地表无植被覆盖，在计算阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$时，零平面位移取为$d=0$。
 动量粗糙度在有积雪覆盖(即$f_{sno}>0$)时取为$z_{0m}=0.0024$，无积雪覆盖时取为$z_{0m}=0.01$。
 由于动量输送会受到粗糙物后面湍流波中气压波动的影响，而热量和水汽的输送过程不涉及这种动力学机制，热量和水汽必须通过界面的分子扩散进行传输，
-故感热和水汽的粗糙度不同于动量粗糙度，根据\citep{zeng1998effect}：
+故感热和水汽的粗糙度不同于动量粗糙度，根据~\citet{zeng1998effect}：
 \begin{equation}\label{z0hw}
 z_{0 h} = z_{0 w} = z_{0 m} \exp \left[-0.13\left(u_{*} \cdot z_{0 m} / v\right)^{0.45}\right]
 \end{equation}
-其中$u_{*} \cdot z_{0 m} / v$为粗糙雷诺数(可理解为最小湍涡的雷诺数)，$\upsilon=1.5\times{10}^{-5}$（$\rm m^2/s$）为空气的动力粘性系数。
+其中$u_{*} \cdot z_{0 m} / v$为粗糙雷诺数(可理解为最小湍涡的雷诺数)，$\upsilon=1.5\times{10}^{-5}$（$\rm m^2s^{-1}$）为空气的动力粘性系数。
 
 
 综上，无植被覆盖部分的地表湍流通量的数值计算过程可总结如下：
@@ -496,7 +496,7 @@ E_{p}=-f_{\text {sig }} \rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 f_{sun}=\frac{1-\exp (-K \cdot \text {LAI})}{K \cdot \text {LAI}}
 \end{equation}
 其中LAI为叶面积指数，$K$为太阳辐射消光系数(见章节 \ref{短波吸收辐射通量})，${10}^{-6}\le K \cdot \text {LAI}\le40$。
-当白天植被吸收的太阳辐射小于1 W/m$^2$ 或白天结束时，$f_{sun}=0$。叶面积指数也对应表达为两部分：
+当白天植被吸收的太阳辐射小于1 $\mathrm{W m^{-2}}$ 或白天结束时，$f_{sun}=0$。叶面积指数也对应表达为两部分：
 \begin{equation}
 \begin{array}{c} \text {LAI}_{sun}= \text {LAI} \cdot f_{sun} \\ \text {LAI}_{sha}=\text {LAI} \cdot \left(1-f_{sun}\right)\end{array}
 \end{equation}
@@ -550,8 +550,8 @@ E_{pg}=-f_{sig} \rho_{atm} \frac{\left(q_{s}-q_{g}\right)}{r_{a w}^{\prime}}
 E_{pv}=-f_{sig} \rho_{atm} \frac{\left(q_{s}-q_{s a t}^{T v}\right)}{r_{t o t a l}}
 \end{equation}
 其中$q_{sat}^{T_v}$表示叶片温度在$T_v$下的饱和比湿(kg/kg)，$q_s$表示定义在高度$z_{0w}+d$上的植被冠层顶空气比湿(kg/kg)，
-$q_g$表示地表空气比湿(kg/kg，其表达见章节 \ref{无植被覆盖地表湍流通量的计算方案})，$r_{aw}^\prime$表示地表与植被冠层顶空气之间的水汽交换阻抗(s/m)。
-$r_{total}$表示植被表面与植被冠层顶空气之间水汽交换的总阻抗(s/m)，
+$q_g$表示地表空气比湿(kg/kg，其表达见章节 \ref{无植被覆盖地表湍流通量的计算方案})，$r_{aw}^\prime$表示地表与植被冠层顶空气之间的水汽交换阻抗($\mathrm{s\,m^{-1}}$)。
+$r_{total}$表示植被表面与植被冠层顶空气之间水汽交换的总阻抗($\mathrm{s\,m^{-1}}$)，
 它来自叶面边界层阻抗$r_b$和气孔阻抗$r_{s,sun}\left(r_{s,sha}\right)$的双重贡献。
 植被表面与植被冠层空气之间的水汽交换包含两部分：湿的叶面及茎面的蒸发水汽和干叶表面的蒸腾水汽。
 湿的叶面茎面积占总叶面茎面积的比例 \citep{dickinson1993biosphere} 为：
@@ -604,12 +604,12 @@ r_{a h}^{\prime}=r_{a w}^{\prime}=\frac{1}{C_{s} u_{*}}:=r_{\mathrm{d}}
 \end{equation}
 其中$C_s$表示地表与植被冠层空气之间的湍流交换系数，它由裸土表面的数值与浓密植被覆盖时的数值进行线性组合得到 \citep{zeng2005vegetation}：
 $C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\exp {\left[-(\text{LAI}+\text{SAI})\right]}$，
-浓密植被覆盖时的湍流交换系数$C_{s,dense}=0.004$，裸土表面的湍流交换系数$C_{s,bare}=\frac{k}{0.13}\left(\frac{z_{0m,g}u_\ast}{\upsilon}\right)^{-0.45}$，
+浓密植被覆盖时的湍流交换系数$C_{s,dense}=0.004$，裸土表面的湍流交换系数$C_{s,bare}=\frac{\kappa}{0.13}\left(\frac{z_{0m,g}u_\ast}{\upsilon}\right)^{-0.45}$，
 其中空气动力学粘性系数$\upsilon=1.5\times{10}^{-5}\,\rm m^2\,s^{-1}$，地表粗糙度$z_{0m,g}=0.01$。再次，对于叶面边界层阻抗$r_b$，计算公式为：
 \begin{equation}
 r_{b}=\frac{1}{c_{v}}\left(u_{*} / d_{{leaf }}\right)^{-0.5}
 \end{equation}
-其中$C_v=0.01\ \rm m\,s^{-1/2}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$表示叶片在风向的特征值。
+其中$c_v=0.01\ \rm m^{-1/2}\,s^{-1/2}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$ 表示叶片在风向的特征值。
 最后，气孔阻抗系数$r_{s,sun}$和$r_{s,sha}$的计算将在光合作用部分介绍。
 在计算地表温度并基于该温度对地表感热和水汽通量进行更新时，需给出地表感热和水汽通量对地表温度的变化率：
 \begin{equation}
@@ -639,11 +639,13 @@ CoLM2014假设$d$和$z_0$与植被高度成固定比例，即$d=\frac{2}{3}h$，
 \begin{equation}\label{zOh}
 \frac{z_{0}}{h}=\left(1-\frac{d}{h}\right) \exp \left(-\kappa \frac{u_{h}}{u_{*}}-\Psi_{h}\right)
 \end{equation}
-其中$\kappa=0.4$为卡曼常数。$\Psi_h$为下层粗糙度影响函数，设置为0.193。$u_\ast$是摩擦速度，$u_h$是冠层顶的风速，二者比值计算如下：
+其中%
+%$\kappa=0.4$为 von K\'arman 常数。
+$\Psi_h$为下层粗糙度影响函数，设置为0.193。$u_\ast$是摩擦速度，$u_h$是冠层顶的风速，二者比值计算如下：
 \begin{equation}\label{ustrarOuh}
 \frac{u_{*}}{u_{h}}=\min \left[\left(C_{S}+C_{R} \lambda\right)^{0.5}, 0.3\right]
 \end{equation}
-其中$C_S=0.003$，为无植被情况时$h$高度的拖曳系数；$C_R$为植被覆盖区域的拖曳系数。$\lambda$表示植被迎风面积($FAI$)，计算为$1-\exp{\left(-0.5 \cdot LSAI\right)}$。
+其中$C_S=0.003$，为无植被情况时$h$高度的拖曳系数；$C_R$为植被覆盖区域的拖曳系数。$\lambda$表示植被迎风面积指数 ($FAI$)，计算为$1-\exp{\left(-0.5 \cdot LSAI\right)}$。
 
 
 CoLM2014 假设$r_b$和$r_d$分别与$u_\ast^{0.5}$和$u_\ast$成正比例关系，
@@ -651,30 +653,30 @@ CoLM2014 假设$r_b$和$r_d$分别与$u_\ast^{0.5}$和$u_\ast$成正比例关系
 $u$和$K$的廓线是基于指数衰减假设\citep{inoue1963turbulent,cowan1968mass}。
 另外对近地表廓线进行了一定的订正，保证$u$和$K$满足到达地面时趋于0 \citep{dai2019different}。$u$和$K$的廓线函数分别表示为：
 \begin{equation}\label{uz}
-u(z)=\min \left(u_{\exp }(z), u_{{comb }}(z)\right)
+u(z)=\min \left[u_{exp}(z), u_{comb}(z)\right]
 \end{equation}
 \begin{equation}\label{Kz}
-K(z)=\min \left(K_{\exp }(z), K_{{comb}}(z)\right)
+K(z)=\min \left[K_{exp}(z), K_{comb}(z)\right]
 \end{equation}
 其中$u_{exp}$ 和 $K_{exp}$为指数衰减函数：
 \begin{equation}
-u_{\exp}(z)=u(h) \exp \left(-a\left(1-\frac{z}{h}\right)\right)
+u_{exp}(z)=u(h) \exp \left[-a\left(1-\frac{z}{h}\right)\right]
 \end{equation}
 \begin{equation}
-K_{\exp}(z)=K(h) \exp \left(-a\left(1-\frac{z}{h}\right)\right)
+K_{exp}(z)=K(h) \exp \left[-a\left(1-\frac{z}{h}\right)\right]
 \end{equation}
-上式中的$a$表示衰减系数，计算为 \citep{inoue1963turbulent,cowan1968mass,kondo1971relationship}：
+上式中的$a$表示衰减系数，计算为~\citep{inoue1963turbulent,cowan1968mass,kondo1971relationship}：
 \begin{equation}
 a=\frac{1}{h-d} \frac{h}{\ln \left[(h-d) / z_{0}\right]}
 \end{equation}
 $u_{comb}$计算为对数廓线和裸土情况下相似性理论计算的风速廓线组合：
 \begin{equation}\label{ucomb}
-u_{\mathrm{comb}}(z)=\zeta u_{\log }(z)+(1-\zeta) u_{{bare }}(z)
+u_{comb}(z)=\zeta u_{\log }(z)+(1-\zeta) u_{{bare }}(z)
 \end{equation}
 其中$\zeta$是一个 logistic 函数$\zeta=\frac{1}{1+\exp{\left(-\frac{d/h-0.4}{0.08}\right)}}$。
 $K_{comb}$计算为线性衰减剖面和裸土情况下相似性理论计算的交换系数剖面的线性组合：
 \begin{equation}\label{kcomb}
-K_{\mathrm{comb}}(z)=\zeta K_{\mathrm{lin}}(z)+(1-\zeta) K_{{bare }}(z)
+K_{comb}(z)=\zeta K_{\mathrm{lin}}(z)+(1-\zeta) K_{bare}(z)
 \end{equation}
 $\zeta$的计算同上。方程 (\ref{uz}) 和 (\ref{Kz}) 中的 min 函数表示取其小。
 这样无论是植被浓密或者稀疏时，既能考虑到植被中上层部分的风速和湍流交换系数的指数衰减，
@@ -701,7 +703,8 @@ r_{d}=\int_{z_{0 \mathrm{hg}}}^{d+z_{0}} \frac{1}{K(z)} d z
 \begin{equation}\label{dooh0}
 \frac{d}{h}=1-\frac{1-\exp \left(-\sqrt{c_{d1} 2 \lambda}\right)}{\sqrt{c_{d1} 2 \lambda}}
 \end{equation}
-其中$c_{d1}=7.5$，$\lambda$表示植被迎风面积($FAI$)，计算为$f_c\left(1-\exp{\left(-0.5LSAI\right)}\right)$。
+其中$c_{d1}=7.5$，$\lambda$%表示植被迎风面积指数 ($FAI$)，
+计算为$f_c\left(1-\exp{\left(-0.5LSAI\right)}\right)$。
 当植被覆盖$f_c$等于100\%时，$\lambda$计算同100\%植被覆盖情景。为了同时适用与稀疏和浓密覆盖植被，
 本版本采用\citet{dai2019different}方案计算$d$：
 \begin{equation}\label{dooh}
