@@ -1,0 +1,41 @@
+\chapter{产流参数化方案}
+%\addcontentsline{toc}{chapter}{陆地表面的水分循环}
+
+\section{地表产流}
+地表径流的参数化方案考虑了地形、地下水位、降水和入渗速度等因素。
+模式网格内饱和区域的面积$f_{sat}$通过以下方案估算，
+\begin{equation}
+f_{sat}=f_{w t} \times e^{-0.5 \times fff \times z_{wt}}
+\end{equation}
+其中，$f_{wt}$为网格内地下水位较高的区域的面积百分比，$fff$为径流的衰减因子，$z_{wt}$为地下水位的位置。
+
+最大入渗能力的计算考虑了最上面三层土壤的物理状态和属性，
+\begin{equation}
+q_{i n, \max }=\min _{i=1,2,3} 10^{-6.0 \times f_{i c e, i} \times K_{sat, i}}
+\end{equation}
+其中，$f_{ice,i}$表示第$i$层中冰占土壤孔隙的体积百分比，$K_{sat,i}$表示第$i$层的饱和导水率。
+
+一个模式网格内，饱和区域的地表水全部转化为径流流走，非饱和区域的地表水，部分入渗到土壤中，剩余部分转化为径流，总的地表径流为：
+\begin{equation}
+r_{surface }=f_{sat} \times G_{water}+\left(1-f_{sat}\right) \times \left(G_{water}-q_{in,max}\right)
+\end{equation}
+入渗到土壤中的部分等于表面水分的输入减去地表径流，即
+\begin{equation}
+q_{infl}={G}_{water}-r_{surface}
+\end{equation}
+
+\section{地下产流}
+地下产流的大小与地形和地下水位有关，
+\begin{equation}
+{q}_{{drai}}=q_{drai,max } \exp \left(-f_{d r a i} \times z_{w t}\right)
+\end{equation}
+其中，$q_{drai,max}$为径流的最大值，取决于地形坡面的大小，
+模式中取全球统一的数值；$f_{drai}=2.5\ \rm m^{-1}$ 为衰减因子。当土壤中含有冰时，需考虑冰对地下径流的阻力作用，
+\begin{equation}
+\begin{array}{c} { fracice }_{ {sub }}=\frac{\exp \left(-3 \times\left(1-\frac{i c e f r a c s u m}{d z s u m}\right)\right)
+    -\exp (-3)}{1-\exp (-3)} \\ f_{ {imped }}=1- { fracice }_{s u b} \\ {q}_{{drai}}=f_{ {imped }} \times q_{ {drai,max }} 
+    \exp \left(-f_{d r a i} \times z_{w t}\right)\end{array}
+\end{equation}
+模式中只考虑地下径流的流出，不考虑流入。土壤中含水量的变化及地下水位变化的计算方案同土壤水对地下水的补给：
+当地下水位位于最下层土壤之下时，地下径流造成地下水位的下降；当地下水位位于分层土壤区域之内时，
+自地下水位所在分层开始，向下逐层排出土壤中的水分，直到排出的总量等于$q_{drai}$为止。

@@ -1,0 +1,224 @@
+\chapter{侧向流物理方案}
+
+\section{坡面流、河道径流}
+对坡面流和河道径流的模拟基于完整的浅水波方程.
+ \subsection{浅水波方程}
+ 质量方程
+  \begin{equation}
+ \frac{\partial h}{\partial t} + \frac{\partial \left(uh\right)}{\partial s} = 0
+ \end{equation}
+ 动量方程
+ \begin{equation}
+ \frac{\partial \left(uh\right)}{\partial t} + \frac{\partial}{\partial s}\left(u^2h+\frac{1}{2}gh^2\right) = -gh\frac{\partial z_b}{\partial s}-gh\frac{n^2\left|q\right|}{h^{10/3}}q
+  \end{equation}
+  其中，$h$表示水深（单位m），$u$表示水流速度（单位m/s），$t$表示时间（单位s），$s$表示沿水流路径的长度（单位m），$q=uh$表示单位宽度的流量（单位$\mathrm{m^2/s}$），$z_b$表示坡面的高度（单位m），$n$表示曼宁系数（单位$\mathrm{m^{-1/3}s}$）
+
+\subsection{数值离散格式}
+
+ 质量方程离散为
+  \begin{equation}
+ \frac{ h^{n+1}_i - h^n_i}{\Delta t} A_i+\sum_{j\in K_i} Q^n_{ij} = 0
+ \end{equation}
+ 动量方程离散为
+ \begin{equation}
+ \frac{ \left(uh\right)^{n+1}_i - \left(uh\right)^n_i}{\Delta t} A_i + \sum_{j\in K_i} F^n_{ij} = \sum_{j\in K_i} G^n_{ij}  + T^{n+1}_i  A_i \label{swe-d-2}
+  \end{equation}
+其中，
+\begin{itemize}
+\item $n$和$n+1$表示时间步数，时间步长为$\Delta t$；
+\item $C_i$表示标号为$i$的空间单元，$A_i$表示$C_i$的面积；
+\item $K_i$表示与$C_i$有水分交换的其余空间单元的标号的集合；
+\item $Q_{ij}$表示从$C_i$到$C_j$的质量通量，$F_{ij}$表示从$C_i$到$C_j$的动量通量；
+\item $G_{ij}$表示$C_i$与$C_j$之间由坡面梯度形成的动量的源汇项；
+\item $T_i$表示$C_i$上坡面的摩擦力.
+\end{itemize}
+
+假设两个相邻的水文单元为$C_i$和$C_j$，其中$C_i$为上游单元，$C_j$为下游单元.  离散格式中各项的计算方法如下：
+
+（1）首先对边界上的$h$进行重构，
+\begin{eqnarray}
+z_{b,ij} & = & \max\left(z_{b,i}, z_{b,j}\right) \\
+h_{ij-} & = & \max\left(0, h_i + z_{b,i} - z_{b,ij} \right) \\
+h_{ij+} & = & \max\left(0, h_j + z_{b,j} - z_{b,ij} \right)
+\end{eqnarray}
+其中$h_{ij-}$表示界面处$C_i$一侧的重构值，$h_{ij+}$表示界面处$C_j$一侧的重构值.
+
+（2）局部黎曼问题中，中间区域的速度$u_{ij*}$计算为
+	\begin{equation}
+		u_{ij*} = \frac{1}{2}\left(u_i + u_j\right) + \sqrt{g h_{ij-}} - \sqrt{g h_{ij+}}
+	\end{equation}
+其中，$u_i$和$u_j$分别为$C_i$和$C_j$中的水流的速度. \\
+局部黎曼问题中，中间区域的水深$h_{ij*}$计算为
+	\begin{equation}
+		h_{ij*} = \frac{1}{g}\left[\frac{1}{2}\left(\sqrt{g h_{ij-}} + \sqrt{g h_{ij+}}\right) + \frac{1}{4}\left(u_i - u_j\right)\right]^2
+	\end{equation}
+
+（3）上游波速$S_{ij-}$计算为
+	\begin{equation}
+		S_{ij-} = \left\{
+		\begin{aligned}
+			&u_j - 2\sqrt{gh_{ij+}}, && \mbox{if} \quad h_{ij-} = 0 \\
+			& \min \left(u_i - \sqrt{gh_{ij-}}, u_{ij*} - \sqrt{gh_{ij*}}\right), && \mbox{if} \quad h_{ij-} > 0
+		\end{aligned}\right.
+	\end{equation}
+下游波速$S_{ij+}$计算为
+	\begin{equation}
+		S_{ij+} = \left\{
+		\begin{aligned}
+			&u_i + 2\sqrt{gh_{ij-}}, && \mbox{if} \quad h_{ij+} = 0 \\
+			& \max \left(u_j + \sqrt{gh_{ij+}}, u_{ij*} + \sqrt{gh_{ij*}}\right), && \mbox{if} \quad h_{ij+} > 0
+		\end{aligned}\right.
+	\end{equation}
+
+（4）边界上的通量计算为
+\begin{equation}
+	Q_{ij} = L_{ij} \cdot \left\{
+	\begin{aligned}
+		& Q_{ij-}, && \mbox{if} \quad 0\leq S_{ij-} \\
+		& \frac{S_{ij+} Q_{ij-} - S_{ij-} Q_{ij+} + S_{ij-} S_{ij+} \left(h_{ij+} - h_{ij-}\right)}{S_{ij+}-S_{ij-}} , && \mbox{if} \quad S_{ij-} \leq 0\leq S_j\\
+		& Q_{ij+}, && \mbox{if} \quad 0\geq S_{ij+}
+	\end{aligned}\right.
+\end{equation}
+
+\begin{equation}
+F_{ij} = L_{ij} \cdot \left\{
+\begin{aligned}
+	& F_{ij-}, && \mbox{if} \quad 0\leq S_{ij-} \\
+	& \frac{S_{ij+} F_{ij-} - S_{ij-} F_{ij+} + S_{ij-} S_{ij+} \left(q_{ij+} - q_{ij-}\right)}{S_{ij+}-S_{ij-}} , && \mbox{if} \quad S_{ij-} \leq 0\leq S_{ij+}\\
+	& F_{ij+}, && \mbox{if} \quad 0\geq S_{ij+}
+\end{aligned}\right.
+\end{equation}
+其中，$L_{ij}$为单元$C_i$与$C_j$之间交界线的长度，边界两侧的重构量
+\begin{align*}
+&Q_{ij-} = q_{ij-} = u_i h_{ij-},  && Q_{ij+} = q_{ij+} = u_j h_{ij+}, \\
+&F_{ij-} = u_i^2h_{ij-}+\frac{1}{2}gh_{ij-}^2, && F_{ij+} = u_j^2h_{ij+}+\frac{1}{2}gh_{ij+}^2
+\end{align*}
+
+（5）由坡面梯度形成的动量的源汇项计算为
+\begin{equation}
+G_{ij} = \frac{1}{2}gh_{ij-}^2 \cdot L_{ij}, \quad
+G_{ji}=-\frac{1}{2}g h_{ij+}^2 \cdot L_{ij}
+\end{equation}
+注意，$G_{ji}$不出现在$C_i$单元的离散动量方程(\ref{swe-d-2})中，而是在$C_j$单元的离散动量方程中使用. 因为不是通量项，所以$G_{ij}$与$G_{ji}$不一定互为相反数.
+
+通量项满足$Q_{ji} = -Q_{ji},F_{ji}=-F_{ji}$.
+
+（6）摩擦力项采用半隐离散格式
+\begin{equation}
+T^{n+1}_i = -g \left(\frac{n^2}{h^{7/3}} \left|q\right|\right)^n_i q^{n+1}_i
+\end{equation}
+代入离散后的动量方程可得，
+ \begin{equation}
+ \frac{ q^{n+1}_i - q^n_i}{\Delta t} A_i + \sum_{j\in K_i} F^n_{ij} = \sum_{j\in K_i} G^n_{ij}  -g \left(\frac{n^2}{h^{7/3}} \left|q\right|\right)^n_i q^{n+1}_i  A_i 
+  \end{equation}
+
+综合起来，单宽流量的更新采用下列格式
+\begin{equation}
+q^{n+1}_i = \frac{q^n_i - \frac{\Delta t}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G^n_{ij}\right)}{1 + g \left(\frac{n^2}{h^{7/3}} \left|q\right|\right)^n_i \Delta t}
+\end{equation}
+
+\subsection{时间步长的约束}
+对时间步长的约束包含三个，$\Delta t = \min \Delta t_i \quad (i=1,N)$，
+\begin{enumerate}
+\item CFL条件
+\begin{equation}
+\qquad \Delta t_i \leq \mathrm{C}\frac{ D_i }{\left| u_{i}\right| + \sqrt{gh_{i}}}
+\end{equation}
+其中，$D_i$为第$i$个单元的平均水流路径长度，C为Courant数，模式里取值为0.8.
+\item 质量限制：
+当$\sum_{j\in K_i} Q_{ij}>0$时，
+  \begin{equation}
+ \Delta t_i \leq \frac{h^n_i\cdot A_i}{\sum_{j\in K_i} Q_{ij}}
+ \end{equation}
+\item 动量限制：
+当$q^n_i \cdot \left[ \frac{1}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G^n_{ij} \right)\right] > 0$ 且 $\mathrm{abs}\left(q^n_i\right) > q_{min}$时，
+  \begin{equation}
+ \Delta t_i \leq \frac{q^n_i}{\frac{1}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G^n_{ij} \right)}
+ \end{equation}
+ 其含义为在一个时间步长内，速度不改变方向.
+% \item 大小单元之间的限制
+%   \begin{equation}
+% \Delta t < \frac{A_j}{A_i + A_j} \Delta t_0
+% \end{equation}
+%  其含义为在一个时间步长内，流向下游单元的水量不能使得下游单元的液面高于上游单元
+ \end{enumerate}
+
+\section{地下水侧向流}
+\subsection{坡面蓄水型Boussinesq方程}
+守恒形式的方程为
+\begin{equation}
+\frac{\partial \left(fh\right)}{\partial t} = \frac{\partial}{\partial x} \left[\cos i \cdot \left(kh\frac{\partial h}{\partial x}\right)+\sin i\cdot k\frac{\partial h}{\partial x}\right]
+\end{equation}
+其中，
+\begin{itemize}
+\item $h$表示饱和水层在垂直于不透水面方向上的厚度（单位m）
+\item $t$表示时间（单位s）
+\item $x$表示沿不透水面向上的方向（单位m）
+\item $i$表示不透水面的倾斜角
+\item $k$表示水力导度（单位m/s）
+\item $f$表示可排水的孔隙度（单位m/m）
+\end{itemize}
+
+
+\subsection{地下水侧向运动：方程的简化}
+假设垂直于不透水面的方向为$y$方向（从地表向下为正方向），土壤厚度为$H$，当$k$在$y$方向有变化时，$kh$替换为$y$方向的积分
+\begin{equation}
+\int^H_{H-h} k \  \mathrm{d}y
+\end{equation}
+记地下水位为$z_{wt}=H-h$，代入可得
+\begin{equation}
+\frac{\partial \left(fz_{wt}\right)}{\partial t} = \frac{\partial}{\partial x} \left[ \cos i \cdot \left(\int^{H}_{z_{wt}} k \mathrm{d}y\right)\frac{\partial z_{wt}}{\partial x} +\sin i\cdot k\frac{\partial z_{wt}}{\partial x}\right]
+\end{equation}
+当不考虑不透水面（基岩）时，可令$H\to \infty$，$i=0$，则方程变为
+\begin{equation}
+\frac{\partial \left(fz_{wt}\right)}{\partial t} = \frac{\partial}{\partial x} \left[ \left(\int^\infty_{z_{wt}} k\ \mathrm{d}z\right)\frac{\partial z_{wt}}{\partial x} \right]
+\end{equation}
+
+\subsection{通量的计算：相邻单元之间的半隐格式}
+假设相邻水文单元之间交界面的宽度为$w$，则它们之间的水流通量为
+$$q=-w\cdot \left(\int^\infty_{z_{wt}} k\ \mathrm{d}z\right)\frac{\partial z_{wt}}{\partial x} $$
+水分只在两个单元$C_i$和$C_j$（$x$由$C_i$指向$C_j$）之间交换时，方程可离散为
+\begin{eqnarray}
+z_{wt,i}^{n+1} = z_{wt,i}^{n} - \frac{\Delta t}{g_i}\left[ -  w k^n_{ij} \frac{z_{wt,j}^{n+1} - z_{wt,i}^{n+1}}{d_i+d_j} \right], \quad
+z_{wt,j}^{n+1} = z_{wt,j}^{n} + \frac{\Delta t}{g_j}\left[ -  w k^n_{ij} \frac{z_{wt,j}^{n+1} - z_{wt,i}^{n+1}}{d_i+d_j} \right]
+\end{eqnarray}
+其中，$k^n_{ij}$为界面处的导水率，$g_i=f_iA_i,g_j=f_jA_j$为孔隙度和面积之积\\
+由此可解出
+\begin{equation}
+z_{wt,i}^{n+1} = \frac{g_i\left(g_j+\sigma\right)z_{wt,i}^{n} +g_j\sigma z_{wt,j}^{n}}{g_ig_j+\left(g_i+g_j\right)\sigma},\quad z_{wt,j}^{n+1} = \frac{g_i\sigma z_{wt,i}^{n} +g_j\left(g_i+\sigma\right)z_{wt,j}^{n}}{g_ig_j+\left(g_i+g_j\right)\sigma}\quad \left(\sigma = \frac{\Delta t wk_{ij}^n}{d_i+d_j}\right)
+\end{equation}
+从而水流通量为
+\begin{equation}
+q = \frac{\sigma}{\Delta t} \frac{g_ig_j}{g_ig_j+\left(g_i+g_j\right)\sigma} \left( z_{wt,i}^{n} - z_{wt,j}^{n} \right)
+\end{equation}
+
+\subsection{参数的计算}
+\begin{itemize}
+\item 导水率的计算（来自TOPMODEL）
+\begin{equation}
+k(z) = K_0\exp^{- z/b},\quad \int^\infty_{z_{wt}} k\ \mathrm{d}z = b K_0\exp^{-z_{wt}/b}
+\end{equation}
+\end{itemize}
+
+\subsection{单元内部的地下水交换}
+应用于模式时，计算流域单元之间、水文响应单元之间以及水文响应单元内部三种地下水的侧向流动.
+
+其中，第$i$个水文响应单元内部第$p$个patch的地下水侧向流通量为
+\begin{equation}
+q^{\mathrm{I}}_{i,p} = b K_0 \exp^{-z_{wt,i}/b}\cdot\frac{z_{wt,i,p}-z_{wt,i}}{\sqrt{A_i/\pi}}
+\end{equation}
+其中
+$$z_{wt,i} = \sum^P_{p=1} \alpha_p z_{wt,i,p}$$
+$\alpha_p$为第$p$个patch在整个单元占据的面积比\\
+不难验证
+$$\sum^P_{p=1} \alpha_p q^{\mathrm{I}}_{i,p} =0$$
+即$q^{\mathrm{I}}_{i,p}$表达了单元内部的地下水交换.
+
+\section{参考文献}
+Toro EF. Shock-capturing methods for free-surface shallow flows. Chichester: John Wiley \& Sons; 2001.
+
+Audusse, E., Bouchut, F., Bristeau, M.-O., Klein, R., \&; Perthame, B. (2004). A Fast and Stable Well-Balanced Scheme with Hydrostatic Reconstruction for Shallow Water Flows. SIAM Journal on Scientific Computing, 25(6), 2050–2065.
+
+Liang, Q., \& Borthwick, A. G. L. (2009). Adaptive quadtree simulation of shallow flows with wet-dry fronts over complex topography. Computers and Fluids, 38(2), 221–234.
+
+Troch, P. A., Paniconi, C., \& van Loon, E. E. (2003). Hillslope-storage Boussinesq model for subsurface flow and variable source areas along complex hillslopes: 1. Formulation and characteristic response. \textit{Water Resources Research}, 39(11).

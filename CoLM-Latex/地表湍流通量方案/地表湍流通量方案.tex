@@ -38,7 +38,7 @@ $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa
 \end{equation}
 其中 $\kappa$ 为 von K\'arman 常数，$z$为离地面高度(m)，$d$为零平面位移(m)，$L$为Monin-Obukhov长度(m)：
 \begin{equation}\label{ObukL}
-L=-\frac{u_{*}^{3}}{\kappa \left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{\kappa g \theta_{v *}}
+L=-\frac{u_{*}^{3}}{\kappa \left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{k g \theta_{v *}}
 \end{equation}
 其中$\overline{\theta_{v,atm}}=\overline{\theta_{atm}}(1+0.61\overline{q_{atm}})$表示参考大气虚位温(K)，
  大气位温$\theta_{atm}$由其定义的一阶展开近似给出$\theta_{atm}=T_{atm}+0.0098z_{atm}$。$L$可表征近地层的大气层结稳定度：
@@ -609,7 +609,7 @@ $C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\exp {\left[-(\te
 \begin{equation}
 r_{b}=\frac{1}{c_{v}}\left(u_{*} / d_{{leaf }}\right)^{-0.5}
 \end{equation}
-其中$c_v=0.01\ \rm m\,s^{-1/2}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$ m 表示叶片在风向的特征值。
+其中$c_v=0.01\ \rm m^{-1/2}\,s^{-1/2}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$ 表示叶片在风向的特征值。
 最后，气孔阻抗系数$r_{s,sun}$和$r_{s,sha}$的计算将在光合作用部分介绍。
 在计算地表温度并基于该温度对地表感热和水汽通量进行更新时，需给出地表感热和水汽通量对地表温度的变化率：
 \begin{equation}
@@ -753,63 +753,3 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 \label{fig:三维植被湍流交换模型计算流程图}
 \end{figure}
 }
-
-
-\section{饱和水汽压(比湿)及其随温度的变化}\label{饱和水汽压(比湿)及其随温度的变化}
-饱和水汽压 ($e_{sat}^T$， Pa) 与饱和比湿 ($q_{sat}^T$， kg/kg) 只依赖于温度 ($T$，\textcelsius) 的变化，
-其计算方案采用\citet{flatau1992polynomial} 提出的八阶多项式拟合法：
-\begin{equation}
-e_{s a t}^{T}=100\left[a_{0}+a_{1} T+\cdots+a_{n} T^{n}\right]
-\end{equation}
-\begin{equation}
-\frac{d e_{s a t}^{T}}{d T}=100\left[b_{0}+b_{1} T+\cdots+b_{n} T^{n}\right]
-\end{equation}
-\begin{equation}
-q_{s a t}^{T}=\frac{0.622 e_{s a t}^{T}}{P_{atm}-0.378 e_{s a t}^{T}}
-\end{equation}
-\begin{equation}
-\frac{d q_{{sat }}^{T}}{d T}=\frac{0.622 P_{atm}}{\left(P_{atm}-0.378 e_{{sat }}^{T}\right)^{2}} \frac{d e_{{sat }}^{T}}{d T}
-\end{equation}
-其中固态水($-75$ \textcelsius $\le T < 0$ \textcelsius)与液态水($0$ \textcelsius $\le T\le100$ \textcelsius)情形对应的拟合系数见
-表 \ref{tab:e_sat_T的拟合系数} 和 \ref{tab:de_sat_dT的拟合系数}。
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[]
-\centering
-\caption{$e_{sat}^T$的拟合系数。}
-\label{tab:e_sat_T的拟合系数}
-\begin{tabular}{@{}lcc@{}}
-\toprule
-     &  液态水  & 固态水                         \\ \midrule
-$a_0$ & 6.11213476        & 6.11123516       \\
-$a_1$ & $\rm 4.44007856 \times 10^{-1}$   & $\rm 5.03109514 \times 10^{-1}$  \\
-$a_2$ & $\rm 1.43064234 \times 10^{-2}$   & $\rm 1.88369801 \times 10^{-2}$  \\
-$a_3$ & $\rm 2.64461437 \times 10^{-4}$   & $\rm 4.20547422 \times 10^{-4}$  \\
-$a_4$ & $\rm 3.05903558 \times 10^{-6}$   & $\rm 6.14396778 \times 10^{-6}$  \\
-$a_5$ & $\rm 1.96237241 \times 10^{-8}$   & $\rm 6.02780717 \times 10^{-8}$  \\
-$a_6$ & $\rm 8.92344772 \times 10^{-11}$  & $\rm 3.87940929 \times 10^{-10}$ \\
-$a_7$ & $\rm -3.73208410 \times 10^{-13}$ & $\rm 1.49436277 \times 10^{-12}$ \\
-$a_8$ & $\rm 2.09339997 \times 10^{-16}$  & $\rm 2.62655803 \times 10^{-15}$ \\ \bottomrule
-\end{tabular}
-\end{table}
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[]
-\centering
-\caption{$\frac{d e_{sat}^T}{d T}$ 的拟合系数。}
-\label{tab:de_sat_dT的拟合系数}
-\begin{tabular}{@{}lcc@{}}
-\toprule
-     &  液态水  & 固态水                         \\ \midrule
-$b_0$ & $\rm 4.44017302 \times 10^{-1}$   & $\rm 5.03277922 \times 10^{-1}$  \\
-$b_1$ & $\rm 2.86064092 \times 10^{-2}$  & $\rm 3.77289173 \times 10^{-2}$  \\
-$b_2$ & $\rm 7.94683137 \times 10^{-4}$   & $\rm 1.26801703 \times 10^{-3}$  \\
-$b_3$ & $\rm 1.21211669 \times 10^{-5}$   & $\rm 2.49468427 \times 10^{-5}$  \\
-$b_4$ & $\rm 1.03354611 \times 10^{-7}$   & $\rm 3.13703411 \times 10^{-7}$  \\
-$b_5$ & $\rm 4.04125005 \times 10^{-10}$  & $\rm 2.57180651 \times 10^{-9}$  \\
-$b_6$ & $\rm -7.88037859 \times 10^{-13}$ & $\rm 1.33268878 \times 10^{-11}$ \\
-$b_7$ & $\rm -1.14596802 \times 10^{-14}$ & $\rm 3.94116744 \times 10^{-14}$ \\
-$b_8$ & $\rm 3.81294516 \times 10^{-17}$  & $\rm 4.98070196 \times 10^{-17}$ \\\bottomrule
-\end{tabular}
-\end{table}

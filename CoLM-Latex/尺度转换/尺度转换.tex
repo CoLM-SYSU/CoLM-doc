@@ -1,0 +1,57 @@
+\chapter{尺度转换}\label{尺度转换}
+%\addcontentsline{toc}{chapter}{尺度转换}
+****
+%\begin{尺度转换}
+CoLM植物水力模式根据土壤-植物-大气连通体的概念计算陆气水分交换的蒸腾分量。
+
+\section{土壤水热特征参数及尺度转换}\label{土壤水热特征参数及尺度转换}
+
+基于土壤基础数据集GSDE和SoilGrids，CoLM团队开发了全球1 km分辨率土壤水热特征参数数据供陆面模式土壤水热传输过程模拟直接使用。
+在土壤热力参数方面，CoLM提供了七种土壤导热率计算方案以供选择，分别为 \citet{farouki1981thermal}方案，\citet{Johansen1975} 方案，
+\citet{cote2005} 方案，\citet{balland2005}方案，\citet{lu2007improved} 方案，\citet{tarnawski2012series} 方案和 \citet{de1963thermal} 方案。
+根据\citet{dai2019evaluation}的评估结果，\citet{balland2005} 方案的计算结果与土壤导热率观测数据的均方根误差最小，
+在CoLM中模拟的土壤温度和地表湍流通量与观测数据最为接近。因此，\citet{balland2005} 方案为CoLM使用的默认方案。
+土壤热容量可由固体土壤、液态水和固态水的热容量根据其质量百分比加权得到。
+在土壤水力参数方面，CoLM基于两个经典的土壤水分特征曲线模型 \citet{campbell1974} 和 \citet{van1980closed}，
+选取了针对模型参数的超过30种高被引用或新近开发的土壤转换函数 (PTF， Pedotransfer Function)，对模型参数进行最优拟合。
+以\citet{balland2005} 和 \citet{campbell1974} 模型为例，两个待定参数通过解下列极值问题得到：
+\begin{equation}
+\chi\left(\hat{\psi}_{s}, \hat{\lambda}\right)=\min \sum_{i=1}^{N}\left[\psi\left(\hat{\psi}_{s}, \hat{\lambda}\right)-\psi\left(\psi_{s i}, \lambda_{i}\right)\right]^{2}
+\end{equation}
+%
+其中的$\psi_{s i}$, $\lambda_{i}$为每一组PTF的预报结果。通过此方法得到的参数$\hat{\psi}_{s}$, $\hat{\lambda}$是最为接近PTF集合内全部PTF预报结果的参数，
+即集合内的最优参数。van Genuchten模型的参数同理可得。饱和土壤导水率的估计仍采用传统的PTF集合中位值法。基于以上方法利用GSDE和SoilGrids陆面基础数据集，
+即可生成全球高分辨率(1 km)全球土壤水热特征参数~\citep{dai2019evaluation}，直接用于陆面过程模拟。
+
+
+为使得CoLM可应用于不同分辨率的模拟，针对全球1 km土壤水热参数开发了升尺度算法。在具体实施中，CoLM将针对 \citet{campbell1974} 和 \citet{van1980closed} 建立的
+土壤水力特征曲线参数以及 \citet{balland2005} 土壤导热率计算方案中Kersten数-饱和度曲线中的参数实施一种满足参数内部关系自洽的升尺度方法，
+即将拟合得到的到达所有细网格曲线距离最短的曲线对应的参数作为表征粗网格特征的最优参数，而饱和土壤导水率/导热率和干土壤导热率采用几何平均法进行聚合。
+以升尺度 \citet{campbell1974} 土壤水分特征曲线中的参数为例，具体方法如下：
+首先，给出粗网格内所有细网格对应的土壤水分特征曲线，即通过每个细网格中的参数$\psi_{s i}$, $\lambda_{i}$，计算下列土壤水势向量对应的土壤含水量向量：
+\begin{equation}
+\begin{array}{l}\psi=[-1,-5,-10,-20,-30,-40,-50,-60,-70,-90,-110,-130,-150,-170,\\-210,-300,-345  -690,-1020,-5100,-15300,-20000,-100000,-1000000]\end{array}
+\end{equation}
+其次，基于以上土壤水势向量对所有细网格的土壤含水量向量做面积加权平均，得到可以表征粗网格土壤水分特征曲线的土壤含水量向量；最后，在粗网格中利用\citet{campbell1974}土壤水分特征曲线关系拟合上述土壤水势向量和平均后的土壤含水量向量，得到粗网格中 \citet{campbell1974} 土壤水分特征曲线关系中的待定参数$\hat{\psi}_{s}$ 和 $\hat{\lambda}$。粗网格的\citet{van1980closed} 土壤水力特征曲线参数可通过上述升尺度方法类似得到。
+
+
+升尺度土壤导热率计算方案中Kersten数-饱和度曲线参数采用的方法与上述方法略有区别。粗网格的Kersten数由于其计算的非线性性不可直接由细网格的Kersten数平均得到，故升尺度Kersten数-饱和度曲线参数可通过解下列极值问题得到：
+
+\begin{equation}
+(\hat{\alpha}, \hat{\beta})=\min \sum_{i=1}^{N}\left[K_{e}(\hat{\alpha}, \hat{\beta})-K_{e}\left(\alpha_{i}, \beta_{i}\right)\right]^{2}
+\end{equation}
+其中$\alpha_{i}$,  $\beta_{i}$为每一个细网格中Kersten数-饱和度曲线参数，
+$\hat{\alpha}$, $\hat{\beta}$为表征粗网格曲线的参数。
+通过此方法得到的粗网格参数是最为接近全部细网格计算结果的参数。
+
+
+以上方法即为升尺度土壤水力特征曲线参数以及Kersten数-饱和度曲线中的参数的方法，
+该方法最大优势为升尺度后的参数之间在原有曲线关系中可保持物理关系与细网格的一致性。
+\subsection{土壤颜色}\label{土壤颜色}
+
+土壤颜色（反照率）数据来自NCAR CLM5.0模式(mksrf\_soilcolor\-\_histclm52deg025\-\_earthstatmirca\-\_2005.c210808 版)，
+共20种土壤颜色分类，为全球$30''$ (1公里)分辨率，经纬度网格。每种土壤分类提供可见光、
+近红外波段在土壤干旱时和湿润时(土壤水饱和时)的反照率查找表，其数值同NCAR-CLM技术报告表3.3 (2020年3月23日版) \citep{lawrence2018}。
+
+
+
