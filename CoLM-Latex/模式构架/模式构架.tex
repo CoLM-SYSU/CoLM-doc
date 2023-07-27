@@ -58,7 +58,7 @@ LCT方案所依赖的地表覆盖类型数据可以直接由USGS或MODIS-IGBP地
 
 \section{陆气耦合}\label{陆气耦合}
 \subsection{陆面模式与大气模式的信息交换}
-陆面模式的运行需要积分过程中各时间步长内的大气状态变量进行驱动。当离线运行陆面模式时(offline)，大气状态可由观测数据、再分析数据或大气模式模拟结果数据直接提供；当在耦合模式中运行陆面模式时(online)，大气状态可由耦合模式中的大气模式模拟结果提供，通过耦合器或程序调用接口传递给陆面模式。陆面模式接收到当前时刻的大气状态后，首先结合上一时刻的植被、雪盖或土壤的状态和地表特征（如地表反照率、空气动力学阻抗等）计算当前时刻的陆气湍流交换通量、辐射通量、进入地表的能量和水分通量等，然后根据这些通量计算当前时刻的植被、雪盖或土壤的状态变量和地表特征。在耦合模式中，这些通量和地表状态作为陆面下边界条件被返回给大气模式，供大气模式进行下一时刻大气状态的计算。陆面模式所需的大气状态变量和大气模式所需的陆面下边界条件变量分别见表~\ref{tab:陆面模式所需的大气状态变量} 和表~\ref{tab:大气模式所需的陆面模式输出变量} 
+陆面模式的运行需要积分过程中各时间步长内的大气状态变量进行驱动。当离线运行陆面模式时(offline)，大气状态可由观测数据、再分析数据或大气模式模拟结果数据直接提供；当在耦合模式中运行陆面模式时(online)，大气状态可由耦合模式中的大气模式模拟结果提供，通过耦合器或程序调用接口传递给陆面模式。陆面模式接收到当前时刻的大气状态后，首先结合上一时刻的植被、雪盖或土壤的状态和地表特征（如地表反照率、空气动力学阻抗等）计算当前时刻的陆气湍流交换通量、辐射通量、进入地表的能量和水分通量等，然后根据这些通量计算当前时刻的植被、雪盖或土壤的状态变量和地表特征。在耦合模式中，这些通量和地表状态作为陆面下边界条件被返回给大气模式，供大气模式进行下一时刻大气状态的计算。陆面模式所需的大气状态变量和大气模式所需的陆面下边界条件变量分别见表~\ref{tab:陆面模式所需的大气状态变量} 和表~\ref{tab:大气模式所需的陆面模式输出变量} 。
 
 
 \begin{table}[]
@@ -123,7 +123,7 @@ LCT方案所依赖的地表覆盖类型数据可以直接由USGS或MODIS-IGBP地
 摩擦速度        & $u_\ast$                       & m/s     \\
 净生态系统碳交换通量  &                                &         \\
 $NEE$       & gC/m2/s                        &         \\
-氧化亚氮浓度      & $N_2O$                         & gN/m2/s\\\bottomrule
+氧化亚氮浓度      & $\mathrm{N_2O}$                         & gN/m2/s\\\bottomrule
          
 \end{tabular}
 \begin{tablenotes}
@@ -186,14 +186,14 @@ CoLM支持多套大气驱动数据集的使用，包括全球格点数据和单�
 \textbf{WFDE5}             & 0.5\textdegree/hourly      & 1979-2019             & Global (land only)                  & Cucchi et al. (2020)                                                                                                           \\\midrule 
 \textbf{CLDAS}             & 0.0625\textdegree/hourly   & 2008-2020             & 东亚区域; 60\textdegree $\sim$ 160\textdegree E, 0\textdegree $\sim$ 65\textdegree N   & 国家气象信息中心                                                                                                                                                                              & 降水在模式中自动由逐小时累计值转换为逐小时平均值；异常或缺省值需补充                                                     \\\midrule 
 \textbf{CMFD}              & 0.1\textdegree/3-hourly    & 1979-2018             & 中国区域;  70\textdegree $\sim$ 140 \textdegree E, 15\textdegree $\sim$55 \textdegree N & Yang and He (2019); He et al. (2020)                                                                                                                                          & 降水在模式中自动由逐小时累计值转换为逐小时平均值                                                               \\\midrule 
-\textbf{TPMFD}             & 0.01\textdegree/hourly     & 1979-2020             & 青藏高原 (25\textdegree $\sim$ 106\textdegree E,41\textdegree $\sim$ 61\textdegree N) & Yang et al. (2023)                                                                                 & 降水在模式中自动由逐小时累计值转换为逐小时平均值；气压在模式中自动转换为单位帕                                                \\
+\textbf{TPMFD}             & 0.01\textdegree/hourly     & 1979-2020             & 青藏高原 (25\textdegree $\sim$ 106\textdegree E, 41\textdegree $\sim$ 61\textdegree N) & Yang et al. (2023)                                                                                 & 降水在模式中自动由逐小时累计值转换为逐小时平均值；气压在模式中自动转换为单位帕                                                \\
 \textbf{CMIP6/SSPs}        & 1\textdegree /3-hourly      & 1850-2100             & Global                              & Stockhause et al. (2021)                                                                                                                                                                               & 数据文件需按月为存储单位进行合并；需采用异常值叠加方式产生未来情景下的大气驱动数据（见下文说明）                                       \\
-\textbf{PLUMBER2}          & 单点/houly         &1990-2019         & Global                              & Ukkola et al. (2022)                                                                                                                                                & 需制作surface data给定站点的USGS/IGBP分类和经纬度等信息                                                 \\\midrule 
-\textbf{大气CO2浓度}           & 全球统一值/yearly     & 1849-2100             & Global                              & Büchner and Reyer (2022); Keeling et al. (2005)                                     & 1849-1957 \& 2023-2100 CO2浓度来自ISIMIP3b大气组份浓度输入数据集；1958-2022 CO2浓度来自夏威夷Mauna Loa观测站监测数据 \\\midrule 
+\textbf{PLUMBER2}          & 单点/hourly         &1990-2019         & Global                              & Ukkola et al. (2022)                                                                                                                                                & 需制作 surface data 给定站点的USGS/IGBP分类和经纬度等信息                                                 \\\midrule 
+\textbf{大气$\mathrm{CO_2}$ 浓度}           & 全球统一值/yearly     & 1849-2100             & Global                              & Büchner and Reyer (2022); Keeling et al. (2005)                                     & 1849-1957 \& 2023-2100 $\mathrm{CO_2}$ 浓度来自ISIMIP3b 大气组份浓度输入数据集；1958-2022 $\mathrm{CO_2}$ 浓度来自夏威夷 Mauna Loa 观测站监测数据 \\\midrule 
 \textbf{臭氧浓度}              & 0.1\textdegree /daily       & 2013-2022             & 中国区域 (73\textdegree $\sim$135\textdegree E,18\textdegree $\sim$ 54\textdegree N)                                                                                  & -                                                                                                                                                                     & 来自中科院大气所李芳研究员                                                                        \\\midrule 
-\textbf{大气气溶胶沉降速率}         & 0.9x1.25/monthly & 1849-2001 / climatology & Global                              & CLM5 Documentation \& Lamarque et al. (2010)     & 来自NCAR-CAM模式模拟结果                                                                       \\\midrule 
-\textbf{氮沉降速率}             & 1.9x2.5/yearly   & 1849-2006             & Global                              & CLM5 Documentation                                                                                                                                                                                                             & 来自NCAR-WACCM模式模拟结果                                                                     \\\midrule 
-\textbf{闪电频率}              & 2\textdegree/3-hourly      & climatology           & Global                              & CLM5 Documentation                                                                                                                                                                                                       & 由1995-2011年NASA LIS/OTD格点数据产品v2.2版通过双线性插值得到        \\
+\textbf{大气气溶胶沉降速率}         & 0.9\textdegree $\times$ 1.25\textdegree/monthly & 1849-2001 / climatology & Global                              & CLM5 Documentation \& Lamarque et al. (2010)     & 来自NCAR-CAM模式模拟结果                                                                       \\\midrule 
+\textbf{氮沉降速率}             & 1.9\textdegree $\times$ 2.5\textdegree/yearly   & 1849-2006             & Global                              & CLM5 Documentation                                                                                                                                                                                                             & 来自NCAR-WACCM模式模拟结果                                                                     \\\midrule 
+\textbf{闪电频率}              & 2\textdegree/3-hourly      & climatology           & Global                              & CLM5 Documentation                                                                                                                                                                                                       & 由1995-2011年 NASA LIS/OTD 格点数据产品 v2.2 版通过双线性插值得到        \\
 
 \end{longtable}
 \end{center}
@@ -204,9 +204,9 @@ CoLM支持多套大气驱动数据集的使用，包括全球格点数据和单�
 
 \item[2] 2. 凡原始数据带有$offset$ 和 $scale\_{factor}$ 属性的均需转换为无 $offset$ 和$scale\_{factor}$ 属性的数据。
 
-\item[3] 3. 大气 $\mathrm{O_2}$ 分压由公式 0.209 Patm 计算得到，其中 Patm 为大气压强。
+\item[3] 3. 大气 $\mathrm{O_2}$ 分压由公式 0.209 $P_{atm}$ 计算得到，其中 $P_{atm}$ 为大气压强。
 
-\item[4] 4. 默认大气风速参考高度为100米，大气温度和比湿参考高度为50米。
+\item[4] 4. 默认大气风速参考高度为100 米，大气温度和比湿参考高度为50米。
 
 \item[5] 5. 当驱动仅给出总风速时，纬向风速和经向风速平均分配：$u_{atm}=v_{atm}=W_{atm}/\sqrt2$
 
@@ -236,12 +236,11 @@ R_{vis}=a_{0}+a_{1} \alpha S+a_{2}(\alpha S)^{2}+a_{3}(\alpha S)^{3} \quad 0.01 
 \begin{equation}
 R_{nir}=b_{0}+b_{1}(1-\alpha) S+b_{2}((1-\alpha) S)^{2}+b_{3}((1-\alpha) S)^{3} \quad 0.01 \leq R_{nir} \leq 0.99
 \end{equation}
-其中$a_0$=0.17639, $a_1$=0.0038, $a_2=-9.0039\times{10}\times{10}^{-8}$。这些系数来自对NCAR-CAM模式模拟结果的拟合。
-\\
-\\
-\textbf{降水拆分雨雪方案由谭奥博同学补充…}
-\\
-\\
+其中$a_0$=0.17639, $a_1$=0.0038, $a_2=-9.0039\times{10}^{-8}$, $a_3=8.1351\times10^{-9}$, $b_0=0.29548$, $b_1=0.00504$, $b_2=-1.4957\times10^{-5}$, $b_3=1.4881\times10^{-8}$。这些系数来自对 NCAR-CAM 模式模拟结果的拟合。
+
+\begin{mymdframed}{需补充内容}
+\textbf{\color{red}降水拆分雨雪方案由谭奥博同学补充…}
+\end{mymdframed}
 
 当大气驱动数据未提供下行长波辐射通量时，模式将根据大气温度$T_{atm}$、比湿$q_{atm}$和水汽压$e_{atm}$计算获得(Idso 1981)，计算方案为
 \begin{equation}\label{L_downarrow}
