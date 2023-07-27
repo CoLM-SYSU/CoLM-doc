@@ -181,7 +181,36 @@ Canopy height                                                   & Global 1 km fo
 \section{水文数据}\label{水文数据}
 \subsection{水文学基础数据}
 \subsection{河网}
-\subsection{水库}
+\subsection{水库数据}\label{水库数据}
+模式中水库调度模块(\ref{sec:水库模式})所用的水库基础数据主要包括：全球水库基本属性数据、全球水库水面面积数据和全球水库几何数据(如表~\ref{tab:水库模块所用的水库基础数据}所示)，根据这些数据可以进一步得到：(i) 与不同分辨率河网数据相匹配的水库位置；(ii) 水库调度模拟所需的特征流量和特征库容数据；以及(iii) 每个水库的需水网格。这些计算过程将在章节~\ref{sec:水库模式}中详细说明，本章节主要介绍所用基础数据。
+
+\begin{table}[h!]
+\centering
+\caption{水库模块所用的水库基础数据}
+\begin{tabular}{ccccc}
+\toprule
+数据集 & 数据描述 & 水库数量 & 时间分辨率 & 数据源 \\ \midrule
+GRanD  & \textbf{\makecell{全球水库\\基本属性数据}} & \textbf{\makecell{7320 - v1.3\\6862 - v1.1}} & /    & \textbf{\makecell{https://doi.org/\\10.7927/H4N877QK\\(\cite{lehner2011high})}} \\
+GRSAD  & \textbf{\makecell{全球水库\\水面面积数据}} & 6817 (GRanD v1.1) & \textbf{\makecell{1984-2015\\月尺度}} & \textbf{\makecell{https://doi.org/\\10.18738/T8/DF80WG\\(\cite{zhao2018automatic})}}  \\
+ReGeom & \textbf{\makecell{全球水库\\几何数据}} & 6868 (GRanD v1.1)  & / & \textbf{\makecell{https://doi.org/\\110.5281/zenodo.1322884\\(\cite{yigzaw2018new})}}  \\
+\bottomrule
+\end{tabular}
+\label{tab:水库模块所用的水库基础数据}
+\end{table}
+
+全球水库基本属性数据来自Global Reservoir and Dam Database (GranD; \cite{lehner2011high})，该数据集目前提供v1.1和v1.3两个版本。v1.1版本包含了全球范围内6862个水库及其关联大坝(图~\ref{fig:GranDv1.1 所包含水库的位置和主要用途})的基本属性数据，水库的累积库容为6197 $km^3$，水库数量较多、库容较大的区域主要集中在中国、美国、加拿大、印度和欧洲。v1.3版本包含的水库在v1.1版本的基础上增加到7320个，累积库容增加到6863.5 $km^3$。GranD提供了水库及其关联大坝的地理位置和基本属性信息(对于其包含的大部分水库)。其中，水库模块(\ref{sec:水库模式})所用属性主要包括水库编码(GRAND\textunderscore ID)、水库名称(DAM\textunderscore NAME)、经度(LONG\textunderscore DD)、纬度(LAT\textunderscore DD)、水库总库容(CAP\textunderscore MCM)、汇流面积(CATCH\textunderscore SKM)、主要用途(MAIN\textunderscore USE)、建坝年份(YEAR)等。\\
+
+{
+\begin{figure}[h!]
+\centering
+\includegraphics{Figures/地表输入数据/GranDv1.1.png}
+\caption{GranDv1.1 所包含水库的位置和主要用途}
+\label{fig:GranDv1.1 所包含水库的位置和主要用途}
+\end{figure}
+}
+全球水库水面面积数据来自Global Reservoir Surface Area Dataset(GRSAD)，该数据集提供了全球6871个水库1984年至2015年的逐月水库面积变化数据(与GranD水库匹配)。该数据是基于Global Surface Water Dataset(GSWD)数据修正而得。\cite{pekel2016high}使用1984\textasciitilde2015年300万张Landsat卫星图像创建了全球地表水数据集GSWD(\citep{pekel2016high})。但由于云、云阴影等因素的影响，利用Landsat对全球范围内单个水库进行长期水面变化分析会存在较大偏差。GRSAD修复了由于云层、云层阴影、地形阴影和扫描线校正器故障导致的像素污染，使每个时间序列中有效图像的数量平均提高了81\%(\citep{zhao2018automatic})。基于水库面积长期动态变化数据，可估算水库的防洪库容面积、正常库容面积和死库容面积。
+全球水库形状数据来源于Global Reservoir Geometry Database(ReGeom)，该数据集包含了全球6824个水库的库容\textendash 面积\textendash 深度数据(与GranD水库匹配)。\cite{yigzaw2018new}采用一种优化算法来确定每个水库的库容\textendash 面积\textendash 深度关系，该算法从五种可能的规则几何形状中迭代选择出最佳几何形状，以最小化水库总库容和表面积的估算误差。ReGeom数据集适用范围广泛，尤其适用于改进全球水文或地球系统模型中对水库动态的表达，特别是在水库信息有限或不精确的地区。数据集中包含了所有水库的近似几何数据(ReGeomData\textunderscore WOW\textunderscore V1.xlsx)和每个水库的库容\textendash 面积\textendash 深度数据(*.csv)。通过每个水库的防洪库容面积、正常库容面积和死库容面积，查找相应的库容\textendash 面积\textendash 深度数据，即可得到对应的防洪库容、正常库容和死库容。
+
 \subsection{湖泊深度数据}
 湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球$30''$ (约1公里)分辨率，经纬度网格，单时次数据。
 
