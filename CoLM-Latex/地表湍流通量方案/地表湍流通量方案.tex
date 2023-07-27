@@ -38,7 +38,7 @@ $\ e_{atm}=\frac{q_{atm}P_{atm}}{0.622+0.378q_{atm}}$表示大气水汽分压(Pa
 \end{equation}
 其中 $\kappa$ 为 von K\'arman 常数，$z$为离地面高度(m)，$d$为零平面位移(m)，$L$为Monin-Obukhov长度(m)：
 \begin{equation}\label{ObukL}
-L=-\frac{u_{*}^{3}}{\kappa \left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{k g \theta_{v *}}
+L=-\frac{u_{*}^{3}}{\kappa \left(\frac{g}{\overline{\theta_{v, atm}}}\right) \overline{\theta_{v}^{\prime} w^{\prime}}}=\frac{u_{*}^{2} \overline{\theta_{v, atm}}}{\kappa g \theta_{v *}}
 \end{equation}
 其中$\overline{\theta_{v,atm}}=\overline{\theta_{atm}}(1+0.61\overline{q_{atm}})$表示参考大气虚位温(K)，
  大气位温$\theta_{atm}$由其定义的一阶展开近似给出$\theta_{atm}=T_{atm}+0.0098z_{atm}$。$L$可表征近地层的大气层结稳定度：
@@ -609,7 +609,7 @@ $C_s=C_{s,bare}W+C_{s,dense}\left(1-W\right)$，其中权重$W=\exp {\left[-(\te
 \begin{equation}
 r_{b}=\frac{1}{c_{v}}\left(u_{*} / d_{{leaf }}\right)^{-0.5}
 \end{equation}
-其中$c_v=0.01\ \rm m^{-1/2}\,s^{-1/2}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$ 表示叶片在风向的特征值。
+其中$c_v=0.01\ \rm m\,s^{-1/2}$表示植被表面与植被冠层空气之间的湍流交换系数，$d_{leaf}=0.04$ m 表示叶片在风向的特征值。
 最后，气孔阻抗系数$r_{s,sun}$和$r_{s,sha}$的计算将在光合作用部分介绍。
 在计算地表温度并基于该温度对地表感热和水汽通量进行更新时，需给出地表感热和水汽通量对地表温度的变化率：
 \begin{equation}
