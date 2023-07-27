@@ -150,19 +150,27 @@ CoLM支持多套大气驱动数据集的使用，包括全球格点数据和单�
 \begin{longtable}{p{3cm}p{3cm}p{2cm}p{2cm}p{4cm}p{6cm}<{\centering}}
 \caption{CoLM离线运行已经测试的站点列表}
 \label{tab:CoLM离线运行已经测试的站点列表}
-\hline \multicolumn{1}{c}{\textbf{驱动名}} & \multicolumn{1}{c}{\textbf{分辨率}} & \multicolumn{1}{c}{\textbf{时间范围}} & \multicolumn{1}{c}{\textbf{空间范围}} & \multicolumn{1}{c}{\textbf{参考文献}} & \multicolumn{1}{c}{\textbf{附加说明}} \\ \hline 
+\\
+\hline 
+\textbf{驱动名} & \textbf{分辨率}& \textbf{时间范围} & \textbf{空间范围} & \textbf{参考文献} & \textbf{附加说明} \\ 
+\hline 
 \endfirsthead
 
 \multicolumn{6}{c}%
-{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-\hline \multicolumn{1}{c}{\textbf{驱动名}} & \multicolumn{1}{c}{\textbf{分辨率}} & \multicolumn{1}{c}{\textbf{时间范围}} & \multicolumn{1}{c}{\textbf{空间范围}} & \multicolumn{1}{c}{\textbf{参考文献}} & \multicolumn{1}{c}{\textbf{附加说明}} \\ \hline 
+{{\bfseries \tablename\ \thetable{} -- 续表}} \\
+\hline
+\textbf{驱动名} & \textbf{分辨率} & \textbf{时间范围} & \textbf{空间范围} & \textbf{参考文献} & \textbf{附加说明} \\ 
+\hline 
 \endhead
 
-\hline \multicolumn{6}{r}{{Continued on next page}} \\ \hline
+\hline 
+\multicolumn{6}{r}{{接下一页表格}} \\ 
+\hline
 \endfoot
 
 \hline
 \endlastfoot
+
 \textbf{QIAN}              & 1.875\textdegree/6-hourly  & 1948-2004             & Global                              & Qian et al. (2006)                                                                                                                                                                    & 长波辐射由空气温度和水汽压计算得到                                                                      \\\midrule 
 \textbf{CRU-NCEP\_V4}      & 0.5\textdegree/6-hourly    & 1980-2014             & Global                              & Viovy (2011)                                                                                                             & –                                                                                      \\\midrule 
 \textbf{CRU-NCEP\_V7}      & 0.5\textdegree/6-hourly    & 1901-2016             & Global                              & Viovy (2018)                                                                                                                                                                                                   & –                                                                                      \\\midrule 
@@ -183,28 +191,28 @@ CoLM支持多套大气驱动数据集的使用，包括全球格点数据和单�
 \textbf{PLUMBER2}          & 单点/houly         &1990-2019         & Global                              & Ukkola et al. (2022)                                                                                                                                                & 需制作surface data给定站点的USGS/IGBP分类和经纬度等信息                                                 \\\midrule 
 \textbf{大气CO2浓度}           & 全球统一值/yearly     & 1849-2100             & Global                              & Büchner and Reyer (2022); Keeling et al. (2005)                                     & 1849-1957 \& 2023-2100 CO2浓度来自ISIMIP3b大气组份浓度输入数据集；1958-2022 CO2浓度来自夏威夷Mauna Loa观测站监测数据 \\\midrule 
 \textbf{臭氧浓度}              & 0.1\textdegree /daily       & 2013-2022             & 中国区域 (73\textdegree $\sim$135\textdegree E,18\textdegree $\sim$ 54\textdegree N)                                                                                  & -                                                                                                                                                                     & 来自中科院大气所李芳研究员提供                                                                        \\\midrule 
-\textbf{大气气溶胶沉降速率}         & 0.9x1.25/monthly & 1849-2001 / climatology & Global                              & CLM5 Documentation\\ Lamarque et al. (2010)                                                                                                                                          & 来自NCAR-CAM模式模拟结果                                                                       \\\midrule 
+\textbf{大气气溶胶沉降速率}         & 0.9x1.25/monthly & 1849-2001 / climatology & Global                              & CLM5 Documentation \& Lamarque et al. (2010)     & 来自NCAR-CAM模式模拟结果                                                                       \\\midrule 
 \textbf{氮沉降速率}             & 1.9x2.5/yearly   & 1849-2006             & Global                              & CLM5 Documentation                                                                                                                                                                                                             & 来自NCAR-WACCM模式模拟结果                                                                     \\\midrule 
 \textbf{闪电频率}              & 2\textdegree/3-hourly      & climatology           & Global                              & CLM5 Documentation                                                                                                                                                                                                       & 由1995-2011年NASA LIS/OTD格点数据产品v2.2版通过双线性插值得到        \\
 
 \end{longtable}
 \end{center}
-\begin{Tablenotes}
-\footnotesize
-%\item 注：
-\item[1] 1. 模式中针对以上数据会自动对比湿协调性做检查，当比湿数据大于通过近地面空气温度和气压数据计算得到的饱和比湿时，比湿将被更新为饱和比湿的计算结果。
-
-\item[2] 2. 凡原始数据带有$offset$和$scale_{factor}$属性的均需转换为无$offset$和$scale_{factor}$属性的数据。
-
-\item[3] 3. 大气O2分压由公式0.209Patm计算得到，其中Patm为大气压强。
-
-\item[4] 4. 默认大气风速参考高度为100米，大气温度和比湿参考高度为50米。
-
-\item[5] 5. 当驱动仅给出总风速时，纬向风速和经向风速平均分配：$u_{atm}=v_{atm}=W_{atm}/\sqrt2$
-
-\end{Tablenotes}
-\bottomrule
-%\end{threeparttable}
+%\begin{Tablenotes}
+%\footnotesize
+%%\item 注：
+%\item[1] 1. 模式中针对以上数据会自动对比湿协调性做检查，当比湿数据大于通过近地面空气温度和气压数据计算得到的饱和比湿时，比湿将被更新为饱和比湿的计算结果。
+%
+%\item[2] 2. 凡原始数据带有$offset$和$scale_{factor}$属性的均需转换为无$offset$和$scale_{factor}$属性的数据。
+%
+%\item[3] 3. 大气O2分压由公式0.209Patm计算得到，其中Patm为大气压强。
+%
+%\item[4] 4. 默认大气风速参考高度为100米，大气温度和比湿参考高度为50米。
+%
+%\item[5] 5. 当驱动仅给出总风速时，纬向风速和经向风速平均分配：$u_{atm}=v_{atm}=W_{atm}/\sqrt2$
+%
+%\end{Tablenotes}
+%\bottomrule
+%%\end{threeparttable}
 \end{landscape}
 
 
@@ -227,7 +235,7 @@ R_{vis}=a_{0}+a_{1} \alpha S+a_{2}(\alpha S)^{2}+a_{3}(\alpha S)^{3} \quad 0.01 
 \begin{equation}
 R_{nir}=b_{0}+b_{1}(1-\alpha) S+b_{2}((1-\alpha) S)^{2}+b_{3}((1-\alpha) S)^{3} \quad 0.01 \leq R_{nir} \leq 0.99
 \end{equation}
-其中$a_0$=0.17639, $a_1$=0.0038, $a_2$=-9.0039\times{10}$^{-6}$,$a_3$=8.1351\times{10}$^{-9}$, $b_0$=0.29548, $b_1$=0.00504, $b_2$=-1.4957\times{10}$^{-5}$,$b_3$=1.4881\times{10}$^{-8}$。这些系数来自对NCAR-CAM模式模拟结果的拟合。
+其中$a_0$=0.17639, $a_1$=0.0038, $a_2=-9.0039\times{10}\times{10}^{-8}$。这些系数来自对NCAR-CAM模式模拟结果的拟合。
 \\
 \\
 \textbf{降水拆分雨雪方案由谭奥博同学补充…}
@@ -249,7 +257,9 @@ L \downarrow=\left[0.70+5.95 \times 10^{-5} \times 0.01 e_{a t m} \exp \left(\fr
 \begin{longtable}{lcccccc}
 \caption{CoLM离线运行已经测试的站点列表}
 \label{tab:CoLM离线运行已经测试的站点列表}
-\hline \multicolumn{1}{c}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年份}} & \multicolumn{1}{c}{\textbf{终止年份}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
+\\
+\hline 
+\textbf{站点名称} & \textbf{起始年份} & \textbf{终止年份} & \textbf{数据来源} & \textbf{IGBP分类} & \textbf{纬度坐标} & \textbf{经度坐标}\\ \hline 
 \endfirsthead
 
 \multicolumn{7}{c}%
