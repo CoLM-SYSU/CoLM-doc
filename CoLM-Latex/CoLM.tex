@@ -40,9 +40,11 @@
 \usepackage{makecell}
 \raggedbottom
 
-
+\usepackage{siunitx}
 \usepackage{longtable}
+%\PassOptionsToPackage{hyphens}{url}
 \usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
 
 \begin{document}
 %\include{uhead.sty}
@@ -89,16 +91,16 @@
 \include{植被水力模式/植被水力模式}
 \include{降水与地表的能量交换/降水与地表的能量交换}
 
-\part{植被冠层、雪和土壤温度计算方案}
+\part{植被冠层、积雪和土壤温度计算方案}
 \include{植被叶片温度计算/植被叶片温度计算}
 \include{雪盖土壤热力过程/雪盖土壤热力过程}
 
-\part{植被冠层、雪和土壤水分计算方案}
+\part{植被冠层、积雪和土壤水分计算方案}
 \include{植被冠层和土壤水分/植被冠层和土壤水分}
 
 \part{水文过程}
 \include{水文过程/产流参数化方案}
-\include{水文过程/径流模式CaMaFlood}
+\include{水文过程/径流模式CaMa-Flood}
 \include{水文过程/侧向流物理方案}
 \include{湖泊模式/湖泊模式}
 

@@ -23,6 +23,9 @@ G_{water}=P_{ground}+S_{melt}-E
 模式中采用简化的方案来近似液态水在积雪中的流动：当某一层中的液态水的含量超过了这一层的持水能力的时候，多余的液态水自这一层流入其下的一层。
 最下层的液态水运动，形成对土壤的入渗或地表径流。下面依次从植被到土壤分别介绍各水文循环过程的描述。
 \section{植被冠层截留}\label{植被冠层截留}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_LeafInterception.F90}。
+\end{mymdframed}
 CoLM冠层水库的水平衡方程基本与SiB2一致 \citep{sellers1996revised}，主要基于以下控制方程：
 \begin{equation}
 \partial M_{cw,s}=P-D_{d}-D_{c}-E_{ci} / \rho_{w}
