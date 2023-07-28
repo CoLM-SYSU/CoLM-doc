@@ -21,7 +21,7 @@
  {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/网格构建/非结构化网格CoLM总体运行流程图.png}
+\includegraphics{Figures/模式构架/非结构化网格CoLM总体运行流程图.png}
 \caption{CoLM植物水力模型示意图，摘自Fan et al. (2023, in preparation)}
 \label{fig:非结构化网格CoLM总体运行流程图}
 \end{figure}
@@ -30,7 +30,7 @@
  {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/网格构建/非结构化网格生成流程图.png}
+\includegraphics{Figures/模式构架/非结构化网格生成流程图.png}
 \caption{非结构化网格生成流程图，摘自Fan et al. (2023, in preparation)}
 \label{fig:非结构化网格生成流程图}
 \end{figure}
@@ -59,7 +59,7 @@ tksatu         & 土壤导热系数（未冻结、饱和） \\\bottomrule
  {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/网格构建/三角形网格简易细化.png}
+\includegraphics{Figures/模式构架/三角形网格简易细化.png}
 \caption{三角形网格简易细化，摘自Fan et al. (2023, in preparation)}
 \label{fig:三角形网格简易细化}
 \end{figure}
@@ -92,6 +92,8 @@ tksatu         & 土壤导热系数（未冻结、饱和） \\\bottomrule
 三角形网格构造完成后，消除凹陷区域后会生成许多钝角三角形，而多边形网格是由三角形网格重心连接而成的。因此，这会导致在多边形网格的生成过程中，一些多边形与正多边形偏差较大，降低了网格的各向同性，从而影响了网格在CoLM等水文模型中的应用。为了在不过度影响原有网格结构的情况下对网格进行校正。
 \item 输出网格文件\\
 在步骤h结束时，将输出两种类型的网格。其一是最后一次迭代生成的三角形网格，其二是根据三角形网格重心连接的多边形网格。将地表、大气等初始数据的存储方式由经纬度网格转换为非结构化网格，就可以实现CoLM中地表水文过程在非结构化网格上的模拟。
+
+更为详细的网格制作过程参考附录。
 \end{enumerate}
 
 
