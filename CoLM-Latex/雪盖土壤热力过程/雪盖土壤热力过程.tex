@@ -11,6 +11,8 @@ c \frac{\partial T}{\partial t}=-\frac{\partial F}{\partial z}
 F表示垂直方向的热传导通量，方向向上为正($\rm W/m^2$)，表达式为$F=-\lambda\frac{\partial T}{\partial z}$，$\lambda$表示热力传导率(W/m/K)。
 将方程(\ref{eq:1d_energy_balance})进行离散，并结合上边界由大气输送到雪盖土壤表面的热通量$h_s$以及下边界土壤底层的零热通量，
 即可求出雪盖土壤的温度扩线，之后再根据相态变化条件对温度进行进一步调整。
+
+
 \section{温度求解的数值格式}\label{温度求解的数值格式}
 在离散上述能量平衡方程时，土壤被划分为10层。每一层土壤的中心深度$z_i$(m)定义为：
 \begin{equation}
@@ -25,6 +27,7 @@ z_{i}=f_{s} \exp [0.5(i-0.5)]-1
 \begin{equation}
 z_{h, i}=\left\{\begin{array}{ll}0.5\left(z_{i}+z_{i+1}\right) & i=1 \ldots 9 \\ z_{10}+0.5 \Delta z_{10} & i=10\end{array}\right.
 \end{equation}
+
 
 
 雪盖位于土壤之上，可根据其厚度划分为至多5层。为与土壤层编号一致，
@@ -300,3 +303,149 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 以上过程即是雪盖土壤温度计算的全部过程。得到$T_i^{n+1}$后，地表发出的上行长波辐射$L_g\uparrow$，感热通量$H_g$与潜热通量$\lambda E_g$需再做一次更新以作为输出的状态变量，
 其中用于蒸发的水汽不能超过雪盖土壤顶层的总含水量$\left(w_{liq,snl+1}^{n+1}+w_{ice,snl+1}^{n+1}\right)/\Delta t$，
 否则地表蒸发水汽取为$\left(w_{liq,snl+1}^{n+1}+w_{ice,snl+1}^{n+1}\right)/\Delta t$，产生的能量误差将加到感热通量上。
+
+\section{雪的压实，雪层的合并和细分}
+\subsection{雪层的建立}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_NewSnow.F90}。
+\end{mymdframed}
+在模式中，覆盖在地表的积雪被模拟为最多五层，具体取决于总积雪深度。积雪层数从上到下分别用$j = −4, −3, −2, −1, 0$编号。$j = 0$是靠近土壤表面的底层雪层，$j = snl + 1$是表层雪层，其中变量$snl$是积雪层数的负数。雪层的厚度表示为$\delta z_j$（m），雪层的深度$z_j$取为其上边界深度$\left[{\ z}_h\right]_{j-1}$和下边界深度$\left[{\ z}_h\right]_j$的平均值（中位数？）图 \ref{fig:模式中积雪雪层示意图}
+）。
+{
+\begin{figure}[]
+\centering
+\includegraphics{Figures/雪盖土壤热力过程/模式中积雪雪层示意图.png}
+\caption{模式中积雪雪层示意图(以三层雪层为例)。}
+\label{fig:模式中积雪雪层示意图}
+\end{figure}
+}
+
+当固态降水$q_{sno}$的发生导致总雪深 大于0.01m时，若模式中没有已存在的雪层，则将在模拟开始时创建一个新的雪层，初始参数设置如下
+\begin{equation}
+\left\{\begin{array}{c}\Delta z_{0}={d}_{{sn}} \\ z_{0}=-0.5 \Delta z_{0} \\ z_{{h},-1}=-\Delta z_{0} \\ T_{0}=\min \left(T_{{f}}, T_{{atm}}\right) \\ {\left[{w}_{{ice}}\right]_{0}={W}_{{sno}}} \\ {\left[{w}_{\text {liq }}\right]_{0}=0}\end{array}\right.
+\end{equation}
+其中$T_f$为水的冻结温度，$T_{atm}$为大气温度，$w_{ice}$和$w_{liq}$分别表示雪层中冰的质量和液态水的质量（kg m$^{-2}$）。
+
+
+若模式中存在已建立的雪层，则固态降水产生的影响将添加至表层雪层，表层雪层因此而发生的改变如下：
+\begin{equation}
+\left\{\begin{array}{c}\Delta z_{[{snl}+1]^{*}}=\Delta z_{{snl}+1}+\Delta {d}_{{sn}} \\ {\left[z_{[{snl}+1]^{*}}\right]_{0}=-0.5 \Delta z_{[{snl}+1]^{*}}} \\ z_{{h}, {snl}^{*}}=z_{{h}, {snl}+1}-\Delta z_{[{snl}+1]^{*}} \\ {\left[{w}_{{ice}}\right]_{[{snl}+1]^{*}}=\Delta {W}_{{sno}}}\end{array}\right.
+\end{equation}
+其中$\ast$表示改变后的雪层。
+
+\subsection{雪的压实}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_SnowLayersCombineDivide.F90}。
+\end{mymdframed}
+积雪压实的过程主要由以下四种变质作用造成：破坏（destructive）变质作用、压力（pressure）变质作用、结构（constructive）变质作用和融化（melt）变质作用 \citep{yen1981review}。在当前版本CoLM中，只实现了三种变质作用：破坏变质作用、负重（overburden）变质作用（或压力变质作用）和融化变质作用。前两种变质作用的处理方法来自 SNTHERM.89 \citep{jordan1991one}和 SNTHERM.99 \citep{jordan1999heat}，融化变质作用的贡献简单地取为融化后与融化前的雪/冰比例。自然压实率的总分量可写成
+
+\begin{equation}
+{C}_{{R}}=\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {destructive }}+\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {overburden }}+\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{{melt}}
+\end{equation}
+由于压实导致的雪层厚度为：
+\begin{equation}
+\Delta z_{j}=\Delta z_{j}^{\prime}\left(1+C_{R, j} \Delta t\right)
+\end{equation}
+其中$\Delta {z}_{{j}}^{\prime}$ 为未压实前第$j^{th}$层雪层的厚度。
+
+
+
+\begin{enumerate}
+\item 破坏变质下的积雪沉降\\
+雪到达地面后，随即开始快速变化，单个雪花会迅速失去原有形状，变成更具球形。在风或热力的作用下，新雪的星形晶状结构破裂，雪堆发生沉降，雪粒堆积。对于密度小于100 kg $m^{-3}$ 的新雪来说，破坏变质引起的沉降非常重要。新雪由于星形雪粒之间的“齿轮咬合”作用而具有一定的结构强度，这种结构在变质作用中会逐渐丧失。\citet{anderson1976point}对这一阶段的压实过程提出了以下经验函数：
+\begin{equation}\label{eq:Delta_Z}
+\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {destructive }}=-2.778 \times 10^{-6} {c}_{3} {c}_{4} {e}^{-0.04\left({~T}_{{f}}-{T}\right)}
+\end{equation}
+式中${c}_{3}={c}_{4}=1$
+当雪层中冰的体积密度$\rho_{i} \theta_{i}>100$(kg m$^{-3}$) 时
+\begin{equation}
+{C}_{3}={e}^{-0.046\left(\rho_{{i}} \theta_{{i}}-100\right)}, \quad {C}_{4}=1
+\end{equation}
+当雪层中液态水的体积密度$\rho_{1} \theta_{1}>0.01$ (kg m$^{-3}$) 时
+\begin{equation}
+{C}_{3}=1,\quad  {C}_{4}=2
+\end{equation}
+即根据式~\ref{eq:Delta_Z} 预测的密度小于100kg m$^{-3}$的积雪，破坏变质导致的形变率为每小时 1\%，当雪层中冰的体积密度超过100 kg m$^{-3}$时，破环变质的速率会有所降低，而当雪层中存在液态水时，破环变质的速率将为原来的两倍。
+
+\item 雪层负重引起的压实\\
+随着积雪的累积，上覆积雪的自重会进一步地压实雪层。上覆雪层产生的压力导致雪粒粘结生长速度加快，形成更加有效的堆积形状。在经过最初的沉降阶段后，这一阶段的压实速度会减慢，很大程度上取决于雪层负重带来的压力。在低压力范围的季节性积雪内，雪的形变率是压力的线性函数，即
+\begin{equation}
+\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {overburden }}=-\frac{{P}_{{s}}}{9 \times 10^{5}} {e}^{-0.08\left({~T}_{{f}}-{T}\right)-0.023 \rho_{{i}} \theta_{{i}}}
+\end{equation}
+其中$P_{s}$是上覆雪的重量(kg m$^{-2}$)，对于第j层，其上覆雪的重量由以下公式得出
+\begin{equation}
+\left[P_{s}\right]_{j}=\frac{\left[w_{\text {ice }}\right]_{j}+\left[w_{\text {liq }}\right]_{j}}{2}+\sum_{{i}={snl}+1}^{{i}={j}-1}\left(\left[{w}_{{ice}}\right]_{{i}}+\left[{w}_{\text {liq }}\right]_{{i}}\right)
+\end{equation}
+
+\item 雪层融化引起的压实。\\
+在融雪过程的后期（雪经过多次冻融循环后），融雪水的出流导致雪层压实，雪堆过度致密：
+\begin{equation}
+\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{{melt}}=\frac{1}{\Delta {t}}\left[\frac{{f}_{{I}}^{{n}+1}-{f}_{{I}}^{{n}}}{{f}_{{I}}^{{n}}}\right]
+\end{equation}
+\end{enumerate}
+\subsection{雪层的合并}
+当某一雪层完全融化或其厚度小于规定的最小值时，则将该雪层与邻近雪层合并。根据以下标准选择相邻的上层或下层雪层进行合并：
+\begin{enumerate}
+\item 如果为表面雪层，则将其与相邻的下层雪层合并；
+\item 如果为与土壤相邻的底层雪层，则将其与相邻的上层雪层合并；
+\item 如果为已完全融化的中间雪层，则将其与相邻的下层雪层合并；以及
+\item 如果上述情况均不适用，则将该雪层与较薄的相邻雪层合并。
+五个雪层（从表层到底层）的厚度最小值分别为 0.010、0.015、0.025、0.055 和 0.115（米）。
+
+\end{enumerate}
+
+\subsubsection{质量和能量再分配}
+
+当两个雪层（用$j$和$j+1$表示）合并时，它们合并后的厚度为
+\begin{equation}
+\Delta {z}_{{j} *}=\Delta {z}_{{j}}+\Delta {z}_{{j}+1}
+\end{equation}
+合并后的质量为
+\begin{equation}
+\left[{w}_{{liq}}\right]_{{j}^{*}}=\left[{w}_{{liq}}\right]_{{j}}+\left[{w}_{{liq}}\right]_{{j}+1}
+\end{equation}
+\begin{equation}
+\left[{w}_{ {ice }}\right]_{j *}=\left[{w}_{ {ice }}\right]_{j}+\left[{w}_{ {ice }}\right]_{j+1}
+\end{equation}
+合并后的温度根据焓的守恒，由以下公式得出
+\begin{equation}
+\begin{array}{l}h_{j}=\left[c_{i} w_{ {ice }}+c_{1} w_{ {liq }}\right]_{j} \times\left[T_{j}-T_{f}\right]+L_{f}\left[w_{ {liq }}\right]_{j} \\ h_{j+1}=\left[c_{i} w_{ {ice }}+c_{1} w_{ {liq }}\right]_{j+1} \times\left[T_{j+1}-T_{f}\right]+L_{f}\left[w_{ {liq }}\right]_{j+1} \\ h_{j *}=h_{j}+h_{j+1}\end{array}
+\end{equation}
+\begin{equation}
+{T}_{{j}^{*}}=\left\{\begin{array}{ll}{T}_{{f}}+{h}_{{j}^{*}} /\left[{c}_{1} {w}_{\text {liq }}+{c}_{{i}} {w}_{{ice}}\right]_{{j}^{*}}, & \text { for } {h}_{{j}^{*}}<0 \\ {~T}_{{f}}, & \text { for } {h}_{{j}^{*}} \leq {L}_{{f}}\left[{w}_{{liq}}\right]_{{j}^{*}} \\ {~T}_{{f}}-\left({h}_{{j}^{*}}-{L}_{{f}}\left[{w}_{{liq}}\right]_{{j}^{*}}\right) /\left[{c}_{{l}} {w}_{{liq}}+{c}_{{i}} {w}_{{ice}}\right]_{{j}^{*}}, & \text { for } {h}_{{j}^{*}}>{L}_{{f}}\left[{w}_{{liq}}\right]_{{j}^{*}}\end{array}\right.
+\end{equation}
+
+
+\subsubsection{气溶胶通量的计算}
+
+本版本CoLM在计算雪层的合并与细分时，添加了SNICAR模型可供选择。当使用SNICAR模型时，会额外计算雪层合并后的黑碳、有机碳和矿物粉尘的质量，均采用以下公式得出
+\begin{equation}
+\left[m_{\mathrm{sp}}\right]_{\mathrm{j}^{*}}=\left[m_{\mathrm{sp}}\right]_{\mathrm{j}}+\left[m_{\mathrm{sp}}\right]_{\mathrm{j}+1}
+\end{equation}
+其中下标sp可表示不同的黑碳、有机碳和粉尘种类。
+\subsubsection{雪层的细分}
+当某一雪层的厚度超过规定的最大厚度（从表层到底层分别为，0.02、0.05、0.11、0.23 和 > 0.23 米）时，雪层将被细分。如果被细分的雪层没有已存在的相邻下层雪层，则该雪层被等分为厚度相同的两层，并具有同样的液态水含量、冰含量和温度。如果被细分的雪层有相邻的下层雪层，则将多余的雪层厚度、液态水含量、冰含量以及温度属性和下层雪层合并。细分规则如~图 \ref{fig:情况1-5} 和\ref{fig:情况6-9} 所示，图中$d_{sn}$为总雪深（米）。
+
+{
+\begin{figure}[]
+\centering
+\includegraphics{Figures/雪盖土壤热力过程/情况1-5.png}
+\caption{不同积雪高度下雪层厚度的分层规则。}
+\label{fig:情况1-5}
+\end{figure}
+}
+
+{
+\begin{figure}[]
+\centering
+\includegraphics{Figures/雪盖土壤热力过程/情况6-9.png}
+\caption{不同积雪高度下雪层厚度的分层规则续}
+\label{fig:情况6-9}
+\end{figure}
+}
+
+
+
+
+                            
+

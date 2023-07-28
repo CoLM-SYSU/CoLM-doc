@@ -6,16 +6,16 @@
 
 \section{地表覆盖数据}\label{地表覆盖数据}
 \subsection{USGS地表覆盖数据}\label{USGS地表覆盖数据}
-USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global Land Cover Characterization (GLCC) data base Version 2.0 
-(https://www.usgs.gov/centers/eros/science\\/usgs-eros-archive-land-cover-products-global-land-cover-characterization-glcc)。
-数据为全球 $30''$ (约1公里) 分辨率，经纬度网格，单时次数据，划分类型如表~\ref{tab:USGS覆盖类型} 所示。
+USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global Land Cover Characterization (GLCC) database Version 2.0 
+(\url{https://www.usgs.gov/centers/eros/science/usgs-eros-archive-land-cover-products-global-land-cover-characterization-glcc})。
+数据为全球 \ang{;;30} (约1公里) 分辨率，经纬度网格，单时次数据，划分类型如表~\ref{tab:USGS覆盖类型} 所示。
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[]
 \centering
 \caption{USGS覆盖类型}
 \label{tab:USGS覆盖类型}
-\begin{tabular}{@{}lc@{}}
+\begin{tabular}{@{}ll@{}}
 \toprule
 编号 & USGS覆盖类型     \\ \midrule
 1  & 城市           \\
@@ -55,14 +55,14 @@ USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global 
 \subsection{IGBP地表覆盖数据}\label{IGBP地表覆盖数据}
 IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging Spectroradiometer 
 （MODIS）MCD12Q1 Version 6（The Terra and Aqua combined MODIS Land Cover Type data product）
-的数据（https://lpdaac.usgs.gov/products/mcd12q1v006/），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生 
- \citep{Friedl2019}。数据为全球15$''$（约500 m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表 \ref{tab:IGBP覆盖类型} 所示。
+的数据（\url{https://lpdaac.usgs.gov/products/mcd12q1v006/}），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生 
+ \citep{Friedl2019}。数据为全球 \ang{;;15}（约500 m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表 \ref{tab:IGBP覆盖类型} 所示。
 
 \begin{table}[]
 \centering
 \caption{IGBP覆盖类型}
 \label{tab:IGBP覆盖类型}
-\begin{tabular}{@{}lc@{}}
+\begin{tabular}{@{}ll@{}}
 \toprule
 编号 & IGBP覆盖类型     \\ \midrule
 0  & 水体           \\
@@ -88,22 +88,23 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 
 \section{土壤数据}\label{土壤数据}
 \subsection{土壤基础属性}\label{土壤基础属性}
-土壤基础属性数据采用Global Soil Dataset for Earth System Modeling（GSDE，http://globalchange.bnu.edu.cn/research/soilw） \citep{shangguan2014global}
-和SoilGrids （https:\\//www.soilgrids.org/）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0-0.045, 0.045-0.091, 0.091-0.166, 0.166-0.289, 0.289-0.493, 0.493-0.829, 0.829-1.383, 1.383-2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0-0.05，0.05-0.15，0.15-0.3，0.3-0.6，0.6-1，1-2m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。
+土壤基础属性数据采用Global Soil Dataset for Earth System Modeling（GSDE，\url{http://globalchange.bnu.edu.cn/research/soilw}）~\citep{shangguan2014global}
+和SoilGrids（\url{https://www.soilgrids.org/}）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0--0.045, 0.045--0.091, 0.091--0.166, 0.166--0.289, 0.289--0.493, 0.493--0.829, 0.829--1.383, 1.383--2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0--0.05，0.05--0.15，0.15--0.3，0.3--0.6，0.6--1，1--2 m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。
 
 \subsection{基岩深度}\label{基岩深度}
 
-模式的土壤层数可以根据基岩深度数据集进行设定，使得空间上每个格点有不同土壤层数。采用的基岩深度数据为Global Depth to Bedrock Dataset for Earth System Modeling (GDBDESM，http://globalchange.bnu.edu.cn/research/dtb.jsp, \citet{shangguan2017mapping})。该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。
+模式的土壤层数可以根据基岩深度数据集进行设定，使得空间上每个格点有不同土壤层数。采用的基岩深度数据为Global Depth to Bedrock Dataset for Earth System Modeling (GDBDESM，\url{http://globalchange.bnu.edu.cn/research/dtb.jsp}, \citet{shangguan2017mapping})。该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。
 
 
 \section{植被结构及属性数据}\label{植被结构及属性数据}
 \subsection{叶面积指数数据}\label{叶面积指数数据}
-叶面积指数数据来自重处理的MODIS LAI数据~\citep{yuan20143d}。目前模式提供MODIS第5版和第6.1版数据。其中MODIS第5版数据 (MOD15A2) 为全球 $30''$ (1公里) 分辨率，经纬度网格，时间覆盖2000-2016年，时间分辨率为每8天。MODIS第6.1版数据 (MCD15A2H)，空间分辨率为全球 $15''$ (约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
+叶面积指数数据来自重处理的MODIS LAI数据~\citep{yuan20143d}。目前模式提供MODIS第5版和第6.1版数据。其中MODIS第5版数据 (MOD15A2) 为全球 \ang{;;30} (1公里) 分辨率，经纬度网格，时间覆盖2000--2016年，时间分辨率为每8天。MODIS第6.1版数据 (MCD15A2H)，空间分辨率为全球 \ang{;;15} (约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
+
 
 \subsection{树高数据}\label{树高数据}
 树高数据来自2005年Geoscience Laser Altimeter System (GLAS) aboard ICESat 
 (Ice, Cloud, and land Elevation Satellite)卫星数据~\citep{simard2011mapping}，
-全球$30''$ (1公里) 分辨率，经纬度网格，单时次数据。
+全球 \ang{;;30} (1公里) 分辨率，经纬度网格，单时次数据。
 
 \subsection{PFT/PC数据及其依赖数据}\label{PFTPC数据及其依赖数据}
 模式如采用PFT或PC植被次网格方式运行，则不能像LCT方案一样直接进行地表覆盖类型聚合(图~\ref{fig:次网格聚合方案} LCT方案所示)，
@@ -117,7 +118,7 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 \centering
 \caption{植被功能型-PFT分类}
 \label{tab:PFT分类}
-\begin{tabular}{@{}lc@{}}
+\begin{tabular}{@{}ll@{}}
 \toprule
 \multicolumn{1}{c}{编号} & \multicolumn{1}{c}{植被功能型} \\ \midrule
 0                      & 裸土                        \\
@@ -150,7 +151,7 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 
 
 由于PFT和PC方案都需要对细网格地表覆盖数据进行PFT分解，而地表覆盖原数据并不包含此信息，
-需要借助辅助数据进行计算，其数据来源如表~\ref{tab:网格划分辅助数据}所列。
+需要借助辅助数据进行计算，其数据来源如表~\ref{tab:网格划分辅助数据} 所列。
 
 
 % Please add the following required packages to your document preamble:
@@ -164,15 +165,15 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 
 \begin{tabular}[h]{p{3cm}p{6cm}p{2cm}p{2cm}p{5cm}}
 \toprule
-数据名称                                                            & 描述                                                                                              & 分辨率   & 坐标投影               & 参考文献                                            \\ \midrule
+数据名称      & 描述        & 分辨率   & 坐标投影     & 参考文献           \\ \midrule
 MODIS Land Cover Type & The Terra and Aqua combined MODIS Land Cover Type (LC\_Type1) data product, Version 6 (MCD12Q1) & 500 m & Sinusoidal        & (Friedl \& Sulla-Menashe, 2019)                \\\midrule
-ESA LC-CCI land cover type                                      & ESA CCI land cover type products                                                                & 300 m & Latitude-Longitude & http://maps.elie.ucl.ac.be \\\midrule
-MODIS VCF                                                       & MODIS Vegetation Continuous Fields product, Version 6 (MOD44B)                                           & 250 m & Sinusoidal         & \citet{DiMiceli2015}                        \\\midrule
-AVHRR VCF                                                      & AVHRR Tree Cover (evergreen, deciduous and broadleaf, needleleaf) Continuous Fields                      & 1 km  & Latitude-Longitude & \citet{defries2000new}                         \\\midrule
-Köppen-Geiger climate classification                                     & Present Köppen-Geiger climate classification maps at 1-km resolution                            & 1 km  & Latitude-Longitude & \citet{beck2018}                            \\\midrule
-Reprocessed MODIS LAI                                           & Reprocessed MODIS leaf area index produces, Version 6                                           & 500 m & Sinusoidal         & \citet{yuan2011reprocessing}                              \\\midrule
-WorldClim Version2                                             & Worldclim 2: New 1-km spatial resolution climate surfaces for global land areas                          & 1 km  & Latitude-Longitude & \citet{fick2017worldclim}                        \\\midrule
-Canopy height                                                   & Global 1 km forest canopy height map                                                            & 1 km  & Latitude-Longitude & \citet{simard2011mapping}                          \\ \bottomrule
+ESA LC-CCI land cover type         & ESA CCI land cover type products                                                                & 300 m & Latitude-Longitude & \url{http://maps.elie.ucl.ac.be} \\\midrule
+MODIS VCF      & MODIS Vegetation Continuous Fields product, Version 6 (MOD44B)                                           & 250 m    & Sinusoidal         & \citet{DiMiceli2015}                        \\\midrule
+AVHRR VCF& AVHRR Tree Cover (evergreen, deciduous and broadleaf, needleleaf) Continuous Fields                      & 1 km  & Latitude-Longitude & \citet{defries2000new}                         \\\midrule
+Köppen-Geiger climate classification        & Present Köppen-Geiger climate classification maps at 1-km resolution                            & 1 km  & Latitude-Longitude & \citet{beck2018}     \\\midrule
+Reprocessed MODIS LAI                 & Reprocessed MODIS leaf area index produces, Version 6                                           & 500 m & Sinusoidal         & \citet{yuan2011reprocessing}     \\\midrule
+WorldClim Version2                    & Worldclim 2: New 1-km spatial resolution climate surfaces for global land areas                          & 1 km  & Latitude-Longitude & \citet{fick2017worldclim}   \\\midrule
+Canopy height                         & Global 1 km forest canopy height map                                                            & 1 km  & Latitude-Longitude & \citet{simard2011mapping}             \\ \bottomrule
 \end{tabular}
 \end{sidewaystable}
 如采用PFT/PC方案进行植被次网格模拟，其不同类型相关参数请参考附录~\ref{植被功能型PFT相关参数} 和附录~\ref{植物群落PC次网格PFT相关参数}。
@@ -181,93 +182,176 @@ Canopy height                                                   & Global 1 km fo
 \section{水文数据}\label{水文数据}
 \subsection{水文学基础数据}
 \subsection{河网}
-$CaMa-Flood$模拟所需的相关次网格地形参数是由90m超高精细分辨率的全球流动方向地图 ($MERIT-Hydro$) (Yamazaki et al, 2019)，水文调整高程DEM (Yamazaki et al., 2017; Yamazaki et al., 2012)，以及河宽数据 (Yamazakiet al., 2014); 使用 Yamazaki et al. (2009) 开发的升尺度模式 Flexible Location of Waterways ($FLOW$)计算得出。相关数据以纯“二进制”格式 (nx $\times$ ny)存储于在$map/$目录下。默认的数据存储顺序是从180W到180E，从90N到90S；数据的字节顺序是“little endian”。具体而言，除了需要陆面模式计算得出的产流量 ($runoff$) 之外，CaMa-Flood还需要包括流域面积 ($As$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，漫滩 (洪水淹没) 面积，以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河流的宽度和深度以外，所有的地形相关参数均可由$MERIT-hydro$水文地形数据中获取。以下以全球0.25度的河网为例进行详细介绍。
-{
-\begin{figure}[]
-\centering
-\includegraphics{Figures/基础数据/CaMa-Flood流域单元分布图.png}
-\caption{流域单元分布图。每个流域单元的出口用白色四边形标记。蓝色线条连接不同流域单元，箭头指向下游流域单元。橙色和黄色边界代表了不同的流域单元。图片摘自Yamazaki et al. (2013)。}
-\label{fig:CaMa-Flood流域单元分布图}
-\end{figure}
-}
-
-在目录glb\_15min下包含了全球0.25度分辨率的网格-矢量-混合(grid-vector-hybrid)河网图，该河网地图是由90m $MERIT-Hydro$数据使用FLOW模式升尺度而来 (图~\ref{fig:CaMa-Flood流域单元分布图})；具体文件内容如表~\ref{tab:CaMa-FloodMap目录下河网图及地形参数文件列表}所示。河网地图的维度信息，包括东西方向网格数目$nx$，南北方向网格数目$ny$，泛滥平原层数 ($nfpl$)，网格大小 ($gsize$)和区域边界 (西、东、南、北)，记录在$params.txt$之中。$nextxy.bin$文件包含了2个参数 ($nextx$和$nexty$)，分别记录了每个网格的下游单元的相对位置，其中与海洋接口的河口标记为-9，内陆河流终点标记为-10，海洋 (未定义) 标记为-9999。
-
-
-假设任意网格的洪水事件是从高程低的区域到高程高的区域发生淹没，任意流域单元(图~\ref{fig:CaMa-Flood基于流域单元的漫滩高程剖面函数})的漫滩面积可以由漫滩水深$Df$ (m) 以及累积分布函数 ($CDF$) 的经验函数生成 (图~\ref{fig:CaMa-Flood基于流域单元的漫滩高程剖面函数})。每个网格的$CDF$函数的第10百分位数的10个值 (图~\ref{fig:CaMa-Flood基于流域单元的漫滩高程剖面函数}，红色圆点)分别存储在$fldhgt.bin$的十个参数之中 (见表~\ref{tab:CaMa-FloodMap目录下河网图及地形参数文件列表})，文件格式与上述的$nextxy.bin$相同。例如，$fldhgt.bin$的第三个参数表示流域单元30\%的面积被淹没时的该流域单元的平均洪水深度 (m)。 
+CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分辨率的全球流动方向地图 (MERIT-Hydro)\citep{yamazaki2019merit}，
+水文调整高程 DEM~\citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据~\citep{yamazaki2014development}; 
+使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。
+相关数据以纯``二进制''格式 ($nx*ny$)存储于 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，
+从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是 ``little endian''。
+具体而言，除了需要陆面模式计算得出的产流量 (runoff) 之外，CaMa-Flood还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，
+漫滩 (洪水淹没) 面积，以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河流的宽度和深度以外，
+所有的地形相关参数均可由 MERIT-hydro 水文地形数据中获取。以下以全球 0.25\textdegree 的河网为例进行详细介绍。
 
 {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/基础数据/CaMa-Flood基于流域单元的漫滩高程剖面函数.png}
-\caption{流域单元分布图。每个流域单元的出口用白色四边形标记。蓝色线条连接不同流域单元，箭头指向下游流域单元。橙色和黄色边界代表了不同的流域单元。图片摘自Yamazaki et al. (2013)。}
-\label{fig:CaMa-Flood基于流域单元的漫滩高程剖面函数}
+\includegraphics{Figures/陆地表面的水分循环/流域单元分布图.png}
+\caption{流域单元分布图。每个流域单元的出口用白色四边形标记。蓝色线条连接不同流域单元，箭头指向下游流域单元。
+橙色和黄色边界代表了不同的流域单元。图片摘自\citet{yamazaki2013improving}。 }
+\label{fig:流域单元分布图}
 \end{figure}
 }
 
 
+在目录\texttt{glb\_15min}下包含了全球 0.25\textdegree 分辨率的网格-矢量-混合 (grid-vector-hybrid) 河网图，
+该河网地图是由 90m MERIT Hydro 数据使用 FLOW 模式升尺度而来 (图~\ref{fig:流域单元分布图})；
+具体文件内容如表~\ref{tab:河网图及地形参数文件列表} 和表~\ref{tab:河网图及地形参数文件列表2} 所示。
+河网地图的维度信息，包括东西方向网格数目$nx$，南北方向网格数目$ny$，泛滥平原层数 ($nfpl$)，
+网格大小 ($gsize$)和区域边界 (西、东、南、北)，记录在 \texttt{params.txt} 之中。\texttt{nextxy.bin} 文件包含了2个参数 ($nextx$和$nexty$)，
+分别记录了每个网格的下游单元的相对位置，
+其中与海洋接口的河口标记为 -9，内陆河流终点标记为 -10，海洋 (未定义) 标记为 -9999。
 
-河道断面参数(河道长度$W$(m)和河道深度 $B$(m))是水动力模拟的主要参数之一。在CaMa-Flood中的该参数是流域产流量的气候态的经验函数，由以下公式推导得出：
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\centering
+\caption{河网图及地形参数文件列表}
+\label{tab:河网图及地形参数文件列表}
+    \begin{tabular}[h]{p{3.5cm}p{1.5cm}p{1.5cm}p{5cm}p{1cm}p{1cm}}  %{@{}cccccc@{}}
+    \toprule
+    File              & Variable & Symbol                        & Description                                  & Unit    & Format  \\ \midrule
+    \texttt{params.txt}        & -        & -                             & Map parameters                     & -         & text    \\
+    \texttt{nextxy.bin}        & \texttt{nextx}    & $jx$                         & Downstream X (rec=1)         & -         & integer \\
+                                       & \texttt{nexty}    & $jy$                         & Downstream Y (rec=2)            & -        & integer \\
+    \texttt{downxy.bin}      & \texttt{downx}   & $dx$                        & Relative DownstreamX (rec=1)   & -   & integer \\
+                                       & \texttt{downy}   & $dy$                      & Relative Downstream Y (rec=2)   & -    & integer \\
+    \texttt{ctmare.bin}       & \texttt{ctmare}   & $Ac$                     & Unit-catchment Area                     & $\rm m^2$   & real    \\
+    \texttt{elevtn.bin}        & \texttt{elevtn}    & $Z$                        & Base Elevation                         & m       & real    \\
+    \texttt{rivlen.bin}         & \texttt{rivlen}    & $L$                         & Channel Length                        & m       & real    \\
+    \texttt{rivhgt.bin}         & \texttt{rivhgt}   & $B$                         & Channel Depth                          & m       & real    \\
+    \texttt{rivwth.bin}        & \texttt{rivwth}   & $W$                        & Channel Width                           & m       & real    \\
+    \texttt{rivwth\_gwdlr.bin} & \texttt{rivwth}   & $W$                    & Combined Width (recommended)    & m       & real    \\
+    \texttt{nxtdst.bin}        & \texttt{nxtdst}   & $X$                             & Downstream Distance                          & m       & real    \\
+    \texttt{fldhgt.bin}        & \texttt{fldhgt}   & $D_f$                            & Floodplain Elevation profile (rec=1$\sim$10) & m       & real    \\
+    \texttt{rivman.bin}        & \texttt{rivman}   & -                             & Manning’s Roughness                          & -       & real    \\
+    \texttt{bifori.txt}        & -        & -                             & Bifurcation Channel Original Data            & -       & text    \\
+    \texttt{bifprm.txt}        & -        & -                             & Bifurcation channel parameters               & -       & text    \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+
+    % Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\centering
+\caption{河网图及地形参数文件列表续}
+\label{tab:河网图及地形参数文件列表2}
+    \begin{tabular}[h]{p{3.5cm}p{1.5cm}p{1.5cm}p{5cm}p{1cm}p{1cm}} %{@{}cccccc@{}}
+    \toprule
+    File             & Variable & Symbol                             & Description                                          & Unit     & Format  \\ \midrule
+    \texttt{grdare.bin}       & \texttt{grdare}   & -                                  & Rectangular grid area (optional)                     & $\rm m^2$       & real    \\
+    \texttt{nxtdst\_grid.bin} &          &                                    &                                                      &          &         \\
+    \texttt{rivlen\_grid.bin} & \texttt{nxtdst}   & $X$                                  & Downstream Distance (grid center)                    & m        & real    \\
+                                        & \texttt{rivlen}    & $L$                            & Channel Length (grid center)       &    m                             & real        \\
+    \texttt{inpmat.bin}       & \texttt{inpx}     & -                                  & Corresponding input grid X (rec=1) & -        & integer \\
+                                       & \texttt{inpy}     & -                               & Corresponding input grid Y (rec=2)    & -        & integer  \\
+    \texttt{ctmare.bin}       & \texttt{inpa}     & $A_{ij}$                            & Area of input grid XY (rec=3)              & $\rm m^2$     & real    \\
+    \texttt{diminfo.txt}      & -        & -                                  & Dimension infomation                         & text     &         \\
+    \texttt{lsmask.bin}       & -        & -                                  & Land ID of corresponding hi resolution area Basin ID & -        & integer \\
+    \texttt{basin.bin}        & -        & -                                  & Basin ID                                             & -        & integer \\
+    \texttt{bsncol.bin}       & -        & -                                  & Basin Color Pattern for Visualization                & -        & integer \\
+    \texttt{lonlat.bin}       & \texttt{lon}      & -                                  & Longitude, catchment outlet (rec=1)     & \textdegree      & real    \\
+                                     & \texttt{lat}       & -                                 & Latitude, catchment outlet (rec=2)        & \textdegree       & real    \\
+    \texttt{uparea.bin}       & \texttt{uparea}   & -                           & Upstream Drainage Area                       & $\rm m^2$        & real    \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+
+假设任意网格的洪水事件是从高程低的区域到高程高的区域发生淹没，
+任意流域单元(图~\ref{fig:基于流域单元的漫滩高程剖面函数}) 的漫滩面积可以由漫滩水深$D_f$ (m) 
+以及累积分布函数 (CDF) 的经验函数生成 (图~\ref{tab:河网图及地形参数文件列表2})。
+每个网格的CDF函数的第10百分位数的10个值 (图~\ref{tab:河网图及地形参数文件列表2}，红色圆点)分别存储在 \texttt{fldhgt.bin} 的十个参数之中
+ (见表~\ref{tab:河网图及地形参数文件列表} 和表~\ref{tab:河网图及地形参数文件列表2})，文件格式与上述的 \texttt{nextxy.bin} 相同。
+例如，\texttt{fldhgt.bin} 的第三个参数表示流域单元 30\% 的面积被淹没时的该流域单元的平均洪水深度 (m)。
+
+{
+\begin{figure}[]
+\centering
+\includegraphics{Figures/陆地表面的水分循环/基于流域单元的漫滩高程剖面函数.png}
+\caption{基于流域单元的漫滩高程剖面函数。图片摘自\citet{yamazaki2013improving}。  }
+\label{fig:基于流域单元的漫滩高程剖面函数}
+\end{figure}
+}
+
+
+河道断面参数(河道长度$W$ (m)和河道深度 $B$ (m))是水动力模拟的主要参数之一。在CaMa-Flood中的该参数是流域产流量的气候态的经验函数，由以下公式推导得出：
 \begin{equation}
-W=\max \left(W_{\min }, c_{w} * {Q_{a v e}}^{p_{w}}+W_{0}\right)
+W=\max \left(W_{min}, c_{w} * Q_{ave}{}^{p_{w}}+W_{0}\right)
 \end{equation}
-
 \begin{equation}
-B=\max \left(B_{\min }, c_{H} * {Q_{a v e}}^{p_{H}}+B_{0}\right)
+B=\max \left(B_{min}, c_{H} * Q_{ave}{}^{p_{H}}+B_{0}\right)
 \end{equation}
-
-其中$Q_{ave}$是由陆面模式计算得出的产流量 ($runoff$) (m$^{3}$s$^{-1}$)。河道宽度计算所使用的经验系数 $c_w$、$p_w$、 $W_0$和$W_{min}$ 分别设置为2.5，0.6，0.0以及5.0；河道深度计算所使用的经验系数 $c_H$、$p_H$、$B_0$和$B_{min}$ 分别设置为0.1，0.5，0.0以及1.0。值得注意的是这些经验系数存在着极大的不确定性，在使用之时需要对其进行对应的率定和调参。除此之外，基于卫星观测的河道宽度数据 (width.bin，如图~\ref{fig:CaMa-Flood基于卫星数据生成的河道宽度示意图}) 也可由$MERIT-hydro$水文地形数据中获取。$CaMa-Flood$推荐使用通过$set\_gwdlr.F90$子程序生成组合宽度参数 (经验公式和卫星数据的组合) 数据。相关地图的制备详见Yamazaki et al. (2014a,b)。
+其中$Q_{ave}$是由陆面模式计算得出的产流量 (total runoff) ($\rm m^3\,s^{-1}$)。
+河道宽度计算所使用的经验系数 $c_w$，$p_w$，$W_0$，$W_{min}$ 分别设置为 2.5，0.6，0.0 以及5.0；
+河道深度计算所使用的经验系数 $c_H$，$p_H$，$B_0$ 和 $B_{min}$ 分别设置为 0.1，0.5，0.0 以及1.0。
+值得注意的是这些经验系数存在着极大的不确定性，在使用之时需要对其进行对应的率定和调参。
+除此之外，基于卫星观测的河道宽度数据 (\texttt{width.bin}，如图~\ref{fig:基于卫星数据生成的河道宽度示意图}) 也可由MERIT-hydro水文地形数据中获取。
+CaMa-Flood推荐使用通过 \texttt{set\_gwdlr.F90} 子程序生成组合宽度参数 (经验公式和卫星数据的组合) 数据。
+相关地图的制备详见 \citet{yamazaki2014regional, yamazaki2014development}。
 {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/基础数据/CaMa-Flood基于卫星数据生成的河道宽度示意图.png}
-\caption{基于卫星数据生成的河道宽度示意图。图片摘自Yamazaki et al. (2011)。}
-\label{fig:CaMa-Flood基于卫星数据生成的河道宽度示意图}
+\includegraphics{Figures/陆地表面的水分循环/基于卫星数据生成的河道宽度示意图.png}
+\caption{基于卫星数据生成的河道宽度示意图。图片摘自\citet{yamazaki2011physically}。}
+\label{fig:基于卫星数据生成的河道宽度示意图}
 \end{figure}
 }
 
-
-如图 ~\ref{fig:CaMa-Flood流域单元分布图}所示，由于CaMa-Flood是基于流域单元进行计算的，而陆面模式是基于规则的经纬度网格，流域单元在当前陆面模式分辨率 (经纬度网格) 投影下呈现不规则的形状。因此在流域边缘有可能出现一个网格分属于不同流域，以及多个经纬度网格单元同属于一个流域单元的情况。这就需要强制插值分割这些陆面模式经纬度网格生成的产流量到不同的流域。指定流域单元i从陆面模式网格获得的水量由如下公式进行计算：
+如图~\ref{fig:流域单元分布图} 所示，由于 CaMa-Flood 是基于流域单元进行计算的，而陆面模式是基于规则的经纬度网格，
+流域单元在当前陆面模式分辨率 (经纬度网格) 投影下呈现不规则的形状。
+因此在流域边缘有可能出现一个网格分属于不同流域，以及多个经纬度网格单元同属于一个流域单元的情况。
+这就需要强制插值分割这些陆面模式经纬度网格生成的产流量到不同的流域。
+指定流域单元$i$从陆面模式网格获得的水量由如下公式进行计算：
 \begin{equation}
 F_{i}=\sum_{N} A_{i, j} R_{j}
 \end{equation}
-其中$F_i$为进入流域单元i在单位时间 [$m^3s^{-1}$]的输入水量，$A_i$,$j$ 是陆面模式的经纬度网格单元$j$在属于指定流域单元的面积大小, $N$是指属于指定流域单元陆面模式的经纬度网格的数量。该映射信息被存储在$test\_***.bin$(***是网格分辨率，例如 $test\_1deg.bin$)。同时，还需准备一个文本文件 (比如说$diminfo\_test-1deg.txt$) 用来指定模拟的维度 (比如说区域，分辨率，流域单元数量，输入经纬度网格数量，输入的映射文件名$test_***.bin$)。
-{
-\begin{figure}[]
-\centering
-\includegraphics{Figures/基础数据/CaMa-FloodMap目录下河网图及地形参数文件列表.png}
-\caption{Map目录下河网图及地形参数文件列表}
-\label{tab:CaMa-FloodMap目录下河网图及地形参数文件列表}
-\end{figure}
-}
+其中$F_i$为进入流域单元$i$在单位时间 [$\rm m^3\,s^{-1}$]的输入水量，$A_{i, j}$ 是陆面模式的经纬度网格单元$j$在属于指定流域单元的面积大小,
+ $N$是指属于指定流域单元陆面模式的经纬度网格的数量。该映射信息被存储在 \texttt{test\_***.bin} (\texttt{***} 是网格分辨率
+ ，例如 \texttt{test\_1deg.bin})。同时，还需准备一个文本文件 (比如说 \texttt{diminfo\_test-1deg.txt}) 用来指定模拟的维度
+  (比如说区域，分辨率，流域单元数量，输入经纬度网格数量，输入的映射文件名 \texttt{test\_***.bin})。
 
-
-在map目录中，$CaMa-Flood$还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据，如 (3sec，1min，15min，3min等目录之下)。高分辨率数据被划分为$\$(TILE).\$(VAR).bin$，每个TILE的区域记录在“location.txt”文件之中；具体提供的参数\$(VAR)如表~\ref{tab:河网各数据文件}所示。其中$\$(TILE).flwdir.bin$和$\$(TILE).downxy.bin$分别以基于$D8$格式和$downstreamXY$格式描述了河流流向；$\$(TILE).catmzy.bin$表示流域单元内的网格 ($ix,iy$) 在高分辨率经纬度网格($iXX,iYY$)上的映射；$\$(TILE).catmzz.bin$表示每个网格对应的漫滩层；$\$(TILE).flddif.bin$表示每个网格堤坝平均高度 [m]，用于对粗分辨率的漫滩水深进行降尺度；$\$(TILE).visual.bin$用于高分辨率流域边界可视化，其中数值上体现为海洋=0, 陆地 (未调整) =1, 陆地 (调整并在$CaMa-Flood$中使用) =2, 通常网格=3，流域边界=5, 河道=10, 内陆流域出口=20, 与海洋连接的河口=25。
-
+在 \texttt{map} 目录中，CaMa-Flood 还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据 (如 \texttt{3sec}，\texttt{1min}，\texttt{15min}，
+\texttt{3min} 等目录之下)。
+高分辨率数据被划分为\texttt{\$(TILE).\$(VAR).bin}，每个TILE的区域记录在 \texttt{location.txt} 文件之中；
+具体提供的参数 \texttt{\$(VAR)} 如表~\ref{tab:河网图及地形参数文件列表2} 所示。其中 \texttt{\$(TILE).flwdir.bin} 和
+\texttt{\$(TILE).downxy.bin} 分别以基于 D8 格式和 downstreamXY 格式描述了河流流向；\texttt{\$(TILE).catmzy.bin} 表示流域单元内的网格 (ix, iy) 
+在高分辨率经纬度网格 (iXX, iYY)上的映射；\texttt{\$(TILE).catmzz.bin} 表示每个网格对应的漫滩层；\texttt{\$(TILE).flddif.bin} 表示每个网格堤坝平均高度 [m]，
+用于对粗分辨率的漫滩水深进行降尺度；\texttt{\$(TILE).visual.bin} 用于高分辨率流域边界可视化，其中数值上体现为海洋 = 0, 
+陆地 (未调整) = 1, 陆地 (调整并在 CaMa 中使用) = 2, 通常网格 = 3，流域边界 = 5, 河道 = 10, 内陆流域出口 = 20, 与海洋连接的河口 = 25。
+具体文件列表见表~\ref{tab:河网各数据文件1}。
 
 % Please add the following required packages to your document preamble:
-% \usepackage{multirow}
+% \usepackage{booktabs}
 \begin{table}[]
-\centering
-\caption{河网各数据文件}
-\label{tab:河网各数据文件}
-\begin{tabular}{lccccc}
-\toprule
-文件名                                  & 变量名   & 符号  & 描述                            & 单位 & 格式        \\\midrule
-location.txt                         & -     & -   & Hi-res domain info            & -  & text      \\
-\multirow{2}{*}{\$(TILE).catmxy.bin} & catmx & jXX & catchment (iXX,iYY) rec=1     &    & int*2byte \\
-                                     & catmy & iYY & catchment (iXX,iYY) rec=2     &    & int*2byte \\
-\$(TILE).catmzz.bin                  & catmz & -   & floodplain layer              &    & int*1byte \\
-\$(TILE).flwdir.bin                  & dir   & -   & flow direction (D8)           &    & int*1byte \\
-\multirow{2}{*}{\$(TILE).downxy.bin} & downx & dx  & relative downstream x (rec=1) &    & int*2byte \\
-                                     & downy & dy  & relative downstream y (rec=2) &    & int*2byte \\
-\$(TILE).elevtn.bin                  &       & -   & elevation                     & m  & real      \\
-\$(TILE).flddif.bin                  &       & -   & height above river channel    & m  & real      \\
-\$(TILE).rivwth.bin                  &       & -   & river channel width           & m  & real      \\
-\$(TILE).grdare.bin                  &       & -   & pixel area                    & m2 & real      \\
-\$(TILE).uparea.bin                  &       & -   & upstream drainage area        & m2 & real      \\
-\$(TILE).visual.bin                  &       & -   & Catchment visualization       &    & int*1byte \\ \bottomrule
-\end{tabular}
+    \centering
+    \caption{河网各数据文件}
+    \label{tab:河网各数据文件1}
+    \begin{tabular}[h]{p{4cm}p{1.5cm}p{1.5cm}p{4cm}p{1cm}p{2cm}} %{@{}cccccc@{}} %
+    \toprule
+    File                & Variable    & Symbol                        & Description                   & Unit      & Format \\ \midrule
+    \texttt{location.txt}        & -        & -                             & Hi-res domain info            & -         & text   \\
+    \texttt{\$(TILE).catmxy.bin} & \texttt{catmx}    & $iXX$         & catchment (iXX,jYY) rec=1     & - & int*2byte       \\
+                                               & \texttt{catmy}    & $jYY$      & catchment (iXX,jYY) rec=2     & - & int*2byte      \\
+    \texttt{\$(TILE).catmzz.bin} & \texttt{catmz}    & -                 & floodplain layer              & -  & int*1byte \\
+    \texttt{\$(TILE).flwdir.bin} & \texttt{dir}      & -                        & flow direction (D8)         & -   & int*1byte  \\
+    \texttt{\$(TILE).downxy.bin} & \texttt{downx}    & $dx$          & relative downstream x (rec=1) & - & int*2byte   \\
+                                                & \texttt{downy}    & $dy$       & relative downstream y (rec=2) & - & int*2byte   \\
+    \texttt{\$(TILE).elevtn.bin}    & -        & -                             & elevation                     & m                             & real    \\
+    \texttt{\$(TILE).flddif.bin}      & -        & -                             & height above river channel    & m                             & real   \\
+    \texttt{\$(TILE).rivwth.bin} & -        & -                                & river channel width           & m                             & real   \\
+    \texttt{\$(TILE).grdare.bin} & -        & -                               & pixel area                    & $\rm m^2$                            & real   \\
+    \texttt{\$(TILE).uparea.bin} & -       & -                               & upstream drainage area        & $\rm m^2$       & real   \\
+    \texttt{\$(TILE).visual.bin}  & -        & -                               & Catchment visualization        & -                                                        & int*1byte       \\ \bottomrule
+    \end{tabular}
 \end{table}
 
 \subsection{水库}
@@ -280,7 +364,7 @@ location.txt                         & -     & -   & Hi-res domain info         
 这些计算过程将在水库中详细说明，本章节主要介绍所用基础数据。
 
 
-\begin{table}[h!]
+\begin{table}[h]
     \centering
     \caption{水库模块所用的水库基础数据}
     \label{tab:水库模块所用的水库基础数据}
@@ -296,7 +380,7 @@ location.txt                         & -     & -   & Hi-res domain info         
     
 
 \subsubsection{全球水库基本属性数据}
-全球水库基本属性数据来自Global Reservoir and Dam Database （$GranD$; Lehner et al., 2011），该数据集目前提供v1.1和v1.3两个版本。v1.1版本包含了全球范围内6862个水库及其关联大坝（图~\ref{fig:GranD-v1.1所包含水库的位置和主要用途}）的基本属性数据，水库的累积库容为6197 km$^{3}$，水库数量较多、库容较大的区域主要集中在中国、美国、加拿大、印度和欧洲。v1.3版本包含的水库在v1.1版本的基础上增加到7320个，累积库容增加到6863.5 km$^{3}$。$GranD$提供了水库及其关联大坝的地理位置和基本属性信息（对于其包含的大部分水库）。其中，水库模块所用属性主要包括水库编码（$GRAND\_ID$）、水库名称（$DAM\_NAME$）、经度（$LONG\_DD$）、纬度（$LAT\_DD$）、水库总库容（$CAP\_MCM$）、汇流面积（$CATCH\_SKM$）、主要用途（$MAIN\_USE$）、建坝年份（$YEAR$）等。
+全球水库基本属性数据来自Global Reservoir and Dam Database (GranD; \citet{lehner2011high})，该数据集目前提供v1.1和v1.3两个版本。v1.1版本包含了全球范围内6862个水库及其关联大坝（图~\ref{fig:GranD-v1.1所包含水库的位置和主要用途}）的基本属性数据，水库的累积库容为6197 km$^{3}$，水库数量较多、库容较大的区域主要集中在中国、美国、加拿大、印度和欧洲。v1.3版本包含的水库在v1.1版本的基础上增加到7320个，累积库容增加到6863.5 \unit{km^3}。GranD提供了水库及其关联大坝的地理位置和基本属性信息（对于其包含的大部分水库）。其中，水库模块所用属性主要包括水库编码（\texttt{GRAND\_ID}）、水库名称（\texttt{DAM\_NAME}）、经度（\texttt{LONG\_DD}）、纬度（\texttt{LAT\_DD}）、水库总库容（\texttt{CAP\_MCM}）、汇流面积（\texttt{CATCH\_SKM}）、主要用途（\texttt{MAIN\_USE}）、建坝年份（\texttt{YEAR}）等。
 {
 \begin{figure}[]
 \centering
@@ -307,15 +391,15 @@ location.txt                         & -     & -   & Hi-res domain info         
 }
 
 \subsubsection{全球水库水面面积数据}
-全球水库水面面积数据来自Global Reservoir Surface Area Dataset（$GRSAD$），该数据集提供了全球6871个水库1984年至2015年的逐月水库面积变化数据（与GranD水库匹配）。该数据是基于Global Surface Water Dataset（$GSWD$）数据修正而得。Pekel等（2016）使用1984~2015年300万张Landsat卫星图像创建了全球地表水数据集$GSWD$（Pekel et al. 2016）。但由于云、云阴影等因素的影响，利用Landsat对全球范围内单个水库进行长期水面变化分析会存在较大偏差。$GRSAD$修复了由于云层、云层阴影、地形阴影和扫描线校正器故障导致的像素污染，使每个时间序列中有效图像的数量平均提高了81\%（Zhao et al., 2018）。基于水库面积长期动态变化数据，可估算水库的防洪库容面积、正常库容面积和死库容面积。
+全球水库水面面积数据来自Global Reservoir Surface Area Dataset（GRSAD），该数据集提供了全球6871个水库1984年至2015年的逐月水库面积变化数据（与GranD水库匹配）。该数据是基于Global Surface Water Dataset（GSWD）数据修正而得。\citet{pekel2016high} 使用1984$\sim$2015年300万张Landsat卫星图像创建了全球地表水数据集GSWD。但由于云、云阴影等因素的影响，利用Landsat对全球范围内单个水库进行长期水面变化分析会存在较大偏差。GRSAD修复了由于云层、云层阴影、地形阴影和扫描线校正器故障导致的像素污染，使每个时间序列中有效图像的数量平均提高了81\%~\citep{zhao2018automatic}。基于水库面积长期动态变化数据，可估算水库的防洪库容面积、正常库容面积和死库容面积。
 
 \subsubsection{全球水库形状数据}
 
-全球水库形状数据来源于Global Reservoir Geometry Database（$ReGeom$），该数据集包含了全球6824个水库的库容-面积-深度数据（与$GranD$水库匹配）。Yigzaw等（2018）采用一种优化算法来确定每个水库的库容-面积-深度关系，该算法从五种可能的规则几何形状中迭代选择出最佳几何形状，以最小化水库总库容和表面积的估算误差。$ReGeom$数据集适用范围广泛，尤其适用于改进全球水文或地球系统模型中对水库动态的表达，特别是在水库信息有限或不精确的地区。数据集中包含了所有水库的近似几何数据($ReGeomData\_WOW\_V1.xlsx$)和每个水库的库容-面积-深度数据($*.csv$)。通过每个水库的防洪库容面积、正常库容面积和死库容面积，查找相应的库容-面积-深度数据，即可得到对应的防洪库容、正常库容和死库容。
+全球水库形状数据来源于Global Reservoir Geometry Database（ReGeom），该数据集包含了全球6824个水库的库容-面积-深度数据（与GranD水库匹配）。\citet{yigzaw2018new} 采用一种优化算法来确定每个水库的库容-面积-深度关系，该算法从五种可能的规则几何形状中迭代选择出最佳几何形状，以最小化水库总库容和表面积的估算误差。ReGeom数据集适用范围广泛，尤其适用于改进全球水文或地球系统模型中对水库动态的表达，特别是在水库信息有限或不精确的地区。数据集中包含了所有水库的近似几何数据(\texttt{ReGeomData\_WOW\_V1.xlsx})和每个水库的库容-面积-深度数据(\texttt{*.csv})。通过每个水库的防洪库容面积、正常库容面积和死库容面积，查找相应的库容-面积-深度数据，即可得到对应的防洪库容、正常库容和死库容。
 
 
 \subsection{湖泊}
-湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球$30''$ (约1公里)分辨率，经纬度网格，单时次数据。
+湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球\ang{;;30} (约1公里)分辨率，经纬度网格，单时次数据。
 
 \section{城市数据}\label{城市数据}
 
@@ -352,7 +436,7 @@ LCZ数据目前使用的 \citet{demuzere2022global} 全球LCZ分类数据，该�
 这些物理性质取决于建筑物的材质及城市几何结构数据，比如: 不透水面比例分布(impervious fraction)、
 建筑物屋顶面比例分布(roof fraction)、建筑物高度(building height)以及街区宽高比(H/W ratio)、反照率、发射率、导热率以及比热容等等。
 目前使用 \citet{oleson2020parameterization} 基于 \citet{jackson2013parameterization} 的建筑数据开发的NCAR城市工具
-(Toolbox for Human-Earth SystemIntegration \& Scaling (THESIS) toolset, http://www.cgd.ucar.edu/iam/projects/thesis/thesis-urbanproperties-tool.html)
+(Toolbox for Human-Earth SystemIntegration \& Scaling (THESIS) toolset, \url{http://www.cgd.ucar.edu/iam/projects/thesis/thesis-urbanproperties-tool.html})
 为模式生成各类城市形态以及物理性质输入参数。
 该工具根据一定规则将全球所有国家分为33类 (图~\ref{fig:地区分类})，并根据传统城市分类进一步划分，不同类的国家不同类型建筑具有不同的性质。
 %
