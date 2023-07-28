@@ -87,7 +87,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 
 
 \section{土壤数据}\label{土壤数据}
-\subsection{土壤基础数据}\label{土壤基础数据}
+\subsection{土壤基础属性}\label{土壤基础属性}
 土壤基础属性数据采用Global Soil Dataset for Earth System Modeling（GSDE，http://globalchange.bnu.edu.cn/research/soilw） \citep{shangguan2014global}
 和SoilGrids （https:\\//www.soilgrids.org/）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0-0.045, 0.045-0.091, 0.091-0.166, 0.166-0.289, 0.289-0.493, 0.493-0.829, 0.829-1.383, 1.383-2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0-0.05，0.05-0.15，0.15-0.3，0.3-0.6，0.6-1，1-2m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。
 
@@ -142,7 +142,7 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/地表输入数据/次网格聚合方案.png}
+\includegraphics{Figures/基础数据/次网格聚合方案.png}
 \caption{CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图。}
 \label{fig:次网格聚合方案}
 \end{figure}
@@ -200,7 +200,7 @@ Canopy height                                                   & Global 1 km fo
 {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/地表输入数据/LCZ分类图示.png}
+\includegraphics{Figures/基础数据/LCZ分类图示.png}
 \caption{LCZ分类示意图}
 \label{fig:LCZ分类图示}
 \end{figure}
@@ -229,12 +229,14 @@ LCZ数据目前使用的 \citet{demuzere2022global} 全球LCZ分类数据，该�
 {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/地表输入数据/地区分类.png}
+\includegraphics{Figures/基础数据/地区分类.png}
 \caption{地区分类示意图}
 \label{fig:地区分类}
 \end{figure}
 }
+\subsection{建筑高度与建筑比例数据}\label{建筑高度与建筑比例数据}
 
+\subsection{人口数据}\label{人口数据}
 
 \subsection{城市树覆盖数据}\label{城市树覆盖数据}
 NCAR CLM城市数据集比较全面的描述了全球城市的形态特征和物理性质，但是其城市数据缺少关于植被(树)和水体的描述，
@@ -256,7 +258,7 @@ GFCC Tree Cover (https://lpdaac.usgs.gov/products/gfcc30tcv003/) 提供了
 {
 \begin{figure}[]
 \centering
-\includegraphics{Figures/地表输入数据/GlobeLand30数据覆盖示意图.png}
+\includegraphics{Figures/基础数据/GlobeLand30数据覆盖示意图.png}
 \caption{GlobeLand30数据覆盖示意图}
 \label{fig:GlobeLand30数据覆盖示意图}
 \end{figure}
