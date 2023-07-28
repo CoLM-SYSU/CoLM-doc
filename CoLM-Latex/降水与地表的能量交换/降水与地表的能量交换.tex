@@ -16,10 +16,10 @@
 \begin{equation}
 C_{p a}\left(T_{w b}-T\right)=\lambda_{v}\left(r-r_{s a t}^{T_{w b}}\right)
 \end{equation}
-其中$C_{pa}$表示干空气的比热容(J/kg/K)，$T_{wb}$表示大气湿球温度(K)，
-$T$表示大气环境温度(K)，$r$表示混合比，$r_{sat}^{T_{wb}}$表示$T_{wb}$温度下的饱和混合比，
-$\lambda_v$表示液态水的蒸发潜热(J/kg)。于是，取$T_{wb}$的初始值$T_{wb}^{\left(0\right)}=T$，
-$T_{wb}$可通过如下过程进行迭代求解：
+其中 $C_{pa}$ 表示干空气的比热容 (J/kg/K)，$T_{wb}$ 表示大气湿球温度 (K)，
+$T$ 表示大气环境温度 (K)，$r$ 表示混合比，$r_{sat}^{T_{wb}}$ 表示 $T_{wb}$ 温度下的饱和混合比，
+$\lambda_v$ 表示液态水的蒸发潜热 (J/kg)。于是，取 $T_{wb}$ 的初始值 $T_{wb}^{\left(0\right)}=T$，
+$T_{wb}$ 可通过如下过程进行迭代求解：
 \begin{enumerate}
     \item 由章节 \ref{饱和水汽压(比湿)及其随温度的变化} 计算$T_{wb}^{\left(n\right)}$温度下的饱和比湿$q_{sat}^{T_{wb}^{\left(n\right)}}$；
     \item 通过混合比和比湿的换算关系($r=\frac{q}{1-q}$)，计算混合比$r$与$r_{sat}^{T_{wb}^{\left(n\right)}}$；
