@@ -69,9 +69,9 @@ r_{3}=0.3
 其中$\Delta p_{s}$为在$t^{(N+1)}$-$t^N$时间内的降雪量 (m)，$N$为积分的时间步数。
 
 
-对于部分雪覆盖的地表，其反照率为雪覆盖度($f_{sno}$，参见章节 \ref{无植被覆盖地表湍流通量的计算方案})的加权函数，表示为：
+对于部分雪覆盖的地表，其反照率为雪覆盖度($f_{sno}$，参见章节~\ref{无植被覆盖地表湍流通量的计算方案}) 的加权函数，表示为：
 \begin{equation}
-\alpha_{g}=\left(1-f_{sno}\right) * \alpha_{g}+f_{sno} \alpha_{sno}
+\alpha_{g}=\left(1-f_{sno}\right) \alpha_{g} + f_{sno} \alpha_{sno}
 \end{equation}
 其中$\alpha_{g}$表示土壤、冰川或水体地表覆盖时的反照率。对可见光和近红外波段均按上式计算。
 
@@ -84,8 +84,9 @@ r_{3}=0.3
 
 对于无冰海洋，采用太阳高度角计算直射入射反照率，漫射反射率则设为常数。计算中，假设反照率与波段和海表面风速等其他物理量无关。可见光和近红外波段的漫射反射率均设为0.06；而两个波段的直射反照率均通过以下公式计算：
 \begin{equation}
-\alpha_{s}= \frac{0.026}{\mu^{1.7}+0.065}+0.15\times(\mu-0.1)\times(\mu-0.5)\times(\mu-1) 
+\alpha_{s}= \frac{0.026}{\mu^{1.7}+0.065}+0.15\times(\mu-0.1)\times(\mu-0.5)\times(\mu-1)
 \end{equation}
+
 
 \section{植被反照率-二流近似模型}\label{植被反照率二流近似模型}
 {
@@ -123,10 +124,10 @@ G(\mu)=\phi_{1}+\phi_{2} \mu
 \end{equation}
 上面计算表达式是假设$\phi_{1} \neq 0$以及$\phi_{2} \neq 0$，但实际上两者均可为0 \citep{dai2004two}。当$\phi_{1}$、$\phi_{2}$为0时，计算为
 \begin{equation}
-\bar{\mu}=1 / 0.877, \text { 当 } \phi_{1}=0
-\end{equation}
-\begin{equation}
-\bar{\mu}=1 /\left(2 \phi_{1}\right), \text { 当 } \phi_{2}=0
+\bar{\mu}= \begin{cases} 
+1 / 0.877, & \text { 当 } \phi_{1}=0 \\
+1 /\left(2 \phi_{1}\right), & \text { 当 } \phi_{2}=0
+\end{cases}
 \end{equation}
 假设叶片上的散射辐射各项同性(理想朗伯体)，漫射辐射和直射辐射向上散射系数$\beta$、$\beta_0$可近似计算为
 \begin{equation}
@@ -801,7 +802,7 @@ I_{n}\left(1-T_{d, n}\right)(1-\omega)
 \end{equation}
 第n层植被的太阳直射照射面积($p_{sun}$)计算为：
 \begin{equation}
-P_{sun}=I_{n} / S_{n}
+p_{sun}=I_{n} / S_{n}
 \end{equation}
 上式表明每层植被并不是100\%的被太阳直射照射，该参数将会用于修正植被光照叶面积指数（图 \ref{fig:三层植被辐射传输计算示意图}）。
 {
@@ -846,7 +847,7 @@ P_{sun}=I_{n} / S_{n}
 并将其作为权重，把每层的植被辐射吸收分配到其所包含的PFT中去(包括上面计算的直射辐射直射吸收)。
 
 \subsection{三维植被长波辐射传输}\label{三维植被长波辐射传输}
-为了说明三维植被情况下长波辐射传输与一维情况下最大的不同，我们举一个极端的例子加以说明，如图~\ref{fig:单颗树冠长波辐射传输示意图}所示,
+为了说明三维植被情况下长波辐射传输与一维情况下最大的不同，我们举一个极端的例子加以说明，如图~\ref{fig:单颗树冠长波辐射传输示意图} 所示,
 {
 \begin{figure}[]
 \centering

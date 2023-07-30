@@ -17,12 +17,12 @@ CoLM植被碳氮循环可以表示为21个碳库和22个氮库的碳氮平衡方
 \begin{equation}
 \frac{d N_{\text {veg}}}{dt}=B I_{Nin}+\left(A_{phn}(t) K_{phn}+A_{gmn}(t) K_{gmn}\right) N_{\text {veg }}(t)
 \end{equation}
-$C_{veg}$ 和$N_{veg}$ 是植被碳氮库的状态变量 ($\mathrm{g\ C\ m^{-2}}$ 和 $\mathrm{ g\ N\  m^{-2}}$)，是长度分别为21和22的列向量，
-具体内容见章节11.1对植被碳氮库的详细介绍。$I_{Cin}$ 和$I_{Nin}$ 分别是植被的碳氮输入($\mathrm{g\ C\ m^{-2} s^{-1}}$ and $\mathrm{g\ N\ m^{-2} s^{-1}}$)，
+$C_{veg}$ 和$N_{veg}$ 是植被碳氮库的状态变量 (\unit{g.C.m^{-2}} 和 \unit{g.N.m^{-2}})，是长度分别为21和22的列向量，
+具体内容见章节~\ref{植被碳氮库结构} 对植被碳氮库的详细介绍。$I_{Cin}$ 和$I_{Nin}$ 分别是植被的碳氮输入(\unit{g.C.m^{-2}.s^{-1}} 和 \unit{g.N.m^{-2}.s^{-1}})，
 是标量。其中，碳输入来源于净第一性生产力，氮输入来源于生物固氮和植被被动氮吸收。
 $B$是分配系数向量，代表植被碳氮输入分配到每个植被碳氮库的比例。  
-$K_{phc}$和$K_{gmc}$是21$\times$21的对角矩阵，分别代表植被每个库因为物候过程和自然死亡过程产生的碳周转速率($\rm s^{-1}$)。
-$K_{phn}$和$K_{gmn}$是22$\times$22的对角矩阵，分别代表植被每个库因为物候过程和自然死亡过程产生的氮周转速率($\rm s^{-1}$):
+$K_{phc}$和$K_{gmc}$是21$\times$21的对角矩阵，分别代表植被每个库因为物候过程和自然死亡过程产生的碳周转速率(\unit{s^{-1}})。
+$K_{phn}$和$K_{gmn}$是22$\times$22的对角矩阵，分别代表植被每个库因为物候过程和自然死亡过程产生的氮周转速率(\unit{s^{-1}}):
 \begin{equation}
 K_{p h c}=\left(\begin{array}{ccc}k_{p 1} & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & k_{p 21}\end{array}\right)
 \end{equation}
@@ -141,14 +141,14 @@ N_{veg, s s}=\left(A_{phn}(t) K_{phn}+A_{gmn}(t) K_{gmn}\right)^{-1} B I_{Nin}
 由于生物地球化学循环运用循环的气象强迫场数据，所以平衡状态需要累加计算一个气象循环的平均值。
 
 \section{土壤凋落物生物地球化学循环预热加速}
-CoLM土壤凋落物的碳氮循环可以表示为7个碳库和7个氮库的碳氮平衡方程组 \citep{lu2020full}，其中每个库在土壤垂直方向分为10层，可以写成矩阵形式：
+CoLM土壤凋落物的碳氮循环可以表示为7个碳库和7个氮库的碳氮平衡方程组~\citep{lu2020full}，其中每个库在土壤垂直方向分为10层，可以写成矩阵形式：
 \begin{equation}
 \frac{d C_{\text {soil }}}{dt}=I_{C \text { soil }}+\left(A_{h c} \xi(t) K_{h}+V(t)\right) C_{\text {soil }}(t)
 \end{equation}
 \begin{equation}
 \frac{d N_{\text {soil }}}{dt}=I_{N s o i l}+\left(A_{h n} \xi(t) K_{h}+V(t)\right) N_{\text {soil }}(t)
 \end{equation}
-$C_{soil}$和$N_{soil}$是CoLM土壤凋落物有机碳氮库的状态变量($\mathrm{g\ C\ m^{-3}}$ 和 $\mathrm{g\ N\ m^{-3}}$), 是向量。
+$C_{soil}$和$N_{soil}$是CoLM土壤凋落物有机碳氮库的状态变量(\unit{g.C.m^{-3}} 和 \unit{g.N.m^{-3}}), 是向量。
 $I_{Csoil}$和$I_{Nsoil}$同样是长度为70的向量，代表进入土壤碳氮库中不同分层的凋落物输入。
  $A_{hc}$ 和$A_{hn}$代表土壤碳氮在同一层内不同库之间的传输系数。$V$土壤碳氮在不同层之间的传输系数：
 \begin{equation}

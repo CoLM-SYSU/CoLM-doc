@@ -7,7 +7,7 @@
 \citet{zeng2002coupling}对当时已有的湖泊模式进行了改进，
 使得湖泊模式的模拟效果得到显著提高，成为通用陆面模式CoLM中湖泊模型的早期版本(CoLM-lake)。
 近几年来，随着湖泊模型的不断发展，CoLM-Lake逐渐纳入了新的针对湖泊方案的发展与改进，
-并在2014年发布的新版CoLM中对湖泊模型进行了更新。本文将对新版CoLM-Lake的物理方案做一详细描述（图\ref{fig:湖泊系统垂直分层示意图}）。
+并在2014年发布的新版CoLM中对湖泊模型进行了更新。本文将对新版CoLM-Lake的物理方案做一详细描述（图~\ref{fig:湖泊系统垂直分层示意图}）。
 {
 \begin{figure}[]
 \centering
@@ -30,14 +30,15 @@
 降水到达湖泊表面可发生能量转移与相态变化等一系列过程。此过程可改变湖泊表面条件，尤其当降雪存在时，对于湖泊之上雪层的形成起到决定性作用。
 
 
-首先，在进行湖泊过程计算之前，对湖泊表面的积雪厚度$z_{sno}$(m)与雪水当量$W_{sno}$(mm或$\rm kg/m^2$)进行更新：
+首先，在进行湖泊过程计算之前，对湖泊表面的积雪厚度$z_{sno}$(m)与雪水当量$W_{sno}$(mm或 \unit{kg.m^{-2}})进行更新：
 \begin{equation}
 Z_{sno}=Z_{sno}+\frac{p_{i} \Delta t}{\rho_{sno,new}}
 \end{equation}
 \begin{equation}
 W_{sno}=W_{sno}+p_{i} \Delta t
 \end{equation}
-其中$p_i$表示固态降水率($\rm kg/m^2$/s)，$\rho_{sno,new}$表示新降的干雪密度(kg/m3)(见章节  \ref{温度求解的数值格式})。
+其中$p_i$表示固态降水率(\unit{kg.m^{-2}.s^{-1}})，$\rho_{sno,new}$表示新降的干雪密度(\unit{kg.m^{-3}})(见章节~\ref{温度求解的数值格式})。
+
 接下来，计算湖泊表面与降水的能量转移过程，并且当降水与湖泊表面的相态不同时，相态变化过程同时考虑。
 此过程将根据更新后的积雪厚度，分为湖泊表层
 \begin{enumerate}
@@ -48,7 +49,7 @@ W_{sno}=W_{sno}+p_{i} \Delta t
 
 \textbf {(1)未达到第一层雪产生条件(即$z_{sno}<0.01$且$snl=0$)}\\
 此情形下，降水视为与第一层湖泊表面充分接触并立即发生能量转移，并且当降水与湖泊表层的相态不同时，相态变化过程同时发生。
-此过程的演变由以下八个能量组份($\rm J/m^2$)决定：
+此过程的演变由以下八个能量组份(\unit{J.m^{-2}})决定：
 \begin{align*}
 a &= C_{pl} p_{l} \Delta t\left(T_{p}-T_{f}\right)   & \text{液态降水冷却到$T_f$释放的能量} \\
 b &= L_f p_l \Delta t                                           & \text{液态降水凝结为固态释放的能量} \\
@@ -59,9 +60,9 @@ f &= L_f p_i \Delta t                                           & \text{固态�
 g &= C_{pl} \rho_{liq} \Delta z_{lake, 1}\left(1-I_{1}\right)\left(T_{lake, 1}-T_f\right)  & \text{第一层湖泊液态下冷却到$T_f$释放的能量} \\
 h &= L_f \rho_{liq} \Delta z_{lake, 1}\left(1-I_{1}\right)  & \text{第一层湖泊液态下完全冻结释放的能量}
 \end{align*}
-其中，$p_l$、$p_i$分别为液态与固态降水率($\rm kg/m^2$/s)，$C_{pl}$、$C_{pi}$分别为液态水与固态水的比热容(J/kg/K)，
-$T_p$、$T_f$分别为雨水温度与液态水凝结温度(K)，$\Delta t$表示时间积分步长(s)，$L_f$表示液态水凝结潜热(J/kg)，
-$\rho_{liq}$表示液态水密度($\rm kg/m^3$)，$T_{lake,1}$，$\Delta z_{lake,1}$，$I_1$分别为第一层湖泊的温度，
+其中，$p_l$、$p_i$分别为液态与固态降水率(\unit{kg.m^{-2}.s^{-1}})，$C_{pl}$、$C_{pi}$分别为液态水与固态水的比热容(\unit{J.kg^{-1}.K^{-1}})，
+$T_p$、$T_f$分别为雨水温度与液态水凝结温度(K)，$\Delta t$表示时间积分步长(s)，$L_f$表示液态水凝结潜热(\unit{J.kg^{-1}})，
+$\rho_{liq}$表示液态水密度(\unit{kg.m^{-3}})，$T_{lake,1}$，$\Delta z_{lake,1}$，$I_1$分别为第一层湖泊的温度，
 厚度与冻结部分所占的质量比。为表述清晰，此过程将按照第一层湖泊的不同相态分别考虑，计算如下：\\
 
 A. 第一层湖泊完全冻结($I_1>0.999$)\\
@@ -235,15 +236,15 @@ C_{p i} p_{i} \Delta t\left(T_{lake, 1}^{(n+1)}-T_{p}\right)=g+h+C_{p i} \rho_{l
 \begin{equation}
 \beta S_{g}+L_{g}\left(T_{g}\right)-H_{g}\left(T_{g}\right)-\lambda E_{g}\left(T_{g}\right)-G\left(T_{g}\right)=0
 \end{equation}
-其中$S_g$表示可被湖泊吸收的净太阳辐射($\rm W/m^2$)(见章节 \ref{短波吸收辐射通量} )，$\beta$表示被表面吸收的比例，
-$L_g$表示湖泊表面吸收的净长波辐射($\rm W/m^2$)，$H_g$，$E_g$分别表示陆面向大气输送的感热通量($\rm W/m^2$)
-和水汽通量($\rm kg/m^2$)，$G$表示输入到湖泊表面以下的地表热通量($\rm W/m^2$)。
-所有能量通量均表达为湖泊表面温度$T_g$的函数。$\lambda$用于将水汽通量转换为潜热通量，取值为(J/kg，见表 \ref{tab:物理常数})
+其中$S_g$表示可被湖泊吸收的净太阳辐射(\unit{W.m^{-2}})(见章节~\ref{短波吸收辐射通量})，$\beta$表示被表面吸收的比例，
+$L_g$表示湖泊表面吸收的净长波辐射(\unit{W.m^{-2}})，$H_g$，$E_g$分别表示陆面向大气输送的感热通量(\unit{W.m^{-2}})
+和水汽通量(\unit{kg.m^{-2}})，$G$表示输入到湖泊表面以下的地表热通量(\unit{W.m^{-2}})。
+所有能量通量均表达为湖泊表面温度$T_g$的函数。$\lambda$用于将水汽通量转换为潜热通量，取值为(\unit{J.kg^{-1}}，见表~\ref{tab:物理常数})
 \begin{equation}
 \lambda=\left\{\begin{array}{ll}\lambda_{s} & T_{g} \leq T_{f} \\ \lambda_{v} & T_{g}>T_{f}\end{array}\right.
 \end{equation}
 $\beta$的取值依赖于湖泊表面的状态。若湖泊表面存在雪层，则忽略短波辐射在雪层中的传递，
-取$\beta=1$；若不存在雪层，则$\beta$取为短波辐射中近红外辐射所占的比例(见章节 \ref{短波吸收辐射通量} )，
+取$\beta=1$；若不存在雪层，则$\beta$取为短波辐射中近红外辐射所占的比例(见章节~\ref{短波吸收辐射通量})，
 其余辐射的部分($1-\beta$)被湖泊水体及下面的土壤吸收。
 
 
@@ -251,66 +252,66 @@ $\beta$的取值依赖于湖泊表面的状态。若湖泊表面存在雪层，�
 \begin{equation}
 H_{g}=-\rho_{atm} C_{p a} \frac{\left(\theta_{atm}-T_{g}\right)}{r_{a h}}
 \end{equation}
-其中$\rho_{atm}$表示空气密度(kg/m3)(计算见章节 \ref{基本理论})，$C_{pa}$表示空气的比热容(J/kg/K，见表 \ref{tab:物理常数})，
-$\theta_{atm}$表示大气位温(K)(计算见章节 \ref{基本理论})，$r_{ah}$表示感热通量的空气动力学阻抗(s/m)(计算见章节 \ref{基本理论})。
+其中$\rho_{atm}$表示空气密度(\unit{kg.m^{-3}})(计算见章节~\ref{基本理论})，$C_{pa}$表示空气的比热容(\unit{J.kg^{-1}.K^{-1}}，见表~\ref{tab:物理常数})，
+$\theta_{atm}$表示大气位温(K)(计算见章节~\ref{基本理论})，$r_{ah}$表示感热通量的空气动力学阻抗(\unit{s.m^{-1}})(计算见章节~\ref{基本理论})。
 水汽通量表达为：
 \begin{equation}
 E_{g}=-\rho_{atm} \frac{\left(q_{atm}-q_{g}\right)}{r_{a w}}
 \end{equation}
-其中$q_{atm}$表示空气比湿(kg/kg)，$q_g=q_{sat}^{T_g}$为温度在$T_g$时的饱和比湿(kg/kg)(计算见章节 \ref{饱和水汽压(比湿)及其随温度的变化})，
-$r_{aw}$表示水汽通量的空气动力学阻抗(s/m)(计算见章节 \ref{基本理论})。
+其中$q_{atm}$表示空气比湿(\unit{kg.kg^{-1}})，$q_g=q_{sat}^{T_g}$为温度在$T_g$时的饱和比湿(\unit{kg.kg^{-1}})(计算见章节~\ref{饱和水汽压(比湿)及其随温度的变化})，
+$r_{aw}$表示水汽通量的空气动力学阻抗(\unit{s.m^{-1}})(计算见章节~\ref{基本理论})。
 计算空气动力学阻抗系数需估算湖泊表面动力、热力和水汽粗糙度，他们依赖于湖泊表面的状态。
-若湖泊冻结($T_g\le T_f$)且湖泊之上存在雪层，则动力粗糙度$z_{0m}=0.0024$m，
+若湖泊冻结($T_g\le T_f$)且湖泊之上存在雪层，则动力粗糙度$z_{0m}=0.0024$ m，
 热力与水汽粗糙度$z_{0h}=z_{0w}=z_{0m}\exp{\left(-0.13R_0^{0.45}\right)}$~\citep{zilitinkevich1972dynamics}，
 其中$R_0$表示近地面大气雷诺数$R_0=\frac{z_{0m}u_\ast}{\upsilon}$，
-$\upsilon=1.5\times{10}^{-5}$ $\rm m^2/s$表示空气动力学粘性系数。
-若湖泊冻结但湖泊之上不存在雪层，则动力粗糙度$z_{0m}=0.001$m \citep{subin2012improved}，
-热力与水汽粗糙度同上。若湖泊为非冻结状态($T_g>T_f$)，则动力粗糙度为\citep{subin2012improved}：
+$\upsilon=1.5\times{10}^{-5}$ \unit{m^2.s^{-1}} 表示空气动力学粘性系数。
+若湖泊冻结但湖泊之上不存在雪层，则动力粗糙度$z_{0m}=0.001$ m~\citep{subin2012improved}，
+热力与水汽粗糙度同上。若湖泊为非冻结状态($T_g>T_f$)，则动力粗糙度为~\citep{subin2012improved}：
 \begin{equation}
 z_{0 m}=\max \left(\frac{0.1 v}{u_{*}}, C \frac{u_{*}^{2}}{g}\right) \geq 10^{-5}
 \end{equation}
-其中$g$表示重力加速度，$\upsilon$表示如下方式给出的空气动力学粘性系数($\rm m^2/s$)：
+其中$g$表示重力加速度，$\upsilon$表示如下方式给出的空气动力学粘性系数(\unit{m^2.s^{-1}})：
 \begin{equation}
 v=v_{0}\left(\frac{T_{g}}{T_{0}}\right)^{1.5} \frac{P_{0}}{P_{r e f}}
 \end{equation}
-其中$T_0=293.15$K，$P_0=1.013\times{10}^5$Pa，
-$\upsilon_0$表示此温度压强下的空气动力粘性系数$\upsilon_0=1.51\times{10}^{-5}$$\rm m^2/s$，
+其中$T_0=293.15$ K，$P_0=1.013\times{10}^5$ Pa，
+$\upsilon_0$表示此温度压强下的空气动力粘性系数$\upsilon_0=1.51\times{10}^{-5}$ \unit{m^2.s^{-1}}，
 $P_{ref}$表示大气参考高度气压。$z_{0m}$的计算中$C$表示有效Charnock系数，按如下方式表达：
 \begin{equation}
-C=C_{\min }+\left(C_{\max }-C_{\min }\right) \exp \max (A, B)
+C=C_{min}+\left(C_{max}-C_{min}\right) \exp\left[\max (A, B)\right]
 \end{equation}
 其中$C_{max}=0.11$，$C_{min}=0.01$分别表示最大与最小Charnock系数，
 $A$、$B$分别表示来自湖泊风浪区长度$F$与湖泊深度$d$的限制：
-$A=-\left(\frac{Fg}{u^2}\right)^{1/3}/f_c，B=-\frac{\sqrt{dg}}{u}$，
-其中$u$表示大气参考高度风速(m/s)，$f_c=22$，$F(m)$依赖于湖泊深度，
+$A=-\left(\frac{Fg}{u^2}\right)^{1/3}/f_c$, $B=-\frac{\sqrt{dg}}{u}$，
+其中$u$表示大气参考高度风速(\unit{m.s^{-1}})，$f_c=22$，$F(m)$依赖于湖泊深度，
 假定浅湖具有较小的湖泊风浪区，
 计算公式为：$$F=\left\{\begin{array}{ll}100.0 & d<4.0 \\ 25.0 * d & d \geq 4.0\end{array}\right.$$
 
 
 根据 \citet{Zilitinkevich2001}，非冻结湖泊的热力和水汽粗糙度表达为：
 \begin{equation}
-z_{0 h}=z_{0 m} \exp \left\{-\frac{k}{P_{r}}\left(4 \sqrt{R_{0}}-3.2\right)\right\} \geq 10^{-5}
+z_{0 h}=z_{0 m} \exp \left[-\frac{\kappa}{P_{r}}\left(4 \sqrt{R_{0}}-3.2\right)\right] \geq 10^{-5}
 \end{equation}
 \begin{equation}
-z_{0 w}=z_{0 m} \exp \left\{-\frac{k}{s_{c}}\left(4 \sqrt{R_{0}}-4.2\right)\right\} \geq 10^{-5}
+z_{0 w}=z_{0 m} \exp \left[-\frac{\kappa}{s_{c}}\left(4 \sqrt{R_{0}}-4.2\right)\right] \geq 10^{-5}
 \end{equation}
-其中$k$表示von K\'arman常数，$P_r=0.713$表示空气分子的 Prandtl 数，
+其中$\kappa$表示von K\'arman常数，$P_r=0.713$表示空气分子的 Prandtl 数，
 $S_c=0.66$表示空气中水分子的 Schmidt 数，
 $R_0=\frac{z_{0m}u_\ast}{\upsilon}\geq0.1$表示近地面大气雷诺数，$\upsilon$的计算方式同上。
 
 
-输入到湖泊表面以下的地表热通量$G$($\rm W/m^2$)表达为
+输入到湖泊表面以下的地表热通量$G$(\unit{W.m^{-2}})表达为
 \begin{equation}
 G=\frac{2 \lambda_{snl+1}}{\Delta z_{snl+1}}\left(T_{g}-T_{snl+1}\right)
 \end{equation}
 其中$T_{snl+1}$，$\Delta z_{snl+1}$分别表示湖泊顶层(雪层或湖泊层)的温度(K)与厚度(m)，
-$\lambda_{snl+1}$表示湖泊顶层的热力传导率(W/m/K)。
-若顶层为雪层，$\lambda_{snl+1}$需考虑雪层的固态和液态含水量，计算见 \ref{温度求解的数值格式} 节；
-若顶层为湖泊层且湖泊层已冻结($T_g\le T_f$)，则$\lambda_{snl+1}=\lambda_{ice}$(见表 \ref{tab:物理常数})；
-若顶层为湖泊层且湖泊层未冻结($T_g>T_f$)，则$\lambda_{snl+1}$需同时考虑分子与大涡扩散率，计算见~\ref{雪层湖泊层土壤层温度的计算} 节。
+$\lambda_{snl+1}$表示湖泊顶层的热力传导率(\unit{W.m^{-1}.K^{-1}})。
+若顶层为雪层，$\lambda_{snl+1}$需考虑雪层的固态和液态含水量，计算见章节~\ref{温度求解的数值格式}；
+若顶层为湖泊层且湖泊层已冻结($T_g\le T_f$)，则$\lambda_{snl+1}=\lambda_{ice}$(见表~\ref{tab:物理常数})；
+若顶层为湖泊层且湖泊层未冻结($T_g>T_f$)，则$\lambda_{snl+1}$需同时考虑分子与大涡扩散率，计算见章节~\ref{雪层湖泊层土壤层温度的计算}。
 
 
-湖泊表面吸收的净长波辐射$L_g$ ($\rm W/m^2$)可达表为：
+湖泊表面吸收的净长波辐射$L_g$ (\unit{W.m^{-2}})可达表为：
 \begin{equation}
 L_{g}=L \downarrow-L_{g} \uparrow
 \end{equation}
@@ -348,10 +349,10 @@ $T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$表示$T_g$在使用牛顿迭代法
         Z_{0 m}=\frac{0.013 u_{*}^{2}}{g}+\frac{0.11 v}{u_{*}}
         \end{equation}
         \begin{equation}
-        u_{*}=k V_{a} / \ln \frac{z_{atm, m}-d}{z_{0 m}}
+        u_{*}=\kappa V_{a} / \ln \frac{z_{atm, m}-d}{z_{0 m}}
         \end{equation}
-        其中$k$表示 von K\'arman常数，$z_{atm,m}$表示风速观测高度(m)，$d=0$表示湖泊表面零平面位移，
-        $\upsilon$表示通过下式计算的空气动力学粘性系数($\rm m^2/s$)\citep{andreas1989thermal}：
+        其中$\kappa$表示 von K\'arman常数，$z_{atm,m}$表示风速观测高度(m)，$d=0$表示湖泊表面零平面位移，
+        $\upsilon$表示通过下式计算的空气动力学粘性系数(\unit{m^2.s^{-1}})~\citep{andreas1989thermal}：
         \begin{equation}
             \begin{array}{cl}
             \upsilon=&1.326\times{10}^{-5}\left[1+6.542\times{10}^{-3}\left(T_{atm}-T_f\right)\right.\\
@@ -372,7 +373,7 @@ $T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$表示$T_g$在使用牛顿迭代法
     j. 计算新一步$L$，并计算$\zeta$，根据稳定性条件限制$\zeta$的取值范围 \\
     k. 根据限制条件后的$\zeta$重新计算$L=\frac{z_{atm,m}-d}{\zeta}$ \\
     l. 由前述方法更新湖泊表面粗糙度$z_{0m}$，$z_{0h}$，$z_{0w}$\\
-    m. 判断迭代停止条件：若迭代过程中，$\Delta Tg\leq 0.01$K已出现4次，或迭代次数已超过40次，则迭代停止。
+    m. 判断迭代停止条件：若迭代过程中，$\Delta T_g\leq 0.01$ K已出现4次，或迭代次数已超过40次，则迭代停止。
     \item 迭代求解$T_g$结束后，为保证湖泊温度的一致性，$T_g$需根据湖泊顶层条件进行如下调整：\\
     当$T_g>T_f$时，若存在雪层($snl<0$)或$T_{lake,1}\le T_f$，则$T_g=T_f$ \\
     当$T_m<T_g<T_{lake,1}$时，$T_g=T_{lake,1}$ \\
@@ -389,7 +390,7 @@ $T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$表示$T_g$在使用牛顿迭代法
     \begin{equation}
     \begin{array}{c}\tau_{x}=-\rho_{atm} \frac{u_{atm}}{r_{am}} \\ \tau_{y}=-\rho_{atm} \frac{v_{atm}}{r_{am}}\end{array}
     \end{equation}
-    \item 计算2m温度与比湿$T_{2m}$，$q_{2m}$
+    \item 计算2 m温度与比湿$T_{2m}$，$q_{2m}$
     \item 根据湖泊表面条件更新湖泊与大气水汽通量的形式如下：\\
     当$E_g\geq0.0$时，若湖泊表面存在雪层，则蒸发通量$E_{g,eva}=\min \left(\frac{w_{liq, s n l+1}}{\Delta t}, E_{g}\right)$，
     升华通量$E_{g,sub}=E_{g}-E_{g,eva}$；\\
@@ -405,14 +406,14 @@ $T_g^{\left(n+1\right)}-T_g^{\left(n\right)}$表示$T_g$在使用牛顿迭代法
 \begin{equation}
 C \frac{\partial T}{\partial t}=\frac{\partial}{\partial z}\left(\tau \frac{\partial T}{\partial z}\right)-\frac{d \phi}{d z}
 \end{equation}
-其中$c$表示雪盖、湖泊或土壤的体积热容量($\rm J/m^3/K$)，t表示时间(s)，$\tau$表示热力传导率(W/m/K)，
-$\phi$表示穿透深度$z$所吸收的太阳辐射($\rm W/m^2$)。该系统共分为$N=n_{sno}+N_{lake}+N_{soi}$层，
+其中$c$表示雪盖、湖泊或土壤的体积热容量(\unit{J.m^{-3}.K^{-1}})，t表示时间(s)，$\tau$表示热力传导率(\unit{W.m^{-1}.K^{-1}})，
+$\phi$表示穿透深度$z$所吸收的太阳辐射(\unit{W.m^{-2}})。该系统共分为$N=n_{sno}+N_{lake}+N_{soi}$层，
 其中$n_{sno}$表示此时刻存在的雪层数，$N_{lake}$、$N_{soi}$分别表示湖泊与土壤的层数。
 当湖泊发生相态变化等使得湖泊的固液态水比例发生变化的过程时，体积热容量$c$与热力传导率$\tau$会进行相应的调整。
 $\tau$，$c$，$\phi$的计算方案见下。
 
 
-首先，对于热力传导率$\tau$，雪层与土壤层的计算与第 \ref{温度求解的数值格式} 节计算雪盖土壤的热力传导率完全相同，
+首先，对于热力传导率$\tau$，雪层与土壤层的计算与章节~\ref{温度求解的数值格式} 计算雪盖土壤的热力传导率完全相同，
 只是当大部分土壤水冻结使得土壤的体积含水量超过孔隙度$\theta_{sat,i}$，
 即土壤相对于其饱和状态的潮湿程度$S_{r,i}$大于1时：
 \begin{equation}
@@ -423,50 +424,50 @@ S_{r,i}=\left(\frac{w_{liq, i}}{\rho_{liq} \Delta z_{i}}+\frac{w_{ice, i}}{\rho_
 \begin{equation}
 \tau_{i}=\frac{\tau_{i}+X \lambda_{ice}}{(1+X)^{2}}
 \end{equation}
-其中$\lambda_{ice}$表示固态水热力传导率(见表 \ref{tab:物理常数})，$X=\frac{S_{r,i}-1}{\theta_{sat,i}}$。
+其中$\lambda_{ice}$表示固态水热力传导率(见表~\ref{tab:物理常数})，$X=\frac{S_{r,i}-1}{\theta_{sat,i}}$。
 此外，雪层(若存在)与第一层湖泊交界面的热力传导率取为最下层雪层的热力传导率。
 
 下面考虑湖泊层本身热力传导率的计算。令第$i\left(1\le i<N_{lake}\right)$层湖泊中非冻结部分的热力传导率表达为：
 \begin{equation}
 \tau_{lake, i, liq}=K_{w} C_{p l} \rho_{liq}
 \end{equation}
-其中$C_{pl}$，$\rho_{liq}$分别表示液态水的比热容(J/kg/K)与密度($\rm kg/m^3$)(见表 \ref{tab:物理常数})，
-$K_w$表示热力扩散率($\rm m^2/s$)。$K_w$可由三部分组成\citep{subin2012improved}：
+其中$C_{pl}$，$\rho_{liq}$分别表示液态水的比热容(\unit{J.kg^{-1}.K^{-1}})与密度(\unit{kg.m^{-3}})(见表~\ref{tab:物理常数})，
+$K_w$表示热力扩散率(\unit{m^2.s^{-1}})。$K_w$可由三部分组成~\citep{subin2012improved}：
 \begin{equation}
-K_{w}=m_{d}\left(\kappa_{e}+K_{e d}+\kappa_{m}\right)
+K_{w}=m_{d}\left(K_{e}+K_{ed}+K_{m}\right)
 \end{equation}
-其中$\kappa_e$表示由风驱动的大涡扩散率\citep{hostetler1990simulation}，
-$K_{ed}$表示一些无法表达的混合过程所产生的增强扩散率\citep{fang1996long}，
-$\kappa_m=\frac{\lambda_{liq}}{C_{pl}\rho_{liq}}$表示液态水分子扩散率。
+其中$K_e$表示由风驱动的大涡扩散率~\citep{hostetler1990simulation}，
+$K_{ed}$表示一些无法表达的混合过程所产生的增强扩散率~\citep{fang1996long}，
+$K_m=\frac{\lambda_{liq}}{C_{pl}\rho_{liq}}$表示液态水分子扩散率。
 对于大湖，三维混合过程可使得热力扩散率再次增强，$m_d$即表示依赖于湖泊深度$d$的增强因子：
 \begin{equation}
-m_{d}=\left\{\begin{array}{ll}1 & d<25 m \\ 5 & d \geq 25 m\end{array}\right.
+m_{d}=\left\{\begin{array}{ll}1 & d<25 \text{ m} \\ 5 & d \geq 25 \text{ m}\end{array}\right.
 \end{equation}
-由风驱动的大涡扩散率$\kappa_e$只存在于完全非冻结的湖泊层中，计算方式为
+由风驱动的大涡扩散率$K_e$只存在于完全非冻结的湖泊层中，计算方式为
 \begin{equation}
-\kappa_{e, i}=\left\{\begin{array}{ll}\frac{k w^{*} z_{lake, i}}{P_{0}\left(1+37 R_{i}^{2}\right)} 
-    \exp \left(-k^{*} z_{lake, i}\right) & T_{g}>T_{f} \\ 0 & T_{g} \leq T_{f}\end{array}\right.
+K_{e, i}=\left\{\begin{array}{ll}\frac{\kappa w^\ast z_{lake, i}}{P_{0}\left(1+37 R_{i}^{2}\right)} 
+    \exp \left(-\kappa^{*} z_{lake, i}\right) & T_{g}>T_{f} \\ 0 & T_{g} \leq T_{f}\end{array}\right.
 \end{equation}
-其中$k$表示 von K\'arman 常数(见表 \ref{tab:物理常数})，$P_0=1$表示中性条件下的湍流$Prandtl$数，
-$z_{lake,i}$表示第i层湖泊的中心深度，$w^\ast$表示表层摩擦速度$w^\ast=0.0012u_2$，
-$k^\ast$随着纬度$\phi$的变化而变化$k^\ast=6.6u_2^{-1.84}\sqrt{\left|sin\phi\right|}$。
-根据 \citet{hostetler1990simulation}，计算$w^\ast$与$k^\ast$时，
-使用2m风速$u_2$比使用10m风速模拟的效果要好，故这里使用2m风速$u_2$进行计算$u_2=\frac{u_\ast}{k}\ln{\left(\frac{2}{z_{0m}}\right)}\geq0.1$。
+其中$\kappa$表示 von K\'arman 常数(见表~\ref{tab:物理常数})，$P_0=1$表示中性条件下的湍流$Prandtl$数，
+$z_{lake,i}$表示第i层湖泊的中心深度，$w^\ast$表示表层摩擦速度，$w^\ast=0.0012u_2$，
+$\kappa^\ast$随着纬度$\phi$的变化而变化，$\kappa^\ast=6.6u_2^{-1.84}\sqrt{\left|sin\phi\right|}$。
+根据 \citet{hostetler1990simulation}，计算$w^\ast$与$\kappa^\ast$时，
+使用2 m风速$u_2$比使用10 m风速模拟的效果要好，故这里使用2 m风速$u_2$进行计算$u_2=\frac{u_\ast}{\kappa}\ln{\left(\frac{2}{z_{0m}}\right)}\geq0.1$。
 $R_i$表示理查德森数，计算公式为
 \begin{equation}
-R_{i}=\frac{-1+\sqrt{\left.1+\frac{40 N^{2} k^{2} z_{lake, i}^{2}}{w^{* 2} \exp \left(-2 k^{*} z_{lake, i}\right)}\right.}}{20}
+R_{i}=\frac{-1+\sqrt{\left.1+\frac{40 N^{2} \kappa^{2} z_{lake, i}^{2}}{w^{\ast 2} \exp \left(-2 \kappa^{\ast} z_{lake, i}\right)}\right.}}{20}
 \end{equation}
 其中$N^2=\frac{g}{\rho_i}\frac{\rho_{i+1}-\rho_i}{z_{i+1}-z_i}\geq7.5\times{10}^{-5}$，
-$g$表示重力加速度，$\rho_i$表示第$i$层湖泊的密度\citep{hostetler1990simulation}：
+$g$表示重力加速度，$\rho_i$表示第$i$层湖泊的密度~\citep{hostetler1990simulation}：
 \begin{equation}\label{rho_i}
 \rho_{i}=\left(1-I_{i}\right) \rho_{liq}\left(1-1.9549 \times 10^{-5}\left|T_{lake, i}-277\right|^{1.68}\right)+I_{i} \rho_{ice}
 \end{equation}
-其中$I_i$表示湖泊冻结部分的质量比。增强扩散率$K_{ed}$的计算公式为\citep{fang1996long}：
+其中$I_i$表示湖泊冻结部分的质量比。增强扩散率$K_{ed}$的计算公式为~\citep{fang1996long}：
 \begin{equation}
 K_{e d}=1.039 \times 10^{-8}\left(N^{2}\right)^{-0.43}
 \end{equation}
 综上，非冻结部分的热力传导率$\tau_{lake,i,liq}$即由上述三部分组成
-$\tau_{lake,i,liq}=K_wC_{pl}\rho_{liq}=m_d\left(\kappa_e+K_{ed}+\kappa_m\right)C_{pl}\rho_{liq}$。
+$\tau_{lake,i,liq}=K_wC_{pl}\rho_{liq}=m_d\left(K_e+K_{ed}+K_m\right)C_{pl}\rho_{liq}$。
 对于湖泊层的冻结部分，热力传导率可表达为：
 \begin{equation}
 \tau_{lake,i,ice}=\lambda_{ice} \frac{\rho_{ice}}{\rho_{liq}}
@@ -482,18 +483,18 @@ $I_i$表达为$\tau_{lake,i,liq}$与$\tau_{lake,i,ice}$的调和平均数：
 
 
 对于体积热容量的计算，雪层土壤层的体积热容量与计算雪盖土壤温度时体积热容量的计算完全相同(见 \ref{温度求解的数值格式} 节)。
-而湖泊层的体积热容量$c_{lake,i}$($\rm J/m^3/K$)即为液态水与固态水体积热容量基于$I_i$的加权平均：
+而湖泊层的体积热容量$c_{lake,i}$ (\unit{J.m^{-3}.K^{-1}})即为液态水与固态水体积热容量基于$I_i$的加权平均：
 \begin{equation}
 c_{lake, i}=\rho_{liq}\left[C_{p l}\left(1-I_{i}\right)+C_{p i} I_{i}\right]
 \end{equation}
-湖泊系统对于太阳辐射的吸收可发生于湖泊表面、雪层、湖泊层以及土壤顶层。湖泊表面吸收太阳辐射的量为$\beta S_g$(见章节 \ref{湖泊表面能量通量与温度的计算})，
+湖泊系统对于太阳辐射的吸收可发生于湖泊表面、雪层、湖泊层以及土壤顶层。湖泊表面吸收太阳辐射的量为$\beta S_g$ (见章节~\ref{湖泊表面能量通量与温度的计算})，
 剩余部分$\left(1-\beta\right)S_g$将被湖泊表面之下的每一层吸收，吸收量$\phi_i$依赖于湖泊表面条件。
 若湖泊表面存在雪层，则忽略太阳辐射在雪层中的传递，假设辐射量完全被雪层表面吸收，即$\beta=1$，$\phi_i=0$；
 若湖泊表面不存在雪层但湖泊处于冻结状态，则假设冰对于太阳辐射不透明，表面剩余太阳辐射完全被第一层湖泊吸收，
 即$\phi_{lake,1}=\left(1-\beta\right)S_g$；若湖泊处于非冻结状态，
-假设湖泊表面吸收的太阳辐射的作用深度为$z_a$(m)，取值根据湖泊深度$d$为
+假设湖泊表面吸收的太阳辐射的作用深度为$z_a$ (m)，取值根据湖泊深度$d$为
 \begin{equation}
-z_{a}=\left\{\begin{array}{ll}0.5 & d<4 m \\ 0.6 & d \geq 4 m\end{array}\right.
+z_{a}=\left\{\begin{array}{ll}0.5 & d<4 \text{ m} \\ 0.6 & d \geq 4 \text{ m}\end{array}\right.
 \end{equation}
 则$z_a$之下深度为z的太阳辐射剩余量为
 \begin{equation}
@@ -502,19 +503,19 @@ z_{a}=\left\{\begin{array}{ll}0.5 & d<4 m \\ 0.6 & d \geq 4 m\end{array}\right.
 其中$\eta(m-1)$表示消光系数$\eta=1.1925d^{-0.424}$ \citep{subin2012improved}，
 那么对于$z_a$之下的每一层湖泊，太阳辐射吸收量为：
 \begin{equation}
-\begin{array}{l}
-    \phi_{lake, i}=(1-\beta) S_{g} \exp \left[-\eta\left(z_{lake, i}-\frac{\Delta z_{lake, i}}{2}-z_{a}\right)\right] \\
-     -\exp \left[-\eta\left(z_{lake, i}+\frac{\Delta z_{lake, i}}{2}-z_{a}\right)\right]
-\end{array}
+\begin{split}
+    \phi_{lake, i}= & (1-\beta) S_{g} \exp \left[-\eta\left(z_{lake, i}-\frac{\Delta z_{lake, i}}{2}-z_{a}\right)\right] \\
+     & -\exp \left[-\eta\left(z_{lake, i}+\frac{\Delta z_{lake, i}}{2}-z_{a}\right)\right]
+\end{split}
 \end{equation}
 湖泊底层的出射太阳辐射即为土壤顶层吸收的太阳辐射：
 \begin{equation}
 \phi_{1}=(1-\beta) S_{g} \exp \left[-\eta\left(d-z_{a}\right)\right]
 \end{equation}
 湖泊系统求解能量平衡方程的方法与求解雪盖土壤温度用的方法完全相同(见 \ref{温度求解的数值格式} 节)，
-即$Crank-Nicholson$半隐式格式求解，只是层数扩充到$N=n_{sno}+N_{lake}+N_{soi}$层。
+即Crank--Nicholson半隐式格式求解，只是层数扩充到$N=n_{sno}+N_{lake}+N_{soi}$层。
 热传导通量$F_i$的计算采用相邻两层介质交界面处的热力传导率$\tau\left[z_{h,i}\right]$，
-而此量的计算与计算雪盖土壤温度时交界面热力传导率的计算完全相同(见 \ref{温度求解的数值格式} 节)：
+而此量的计算与计算雪盖土壤温度时交界面热力传导率的计算完全相同(见~\ref{温度求解的数值格式} 节)：
 \begin{equation}
     \tau\left[z_{h,i}\right]=\frac{\tau_i\tau_{i+1}\left(z_i-z_{i+1}\right)}{\tau_i\left(z_{h,i}-z_{i+1}\right)
     +\tau_{i+1}\left(z_i-z_{h,i}\right)}
@@ -545,15 +546,15 @@ F_{i}=\tau\left[z_{h, i}\right] \frac{T_{i}^{n}-T_{i+1}^{n}}{z_{i+1}-z_{i}}
 与雪盖土壤温度的计算类似，湖泊系统温度计算之后，需根据每一层介质的温度与固液态水含量进行相态变化调整。
 当某一层介质的温度高于凝结点$T_f$而固态水存在，则融化过程发生；当温度低于凝结点$T_f$而液态水存在，则冻结过程发生。
 
-若融化条件满足，则该层介质可用于融化过程的能量表达为($\rm J/m^2$)：
+若融化条件满足，则该层介质可用于融化过程的能量表达为(\unit{J.m^{-2}})：
 \begin{equation}
 Q_{avail}=\left(T_{i}^{n+1}-T_{f}\right) c_{i} \Delta z_{i}
 \end{equation}
-融化的质量表达为($\rm kg/m^2$)：
+融化的质量表达为(\unit{kg.m^{-2}})：
 \begin{equation}
 M=\min \left(M_{ice}, \frac{Q_{a v a i l}}{L_{f}}\right)
 \end{equation}
-其中$L_f$表示融化潜热(J/kg)，$M_{ice}$表示该层介质的固态水含量：
+其中$L_f$表示融化潜热(\unit{J.kg^{-1}})，$M_{ice}$表示该层介质的固态水含量：
 \begin{equation}
 M_{ice}=\left\{\begin{array}{lr}I_{i} \rho_{liq} \Delta z_{lake, i} & 
     \text { 湖泊层 } \\ w_{ice, i} & \text { 雪盖土壤层 }\end{array}\right.
@@ -602,7 +603,7 @@ W_{sno}=W_{sno}-M
 \end{equation}
 
 \section{基于湖泊层稳定性的垂直对流混合}
-基于稳定性的湖泊对流混合方案来自于\citet{hostetler1993interactive,hostetler1994lake} 在其提出的湖泊大气耦合模型中采用的方案：
+基于稳定性的湖泊对流混合方案来自于~\citet{hostetler1993interactive,hostetler1994lake} 在其提出的湖泊大气耦合模型中采用的方案：
 在热传导过程与相态变化过程模拟结束后，湖泊温度应再次调整，使得湖泊具有稳定的层结结构：
 即湖泊上层密度应不大于下层密度。具体操作为，对于完全非冻结状态的湖泊，
 若相邻两层的密度出现$\rho_i>\rho_{i+1}$，则湖泊发生对流混合过程，
@@ -655,9 +656,9 @@ $I_j$与$T_{lake,j}$的计算将按照如下方式进行，记${Z_j}=\sum_{m=1}^
 \begin{equation}
 W_{sno}^{n+1}-W_{sno}^{n}+\sum_{i=1}^{N_{s o i}}\left(w_{liq, i}^{n+1}+w_{ice, i}^{n+1}-w_{liq, i}^{n}-w_{ice, i}^{n}\right)=\left(p_{l}+p_{i}-E_{g}-q_{r u n}\right) \Delta t
 \end{equation}
-其中$W_{sno}$表示雪水当量($\rm kg/m^2$)，$w_{liq,i}$，$w_{ice,i}$分别表示第i层土壤的液态水与固态水含量($\rm kg/m^2$)，
-$n$表示时间步数指标，$p_l$,$p_i$分别表示液态与固态降水量($\rm kg/m^2$/s)，$\Delta t$表示积分时间步长(s)，
-$E_g$表示湖泊表面与大气的水汽通量($\rm kg/m^2$/s)，$q_{run}$表示地表径流，用来平衡由湖泊质量固定所带来的水分转移与补充。
+其中$W_{sno}$表示雪水当量(\unit{kg.m^{-2}})，$w_{liq,i}$，$w_{ice,i}$分别表示第i层土壤的液态水与固态水含量(\unit{kg.m^{-2}})，
+$n$表示时间步数指标，$p_l$,$p_i$分别表示液态与固态降水量(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$表示积分时间步长(s)，
+$E_g$表示湖泊表面与大气的水汽通量(\unit{kg.m^{-2}.s^{-1}})，$q_{run}$表示地表径流，用来平衡由湖泊质量固定所带来的水分转移与补充。
 
 
 对于土壤层，由于它位于湖泊之下，土壤层被视为始终处于饱和状态，其体积含水量$\theta_i$表达为：
@@ -692,7 +693,7 @@ w_{ice, i}=0.0
 对于雪层，包含雪的压实、合并、分层等水文过程与雪盖土壤的水文过程完全一致。
 一个特殊的情形是，当湖泊温度计算后，雪层可能存在于完全非冻结状态的湖泊之上($T_{lake,1}>T_f$)，
 若此时湖泊可提供足够的能量将雪层融化，则雪层将会消失；否则，若湖泊完全冻结都无法将雪层融化，
-则雪层将会以原有状态保留。具体计算如下，考虑四个状态变量($\rm J/m^2$)：
+则雪层将会以原有状态保留。具体计算如下，考虑四个状态变量(\unit{J.m^{-2}})：
 雪层在凝结点之下升温所需的总能量:
 \begin{equation}
 a=\sum_{i=s n l+1}^{0}\left(w_{ice, i} C_{p i}+w_{liq, i} C_{p l}\right)\left(T_{f}-T_{i}\right)

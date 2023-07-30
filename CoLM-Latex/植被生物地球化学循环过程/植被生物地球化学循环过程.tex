@@ -92,13 +92,13 @@ CF_{ {avail\_alloc }}=CF_{GPP}-CF_{GPP, mr}-CF_{GPP, xs}
   \item 新生长活茎和新生长叶的比例$a_3$;
   \item 新生长活茎和新生长叶的比例$a_3$;
   \item 新生长活茎在新生长总茎(活茎+死茎)碳含量的比例$a_4$;
-  \item 生长呼吸在总生长碳的比例 $g_1$，这些分配系数参数取决于其所属植被功能型。其中，新生长活茎和新生长叶的比例$a_3$由前一年的年$NPP_{ann}$ ($\mathrm{g\ C\ m^{-2}\ year^{-1}}$)决定：
+  \item 生长呼吸在总生长碳的比例 $g_1$，这些分配系数参数取决于其所属植被功能型。其中，新生长活茎和新生长叶的比例$a_3$由前一年的年$NPP_{ann}$ (\unit{g.C.m^{-2}.year^{-1}})决定：
     \begin{equation}
       a_{3}=\frac{2.7}{1+e^{-0.004 \cdot\left(NPP_{ann}^{-300}\right)}}-0.4
     \end{equation}
 \end{enumerate}
 
-因此，随着$NPP$增加，植被倾向于将更多的碳分配给茎 \citep{allen2005,vanninen2005carbon}。
+因此，随着$NPP$增加，植被倾向于将更多的碳分配给茎~\citep{allen2005,vanninen2005carbon}。
 因此叶片的单位碳生长需要植被的总碳输入是：
 \begin{equation}\label{C_allom}
 C_{ {allom }}=\left\{\begin{array}{lr}\left(1+g_{l}\right)\left[1+a_{1}+a_{3}\left(1+a_{2}\right)\right] &  \text{ woody } \text{PFT} \\ 
@@ -132,7 +132,7 @@ NF_{actual\_{alloc}}=NF_{retran\_{alloc}}+NF_{sminn\_{alloc}}
 \begin{equation}
 NF_{avail\_retrans}=\min{\left(\frac{NF_{retrans\_ann}\ \cdot \frac{NF_{plant\_demand}}{NF_{plant\_demand\_ann}}}{{\Delta t}}, \frac{NS_{retrans}}{{\Delta t}}\right)}
 \end{equation}
-其中，$NF_{retrans\_ann}$是去年植被重利用氮总量 ($\mathrm{g\ N\ m^{-2}\ year^{-1}}$)，$NF_{plant\_demand\_ann}$ 是去年植被氮需求总量 ($\mathrm{g\ N\ m^{-2}\ year^{-1}}$)，${\Delta t}$ 是模型的时间步长。
+其中，$NF_{retrans\_ann}$是去年植被重利用氮总量 (\unit{g.N.m^{-2}.year^{-1}})，$NF_{plant\_demand\_ann}$ 是去年植被氮需求总量 (\unit{g.N.m^{-2}.year^{-1}})，${\Delta t}$ 是模型的时间步长。
 实际来源于重利用氮库的氮通量 ($NF_{retran\_alloc}$) 是可利用氮 ($NF_{avail\_retrans}$) 和氮需求 ($NF_{plant\_demand}$) 的最小值：
 \begin{equation}\label{NF_retran_alloc}
   NF_{retran\_alloc}=\min{\left(NF_{avail\_retrans}, NF_{plant\_demand}\right)}
@@ -521,8 +521,8 @@ t_{onset}^n=t_{onset}^{n-1}-\Delta t
 
 当温度暖和，干旱成为触发胁迫的主要条件。当上一次落叶期结束后，土壤水分因子就开始从0累加：
 \begin{equation}
-SWI_{sum}^{n}=\left\{\begin{array}{ll}SWI_{sum}^{n-1}+f_{d a y} & \text{ 当 } \Psi_{s, 3} \geq-0.6\ \mathrm{MPa} \\ 
-SWI_{sum}^{n} &  \text{ 当 } \Psi_{s, 3}<-0.6\ \mathrm{MPa}
+SWI_{sum}^{n}=\left\{\begin{array}{ll}SWI_{sum}^{n-1}+f_{d a y} & \text{ 当 }\ \Psi_{s, 3} \geq-0.6\ \mathrm{MPa} \\ 
+SWI_{sum}^{n} &  \text{ 当 }\ \Psi_{s, 3}<-0.6\ \mathrm{MPa}
 \end{array}\right.
 \end{equation}
 其中$\Psi_{s,3}$是第三层土壤的水势，当土壤水势高于 -0.6 MPa 时，土壤足够湿润，土壤水分因子就开始累加。
@@ -531,8 +531,8 @@ SWI_{sum}^{n} &  \text{ 当 } \Psi_{s, 3}<-0.6\ \mathrm{MPa}
 
 同时，因为土壤温度过低 ($FD_{sum}^n>15$)，需要应用冷气候标准
 \begin{equation}
-FD_{sum}^{n}=\left\{\begin{array}{ll}FD_{sum}^{n-1}+f_{day} &  \text{ 当 } T_{s, 3} > \text{0 \textcelsius} \\ 
-FD_{sum}^{n-1} &  \text{ 当 } T_{s, 3} \leq \text{0 \textcelsius}
+FD_{sum}^{n}=\left\{\begin{array}{ll}FD_{sum}^{n-1}+f_{day} &  \text{ 当 }\ T_{s, 3} > \text{0 \textcelsius} \\ 
+FD_{sum}^{n-1} &  \text{ 当 }\ T_{s, 3} \leq \text{0 \textcelsius}
 \end{array}\right.
 \end{equation}
 即当气温低，发芽展叶期的触发需要土壤温度和土壤湿度同时满足条件：
@@ -544,15 +544,15 @@ t_{o n s e t}^{n}=t_{o n s e t}^{n-1}-\Delta t
 当持续土壤干旱或持续低温或日照长度低于6小时，胁迫落叶期就将触发。
 土壤干旱用累积落叶土壤水分因子($OSWI_{sum}^n$)来量化：
 \begin{equation}
-OSWI_{sum}^{n}=\left\{\begin{array}{ll}OSWI_{sum}^{n-1}+f_{d a y}, &  \text{ 当 } \Psi_{s, 3}<-2\ \mathrm{MPa} \\ 
-\max \left(OSWI_{sum}^{n-1}-f_{d a y}, 0\right) &  \text{ 当 } \Psi_{s, 3}>-2\ \mathrm{MPa}
+OSWI_{sum}^{n}=\left\{\begin{array}{ll}OSWI_{sum}^{n-1}+f_{d a y}, &  \text{ 当 }\ \Psi_{s, 3}<-2\ \mathrm{MPa} \\ 
+\max \left(OSWI_{sum}^{n-1}-f_{d a y}, 0\right) &  \text{ 当 }\ \Psi_{s, 3}>-2\ \mathrm{MPa}
 \end{array}\right.
 \end{equation}
 当前面一个发芽展叶期已经完成时，且$OSWI_{sum}^n\geq15$，即触发落叶期。
 冷温胁迫用累积落叶冷冻天数来量化：
 \begin{equation}
-OFD_{sum}^{n}=\left\{\begin{array}{ll}OFD_{sum}^{n-1}+f_{d a y} &  \text{ 当 }{T}_{s, 3} \leq \text{0 \textcelsius} \\ 
-\max \left(OFD_{sum}^{n-1}-f_{d a y}, 0\right) & \text{ 当 }{T}_{s, 3}> \text{0 \textcelsius}\end{array}\right.
+OFD_{sum}^{n}=\left\{\begin{array}{ll}OFD_{sum}^{n-1}+f_{d a y} &  \text{ 当 }\ {T}_{s, 3} \leq \text{0 \textcelsius} \\ 
+\max \left(OFD_{sum}^{n-1}-f_{d a y}, 0\right) & \text{ 当 }\ {T}_{s, 3}> \text{0 \textcelsius}\end{array}\right.
 \end{equation}
 当前面一个发芽展叶期已经完成时，且$OFD_{sum}^n\geq15$，即触发落叶期。
 
@@ -568,9 +568,9 @@ t_{offset}^{n}=t_{offset}^{n-1}-\Delta t
 \end{equation}
 
 \begin{equation}
-L G S=\left\{\begin{array}{cc}0 &  \text{ 当 } n_{ {days}\_{active}}<365 \\ 
-\frac{n_{ {days\_{active}}}}{365}-1 &  \text{ 当 } 365 \leq n_{ {days }\_{active} }<730 \\ 
-1 & \text{ 当 } n_{ {days}\_{active}} \geq 730
+L G S=\left\{\begin{array}{cc}0 &  \text{ 当 }\ n_{ {days}\_{active}}<365 \\ 
+\frac{n_{ {days\_{active}}}}{365}-1 &  \text{ 当 }\ 365 \leq n_{ {days }\_{active} }<730 \\ 
+1 & \text{ 当 }\ n_{ {days}\_{active}} \geq 730
 \end{array}\right.
 \end{equation}
 $n_{days\_{active}}$ 是植被只从上次发芽开始的天数。

@@ -178,10 +178,10 @@ S_{w}=S_{w}-S_{v w}
 \end{equation}
 阴面墙和阳面墙的面积占比计算同公式(\ref{f_wsun})和(\ref{f_wsha})。
 
-在不考虑植被存在时，可视因子$F_{sw}$,$F_{sg}$,$F_{gw}$,$F_{gs}$,$F_{ws}$,$F_{wg}$,$F_{ww}$的
+在不考虑植被存在时，可视因子$F_{sw}$, $F_{sg}$, $F_{gw}$, $F_{gs}$, $F_{ws}$, $F_{wg}$ 和 $F_{ww}$的
 计算同章节 \ref{无植被覆盖时短波辐射传输}，下面需要考虑植被的遮挡，对以上可视因子进行修改，并添加植被到各个面的可视因子。
 
-同公式(\ref{S_v2})和(\ref{S_w2})，计算在漫射等效角度下的墙面和植被在地面的“阴影”占比(辐射遮挡)$S_w^\ast$和$S_v^\ast$，
+同公式(\ref{S_v2})和(\ref{S_w2})，计算在漫射等效角度下的墙面和植被在地面的“阴影”占比(辐射遮挡) $S_w^\ast$和$S_v^\ast$，
 利用公式(\ref{f_Sw})进行计算，则天空到达植被($F_{sv}$)、天空通过植被到墙面($F_{svw}$)，以及天空通过植被到达地面的可视因子($F_{svg}$)分别计算为：
 \begin{equation}\label{F_sv_svw_svg}
 \begin{array}{c}F_{s v}=S_{v}^{*} \\ F_{s v w}=S_{v w}^{*} \\ F_{s v g}=F_{s v}-F_{s v w}\end{array}
@@ -222,7 +222,7 @@ F_{wvs}=f_{1} \frac{F_{ws}}{F_{ww}} F_{wvw}
 F_{wvg}=f_{2} \frac{F_{w g}}{F_{ww}} F_{wvw}
 \end{equation}
 在此基础上，可以计算得到考虑植被影响的天空、墙面和地面之间的可视因子，
-其中天空到墙面和地面的可视因子$F_{sw}^\prime$,$ F_{sg}^\prime$计算为：
+其中天空到墙面和地面的可视因子$F_{sw}^\prime$, $F_{sg}^\prime$计算为：
 \begin{equation}
 F_{s w}^{\prime}=F_{s w}-F_{s v w}+F_{s v w} T_{d}
 \end{equation}
@@ -247,6 +247,7 @@ F_{ww}^{\prime}=F_{ww}-F_{wvw}+F_{wvw} T_{d}
 \begin{equation}
 F_{ws}^{\prime}=F_{ww}-F_{wvs}+F_{wvs} T_{d}
 \end{equation}
+
 a. 直射入射太阳辐射\\
 对于直射辐射太阳辐射，直射光到达阳面墙的辐射通量$E_{wsun}=S_w$，到达阴面墙的辐射通量$E_{wsha}=S_{vw}T_d$，
 到达地面的辐射通量$E_g=1-S_w-S_v+\left(S_v-S_{vw}\right)T_d$，其中$E_{gimp}=E_gf_{gimp}$，$E_{gper}=E_gf_{gper}$，
@@ -280,6 +281,7 @@ s_{v}=\frac{f_{g}}{f_{v}} s_{v}
 \begin{equation}
 \alpha_{u}=\alpha_{roof} f_{b}+\alpha_{u} f_{g}
 \end{equation}
+
 b. 漫射入射太阳辐射\\
 对于漫射，计算过程与直射入射辐射过程基本类似，不同之处在于首次到达墙面、地面和植被的辐射通量分别为：$F_{sw}^\prime f_{wsun}$、
 $F_{sw}^\prime f_{wsha}$、$F_{sg}^\prime f_{gimp}$、$F_{sg}^\prime f_{gper}$和$F_{sv}$。
@@ -552,13 +554,13 @@ F_{h a c}=H \rho_{a} C_{p} \frac{T_{{room }}^{\prime}-T_{{room,min }}}{\Delta t}
 
 
 \subsection{人体代谢热}
-人体代谢热($Q_M$, W/m$\rm ^2$)根据 \citet{allen2011} 的方法，按照能源清单法及 Top-Down 方法，利用人口密度数据，
+人体代谢热($Q_M$, \unit{W.m^{-2}})根据 \citet{allen2011} 的方法，按照能源清单法及 Top-Down 方法，利用人口密度数据，
 将不同时刻的人体热排放映射到每个城市格点上，具体计算如下：
 \begin{equation}
 Q_{M}=P \cdot H_{M} \cdot 10^{-6}
 \end{equation}
-其中$P$为格点内人口密度(pop/km$^2$)，目前使用的是 Gridded Population of the World (GPWv3) 数据，
-分辨率为2.5 arc-min (表~\ref{tab:人口密度数据})，$H_M$为不同时刻人体排放的热量。人体排放的热量遵循一个基本假设：
+其中$P$为格点内人口密度(\unit{pop.km^{-2}})，目前使用的是 Gridded Population of the World (GPWv3) 数据，
+分辨率为\ang{;2.5} (表~\ref{tab:人口密度数据})，$H_M$为不同时刻人体排放的热量。人体排放的热量遵循一个基本假设：
 人在活动时每小时排放的热量为175 W (工作)，非活动时排放量为75 W (休息)，以及一个中间值125 W~\citep{sailor2004top}；
 除此之外，也没有考虑人口在不同格点间的移动。
 % Please add the following required packages to your document preamble:
@@ -570,13 +572,13 @@ Q_{M}=P \cdot H_{M} \cdot 10^{-6}
     \begin{tabular}{@{}lll@{}}
     \toprule
     数据名称                            & 分辨率         & 来源                                                                                                     \\ \midrule
-    Gridded Population of the World & 2.5 arc-min & \begin{tabular}[c]{@{}l@{}}https://sedac.ciesin.columbia.edu/\\    data/collection/gpw-v3\end{tabular} \\ \bottomrule
+    Gridded Population of the World & 2.5 arc-min & \begin{tabular}[c]{@{}l@{}}https://sedac.ciesin.columbia.edu/\\   data/collection/gpw-v3\end{tabular} \\ \bottomrule
     \end{tabular}
 \end{table}
 
 
 \subsection{交通热}
-交通热排放($Q_v$, W/m$^2$)同样根据~\citet{allen2011} 的方法利用能源清单法进行计算，
+交通热排放($Q_v$, \unit{W.m^{-2}})同样根据~\citet{allen2011} 的方法利用能源清单法进行计算，
 并采用Top-Down的方法，利用人口密度以及各个国家的汽车拥有量计算出格点内的汽车数量，
 然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
 其数据来源如表~\ref{tab:交通热数据及来源}，具体计算方法如下：
@@ -598,7 +600,7 @@ Q_{v}=\frac{\left(V_{c} E_{c}+V_{M} E_{M}+V_{F R} E_{F R}\right) \cdot F \cdot 2
     \end{tabular}
     \end{table}
 其中$V_c$、$V_M$、$V_{FR}$分别为每千人拥有的汽车、摩托车、货车(巴士)的数量，该数据来自于World mapper
-(http://www.worldmapper.org/textindex/texttransport.htm)；
+(\url{http://www.worldmapper.org/textindex/texttransport.htm})；
 $E_c$、$E_M$、$E_{FR}$则为三种机动车的排放系数，与机动车行驶速度有关，目前使用的 \citet{smith2009estimating} 的系数设置。
 $F$为改变汽车数量的系数，相当于汽车总量的一部分在行驶，目前为固定系数(0.8)；
-$P$为格点内人口密度 (pop/km$^2$)；$D$为行驶的距离，同样与速度有关；$H_{trac}$为时间步长内交通流量分布。
+$P$为格点内人口密度 (\unit{pop.km^{-2}})；$D$为行驶的距离，同样与速度有关；$H_{trac}$为时间步长内交通流量分布。

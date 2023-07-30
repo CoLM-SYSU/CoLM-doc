@@ -18,22 +18,25 @@ $L_v$表示叶片吸收的净长波辐射。$T_v$可通过对方程 (\ref{FT_V})
 在能量平衡方程中，$S_v$不依赖于温度的变化，其表达式在第 \ref{短波吸收辐射通量} 节中已经给出。
 $L_v$可做如下表达(假设植被和被植被覆盖的地表的长波辐射发射率为1)：
 \begin{equation}
-L_{v}=f_{sig} *\left(1-\mu_{t h}\right)\left(L \downarrow+\varepsilon_{g} \sigma T_{g}^{4}-2 \sigma T_{v}^{4}\right)
+L_{v}=f_{sig} \left(1-\mu_{t h}\right)\left(L \downarrow+\varepsilon_{g} \sigma T_{g}^{4}-2 \sigma T_{v}^{4}\right)
 \end{equation}
 即植被吸收的净长波辐射等于植被吸收的来自大气和地表的长波辐射减去植被向大气和地表方向同时发出的长波辐射，
 其中$L\downarrow$表示近地面大气下行长波辐射，$\varepsilon_g=0.96$表示未被植被覆盖的地表的长波辐射发射率，
 $\mu_{th}$表示长波辐射直接穿过植被冠层的比例(见章节~\ref{长波净辐射通量})。$L_v$对叶片温度的变化率如下：
 \begin{equation}
-\begin{array}{c}\frac{\partial L_{v}}{\partial T_{v}}=-8 f_{sig} *\left(1-\mu_{t h}\right)\left(\sigma T_{v}^{3}\right) \\ \frac{\partial L_{v, s u n}}{\partial T_{v, s h a}}=0\end{array}
+\begin{aligned}
+ \frac{\partial L_{v}}{\partial T_{v}} &= -8 f_{sig} \left(1-\mu_{t h}\right)\left(\sigma T_{v}^{3}\right) \\
+ \frac{\partial L_{v, s u n}}{\partial T_{v, s h a}} &= 0
+\end{aligned}
 \end{equation}
-感热通量表达式$H_{pv}$已在~\ref{一维植被湍流交换模型} 节给出，其对温度的变化率为：
+感热通量表达式$H_{pv}$已在章节~\ref{一维植被湍流交换模型} 给出，其对温度的变化率为：
 \begin{equation}
 \frac{\partial H_{p v}}{\partial T_{v}}=f_{sig} \rho_{atm} C_{pa} c_{v}^{h}
 \end{equation}
-对于水汽通量$E_{pv}$，虽然其表达式也已在 \ref{一维植被湍流交换模型} 节给出，但这里为了表达上的便利，
+对于水汽通量$E_{pv}$，虽然其表达式也已在章节~\ref{一维植被湍流交换模型} 给出，但这里为了表达上的便利，
 我们引入对于植被表面蒸散发是否发生的判别因子$\delta$如下：
 \begin{equation}
-\delta=\left\{\begin{array}{cc}1 & \text { 当 } q_{s a t}^{T_{v}}>q_{s} \text { 即阳叶蒸散发可以发生时 } \\ 0 & \text { 否则 }\end{array}\right.
+\delta=\left\{\begin{array}{cc}1 & \text { 当 }\ q_{s a t}^{T_{v}}>q_{s} \text { 即阳叶蒸散发可以发生时 } \\ 0 & \text { 否则 }\end{array}\right.
 \end{equation}
 于是$c_v^w$可重新表达为如下形式：
 \begin{equation}
@@ -42,26 +45,41 @@ c_{v}^{w}=\frac{1}{r_{total}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](
 由于蒸发与蒸腾率均受到可利用水分的限制，所以$E_{pv}$将分别针对蒸发与蒸腾作用进行调整：\\
 对于叶片的蒸腾通量：
 \begin{equation}
-\begin{array}{c}E_{pvt}=-\frac{f_{sig} \rho_{atm}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{\delta LAI\left(1-f_{w e t}\right)}{r_{b}+r_{s}}\left[c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}-\left(c_{a}^{w}+c_{g}^{w}+c_{v}^{w}\right) q_{s a t}^{T_{v}}\right] \\ \frac{\partial E_{pvt}}{\partial T_{v}}=\frac{f_{sig} \rho_{atm} \delta LAI\left(1-f_{w e t}\right)}{r_{b}+r_{s}} \frac{c_{a}^{w}+c_{g}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{d q_{s a t}^{T_{v}}}{d T_{v}}\end{array}
+\begin{aligned}
+E_{pvt} &= -\frac{f_{sig} \rho_{atm}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{\delta LAI\left(1-f_{w e t}\right)}{r_{b}+r_{s}}\left[c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}-\left(c_{a}^{w}+c_{g}^{w}+c_{v}^{w}\right) q_{s a t}^{T_{v}}\right] \\ 
+\frac{\partial E_{pvt}}{\partial T_{v}} &= \frac{f_{sig} \rho_{atm} \delta LAI\left(1-f_{w e t}\right)}{r_{b}+r_{s}} \frac{c_{a}^{w}+c_{g}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{d q_{s a t}^{T_{v}}}{d T_{v}}
+\end{aligned}
 \end{equation}
-当$ E_{pvt} \geq f_{sig}\ast E_{pvt,max} $即叶片最大蒸腾率($\rm kg/m^2/s$)时，
+当$ E_{pvt} \geq f_{sig} E_{pvt,max}$ 即叶片最大蒸腾率(\unit{kg.m^{-2}.s^{-1}})时，
 \begin{equation}
-\begin{array}{c}E_{pvt}=f_{sig} * E_{pvt, \max } \\ \frac{\partial E_{pvt}}{\partial T_{v}}=0\end{array}
+\begin{aligned}
+E_{pvt} &= f_{sig} E_{pvt, \max } \\ 
+\frac{\partial E_{pvt}}{\partial T_{v}} &= 0
+\end{aligned}
 \end{equation}
 对于叶片的蒸发通量：
 \begin{equation}
-\begin{array}{c}E_{pva}=-\frac{f_{\text {sig }} \rho_{atm}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{\left[1-\delta\left(1-f_{w e t}\right)\right](LAI+SAI)}{r_{b}}\left[c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}\right. \\ \left.-\left(c_{a}^{w}+c_{g}^{w}+c_{v}^{w}\right) q_{s a t}^{T_{v}}\right] \\ \frac{\partial E_{pva}}{\partial T_{v}}=\frac{f_{\text {sig }} \rho_{atm}\left[1-\delta\left(1-f_{w e t}\right)\right](LAI+SAI)}{r_{b}} \frac{c_{a}^{w}+c_{g}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{d q_{s a t}^{T_{v}}}{d T_{v}}\end{array}
+\begin{aligned}
+E_{pva} &= -\frac{f_{\text {sig }} \rho_{atm}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{\left[1-\delta\left(1-f_{w e t}\right)\right](LAI+SAI)}{r_{b}}\left[c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}\right. \\ 
+&\mathrel{\phantom{=}}\left.-\left(c_{a}^{w}+c_{g}^{w}+c_{v}^{w}\right) q_{s a t}^{T_{v}}\right] \\ 
+\frac{\partial E_{pva}}{\partial T_{v}} &= \frac{f_{\text {sig }} \rho_{atm}\left[1-\delta\left(1-f_{w e t}\right)\right](LAI+SAI)}{r_{b}} \frac{c_{a}^{w}+c_{g}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{d q_{s a t}^{T_{v}}}{d T_{v}}
+\end{aligned}
 \end{equation}
-当$E_{pva} \geq \frac{W_{can}}{\Delta t} \frac{LAI+SAI}{LAI+SAI}$即叶片最大蒸发率($\rm kg/m^2/s$)时，
+当$E_{pva} \geq \frac{W_{can}}{\Delta t} \frac{LAI+SAI}{LAI+SAI}$即叶片最大蒸发率(\unit{kg.m^{-2}.s^{-1}})时，
 \begin{equation}
-\begin{array}{c}E_{pva}=\frac{W_{can}}{\Delta t} \\ \frac{\partial E_{pva}}{\partial T_{v}}=0\end{array}
+  \begin{aligned}
+   E_{pva} &= \frac{W_{can}}{\Delta t} \\ 
+   \frac{\partial E_{pva}}{\partial T_{v}} &= 0
+  \end{aligned}
 \end{equation}
 于是对于叶片的总水汽通量：
 \begin{equation}
-\begin{array}{l}E_{pv}=E_{pvt}+E_{pva} \\ 
-    \frac{\partial E_{pv}}{\partial T_{v}}=\frac{\partial E_{pvt}}{\partial T_{v}}+\frac{\partial E_{pva}}{\partial T_{v}}\end{array}
+  \begin{aligned}
+   E_{pv} &= E_{pvt}+E_{pva} \\ 
+   \frac{\partial E_{pv}}{\partial T_{v}} &= \frac{\partial E_{pvt}}{\partial T_{v}}+\frac{\partial E_{pva}}{\partial T_{v}}
+  \end{aligned}
 \end{equation}
-雨水感热表达式$H_{prcv}$已在 \ref{植被地表的雨水感热} 节给出，其对温度的变化率为：
+雨水感热表达式$H_{prcv}$已在章节~\ref{植被地表的雨水感热} 给出，其对温度的变化率为：
 \begin{equation}
 \frac{\partial H_{prcv}}{\partial T_{v}}=-\left[C_{p l} q_{p l}+C_{p i} q_{p i}\right]
 \end{equation}
@@ -86,7 +104,7 @@ c_{v}^{w}=\frac{1}{r_{total}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](
     g. 若前后两次迭代过程中潜热通量的符号发生变化($\lambda_vE_{pv}^{\left(n\right)}\times\lambda_vE_{pv}^{\left(n+1\right)}<0$)，
     则在该次迭代计算温度时，潜热通量的量级限制为原量级的10\%，由此产生的能量差最后将加到感热通量中 \\
     h. 计算温度变化$\Delta T_v$，并由此更新$T_v^{\left(n+1\right)}=\Delta T_v^{\left(n\right)}+T_v^{\left(n\right)}$。在每次迭代过程中，对于温度的变化作出如下两个限制：
-    (1)温度的变化不得超过1K，若超过，则强制其变化只有1K；
+    (1)温度的变化不得超过1 K，若超过，则强制其变化只有1K；
     (2)若本次迭代温度变化的方向与上一次变化的方向相反，则本次温度的变化将取为两次变化的平均值(若$\Delta T_v^{\left(n-1\right)} \cdot \Delta T_v^{\left(n\right)}<0$，则$\Delta T_v^{\left(n\right)}=\left(\Delta T_v^{\left(n-1\right)}+\Delta T_v^{\left(n\right)}\right)/2$)。\\
     由温度调整所带来的能量平衡误差最后将加到感热通量中；\\
     i. 更新饱和比湿$q_{sat}^{T_v}$及其对$T_v$的变化率 \\
@@ -104,7 +122,7 @@ c_{v}^{w}=\frac{1}{r_{total}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](
         \max\left( \sqrt{\left(\Delta T_{v}^{(n)}\right)^{2}}, \sqrt{\left(\Delta T_{v}^{(n-1)}\right)^{2}} \right) \leq 0.01\end{array}
     \end{equation}
     其中$\left[\bullet\right]^{\ast\ast2}$表示各个相同能量项合并后的平方和；
-    \item 由最终叶片温度更新植被表面与植被冠层空气之间的潜热通量，其中蒸发率不得超过最大蒸发率$W_{can} \Delta t$，蒸腾率不得超过最大蒸腾率$f_{sig}\ast E_{pvt,max}$，
+    \item 由最终叶片温度更新植被表面与植被冠层空气之间的潜热通量，其中蒸发率不得超过最大蒸发率$W_{can} \Delta t$，蒸腾率不得超过最大蒸腾率$f_{sig} E_{pvt,max}$，
     若超过则蒸发(腾)率强制取为最大蒸发(腾)率，由此产生的能量差最后将加到感热通量中。
     \item 由最终叶片温度更新植被表面与植被冠层空气之间的感热通量以及上述因为潜热与温度的调整导致的能量误差之和。
     \item 由最终叶片温度更新植被冠层的雨水感热。
@@ -116,12 +134,17 @@ c_{v}^{w}=\frac{1}{r_{total}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](
     \item 计算有植被覆盖下的地表感热通量$H_{pg}$和潜热通量$\lambda_{vE_{pg}}$及其对地表温度的变化率，
     并给出地表总感热通量$H_g$和潜热通量$\lambda_{vE_g}$：
     \begin{equation}
-    \begin{aligned} H_{g} &=H_{b}+H_{p g} \\ \lambda_{vE_{g}} &=\lambda_{vE_{b}}+\lambda_{vE_{pg}} \end{aligned}
+      \begin{aligned} 
+        H_{g} &=H_{b}+H_{p g} \\ 
+        \lambda_{vE_{g}} &=\lambda_{vE_{b}}+\lambda_{vE_{pg}} 
+      \end{aligned}
     \end{equation}
     \item 计算植被覆盖下地表吸收的下行长波辐射$L_{pg}\downarrow$和返回大气的上行长波辐射$L_p\uparrow$：
     \begin{equation}
-    \begin{array}{c}L_{pg} \downarrow=f_{sig} \mu_{th} L \downarrow+f_{sig} \left(1-\mu_{t h}\right) \sigma T_{v}^{4} \\
-         L_{p} \uparrow=f_{sig} \mu_{t h} \varepsilon_{g} \sigma T_{g}^{4}+f_{sig} \left(1-\mu_{t h}\right) \sigma T_{v}^{4}\end{array}
+      \begin{aligned}
+        L_{pg} \downarrow &= f_{sig} \mu_{th} L \downarrow+f_{sig} \left(1-\mu_{t h}\right) \sigma T_{v}^{4} \\
+        L_{p} \uparrow &= f_{sig} \mu_{t h} \varepsilon_{g} \sigma T_{g}^{4}+f_{sig} \left(1-\mu_{t h}\right) \sigma T_{v}^{4}
+      \end{aligned}
     \end{equation}
-    \item 计算2m温度与比湿$T_{2m}$、$q_{2m}$。
+    \item 计算2 m温度与比湿$T_{2m}$、$q_{2m}$。
 \end{enumerate}

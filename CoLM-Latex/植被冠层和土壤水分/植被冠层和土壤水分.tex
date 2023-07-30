@@ -22,21 +22,24 @@ G_{water}=P_{ground}+S_{melt}-E
 水流通量一般表达为$K\times{\rm ss}^3$，其中$K$为导水率，$ss$为液态水在孔隙中的饱和度。由于没有有效的参数化方案来计算导水率$K$，
 模式中采用简化的方案来近似液态水在积雪中的流动：当某一层中的液态水的含量超过了这一层的持水能力的时候，多余的液态水自这一层流入其下的一层。
 最下层的液态水运动，形成对土壤的入渗或地表径流。下面依次从植被到土壤分别介绍各水文循环过程的描述。
+
+
 \section{植被冠层截留}\label{植被冠层截留}
 \begin{mymdframed}{代码}
 本节对应的代码文件为\texttt{MOD\_LeafInterception.F90}。
 \end{mymdframed}
+
 CoLM冠层水库的水平衡方程基本与SiB2一致 \citep{sellers1996revised}，主要基于以下控制方程：
 \begin{equation}
 \partial M_{cw,s}=P-D_{d}-D_{c}-E_{ci} / \rho_{w}
 \end{equation}
-式中 $P$ 为总降水量($\rm m\ s^{-1}$)，分为对流降水和大尺度降水类型：
+式中 $P$ 为总降水量(\unit{m.s^{-1}})，分为对流降水和大尺度降水类型：
 \begin{equation}
 P=P_{c}+P_{l}=\left(R_{c}+S_{c}\right)+\left(R_{l}+S_{l s}\right)
 \end{equation}
-其中下标$c$和$l$代表对流和大尺度降水类型，$R$和$S$分别代表降雨率与降雪率 ($\rm m\ s^{-1}$)。
+其中下标$c$和$l$代表对流和大尺度降水类型，$R$和$S$分别代表降雨率与降雪率 (\unit{m.s^{-1}})。
 当驱动强迫场中只有总降水可用时，CoLM假设大尺度降水等于$1/3P$，对流降水占$2/3P$。
-$D_d$为降雨穿透速率 ($\rm m\ s^{-1}$)，即从冠层间隙下落的降水速率，$D_c$为冠层排水速度 ($\rm m\ s^{-1}$)，$\partial M_{cw,s}$为冠层蓄水变化率 ($\rm m\ s^{-1}$), 
+$D_d$为降雨穿透速率 (\unit{m.s^{-1}})，即从冠层间隙下落的降水速率，$D_c$为冠层排水速度 (\unit{m.s^{-1}})，$\partial M_{cw,s}$为冠层蓄水变化率 (\unit{m.s^{-1}}), 
 $\rho_w$是水的密度, $E_{ci}$为蒸发速率。此处的直接穿透量$D_d$与辐射传输中的光穿透量的计算方法一致，由下式给出：
 \begin{equation}
 D_{d}=\delta_{P} \cdot P=\delta_{P} \cdot\left(R_{c}+S_{c}+R_{l}+S_{l s}\right)
@@ -45,14 +48,18 @@ D_{d}=\delta_{P} \cdot P=\delta_{P} \cdot\left(R_{c}+S_{c}+R_{l}+S_{l s}\right)
 \begin{equation}
 \delta_{P}=1.0-\alpha \times\left[1-\exp \left(-K_{p} \times LSAI\right)\right]
 \end{equation}
-该公式中反映叶片集水能力的经验系数$\alpha$被设定为0.25 \citep{lawrence2011parameterization}。
+该公式中反映叶片集水能力的经验系数$\alpha$被设定为0.25~\citep{lawrence2011parameterization}。
 $LSAI$是$SAI$和$LAI$之和 ($LAI$和$SAI$分别是叶指数和茎面积指数)；$K_p$是消光系数，与辐射在冠层中的穿透计算相同：
 \begin{equation}
-\begin{array}{c}K_{p}=\phi_{1}+\phi_{2} \\ \phi_{2}=0.877\left(1-2 \phi_{1}\right) \\ \phi_{1}=0.5-0.633 \chi_{L}-0.33 \chi_{L}^{2}\end{array}
+\begin{aligned}
+K_{p} &= \phi_{1}+\phi_{2} \\
+\phi_{2} &= 0.877\left(1-2 \phi_{1}\right) \\
+\phi_{1} &= 0.5-0.633 \chi_{L}-0.33 \chi_{L}^{2}
+\end{aligned}
 \end{equation}
 $K_p$通过叶角分布的经验参数$\chi_L$的变化来控制，
 其中$\chi_L=0$表示球形叶角分布，$\chi_L= 1$ 表示水平方向的叶子，$\chi_L= -1$ 表示垂直方向的叶子。
-根据植被类型，$\chi_L$的范围在-0.3$\sim$0.25之间。由此计算得出的$\delta_P$的变动范围如图 \ref{fig:穿透系数与叶面积指数} 所示。%
+根据植被类型，$\chi_L$的范围在-0.3$\sim$0.25之间。由此计算得出的$\delta_P$的变动范围如图~\ref{fig:穿透系数与叶面积指数} 所示。%
 {
 \begin{figure}[]
 \centering
@@ -61,9 +68,13 @@ $K_p$通过叶角分布的经验参数$\chi_L$的变化来控制，
 \label{fig:穿透系数与叶面积指数}
 \end{figure}
 }
+
 为防止升华或冷凝水超过最大树冠储存量，CoLM在计算冠层截留之前首先更新树叶上的水深 ($L_{dew}$) (mm)：
 \begin{equation}
-\begin{array}{c}L_{dew}=L_{dew}-x_{sc} \\ x_{s c}=\max \left(0 ., L_{dew}-x_{sc}\right)\end{array}
+\begin{aligned}
+L_{dew} &= L_{dew}-x_{sc} \\
+x_{s c} &= \max \left(0., L_{dew}-x_{sc}\right)
+\end{aligned}
 \end{equation}
 其中 $x_{sc}$ 是超过最大树冠储存量的水(mm)，$S_c=0.1f_{sig}\left(LAI+SAI\right)$代表最大蓄水量(mm)。
 $x_{sc}$的相位首先由冠层温度决定。如果冠层温度大于冰点温度，CoLM 假定所有过量的水都处于液相，否则处于冰雪相。
@@ -97,11 +108,11 @@ t h r u_{ {rain }}=\left(R_{c}+R_{l}\right)\left(1-\delta_{p}\right) \frac{a_{p}
 \begin{equation}
 D_c=thru_{r a i n}+x_{s c}
 \end{equation}
-因此，保留在树冠上的可用于树冠蒸发(截留蒸发)的蓄水量$I$(mm)可以由下式进行更新：
+因此，保留在树冠上的可用于树冠蒸发(截留蒸发)的蓄水量$I$ (mm)可以由下式进行更新：
 \begin{equation}
 I={P}-D_{c}-D_{d}
 \end{equation}
-在冠层蒸发量的计算上首先需要计算湿叶茎面积占总叶茎面积的比例 ($f_{wet}$)。该计算CoLM模型采用\citet{dickinson1993biosphere}提出的经验方法
+在冠层蒸发量的计算上首先需要计算湿叶茎面积占总叶茎面积的比例 ($f_{wet}$)。该计算CoLM模型采用~\citet{dickinson1993biosphere}提出的经验方法
 \begin{equation}
 f_{{wet}}=\left(\frac{L_{dew, p}}{s_{c}}\right)^{2 / 3} \leq 1.0
 \end{equation}
@@ -166,12 +177,15 @@ q_{i+\frac{1}{2}}^{n+1}=-K_{i+\frac{1}{2}}^{n+1}\left(\frac{\psi_{i+1}^{n+1}-\ps
 其中$\Delta z_{i,i+1}$表示从第$i$层到第$i+1$层中心的距离。
 为了简化计算，将$q_{i+\frac{1}{2}}^{n+1}$表达式中的各项在$\theta_i^n$附近做一阶近似，可得
 \begin{equation}
-\begin{array}{c}K_{i+\frac{1}{2}}^{n+1}=K_{i+\frac{1}{2}}^{n}+\frac{\partial K_{i+\frac{1}{2}}}
+\begin{aligned}
+K_{i+\frac{1}{2}}^{n+1} &= K_{i+\frac{1}{2}}^{n}+\frac{\partial K_{i+\frac{1}{2}}}
     {\partial \theta_{i}}\left(\theta_{i}^{n+1}-\theta_{i}^{n}\right)+\frac{\partial K_{i+\frac{1}{2}}}
     {\partial \theta_{i+1}}\left(\theta_{i+1}^{n+1}-\theta_{i+1}^{n}\right) \\ 
-    \psi_{i+1}^{n+1}=\psi_{i+1}^{n}+\frac{\partial \psi_{i+1}}{\partial \theta_{i+1}}\left(\theta_{i+1}^{n+1}-\theta_{i+1}^{n}\right)
-     \\ \psi_{i}^{n+1}=\psi_{i}^{n}+\frac{\partial \psi_{i}}{\partial \theta_{i}}\left(\theta_{i}^{n+1}-\theta_{i}^{n}\right)\end{array}
+\psi_{i+1}^{n+1} &= \psi_{i+1}^{n}+\frac{\partial \psi_{i+1}}{\partial \theta_{i+1}}\left(\theta_{i+1}^{n+1}-\theta_{i+1}^{n}\right) \\
+\psi_{i}^{n+1} &= \psi_{i}^{n}+\frac{\partial \psi_{i}}{\partial \theta_{i}}\left(\theta_{i}^{n+1}-\theta_{i}^{n}\right)
+\end{aligned}
 \end{equation}
+
 记$\Delta \theta_i=\theta_i^{n+1}-\theta_i^n$，则
 \begin{equation}
 \begin{split} 
@@ -191,37 +205,50 @@ q_{i+\frac{1}{2}}^{n+1} =&-\left(K_{i+\frac{1}{2}}^{n}+\frac{\partial K_{i+\frac
 \end{equation}
 其中，
 \begin{equation}
-\begin{array}{c}{a}_{{mx}}=-\left(K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-1, i}}
+\begin{aligned}
+ a_{mx} &= -\left(K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-1, i}}
      \frac{\partial \psi_{i-1}}{\partial \theta_{i-1}}\right)+\frac{\partial K_{i-\frac{1}{2}}}
      {\partial \theta_{i-1}}\left(\frac{1}{\Delta z_{i-1, i}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right) \\
-      {b}_{{mx}}=\frac{\Delta z_{i}}{\Delta t}-\left(-\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} 
+b_{mx} &= \frac{\Delta z_{i}}{\Delta t}-\left(-\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} 
       \frac{\partial \psi_{i}}{\partial \theta_{i}}\right)+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i}}
       \left(\frac{1}{\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \\
-       +\left(\left(K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-1, i}} \frac{\partial \psi_{i}}{\partial 
-       \theta_{i}}\right)+\frac{\partial K_{i-\frac{1}{2}}}{\partial \theta_{i}}\left(\frac{1}{\Delta z_{i-1, i}}\left(\psi_{i}^{n}
-       -\psi_{i-1}^{n}\right)-1\right)\right) \\ {c}_{{mx}}=-\left(\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} 
+&\mathrel{\phantom{=}}+\left(\left(K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-1, i}} \frac{\partial \psi_{i}}{\partial 
+       \theta_{i}}\right)+\frac{\partial K_{i-\frac{1}{2}}}{\partial \theta_{i}}\left(\frac{1}{\Delta z_{i-1, i}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right)\right) \\ 
+c_{mx} &= -\left(\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} 
        \frac{\partial \psi_{i+1}}{\partial \theta_{i+1}}\right)+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}}\left(\frac{1}
-       {\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \\ r_{m x}=K_{i+\frac{1}{2}}^{n}
+       {\Delta z_{i, i+1}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \\ 
+r_{mx} &= K_{i+\frac{1}{2}}^{n}
        \left(\frac{1}{\Delta z}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)+1\right)-K_{i-\frac{1}{2}}^{n}
-       \left(\frac{1}{\Delta z}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right)-e_{i}\end{array}
+       \left(\frac{1}{\Delta z}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right)-e_{i}
+\end{aligned}
 \end{equation}
+
 对最上面的土壤分层(第1层)，使用给定的入渗通量$q_{infl}$，则
 \begin{equation}
-\begin{array}{c}{a}_{{mx}}=0 \\ {~b}_{{mx}}=\frac{\Delta z_{i}}{\Delta t}-\left(-\left(K_{i+\frac{1}{2}}^{n} 
+\begin{aligned}
+a_{mx} &= 0 \\
+b_{mx} &= \frac{\Delta z_{i}}{\Delta t}-\left(-\left(K_{i+\frac{1}{2}}^{n} 
     \frac{1}{\Delta z_{i, i+1}} \frac{\partial \psi_{i}}{\partial \theta_{i}}\right)+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i}}\left(\frac{1}{\Delta z_{i, i+1}}
-    \left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \\ {c}_{{mx}}=-\left(\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} 
+    \left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \\
+c_{mx} &= -\left(\left(K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i, i+1}} 
     \frac{\partial \psi_{i+1}}{\partial \theta_{i+1}}\right)+\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}}\left(\frac{1}{\Delta z_{i, i+1}}
-    \left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \\ r_{m x}=q_{i n f l}+K_{i+\frac{1}{2}}^{n}
-    \left(\frac{1}{\Delta z}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)-e_{i}\end{array}
+    \left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right) \\ 
+r_{mx} &= q_{i n f l}+K_{i+\frac{1}{2}}^{n}
+    \left(\frac{1}{\Delta z}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)-e_{i}
+\end{aligned}
 \end{equation}
 对最下面的土壤分层，假定边界条件为重力排水边界条件，即$q_{i+\frac{1}{2}}^{n+1}=-K_{i+\frac{1}{2}}^{n+1}$，则
 \begin{equation}
-\begin{array}{c}{a}_{{mx}}=-\left(K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-1, i}} \frac{\partial \psi_{i-1}}
+\begin{aligned}
+a_{mx} &= -\left(K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-1, i}} \frac{\partial \psi_{i-1}}
     {\partial \theta_{i-1}}\right)+\frac{\partial K_{i-\frac{1}{2}}}{\partial \theta_{i-1}}\left(\frac{1}{\Delta z_{i-1, i}}
-    \left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right) \\ {b}_{{mx}}=\frac{\Delta z_{i}}{\Delta t}+\frac{\partial K_{i+\frac{1}{2}}}
+    \left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right) \\
+b_{mx} &= \frac{\Delta z_{i}}{\Delta t}+\frac{\partial K_{i+\frac{1}{2}}}
     {\partial \theta_{i}}+\left(\left(K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-1, i}} \frac{\partial \psi_{i}}{\partial \theta_{i}}\right)+
     \frac{\partial K_{i-\frac{1}{2}}}{\partial \theta_{i}}\left(\frac{1}{\Delta z_{i-1, i}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right)\right) \\
-     c_{{mx}}=0 \\ r_{m x}=-K_{i+\frac{1}{2}}^{n}-K_{i-\frac{1}{2}}^{n}\left(\frac{1}{\Delta z}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right)-e_{i}\end{array}
+c_{mx} &= 0 \\
+r_{mx} &= -K_{i+\frac{1}{2}}^{n}-K_{i-\frac{1}{2}}^{n}\left(\frac{1}{\Delta z}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right)-e_{i}
+\end{aligned}
 \end{equation}
 求解上述方程组，即可得到土壤水含量的变化量。方程组的系数矩阵为三对角阵，可用追赶法快速求解。
 

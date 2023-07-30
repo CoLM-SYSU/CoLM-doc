@@ -63,11 +63,10 @@ $E_{sun}$代表阳叶蒸腾速率，$E_{sha}$代表阴叶蒸腾速率。它们�
 植物水势下降导致的空穴现象会严重降低水分在植物内部的传导能力。我们将实验上观测到水力导度随水势变化的S型脆弱性曲线 
 \citep{sperry1988method,gentine2016allometry,neufeld1992genotypic,pammenter1998mathematical,plaut2012hydraulic}
  引入到模型，对植物水力栓塞进行参数化，得到节点间的水力导度$k_{i\gets j}$ (从节点$j$到$i$的传输)：
- \begin{equation}
+\begin{equation}
 k_{i \leftarrow j}=k_{\max } \cdot 2^{-\left(\frac{\Psi_{\mathbf{j}}}{p 50}\right)^{c_{k}}}
 \end{equation}
-其中$k_{max}$表示最大水力导度 ($\mathrm{s^{-1}}$)。$\Psi_j$代表节点$j$的水势 ($\mathrm{mm\  H_2O}$)，$p50$代表水力导度降低 50\% 时的水势 ($\mathrm{mm\ H_2O}$)，$c_k$代表脆弱性曲线的形状参数。
-
+其中$k_{max}$表示最大水力导度 (\unit{s^{-1}})。$\Psi_j$代表节点$j$的水势 (\unit{mm.H_2O})，$p50$代表水力导度降低 50\% 时的水势 (\unit{mm.H_2O})，$c_k$代表脆弱性曲线的形状参数。
 
 
 实验数据发现气孔导度和叶片水势同样存在S型曲线关系 \citep{klein2014variability}，
@@ -116,7 +115,7 @@ q_{ax,1}+q_{rad, 1}=q_{root,0}
 其输出包括根水势垂直分布 ($\Psi_{r,i}$) 和根吸水速率垂直分布 ($q_{rad,i}$)。因此，地下植物水力过程可以被简化地表示为公式(\ref{Psi_root_0})。
 
 \section{气孔导度的水分胁迫}\label{气孔导度的水分胁迫}
-土壤水分亏缺对植物生理的影响被表现在水分胁迫因子上，水分胁迫因子作为取值 $0\sim 1$ 的无量纲变量，作用在光合作用各限制因子上，见公式(\ref{V_cmax_a})-(\ref{R_d1})。
+土壤水分亏缺对植物生理的影响被表现在水分胁迫因子上，水分胁迫因子作为取值 $0\sim 1$ 的无量纲变量，作用在光合作用各限制因子上，见公式(\ref{V_cmax_a})--(\ref{R_d1})。
 
 植物水力模式未开启时，水分胁迫因子 ($\beta$) 决定于根的垂直分布比例和土壤水势，其计算不区分阴叶和阳叶：
 \begin{equation}\label{beta_0}
@@ -161,7 +160,7 @@ $f_{photo}$代表公式(\ref{An1})的光合作用模型。
 
 
 最大气孔导度一方面是植物水力模式水分胁迫计算的必要变量(公式(\ref{beta_sun})和(\ref{beta_sun}))，
-另一方面，为地表冠层湍流参数化方案中叶片最大蒸腾速率计算提供重要输入 (如图\ref{fig:光合气孔模式和植物水力模式的耦合示意图})。
+另一方面，为地表冠层湍流参数化方案中叶片最大蒸腾速率计算提供重要输入 (如图~\ref{fig:光合气孔模式和植物水力模式的耦合示意图})。
 地表冠层湍流参数化方案中的叶片最大蒸腾速率$(E_{sun,max}$和$E_{sha,max}$) 可简化地表示为：
 \begin{equation}\label{E_sunmax}
 E_{sun, \max }=E\left(g_{s, sun, \max }\right)
