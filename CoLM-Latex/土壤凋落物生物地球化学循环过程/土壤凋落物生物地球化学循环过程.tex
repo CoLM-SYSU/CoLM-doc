@@ -9,12 +9,13 @@ CoLM的土壤和凋落物存在垂直分层结构，碳氮动态变化根据平�
 \begin{equation}
 \begin{array}{r}\frac{\partial C_{i}(z)}{\partial t}=R_{i}(z)+\sum_{i \neq j}\left(1-r f_{j}\right) T_{j i} k_{j}(z) C_{j}(z)-k_{i}(z) C_{i}(z) \\ +\frac{\partial}{\partial z}\left(D(z) \frac{\partial C_{i}}{\partial z}\right)+\frac{\partial}{\partial z}\left(A(z) C_{i}(z)\right)\end{array}
 \end{equation}
-其中，$C_i\left(z\right)$是第$z$层的土壤碳密度($\mathrm{g\ C\ m^{-3}}$); $R_i (z)$ 是第 $z$ 层土壤的凋落物碳输入，
+其中，$C_i\left(z\right)$是第$z$层的土壤碳密度(\unit{g.C.m^{-3}}); $R_i (z)$ 是第 $z$ 层土壤的凋落物碳输入，
 $\sum_{i\neq j}{\left(1-{rf}_j\right)T_{ji}k_j\left(z\right)C_j\left(z\right)}$代表土壤碳库$j$到碳库$i$的碳转变；
 $k_j\left(z\right)$是第$z$层碳库$j$的周转速率；${rf}_j$是$j$库在转换中呼吸掉的碳的比例；
 $\left(1-{rf}_j\right)$是微生物对库$j$分解的碳利用效率，$T_{ji}$是碳转换途径$j$到$i$在所有离开$j$库碳通量
 (不包括因呼吸作用离开$j$库)的比例；$k_i\left(z\right)C_i\left(z\right)$代表库$i$的碳分解；
 $\frac{\partial}{\partial z}\left(D\left(z\right)\frac{\partial C_i}{\partial z}\right)+\frac{\partial}{\partial z}\left(A\left(z\right)C_i\left(z\right)\right)$代表碳垂直传输。
+
 
 \section{土壤凋落物分解}\label{土壤凋落物分解}
 土壤凋落物碳氮分解在每一层分别进行，分解速率受每一层不同的环境因子控制：
@@ -22,6 +23,7 @@ $\frac{\partial}{\partial z}\left(D\left(z\right)\frac{\partial C_i}{\partial z}
 k_{i}(z)=k_{i,base} \cdot \xi_{tsoil}(z) \cdot \xi_{water}(z) \cdot \xi_{depth}(z)
 \end{equation}
 其中$k_{i,base}$是库$i$的基础周转速率，$\xi_{tsoil}$是温度环境因子，$\xi_{water}$是土壤水环境因子，$\xi_{depth}$是深度因子。
+
 
 \section{环境限制因子}\label{环境限制因子}
 CoLM生物地球化学模块，控制土壤分解的环境因子包括土壤温度因子，土壤水分因子和深度因子。其中土壤温度因子运用$Q_{10}$关系：
@@ -122,7 +124,7 @@ CoLM将植被的氮需求($NF_{plant\_{demand\_{soil}}}$) 按无机氮含量的�
     NF_{total\_{demand\_{soil}},vr}(z)=NF_{plant\_{demand\_{soil}},vr}(z)+NF_{immob,demand,vr}\left(z\right)
 \end{equation}
 CoLM在每层土壤中分别考虑无机氮的供需关系及其和每层无机氮含量 ${NS}_{sminn,vr}(z)$ 的关系，
-我们得到每层土壤分解的氮限制因子 ($f_{immo_{demand},vr}$) 和植被氮吸收的限制因子($f_{plant\_{demand},vr}$)：
+我们得到每层土壤分解的氮限制因子 ($f_{immo\_{demand},vr}$) 和植被氮吸收的限制因子($f_{plant\_{demand},vr}$)：
 \begin{equation}
     f_{plant\_{demand},vr}(z)=f_{immob\_{demand},vr}(z)=\frac{NS_{sminn,vr}(z)}{NF_{total\_{demand\_{soil}},vr}(z)\cdot\Delta t}
 \end{equation}

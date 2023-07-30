@@ -13,7 +13,7 @@
        }
    }
    
-\usepackage{tocbibind} % used to add bibliography to toc with correct bookmark and page number
+\usepackage[nottoc]{tocbibind} % used to add bibliography to toc with correct bookmark and page number
    
 %\usepackage[T1]{fontenc}
 \newcommand{\arial}[1]{{\fontencoding{T1}\usefont{T1}{phv}{m}{n}{#1}}}
@@ -119,8 +119,11 @@
 \part{其他}
 \include{尺度转换/尺度转换}
 
-\part*{附录}
+\clearpage
 \addcontentsline{toc}{part}{附录}
+\part*{附录}
+
+%\cleardoublepage
 \appendix
 \clearpage
 %\addcontentsline{toc}{chapter}{附录}

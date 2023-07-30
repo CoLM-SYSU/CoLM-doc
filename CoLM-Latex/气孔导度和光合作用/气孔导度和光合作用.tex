@@ -9,13 +9,13 @@
 
 
 CoLM的气孔导度计算仍沿用Ball-Berry模型。Ball-Berry模型根据叶片净光合作用速率 
-($A_n$，单位: $\rm mol\ CO_2\ m^{-2}s^{-1}$)、叶表水汽压 ($e_s$，单位: Pa)、叶表二氧化碳分压 ($c_s$，单位: Pa) 
-基于气孔导度的观测回归经验关系，计算气孔导度 ($g_s$, 单位: $\rm mol\ CO_2\ m^{-2}s^{-1}$)： 
+($A_n$，单位: \unit{mol.CO_2.m^{-2}.s^{-1}})、叶表水汽压 ($e_s$，单位: Pa)、叶表二氧化碳分压 ($c_s$，单位: Pa) 
+基于气孔导度的观测回归经验关系，计算气孔导度 ($g_s$, 单位: \unit{mol.CO_2.m^{-2}.s^{-1}})： 
 \begin{equation}\label{rs_a1}
 \frac{1}{r_{s}}=g_{s}=m \frac{A_{n}}{c_{s}} \frac{e_{s}}{e_{i}} p_{s}+b
 \end{equation}
-$r_s$代表叶片气孔阻抗，单位: $\rm s\ m^{-1}$；$m$是无量纲经验参数；$b$是最小气孔导度，
-单位: $\rm mol\ CO_2\ m^{-2}s^{-1}$，$m$和$b$是观测拟合的经验系数；$e_i$是饱和水蒸气压，
+$r_s$代表叶片气孔阻抗，单位: \unit{s.m^{-1}}；$m$是无量纲经验参数；$b$是最小气孔导度，
+单位: \unit{mol.CO_2.m^{-2}.s^{-1}}，$m$和$b$是观测拟合的经验系数；$e_i$是饱和水蒸气压，
 是气温的函数，单位: Pa；$p_s$是大气压强，单位: Pa。
 \section{植物的光合作用}\label{植物的光合作用}
 C3植物的光合作用模拟是基于Farquhar光合作用模型 \citep{farquhar1980biochemical} ，
@@ -31,7 +31,7 @@ RuBP羧化酶限制主要指当羧化酶浓度不足时，光合作用最大羧�
 A_{c}=\left\{\begin{array}{ll}\frac{V_{c \max }\left(c_{i}-\Gamma\right)}{c_{i}+K_{c}\left(1+\frac{o_{i}}{K_{o}}\right)}
      & { for\ } \mathrm{ C3\ } \mathrm{ plants } \\ V_{c \max } & { for\ } \mathrm{ C4\ } \mathrm{ plants }\end{array}\right.
 \end{equation}
-其中，$\Gamma$是CO$_2$补偿点，$K_c$和$K_o$分别是对于CO$_2$和O$_2$的Michaelis-Menten常数(Pa)，$o_i$是氧气分压(Pa)。\\
+其中，$\Gamma$是CO$_2$补偿点，$K_c$和$K_o$分别是对于CO$_2$和O$_2$的Michaelis--Menten常数(Pa)，$o_i$是氧气分压(Pa)。\\
 C3植物：\\
 \begin{equation}\label{V_cmax_a}
 V_{c \max }\left(T_{{leaf }}\right)=V_{c \max 25} \cdot \frac{2.1^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{1}\left(T_{{leaf }}-T_{{high }}\right)}} \cdot \beta
@@ -41,8 +41,8 @@ $C_4$植物：\\
 V_{c \max }\left(T_{{leaf }}\right)=V_{c \max 25} \cdot \frac{2.1^{\frac{T_{{leaf }}-T_{o p}}{10}}}{\left(1+e^{s_{2}\left(T_{{low }}
  - T_{{leaf }}\right)}\right)\left(1+e^{s_{1}\left(T_{{leaf }}-T_{h i g h}\right)}\right)} \cdot \beta
 \end{equation}
-$V_{c \max 25}$ 是 25 \textcelsius 下的最大羧化速率，单位: $\mathrm{mol\ m^{-2}s^{-1}}$；$T_{op}$是参考温度298 K；$s_1$和$s_2$分别为高温和低温的温度敏感性参数；$T_{low}$和$T_{high}$分别为羧化速率的低温和高温响应参数，
-取值根据植被类型而变化，范围分别为: 278$\sim$288 K，303$\sim$313 K；$T_{leaf}$是叶片温度，通过对叶片能量平衡方程进行牛顿迭代方法而求解得到，详见章节~\ref{植被叶片温度计算}，$\beta$是植物水分胁迫因子，取值范围0$\sim$1，详见章节~\ref{气孔导度的水分胁迫}。
+$V_{c \max 25}$ 是 25 \textcelsius 下的最大羧化速率，单位: \unit{mol.m^{-2}.s^{-1}}；$T_{op}$是参考温度298 K；$s_1$和$s_2$分别为高温和低温的温度敏感性参数；$T_{low}$和$T_{high}$分别为羧化速率的低温和高温响应参数，
+取值根据植被类型而变化，范围分别为: 278$\sim$288 K，303$\sim$313 K；$T_{leaf}$是叶片温度，通过对叶片能量平衡方程进行牛顿迭代方法而求解得到，详见章节~\ref{植被叶片温度计算}，$\beta$是植物水分胁迫因子，取值范围0$\sim1$，详见章节~\ref{气孔导度的水分胁迫}。
 
 当光照不足时，RuBP再生速率下降，成为制约光合作用开尔文循环的最主要因素。因此，RuBP再生速率限制下的羧化速率 ($A_j$) 可表达为有效光合辐射 ($PAR$) 的函数：
 \begin{equation}\label{A_J1}
@@ -56,10 +56,10 @@ J_{x}\left(T_{{leaf }}\right)=\min \left(\alpha\left(4.6 \times 10^{-6} \cdot PA
  \cdot e^{\frac{37000\left(T_{{leaf }}-T_{o p}\right)}{T_{o p} \cdot T_{{leaf }} \cdot R} \cdot \frac{1+e^{\frac{710 \cdot T_{o p}-220000}
  {R \cdot T_{o p}}}}{\frac{710 \cdot T_{{leaf }}-220000}{R \cdot T_{{leaf }}}}}\right) \cdot \beta
 \end{equation}
-其中$\alpha$是量子效率 (0.05 mol CO$_2$ $\rm mol^{-1}$ photon)；$PAR$是有效光合辐射，单位: $\rm W m^{-2}$，详细计算见章节~\ref{短波吸收辐射通量}；
-$4.6 \times 10^{-6}$代表单位从$\rm W m^{-2}$转换到$\mathrm{mol\ photon\ m^{-2}}$的转换系数；
-$J_{\max 25}$是25 \textcelsius 下的最大电子传输速率，单位: $\mathrm{mol\ m^{-2}s^{-1}}$，$J_{\max 25}=1.97 \cdot V_{c \max 25}$； 
-$R$是通用气体常数，$R=8.314467591$ $\mathrm{mol\ m^{-2}s^{-1}}$。
+其中$\alpha$是量子效率 (\qty{0.05}{mol.CO_2.mol^{-1}.photon})；$PAR$是有效光合辐射，单位: \unit{W.m^{-2}}，详细计算见章节~\ref{短波吸收辐射通量}；
+\num{4.6e-6} 代表单位从 \unit{W.m^{-2}} 转换到 \unit{mol.photon.m^{-2}} 的转换系数；
+$J_{\max 25}$是25 \textcelsius 下的最大电子传输速率，单位: \unit{mol.m^{-2}.s^{-1}}，$J_{\max 25}=1.97 \cdot V_{c \max 25}$； 
+$R$是通用气体常数，$R=$ \qty{8.314467591}{mol.m^{-2}.s^{-1}}。
 
 羧化产物速率限制下的羧化速率 ($A_e$) 是25 \textcelsius 最大羧化速率常数 ($V_{c \max}$) 的函数，并且受到叶温和水分胁迫因子的调控：、\\
 C3植物：\\
@@ -103,7 +103,7 @@ A_{n}=\left(c_{a}-c_{s}\right) /\left(\frac{1.37}{g_{b}} p_{s}\right)=\left(c_{s
 \begin{equation}\label{ea_ei}
 \left(e_{a}-e_{i}\right) /\left(\frac{1}{g_{b}}+\frac{1}{g_{s}}\right)=\left(e_{s}-e_{i}\right) / \frac{1}{g_{s}}
 \end{equation}
-$c_a$是冠层大气$\rm CO_2$分压，单位: Pa；$g_b$是叶片边界层导度，单位: $\mathrm{mol\ m^{-2}s^{-1}}$；$e_a$是冠层大气水汽分压，单位: Pa，$e_i$是胞间水汽分压，单位: Pa。
+$c_a$是冠层大气$\rm CO_2$分压，单位: Pa；$g_b$是叶片边界层导度，单位: \unit{mol.m^{-2}.s^{-1}}；$e_a$是冠层大气水汽分压，单位: Pa，$e_i$是胞间水汽分压，单位: Pa。
 
 由方程~\eqref{A_n2} 可知：
 \begin{equation}\label{cs_a1}

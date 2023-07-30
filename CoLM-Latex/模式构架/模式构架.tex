@@ -2,7 +2,7 @@
 %\addcontentsline{toc}{chapter}{模式结构}
 \section{网格构建}\label{网格构建}
 
-通用陆面模式（CoLM，Common Land Model）首先对陆地表面进行剖分，将模拟区域按一定规则划分成单元（Element），模拟分辨率决定了单元平均面积的大小。CoLM中包含三种单元划分规则：1）经纬度网格；2）非结构网格（三角形/六边形）；3）流域单元（catchment）。
+通用陆面模式（CoLM，Common Land Model）首先对陆地表面进行剖分，将模拟区域按一定规则划分成单元（Element），模拟分辨率决定了单元平均面积的大小。CoLM中包含三种单元划分规则：1）经纬度网格；2）非结构网格（三角形/六边形）；3）流域单元（Catchment）。
 
 经纬度网格通过规定经度和纬度分割线的位置来建立，单元的边界由东西两段经线和南北两段纬线组成。经纬度网格的分辨率通常使用经纬度分割线的间距来表达，例如，分辨率为0.5\textdegree 表示相邻两条纬度分割线和经度分割线的距离均为0.5\textdegree。
 
@@ -343,12 +343,12 @@ L \downarrow=\left[0.70+5.95 \times 10^{-5} \times 0.01 e_{a t m} \exp \left(\fr
 \label{tab:CoLM离线运行已经测试的站点列表}
 \\
 \hline 
-\textbf{站点名称} & \textbf{起始年份} & \textbf{终止年份} & \textbf{数据来源} & \textbf{IGBP分类} & \textbf{纬度坐标} & \textbf{经度坐标}\\ \hline 
+\multicolumn{1}{l}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年}} & \multicolumn{1}{c}{\textbf{终止年}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
 \endfirsthead
 
 \multicolumn{7}{c}%
 {{\bfseries \tablename\ \thetable{} -- \kaishu 续表}} \\
-\hline \multicolumn{1}{c}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年份}} & \multicolumn{1}{c}{\textbf{终止年份}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
+\hline \multicolumn{1}{l}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年}} & \multicolumn{1}{c}{\textbf{终止年}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
 \endhead
 
 \hline \multicolumn{7}{r}{{\kaishu 接下一页表格}} \\ \hline
@@ -356,7 +356,6 @@ L \downarrow=\left[0.70+5.95 \times 10^{-5} \times 0.01 e_{a t m} \exp \left(\fr
 
 \hline
 \endlastfoot
-
 
 AR-SLu & 2010 & 2010 & FLUXNET2015 & 5      & -66.45980072 & -33.46480179 \\
 AT-Neu & 2002 & 2012 & FLUXNET2015 & 10     & 11.31750011  & 47.1166687   \\
