@@ -17,9 +17,11 @@ CoLM的气孔导度计算仍沿用Ball-Berry模型。Ball-Berry模型根据叶�
 $r_s$代表叶片气孔阻抗，单位: \unit{s.m^{-1}}；$m$是无量纲经验参数；$b$是最小气孔导度，
 单位: \unit{mol.CO_2.m^{-2}.s^{-1}}，$m$和$b$是观测拟合的经验系数；$e_i$是饱和水蒸气压，
 是气温的函数，单位: Pa；$p_s$是大气压强，单位: Pa。
+
+
 \section{植物的光合作用}\label{植物的光合作用}
-C3植物的光合作用模拟是基于Farquhar光合作用模型 \citep{farquhar1980biochemical} ，
-C4植物则是基于\citet{collatz1992} 的光合作用改进模型。
+C3植物的光合作用模拟是基于Farquhar光合作用模型~\citep{farquhar1980biochemical}，
+C4植物则是基于~\citet{collatz1992} 的光合作用改进模型。
 光合作用受到三方面的限制，即RuBP羧化酶的限制，RuBP再生速率的限制和羧化产物速率的限制，相应的受限羧化速率分别为：$A_{c}$, $A_{j}$, $A_{e}$。叶片净光合作用速率 ($A_{n}$) 等于受限光合羧化速率减去叶呼吸速率 ($R_d$)：
 \begin{equation}\label{An1}
 A_{n}=\min \left(A_{c}, A_{j}, A_{e}\right)-R_{d}
@@ -28,8 +30,11 @@ A_{n}=\min \left(A_{c}, A_{j}, A_{e}\right)-R_{d}
 
 RuBP羧化酶限制主要指当羧化酶浓度不足时，光合作用最大羧化速率$V_{c \max }$受限。RuBP羧化酶限制下的最大羧化率 ($A_c$) 可表达为$V_{c \max }$的函数，其中C3植物羧化速率受到胞间CO$_2$分压$c_i$的调节，并表达为Michaelis-Menten函数：
 \begin{equation}\label{A_C1}
-A_{c}=\left\{\begin{array}{ll}\frac{V_{c \max }\left(c_{i}-\Gamma\right)}{c_{i}+K_{c}\left(1+\frac{o_{i}}{K_{o}}\right)}
-     & { for\ } \mathrm{ C3\ } \mathrm{ plants } \\ V_{c \max } & { for\ } \mathrm{ C4\ } \mathrm{ plants }\end{array}\right.
+A_{c}=\begin{cases}
+\frac{V_{c \max }\left(c_{i}-\Gamma\right)}{c_{i}+K_{c}\left(1+\frac{o_{i}}{K_{o}}\right)}
+     & \text{for C3 plants} \\ 
+V_{c \max } & \text{for C4 plants}
+\end{cases}
 \end{equation}
 其中，$\Gamma$是CO$_2$补偿点，$K_c$和$K_o$分别是对于CO$_2$和O$_2$的Michaelis--Menten常数(Pa)，$o_i$是氧气分压(Pa)。\\
 C3植物：\\
@@ -46,8 +51,10 @@ $V_{c \max 25}$ 是 25 \textcelsius 下的最大羧化速率，单位: \unit{mol
 
 当光照不足时，RuBP再生速率下降，成为制约光合作用开尔文循环的最主要因素。因此，RuBP再生速率限制下的羧化速率 ($A_j$) 可表达为有效光合辐射 ($PAR$) 的函数：
 \begin{equation}\label{A_J1}
-A_{J}=\left\{\begin{array}{ll}\frac{J_x\left(PAR\right)\left(c_{i}-\Gamma\right)}{4c_{i}+8\Gamma}
-     & { for\ } \mathrm{ C3\ } \mathrm{ plants } \\ \alpha\left(4.6\phi\right) & { for\ } \mathrm{ C4\ } \mathrm{ plants }\end{array}\right.
+A_{J}=\begin{cases}\frac{J_x\left(PAR\right)\left(c_{i}-\Gamma\right)}{4c_{i}+8\Gamma}
+     & \text{for C3 plants} \\
+\alpha\left(4.6\phi\right) & \text{for C4 plants}
+\end{cases}
 \end{equation}
 
 $J_x$是有效光合辐射(PAR)的函数，并受叶片温度 ($T_{leaf}$) 的调节：
@@ -66,7 +73,7 @@ C3植物：\\
 \begin{equation}\label{A_e_a}
 A_e=\frac{V_{c \max 25}}{2} \cdot \frac{1.8^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{2}\left(T_{{leaf }}-T_{{low }}\right)}} \cdot \beta
 \end{equation}
-$C_4$植物：\\
+C4植物：\\
 \begin{equation}\label{A_e_b}
 A_e=\frac{V_{c \max 25}}{5} \cdot 1.8^{\frac{T_{{leaf }}-298.16}{10}} \cdot \beta
 \end{equation}

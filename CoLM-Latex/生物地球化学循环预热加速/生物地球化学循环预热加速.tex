@@ -36,10 +36,12 @@ K_{phn}=\left(\begin{array}{ccc}k_{p 1} & \cdots & 0 \\ \vdots & \ddots & \vdots
 K_{gmn}=\left(\begin{array}{ccc}k_{g 1} & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & k_{n 22}\end{array}\right)
 \end{equation}
 $A_{phc}$和$A_{phn}$分别是碳氮传输系数矩阵，代表不同植被碳氮库之间的传输比例。
+
+\afterpage{%\clearpage %
 \begin{landscape}
+\enlargethispage{10pt}
 \begin{equation}
-  A_{phc}=\\
-  \left(\begin{array}{rcccccccccccccccccc}
+  A_{phc}=\left(\begin{array}{rcccccccccccccccccc}
       -1 & 0 & a_{1,3} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
        0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
        0 & a_{3,2} & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -60,7 +62,11 @@ $A_{phc}$和$A_{phn}$分别是碳氮传输系数矩阵，代表不同植被碳�
        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &  a_{18,17} & -1\end{array}\right)
   \end{equation}
 \end{landscape}
+}
+
+%\afterpage{%\clearpage %
 \begin{landscape}
+\enlargethispage{55pt}
   \begin{equation}
     A_{phn}=\left(\begin{array}{rcccccccccccccccccc}
       -1 & 0 & a_{1,3} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & a_{1,19} \\ 
@@ -85,6 +91,8 @@ $A_{phc}$和$A_{phn}$分别是碳氮传输系数矩阵，代表不同植被碳�
     \end{array}\right)
     \end{equation}
   \end{landscape}
+%}
+
     \begin{equation}
       A_{gmc}=\left(\begin{array}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
         -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
@@ -107,6 +115,7 @@ $A_{phc}$和$A_{phn}$分别是碳氮传输系数矩阵，代表不同植被碳�
         0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  & -1
       \end{array}\right)
       \end{equation}
+      
       \begin{equation}
         A_{gmn}=\left(\begin{array}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
           -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -184,7 +193,7 @@ V(t)=\left(\begin{array}{ccccccc}v & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & v & 0 & 0 & 0 
 其中CoLM的粗木质残体库不存在土壤的垂直传输，所以其对应的矩阵$v$是0。
 其余库对应的矩阵都是三对角矩阵，意味着碳氮的垂直传输只发生在相邻的两层土壤之间:
 \begin{equation}
-\begin{array}{c}v=\operatorname{diag}\left(d z_{1}, d z_{2}, \ldots d z_{20}\right)^{-1} \\ 
+\begin{array}{c}v=\operatorname{diag}\left(d z_{1}, d z_{2}, \ldots,  d z_{20}\right)^{-1} \\ 
   \left(\begin{array}{ccccccc}g_{1} & -g_{1} & 0 & & 0 & 0 & 0 \\
      -h_{2} & h_{2}+g_{2} & -g_{2} & \ldots & 0 & 0 & 0 \\ 0 & -h_{3} & h_{3}+g_{3} & & 0 & 0 & 0 \\
       & \vdots & & \ddots & & \vdots & \\ 0 & 0 & 0 & & h_{18}+g_{18} & -g_{18} & 0 \\
