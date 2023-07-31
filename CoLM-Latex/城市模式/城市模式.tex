@@ -248,7 +248,8 @@ F_{ww}^{\prime}=F_{ww}-F_{wvw}+F_{wvw} T_{d}
 F_{ws}^{\prime}=F_{ww}-F_{wvs}+F_{wvs} T_{d}
 \end{equation}
 
-a. 直射入射太阳辐射\\
+a. 直射入射太阳辐射
+
 对于直射辐射太阳辐射，直射光到达阳面墙的辐射通量$E_{wsun}=S_w$，到达阴面墙的辐射通量$E_{wsha}=S_{vw}T_d$，
 到达地面的辐射通量$E_g=1-S_w-S_v+\left(S_v-S_{vw}\right)T_d$，其中$E_{gimp}=E_gf_{gimp}$，$E_{gper}=E_gf_{gper}$，
 $E_v=S_v$。阳面墙、阴面墙、不透水面、透水面和植被第一次散射辐射通量可分别计算为：$E_{wsun}\alpha_w$，$E_{wsha}\alpha_w$，
@@ -282,7 +283,8 @@ s_{v}=\frac{f_{g}}{f_{v}} s_{v}
 \alpha_{u}=\alpha_{roof} f_{b}+\alpha_{u} f_{g}
 \end{equation}
 
-b. 漫射入射太阳辐射\\
+b. 漫射入射太阳辐射
+
 对于漫射，计算过程与直射入射辐射过程基本类似，不同之处在于首次到达墙面、地面和植被的辐射通量分别为：$F_{sw}^\prime f_{wsun}$、
 $F_{sw}^\prime f_{wsha}$、$F_{sg}^\prime f_{gimp}$、$F_{sg}^\prime f_{gper}$和$F_{sv}$。
 漫射入射辐射的传输矩阵同直射入射辐射情景。其求逆后的结果可以直接用于漫射入射辐射，各组分的辐射吸收和反照率计算过程在此不再赘述。 
@@ -298,7 +300,10 @@ $F_{sw}^\prime f_{wsha}$、$F_{sg}^\prime f_{gimp}$、$F_{sg}^\prime f_{gper}$�
 \end{equation}
 上式中$\varepsilon$表示发射率，$\varepsilon_w$，$\varepsilon_{gimp}$，$\varepsilon_{gper}$为已知变量。各组分表面向外发射的长波辐射量为：
 \begin{equation}
-\begin{array}{c}4 f_{wsun} \mathrm{HL} * \frac{f_{b}}{f_{g}} * \sigma \varepsilon_{w} T_{wsun}^{4} \\ 4 f_{wsha} \mathrm{HL} * \frac{f_{b}}{f_{g}} * \sigma \varepsilon_{w} T_{wsha}^{4} \\ \sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp} \\ \sigma \varepsilon_{gper} T_{gper}^{4} f_{gper}\end{array}
+\begin{array}{c}4 f_{wsun} \mathrm{HL} \times \frac{f_{b}}{f_{g}} \times \sigma \varepsilon_{w} T_{wsun}^{4} \\
+4 f_{wsha} \mathrm{HL} \times \frac{f_{b}}{f_{g}} \times \sigma \varepsilon_{w} T_{wsha}^{4} \\
+\sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp} \\
+\sigma \varepsilon_{gper} T_{gper}^{4} f_{gper}\end{array}
 \end{equation}
 $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似与短波辐射传输，可以构建辐射平衡方程：
 \begin{landscape}
@@ -337,6 +342,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似与短波辐�
 L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}+L_{wsha}^{\uparrow} F_{ws}+L_{gimp}^{\uparrow} F_{gs}+L_{gper}^{\uparrow} F_{gs}
 \end{equation}
 
+
 \subsection{有植被覆盖时长波辐射传输}\label{有植被覆盖时长波辐射传输}
 考虑植被覆盖时的长波辐射计算类似于有植被覆盖时的短波辐射传输，根据之前介绍的无植被时长波辐射传输平衡方程，可以写出有植被覆盖时： 
 \begin{landscape}
@@ -352,7 +358,7 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}+L_{wsha}^{\uparrow} F_{ws}+L_{gimp}^{\up
 \end{landscape}
 
 \begin{landscape}
-上式中的$F$,$F^\prime$表示可视因子，同章节 \ref{有植被覆盖时短波辐射传输}。经过整理，可以得到：
+上式中的$F$, $F^\prime$表示可视因子，同章节 \ref{有植被覆盖时短波辐射传输}。经过整理，可以得到：
 \begin{equation}
     \begin{split}
     \left(\begin{matrix}1-\ F_{ww}^\prime f_{wsun}\left(1-\varepsilon_w\right)&-\ F_{ww}^\prime f_{wsun}\left(1-\varepsilon_w\right)&-F_{gw}^\prime f_{wsun}\left(1-\varepsilon_w\right)&-F_{gw}^\prime f_{wsun}\left(1-\varepsilon_w\right)&-F_{vw}f_{wsun}\left(1-\varepsilon_w\right)\\
@@ -361,9 +367,9 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}+L_{wsha}^{\uparrow} F_{ws}+L_{gimp}^{\up
     -F_{wg}^\prime f_{gper}\left(1-\varepsilon_{gper}\right)&-F_{wg}^\prime f_{gper}\left(1-\varepsilon_{gper}\right)&0&1&-F_{vg}f_{gper}\left(1-\varepsilon_{gper}\right)\\
     0&0&0&0&1\\\end{matrix}\right)\cdot \\
     \left(\begin{matrix}L_{wsun}^\uparrow\\L_{wsha}^\uparrow\\L_{gimp}^\uparrow\\L_{gper}^\uparrow\\L_v^\uparrow\\\end{matrix}\right)
-    =\left(\begin{matrix}I_{wsun}\left(1-\varepsilon_w\right)+4f_{wsun}HL\ast\frac{f_b}{f_g}\ast\sigma\varepsilon_wT_{wsun}^4\\
-        I_{wsha}\left(1-\varepsilon_w\right)+4f_{wsha}HL\ast\frac{f_b}{f_g}\ast\sigma\varepsilon_wT_{wsha}^4\\
-        I_{gimp}\left(1-\varepsilon_{gimp}\right)+\sigma\varepsilon_{gimp}T_{gimp}^4f_{gimp}\\
+    =\left(\begin{matrix}I_{wsun}\left(1-\varepsilon_w\right)+4f_{wsun}HL \times \frac{f_b}{f_g} \times \sigma\varepsilon_wT_{wsun}^4 \\
+        I_{wsha}\left(1-\varepsilon_w\right)+4f_{wsha}HL \times \frac{f_b}{f_g} \times \sigma\varepsilon_wT_{wsha}^4  \\
+        I_{gimp}\left(1-\varepsilon_{gimp}\right)+\sigma\varepsilon_{gimp}T_{gimp}^4f_{gimp} \\
         I_{gper}\left(1-\varepsilon_{gper}\right)+\sigma\varepsilon_{gper}T_{gper}^4f_{gper}\\
         4f_v/f_g\sigma\varepsilon_vT_v^4\\\end{matrix}\right)
     \end{split}
@@ -388,7 +394,7 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}^{\prime}+L_{wsha}^{\uparrow} F_{ws}^{\pr
 零平面位移高度、风速/湍流交换系数衰减系数、建筑表面边界层阻抗计算与植被有所不同。
 下面就无植被覆盖和有植被覆盖时对不同于自然植被湍流交换过程的部分进行简要说明。
 \subsection{无植被覆盖时湍流交换过程}
-建筑物的零平面位移高度采用\citet{macdonald1998improved}方案：
+建筑物的零平面位移高度采用~\citet{macdonald1998improved}方案：
 \begin{equation}
 \frac{d}{H}=1+A^{-f_{b}}\left(f_{b}-1\right)
 \end{equation}
@@ -400,7 +406,7 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}^{\prime}+L_{wsha}^{\uparrow} F_{ws}^{\pr
 \begin{equation}
 \frac{z_{0}}{H}=\left(1-\frac{d}{H}\right) \exp \left[-\left(0.5 \frac{c_{D}}{\kappa^{2}}\left(1-\frac{d}{H}\right) \lambda_{f}\right)^{-0.5}\right]
 \end{equation}
-其中$C_D=1.2$，$\kappa=0.4$为卡曼常数。
+其中$C_D=1.2$，$\kappa=0.4$为 von K\'arman 常数。
 
 城市冠层内的风速和湍流交换系数同样假设为指数衰减，但衰减系数与植被不同，
 采用\citet{masson2000physically}方案，计算为0.5$HW$。建筑物(屋顶、墙面)边界层阻抗$r_b$计算为\citep{oleson2008urban}：
@@ -572,7 +578,7 @@ Q_{M}=P \cdot H_{M} \cdot 10^{-6}
     \begin{tabular}{@{}lll@{}}
     \toprule
     数据名称                            & 分辨率         & 来源                                                                                                     \\ \midrule
-    Gridded Population of the World & 2.5 arc-min & \begin{tabular}[c]{@{}l@{}}https://sedac.ciesin.columbia.edu/\\   data/collection/gpw-v3\end{tabular} \\ \bottomrule
+    Gridded Population of the World & \ang{;2.5}  & \begin{tabular}[c]{@{}l@{}}https://sedac.ciesin.columbia.edu/\\   data/collection/gpw-v3\end{tabular} \\ \bottomrule
     \end{tabular}
 \end{table}
 

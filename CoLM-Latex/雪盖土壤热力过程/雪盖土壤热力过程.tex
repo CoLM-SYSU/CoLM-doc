@@ -201,7 +201,7 @@ L_{g} \uparrow=\varepsilon_{g} \sigma T_{g}^{4}
 \end{equation}
 另外，对于潜热通量系数$\lambda$，当雪盖土壤顶层不存在液态水时，$\lambda$取为升华潜热系数$\lambda_s$，即：
 \begin{equation}
-\lambda=\left\{\begin{array}{lr}\lambda_{s} & \text { 当 } w_{liq, s n l+1}=0 \text { 并且 } w_{ice, s n l+1}>0 \\ \lambda_{v} & \text { 其他情况 }\end{array}\right.
+\lambda=\left\{\begin{array}{lr}\lambda_{s} & \text { 当 }\ w_{liq, s n l+1}=0 \text { 并且 }\ w_{ice, s n l+1}>0 \\ \lambda_{v} & \text { 其他情况 }\end{array}\right.
 \end{equation}
 其中$w_{liq,snl+1}$和$w_{ice,snl+1}$分别表示雪盖土壤顶层的液态水和固态水含量 (\unit{kg.m^{-2}}，其计算见章节~\ref{sec:土壤水的运动})。
 
@@ -238,7 +238,8 @@ S_{r, i}=\left(\frac{w_{liq, i}}{\rho_{liq} \Delta z_{i}}+\frac{w_{ice, i}}{\rho
 \end{equation}
 $K_{e,i}$表示Kersten数，它是$S_{r,i}$的函数：
 \begin{equation}
-K_{e, i}=\left\{\begin{array}{ll}\log _{10} S_{r, i}+1 \geq 0 & \text{ 当 } T_{i} \geq T_{f} \text{ 时 } \\ S_{r, i} & \text{ 当 } T_{i}<T_{f} \text{ 时 }\end{array}\right.
+K_{e, i}=\left\{\begin{array}{ll}\log _{10} S_{r, i}+1 \geq 0 & \text{ 当 }\ T_{i} \geq T_{f} \text{ 时 } \\ 
+S_{r, i} & \text{ 当 }\ T_{i}<T_{f} \text{ 时 }\end{array}\right.
 \end{equation}
 当$T_i<T_f$时，饱和土壤热力传导率$\lambda_{sat,i}$需根据已有$\lambda_{sat,i}$结合水和冰的热力传导率$\lambda_{liq}$，$\lambda_{ice}$进行调整：
 \begin{equation}
@@ -383,7 +384,7 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 \item 破坏变质下的积雪沉降\\
 雪到达地面后，随即开始快速变化，单个雪花会迅速失去原有形状，变成更具球形。在风或热力的作用下，新雪的星形晶状结构破裂，雪堆发生沉降，雪粒堆积。对于密度小于 \qty{100}{kg.m^{-3}} 的新雪来说，破坏变质引起的沉降非常重要。新雪由于星形雪粒之间的“齿轮咬合”作用而具有一定的结构强度，这种结构在变质作用中会逐渐丧失。\citet{anderson1976point}对这一阶段的压实过程提出了以下经验函数：
 \begin{equation}\label{eq:Delta_Z}
-\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {destructive }}=-2.778 \times 10^{-6} {c}_{3} {c}_{4} {e}^{-0.04\left({~T}_{{f}}-{T}\right)}
+\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {destructive }}=-2.778 \times 10^{-6} {c}_{3} {c}_{4} {e}^{-0.04\left(T_f-T\right)}
 \end{equation}
 式中${c}_{3}={c}_{4}=1$
 当雪层中冰的体积密度$\rho_{i} \theta_{i}>100$ \unit{kg.m^{-3}} 时
@@ -399,7 +400,7 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 \item 雪层负重引起的压实\\
 随着积雪的累积，上覆积雪的自重会进一步地压实雪层。上覆雪层产生的压力导致雪粒粘结生长速度加快，形成更加有效的堆积形状。在经过最初的沉降阶段后，这一阶段的压实速度会减慢，很大程度上取决于雪层负重带来的压力。在低压力范围的季节性积雪内，雪的形变率是压力的线性函数，即
 \begin{equation}
-\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {overburden }}=-\frac{{P}_{{s}}}{9 \times 10^{5}} {e}^{-0.08\left({~T}_{{f}}-{T}\right)-0.023 \rho_{{i}} \theta_{{i}}}
+\left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {overburden }}=-\frac{{P}_{{s}}}{9 \times 10^{5}} {e}^{-0.08\left(T_f-{T}\right)-0.023 \rho_{{i}} \theta_{{i}}}
 \end{equation}
 其中$P_{s}$是上覆雪的重量(\unit{kg.m^{-2}})，对于第$j$层，其上覆雪的重量由以下公式得出
 \begin{equation}

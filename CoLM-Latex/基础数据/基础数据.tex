@@ -153,12 +153,13 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 由于PFT和PC方案都需要对细网格地表覆盖数据进行PFT分解，而地表覆盖原数据并不包含此信息，
 需要借助辅助数据进行计算，其数据来源如表~\ref{tab:网格划分辅助数据} 所列。
 
-
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 % \usepackage[table,xcdraw]{xcolor}
 % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{sidewaystable}[]
+\begin{landscape}
+\begin{table}[htbp]
+%\begin{sidewaystable}[]
 \centering
 \caption{用于PFT和PC次网格划分辅助数据}
 \label{tab:网格划分辅助数据}
@@ -175,7 +176,9 @@ Reprocessed MODIS LAI                 & Reprocessed MODIS leaf area index produc
 WorldClim Version2                    & Worldclim 2: New 1-km spatial resolution climate surfaces for global land areas                          & 1 km  & Latitude-Longitude & \citet{fick2017worldclim}   \\\midrule
 Canopy height                         & Global 1 km forest canopy height map                                                            & 1 km  & Latitude-Longitude & \citet{simard2011mapping}             \\ \bottomrule
 \end{tabular}
-\end{sidewaystable}
+%\end{sidewaystable}
+\end{table}
+\end{landscape}
 如采用PFT/PC方案进行植被次网格模拟，其不同类型相关参数请参考附录~\ref{植被功能型PFT相关参数} 和附录~\ref{植物群落PC次网格PFT相关参数}。
 
 
@@ -185,7 +188,7 @@ Canopy height                         & Global 1 km forest canopy height map    
 CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分辨率的全球流动方向地图 (MERIT-Hydro)\citep{yamazaki2019merit}，
 水文调整高程 DEM~\citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据~\citep{yamazaki2014development}; 
 使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。
-相关数据以纯``二进制''格式 ($nx*ny$)存储于 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，
+相关数据以纯``二进制''格式 ($nx\times ny$)存储于 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，
 从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是 ``little endian''。
 具体而言，除了需要陆面模式计算得出的产流量 (runoff) 之外，CaMa-Flood还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，
 漫滩 (洪水淹没) 面积，以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河流的宽度和深度以外，
@@ -390,8 +393,10 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 \end{figure}
 }
 
+
 \subsubsection{全球水库水面面积数据}
 全球水库水面面积数据来自Global Reservoir Surface Area Dataset（GRSAD），该数据集提供了全球6871个水库1984年至2015年的逐月水库面积变化数据（与GranD水库匹配）。该数据是基于Global Surface Water Dataset（GSWD）数据修正而得。\citet{pekel2016high} 使用1984$\sim$2015年300万张Landsat卫星图像创建了全球地表水数据集GSWD。但由于云、云阴影等因素的影响，利用Landsat对全球范围内单个水库进行长期水面变化分析会存在较大偏差。GRSAD修复了由于云层、云层阴影、地形阴影和扫描线校正器故障导致的像素污染，使每个时间序列中有效图像的数量平均提高了81\%~\citep{zhao2018automatic}。基于水库面积长期动态变化数据，可估算水库的防洪库容面积、正常库容面积和死库容面积。
+
 
 \subsubsection{全球水库形状数据}
 
@@ -492,30 +497,53 @@ L A I_{u r}=\sum_{i=1}^{9} L A I_{P F T_{-} i} \cdot \frac{H T O P_{u r}}{H T O 
 \end{equation}
 其中$LAI_{PFT_{-}i}$为PFT的LAI(SAI)，$HTOP_{ur}$和 $HTOP_{PFT_{-} i}$分别为城市树高和PFT树高，$PCT_{PFT_{-} i}$为PFT占比。城市树木SAI数据采用同样的方法进行计算。
 
+
 \section{作物数据}
 
-\subsection{作物类型分布数据}\label{作物类型分布数据}
+\subsection{作物种类分布数据}\label{作物种类分布数据}
+
+
 
 \subsection{施肥数据}\label{施肥数据}
 
+
+
 \subsection{播种时间数据}\label{播种时间数据}
 
-\subsection{灌溉数据}\label{灌溉数据}
+
+
+\subsection{灌溉方式数据}\label{灌溉方式数据}
+
+
 
 \section{生物地球化学数据}
 
 \subsection{氮沉降数据}\label{氮沉降数据}
-氮沉降是陆地生态系统的重要氮输入之一，
+氮沉降是陆地生态系统的重要氮输入之一。近几十年来，人类活动造成大气氮沉降增加对生态系统生物地球化学循环产生了重要影响。由于区域地表氮沉降数据尚无法利用卫星直接观测得到，目前生物地球化学循环模式更多地利用大气模式或地球系统模式模拟得出。CoLM生物地球化学循环模块的氮沉降输入是$\mathrm{NO_y}$和$\mathrm{NH_x}$的总和，数据来源于CESM-WACCM的CMIP6历史时期和未来SSP情景模拟的集合平均。氮沉降历史时期数据包含1849年到2013年的时空变化，氮沉降未来时期数据包含1849--2101年的时空变化，未来情景包括SSP126，SSP245，SSP370和SSP585四种情景的预测模拟结果。数据的空间分辨率为0.9375\textdegree\ $\times$ 1.25\textdegree，数据在月尺度上刻画大气氮沉降的季节和年际变化。
+
+
 \subsection{土壤含氧量数据}\label{土壤含氧量数据}
+
+
 
 \subsection{闪电频率数据}\label{闪电频率数据}
 
+
+
 \subsection{国民生产总值数据}\label{国民生产总值数据}
+
+
 
 \subsection{泥炭地比例数据}\label{泥炭地比例数据}
 
+
+
 \subsection{火灾峰值月份数据}\label{火灾峰值月份数据}
 
+
+
 \subsection{地表臭氧浓度数据}\label{地表臭氧浓度数据}
+
+
 
 %\end{地表输入数据}
