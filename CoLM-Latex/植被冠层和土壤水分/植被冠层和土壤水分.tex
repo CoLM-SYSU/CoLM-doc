@@ -29,6 +29,7 @@ G_{water}=P_{ground}+S_{melt}-E
 本节对应的代码文件为\texttt{MOD\_LeafInterception.F90}。
 \end{mymdframed}
 
+冠层是降水的首要接触层，它对降水的再分配有着重要的作用。
 CoLM支持包括CoLM2014、CLM4.5、CLM5.0、VIC、MATSIRO和Noah-MP等多种冠层截留计算参数化方案。以下针对不同方案分别进行详细介绍。
 \subsection{CoLM2014方案}
 CoLM冠层的水量平衡方程基本与SiB2一致 \citep{sellers1996revised}，主要基于以下控制方程：
@@ -52,17 +53,16 @@ D_{d}=\delta_{P} \cdot P=\delta_{P} \cdot\left(R_{c}+S_{c}+R_{l}+S_{l s}\right)
 \end{equation}
 该公式中反映叶片集水能力的经验系数$\alpha$被设定为0.25~\citep{lawrence2011parameterization}。
 $LSAI$是$SAI$和$LAI$之和 ($LAI$和$SAI$分别是叶指数和茎面积指数)；$K_p$是消光系数，与辐射在冠层中的穿透计算相同：
-\begin{equation}
+\begin{equation}\label{Eq:消光系数}
 \begin{aligned}
 K_{p} &= \phi_{1}+\phi_{2} \\
 \phi_{2} &= 0.877\left(1-2 \phi_{1}\right) \\
 \phi_{1} &= 0.5-0.633 \chi_{L}-0.33 \chi_{L}^{2}
 \end{aligned}
-\label{Eq:消光系数}
 \end{equation}
 $K_p$通过叶角分布的经验参数$\chi_L$的变化来控制，
 其中$\chi_L=0$表示球形叶角分布，$\chi_L= 1$ 表示水平方向的叶子，$\chi_L= -1$ 表示垂直方向的叶子。
-根据植被类型，$\chi_L$的范围在-0.3$\sim$0.25之间。由此计算得出的$\delta_P$的变动范围如图~\ref{fig:穿透系数与叶面积指数} 所示。%
+根据植被类型，$\chi_L$的范围在$-0.3\sim0.25$之间。由此计算得出的$\delta_P$的变动范围如图~\ref{fig:穿透系数与叶面积指数} 所示。%
 {
 \begin{figure}[]
 \centering
