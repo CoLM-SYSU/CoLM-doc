@@ -113,10 +113,9 @@ $\theta_{atm}$,$\hat{\theta_{atm}}$分别为模式网格和次网格上的位温
 \begin{equation}
 \hat{q_{atm}}=q_{atm} \frac{\hat{q_{sat}^T}}{q_{sat}^T} 
 \end{equation}
-其中，模式网格和次网格上的饱和比湿通过调整前后的大气温度计算（见附录F）。
+其中，模式网格和次网格上的饱和比湿通过调整前后的大气温度计算（见附录~\ref{饱和水汽压(比湿)及其随温度的变化}）。
 
 \item  调整大气温度，近地面气压和大气比湿后，更新次网格上的大气密度：\\
-
 由调整后的大气温度，近地面气压和大气比湿估计大气密度：
 \begin{equation}
 \rho_{atm}=\frac{P_{atm}-(1-\beta A)}{R T_{atm}}
@@ -131,22 +130,20 @@ $\theta_{atm}$,$\hat{\theta_{atm}}$分别为模式网格和次网格上的位温
 \end{equation}
 其中，$\hat{H_{max}}$为次网格上最大海拔高度，
 $p$,$\hat{p}$分别为模式网格和次网格上的降水。
-
-第二种方案~\citep{liston2006distributed}为：
+第二种方案~\citep{liston2006Meteorological}为：
 \begin{equation}
 \hat{p}=p \left(1+\frac{2 \alpha \left(\hat{H}-H\right)}{1- \alpha \left(\hat{H}-H\right)}\right)
 \end{equation}
 其中，$\alpha=0.00027$。
 
 \item 近地面下行长波辐射调整方案分为两种：\\
-
 第一种方案 \citep{fiddes2014toposcale} 为：
 
 晴朗天空发射率由水汽压和大气温度计算获得 \citep{konzelmann1994parameterization}，计算方案为：
 \begin{equation}\label{eq:varepsilon_c}
 \varepsilon_{c}=0.23+0.43 \left(\frac{e^{T}}{T_{atm}}\right)^ \frac{1}{5.7}
 \end{equation}
-其中，$e^{T}$为水汽压，由饱和水汽压和比湿计算而得$e^{T}= \frac{q_{atm} e_{sat}^{T}}{100}$，饱和水汽压由大气温度计算获得（见附录?）。将模式网格和次网格的大气温度代入公式～\ref{eq:varepsilon_c}，得到对应网格的晴空发射率$\varepsilon_c$和$\hat{\varepsilon_{c}}$。
+其中，$e^{T}$为水汽压，由饱和水汽压和比湿计算而得$e^{T}= \frac{q_{atm} e_{sat}^{T}}{100}$，饱和水汽压由大气温度计算获得（见附录~\ref{饱和水汽压(比湿)及其随温度的变化}）。将模式网格和次网格的大气温度代入公式~\ref{eq:varepsilon_c}，得到对应网格的晴空发射率$\varepsilon_c$和$\hat{\varepsilon_{c}}$。
 
 全空发射率由斯蒂芬-玻尔兹曼公式计算而得：
 \begin{equation}
