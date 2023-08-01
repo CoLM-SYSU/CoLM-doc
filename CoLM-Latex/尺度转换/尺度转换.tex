@@ -5,7 +5,7 @@ CoLM植物水力模式根据土壤-植物-大气连通体的概念计算陆气�
 
 \section{土壤水热特征参数及尺度转换}\label{土壤水热特征参数及尺度转换}
 
-基于土壤基础数据集GSDE和SoilGrids，CoLM团队开发了全球1 km分辨率土壤水热特征参数数据供陆面模式土壤水热传输过程模拟直接使用。
+基于土壤基础数据集GSDE和SoilGrids，CoLM团队开发了全球1km分辨率土壤水热特征参数数据供陆面模式土壤水热传输过程模拟直接使用。
 在土壤热力参数方面，CoLM提供了七种土壤导热率计算方案以供选择，分别为 \citet{farouki1981thermal}方案，\citet{Johansen1975} 方案，
 \citet{cote2005} 方案，\citet{balland2005}方案，\citet{lu2007improved} 方案，\citet{tarnawski2012series} 方案和 \citet{de1963thermal} 方案。
 根据\citet{dai2019evaluation}的评估结果，\citet{balland2005} 方案的计算结果与土壤导热率观测数据的均方根误差最小，
@@ -31,7 +31,7 @@ CoLM植物水力模式根据土壤-植物-大气连通体的概念计算陆气�
 \begin{equation}
 \begin{array}{l}\psi=[-1,-5,-10,-20,-30,-40,-50,-60,-70,-90,-110,-130,-150,-170,\\-210,-300,-345  -690,-1020,-5100,-15300,-20000,-100000,-1000000]\end{array}
 \end{equation}
-其次，基于以上土壤水势向量对所有细网格的土壤含水量向量做面积加权平均，得到可以表征粗网格土壤水分特征曲线的土壤含水量向量；最后，在粗网格中利用\citet{campbell1974}土壤水分特征曲线关系拟合上述土壤水势向量和平均后的土壤含水量向量，得到粗网格中 \citet{campbell1974} 土壤水分特征曲线关系中的待定参数$\hat{\psi}_{s}$ 和 $\hat{\lambda}$。粗网格的\citet{van1980closed} 土壤水力特征曲线参数可通过上述升尺度方法类似得到。
+其次，基于以上土壤水势向量对所有细网格的土壤含水量向量做面积加权平均，得到可以表征粗网格土壤水分特征曲线的土壤含水量向量；最后，在粗网格中利用\citet{campbell1974}土壤水分特征曲线关系拟合上述土壤水势向量和平均后的土壤含水量向量，得到粗网格中 \citet{campbell1974} 土壤水分特征曲线关系中的待定参数$\hat{\psi} _{s}$ 和 $\hat{\lambda}$。粗网格的\citet{van1980closed} 土壤水力特征曲线参数可通过上述升尺度方法类似得到。
 
 
 升尺度土壤导热率计算方案中Kersten数--饱和度曲线参数采用的方法与上述方法略有区别。粗网格的Kersten数由于其计算的非线性性不可直接由细网格的Kersten数平均得到，故升尺度Kersten数--饱和度曲线参数可通过解下列极值问题得到：
@@ -39,7 +39,7 @@ CoLM植物水力模式根据土壤-植物-大气连通体的概念计算陆气�
 \begin{equation}
 (\hat{\alpha}, \hat{\beta})=\min \sum_{i=1}^{N}\left[K_{e}(\hat{\alpha}, \hat{\beta})-K_{e}\left(\alpha_{i}, \beta_{i}\right)\right]^{2}
 \end{equation}
-其中$\alpha_{i}$,  $\beta_{i}$为每一个细网格中Kersten数-饱和度曲线参数，
+其中$\alpha _{i}$,  $\beta _{i}$为每一个细网格中Kersten数-饱和度曲线参数，
 $\hat{\alpha}$, $\hat{\beta}$为表征粗网格曲线的参数。
 通过此方法得到的粗网格参数是最为接近全部细网格计算结果的参数。
 
@@ -56,3 +56,122 @@ $\hat{\alpha}$, $\hat{\beta}$为表征粗网格曲线的参数。
 
 
 
+\section{大气强迫降尺度}\label{大气强迫降尺度}
+
+本模块通过地形调整方案将模式网格（Element）上的大气强迫场降尺度到次网格（Patch）上。
+针对的大气状态变量为大气温度（$T_{atm}$），近地面气压（$P_{atm}$），大气比湿（$q_{atm}$），近地面下行长波辐射（$L↓$），降水（$p$），并相应调整了位温（$\theta_{atm}$）和大气密度（$\rho_{atm}$）。
+本模块并未对大气风速及近地面下行短波辐射进行调整。
+\begin{enumerate}
+
+\item  大气温度由地形偏差和温度递减率（${\Gamma}_{t}$）计算获得：\\
+\begin{equation}\label{T_atm}
+\hat{T_{atm}}=T_{atm}-{\Gamma}_{t} \left(\hat{H}-H\right)
+\end{equation}
+其中，
+${\Gamma}_{t}=0.006$。
+$H$,$\hat{H}$分别为模式网格和次网格上的海拔高度,
+$T_{atm}$,$\hat{T_{atm}}$分别为模式网格和次网格上的温度。
+
+\item  近地面气压由地形偏差和大气温度计算获得~\citep{Cosgrove2003}，计算方案为：\\
+\begin{equation}
+\hat{P_{atm}}=P_{atm} e^{-\frac{\hat{H}-H}{\bar{H}}}
+\end{equation}
+其中，
+$G$为重力加速度, 
+$R$为干空气常数。
+$\bar{H}$为地形调整前后平均温度对应的标高，计算方式为$\bar{H}=\frac{R}{G} \frac{\hat{T_{atm}}+T_{atm}}{2}$。
+$P_{atm}$,$\hat{P_{atm}}$分别为模式网格和次网格上的温度。
+
+\item  调整大气温度和近地面气压后，更新次网格上的位温：\\
+
+位温定义为：
+\begin{equation}
+\theta_{atm}=T_{atm} \left(\frac{P_0}{P_{atm}}\right)^\frac{R}{C_{p}}
+\end{equation}
+
+近地面气压为：
+\begin{equation}\label{eq:近地面气压}
+{P_{atm}}=P_{0} e^{-\frac{z_{atm}}{\bar{H}}}
+\end{equation}
+
+代入~\ref{eq:近地面气压}，可得：
+\begin{equation}\label{eq:theta_atm}
+\theta_{atm}=T_{atm} e^{\frac{z_{atm}}{\bar{H}} \frac{R}{C_{p}}}
+\end{equation}
+
+根据~\ref{eq:theta_atm}，位温可由大气温度偏差调整为：
+\begin{equation}
+\hat{\theta_{atm}}=\theta_{atm}+\left(\hat{T_{atm}}-T_{atm}\right) e^{\frac{z_{atm}}{\bar{H}} \frac{R}{C_{p}}}
+\end{equation}
+其中，
+$P_{0}$为标准大气压，
+$\frac{R}{C_{p}}$为干绝热指数，约为0.286，
+$z_{atm}$为参考高度。
+$\theta_{atm}$,$\hat{\theta_{atm}}$分别为模式网格和次网格上的位温。
+
+\item 大气比湿由估计的饱和比湿比例来调整：\\
+\begin{equation}
+\hat{q_{atm}}=q_{atm} \frac{\hat{q_{sat}^T}}{q_{sat}^T} 
+\end{equation}
+其中，模式网格和次网格上的饱和比湿通过调整前后的大气温度计算（见附录F）。
+
+\item  调整大气温度，近地面气压和大气比湿后，更新次网格上的大气密度：\\
+
+由调整后的大气温度，近地面气压和大气比湿估计大气密度：
+\begin{equation}
+\rho_{atm}=\frac{P_{atm}-(1-\beta A)}{R T_{atm}}
+\end{equation}
+其中，$\beta$为水蒸气与干空气的分子量比值，为0.62197。$A=\frac{q_{atm} P_{atm}}{\beta +(1-\beta)q_{atm}}$。
+
+\item  降水由地形偏差调整，提供两种方案：\\
+
+第一种方案~\citep{Tesfa2020}为：
+\begin{equation}
+\hat{p}=p \left({1+\frac{\hat{H}-H}{\hat{H_{max}}}}\right)
+\end{equation}
+其中，$\hat{H_{max}}$为次网格上最大海拔高度，
+$p$,$\hat{p}$分别为模式网格和次网格上的降水。
+
+第二种方案~\citep{liston2006distributed}为：
+\begin{equation}
+\hat{p}=p \left(1+\frac{2 \alpha \left(\hat{H}-H\right)}{1- \alpha \left(\hat{H}-H\right)}\right)
+\end{equation}
+其中，$\alpha=0.00027$。
+
+\item 近地面下行长波辐射调整方案分为两种：\\
+
+第一种方案 \citep{fiddes2014toposcale} 为：
+
+晴朗天空发射率由水汽压和大气温度计算获得 \citep{konzelmann1994parameterization}，计算方案为：
+\begin{equation}\label{eq:varepsilon_c}
+\varepsilon_{c}=0.23+0.43 \left(\frac{e^{T}}{T_{atm}}\right)^ \frac{1}{5.7}
+\end{equation}
+其中，$e^{T}$为水汽压，由饱和水汽压和比湿计算而得$e^{T}= \frac{q_{atm} e_{sat}^{T}}{100}$，饱和水汽压由大气温度计算获得（见附录?）。将模式网格和次网格的大气温度代入公式～\ref{eq:varepsilon_c}，得到对应网格的晴空发射率$\varepsilon_c$和$\hat{\varepsilon_{c}}$。
+
+全空发射率由斯蒂芬-玻尔兹曼公式计算而得：
+\begin{equation}
+\varepsilon_{a}=\frac{L↓}{\sigma T_{atm}^4}
+\end{equation}
+其中，$\sigma$为斯蒂芬-玻尔兹曼常数。则多云天空发射率为$\varepsilon_{cl}=\varepsilon_{a}-\varepsilon_{c}$。
+
+近地面入射长波辐射调整为：
+\begin{equation}
+\hat{L}↓=\left(\varepsilon_{cl}+\varepsilon_{c}\right) \sigma \hat{T_{atm}}^4
+\end{equation}
+
+第二种方案~\citet{Tricht2016}假设近地面入射长波辐射与海拔高度呈现线性反比的关系。计算方案为：
+
+对于冰川覆盖类型：
+\begin{equation}
+\hat{L}↓=L↓-\Gamma_{l} \left(\hat{H}-H\right)       
+\end{equation}
+
+对于其他覆盖类型：
+\begin{equation}
+\hat{L}↓=L↓-\frac{4 L↓}{\bar{T_{atm}} \Gamma_{t} \left(\hat{H}-H\right)}      
+\end{equation}
+其中，$\Gamma_{l}=0.032$，$L↓$, $\hat{L↓}$分别为模式网格和次网格上的入射长波辐射。
+
+为保证对长波辐射降尺度后数值与原始数值不会相差较大，因此将其数值控制在原始数值的0.5-1.5倍之间。注意，为保证降尺度前后的总长波辐射量守恒，将降尺度前后长波辐射总量的比值作为权重系数调整次网格上的长波辐射。
+
+\end{enumerate}

@@ -30,7 +30,8 @@
 \usepackage{textcomp}
 \usepackage{rotating}
 \usepackage{amssymb}
-\usepackage{lscape}
+\usepackage{afterpage} % avoid blank page before landscape environment
+\usepackage{pdflscape}
 \usepackage{xr}
 \usepackage{color}
 \usepackage{textcomp}
@@ -120,6 +121,7 @@
 \include{尺度转换/尺度转换}
 
 \clearpage
+\phantomsection % Correct the link in toc for Appendix
 \addcontentsline{toc}{part}{附录}
 \part*{附录}
 
@@ -129,6 +131,7 @@
 %\addcontentsline{toc}{chapter}{附录}
 \include{附录/附录}
 
+\clearpage
 \renewcommand{\bibname}{参考文献}
 %\addcontentsline{toc}{chapter}{参考文献}
 \bibliographystyle{agufull08}
