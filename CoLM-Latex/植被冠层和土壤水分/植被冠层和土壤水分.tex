@@ -76,7 +76,7 @@ $K_p$通过叶角分布的经验参数$\chi_L$的变化来控制，
 \begin{equation}
 \begin{aligned}
 L_{dew} &= L_{dew}-x_{sc} \\
-x_{s c} &= \max \left(0., L_{dew}-x_{sc}\right)
+x_{s c} &= \max \left(0., L_{dew}-S_{c}\right)
 \end{aligned}
 \end{equation}
 其中 $x_{sc}$ 是超过最大树冠储存量的水(mm)，$S_c=0.1f_{sig}\left(LAI+SAI\right)$代表最大蓄水量(mm)。
@@ -110,7 +110,7 @@ thru_{rain}=\int_{0}^{x_{s}} P I(x) d x+L_{dew} x_{s}-S_{c} x_{s}
 \begin{equation}
 x_{s}=\frac{-1}{b} \log \left[\frac{s_{c}-L_{d e w}}{a_{p}\left(P-D_{d}\right)}-\frac{c_{p}}{a_{p}}\right]
 \end{equation}
-其中$a_p=\frac{a_lP_l+a_cP_c}{P}$，$c_p=\frac{c_lP_l+c_cP_c}{P}$。这里假设只有液态水能够被冠层所截获，我们有
+其中$a_p=\frac{a_lP_l+a_cP_c}{P}$，$c_p=\frac{c_lP_l+c_cP_c}{P}$。这里假设只有液态水能够被从冠层落下，我们有
 \begin{equation}
 thru_{ {rain }}=\left(R_{c}+R_{l}\right)\left(1-\delta_{p}\right) \frac{a_{p}}{b}\left(1-e^{-b x_{s}}\right)+c_{p} x_{s}+L_{d ew} x_{s}-S_{c} x_{s}
 \end{equation}
@@ -145,10 +145,40 @@ $K_p$在CLM4.5冠层截留方案中取固定值0.5，即：
 \delta_{P}=1.0-\alpha \times\left[1-\exp \left(-0.5 \times LSAI\right)\right]
 \end{equation}
 
-在原始的CLM4.5方案中并不考虑网格内部的降水类型和分布（假设降水均匀分布在整个网格上），但在现有的方案中遵循CoLM2014的降水分配方案。
+同时在原始的CLM4.5方案中并不考虑网格内部的降水类型和分布（假设降水均匀分布在整个网格上）：
+\begin{equation}
+thru_{ {rain }}=\left(R_{c}+R_{l}\right)\left(1-\delta_{p}\right)+L_{dew}-S_{c}
+\end{equation}
+其他均与CoLM2014方案保持一致。
 
 \subsection{CLM5.0模型冠层截留方案}
-CLM5.0的参数化方案与CLM4.5有较大的差别。其中最重要的差别之一是对雨和雪的截留方案的进一步细化。在CLM5中，液态水的降落过程和CoLM、CLM4.5类似，
+CLM5.0的参数化方案与CLM4.5有较大的差别。其中最重要的差别之一是对雨和雪的截留方案的进一步细化。在CLM5中，液态水的降落过程和CoLM、CLM4.5类似。液态降水在通过冠层时要么被树冠截留,要么直接落到雪/土壤表面(穿透)或从植被上滴下(树冠滴流)。固态降水的处理也类似,还要考虑先前截留的雪的卸载（unloading）。具体而言，植被对降水的截留分为液态和固态相：
+
+1.分别计算固态和液态的最大蓄水量(mm)\\
+\begin{equation}
+S_c=0.1f_{sig}\left(LAI+SAI\right)
+\end{equation}
+\begin{equation}
+S_c=0.1f_{sig}\left(LAI+SAI\right)
+\end{equation}
+2. 
+\begin{equation}
+q_{intr, liq}=f_{pi, liq} q_{rain}
+\end{equation}
+
+\begin{equation}
+q_{intr, ice}=f_{pi, ice} q_{sno}
+\end{equation}
+其中$f_{pi,liq}$和$f_{pi,ice}$分别是液态水和固态水截留降水比例。式中：
+\begin{equation}
+f_{pi, liq}=\alpha_{liq} \tanh (L+S)
+\end{equation}
+\begin{equation}
+f_{pi, ice}=\alpha_{sno}\{1-\exp [-0.5(L+S)]\}
+\end{equation}
+L和S分别是叶面积指数和茎面积指数，该公式中反映叶片集水能力的经验系数$\alpha_{ice}$和$\alpha_{sno}$的数值和CLM4.5、CoLM（$\alpha$=0.25）有明显的不同，在此处被设定为1.0。
+穿透水量（透过叶片缝隙，直达地面）也被拆分为固态和液态：
+
 
 \subsection{VIC模型冠层截留方案}
 
