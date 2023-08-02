@@ -111,11 +111,11 @@ A_{n}=\left(c_{a}-c_{s}\right) /\left(\frac{1.37}{g_{b}} p_{s}\right)=\left(c_{s
 ($A_n$，单位: \unit{mol.CO_2.m^{-2}.s^{-1}})、叶表水汽压 ($e_s$，单位: Pa)、叶表二氧化碳分压 ($c_s$，单位: Pa) 
 基于气孔导度的观测回归经验关系，计算气孔导度 ($g_s$, 单位: \unit{mol.CO_2.m^{-2}.s^{-1}})： 
 \begin{equation}\label{rs_a1}
-\frac{1}{r_{s}}=g_{s}=m \frac{A_{n}}{c_{s}} \frac{e_{s}}{e_{i}} p_{s}+b
+\frac{1}{r_{s}}=g_{s}=m \frac{A_{n}}{c_{s}} \frac{e_{s}}{e_{i}} p_{s}+b\beta
 \end{equation}
 $r_s$代表叶片气孔阻抗，单位: \unit{s.m^{-1}}，是气孔导度$g_s$的倒数；$m$是无量纲经验参数；$b$是最小气孔导度，
 单位: \unit{mol.CO_2.m^{-2}.s^{-1}}，$m$和$b$是观测拟合的经验系数；$e_i$是饱和水蒸气压，
-是气温的函数，单位: Pa；$p_s$是大气压强，单位: Pa。
+是气温的函数，单位: Pa；$p_s$是大气压强，单位: Pa，$\beta$是植物水分胁迫因子，取值范围0$\sim$1。
 
 
 气孔行为的预测需要综合考虑植被自身的光合能力，大气$\rm CO_2$浓度梯度，水汽浓度梯度和土壤水分胁迫，因此，需要联立光合作用模块方程、气体扩散方程，气孔导度模型和土壤水分胁迫方案，求解叶片气孔导度。
@@ -129,8 +129,8 @@ e_{s}=\left(\frac{e_{a}}{g_{s}}+\frac{e_{i}}{g_{b}}\right) /\left(\frac{1}{g_{b}
 \end{equation}
 将方程~\eqref{e_s1} 代入方程~\eqref{rs_a1}中，得到关于$g_s$的一元二次方程：
 \begin{equation}\label{ei_cs}
-\frac{e_{i} c_{s}}{m A_{n} p_{s}} g_{s}^{2}+\left(g_{b} \frac{e_{i} c_{s}}{m A_{n} p_{s}}-e_{i}-b \frac{e_{i} c_{s}}{m A_{n} p_{s}}\right) g_{s}
--\left(e_{a} g_{b}+b g_{b} \frac{e_{i} c_{s}}{m A_{n} p_{s}}\right)=0
+\frac{e_{i} c_{s}}{m A_{n} p_{s}} g_{s}^{2}+\left(g_{b} \frac{e_{i} c_{s}}{m A_{n} p_{s}}-e_{i}-b \beta \frac{e_{i} c_{s}}{m A_{n} p_{s}}\right) g_{s}
+-\left(e_{a} g_{b}+b \beta g_{b} \frac{e_{i} c_{s}}{m A_{n} p_{s}}\right)=0
 \end{equation}
 气孔导度 ($g_s$) 的解即为一元二次方程的正根，其中叶片表层$\mathrm{CO_2}$分压 ($c_s$) 由方程~\eqref{cs_a1} 得出，$A_n$由光合作用模块公式~\eqref{An1} 得出，
 但仍然包含未知变量胞间 $\mathrm{CO_2}$ 分压 ($c_i$)，完整求解光合气孔模式还需根据~\eqref{A_n2} 得出：
@@ -138,5 +138,5 @@ e_{s}=\left(\frac{e_{a}}{g_{s}}+\frac{e_{i}}{g_{b}}\right) /\left(\frac{1}{g_{b}
 c_{i}=c_{s}-\frac{1.6 A_{n} p_{s}}{g_{s}}
 \end{equation}
 联立~\eqref{An1}, \eqref{cs_a1}, \eqref{ei_cs} 和 \eqref{ci_1} 可以求解 $g_s$，$c_i$，$c_s$ 和 $A_n$。
-通过牛顿迭代数值解法，对胞间$\mathrm{CO_2}$分压 $c_i$ 求解，从而求解所有未知量。
+通过牛顿迭代数值解法 (章节~\ref{数值计算方案})，对胞间$\mathrm{CO_2}$分压 $c_i$ 求解，从而求解所有未知量。
 
