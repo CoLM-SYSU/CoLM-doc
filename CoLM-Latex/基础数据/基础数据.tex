@@ -189,10 +189,10 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
 水文调整高程 DEM~\citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据~\citep{yamazaki2014development}; 
 使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。
 相关数据以纯``二进制''格式 ($nx\times ny$)存储于 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，
-从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是 ``little endian''。
+从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是'little endian'。
 具体而言，除了需要陆面模式计算得出的产流量 (runoff) 之外，CaMa-Flood还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，
 漫滩 (洪水淹没) 面积，以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河流的宽度和深度以外，
-所有的地形相关参数均可由 MERIT-hydro 水文地形数据中获取。以下以全球 0.25\textdegree 的河网为例进行详细介绍。
+所有的地形相关参数均可由 MERIT-hydro 水文地形数据中获取。以下以全球~0.25\textdegree ~的河网为例进行详细介绍。
 
 {
 \begin{figure}[]
@@ -277,7 +277,7 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
 例如，\texttt{fldhgt.bin} 的第三个参数表示流域单元 30\% 的面积被淹没时的该流域单元的平均洪水深度 (m)。
 
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/基于流域单元的漫滩高程剖面函数.png}
 \caption{基于流域单元的漫滩高程剖面函数。图片摘自\citet{yamazaki2013improving}。  }
@@ -300,8 +300,9 @@ B=\max \left(B_{min}, c_{H} * Q_{ave}{}^{p_{H}}+B_{0}\right)
 除此之外，基于卫星观测的河道宽度数据 (\texttt{width.bin}，如图~\ref{fig:基于卫星数据生成的河道宽度示意图}) 也可由MERIT-hydro水文地形数据中获取。
 CaMa-Flood推荐使用通过 \texttt{set\_gwdlr.F90} 子程序生成组合宽度参数 (经验公式和卫星数据的组合) 数据。
 相关地图的制备详见 \citet{yamazaki2014regional, yamazaki2014development}。
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/基于卫星数据生成的河道宽度示意图.png}
 \caption{基于卫星数据生成的河道宽度示意图。图片摘自\citet{yamazaki2011physically}。}
@@ -334,7 +335,7 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
     \centering
     \caption{河网各数据文件}
     \label{tab:河网各数据文件1}
@@ -357,6 +358,7 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
     \end{tabular}
 \end{table}
 
+
 \subsection{水库}
 模式中水库调度模块所用的水库基础数据主要包括：全球水库基本属性数据、全球水库水面面积数据和全球水库几何数据（如表~\ref{tab:水库模块所用的水库基础数据} 所示），根据这些数据可以进一步得到：
 \begin{enumerate}
@@ -367,7 +369,7 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 这些计算过程将在水库中详细说明，本章节主要介绍所用基础数据。
 
 
-\begin{table}[h]
+\begin{table}[htbp]
     \centering
     \caption{水库模块所用的水库基础数据}
     \label{tab:水库模块所用的水库基础数据}
@@ -384,8 +386,9 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 
 \subsubsection{全球水库基本属性数据}
 全球水库基本属性数据来自Global Reservoir and Dam Database (GranD; \citet{lehner2011high})，该数据集目前提供v1.1和v1.3两个版本。v1.1版本包含了全球范围内6862个水库及其关联大坝（图~\ref{fig:GranD-v1.1所包含水库的位置和主要用途}）的基本属性数据，水库的累积库容为6197 km$^{3}$，水库数量较多、库容较大的区域主要集中在中国、美国、加拿大、印度和欧洲。v1.3版本包含的水库在v1.1版本的基础上增加到7320个，累积库容增加到6863.5 \unit{km^3}。GranD提供了水库及其关联大坝的地理位置和基本属性信息（对于其包含的大部分水库）。其中，水库模块所用属性主要包括水库编码（\texttt{GRAND\_ID}）、水库名称（\texttt{DAM\_NAME}）、经度（\texttt{LONG\_DD}）、纬度（\texttt{LAT\_DD}）、水库总库容（\texttt{CAP\_MCM}）、汇流面积（\texttt{CATCH\_SKM}）、主要用途（\texttt{MAIN\_USE}）、建坝年份（\texttt{YEAR}）等。
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/基础数据/GranD-v1.1所包含水库的位置和主要用途.png}
 \caption{GranD-v1.1所包含水库的位置和主要用途}
@@ -406,11 +409,13 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 \subsection{湖泊}
 湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球\ang{;;30} (约1公里)分辨率，经纬度网格，单时次数据。
 
+
 \section{城市数据}\label{城市数据}
 
 \subsection{城市地表覆盖}\label{城市地表覆盖}
 城市地表覆盖数据采用MODIS-IGBP地表覆盖数据(章节 \ref{IGBP地表覆盖数据})中的城市覆盖类型作为判别依据。
 模式利用该数据集区分不同年份网格城市覆盖类型，获得城市在网格中的覆盖度，反应不同年份的城市覆盖变化。
+
 
 \subsection{城市类型划分}\label{城市类型划分}
 模式对城市覆盖地区不同城市类型进行细分。城市类型分类数据目前采取两种方案：
@@ -418,8 +423,9 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
     \item 传统的3类城市——高建筑街区 (Tall Building Distinct, TBD)、高密度(High Density, HD) 和中密度 (Medium Density, MD);
     \item 10类Local Climate Zone (LCZ)分类，如图~\ref{fig:LCZ分类图示}  所示。
 \end{enumerate}
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/基础数据/LCZ分类图示.png}
 \caption{LCZ分类示意图}
@@ -436,6 +442,7 @@ TBD类城市指至少在1平方公里内，建筑高度全部大于或等于10�
 LCZ数据目前使用的 \citet{demuzere2022global} 全球LCZ分类数据，该数据空间分辨率为100米，
 通过向轻量级随机森林模型输入大量标记训练区域和地球观测图像来生成，并对150个选定的功能城市地区采用自助交叉验证和专题基准测试评估了其质量。
 
+
 \subsection{建筑形态及属性数据}\label{建筑形态及属性数据}
 对于城市覆盖而言，建筑物的形态和物理性质(如反照率，导热率等)与其它地表覆盖类型完全不同，
 这些物理性质取决于建筑物的材质及城市几何结构数据，比如: 不透水面比例分布(impervious fraction)、
@@ -448,16 +455,20 @@ LCZ数据目前使用的 \citet{demuzere2022global} 全球LCZ分类数据，该�
 而LCZ分类本身包含了一些建筑材料信息，不同地区的同类LCZ虽然有差别但是可能不会太大，
 因此LCZ形态参数目前采用典型值设定，该部分数据一部分来源于~\citet{stewart2014evaluation}，另一部分参考了WRF中的参数设置。
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/基础数据/地区分类.png}
 \caption{地区分类示意图}
 \label{fig:地区分类}
 \end{figure}
 }
+
+
 \subsection{建筑高度与建筑比例数据}\label{建筑高度与建筑比例数据}
 
+
 \subsection{人口数据}\label{人口数据}
+
 
 \subsection{城市树覆盖数据}\label{城市树覆盖数据}
 NCAR CLM城市数据集比较全面的描述了全球城市的形态特征和物理性质，但是其城市数据缺少关于植被(树)和水体的描述，
@@ -469,6 +480,7 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 经过投影转换后，通过对全球数据每个区域的文件进行读取，并统计500 m ($\sim$0.0041667\textdegree)分辨率下30 m高分辨网格植被总占比，
 对四个年份求平均得到500 m分辨率下城市格点的树覆盖数据作为城市模式的基础输入数据。
 
+
 \subsection{城市内水体数据}\label{城市内水体数据}
 基于与城市树覆盖同样的原因，水体数据也需要尽量选择高分辨率数据，30米全球地表覆盖数据GlobeLand30是中国研制的30 m空间分辨率全球地表覆盖数据，
 2014年发布GlobeLand30 2000和2010版。自然资源部于2017年启动对该数据的更新。目前，GlobeLand30 2020版已发布 (\url{http://www.globallandcover.com/})。
@@ -476,8 +488,9 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 其中数据覆盖如图~\ref{fig:GlobeLand30数据覆盖示意图} 所示 (除2020年外，其他年份不包含极地地区数据)。
 该数据集水体精度最高，达到了92.09\%~\citep{陈军2017}，且时空分辨率高，
 因此投影转换后用同样的方法生成了水体覆盖度数据作为城市模式的原始数据。
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/基础数据/GlobeLand30数据覆盖示意图.png}
 \caption{GlobeLand30数据覆盖示意图}
@@ -485,10 +498,12 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 \end{figure}
 }
 
+
 \subsection{城市树高数据}\label{城市树高数据}
 树高数据使用的~\citet{simard2011mapping} 全球树高数据，分辨率为1 km。除该数据外， \citet{potapov2021mapping} 
 利用GEDI卫星数据反演的30 m树高数据也同样作为模式树高数据。但由于卫星运行轨道限制，
 该数据目前只发布了51.6\textdegree N$\sim$51.6\textdegree S范围内的数据，北半球高纬度地区数据缺失，因此目前该数据集仅作为备用数据。
+
 
 \subsection{城市LAI/SAI数据}\label{城市LAISAI数据}
 由于城市中建筑物的遮掩，卫星反演数据中城市 LAI 存在一定问题，目前模式中城市 LAI 数据利用以下公式根据 0.5\textdegree 范围内的其它PFT (只考虑树，即1-9类PFT)的 LAI/SAI，通过插值并加权平均的办法为城市地区LAI/SAI赋值：
@@ -517,6 +532,7 @@ L A I_{u r}=\sum_{i=1}^{9} L A I_{P F T_{-} i} \cdot \frac{H T O P_{u r}}{H T O 
 
 
 \section{生物地球化学数据}
+
 
 \subsection{氮沉降数据}\label{氮沉降数据}
 氮沉降是陆地生态系统的重要氮输入之一。近几十年来，人类活动造成大气氮沉降增加对生态系统生物地球化学循环产生了重要影响。由于区域地表氮沉降数据尚无法利用卫星直接观测得到，目前生物地球化学循环模式更多地利用大气模式或地球系统模式模拟得出。CoLM生物地球化学循环模块的氮沉降输入是$\mathrm{NO_y}$和$\mathrm{NH_x}$的总和，数据来源于CESM-WACCM的CMIP6历史时期和未来SSP情景模拟的集合平均。氮沉降历史时期数据包含1849年到2013年的时空变化，氮沉降未来时期数据包含1849--2101年的时空变化，未来情景包括SSP126，SSP245，SSP370和SSP585四种情景的预测模拟结果。数据的空间分辨率为0.9375\textdegree\ $\times$ 1.25\textdegree，数据在月尺度上刻画大气氮沉降的季节和年际变化。
