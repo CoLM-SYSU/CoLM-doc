@@ -11,7 +11,7 @@
  \begin{equation}
  \frac{\partial \left(uh\right)}{\partial t} + \frac{\partial}{\partial s}\left(u^2h+\frac{1}{2}gh^2\right) = -gh\frac{\partial z_b}{\partial s}-gh\frac{n^2\left|q\right|}{h^{10/3}}q
   \end{equation}
-  其中，$h$表示水深（单位m），$u$表示水流速度（单位 \unit{m.s^{-1}}），$t$表示时间（单位s），$s$表示沿水流路径的长度（单位m），$q=uh$表示单位宽度的流量（单位\unit{m^2.s^{-1}}），$z_b$表示坡面的高度（单位m），$n$表示曼宁系数（单位\unit{m^{-1/3}.s}）
+  其中，$h$表示水深（单位m），$u$表示水流速度（单位 \unit{m.s^{-1}}），$t$表示时间（单位s），$s$表示沿水流路径的长度（单位m），$q=uh$表示单位宽度的流量（单位 \unit{m^2.s^{-1}}），$z_b$表示坡面的高度（单位m），$n$表示曼宁系数（单位 \unit{m^{-1/3}.s}）
 
 
 \subsection{数值离散格式}
@@ -36,7 +36,7 @@
 
 假设两个相邻的水文单元为$C_i$和$C_j$，其中$C_i$为上游单元，$C_j$为下游单元。离散格式中各项的计算方法如下：
 
-（1）首先对边界上的$h$进行重构，
+（1）首先对边界上的$h$进行重构\citep{audusse2004scientificcomputing}，
 \begin{eqnarray}
 z_{b,ij} & = & \max\left(z_{b,i}, z_{b,j}\right) \\
 h_{ij-} & = & \max\left(0, h_i + z_{b,i} - z_{b,ij} \right) \\
@@ -95,7 +95,7 @@ F_{ij} = L_{ij} \cdot \left\{
 &F_{ij-} = u_i^2h_{ij-}+\frac{1}{2}gh_{ij-}^2, && F_{ij+} = u_j^2h_{ij+}+\frac{1}{2}gh_{ij+}^2
 \end{align*}
 
-（5）由坡面梯度形成的动量的源汇项计算为
+（5）由坡面梯度形成的动量的源汇项计算为\citep{audusse2004scientificcomputing}
 \begin{equation}
 G_{ij} = \frac{1}{2}gh_{ij-}^2 \cdot L_{ij}, \quad
 G_{ji}=-\frac{1}{2}g h_{ij+}^2 \cdot L_{ij}

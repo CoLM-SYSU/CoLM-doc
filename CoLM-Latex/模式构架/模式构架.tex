@@ -19,7 +19,7 @@
 
 在原有的经纬度网格的基础上，CoLM新开发了一个非结构化网格构建工具，可以基于多目标（水平分布特征），如高程、坡度、地形、土地利用和植被类型，自动识别不同区域所需的网格分辨率。模式运行流程如图~\ref{fig:非结构化网格CoLM总体运行流程图} 所示：
  {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/非结构化网格CoLM总体运行流程图.png}
 \caption{非结构化网格CoLM总体运行流程图，摘自Fan et al. [2023, in preparation]。}
@@ -29,7 +29,7 @@
 
 该工具基于非结构化一致性三角-六边形构建算法 \citep{fatichi2020soil,walko2008ocean,walko_direct_2011}，以准均匀的全局三角形（Delaunay）的网格化方法为理论依据。在CoLM中的非结构网格运行流程如图~\ref{fig:非结构化网格生成流程图} 所示，具体介绍如下：
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/非结构化网格生成流程图.png}
 \caption{非结构化网格生成流程图，摘自Fan et al. [2023, in preparation]。}
@@ -38,7 +38,7 @@
 }
 
 {
-\begin{table}[]
+\begin{table}[htbp]
 \centering
 \caption{细化阈值文件}
 \label{tab:细化阈值文件}
@@ -60,7 +60,7 @@ tksatu         & 土壤导热系数（未冻结、饱和） \\\bottomrule
 }
 
  {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/三角形网格简易细化.png}
 \caption{三角形网格简易细化，摘自Fan et al. [2023, in preparation]}
@@ -69,18 +69,27 @@ tksatu         & 土壤导热系数（未冻结、饱和） \\\bottomrule
 }
 
 \begin{enumerate}
-\item 构建初始网格\\
+\item 构建初始网格
+
 在此过程中，首先将一个正二十面体投射到地球表面，它的12个顶点中有两个位于南北两极，其余的位于$\pm\arctan(1/2)$ 纬度。构建好的正二十面体网格的二维投影在0\textdegree 经线与0\textdegree 纬线是轴对称的，有利于在计算包含关系时简化运算步骤。同时将每个区域划分为面积相同大小的三角形分块，以满足非结构网格初步细化和提升并行化计算效率的需要。
-\item 初步细化\\
+
+\item 初步细化
+
 在此步骤中，网格生成工具能够将每个球面三角形面细分为NXP×NXP更小的三角形，其中NXP是可以设置为任意正整数，代表所选的网格分辨率。其定义是两个相邻六边形网格的水平网格间距（网格单元面积的平方根）。网格的分辨率大约等于7200公里/NXP。因此，如果试图在网格上获得100公里的水平网格间距，则应将NXP设置为“72”。这种网格配置采用基于二十面体改进的六边形或三角形网格单元的非结构化网格，从而避免了传统经纬度网格的南北极奇点。该网格配置为局部网格细化提供了一种完全无缝的自然适应性，不需要额外特殊的网格嵌套算法。
-\item 弹簧动态调整\\
+
+\item 弹簧动态调整
+
 虽然通过初步的细化生成的三角形在平面上看起来是等边三角形，但实际上并不完全等同于等边三角形，有一定的角度偏差。实际上，如果考虑到经纬度基础数据在高纬度形变的影响，三角形的变形也会随着纬度的增加而增加。\citet{tomita2002optimization}描述了一种称为“Spring Dynamics”的计算方法，用于在准均匀的全局网格上调整三角形网格单元的形状和大小。该方法代表了一种物理模拟，其中网格中的每个边都像弹簧一样在其端点（顶点）之间施加吸引力或相反的力，该弹力取决于其自身的长度、平衡长度和弹簧系数。该研究表明，将平衡长度设置为使弹簧松弛在数值上稳定的最大可能值，即接近整个网格的平均边长，会产生最小的网格单元尺寸的空间变化，并且调整过程能显著提高模型的数值精度。
-\item 计算包含关系 \\
+
+\item 计算包含关系
+
 CoLM非结构网格的空间细分基于三角形网格与阈值数据（部分地表数据，如表~\ref{tab:细化阈值文件}）进行。一般来说，三角形网格的分辨率远高于阈值数据集。这些高分辨率网格（以下简称像素）构成了非结构化网格。也就是说，每个非结构化网格包含多个高分辨率像素。在进行网格细化之前，需要得到每个网格对应的像素的索引，即计算包含关系，以便识别像素对非结构网格的归属。最后，根据这些像素的信息，用户可以了解特定网格内的空间异质性，并决定是否需要对其进行细化。这个过程将在细化过程中的每次迭代中执行。
-\item 阈值文件计算\\
-最初，\citet{walko_direct_2011} 中的细化面积和程度是通过分配一系列点的经纬度坐标来确定的(例如，(lat = 30.1, lon = 120.5);\dots)加上影响半径(例如，(R = 1km);\dots)。与之不同，CoLM的网格细化工具能够根据各种指标确定精细化的区域。关于这些指标的详细信息可以在表~\ref{tab:细化阈值文件}中找到。该工具允许对一个或多个对象的网格细化约束到用户定义的阈值。也就是说，CoLM可以根据任意数量的重要特征对网格进行细化，例如$LAI$的标准差，网格内土地利用类型数量等等。图~\ref{fig:多阈值非结构网格细化}展示了基于多种不同地表特征进行细化的所生成的全球六边形网格结构。
+
+\item 阈值文件计算
+
+最初，\citet{walko_direct_2011} 中的细化面积和程度是通过分配一系列点的经纬度坐标来确定的(例如，(lat = 30.1, lon = 120.5); \dots)加上影响半径(例如，(R = 1km); \dots)。与之不同，CoLM的网格细化工具能够根据各种指标确定精细化的区域。关于这些指标的详细信息可以在表~\ref{tab:细化阈值文件} 中找到。该工具允许对一个或多个对象的网格细化约束到用户定义的阈值。也就是说，CoLM可以根据任意数量的重要特征对网格进行细化，例如$LAI$的标准差，网格内土地利用类型数量等等。图~\ref{fig:多阈值非结构网格细化} 展示了基于多种不同地表特征进行细化的所生成的全球六边形网格结构。
  {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/多阈值非结构网格细化.png}
 \caption{多阈值非结构网格细化示例，摘自Fan et al. [2023, in preparation]}
@@ -88,7 +97,8 @@ CoLM非结构网格的空间细分基于三角形网格与阈值数据（部分�
 \end{figure}
 }
 
-\item 阈值细化\\
+\item 阈值细化
+
 如图~\ref{fig:非结构化网格生成流程图} 所示，本步骤主要实现三角网格的阈值细化。利用生成的初始三角网格包含关系，计算三角网格下各阈值类型的数组，然后根据阈值标记网格是否需要细化。如图~\ref{fig:三角形网格简易细化} 所示，通过将三角网格“分成四格”，提高了三角网格的分辨率。然后，将新生成的网格信息添加到原始数组中，并添加精细的网格标记。在计算更新网格的包含关系时，只需要遍历精化三角形最小外围矩形内的经纬度网格，可以大大减少计算时间。当迭代次数超过最大迭代阈值，或所有三角形网格满足阈值时，三角形非结构化网格阈值细化终止。程序将输出最终生成的带有包含信息的三角网格信息数据(见表~\ref{tab:细化阈值文件})。图~\ref{fig:根据LAI对非结构网格进行多重细化} 展示了基于叶面积指数特征不同细化的区域六边形网格结构。
  {
 \begin{figure}[]
@@ -252,6 +262,21 @@ CoLM支持多套大气驱动数据集的使用，包括全球格点数据和单�
 % \usepackage{booktabs}
 \begin{landscape}
 %\begin{threeparttable}
+\begin{ThreePartTable}
+\begin{TableNotes}
+\footnotesize
+%\item 注：
+\item[1] 模式中针对以上数据会自动对比湿协调性做检查，当比湿数据大于通过近地面空气温度和气压数据计算得到的饱和比湿时，比湿将被更新为饱和比湿的计算结果。
+
+\item[2] 凡原始数据带有$offset$ 和 $scale\_{factor}$ 属性的均需转换为无 $offset$ 和$scale\_{factor}$ 属性的数据。
+
+\item[3] 大气 $\mathrm{O_2}$ 分压由公式 0.209 $P_{atm}$ 计算得到，其中 $P_{atm}$ 为大气压强。
+
+\item[4] 默认大气风速参考高度为100 米，大气温度和比湿参考高度为50米。
+
+\item[5] 当驱动仅给出总风速时，纬向风速和经向风速平均分配：$u_{atm}=v_{atm}=W_{atm}/\sqrt2$
+
+\end{TableNotes}
 \begin{center}
 \begin{longtable}{p{3cm}p{3cm}p{2cm}<{\centering}p{2cm}<{\centering}p{4cm}<{\centering}p{6cm}<{\centering}}
 \caption{可用于驱动 CoLM 离线运行的大气驱动数据集}
@@ -275,6 +300,7 @@ CoLM支持多套大气驱动数据集的使用，包括全球格点数据和单�
 \endfoot
 
 \hline
+\insertTableNotes 
 \endlastfoot
 
 \textbf{QIAN}              & 1.875\textdegree/6-hourly  & 1948-2004             & Global                              & \citet{qian2006simulation}                                                                                                                                                                    & 长波辐射由空气温度和水汽压计算得到                                                                      \\\midrule 
@@ -293,36 +319,22 @@ CoLM支持多套大气驱动数据集的使用，包括全球格点数据和单�
 \textbf{CLDAS}             & 0.0625\textdegree/hourly   & 2008-2020             & 东亚区域; 60\textdegree $\sim$ 160\textdegree E, 0\textdegree $\sim$ 65\textdegree N   & 国家气象信息中心                                                                                                                                                                              & 降水在模式中自动由逐小时累计值转换为逐小时平均值；异常或缺省值需补充                                                     \\\midrule 
 \textbf{CMFD}              & 0.1\textdegree/3-hourly    & 1979-2018             & 中国区域;  70\textdegree $\sim$ 140 \textdegree E, 15\textdegree $\sim$55 \textdegree N & \citet{He2019CMFD,Yang2019CMFD}                                                                                                                                          & 降水在模式中自动由逐小时累计值转换为逐小时平均值                                                               \\\midrule 
 \textbf{TPMFD}             & 0.01\textdegree/hourly     & 1979-2020             & 青藏高原 (25\textdegree $\sim$ 106\textdegree E, 41\textdegree $\sim$ 61\textdegree N) & \citet{Yang2023TPMFD}                                                                                 & 降水在模式中自动由逐小时累计值转换为逐小时平均值；气压在模式中自动转换为单位帕                                                \\
-\textbf{CMIP6/SSPs}        & 1\textdegree /3-hourly      & 1850-2100             & Global                              & \citet{cmip6}                                                                                                                                                                               & 数据文件需按月为存储单位进行合并；需采用异常值叠加方式产生未来情景下的大气驱动数据（见下文说明）                                       \\
+\textbf{CMIP6/SSPs}        & 1\textdegree /3-hourly      & 1850-2100             & Global                              & \citet{cmip6}                                                                                                                                                                               & 数据文件需按月为存储单位进行合并；需采用异常值叠加方式产生未来情景下的大气驱动数据（见下文说明）                                       \\\midrule
 \textbf{PLUMBER2}          & 单点/hourly         &1990-2019         & Global                              & \citet{ukkola2022flux}                                                                                                                                               & 需制作 surface data 给定站点的USGS/IGBP分类和经纬度等信息                                                 \\\midrule 
 \textbf{大气$\mathrm{CO_2}$ 浓度}           & 全球统一值 /yearly     & 1849-2100             & Global                              & \citet{Buchner2022,keeling1994atmospheric}                                & 1849-1957 \& 2023-2100 $\mathrm{CO_2}$ 浓度来自ISIMIP3b 大气组份浓度输入数据集；1958-2022 $\mathrm{CO_2}$ 浓度来自夏威夷 Mauna Loa 观测站监测数据 \\\midrule 
 \textbf{臭氧浓度}              & 0.1\textdegree /daily       & 2013-2022             & 中国区域 (73\textdegree $\sim$135\textdegree E, 18\textdegree$\sim$54\textdegree N)                                                                                  & -                                                                                                                                                                     & 来自中科院大气所李芳研究员                                                                        \\\midrule 
 \textbf{大气气溶胶沉降速率}         & 0.9\textdegree $\times$ 1.25\textdegree /monthly & 1849-2001 /climatology & Global                              & CLM5 Documentation \& \citet{Lamarque2010Historical}    & 来自NCAR-CAM模式模拟结果                                                                       \\\midrule 
 \textbf{氮沉降速率}             & 1.9\textdegree $\times$ 2.5\textdegree/yearly   & 1849-2006             & Global                              & CLM5 Documentation                                                                                                                                                                                                             & 来自NCAR-WACCM模式模拟结果                                                                     \\\midrule 
-\textbf{闪电频率}              & 2\textdegree/3-hourly      & climatology           & Global                              & CLM5 Documentation                                                                                                                                                                                                       & 由1995-2011年 NASA LIS/OTD 格点数据产品 v2.2 版通过双线性插值得到        \\
+\textbf{闪电频率}              & 2\textdegree/3-hourly      & climatology           & Global                              & CLM5 Documentation                                                                                                                                                                                                       & 由1995-2011年 NASA LIS/OTD 格点数据产品 v2.2 版通过双线性插值得到        \\\hline
 
 \end{longtable}
 \end{center}
-\begin{tablenotes}
-\footnotesize
-%\item 注：
-\item[1] 1. 模式中针对以上数据会自动对比湿协调性做检查，当比湿数据大于通过近地面空气温度和气压数据计算得到的饱和比湿时，比湿将被更新为饱和比湿的计算结果。
 
-\item[2] 2. 凡原始数据带有$offset$ 和 $scale\_{factor}$ 属性的均需转换为无 $offset$ 和$scale\_{factor}$ 属性的数据。
+%\rule{\linewidth}{0.8pt}
+%\hrule height 1pt
+\end{ThreePartTable}
 
-\item[3] 3. 大气 $\mathrm{O_2}$ 分压由公式 0.209 $P_{atm}$ 计算得到，其中 $P_{atm}$ 为大气压强。
-
-\item[4] 4. 默认大气风速参考高度为100 米，大气温度和比湿参考高度为50米。
-
-\item[5] 5. 当驱动仅给出总风速时，纬向风速和经向风速平均分配：$u_{atm}=v_{atm}=W_{atm}/\sqrt2$
-
-\end{tablenotes}
-%\rule{\textheight}{1pt}
-\hrule height 1pt
-%%\end{threeparttable}
 \end{landscape}
-
-
 
 
 
@@ -358,7 +370,7 @@ L \downarrow=\left[0.70+5.95 \times 10^{-5} \times 0.01 e_{a t m} \exp \left(\fr
 未来情景下的大气驱动数据可采用CMIP6气候模式的模拟输出结果。当历史时期与未来情景共同模拟时，未来时期CMIP6气候模式的模拟结果往往不能直接使用，因为当模拟历史时期使用的大气驱动数据来自观测或再分析数据时，其均值、时空变率、数据拼接时刻的取值与CMIP6气候模式的模拟结果往往存在较大差异。这里可使用异常值叠加方式来融合历史与未来的大气驱动数据。举例说明：当模拟1850-2099年的陆面状态时，1850-2014年的历史时期模拟可采用GSWP3大气驱动数据，2015-2099年的未来时期模拟可采用CMIP6气候模式的模拟结果，两套数据的融合方式如下：首先，将2015-2100年各驱动变量的逐月数据去除气候态的季节循环，得到带有某种社会经济排放情景下的各驱动变量的异常值序列，此序列可表征未来气候变化趋势的影响；其次，将历史时期有限时间段的各大气驱动变量反复叠加到未来时期各驱动变量的异常值序列（例如将2010-2014年的大气驱动数据反复叠加到2015-2019、2020-2024、…、2095-2099年的异常值序列），得到可使用的未来时期的大气驱动数据。此种数据融合方式既得到了未来时期的气候变化趋势，又保留了历史时期大气驱动数据的年际变率，缩小了历史时期与未来时期数据拼接时刻的数据阶跃程度。对于不同的大气驱动变量，历史时期数据与未来时期异常值序列的叠加方式不同：对于温度、气压、比湿、风速等大气状态变量，叠加方式采用加法叠加（$S_{new}=S_{old}+k_{anomaly}$），对于降水、下行短波辐射通量、下行长波辐射通量，叠加方式采用乘法叠加（$F_{new}=F_{old}\times k_{anomaly}$）。
 
 
-最后，针对单点模拟，CoLM已经收集整理测试的站点信息见表~\ref{tab:CoLM离线运行已经测试的站点列表} 。
+最后，针对单点模拟，CoLM已经收集整理测试的站点信息见表~\ref{tab:CoLM离线运行已经测试的站点列表}。
 
 \begin{center}
 \begin{longtable}{lcccccc}

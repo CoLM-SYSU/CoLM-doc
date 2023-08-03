@@ -38,15 +38,17 @@
 \usepackage{threeparttable}
 \usepackage{array}
 \usepackage{longtable} % for 'longtable' environment
+\usepackage{threeparttablex} % for 'ThreePartTable' environment
 \usepackage{makecell}
 \raggedbottom
 
 \usepackage{siunitx}
-\usepackage{longtable}
 %\PassOptionsToPackage{hyphens}{url}
 \usepackage[%hidelinks
-   citecolor=blue,linkcolor=black,colorlinks=True,breaklinks=true]{hyperref}
+   citecolor=blue,linkcolor=black,urlcolor=black,colorlinks=True,breaklinks=true]{hyperref}
 \usepackage{xurl}
+\usepackage{setspace}
+\setstretch{1.5}
 
 \begin{document}
 %\include{uhead.sty}
@@ -69,7 +71,7 @@
 2023 年 7 月
 }
 
-\normallinespacing
+%\normallinespacing
 \maketitle
 
 \preface

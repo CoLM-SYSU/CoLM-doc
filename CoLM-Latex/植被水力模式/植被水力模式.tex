@@ -4,16 +4,19 @@
 %\begin{植被水力模式}
 CoLM植物水力模式根据土壤-植物-大气连通体的概念计算陆气水分交换的蒸腾分量。
 CoLM植物水力模式中的植物水分传输得益于土壤、根、茎和叶之间形成的水势梯度。植物各部位的水势也密切影响着各植物水力过程。
-首先，根、茎、叶的水势通过植物栓塞过程影响着植物水分传输能力 (详见章节 \ref{植物水力导度的衰减} )。
+首先，根、茎、叶的水势通过植物栓塞过程影响着植物水分传输能力 (详见章节 \ref{植物水力导度的衰减})。
 其次，植物根与每层土壤的水势梯度将影响根的水力重分配过程 (详见章节 \ref{地下植物水力过程})。最后，叶片的水势降低将影响叶片气孔导度，
 同时影响植物水分传输和光合作用 (详见章节 \ref{气孔导度的水分胁迫})。
+
+
 \section{植物水势动态}\label{植物水势动态}
 植物水势的动态模拟是CoLM植物水力模式的关键。CoLM植物水力模式的水势模拟包括地上和地下植物水力过程两部分
 。地上部分包括在阳叶、阴叶、茎和地表根四个节点的水势 ($\Psi_{sunleaf}$，$\Psi_{shaleaf}$，$\Psi_{stem}$，$\Psi_{root,0}$)
- 模拟；地下部分包括地表根以及$n$层地下根 $n+1$个节点的水势 ($\Psi_{root,i}$，$i=0,1,2{\ldots}n$) 模拟。地上、地下两部分通过地表根水势
- ($\Psi_{root,0}$)的模拟被密切的耦合(如图\ref{fig:CoLM植物水力模型示意图})。
+ 模拟；地下部分包括地表根以及$n$层地下根 $n+1$个节点的水势 ($\Psi_{root,i}$，$i=0,1,2,\ldots,n$) 模拟。地上、地下两部分通过地表根水势
+ ($\Psi_{root,0}$)的模拟被密切的耦合(如图~\ref{fig:CoLM植物水力模型示意图})。
+ 
  {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/植被水力模式/CoLM植物水力模型示意图.png}
 \caption{CoLM植物水力模型示意图。}
@@ -22,7 +25,7 @@ CoLM植物水力模式中的植物水分传输得益于土壤、根、茎和叶�
 }
 
 
-CoLM植物水势的动态模拟假设植物水分传输为稳恒流，并将其类比为电路问题 
+CoLM植物水势的动态模拟假设植物水分传输为稳恒流，并将其类比为电路问题~
 \citep{van1948water}，即水分传输速率正比于水势差和水力导度。
 地上部分四个节点的水势由Darcy定律表达，满足以下方程：
 \begin{equation}\label{q_sunstem}
@@ -35,8 +38,8 @@ q_{ {sha \leftarrow stem }}=k_{ {sha} \leftarrow {stem}}\left(\Psi_{shaleaf}-\Ps
 q_{ {stem \leftarrow root }}=k_{ {stem } \leftarrow  { root }}\left(\Psi_{ {stem }}-\Psi_{ {root }, 0}\right)
 \end{equation}
 $k_{sun \leftarrow stem}$，$k_{sha \leftarrow stem }$，$k_{stem \leftarrow root }$ 分别代表茎到阳叶的水力导度、茎到阴叶的水力导度和根到茎的水力导度。
-水力导度随水势降低而降低，是关于茎和根水势的函数 (详见章节 \ref{植物水力导度的衰减}) 。地表根水势$\Psi_{root,0}$是关于每层土壤水势 ($\Psi_{soil,i}$) 
-及根总吸水速率 ($q_{root,0}$) 的函数，由地下植物水力过程所计算 (详见章节 \ref{地下植物水力过程})：
+水力导度随水势降低而降低，是关于茎和根水势的函数 (详见章节~\ref{植物水力导度的衰减}) 。地表根水势$\Psi_{root,0}$是关于每层土壤水势 ($\Psi_{soil,i}$) 
+及根总吸水速率 ($q_{root,0}$) 的函数，由地下植物水力过程所计算 (详见章节~\ref{地下植物水力过程})：
 \begin{equation}\label{Psi_root_0}
 \Psi_{root, 0}=R\left(\Psi_{ {soil }, i}, q_{root, 0}\right)
 \end{equation}
@@ -55,9 +58,10 @@ q_{ {sun \leftarrow stem }}+q_{ {sha \leftarrow stem }}=q_{ {stem \leftarrow roo
 q_{stem \leftarrow root}=q_{root, 0}
 \end{equation}
 $E_{sun}$代表阳叶蒸腾速率，$E_{sha}$代表阴叶蒸腾速率。它们是由无水分胁迫情况下的叶片蒸腾 ($E_{sun,max}$， $E_{sha,max}$) 
-和受叶片水势 ($\Psi_{sunleaf}$，$\Psi_{shaleaf}$) 控制的蒸腾衰减函数所组成(详见章节 \ref{植物水力导度的衰减})。
+和受叶片水势 ($\Psi_{sunleaf}$，$\Psi_{shaleaf}$) 控制的蒸腾衰减函数所组成(详见章节~\ref{植物水力导度的衰减})。
 同时，无水分胁迫的叶片蒸腾是在最大气孔导度 ($g_{s,sun,max}$, $g_{s,sha,max}$) 的条件下，
-运用章节 \ref{一维植被湍流交换模型} 植被覆盖地表湍流通量的计算方案所推导得出。最大气孔导度的计算则需要植物水力模式、光合作用模式、气孔导度模式耦合解出 (详见章节 \ref{气孔导度})。
+运用章节~\ref{一维植被湍流交换模型} 植被覆盖地表湍流通量的计算方案所推导得出。最大气孔导度的计算则需要植物水力模式、光合作用模式、气孔导度模式耦合解出 (详见章节~\ref{气体扩散方程和气孔导度模型})。
+
 
 \section{植物水力导度的衰减}\label{植物水力导度的衰减}
 植物水势下降导致的空穴现象会严重降低水分在植物内部的传导能力。我们将实验上观测到水力导度随水势变化的S型脆弱性曲线 
@@ -78,6 +82,7 @@ E_{ {sun }}=E_{ {sun,max }} \cdot 2^{-\left(\frac{\Psi_{ {sunleaf }}}{p 50}\righ
 E_{ {sha }}=E_{ {sha,max }} \cdot 2^{-\left(\frac{\Psi_{ {shaleaf }}}{p 50}\right)^{c_{k}}}
 \end{equation}
 $E_{sun,max} $和$E_{sha,max}$分别表示无水分胁迫情况下的阳叶、阴叶的最大蒸腾速率。
+
 
 \section{地下植物水力过程}\label{地下植物水力过程}
 水力重分配是重要的植物地下水力过程，它描述了水分通过地下根系从湿润土壤层向干燥土壤层的传输。
@@ -113,6 +118,7 @@ q_{ax,1}+q_{rad, 1}=q_{root,0}
 将方程(\ref{k_axi})和(\ref{k_radi})代入(\ref{q_axi})和(\ref{q_ax1})，则得到关于$ \Psi_{r,i}$的$n$个线性方程组。
 这$n$个线性方程组描述了在植物地下水力过程作用下，根水势垂直分布。其输入包括土壤水势垂直分布 ($\Psi_{soil,i}$) 和根总吸水速率 ($q_{root,0}$)。
 其输出包括根水势垂直分布 ($\Psi_{r,i}$) 和根吸水速率垂直分布 ($q_{rad,i}$)。因此，地下植物水力过程可以被简化地表示为公式(\ref{Psi_root_0})。
+
 
 \section{气孔导度的水分胁迫}\label{气孔导度的水分胁迫}
 土壤水分亏缺对植物生理的影响被表现在水分胁迫因子上，水分胁迫因子作为取值 $0\sim 1$ 的无量纲变量，作用在光合作用各限制因子上，见公式(\ref{V_cmax_a})--(\ref{R_d1})。
@@ -181,14 +187,15 @@ g_{s, sha}=E^{-1}\left(E_{s h a}\right)
 \end{equation}
 耦合植物水力模式、光合气孔模式和地表冠层湍流参数化方案，再利用公式(\ref{beta_sun})和(\ref{beta_sha})可以完整地求解植物水力模式下的植物水分胁迫 (如图 \ref{fig:光合气孔模式和植物水力模式的耦合示意图})。
 {
-    \begin{figure}[]
+    \begin{figure}[htbp]
     \centering
     \includegraphics{Figures/植被水力模式/光合气孔模式和植物水力模式的耦合示意图.png}
     \caption{光合气孔模式和植物水力模式的耦合示意图。}
     \label{fig:光合气孔模式和植物水力模式的耦合示意图}
     \end{figure}
-    }
-    
+}
+
+
 \section{数值计算方案}\label{数值计算方案}
 求解植物水势、水分胁迫、气孔导度和叶片蒸腾速率，需要耦合植物水力模式、光合气孔模式和地表冠层参数化方案。
 耦合描述植物水势变化的动力方程组(公式(\ref{q_sunstem})--(\ref{q_stemroot}), (\ref{e_sun_a}) 和(\ref{e_sha_a}))，
@@ -209,12 +216,14 @@ g_{s, sha}=E^{-1}\left(E_{s h a}\right)
     \item 更新植物水势和叶片蒸腾，判断叶片温度是否收敛，若收敛，植物水力模式求解完成，若不收敛，回到第 (1) 步。
 \end{enumerate}
 
+气孔导度详细迭代
+
 {
-    \begin{figure}[]
+    \begin{figure}[htbp]
     \centering
     \includegraphics{Figures/植被水力模式/植物水力模式的数值模拟流程图.png}
     \caption{植物水力模式的数值模拟流程图。}
     \label{fig:植物水力模式的数值模拟流程图}
     \end{figure}
-    }
+}
 

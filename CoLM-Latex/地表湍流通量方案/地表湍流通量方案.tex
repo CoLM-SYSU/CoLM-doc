@@ -493,6 +493,10 @@ z_{0 h} = z_{0 w} = z_{0 m} \exp \left[-0.13\left(Re_{*}\right)^{0.45}\right]
 
 
 \section{一维植被湍流交换模型}\label{一维植被湍流交换模型}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_LeafTemperature.F90、MOD\_Thermal.F90}。
+\end{mymdframed}
+
 对于有植被覆盖部分的陆地表面，陆地与大气总湍流输运通量为植被冠层顶空气与大气之间的湍流输送，其动量通量$\tau_p$、感热通量$H_p$和水汽通量$E_p$表达为：
 \begin{equation}
 \tau_{p, x}=-f_{\text {sig }} \rho_{atm} \frac{u_{atm}}{r_{a m}}
@@ -654,6 +658,10 @@ $\frac{dq_{sat}^{T_g}}{dT_g}$的计算见章节~\ref{饱和水汽压(比湿)及�
 
 
 \section{三维植被湍流交换模型}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_LeafTemperature.F90}。
+\end{mymdframed}
+
 三维植被湍流交换模型是考虑植被树冠水平空间分布以及不同植被类型垂直分层(同三维植被辐射传输模型植被结构假设)，
 以一维植被湍流交换过程为基础，同样采用Monin–-Obukhov相似性理论进行计算。为了与一维植被湍流计算相统一，
 与CoLM2014相比，本版本模型在零平面位移($d$)、粗糙度($z_0$)、叶片空气动力学阻抗($r_b$)以及对地的空气动力学阻抗($r_d$)计算上有所更新。
@@ -664,7 +672,7 @@ CoLM2014假设$d$和$z_0$与植被高度成固定比例，即$d=\frac{2}{3}h$，
 这对于稀疏植被可能并不成立\citep{zeng2007consistent}。在本版本，$d$的计算采用\citet{choudhury1988}的方案，
 是通过拟合\citet{shaw1982aerodynamic}二阶闭合理论结果得到：
 \begin{equation}\label{dOh}
-\frac{d}{h}=1.1 \ln \left(1+\left(c_{d} \cdot \text {LAI} \right)^{0.25}\right)
+\frac{d}{h}=1.1 \ln \left(1+\left(c_{d} \cdot (\text {LAI} + \text {SAI})\right)^{0.25}\right)
 \end{equation}
 其中$c_d=0.2$，表示单位面积叶片平均拖曳系数。粗糙度计算采用\citet{raupach1992drag,raupach1994simplified}方案：
 \begin{equation}\label{zOh}
@@ -777,7 +785,7 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 此时利用章节~\ref{三维植被辐射传输模型} 和 \ref{三维植被长波辐射传输} 对三维植被辐射传输计算结果。整个植被冠层与大气的湍流交换同样采用相似性理论进行求解，
 其求解过程如图~\ref{fig:三维植被湍流交换模型计算流程图} 所示。
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/地表湍流交换过程/三维植被湍流交换模型计算流程图.png}
 \caption{三维植被湍流交换模型计算流程图。}
