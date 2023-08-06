@@ -345,8 +345,9 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 \end{mymdframed}
 
 在模式中，覆盖在地表的积雪被模拟为最多五层，具体取决于总积雪深度。积雪层数从上到下分别用$j = −4, −3, −2, −1, 0$编号。$j = 0$是靠近土壤表面的底层雪层，$j = snl + 1$是表层雪层，其中变量$snl$是积雪层数的负数。雪层的厚度表示为$\delta z_j$（m），雪层的深度$z_j$取为其上边界深度$\left[z_h\right]_{j-1}$和下边界深度$\left[z_h\right]_j$的平均值（\textcolor{red}{中位数？}）(图~\ref{fig:模式中积雪雪层示意图}）。
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/雪盖土壤热力过程/模式中积雪雪层示意图.png}
 \caption{模式中积雪雪层示意图(以三层雪层为例)。}
@@ -386,7 +387,8 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 
 
 \begin{enumerate}
-\item 破坏变质下的积雪沉降\\
+\item 破坏变质下的积雪沉降
+
 雪到达地面后，随即开始快速变化，单个雪花会迅速失去原有形状，变成更具球形。在风或热力的作用下，新雪的星形晶状结构破裂，雪堆发生沉降，雪粒堆积。对于密度小于 \qty{100}{kg.m^{-3}} 的新雪来说，破坏变质引起的沉降非常重要。新雪由于星形雪粒之间的“齿轮咬合”作用而具有一定的结构强度，这种结构在变质作用中会逐渐丧失。\citet{anderson1976point}对这一阶段的压实过程提出了以下经验函数：
 \begin{equation}\label{eq:Delta_Z}
 \left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {destructive }}=-2.778 \times 10^{-6} {c}_{3} {c}_{4} {e}^{-0.04\left(T_f-T\right)}
@@ -402,7 +404,8 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 \end{equation}
 即根据式~\eqref{eq:Delta_Z} 预测的密度小于 \qty{100}{kg.m^{-3}} 的积雪，破坏变质导致的形变率为每小时 1\%，当雪层中冰的体积密度超过 \qty{100}{kg.m^{-3}} 时，破环变质的速率会有所降低，而当雪层中存在液态水时，破环变质的速率将为原来的两倍。
 
-\item 雪层负重引起的压实\\
+\item 雪层负重引起的压实
+
 随着积雪的累积，上覆积雪的自重会进一步地压实雪层。上覆雪层产生的压力导致雪粒粘结生长速度加快，形成更加有效的堆积形状。在经过最初的沉降阶段后，这一阶段的压实速度会减慢，很大程度上取决于雪层负重带来的压力。在低压力范围的季节性积雪内，雪的形变率是压力的线性函数，即
 \begin{equation}
 \left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{\text {overburden }}=-\frac{{P}_{{s}}}{9 \times 10^{5}} {e}^{-0.08\left(T_f-{T}\right)-0.023 \rho_{{i}} \theta_{{i}}}
@@ -412,7 +415,8 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 \left[P_{s}\right]_{j}=\frac{\left[w_{\text {ice }}\right]_{j}+\left[w_{\text {liq }}\right]_{j}}{2}+\sum_{{i}={snl}+1}^{{i}={j}-1}\left(\left[{w}_{{ice}}\right]_{{i}}+\left[{w}_{\text {liq }}\right]_{{i}}\right)
 \end{equation}
 
-\item 雪层融化引起的压实。\\
+\item 雪层融化引起的压实
+
 在融雪过程的后期（雪经过多次冻融循环后），融雪水的出流导致雪层压实，雪堆过度致密：
 \begin{equation}
 \left[\frac{1}{\Delta {z}} \frac{\partial \Delta {z}}{\partial {t}}\right]_{{melt}}=\frac{1}{\Delta {t}}\left[\frac{{f}_{{I}}^{{n}+1}-{f}_{{I}}^{{n}}}{{f}_{{I}}^{{n}}}\right]
@@ -469,7 +473,7 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 当某一雪层的厚度超过规定的最大厚度（从表层到底层分别为，0.02、0.05、0.11、0.23 和 > 0.23 米）时，雪层将被细分。如果被细分的雪层没有已存在的相邻下层雪层，则该雪层被等分为厚度相同的两层，并具有同样的液态水含量、冰含量和温度。如果被细分的雪层有相邻的下层雪层，则将多余的雪层厚度、液态水含量、冰含量以及温度属性和下层雪层合并。细分规则如图~\ref{fig:情况1-5} 和~\ref{fig:情况6-9} 所示，图中$d_{sn}$为总雪深（米）。
 
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/雪盖土壤热力过程/情况1-5.png}
 \caption{不同积雪高度下雪层厚度的分层规则。}
@@ -478,7 +482,7 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 }
 
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/雪盖土壤热力过程/情况6-9.png}
 \caption{不同积雪高度下雪层厚度的分层规则续}
