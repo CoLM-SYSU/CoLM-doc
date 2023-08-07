@@ -12,8 +12,9 @@ CoLM城市模式不同于传统城市冠层街谷 (canyon) 假设，而是以三
 $f_g$($f_{gimp}$，$f_{gper}$)，建筑物高度$H$，建筑物高度与平均地面宽度比$H/W$($W$表示楼与楼之间平均距离)，
 植被冠层中心高度$H_v$，城市树木叶面积指数 LAI 及茎面积指数 SAI，植被(树)覆盖面积比例记为$f_v$。
 其中$f_b+f_g=1$，$f_{gimp}+f_{gper}=1$。城市水体覆盖单独表征，其过程考虑为等效湖泊进行计算。
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/城市模式/CoLM城市模式总体结构示意图.png}
 \caption{CoLM城市模式总体结构示意图。}
@@ -32,7 +33,7 @@ $f_g$($f_{gimp}$，$f_{gper}$)，建筑物高度$H$，建筑物高度与平均�
 $S$表示阴影，$H/W$在推导过程中表示为$HW$，$H/L$表示为$HL$，总的直射入射和漫射入射太阳辐射能量通量采用单位能量1表示。
 
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/城市模式/CoLM城市模式几何结构示意图.png}
 \caption{CoLM城市模式几何结构示意图。}
@@ -425,7 +426,7 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 迭代求解其高度处的空气温度、湿度以及相似性理论交换长度(即空气不稳定程度)。
 因为这部分过程与三维植被湍流交换过程完全一致，在此不再阐述。
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/城市模式/无植被覆盖时城市湍流交换阻抗示意图.png}
 \caption{无植被覆盖时城市湍流交换阻抗示意图。}
@@ -441,8 +442,9 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 光合作用过程同自然植被光合作用过程，长波辐射吸收计算在章节 \ref{有植被覆盖时长波辐射传输} 已给出。
 在实际计算过程中，可根据植被与建筑物高度差异，视情况分为两层或三层等效交换(三层时，即植被单独考虑为一层)。
 整个过程也是迭代求解，但此时需要新增迭代求解变量叶片温度，其他过程同无植被覆盖时湍流交换过程。
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/城市模式/有植被覆盖时城市湍流交换阻抗示意图.png}
 \caption{有植被覆盖时城市湍流交换阻抗示意图。}
@@ -493,8 +495,9 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
 最低参考温度，来计算空调对应能耗，以感热的形式增加到湍流交换计算的源项中。
 首先计算热交换通量并建立能量平衡方程，进而求解室内温度$T_{room}$，室内墙壁表面空气温度$T_{wsun,in}$，$T_{wsua,in}$和室内屋顶表面空气温度$T_{roof,in}$。
 通量交换包括最里层墙壁/屋顶与屋内墙壁/屋顶表面空气热量交换，屋内墙壁/屋顶表面空气与室内空气热量交换以及室内空气与室外空气热量交换，通量平衡方程为： 
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/城市模式/建筑能耗模型示意图.png}
 \caption{建筑能耗模型示意图。}

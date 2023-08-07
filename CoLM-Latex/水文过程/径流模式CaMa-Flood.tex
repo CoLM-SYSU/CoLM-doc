@@ -41,7 +41,7 @@ CaMa-Flood 假设不存在漫滩 (洪泛) 事件，上述参数则通过如下�
 
 
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/CaMa-Flood流域单位示意图.png}
 \caption{CaMa-Flood流域单位示意图，摘自\citet{yamazaki2011physically}。 }
@@ -74,7 +74,7 @@ CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量
 
 \section{蓄水量变化计算}
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/蓄水量变化计算流程图.png}
 \caption{蓄水量变化计算流程图。 }
@@ -88,6 +88,7 @@ S_{i}^{t+\Delta t}=S_{i}^{t}+\sum_{k}^{Upstream} Q_{k}^{t} \Delta t-Q_{i}^{t} \D
 式中$S_{i}^{t}$和$S_{i}^{t+\Delta t}$分别代表单元$i$在时间$t$到时间$t+\Delta t$蓄水量的变化，$Q_i^t$代表在时间$t$该单元河流径流出流量 (河道内+漫滩)，
 $Q_k^t$代表在时间 $t$ 该单元从上游网格接收的河流径流流入流量 (河道内+漫滩)，$Ac_i$ 是单元$i$的面积，$R_i^t$ 代表流域单元 $i$ 的产流量。
 
+
 \section{自适应时间步长的估算}
 为避免固定时间步长计算所产生的数值振荡，提高数值方案稳定性，
 CaMa-Flood 采用了\citet{bates2010}提出的基于局部惯性方程并满足 Courant-Friedrichs-Lewy (CFL) 
@@ -100,8 +101,9 @@ $\alpha$是稳定性系数设为0.9，$h_t$是该流域单元在时刻$t$的水�
 图~\ref{fig:自适应时间步长的估算} 展示了基于上述公式计算的某一时刻的$DT_{max}$ (minute)。
 在计算过程中，如果用户指定的默认时间步长$DT$大于$DT_{max}$，则$DT$将被划分为满足$CFL$条件的更小的时间等分的时间步长$DT_{adp}$；
 如果用户指定的默认时间步长$DT$小于$DT_{max}$，则实际计算步长按照用户指定的默认时间步长。
+
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/自适应时间步长的估算.png}
 \caption{自适应时间步长的估算，摘自\citet{yamazaki2013improving}。}

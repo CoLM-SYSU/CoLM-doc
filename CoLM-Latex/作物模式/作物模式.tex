@@ -6,7 +6,7 @@ GPAM1可以模拟作物生长发育的关键过程及其对天气/气候、近�
 农田管理的响应和生物、化学、物理反馈(图~\ref{fig:作物模式GPAM1框图})。
 图~\ref{fig:作物模式GPAM1框图} 中蓝色高亮部分为作物区别与自然植被、需要特殊处理的过程。
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/作物模式/作物模式GPAM1框图.png}
 \caption{作物模式GPAM1框图。  }
@@ -19,7 +19,7 @@ GPAM1可以模拟作物生长发育的关键过程及其对天气/气候、近�
 GPAM1包含10个作物功能类型(Crop Functional Type, CFT)，模拟4种作物类型: 小麦、水稻、玉米、大豆(图~\ref{fig:作物功能类型覆盖率的空间分布})。
 每种作物类型各分雨养(rainfed)和灌溉(irrigated) CFT，小麦又分冬小麦和春小麦。每个CFT占用一个水热独立的陆表单元(patch)。
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/作物模式/作物功能类型覆盖率的空间分布.png}
 \caption{GPAM1模式模拟的10个作物功能类型(CFT)覆盖率的空间分布。}
@@ -57,7 +57,7 @@ GPAM1的物候包括三个阶段: (1)播种->抽芽; (2)抽芽到开始灌浆(gr
 \end{enumerate}
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
   \centering
   \caption{作物物候方案相关参数}
   \label{tab:作物物候方案相关参数}
@@ -99,7 +99,7 @@ GPAM1的物候包括三个阶段: (1)播种->抽芽; (2)抽芽到开始灌浆(gr
 \end{equation}
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
   \centering
   \caption{作物分配方案相关参数}
   \label{tab:作物分配方案相关参数}
@@ -131,7 +131,7 @@ $d_{stem}$    & 1    & 1    & 2    & 5   \\\bottomrule
 表~\ref{tab:作物碳氮比} 中，碳氮比$CN_{leaf}$,$ CN_{stem}$, $CN_{root}$用于灌浆前，其余碳氮比用于灌浆开始后。\\
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
   \centering
   \caption{作物碳氮比}
   \label{tab:作物碳氮比}
@@ -179,7 +179,7 @@ $D=0.663$为臭氧和水蒸气的扩散比，$t$是作物暴露在臭氧污染�
 
 
 \section{冬小麦春化现象}
-春化响应$V$(0$\sim$1)采用\citet{streck2003incorporating}方案：
+春化响应$V$(0$\sim$1)采用~\citet{streck2003incorporating}方案：
 \begin{equation}
 V=\frac{D_{v}{ }^{5}}{22.5^{5}+D_{v}^{5}}
 \end{equation}
@@ -237,7 +237,7 @@ $EF_i$ (\unit{g.species.(kg.dry\ matter(DM))^{-1}})是排放因子，见表~\ref
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
   \centering
   \caption{秸秆焚烧排放因子取值(\unit{g.species.(kg.DM)^{-1}})}
   \label{tab:秸秆焚烧排放因子取值}
@@ -294,7 +294,7 @@ z_{b o t}=0.02
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
   \centering
   \caption{结构形态参数}
   \label{tab:结构形态参数}
