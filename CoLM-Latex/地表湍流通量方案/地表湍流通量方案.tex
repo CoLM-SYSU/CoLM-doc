@@ -753,7 +753,7 @@ K=\frac{\kappa u_{*} (z-d)} {\varphi \phi }
    1, & z \geq z_{w} \text { 时} \\
 \end{cases}
 \end{equation}
-其中$h$为树高，$z_{w}$为粗糙子层顶。$\phi$为稳定度函数，采用\citet{dyer1974review}关系式：
+其中$h$为树高，$z_{w}$为粗糙子层顶(见图\ref{fig:修正Raupach粗糙度方案示意图})。$\phi$为稳定度函数，采用\citet{dyer1974review}关系式：
 \begin{equation}
 \phi(\zeta) = \begin{cases}
    (1-16\zeta)^{-1/4}, & \zeta<0 \text { 时} \\
@@ -824,7 +824,16 @@ z_{0} = (h-d)\exp (-\kappa \gamma + \Psi_{h})
 + \frac{5\left(z_{w}-d\right)}{L} - \frac{5z_{0}}{L}
 \end{equation}
 
-结合方程(\ref{z0_rsl})和(\ref{Psih_unstable})、(\ref{Psih_stable})即可用于计算考虑稳定度影响的植被粗糙度。
+结合方程(\ref{z0_rsl})和(\ref{Psih_unstable})、(\ref{Psih_stable})即可用于计算考虑稳定度影响的植被粗糙度，
+该计算方案示意图如图\ref{fig:修正Raupach粗糙度方案示意图}所示。
+{
+\begin{figure}[]
+\centering
+\includegraphics[scale=0.7]{Figures/地表湍流交换过程/修正Raupach粗糙度方案示意图.jpg}
+\caption{考虑稳定度影响的植被粗糙度计算方案意图。}
+\label{fig:修正Raupach粗糙度方案示意图}
+\end{figure}
+}
 
 
 \subsection{单层植被湍流交换}
