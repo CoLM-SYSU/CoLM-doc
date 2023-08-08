@@ -664,7 +664,7 @@ $\frac{dq_{sat}^{T_g}}{dT_g}$的计算见章节~\ref{饱和水汽压(比湿)及�
 
 三维植被湍流交换模型是考虑植被树冠水平空间分布以及不同植被类型垂直分层(同三维植被辐射传输模型植被结构假设)，
 以一维植被湍流交换过程为基础，同样采用Monin–-Obukhov相似性理论进行计算。为了与一维植被湍流计算相统一，
-与CoLM2014相比，本版本模型在零平面位移($d$)、粗糙度($z_0$)、叶片空气动力学阻抗($r_b$)以及对地的空气动力学阻抗($r_d$)计算上有所更新。
+与CoLM2014相比，本版本模型在零平面位移($d$)、粗糙度($z_0$)、叶片空气动力学阻抗($r_b$)以及对地的空气动力学阻抗($r_d$)等的计算上有了新发展。
 
 
 \subsection{100\%覆盖植被情景}
@@ -731,6 +731,109 @@ r_{b}^{-1}=C_{f} \frac{\int_{0}^{h}(u(z))^{1 / 2} d z}{D_{f}^{1 / 2} h}
 r_{d}=\int_{z_{0 \mathrm{hg}}}^{d+z_{0}} \frac{1}{K(z)} d z
 \end{equation}
 其中$z_{0hg}$表示用于潜热/感热交换计算的粗糙度\citep{zeng1998effect}。
+
+
+\subsection{考虑稳定度影响的植被粗糙度方案}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_RoughnessLength.F90}。
+\end{mymdframed}
+
+\citet{raupach1992drag,raupach1994simplified}的植被粗糙度计算方案假设中性条件，也就是忽略了稳定度的影响，
+而诸多研究表明稳定度对粗糙度具有不可忽略的影响。以\citet{raupach1992drag,raupach1994simplified}方案为基础，
+我们发展了一个考虑稳定度影响的植被粗糙度计算方案 \citep{liu2023roughnesslength}，详述如下。
+
+考虑具有以下一般形式的湍流扩散系数：
+\begin{equation}\label{eddydiffusivity}
+K=\frac{\kappa u_{*} (z-d)} {\varphi \phi }
+\end{equation}
+其中$\kappa=0.4$为von K\'arman常数，$u_{*}$为摩擦速度。$\varphi$为冠层粗糙子层(roughness sublayer)影响函数，定义为：
+\begin{equation}
+\varphi = \begin{cases}
+   \frac{z-d} {z_{w}-d}, & h<z<z_{w} \text { 时} \\
+   1, & z \geq z_{w} \text { 时} \\
+\end{cases}
+\end{equation}
+其中$h$为树高，$z_{w}$为粗糙子层顶(见图\ref{fig:修正Raupach粗糙度方案示意图})。$\phi$为稳定度函数，采用\citet{dyer1974review}关系式：
+\begin{equation}
+\phi(\zeta) = \begin{cases}
+   (1-16\zeta)^{-1/4}, & \zeta<0 \text { 时} \\
+   1+5\zeta, & \zeta \geq 0 \text { 时} \\
+\end{cases}
+\end{equation}
+其中$\zeta = (z-d)/L$为无量纲稳定度参数，$L$为Monin-Obukhov长度(定义见章节~\ref{基本理论})。
+
+根据一阶湍流闭合(即$K$理论)，粗糙子层以上($z>h$)及以下($z_0 + d<z \leq h$)的风速梯度可表达为：
+\begin{equation}\label{kz_u_rsl}
+\frac{\kappa (z-d) u_{*}}{\varphi \phi} \frac{\partial U}{\partial z}=u_{*}^2
+\end{equation}
+方程(\ref{kz_u_rsl})从$z=z_0+d$积分到$z=h$，有：
+\begin{equation}\label{u_rsl_htop}
+\frac{\kappa U_{h}}{u_{*}} = \ln \left(\frac{h-d}{z_{0}}\right) + \Psi_{h}
+\end{equation}
+易得：
+\begin{equation}\label{z0_rsl}
+z_{0} = (h-d)\exp (-\kappa \gamma + \Psi_{h})
+\end{equation}
+其中$\Psi_{h}=\int_{z_{0}+d}^{h} \frac{\varphi \phi - 1}{z-d} d z$，$\gamma \equiv U_{h}/u_{*}$(由公式(\ref{ustrarOuh})计算)。
+
+方程(\ref{kz_u_rsl})从$z=z_0+d$积分到粗糙子层以上的惯性层(即$z\geq z_{w}$)，有：
+\begin{align}\label{u_rsl_iner}
+\frac{\kappa U_{h}}{u_{*}} =& \ln \left(\frac{z-d}{z_{0}}\right) + \Psi_{h} + \int_{h}^{z_{w}} \frac{\varphi \phi - 1}{z-d} \,dz
++ \int_{z_{w}}^{z} \frac{\varphi \phi - 1}{z-d} \,dz \nonumber \\
+=& \ln \left(\frac{z-d}{z_{0}}\right) + \Psi_{h} + \left[\int_{h}^{z_{w}} \frac{\phi}{z_{w}-d} \,dz - \ln \left(\frac{z_{w}-d}{h-d}\right) \right]
++ \int_{z_{w}}^{z} \frac{\phi - 1}{z-d} \,dz
+\end{align}
+根据Garratt [1992]：
+\begin{equation}
+\int_{z_{w}}^{z} \frac{\phi - 1}{z-d} \,dz = -\psi_u \left(\frac{z-d}{L} \right) + \psi_u \left(\frac{z_{w}-d}{L} \right)
+\end{equation}
+其中$\psi_u(\chi )$在稳定和不稳定条件下具有不同的形式：
+\begin{equation}
+   \psi_u(\chi ) = \begin{cases}
+      2\ln \left(\frac{1+x}{2} \right) + \ln \left(\frac{1+x^2}{2} \right) - 2\tan^{-1}x + \frac {\pi}{2}, & \chi<0 \text { 时} \\
+      -5\chi, & \chi \geq 0 \text { 时} \\
+\end{cases}
+\end{equation}
+其中$x=(1-16\chi)^{\frac{1}{4}}$。
+
+为确保惯性子层风速满足稳定度调整下的对数律，即：
+\begin{equation}\label{u_iner}
+\frac{\kappa U_{h}}{u_{*}} = \ln \left(\frac{z-d}{z_{0}}\right) + \int_{z_{0}+d}^{z} \frac{\phi - 1}{z-d} \,dz
+\end{equation}
+方程(\ref{u_rsl_iner})右边最后三项之和(当$z=z_{w}$)必须满足：
+\begin{equation}
+\Psi_{h} + \left[\int_{h}^{z_{w}} \frac{\phi}{z_{w}-d} \,dz - \ln \left(\frac{z_{w}-d}{h-d}\right) \right] = \int_{z_{0}+d}^{z_{w}} \frac{\phi - 1}{z-d} \,dz
+\end{equation}
+即：
+\begin{align}\label{Psih_general}
+\Psi_{h} =& \ln \left(\frac{z_{w}-d}{h-d}\right) - \int_{h}^{z_{w}} \frac{\phi}{z_{w}-d} \,dz
++ \int_{z_{0}+d}^{z_{w}} \frac{\phi - 1}{z-d} \,dz \nonumber \\
+=& \ln \left(c_{w}\right) -\frac{1}{z_{w}-d} \int_{h}^{z_{w}} \phi \,dz - \psi_u \left(\frac{z_{w}-d}{L} \right)
++ \psi_u \left(\frac{z_{0}}{L} \right)
+\end{align}
+其中$c_{w}=(z_{w}-d)/(h-d)$为大于1的常数。
+
+由方程(\ref{Psih_general})易知$\Psi_{h}$在不稳定条件下($z_{w}/L < 0$)的具体表达式：
+\begin{equation}\label{Psih_unstable}
+\Psi_{h} = \ln \left(c_{w}\right) + \frac{L}{12\left(z_{w}-d\right)} \left[\left(1-16\frac{z_{w}}{L}\right)^{3/4} 
+- \left(1-16\frac{h}{L}\right)^{3/4} \right] - \psi_u \left(\frac{z_{w}-d}{L} \right) + \psi_u \left(\frac{z_{0}}{L} \right)
+\end{equation}
+在稳定条件下($z_{w}/L \geq 0$):
+\begin{equation}\label{Psih_stable}
+\Psi_{h} = \ln \left(c_{w}\right) + \left(1-\frac{1}{c_{w}}\right) \left[1+\frac{5\left(z_{w}+h\right)}{2L}\right]
++ \frac{5\left(z_{w}-d\right)}{L} - \frac{5z_{0}}{L}
+\end{equation}
+
+结合方程(\ref{z0_rsl})和(\ref{Psih_unstable})、(\ref{Psih_stable})即可用于计算考虑稳定度影响的植被粗糙度，
+该计算方案示意图如图\ref{fig:修正Raupach粗糙度方案示意图}所示。
+{
+\begin{figure}[]
+\centering
+\includegraphics[scale=0.7]{Figures/地表湍流交换过程/修正Raupach粗糙度方案示意图.jpg}
+\caption{考虑稳定度影响的植被粗糙度计算方案意图。}
+\label{fig:修正Raupach粗糙度方案示意图}
+\end{figure}
+}
 
 
 \subsection{单层植被湍流交换}
