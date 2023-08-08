@@ -1,4 +1,5 @@
 .history
+.vscode
 *.aux
 *.log
 *.lot
