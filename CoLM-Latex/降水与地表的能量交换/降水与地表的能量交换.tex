@@ -1,18 +1,32 @@
 \chapter{降水与地表的能量交换}
 %\addcontentsline{toc}{chapter}{降水与地表的能量交换}
+降水是陆面与大气之间保证水循环以及维持能量平衡的重要过程，CoLM模式通过多个物理参数化方案考虑降水相态分配、水凝物密度计算、雨水与植被/地表之间的潜热感热交换等物理过程。
 
-%\begin{降水与地表的能量交换}
-雨水与地表/植被之间存在温度差异，当降水发生时，它们之间可发生能量交换(雨水感热)。
-\citet{wei2014impact} 表明，虽然在气候尺度上此能量交换的量级很小，但它可通过改变大气环流影响不同地区的气候特征，
-故在气候模式中不可被忽略。下面给出雨水感热的计算方案。
 \begin{mymdframed}{代码}
-本部分的对应代码为\texttt{groundtem.F90}、\texttt{rain\_snow\_temp.F90}和\texttt{wetbulb.F90}。
+本部分的对应代码为\texttt{MOD\_GroundTemperature.F90}、\texttt{MOD\_RainSnowTemp.F90}和\\
+\texttt{MOD\_WetBulb.F90}。
 \end{mymdframed}
 
+\section{降水相态分配}\label{相态分配}
+在CoLM中共有四种基于温、湿参量近似雨水温度分配降水相态的方法，具体如表~\ref{tab:相态区分方案}~所示。
 
-\section{雨水温度}\label{雨水温度}
+\begin{table}[]
+\caption{相态区分方案}
+\label{tab:相态区分方案}
+\begin{tabular}[h]{p{1cm}p{5cm}p{10cm}}
+\toprule
+选项 & 注释(*代表的是默认方案) & 参考文献 \\\midrule
+I & 湿球温度方案      & \citet{Wang-etal_19WetBulb}   \\
+II*  & CLM5方案      & Ben Andre et al., 2020, CLM5 Documentation      \\
+III  & PSY方案     & \citet{harder2013estimating}     \\
+IV  & 单阈值方案     & \citet{us1956snow}     \\    \bottomrule
+
+\end{tabular}
+\end{table}
+
+\subsection{湿球温度方案}
 已有研究(如\citet{anderson1998moored})表明，
-雨水温度非常接近于大气湿球温度，故这里雨水温度由湿球温度近似。根据湿球温度定义有如下关系：
+雨水温度非常接近于大气湿球温度，故该方案中雨水温度由湿球温度近似，根据湿球温度定义有如下关系：
 \begin{equation}
 C_{p a}\left(T_{w b}-T\right)=\lambda_{v}\left(r-r_{s a t}^{T_{w b}}\right)
 \end{equation}
@@ -26,23 +40,124 @@ $T_{wb}$ 可通过如下过程进行迭代求解：
     \item 由上述关系更新湿球温度：$T_{wb}^{\left(n\right)\ast}=T+\frac{\lambda_v}{C_{pa}}\left(r-r_{sat}^{T_{wb}^{\left(n\right)}}\right)$；
     \item 取更新前后湿球温度的平均值作为新一步的湿球温度：$T_{wb}^{\left(n+1\right)}=\left(T_{wb}^{\left(n\right)}+T_{wb}^{\left(n\right)\ast}\right)/2.0$。
 \end{enumerate}
-将上述过程迭代6次($n=0$, $\ldots$, 5)，作为最终的湿球温度$T_{wb}$。
+将上述过程迭代6次($n=0$, $\ldots$, 5)，作为最终的湿球温度$T_{wb}$,再用其近似雨水温度界定液态水占比，具体如下：
+
+\begin{equation}
+f_{pl}= \begin{cases}
+1, & \text{当 }\ 3\le T_{wb} - T_{frz} \text{ 时} \\
+1 - \frac{1}{1 + 5e-5\exp{(T_{wb} - T_{frz}+4)}} , & \text{当 }\ -2\le T_{wb} - T_{frz} < 3 \text{ 时} \\
+0, & \text{当 }\ T_{wb} - T_{frz} < -2 \text{ 时}
+\end{cases}
+\end{equation}
+%
+其中$T_{frz}$ = 273.15 K.
 
 
-当$T>T_f+2.5$ K时，降水完全为液态水，可取雨水温度$T_p=T_{wb}$，否则$T_p$需根据降水的固态与液态比例进行调整。
-根据《Snow Hydrology》(1956)中的实验结果，液态水占总降水的比例$f_{pl}$可按如下方式定义：
+\subsection{CLM5方案}
+CLM5方案假定大气环境温度为雨水温度，其区别于其他方法的地方在于方案会判断下垫面类型是否为冰川，并对冰川这个下垫面类型做单独的考虑，实现的逻辑具体如下。
+
+当地表水体为冰面时（land water type = 3, land ice）:
+\begin{equation}
+Allsnow_{tc} = T_{frz} - 2,\quad Allrain_{tc} = T_{frz}
+\end{equation}
+
+其他下垫面情况:
+\begin{equation}
+Allsnow_{tc} = T_{frz},\quad Allrain_{tc} = T_{frz} +2
+\end{equation}
+
 \begin{equation*}
 f_{pl}= \begin{cases}
-0.4, & \text{当 }\ T_f+2.0\text{ K}<T\le T_f+2.5\text{ K} \text{ 时} \\
--54.632+0.2T, & \text{当 }\ T_f<T\le T_f+2.0\text{ K} \text{ 时} \\
-0, & \text{当 }\ T\le T_f \text{ 时}
+1, & \text{当 }\ Allrain_{tc}\le forc_t \text{ 时}\\
+(forc_t - Allsnow_{tc})/2, & \text{当 }\ Allsnow_{tc}\le forc_t < Allrain_{tc} \text{ 时} \\
+0, & \text{当 }\ forc_t < Allsnow_{tc} \text{ 时}
 \end{cases}
 \end{equation*}
-于是，当$T\le T_f+2.5$ K 且$f_{pl}>0$时，$T_p=T_f-\sqrt{\frac{1}{f_{pl}}-1}/100$，
-否则当降水完全为固态时，$T_p=\min{\left(T_f,T_{wb}\right)}$。
+
+
+\subsection{PSY方案}
+PSY (Psychrometric Energy Balance Method)方案假设:
+\begin{enumerate}
+    \item 在无限接近水凝物（液态水或冰晶）的表面有一理想气团，其温度与水凝物一致，且满足Tetents饱和水汽压经验公式；
+    \item 理想气团与环境大气之间满足质量守恒以及能量守恒且两者都满足理想气体方程；
+    \item 水凝物的凝结（凝华）潜热以及空气导热率与环境温度(\textcelsius)满足一定函数关系。
+\end{enumerate}
+
+综上，方案基于假设，计算出水凝物表面空气温度以代表水凝物温度(\textcelsius)，具体如下：
+\begin{equation}
+L\frac{dm}{dt}=4\pi C\lambda_t(T_i - T)
+\end{equation}
+
+\begin{equation}
+\frac{dm}{dt}=4\pi CD_v(\rho - \rho_i)
+\end{equation}
+
+简化后：
+\begin{equation}
+T_i = T + \frac{D_v}{\lambda_{t}}L(\rho - \rho_i)
+\end{equation}
+%
+其中$L$为凝结或凝华潜热，$C$为水凝物形状因子，$\lambda_t$为空气导热率因子，$T_i$为水凝物表面空气温度，$T$为环境温度，$D_v$为水汽扩散系数，$\rho$为环境空气密度，$\rho_i$为水凝物表面空气密度，以上方程可通过牛顿迭代求解，得出水凝物表面空气温度，相较于(1.1)湿球温度的等焓假设，计算(1.4)水凝物温度时并未做出类似假设，两者的物理基础不同，计算方程不能相互转化。
+
+具体的液态水占比如下：
+\begin{equation*}
+f_{pl}= \begin{cases}
+1, & \text{当 }\ 5\le T_i \text{ 时}\\
+\frac{1}{1 + 2.50286\times 0.125006^{T_{i}}}, & \text{当 }\-5\le T_i < 5 \text{ 时} \\
+0, & \text{当 }\ T_i < -5 \text{ 时}
+\end{cases}
+\end{equation*}
+%
+上式的Sigmoid函数拟合有别于湿球温度方案
+
+PSY方案的拟合数据来源于降水量：
+\begin{equation}
+f_{pl} = \frac{Rainfall(mm)}{Rainfall(mm) + Snowfall(mm)}
+\end{equation}
+%
+而湿球温度方案的拟合数据源于降水事件数：
+\begin{equation}
+f_{pl} = \frac{Rain_{event}}{Rain_{event} + Snow_{event}}
+\end{equation}
+
+
+\subsection{单阈值方案}
+单阈值方案就是设定一个关键温度以界定液态降水的占比，假设认为液态降水占比随温度升高逐渐线性增加，在2 \textcelsius 时占40\%，当环境温度高于2 \textcelsius 后全转变为液态降水，过程具体如下：
+\begin{equation*}
+f_{pl}= \begin{cases}
+1, & \text{当 }\ T_{frz}+2\le forc_t \text{ 时}\\
+\max(0,-54.632 + 0.2\times forc_t), & \text{当 }\ forc_t < T_{frz} + 2 \text{ 时} \\
+\end{cases}
+\end{equation*}
+
+
+\section{新雪密度}
+雪的密度影响到地表的雪深、雪的堆积等一系列物理过程，是一个很重要的参量，在CoLM中采用CLM5的方案计算新雪密度，具体过程如下：
+\begin{equation*}
+Bifall= \begin{cases}
+50 + 1.7\times 17^{1.5}, & \text{当 }\ 2\le forc_t - T_{frz} \text{ 时}\\
+50 + 1.7(forc_t - T_{frz}+15)^{1.5}, & \text{当 }\ -15\le forc_t - T_{frz} < 2 \text{ 时} \\
+-3.8328(forc_t - T_{frz}) - 0.0333(forc_t - T_{frz})^2, & \text{当 }\ -57.55\le forc_t - T_{frz} < -15 \text{ 时} \\
+110.2898, & \text{当 }\ forc_t - T_{frz} < -57.55 \text{ 时}\\
+\end{cases}
+\end{equation*}
+
+当风速达到一定阈值时，雪密度在考虑温度后还需要继续考虑风速：
+\begin{equation}
+forc_{wind} = \sqrt{(u^2 + v^2)}
+\end{equation}
+
+当 $forc_{wind}$ > 0.1 时
+\begin{equation}
+Bifall_{new} = Bifall_{old} + \left\{266.81\left[1 + {\left(\frac{\tanh (\frac{forc_{wind}}{5})}{2}\right)}\right]^{8.8}\right\}
+\end{equation}
 
 
 \section{植被/地表的雨水感热}\label{植被地表的雨水感热}
+雨水与地表/植被之间存在温度差异，当降水发生时，它们之间可发生能量交换(雨水感热)。
+\citet{wei2014impact} 表明，虽然在气候尺度上此能量交换的量级很小，但它可通过改变大气环流影响不同地区的气候特征，
+故在气候模式中不可被忽略。感热计算中默认湿球温度为雨水温度，下面给出雨水感热的计算方案。
+
 当地表有植被覆盖时，植被叶片与雨水的能量交换 (\unit{W.m^{-2}}) 分别计算如下：
 \begin{equation}
 H_{prcv}=C_{pl} q_{pl}\left(T_{p}-T_{v}\right)+C_{pi} q_{pi}\left(T_{p}-T_{v}\right)
@@ -56,5 +171,16 @@ $q_{pl}$与$q_{pi}$分别表示植被冠层对液态水和固态水的截流率(
 \begin{equation}
 H_{p r c g}=C_{p l} p_{l}\left(T_{p}-T_{g}\right)+C_{p i} p_{i}\left(T_{p}-T_{g}\right)
 \end{equation}
+
 其中$p_l$与$p_i$分别表示落到地面的液态水与固态水降水率(\unit{mm.H_2O.s^{-1}})，
 当有植被覆盖时，$p_l$与$p_i$为直接穿透植被冠层的降水率与沿叶茎流出冠层的降水率之和(计算见章节~\ref{植被冠层截留})。
+
+
+
+
+
+
+
+
+
+
