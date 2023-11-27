@@ -1,95 +1,113 @@
 \chapter{城市模式}\label{城市模式}
 %\addcontentsline{toc}{chapter}{城市模式}
-CoLM城市模式不同于传统城市冠层街谷 (canyon) 假设，而是以三维城市建筑群落为基本假设，
-在此基础上计算三维城市建筑群落短波、长波辐射传输及湍流交换过程。在辐射传输和湍流交换计算过程中，
-添加对植被的模拟。第二个特点是高分辨率城市覆盖、植被、水体等数据应用。
-另外，城市模式加入了人为热过程，包括建筑能耗、交通热、新陈代谢热的模拟。
+CoLM城市模式不同于传统城市冠层街谷 (canyon) 假设，而是以三维城市建筑群落为基本假设，在此基础上计算三维城市建筑群落短波、长波辐射传输及湍流交换过程。
+在辐射传输和湍流交换计算过程中，添加对植被的模拟。
+CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等数据应用。
+另外，城市模式加入了水体和较完整的人为热过程，包括建筑能耗、交通热、新陈代谢热的模拟。
+模式整理概念图如图~\ref{fig:CoLM城市模式概念图}所示。
 
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式概念图.png}
+\caption{CoLM城市模式概念图。}
+\label{fig:CoLM城市模式概念图}
+\end{figure}
+}
 
 \section{城市模式结构}
-不同于传统的城市街谷假设模型，CoLM采用由单栋建筑物组成的建筑群落来表征城市，如图~\ref{fig:CoLM城市模式总体结构示意图} 所示。
-建筑物随机分布，包括建筑物位置及朝向。城市几何参数包括建筑物覆盖度$f_b$，地面(透水、不透水面)覆盖度
-$f_g$($f_{gimp}$，$f_{gper}$)，建筑物高度$H$，建筑物高度与平均地面宽度比$H/W$($W$表示楼与楼之间平均距离)，
-植被冠层中心高度$H_v$，城市树木叶面积指数 LAI 及茎面积指数 SAI，植被(树)覆盖面积比例记为$f_v$。
+不同于传统的城市街谷假设模型，CoLM采用由单栋建筑物组成的建筑群落来表征城市，如图~\ref{fig:CoLM城市模式结构和功能示意图} 所示。
+建筑物随机分布，包括建筑物位置及朝向。城市几何参数包括建筑物覆盖度$f_b$(即屋顶覆盖面积占比)，地面(透水、不透水面)覆盖度$f_g$($f_{gimp}$，$f_{gper}$)，建筑物高度$H$，建筑物高度与建筑物平均边长比$H/L$(建筑物底面考虑为正方形，边长为记为$L$)，植被冠层中心高度$H_v$，城市树木叶面积指数 LAI 及茎面积指数 SAI，植被(树)覆盖面积比例记为$f_v$。
 其中$f_b+f_g=1$，$f_{gimp}+f_{gper}=1$。城市水体覆盖单独表征，其过程考虑为等效湖泊进行计算。
 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/城市模式/CoLM城市模式总体结构示意图.png}
-\caption{CoLM城市模式总体结构示意图。}
-\label{fig:CoLM城市模式总体结构示意图}
+\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式结构和功能示意图.png}
+\caption{CoLM城市模式结构和功能示意图。}
+\label{fig:CoLM城市模式结构和功能示意图}
 \end{figure}
 }
 
-建筑物底面考虑为正方形，边长为记为$L$。在已知$f_b$和$H/W$参数时，$L$可以计算为：
+现有的城市模式往往不对平均单栋建筑物进行表征，而是采用街谷宽度比$H/W$描述城市结构主要特征($W$表示楼与楼之间平均距离。在已知$f_b$和$H/W$参数，而未知$L$时，$L$可以简单计算为：
+
 \begin{equation}
 \frac{H}{L}=\frac{H}{W} \cdot \frac{1-\sqrt{f_{b}}}{\sqrt{f_{b}}}, \text { 即 } L=W \frac{\sqrt{f_{b}}}{1-\sqrt{f_{b}}}
 \end{equation}
-对于同一所在地城市覆盖，单栋建筑物几何参数一致，目前未考虑建筑物之间的几何差异，即以上参数代表为统计平均值。
 
-在以下分模块公式推导中，下标约定如下：天空($s$)，地面($g$，包括透水面$gper$和不透水面$gimp$)，
-墙面($w$，包括阳面墙$wsun$和阴面墙$wsha$)，植被($v$)和屋顶$(r$)。$F$表示可视因子，例如$F_{gs}$表示从地面到天空的可视因子。
-$S$表示阴影，$H/W$在推导过程中表示为$HW$，$H/L$表示为$HL$，总的直射入射和漫射入射太阳辐射能量通量采用单位能量1表示。
+对于同一所在地城市覆盖，单栋建筑物几何参数一致，目前未显式考虑建筑物之间的几何差异，即以上参数代表为统计平均值。
+
+在以下分模块公式推导中，变量下标约定如下：天空($s$)，地面($g$，包括透水面$gper$和不透水面$gimp$)，墙面($w$，包括阳面墙$wsun$和阴面墙$wsha$)，植被($v$)和屋顶$(r$)。$F$表示可视因子，例如$F_{gs}$表示从地面到天空的可视因子。
+$S$表示阴影，$H/W$在推导过程中表示为$\rm HW$，$H/L$表示为$\rm HL$，总的直射入射和漫射入射太阳辐射能量通量采用单位能量1表示。
 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/城市模式/CoLM城市模式几何结构示意图.png}
-\caption{CoLM城市模式几何结构示意图。}
+\includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式建筑植被结构示意图.png}
+\caption{CoLM城市模式建筑及植被几何结构示意图。}
 \label{fig:CoLM城市模式几何结构示意图}
 \end{figure}
 }
+
+
 \section{短波辐射传输}\label{短波辐射传输}
+\begin{mymdframed}{代码}
+本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Showtwave.F90}。
+\end{mymdframed}
+
 \subsection{无植被覆盖时短波辐射传输}\label{无植被覆盖时短波辐射传输}
+\begin{mymdframed}{代码}
+本部分对应代码为\texttt{URBAN/MOD\_Urban\_Showtwave.F90}文件中\texttt{UrbanOnlyShortwave}函数。
+\end{mymdframed}
+
 太阳辐射直射照射时(太阳天顶角$\theta_s$)，
 建筑物群落在地面的阴影覆盖占比(被墙面遮挡的部分)计算为：
 \begin{equation}\label{S_w}
-S_{w}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} {HL} \cdot \tan \left(\theta_{s}\right)\right)
+S_{w}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} {\rm HL} \cdot \tan \left(\theta_{s}\right)\right)
 \end{equation}
 阳面墙面积比例计算为：
 \begin{equation}\label{f_wsun}
-f_{wsun}=0.5 \cdot \frac{s_{w} f_{g}+f_{b}}{\frac{4}{\pi} f_{b} {HL} \tan \left(\theta_{s}\right)+f_{b}}
+f_{wsun}=0.5 \cdot \frac{s_{w} f_{g}+f_{b}}{\frac{4}{\pi} f_{b} {\rm HL} \tan \left(\theta_{s}\right)+f_{b}}
 \end{equation}
 阴面墙比例：
 \begin{equation}\label{f_wsha}
 f_{wsha}=1-f_{wsun}
 \end{equation}
-对于天空到墙面的可视因子$F_{sw}$，即天空漫射光源到达墙面的辐射部分，其计算类似与直射光在被墙面遮挡的面积比例：
-\begin{equation}\label{f_Sw}
-F_{S w}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} {HL} \cdot \tan \left(\theta_{s}^{*}\right)\right)
+对于天空到墙面的可视因子$F_{sw}$，即天空漫射光源到达墙面的辐射部分，其计算类似于直射光在被墙面遮挡的面积比例：
+\begin{equation}\label{f_sw}
+F_{sw}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} {\rm HL} \cdot \tan \left(\theta_{s}^{*}\right)\right)
 \end{equation}
 其中$\theta_s^\ast$为漫射光情况下等效角度，可近似计算为：
 \begin{equation}
-\theta_{s}^{*}=\frac{53-10 \sqrt{\frac{f_{b}}{f_{g}} {HL}}}{180} \cdot \pi
+\theta_{s}^{*}=\frac{53-10 \sqrt{\frac{f_{b}}{f_{g}} {\rm HL}}}{180} \cdot \pi
 \end{equation}
 根据能量守恒，天空到达地面的可视因子$F_{sg}=1-F_{sw}$。
 根据可视因子对称性，地面到达墙面和天空的可视因子$F_{gw}=F_{sw}$，$F_{gs}=F_{sg}$。
 墙面到天空和地面的可视因子($F_{ws}$, $F_{wg}$)根据互易原理，满足如下关系：
 \begin{equation}
-F_{ws} \cdot 4 {HL} f_{b}=F_{s w} f_{g}
+F_{ws} \cdot 4 {\rm HL} f_{b}=F_{s w} f_{g}
 \end{equation}
 \begin{equation}
-F_{w g} \cdot 4 {HL} f_{b}=F_{s w} f_{g}
+F_{wg} \cdot 4 {\rm HL} f_{b}=F_{s w} f_{g}
 \end{equation}
-由于太阳辐射在墙面垂直分布并不均匀，对上式进行简单调整，$F_{ws}$和$F_{wg}$计算为：
+由于太阳辐射在墙面垂直分布并不均匀，建筑物上半部分偏多，下半部分偏少，对上式进行简单调整，$F_{ws}$和$F_{wg}$计算为：
 \begin{equation}
-F_{ws}=0.75 F_{s w} \frac{f_{g}}{f_{b}} \frac{1}{2 {HL}}
+F_{ws}=0.75 F_{s w} \frac{f_{g}}{f_{b}} \frac{1}{2 {\rm HL}}
 \end{equation}
 \begin{equation}
-F_{w g}=0.25 F_{s w} \frac{f_{g}}{f_{b}} \frac{1}{2 {HL}}
+F_{wg}=0.25 F_{s w} \frac{f_{g}}{f_{b}} \frac{1}{2 {\rm HL}}
 \end{equation}
-墙面到墙面的可视因子$F_{ww}=1-F_{ws}-F_{wg}$。
+再根据能量守恒，墙面到墙面的可视因子$F_{ww}=1-F_{ws}-F_{wg}$。
 
-a. 直射入射太阳辐射
+\textit{a. 直射入射太阳辐射}
 
-对于直射辐射太阳辐射，直射光到达阳面墙的辐射通量$E_{wsun}=S_w$，
+对于直射辐射太阳辐射，直射光到达阳面墙的辐射通量$E_{wsun}=S_w$，即墙面在地面的阴影覆盖比例。
 到达阴面墙的辐射通量$E_{wsha}=0$，到达地面的辐射通量$E_g=1-E_{wsun}$，
 其中$E_{gimp}=E_gf_{gimp}$，$E_{gper}=E_gf_{gper}$。
 阳面墙、阴面墙、不透水面和透水面第一次散射辐射通量可分别计算为：
 $E_{wsun}\alpha_w，E_{wsha}\alpha_w，E_{gimp}\alpha_{gimp}，E_{gper}\alpha_{gper}$，
-其中$\alpha$表示墙面、不透水面和透水面的反照率，不分区阳面和阴面，不区分漫射和直射照射，且反射后的辐射假设为漫射辐射。
-设经过墙面地面之间多次散射，达到辐射平衡时的墙面和地面辐射出射通量为$M$，可建立如下辐射平衡方程：
+其中$\alpha$表示反照率。对于墙面，不分区阳面和阴面，所有组成面均不区分漫射和直射照射反照率，且反射后的辐射假设为漫射辐射。
+当经过墙面地面之间多次散射后，达到辐射平衡时的墙面和地面辐射出射通量为$M$，可建立如下辐射平衡方程：
 \begin{landscape}
 \begin{equation}
 \begin{array}{l}
@@ -100,7 +118,7 @@ $E_{wsun}\alpha_w，E_{wsha}\alpha_w，E_{gimp}\alpha_{gimp}，E_{gper}\alpha_{g
 \end{array}
 \end{equation}
 通过整理得到：
-\begin{equation}
+\begin{equation}\label{城市无植被辐射传输方程}
 \left(\begin{array}{cccc}1-F_{ww} f_{wsun} \alpha_{w} & -F_{ww} f_{wsun} \alpha_{w} & -F_{g w} f_{wsun} \alpha_{w} & -F_{g w} f_{wsun} \alpha_{w} \\
     -F_{ww} f_{wsha} \alpha_{w} & 1-F_{ww} f_{wsha} \alpha_{w} & -F_{g w} f_{wsha} \alpha_{w} & -F_{g w} f_{wsha} \alpha_{w} \\
     -F_{w g} f_{gimp} \alpha_{gimp} & -F_{w g} f_{gimp} \alpha_{gimp} & 1 & 0 \\ 
@@ -114,25 +132,25 @@ $E_{wsun}\alpha_w，E_{wsha}\alpha_w，E_{gimp}\alpha_{gimp}，E_{gper}\alpha_{g
 \end{equation}
 \end{landscape}
 
-简单表示为
+经过整理的公式(\ref{城市无植被辐射传输方程})可简单表示为
 \begin{equation}\label{mathbf_AX}
 \mathbf{A X}=\mathbf{B}
 \end{equation}
 $\mathbf{A}$为辐射传输矩阵，$\mathbf{B}$为向量($E_{wsun}\alpha_w$,$E_{wsha}\alpha_w$,
 $E_{gimp}\alpha_{gimp}$,$E_{gper}\alpha_{gper}$)，
-即墙面和地面第一次散射辐射通量。$\mathbf{X}$为求解变量组成的向量($M_{wsun}$,$M_{wsha}$,$M_{gimp}$,$M_{gper}$)，
+即太阳辐射初始到达墙面和地面射辐射通量(未经散射)。$\mathbf{X}$为求解变量组成的向量($M_{wsun}$,$M_{wsha}$,$M_{gimp}$,$M_{gper}$)，
 计算为：
 \begin{equation}\label{mathbf_X}
 \mathbf{X}=\mathbf{A}^{-1} \mathbf{B}
 \end{equation}
-矩阵$\mathbf{A}$是由已知变量组成的常数矩阵，可直接进行求逆计算，从而计算得到$\mathbf{X}$。墙面和地面的辐射吸收计算为：
+矩阵$\mathbf{A}$是由已知变量组成的常数矩阵，可直接进行求逆计算，向量$\mathbf{B}$已计算，因此可计算得到$\mathbf{X}$。从而墙面和地面的辐射吸收计算为：
 \begin{equation}\label{s_wsun_wsha_gimp_gper_1}
 \begin{array}{c}s_{wsun}=\frac{M_{wsun}}{\alpha_{w}}\left(1-\alpha_{w}\right) \\ 
     s_{wsha}=\frac{M_{wsha}}{\alpha_{w}}\left(1-\alpha_{w}\right) \\
     s_{gimp}=\frac{M_{gimp}}{\alpha_{gimp}}\left(1-\alpha_{gimp}\right) \\
     s_{gper}=\frac{M_{gper}}{\alpha_{gper}}\left(1-\alpha_{gper}\right)\end{array}
 \end{equation}
-注意，以上辐射吸收为总吸收量，其各自单面面积辐射吸收量修改为：
+注意，以上辐射吸收为各组成面总吸收量，其各自单面面积辐射吸收量修改为：
 \begin{equation}\label{s_wsun_wsha_gimp_gper_2}
 \begin{array}{c}s_{wsun}=\frac{f_{g}}{4 f_{wsun} \mathrm{HL} f_{b}} s_{wsun} \\ 
     s_{wsha}=\frac{f_{g}}{4 f_{wsha} \mathrm{HL} f_{b}} s_{wsha} \\ 
@@ -147,21 +165,26 @@ $E_{gimp}\alpha_{gimp}$,$E_{gper}\alpha_{gper}$)，
 \begin{equation}\label{alpha_u2}
 \alpha_{u}=\alpha_{{roof }} f_{b}+\alpha_{u} f_{g}
 \end{equation}
+对于城市水体(湖泊)考虑同屋顶，最终城市区域地表反照率为面积加权(类似公式~\ref{alpha_u2})
 
-b.漫射入射太阳辐射
-对于漫射，计算过程与直射入射辐射过程基本类似，不同之处在于首次到达墙面和地面的辐射通量分别为：
+\textit{b.漫射入射太阳辐射}
+
+对于漫射情况，计算过程与直射入射辐射过程基本类似，同样采用公式(\ref{城市无植被辐射传输方程})所示的矩阵形式进行求解，不同之处在于初始到达墙面和地面的辐射通量，分别计算为：
 $F_{sw}f_{wsun}$、$F_{sw}f_{wsha}$、$F_{sg}f_{gimp}$、$F_{sg}f_{gper}$，即公式(\ref{mathbf_AX})中的$\mathbf{B}$。
 漫射入射辐射的传输矩阵同直射入射辐射情景，即A。其求逆后的结果可以直接用于漫射入射辐射，利用公式(\ref{mathbf_X})计算得到墙面和地面的辐射出射通量，
-单位面积的辐射吸收和城市反照率同公式(\ref{alpha_u})和(\ref{alpha_u2})，在此不再列出。
+单位面积的辐射吸收和城市反照率同公式(\ref{s_wsun_wsha_gimp_gper_1})、(\ref{alpha_u})和(\ref{alpha_u2})，在此不再列出。
 
 \subsection{有植被覆盖时短波辐射传输}\label{有植被覆盖时短波辐射传输}
-城市中考虑植被后的短波辐射传输过程是在无植被辐射传输的基础上，考虑植被在内的各组分之间的可视因子，
-从而计算辐射平衡时的传输矩阵，采用类似的方法求解墙面、地面和植被的辐射吸收。
+\begin{mymdframed}{代码}
+本部分对应代码为\texttt{URBAN/MOD\_Urban\_Showtwave.F90}文件中\texttt{UrbanVegShortwave}函数。
+\end{mymdframed}
+
+城市中考虑植被后的短波辐射传输过程是在无植被辐射传输的基础上，考虑植被在内的各组分之间的可视因子，从而计算辐射平衡时的传输矩阵，采用类似的方法求解墙面、地面和植被的辐射吸收。
 相比章节 \ref{无植被覆盖时短波辐射传输} 增加的部分为考虑植被在内的可视因子和阴影面积计算。
 
-在植被树冠中心高度$h_v$处，墙面的阴影比例可根据公式(\ref{S_w})计算，利用$\frac{H-h_v}{H}$代替$HL$，记为$S_w^\prime$，即
+在植被树冠中心高度$h_v$处，墙面的阴影比例可根据公式(\ref{S_w})计算，利用$\frac{H-h_v}{L}$代替$\rm HL$，记为$S_w^\prime$，即
 \begin{equation}
-S_{w}^{\prime}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} \frac{H-h_{v}}{H} \cdot \tan \left(\theta_{s}\right)\right)
+S_{w}^{\prime}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} \frac{H-h_{v}}{L} \cdot \tan \left(\theta_{s}\right)\right)
 \end{equation}
 假设该阴影部分与植被覆盖$f_v$随机重叠，则植被被阴影遮挡的面积比例为$f_vS_w^\prime$，未覆盖的植被覆盖面积占比为$f_v^\prime=f_v-f_vS_w^\prime$。
 该未被覆盖植被在整个城市覆盖区域的阴影覆盖$S_v$可根据公式(\ref{S_area})计算得到。将其覆盖比例转化为地面所占比例为：
@@ -183,7 +206,7 @@ S_{w}=S_{w}-S_{v w}
 计算同章节 \ref{无植被覆盖时短波辐射传输}，下面需要考虑植被的遮挡，对以上可视因子进行修改，并添加植被到各个面的可视因子。
 
 同公式(\ref{S_v2})和(\ref{S_w2})，计算在漫射等效角度下的墙面和植被在地面的“阴影”占比(辐射遮挡) $S_w^\ast$和$S_v^\ast$，
-利用公式(\ref{f_Sw})进行计算，则天空到达植被($F_{sv}$)、天空通过植被到墙面($F_{svw}$)，以及天空通过植被到达地面的可视因子($F_{svg}$)分别计算为：
+利用公式(\ref{f_sw})进行计算，则天空到达植被($F_{sv}$)、天空通过植被到墙面($F_{svw}$)，以及天空通过植被到达地面的可视因子($F_{svg}$)分别计算为：
 \begin{equation}\label{F_sv_svw_svg}
 \begin{array}{c}F_{s v}=S_{v}^{*} \\ F_{s v w}=S_{v w}^{*} \\ F_{s v g}=F_{s v}-F_{s v w}\end{array}
 \end{equation}
@@ -202,7 +225,7 @@ F_{v w}=1-F_{v s}-F_{v g}
 \end{equation}
 同理，根据互易性原理，$F_{wv}$计算为：
 \begin{equation}
-F_{w v}=F_{v w} \frac{f_{v}}{f_{b} \cdot {HL}}
+F_{w v}=F_{v w} \frac{f_{v}}{f_{b} \cdot {\rm HL}}
 \end{equation}
 假设墙面通过植被到达墙面、天空和地面的可视因子与墙面到达相应各面的可视因子成正比，即：
 \begin{equation}
@@ -225,22 +248,22 @@ F_{wvg}=f_{2} \frac{F_{w g}}{F_{ww}} F_{wvw}
 在此基础上，可以计算得到考虑植被影响的天空、墙面和地面之间的可视因子，
 其中天空到墙面和地面的可视因子$F_{sw}^\prime$, $F_{sg}^\prime$计算为：
 \begin{equation}
-F_{s w}^{\prime}=F_{s w}-F_{s v w}+F_{s v w} T_{d}
+F_{sw}^{\prime}=F_{sw}-F_{svw}+F_{svw} T_{d}
 \end{equation}
 \begin{equation}
-F_{s g}^{\prime}=F_{s g}-F_{s v g}+F_{s v g} T_{d}
+F_{sg}^{\prime}=F_{sg}-F_{svg}+F_{svg} T_{d}
 \end{equation}
 其中$T_d$为单棵球形树冠直射透射率，利用公式(\ref{T_ds_tau})计算。
 地面到达墙面和天空的可视因子$F_{gw}^\prime$, $F_{gs}^\prime$计算为：
 \begin{equation}
-F_{g w}^{\prime}=F_{g w}-F_{g v w}+F_{g v w} T_{d}
+F_{gw}^{\prime}=F_{gw}-F_{gvw}+F_{gvw} T_{d}
 \end{equation}
 \begin{equation}
-F_{gs}^{\prime}=F_{gs}-F_{g v s}+F_{g v s} T_{d}
+F_{gs}^{\prime}=F_{gs}-F_{gvs}+F_{gvs} T_{d}
 \end{equation}
 墙面到达地面、墙面和天空的可视因子$F_{wg}^\prime$, $F_{ww}^\prime$, $F_{ws}^\prime$计算为：
 \begin{equation}
-F_{w g}^{\prime}=F_{w g}-F_{wvg}+F_{wvg} T_{d}
+F_{wg}^{\prime}=F_{wg}-F_{wvg}+F_{wvg} T_{d}
 \end{equation}
 \begin{equation}
 F_{ww}^{\prime}=F_{ww}-F_{wvw}+F_{wvw} T_{d}
@@ -249,20 +272,18 @@ F_{ww}^{\prime}=F_{ww}-F_{wvw}+F_{wvw} T_{d}
 F_{ws}^{\prime}=F_{ww}-F_{wvs}+F_{wvs} T_{d}
 \end{equation}
 
-a. 直射入射太阳辐射
+\textit{a. 直射入射太阳辐射}
 
 对于直射辐射太阳辐射，直射光到达阳面墙的辐射通量$E_{wsun}=S_w$，到达阴面墙的辐射通量$E_{wsha}=S_{vw}T_d$，
 到达地面的辐射通量$E_g=1-S_w-S_v+\left(S_v-S_{vw}\right)T_d$，其中$E_{gimp}=E_gf_{gimp}$，$E_{gper}=E_gf_{gper}$，
 $E_v=S_v$。阳面墙、阴面墙、不透水面、透水面和植被第一次散射辐射通量可分别计算为：$E_{wsun}\alpha_w$，$E_{wsha}\alpha_w$，
 $E_{gimp}\alpha_{gimp}$，$E_{gper}\alpha_{gper}$，$E_v\alpha_v$，
-其中$\alpha$表示反照率(对于植被表示所有向外散射辐射)，不分区阳面和阴面，不区分漫射和直射照射，
-且反射后的辐射假设为漫射辐射。假设经过墙面、地面和植被之间多次散射，达到辐射平衡时的墙面和地面辐射出射通量为$M$，
-利用各组分之间的可视因子，可建立如下辐射平衡方程：
+其中$\alpha$表示反照率(对于植被表示所有向外散射辐射比例)，不分区阳面和阴面墙，不区分漫射和直射照射，且反射后的辐射假设为漫射辐射。假设经过墙面、地面和植被之间多次散射，达到辐射平衡时的墙面和地面辐射出射通量为$M$，利用各组分之间的可视因子，可建立如下辐射平衡方程：
 \begin{landscape}
 \begin{equation}
 \begin{array}{l}M_{wsun}=E_{wsun} \alpha_{w}+M_{wsun} F_{ww}^{\prime} f_{wsun} \alpha_{w}+M_{wsha} F_{ww}^{\prime} f_{wsun} \alpha_{w}+M_{gimp} F_{g w}^{\prime} f_{wsun} \alpha_{w}+M_{gper} F_{g w}^{\prime} f_{wsun} \alpha_{w}+M_{v} F_{v w} f_{wsun} \alpha_{w} \\ M_{wsha}=E_{wsha} \alpha_{w}+M_{wsha} F_{ww}^{\prime} f_{wsha} \alpha_{w}+M_{wsun} F_{ww}^{\prime} f_{wsha} \alpha_{w}+M_{gimp} F_{g w}^{\prime} f_{wsha} \alpha_{w}+M_{gper} F_{g w}^{\prime} f_{wsha} \alpha_{w}+M_{v} F_{v w} f_{wsha} \alpha_{w} \\ M_{gimp}=E_{gimp} \alpha_{gimp}+M_{wsun} F_{w g}^{\prime} f_{gimp} \alpha_{gimp}+M_{wsha} F_{w g}^{\prime} f_{gimp} \alpha_{gimp}+M_{v} F_{v g} f_{gimp} \alpha_{gimp} \\ M_{gper}=E_{gper} \alpha_{gper}+M_{wsun} F_{w g}^{\prime} f_{gper} \alpha_{gper}+M_{wsha} F_{w g}^{\prime} f_{gper} \alpha_{gper}+M_{v} F_{v g} f_{gper} \alpha_{gper} \\ M_{v}=E_{v} \alpha_{v}+M_{wsun} F_{w v} \alpha_{v}+M_{wsha} F_{w v} \alpha_{v}+M_{gimp} F_{g v} \alpha_{v}+M_{gper} F_{g v} \alpha_{v}\end{array}
 \end{equation}
-整理之后简化为:
+整理后化简为:
 \begin{equation}
 \left(\begin{array}{ccccc}1-F_{ww}^{\prime} f_{wsun} \alpha_{w} & -F_{ww}^{\prime} f_{wsun} \alpha_{w} & -F_{g w}^{\prime} f_{wsun} \alpha_{w} & -F_{g w}^{\prime} f_{wsun} \alpha_{w} & -F_{v w} f_{wsun} \alpha_{w} \\ -F_{ww}^{\prime} f_{wsha} \alpha_{w} & 1-F_{ww}^{\prime} f_{wsha} \alpha_{w} & -F_{g w}^{\prime} f_{wsha} \alpha_{w} & -F_{g w}^{\prime} f_{wsha} \alpha_{w} & -F_{v w} f_{wsha} \alpha_{w} \\ -F_{w g}^{\prime} f_{gimp} \alpha_{gimp} & -F_{w g}^{\prime} f_{gimp} \alpha_{gimp} & 1 & 0 & -F_{v g} f_{gimp} \alpha_{gimp} \\ -F_{w g}^{\prime} f_{gper} \alpha_{gper} & -F_{w g}^{\prime} f_{gper} \alpha_{gper} & 0 & 1 & -F_{v g} f_{gper} \alpha_{gper} \\ -F_{w v} \alpha_{v} & -F_{w v} \alpha_{v} & -F_{g v} \alpha_{v} & -F_{g v} \alpha_{v} & 1\end{array}\right)\left(\begin{array}{c}M_{wsun} \\ M_{wsha} \\ M_{gimp} \\ M_{gper} \\ M_{v}\end{array}\right)=\left(\begin{array}{c}E_{wsun} \alpha_{w} \\ E_{wsha} \alpha_{w} \\ E_{gimp} \alpha_{gimp} \\ E_{gper} \alpha_{gper} \\ E_{v} \alpha_{v}\end{array}\right)
 \end{equation}
@@ -284,13 +305,18 @@ s_{v}=\frac{f_{g}}{f_{v}} s_{v}
 \alpha_{u}=\alpha_{roof} f_{b}+\alpha_{u} f_{g}
 \end{equation}
 
-b. 漫射入射太阳辐射
+\textit{b. 漫射入射太阳辐射}
 
 对于漫射，计算过程与直射入射辐射过程基本类似，不同之处在于首次到达墙面、地面和植被的辐射通量分别为：$F_{sw}^\prime f_{wsun}$、
 $F_{sw}^\prime f_{wsha}$、$F_{sg}^\prime f_{gimp}$、$F_{sg}^\prime f_{gper}$和$F_{sv}$。
 漫射入射辐射的传输矩阵同直射入射辐射情景。其求逆后的结果可以直接用于漫射入射辐射，各组分的辐射吸收和反照率计算过程在此不再赘述。 
+
 \section{长波辐射传输}
 \subsection{无植被覆盖时长波辐射传输}
+\begin{mymdframed}{代码}
+本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Longwave.F90}。
+\end{mymdframed}
+
 无植被时的长波辐射传输类似与无植被时短波辐射传输时的漫射入射情景(长波辐射近似为漫射光源处理)。首次达到各组分表面的长波辐射通量为：
 \begin{equation}
 \begin{aligned} I_{wsun} &=L_{W} F_{s w} f_{wsun} \\ I_{wsha} &=L_{W} F_{s w} f_{wsha} \\ I_{gimp} &=L_{W} F_{s g} f_{gimp} \\ I_{gper} &=L_{W} F_{s g} f_{gper} \end{aligned}
@@ -301,12 +327,12 @@ $F_{sw}^\prime f_{wsha}$、$F_{sg}^\prime f_{gimp}$、$F_{sg}^\prime f_{gper}$�
 \end{equation}
 上式中$\varepsilon$表示发射率，$\varepsilon_w$，$\varepsilon_{gimp}$，$\varepsilon_{gper}$为已知变量。各组分表面向外发射的长波辐射量为：
 \begin{equation}
-\begin{array}{c}4 f_{wsun} \mathrm{HL} \times \frac{f_{b}}{f_{g}} \times \sigma \varepsilon_{w} T_{wsun}^{4} \\
-4 f_{wsha} \mathrm{HL} \times \frac{f_{b}}{f_{g}} \times \sigma \varepsilon_{w} T_{wsha}^{4} \\
+\begin{array}{c}4 f_{wsun} \mathrm{HL} \cdot \frac{f_{b}}{f_{g}} \cdot \sigma \varepsilon_{w} T_{wsun}^{4} \\
+4 f_{wsha} \mathrm{HL} \cdot \frac{f_{b}}{f_{g}} \cdot \sigma \varepsilon_{w} T_{wsha}^{4} \\
 \sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp} \\
 \sigma \varepsilon_{gper} T_{gper}^{4} f_{gper}\end{array}
 \end{equation}
-$T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似与短波辐射传输，可以构建辐射平衡方程：
+$T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐射传输，可以构建辐射平衡方程：
 \begin{landscape}
 \begin{equation}
     \begin{aligned}
@@ -345,7 +371,11 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}+L_{wsha}^{\uparrow} F_{ws}+L_{gimp}^{\up
 
 
 \subsection{有植被覆盖时长波辐射传输}\label{有植被覆盖时长波辐射传输}
-考虑植被覆盖时的长波辐射计算类似于有植被覆盖时的短波辐射传输，根据之前介绍的无植被时长波辐射传输平衡方程，可以写出有植被覆盖时： 
+\begin{mymdframed}{代码}
+本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Longtwave.F90}和\texttt{URBAN/MOD\_Urban\_\allowbreak Flux.F90}。
+\end{mymdframed}
+
+考虑植被覆盖时的长波辐射计算类似于有植被覆盖时的短波辐射传输，根据之前介绍的无植被时长波辐射传输平衡方程，可以得到有植被覆盖时： 
 \begin{landscape}
 \begin{equation}
     \begin{aligned}
@@ -390,18 +420,22 @@ L_{v}=\frac{f_{g}}{f_{v}} L_{v}
 L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}^{\prime}+L_{wsha}^{\uparrow} F_{ws}^{\prime}+L_{gimp}^{\uparrow} F_{gs}^{\prime}+L_{gper}^{\uparrow} F_{gs}^{\prime}+L_{v}^{\uparrow} F_{v s}
 \end{equation}
 \section{湍流交换过程}
-城市湍流交换过程与三维植被湍流交换过程类似，计算屋顶、墙面(阴、阳面)、地面和植被的感热、潜热交换量，
-同样是基于相似性理论，建立每层(等效高度)通量守恒方程，联立求解。不同之处在于其粗糙度、迎风面积指数、
-零平面位移高度、风速/湍流交换系数衰减系数、建筑表面边界层阻抗计算与植被有所不同。
+\begin{mymdframed}{代码}
+本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Flux.F90}。
+\end{mymdframed}
+
+城市湍流交换过程与三维植被湍流交换过程类似，计算屋顶、墙面(阴、阳面)、地面和植被的感热、潜热交换量，同样是基于相似性理论，建立每层(等效高度)通量守恒方程，联立求解。不同之处在于其粗糙度、迎风面积指数、零平面位移高度、风速/湍流交换系数衰减系数、建筑表面边界层阻抗计算与植被有所不同。
 下面就无植被覆盖和有植被覆盖时对不同于自然植被湍流交换过程的部分进行简要说明。
+
 \subsection{无植被覆盖时湍流交换过程}
+
 建筑物的零平面位移高度采用~\citet{macdonald1998improved}方案：
 \begin{equation}
 \frac{d}{H}=1+A^{-f_{b}}\left(f_{b}-1\right)
 \end{equation}
 其中$A$取值为4.43。迎风面积指数可以计算为：
 \begin{equation}
-\lambda_{f}=\frac{2}{\pi} \cdot H L \cdot f_{b} \int_{0}^{\frac{\pi}{2}}(\cos \theta+\sin \theta) d \theta=\frac{4}{\pi} \cdot H L f_{b}
+\lambda_{f}=\frac{2}{\pi} \cdot \rm {HL} \cdot f_{b} \int_{0}^{\frac{\pi}{2}}(\cos \theta+\sin \theta) d \theta=\frac{4}{\pi} \cdot \rm{HL} f_{b}
 \end{equation}
 粗糙度计算为：
 \begin{equation}
@@ -428,17 +462,15 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/城市模式/无植被覆盖时城市湍流交换阻抗示意图.png}
-\caption{无植被覆盖时城市湍流交换阻抗示意图。}
+\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式无植被阻抗交换网络.png}
+\caption{CoLM城市模式无植被覆盖时湍流交换阻抗示意图。}
 \label{fig:无植被覆盖时城市湍流交换阻抗示意图}
 \end{figure}
 }
 
 
-\subsection{有植被覆盖式湍流交换过程}
-有植被覆盖时的湍流交换网络如图~\ref{fig:有植被覆盖时城市湍流交换阻抗示意图} 所示，
-其计算过程与无植被覆盖时类似，不同之处在于新增植被组分。因此，在建立通量守恒方程式时，
-需要考虑植被的感热、潜热交换，涉及到植被光合作用(蒸腾)和长波辐射吸收计算。
+\subsection{有植被覆盖时湍流交换过程}
+有植被覆盖时的湍流交换网络如图~\ref{fig:有植被覆盖时城市湍流交换阻抗示意图} 所示，其计算过程与无植被覆盖时类似，不同之处在于新增植被组分。因此，在建立通量守恒方程式时，需要考虑植被的感热、潜热交换，涉及到植被光合作用(蒸腾)和长波辐射吸收计算。
 光合作用过程同自然植被光合作用过程，长波辐射吸收计算在章节 \ref{有植被覆盖时长波辐射传输} 已给出。
 在实际计算过程中，可根据植被与建筑物高度差异，视情况分为两层或三层等效交换(三层时，即植被单独考虑为一层)。
 整个过程也是迭代求解，但此时需要新增迭代求解变量叶片温度，其他过程同无植被覆盖时湍流交换过程。
@@ -446,8 +478,8 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/城市模式/有植被覆盖时城市湍流交换阻抗示意图.png}
-\caption{有植被覆盖时城市湍流交换阻抗示意图。}
+\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式包含植被湍流交换阻抗网络.png}
+\caption{CoLM城市模式有植被覆盖时湍流交换阻抗示意图。}
 \label{fig:有植被覆盖时城市湍流交换阻抗示意图}
 \end{figure}
 }
@@ -457,27 +489,48 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 城市内透水面、不透水面、墙面和屋顶的温度传导计算以自然界土壤温度传导计算为基础，基本过程一致，下面重点介绍城市的不同之处。
 
 \subsection{透水面温度计算}
-城市透水面即为土壤，与自然界土壤的热传递计算一致 (分层方案与土壤一致，
-土壤热力参数也从全球数据中读取)，只是上表面接收的短波、长波辐射及湍流交换通量(感热、潜热)由城市相应模块求解得到。
+\begin{mymdframed}{代码}
+本节及下节对应的代码文件为\texttt{MOD\_Urban\_PerviousTemperature.F90}。
+\end{mymdframed}
+
+城市透水面即为土壤，与自然界土壤的热传递计算一致 (分层方案与土壤一致，土壤热力参数也从全球数据中读取)，只是上表面接收的短波、长波辐射及湍流交换通量(感热、潜热)由城市相应模块求解得到。
 
 \subsection{不透水面温度计算}
+\begin{mymdframed}{代码}
+本节及下节对应的代码文件为\texttt{MOD\_Urban\_ImperviousTemperature.F90}。
+\end{mymdframed}
+
 不透水面的温度传导计算与透水面最大的不同之处在于需要将不透水面层的热力属性(导热率和热容)替换掉所在层的土壤热力属性。
 另外在有雪、冰和水存在时，需要对第一层不透水面的热容进行订正。不透水面不考虑水分在内部的传递，相变过程只考虑第一层及以上积雪覆盖。
 
 \subsection{墙面温度计算}
+
+\begin{mymdframed}{代码}
+本节及下节对应的代码文件为\texttt{MOD\_Urban\_WallTemperature.F90}。
+\end{mymdframed}
+
 墙面(包括阴面墙、阳面墙)厚度从外部数据读取，同土壤一样，也分为10层，每层厚度一样，其热力参数从外部数据读取。
 不同于透水面/不透水面，墙面不考虑积水、积雪覆盖，因此其热力属性完全由自身材料决定，同时也不考虑水传递、相变过程和潜热交换。
 
-另一个不同之处在于最里(下)层的热量交换设置，对于土壤、不透水面，考虑最下一层无热量交换，但对于墙壁，
-考虑室内墙壁表面温度与最里层墙壁的热量交换。除此之外，其他方面及其求解过程与土壤温度类似。
+另一个不同之处在于最里(下)层的热量交换设置，对于土壤、不透水面，考虑最下一层无热量交换，但对于墙壁，考虑室内墙壁表面温度与最里层墙壁的热量交换。除此之外，其他方面及其求解过程与土壤温度类似。
 
 
 \subsection{屋顶温度计算}
+
+\begin{mymdframed}{代码}
+本节及下节对应的代码文件为\texttt{MOD\_Urban\_RoofTemperature.F90}。
+\end{mymdframed}
+
 屋顶的分层方案与墙壁一致。温度传递类似于墙面，但考虑屋顶积雪、积水覆盖时对屋顶第一层热力属性的影响，同不透水面。
 同时最里层屋顶与室内屋顶表面温度考虑热量交换，相变过程只考虑第一层屋顶。
 
 
 \section{城市水文过程}
+
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_Urban\_Hydrology.F90}。
+\end{mymdframed}
+
 对城市水文过程考虑主要分为三类：1) 透水面；2) 屋顶和不透水面；3) 城市水体。
 
 对于透水面的处理同土壤水过程，计算产流和土壤水传输。对于城市水体，采用湖泊方案进行模拟。对于屋顶和不透水面，
@@ -490,6 +543,11 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 \section{城市人为热模拟}
 
 \subsection{建筑能耗模型}
+
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_Urban\_BEM.F90}。
+\end{mymdframed}
+
 CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，同样是基于三维城市建筑群落结构假设，其过程类似于CLM5.0建筑能耗模型。
 模型考虑墙体、屋顶的热传导过程，同时考虑室内空气与内墙壁、屋顶和室外的热量交换。根据室内设定的最高、
 最低参考温度，来计算空调对应能耗，以感热的形式增加到湍流交换计算的源项中。
@@ -499,8 +557,8 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/城市模式/建筑能耗模型示意图.png}
-\caption{建筑能耗模型示意图。}
+\includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式建筑能耗示意图.png}
+\caption{CoLM城市模式建筑能耗模型示意图。}
 \label{fig:建筑能耗模型示意图}
 \end{figure}
 }
@@ -563,13 +621,18 @@ F_{h a c}=H \rho_{a} C_{p} \frac{T_{{room }}^{\prime}-T_{{room,min }}}{\Delta t}
 
 
 \subsection{人体代谢热}
+
+\begin{mymdframed}{代码}
+本节及下节对应的代码文件为\texttt{MOD\_Urban\_LUCY.F90}。
+\end{mymdframed}
+
 人体代谢热($Q_M$, \unit{W.m^{-2}})根据 \citet{allen2011} 的方法，按照能源清单法及 Top-Down 方法，利用人口密度数据，
 将不同时刻的人体热排放映射到每个城市格点上，具体计算如下：
 \begin{equation}
 Q_{M}=P \cdot H_{M} \cdot 10^{-6}
 \end{equation}
-其中$P$为格点内人口密度(\unit{pop.km^{-2}})，目前使用的是 Gridded Population of the World (GPWv3) 数据，
-分辨率为\ang{;2.5} (表~\ref{tab:人口密度数据})，$H_M$为不同时刻人体排放的热量。人体排放的热量遵循一个基本假设：
+其中$P$为格点内人口密度(\unit{pop.km^{-2}})，目前使用的是 LandScan 数据，
+分辨率为1km，$H_M$为不同时刻人体排放的热量。人体排放的热量遵循一个基本假设：
 人在活动时每小时排放的热量为175 W (工作)，非活动时排放量为75 W (休息)，以及一个中间值125 W~\citep{sailor2004top}；
 除此之外，也没有考虑人口在不同格点间的移动。
 % Please add the following required packages to your document preamble:
@@ -581,18 +644,18 @@ Q_{M}=P \cdot H_{M} \cdot 10^{-6}
     \begin{tabular}{@{}lll@{}}
     \toprule
     数据名称                            & 分辨率         & 来源                                                                                                     \\ \midrule
-    Gridded Population of the World & \ang{;2.5}  & \begin{tabular}[c]{@{}l@{}}https://sedac.ciesin.columbia.edu/\\   data/collection/gpw-v3\end{tabular} \\ \bottomrule
+    LandScan & 1km  & \begin{tabular}[c]{@{}l@{}}https://landscan.ornl.gov/\end{tabular} \\ \bottomrule
     \end{tabular}
 \end{table}
 
 
 \subsection{交通热}
-交通热排放($Q_v$, \unit{W.m^{-2}})同样根据~\citet{allen2011} 的方法利用能源清单法进行计算，
-并采用Top-Down的方法，利用人口密度以及各个国家的汽车拥有量计算出格点内的汽车数量，
+交通热排放($Q_v$, \unit{W.m^{-2}})同样根据利用能源清单法进行计算，
+采用Top-Down的方法，利用人口密度以及各个国家的汽车拥有量计算出格点内的汽车数量，
 然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
 其数据来源如表~\ref{tab:交通热数据及来源}，具体计算方法如下：
 \begin{equation}
-Q_{v}=\frac{\left(V_{c} E_{c}+V_{M} E_{M}+V_{F R} E_{F R}\right) \cdot F \cdot 24 \cdot P \cdot D \cdot H_{t r a c}}{3.6 \cdot 10^{12}}
+Q_{v}=\frac{\left(V_{c} E_{c}+V_{M} E_{M}+V_{F R} E_{F R}\right)  \cdot P \cdot H_{t r a c} \cdot D}{3600 \cdot 10^{6}}
 \end{equation}
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -608,8 +671,147 @@ Q_{v}=\frac{\left(V_{c} E_{c}+V_{M} E_{M}+V_{F R} E_{F R}\right) \cdot F \cdot 2
     Vehicle heat emissions     & \citet{smith2009estimating}       & All countries and territories \\ \bottomrule
     \end{tabular}
     \end{table}
-其中$V_c$、$V_M$、$V_{FR}$分别为每千人拥有的汽车、摩托车、货车(巴士)的数量，该数据来自于World mapper
-(\url{http://www.worldmapper.org/textindex/texttransport.htm})；
-$E_c$、$E_M$、$E_{FR}$则为三种机动车的排放系数，与机动车行驶速度有关，目前使用的 \citet{smith2009estimating} 的系数设置。
-$F$为改变汽车数量的系数，相当于汽车总量的一部分在行驶，目前为固定系数(0.8)；
-$P$为格点内人口密度 (\unit{pop.km^{-2}})；$D$为行驶的距离，同样与速度有关；$H_{trac}$为时间步长内交通流量分布。
+其中$V_c$、$V_M$、$V_{FR}$分别为每千人拥有的汽车、摩托车、货车(巴士)的数量，$H_{trac}$为时间步长内交通流量分布，以上数据采用 \citet{allen2011}；
+$E_c$、$E_M$、$E_{FR}$则为三种机动车的排放系数，目前使用 \citet{sailor2004top} 的系数设置(3975J/m)；
+$P$为格点内人口密度 (pop/km$^2$)，由LandScan数据得到；$D$为行驶的距离，目前模型设置为20km。
+
+\subsection{考虑人为热时城市内部湍流交换}
+
+\begin{mymdframed}{代码}
+本节及下节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}。
+\end{mymdframed}
+{
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式人为热阻抗交换网络.png}
+\caption{考虑人为热时城市内部湍流交换过程}
+\label{fig:考虑人为热时城市内部湍流交换过程}
+\end{figure}
+}
+
+考虑人为热时，城市内部湍流过程示意图 \ref{fig:考虑人为热时城市内部湍流交换过程} 所示，在建筑群落中，不同的城市组成部分在不同层次进行交换，其中，与第一层($layer_{1}$)直接交换的有地面(透水面与不透水面)、前面(阳面墙与阴面墙)、植被以及部分在墙面排放的人为热，屋顶与屋顶释放的人为热则与第二层($layer_{2}$)直接交换，层与层交换总是守恒的。因此，对于感热而言，其不同层次的感热通量$H$可表达为：
+\begin{equation}\label{2lays_H_layer1}
+    H_{layer_{1}} = H_{g}
+\end{equation}
+\begin{equation}\label{2lays_H_layer2}
+    H_{layer_{2}} = H_{g} + H_{wsun} + H_{wsha} + H_{veg} + H_{whac} = \frac{\rho \cdot c \cdot \left( T_{layer_{1}} - T_{layer_{2}} \right)}{r_{d}}
+\end{equation}
+\begin{equation}\label{2lays_H}
+    H = H_{layer_{2}} + H_{roof} + H_{rhac} = \frac{\rho \cdot c \cdot \left( T_{layer_{2}} - \theta \right)}{r_{ah}}
+\end{equation}
+其中，$H_{g}$、$H_{wsun}$、$H_{wsha}$、$H_{veg}$、$H_{roof}$分别为地面、阳面墙、阴面墙、植被以及屋顶的感热通量，$H_{whac}$、$H_{rhac}$为墙面以及屋顶释放的建筑热，其各自的表达式分别为：
+\begin{equation}
+    H_{g} = \frac{\rho \cdot c \cdot \left( T_{g} - T_{layer_{1}} \right) \cdot f_{g}}{r_{gh}} + H_{vehc} + H_{humMeta}
+\end{equation}
+\begin{equation}
+    H_{wsun} = \frac{\rho \cdot c \cdot \left( T_{wsun} - T_{layer_{1}} \right) \cdot fc(1)}{r_{wsun}}
+\end{equation}
+\begin{equation}
+    H_{wsha} = \frac{\rho \cdot c \cdot \left( T_{wsha} - T_{layer_{1}} \right) \cdot fc(2)}{r_{wsha}}
+\end{equation} 
+\begin{equation}
+    H_{veg} = \frac{\rho \cdot c \cdot \left( T_{veg} - T_{layer_{1}} \right) \cdot fc(3)}{r_{t}}
+\end{equation}
+\begin{equation}
+    H_{roof} = \frac{\rho \cdot c \cdot \left( T_{roof} - T_{layer_{2}} \right) \cdot fc(0)}{r_{roof}}
+\end{equation}
+由于代谢热与交通热($H_{humMeta}$ 、$H_{vehc}$)都在地面释放，因此我们将其纳入地面感热$H_{g}$，其中$T_{g}$为透水面与不透水面温度加权得到的平均温度，$r$为空气动力学阻抗，$fc(0-3)$分表代表屋顶、阳面墙、阴面墙以及植被的覆盖比例，$f_{g}$则为除去建筑覆盖外的路面占比(包含透水面$f_{gper}$以及不透水面$f_{gimp}$)，将以上表达式代回式 \ref{2lays_H_layer1} $\sim$ \ref{2lays_H}，可得：
+\begin{equation}
+    \begin{split}
+        & \frac{\rho \cdot c \cdot \left( T_{layer_{1}} - T_{layer_{2}} \right)}{r_{d}} = \\
+        & \frac{\rho \cdot c \cdot \left( T_{g} - T_{layer_{1}} \right) \cdot f_{g}}{r_{gh}} + H_{vehc} + H_{humMeta} + \frac{\rho \cdot c \cdot \left( T_{wsun} - T_{layer_{1}} \right) \cdot {fc}\left( 1 \right)}{r_{wsun}} + \\
+        & \frac{\rho \cdot c \cdot \left( T_{wsha} - T_{layer_{1}} \right) \cdot fc\left( 2 \right)}{r_{wsha}} + \frac{\rho \cdot c \cdot \left( T_{veg} - T_{layer_{1}} \right) \cdot {fc}\left( 3 \right)}{r_{t}} + H_{whac}
+    \end{split}
+\end{equation}
+\begin{equation}
+    \begin{split}
+        & \frac{\rho \cdot c \cdot \left( T_{layer_{2}} - \theta \right)}{r_{ah}} = \\
+        & \frac{\rho \cdot c \cdot \left( T_{layer_{1}} - T_{layer_{2}} \right)}{r_{d}} + \frac{\rho \cdot c \cdot \left( T_{roof} - T_{layer_{2}} \right)*fc\left( 0 \right)}{r_{roof}} + H_{rhac}
+    \end{split}
+\end{equation}
+进而得到关于$T_{layer1}$和$T_{layer2}$的二元一次方程：
+\begin{equation}
+    \begin{split}
+        & T_{layer_{1}} = \\
+        & \frac{\frac{T_{g} \cdot f_{g}}{r_{gh}} + \frac{H_{vehc} + H_{humMeta} + H_{whac}}{\rho \cdot c} + \frac{T_{wsun} \cdot fc\left( 1 \right)}{r_{wsun}} + \frac{T_{wsha} \cdot fc\left( 2 \right)}{r_{wsha}} + \frac{T_{veg} \cdot fc\left( 3 \right)}{r_{t}} + \frac{T_{layer_{2}}}{r_{d}}}{\frac{1}{r_{d}} + \frac{f_{g}}{r_{gh}} + \frac{fc\left( 1 \right)}{r_{wsun}} + \frac{fc\left( 2 \right)}{r_{wsha}} + \frac{fc\left( 3 \right)}{r_{t}}}
+    \end{split}
+\end{equation}
+\begin{equation}\label{result_T_layer2}
+    T_{layer_{2}} = \frac{\frac{T_{layer_{1}}}{r_{d}} + \frac{T_{roof} \cdot fc\left( 0 \right)}{r_{roof}} + \frac{H_{rhac}}{\rho \cdot c} + \frac{\theta}{r_{ah}}}{r_{d} \cdot \left(\frac{1}{r_{ah}} + \frac{1}{r_{d}} + \frac{fc\left( 0 \right)}{r_{roof}} \right)}
+\end{equation}
+求解该二元一次方程可知：
+\begin{equation}
+    \begin{split}
+    % \hspace{-1cm}
+        & T_{layer_{1}} = \\
+        & \frac{\frac{T_{g} \cdot f_{g}}{r_{gh}} + \frac{H_{vehc} + H_{humMeta} + H_{whac}}{\rho \cdot c} + \frac{T_{wsun} \cdot fc\left( 1 \right)}{r_{wsun}} + \frac{T_{wsha} \cdot fc\left( 2 \right)}{r_{wsha}} + \frac{T_{veg} \cdot fc\left( 3 \right)}{r_{t}} + a}{c \cdot \left( 1 - \frac{b}{r_{d} \cdot c} \right)}
+    \end{split}
+\end{equation}
+
+\begin{equation}
+    a = \left(\frac{T_{roof} \cdot fc\left( 0 \right)}{r_{roof}} + \frac{H_{rhac}}{\rho \cdot c} + \frac{\theta}{r_{ah}}\right) \cdot b
+\end{equation}
+\begin{equation}
+    b = \frac{1}{r_{d} \cdot \left(\frac{1}{r_{ah}} + \frac{1}{r_{d}} + \frac{fc\left( 0 \right)}{r_{roof}} \right)}
+\end{equation}
+\begin{equation}
+    c = \frac{1}{r_{d}} + \frac{f_{g}}{r_{gh}} + \frac{fc\left( 1 \right)}{r_{wsun}} + \frac{fc\left( 2 \right)}{r_{wsha}} + \frac{fc\left( 3 \right)}{r_{t}}
+\end{equation}
+将$T_{layer_{1}}$代回式\ref{result_T_layer2}，即可求得$T_{layer_{2}}$。
+
+对于潜热通量而言，其求解过程与感热通量的计算类似，但是在计算潜热通量时，由于墙体难以表达积水过程，因此认为墙体没有潜热交换，并且人为热目前全部作为感热释放，因此，对于潜热通量而言，在第一层发生交换的仅有地面、植被，并且由于考虑土壤阻抗，透水面与不透水面需要单独计算，在第二层发生交换的仅有屋顶，对于不透水面与屋顶，仅考虑其淹没部分($fwet$)，所以对于建筑群落内部不同层次的潜热通量计算，其表达式为：
+\begin{equation}\label{2lays_L_layer1}
+    L_{layer_{1}} = L_{g}
+\end{equation}
+\begin{equation}
+    L_{layer_{2}} = L_{g} + L_{veg}
+\end{equation}
+\begin{equation}\label{2lays_L}
+    L = L_{layer_{2}} + L_{roof}
+\end{equation}
+其中，$L_{g}$、$L_{veg}$、$L_{roof}$分别为地面、植被以及屋顶的潜热通量，其表达式分别为：
+\begin{equation}
+    L_{g} = \frac{\rho \cdot \left( q_{gper}-q_{layer_{1}} \right) \cdot f_{g} \cdot f_{gper}}{r_{gw}+rss} + \frac{\rho \cdot \left( q_{gimp}-q_{layer_{1}} \right) \cdot fwet_{gimp} \cdot f_{g} \cdot f_{gimp}}{r_{gw}}
+\end{equation}
+\begin{equation}
+    L_{veg} = \frac{\rho \cdot \left( q_{veg}-q_{layer_{1}}\right) \cdot fc\left( 3 \right)}{r_{t}}
+\end{equation}
+\begin{equation}
+    L_{roof} = \frac{\rho \cdot \left( q_{roof}-q_{layer_{2}}\right) \cdot fwet_{roof} \cdot fc\left( 0 \right)}{r_{roof}}
+\end{equation}
+由于城市中的地面可以分为透水面和不透水面，对于透水面，因为其本质是土壤，因此在计算其潜热通量时，考虑土壤阻抗(rss)，$fwet$表示各部分干湿的比例，q为不同表面的比湿，将以上表达式代回\ref{2lays_L_layer1} $\sim$ \ref{2lays_L}，可知：
+\begin{equation}
+   \begin{split}
+    & \frac{\rho \cdot \left( q_{layer_{1}}-q_{layer_{2}}\right)}{r_{d}} = \\
+    & \frac{\rho \cdot \left( q_{gper}-q_{layer_{1}}\right) \cdot f_{g} \cdot f_{gper}}{r_{gw}+rss} + \frac{\rho \cdot \left( q_{gimp}-q_{layer_{1}} \right) \cdot fwet_{gimp} \cdot f_{g} \cdot f_{gimp}}{r_{gw}} + \\
+    &\frac{\rho \cdot \left( q_{veg}-q_{layer_{1}}\right) \cdot fc\left( 3 \right)}{r_{t}}
+   \end{split} 
+\end{equation}
+
+\begin{equation}
+    \frac{\rho \cdot \left( q_{layer_{2}} - Q\right)}{r_{aw}} = \frac{\rho \cdot \left( q_{layer_{1}} - q_{layer_{2}}\right)}{r_{d}} + \frac{\rho \cdot \left( q_{roof}-q_{layer_{2}}\right) \cdot fwet_{roof} \cdot fc\left( 0 \right)}{r_{roof}}
+\end{equation}
+同样可得关于$q_{layer_{1}}$以及$q_{layer_{2}}$的二元一次方程：
+\begin{equation}
+    q_{layer_{1}} = \\
+    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{gw} + rss} + \frac{q_{gimp} \cdot f_{g} \cdot fwet_{gimp} \cdot f_{gimp}}{r_{gw}} + \frac{q_{veg} \cdot fc\left( 3 \right)}{r_{t}} + \frac{q_{layer_{2}}}{r_{d}}}{\frac{1}{r_{d}} + \frac{f_{g} \cdot f_{gper}}{r_{gw} + rss} + \frac{fwet_{gimp} \cdot f_{g} \cdot f_{gimp}}{r_{gw}}+\frac{fc\left(3\right)}{r_{t}}}
+\end{equation}
+\begin{equation}\label{equ_2lays_Q_lay2}
+    q_{layer_{2}} = \frac{\frac{q_{layer_{1}}}{r_{d}} + \frac{q_{roof} \cdot fwet_{roof} \cdot fc\left( 0 \right)}{r_{roof}} + \frac{Q}{r_{aw}}}{\frac{1}{r_{aw}} + \frac{1}{r_{d}} + \frac{fwet_{roof} \cdot fc\left( 0 \right)}{r_{roof}}}
+\end{equation}
+求解可得：
+\begin{equation}
+    q_{layer_{1}} = \\
+    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{gw}+rss} + \frac{q_{gimp} \cdot f_{g} \cdot fwet_{gimp} \cdot f_{gimp}}{r_{gw} } + \frac{q_{veg} \cdot fc\left( 3 \right)}{r_{t}} + a}{c \cdot \left( 1 - \frac{b}{r_{d} \cdot c}\right)}
+\end{equation}
+
+\begin{equation}
+    a = \left(\frac{q_{roof} \cdot fc\left(0\right)}{r_{roof}} + \frac{Q}{r_{aw}}\right) \cdot b
+\end{equation}
+\begin{equation}
+    b = \frac{1}{r_{d} \cdot \left( \frac{1}{r_{aw}} + \frac{1}{r_{d}} + \frac{fc\left(0\right)}{r_{roof}} \right)}
+\end{equation}
+\begin{equation}
+    c = \frac{1}{r_{d}}+\frac{f_g \cdot f_{gper}}{r_{gw}+rss} + \frac{fwet_{gimp} \cdot f_g \cdot f_{gimp}}{r_{gw}} + \frac{fc\left( 3 \right)}{r_t}
+\end{equation}
+同理，将$q_{layer_{1}}$带入式\ref{equ_2lays_Q_lay2}即可求得$q_{layer_{2}}$。

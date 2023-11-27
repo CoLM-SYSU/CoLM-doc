@@ -7,7 +7,9 @@
 通常来说，不同模型间平衡态碳氮储量的差异往往大于历史时期由于$\rm CO_2$浓度上升引起的碳氮储量变化的不确定性。
 因此，生物地球化学循环预热过程十分重要。但由于高纬度地区的低温气候造成土壤分解过慢，
 碳氮预热达到平衡态需要上千年的模拟时间，如何加速生物地球化学循环预热过程十分关键。
-CoLM生物地球化学循环模块运用半解析预热方法\citep{xia2012semi} 。从碳氮平衡方程入手，求解平衡态的碳氮库大小。
+CoLM生物地球化学循环模块运用半解析预热方法\citep{xia2012semi}。从碳氮平衡方程入手，求解平衡态的碳氮库大小。
+
+
 \section{植被生物地球化学循环预热加速}
 CoLM植被碳氮循环可以表示为21个碳库和22个氮库的碳氮平衡方程组 \citep{lu2020full}，
 可以写成矩阵形式：
@@ -149,6 +151,7 @@ N_{veg, s s}=\left(A_{phn}(t) K_{phn}+A_{gmn}(t) K_{gmn}\right)^{-1} B I_{Nin}
 \end{equation}
 由于生物地球化学循环运用循环的气象强迫场数据，所以平衡状态需要累加计算一个气象循环的平均值。
 
+
 \section{土壤凋落物生物地球化学循环预热加速}
 CoLM土壤凋落物的碳氮循环可以表示为7个碳库和7个氮库的碳氮平衡方程组~\citep{lu2020full}，其中每个库在土壤垂直方向分为10层，可以写成矩阵形式：
 \begin{equation}
@@ -205,10 +208,10 @@ V(t)=\left(\begin{array}{ccccccc}v & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & v & 0 & 0 & 0 
 所以可以解得植被碳氮的平衡状态($C_{(soil,ss)}$, $N_{(soil,ss)}$)是：
 
 \begin{equation}
-C_{veg, s s}=\left(A_{h c} \xi(t) K_{h}+V(t)\right)^{-1} I_{C s o i l}
+C_{soil, s s}=\left(A_{h c} \xi(t) K_{h}+V(t)\right)^{-1} I_{C s o i l}
 \end{equation}
 \begin{equation}
-N_{veg, s s}=\left(A_{h n} \xi(t) K_{h}+V(t)\right)^{-1} I_{N s o i l}
+N_{soil, s s}=\left(A_{h n} \xi(t) K_{h}+V(t)\right)^{-1} I_{N s o i l}
 \end{equation}
 同样的，由于生物地球化学循环运用循环的气象强迫场数据，
 所以土壤碳氮的平衡状态也需要累加计算一个气象循环的平均值。 

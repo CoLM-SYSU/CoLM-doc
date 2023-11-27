@@ -10,13 +10,18 @@ c \frac{\partial T}{\partial t}=-\frac{\partial F}{\partial z}
 其中$c$表示雪盖或土壤的体积热容量(\unit{J.m^{-3}.K^{-1}})，$T$表示雪盖土壤温度 (K)，$t$表示时间(s)，$z$表示雪盖高度或土壤深度 (m)，
 F表示垂直方向的热传导通量，方向向上为正(\unit{W.m^{-2}})，表达式为$F=-\lambda\frac{\partial T}{\partial z}$，$\lambda$表示热力传导率(\unit{W.m^{-1}.K^{-1}})。
 将方程(\ref{eq:1d_energy_balance})进行离散，并结合上边界由大气输送到雪盖土壤表面的热通量$h_s$以及下边界土壤底层的零热通量，
-即可求出雪盖土壤的温度扩线，之后再根据相态变化条件对温度进行进一步调整。
+即可求出雪盖土壤的温度廓线，之后再根据相态变化条件对温度进行进一步调整。
 
 
 \section{温度求解的数值格式}\label{温度求解的数值格式}
+
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_GroundTemperature.F90}。
+\end{mymdframed}
+
 在离散上述能量平衡方程时，土壤被划分为10层。每一层土壤的中心深度$z_i$(m)定义为：
 \begin{equation}
-z_{i}=f_{s} \exp [0.5(i-0.5)]-1
+z_{i} = f_{s}\left( \exp{\left\lbrack 0.5(i - 0.5) \right\rbrack - 1} \right)
 \end{equation}
 %
 其中尺度因子$f_s=0.025$。这里采用指数定义可以保证土壤接近表面时得到更细的分层，因为土壤水梯度在接近表面时非常大。基于此定义，每一层土壤的厚度$\Delta z_i$ (m)可计算为：
@@ -126,7 +131,7 @@ F_{i}=\lambda\left[z_{h, i}\right] \frac{T_{i}-T_{i+1}}{z_{i}-z_{i+1}}
 \lambda\left[z_{h,i}\right]=\frac{2 \lambda_{i} \lambda_{i+1}}{\lambda_{i}+\lambda_{i+1}} \geq 0.5 \lambda_{i+1}
 \end{equation}
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/雪盖土壤热力过程/雪盖土壤垂直分层及其热传导过程示意图.png}
 \caption{雪盖土壤垂直分层及其热传导过程示意图。}
@@ -205,7 +210,7 @@ L_{g} \uparrow=\varepsilon_{g} \sigma T_{g}^{4}
 \begin{equation}
 \lambda=\left\{\begin{array}{lr}\lambda_{s} & \text { 当 }\ w_{liq, s n l+1}=0 \text { 并且 }\ w_{ice, s n l+1}>0 \\ \lambda_{v} & \text { 其他情况 }\end{array}\right.
 \end{equation}
-其中$w_{liq,snl+1}$和$w_{ice,snl+1}$分别表示雪盖土壤顶层的液态水和固态水含量 (\unit{kg.m^{-2}}，其计算见章节~\ref{sec:土壤水的运动})。
+其中$w_{liq,snl+1}$和$w_{ice,snl+1}$分别表示雪盖土壤顶层的液态水和固态水含量 (\unit{kg.m^{-2}}，其计算见章节~\ref{sec:土壤水的垂直运动})。
 
 在模式中，地表温度$T_g$与$T_{snl+1}$取为同一值，但$T_{snl+1}$表示第一层雪盖或土壤的平均温度，与实际的$T_g$相比具有减弱的日变化幅度。
 为改进这一缺陷，在求解第一层能量平衡方程时，其厚度$\Delta z_i$作以下调整，以求得更接近实际的$T_g$：
@@ -227,55 +232,14 @@ r_{i} &= T_{i}^{n}-\alpha \frac{\Delta t \lambda\left[z_{h, i-1}\right]}{c_{i} \
 \end{aligned}
 \end{equation}
 
-下面给出各层雪盖土壤的热力传导率$\lambda_i$与体积热容量$c_i$的计算方案：\\
-
-根据~\citet{farouki1981thermal}，土壤热力传导率$\lambda_i$ (\unit{W.m^{-1}.K^{-1}}, $i=1,\ldots,10$)的计算公式如下：
-
-\begin{equation}
-\lambda_{i}=\left\{\begin{array}{ll}K_{e, i} \lambda_{sat, i}+\left(1-K_{e, i}\right) \lambda_{d r y, i} & S_{r, i}>1 \times 10^{-7} \\ \lambda_{d r y, i} & S_{r, i} \leq 1 \times10^{-7}\end{array}\right.
-\end{equation}
-其中，$\lambda_{sat,i}$与$\lambda_{dry,i}$分别是饱和土壤和干土壤的热力传导率，由地表参数数据集提供，$S_{r,i}$表示土壤相对于其饱和状态的潮湿程度：
-\begin{equation}
-S_{r, i}=\left(\frac{w_{liq, i}}{\rho_{liq} \Delta z_{i}}+\frac{w_{ice, i}}{\rho_{ice} \Delta z_{i}}\right) \frac{1}{\theta_{sat, i}} \leq 1
-\end{equation}
-$K_{e,i}$表示Kersten数，它是$S_{r,i}$的函数：
-\begin{equation}
-K_{e, i}=\left\{\begin{array}{ll}\log _{10} S_{r, i}+1 \geq 0 & \text{ 当 }\ T_{i} \geq T_{f} \text{ 时 } \\ 
-S_{r, i} & \text{ 当 }\ T_{i}<T_{f} \text{ 时 }\end{array}\right.
-\end{equation}
-当$T_i<T_f$时，饱和土壤热力传导率$\lambda_{sat,i}$需根据已有$\lambda_{sat,i}$结合水和冰的热力传导率$\lambda_{liq}$，$\lambda_{ice}$进行调整：
-\begin{equation}
-\lambda_{sat, i}=\lambda_{sat, i}\left(\frac{\lambda_{ice}}{\lambda_{liq}}\right)^{\theta_{sat, i}\left(1-\frac{w_{liq, i}}{w_{liq, i}+w_{ice, i}}\right)}
-\end{equation}
-$\theta_{sat, i}$表示第$ i $层土壤的孔隙度。
-
-
-根据 \citet{jordan1991one}，雪盖热力传导率$\lambda_i$ (\unit{W.m^{-1}.K^{-1}}, $i=snl+1,\ldots,0$)的计算公式如下：
-\begin{equation}
-\lambda_{i}=\lambda_{a}+\left(7.75 \times 10^{-5} \rho_{sno, i}+1.105 \times 10^{-6} \rho_{sno, i}^{2}\right)\left(\lambda_{ice}-\lambda_{a}\right)
-\end{equation}
-其中$\lambda_a$表示空气的热力传导率(\unit{W.m^{-1}.K^{-1}})，$\rho_{sno,i}$表示第 $i$ 层雪的平均密度(\unit{kg.m^{-3}})：
-\begin{equation}
-\rho_{sno, i}=\frac{w_{liq, i}+w_{ice, i}}{\Delta z_{i}}
-\end{equation}
-
-
-
-根据 \citet{de1963thermal}，土壤体积热容量$c_i$ (\unit{J.m^{-3}.K^{-1}}, $i=1, \ldots, 10$)的计算公式如下：
-\begin{equation}
-c_{i}=c_{s, i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{p l}
-\end{equation}
-其中$c_{s,i}$表示干土壤的体积热容量，由地表参数数据集提供。若地表有积雪但无雪层，则积雪的热容量也需考虑：
-\begin{equation}
-c_{i}=c_{s,i}\left(1-\theta_{sat, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq,i}}{\Delta z_{i}} C_{pl}+\frac{W_{sno}}{\Delta z_{i}} C_{pi}
-\end{equation}
-对于雪盖体积热容量$c_i$ (\unit{J.m^{-3}.K^{-1}}, $i=snl+1, \ldots, 0$)，其计算公式为：
-\begin{equation}
-c_{i}=\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{pl}
-\end{equation}
-
+各层雪盖土壤的热力传导率与体积热容量的计算方案将在\ref{sec_thermalpar}节给出。
 
 \section{温度的相态变化调整}
+
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_PhaseChange.F90}。
+\end{mymdframed}
+
 通过解能量平衡方程组计算出下一时刻的雪盖土壤温度后，需要考虑相态变化过程对温度进行调整。在模式中，相态变化发生的条件为：\\
 若$T_i^{n+1}>T_f$并且$w_{ice,i}>0$ \ \   \ \  \ \   固态水融化\\
 若$T_i^{n+1}<T_f$并且$w_{liq,i}>0$  \ \   \ \  \ \         液态水冻结\\
@@ -337,6 +301,220 @@ E=\sum_{i=1}^{s n l+1} \frac{L_{f}\left(w_{ice, i}^{n}-w_{ice, i}^{n+1}\right)}{
 其中用于蒸发的水汽不能超过雪盖土壤顶层的总含水量$\left(w_{liq,snl+1}^{n+1}+w_{ice,snl+1}^{n+1}\right)/\Delta t$，
 否则地表蒸发水汽取为$\left(w_{liq,snl+1}^{n+1}+w_{ice,snl+1}^{n+1}\right)/\Delta t$，产生的能量误差将加到感热通量上。
 
+\section{雪盖土壤热力参数的计算方案}\label{sec_thermalpar}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_SoilThermalParameters.F90}。
+\end{mymdframed}
+
+雪盖土壤的热力参数是完成雪盖土壤热力过程数值模拟、求解前文所述垂直方向能量平衡方程的必要输入参数，主要包含两类：雪盖土壤的体积热容量和导热率。下面就这两类参数给出在CoLM中的计算方案。
+
+\subsection{雪盖土壤的体积热容量}
+
+体积热容量的计算较为简单。根据 \citet{de1963thermal}，土壤体积热容量由固体土壤、液态水和固态水的热容量基于各自的体积百分比加权平均得到，表达为：
+\begin{equation}
+c_{i}=c_{s, i}\left(1-\theta_{s, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{p l}
+\end{equation}
+其中$c_{s,i}$表示第$i$层的固体土壤体积热容量，由地表参数数据集提供。若地表有积雪但无雪层，则积雪的热容量也需考虑：
+\begin{equation}
+c_{i}=c_{s,i}\left(1-\theta_{s, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq,i}}{\Delta z_{i}} C_{pl}+\frac{W_{sno}}{\Delta z_{i}} C_{pi}
+\end{equation}
+其中，固体土壤假设由矿物质土壤、有机质土壤和砾石组成，每种成分的体积热容量基于各自的体积百分比加权平均即得到固体土壤的体积热容量。有机质土壤和砾石的体积热容量分别取值为$2.51\times 10^6$ \unit{J.m^{-3}.K^{-1}}和$2.35\times 10^6$ \unit{J.m^{-3}.K^{-1}}，矿物质土壤的体积热容量(\unit{J.m^{-3}.K^{-1}})由如下方案给出：$$c_{minerals}=\frac{2.128\times\%sand+2.385\times\%clay}{\%sand+\%clay}\times10^6$$ 
+其中$\%sand$和$\%clay$表示沙土和黏土的质量百分比。
+
+雪盖体积热容量由液态水和固态水的热容量基于各自的体积百分比加权平均得到，表达为：
+\begin{equation}
+c_{i}=\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{pl}
+\end{equation}
+其中，液态水和固态水的热容量可参见表~\ref{tab:物理常数}。
+
+\subsection{雪盖土壤的导热率}
+
+在CoLM中，土壤导热率(\unit{W.m^{-1}.K^{-1}})引入了8种计算方案供用户选择，分别为：\citet{Johansen1975}方案及其5个衍生方案(\citet{farouki1981thermal}, \citet{cote2005}, \citet{balland2005}，\citet{lu2007improved}和\citet{Yan2019thermal})，一个经验方案(\citet{tarnawski2012series})和一个理论方案(\citet{de1963thermal})。以上方案均在各自原始方案基础上，假设固体土壤由矿物质土壤、有机质土壤和砾石组成的前提下进行了改进。根据\citep{dai2019evaluation}在一定观测样本下的评估结果，\citet{balland2005}方案的模拟性能相对较优，故设为默认方案。下面将给出以上8种方案的具体计算方法。
+
+\subsubsection{\citet{Johansen1975}方案}
+\citet{Johansen1975}将土壤导热率$k$视为干土壤导热率$k_{dry}$和饱和土壤导热率$k_{sat}$的线性组合，其中饱和土壤导热率的权重系数为$K_e$（称为Kersten数）。于是，土壤导热率可表达为：
+\begin{equation}\label{eq:STC}
+k=(k_{sat}-k_{dry})K_e+k_{dry}
+\end{equation}
+其中，$K_e$可视为土壤饱和度$S_r$（定义为实际土壤含水量与饱和土壤含水量的比值）、土壤水相态和土壤粒径的函数，计算为：
+\begin{equation}
+K_e=\begin{cases}
+0.7\log_{10}S_r+1 & \text {对于粗质颗粒的未冻结土壤且} Sr>0.05 \text {时} \\ 
+\log_{10}S_r+1 & \text {对于细质颗粒的未冻结土壤且}Sr>0.1 \text {时} \\ 
+S_r & \text {对于冻结土壤时}
+\end{cases}
+\end{equation}
+
+在方程(\ref{eq:STC})中，干土壤导热率$k_{dry}$由固体土壤各成分导热率基于其在固体土壤中的体积分数进行算术加权平均得到，计算表达式为：
+\begin{equation}\label{eq:STC_dry}
+k_{dry}=f_{minerals}k_{minerals\_dry}+f_{om}k_{om\_dry}+f_{gravel}k_{gravel\_dry}
+\end{equation}
+其中，$f_{minerals}$，$f_{om}$和$f_{gravel}$分别表示矿物质土壤、有机质土壤和砾石在固体土壤中的体积分数；$k_{om\_dry}$和$k_{gravel\_dry}$分别表示有机质土壤和砾石在干燥状态下的整体导热率，取值为$k_{om\_dry}=0.05$，$k_{gravel\_dry}=0.039\theta_s^{-2.2}$（$\theta_s$表示土壤孔隙度）；$k_{minerals\_dry}$表示矿物质土壤在干燥状态下的导热率，计算为：$$k_{minerals\_dry}=\frac{0.135\rho_d+0.0647}{2.7-0.947\rho_d}$$
+$\rho_d$表示矿物质土壤的干容重(\unit{g.cm^{-3}})。
+
+饱和土壤导热率$k_{sat}$由固体土壤各成分导热率和水（冰）导热率基于其体积分数进行几何加权平均得到，计算表达式为：
+\begin{equation}\label{eq:STC_wet}
+k_{sat}=k_{minerals\_wet}^{v_m}k_{om\_wet}^{v_{om}}k_{gravel\_wet}^{v_g}k_w^{\theta_s}
+\end{equation}
+其中，$v_m$，$v_{om}$和$v_g$分别表示矿物质土壤、有机质土壤和砾石在整体土壤柱内的体积分数；$k_{minerals\_wet}$，$k_{om\_wet}$和$k_{gravel\_wet}$分别表示矿物质土壤、有机质土壤和砾石在饱和土壤状态下的整体导热率，$k_w$表示水（冰）的导热率（参见表~\ref{tab:物理常数}）。$k_{om\_wet}$和$k_{gravel\_wet}$分别取值为0.25和2.875；$k_{minerals\_wet}$由矿物质土壤中石英部分导热率$k_q$与非石英部分导热率$k_o$基于其在矿物质土壤中的体积分数进行几何加权平均得到：$$k_{minerals\_wet}=k_q^{v_q}k_o^{1-v_q}$$
+其中，$k_q$取值为7.7，$k_o$依据石英的体积分数$v_q$决定：
+\begin{equation}
+k_o=\begin{cases}
+2.0 & \text {当} v_q>0.2 \text {时} \\ 
+3.0 & \text {当} v_q\leq 0.2 \text {时}
+\end{cases}
+\end{equation}
+$v_q$可由\citet{PL_98}基于12种土壤类型（依据美国农业部USDA的土壤质地分类标准）给出的经验值查表获得。
+
+\subsubsection{\citet{farouki1981thermal}方案}
+\citet{farouki1981thermal}方案作为\citet{Johansen1975}方案的衍生方案，土壤导热率$k$与干土壤导热率$k_{dry}$的计算方式完全一致（\ref{eq:STC}和\ref{eq:STC_dry}）。饱和土壤导热率$k_{sat}$由固体土壤导热率和水（冰）导热率基于其体积分数进行几何加权平均得到，而固体土壤导热率取值为各成分导热率基于其在固体土壤中的体积分数的算术加权平均值。$k_{sat}$计算表达式为：
+\begin{equation}\label{eq:STC_wet_Farouki}
+k_{sat}=(f_{minerals}k_{minerals\_wet}+f_{om}k_{om\_wet}+f_{gravel}k_{gravel\_wet})^{1-\theta_s}k_w^{\theta_s}
+\end{equation}
+其中，$k_{minerals\_wet}$也与\citet{Johansen1975}方案的计算方式不同，表达为：$$k_{minerals\_wet}=\frac{8.80\times\%sand+2.92\times\%clay}{\%sand+\%clay}$$ 
+其中$\%sand$和$\%clay$表示沙土和黏土的质量百分比。
+
+Kersten数$K_e$的计算方式相较\citet{Johansen1975}方案更为简化，表达为：
+\begin{equation}
+K_e=\begin{cases}
+\log_{10}S_r+1 & \text {对于未冻结土壤时} \\ 
+S_r & \text {对于冻结土壤时}
+\end{cases}
+\end{equation}
+
+\subsubsection{\citet{cote2005}方案}
+在\citet{cote2005}方案中，土壤导热率$k$与饱和土壤导热率$k_{sat}$的计算方式与\citet{Johansen1975}方案完全一致（\ref{eq:STC}和\ref{eq:STC_wet}）。而干土壤导热率$k_{dry}$和Kersten数$K_e$的计算方案则通过大量实测数据拟合得到经验关系式。$k_{dry}$表达为：
+\begin{equation}\label{eq:STC_dry_CK}
+k_{dry}=\sum_if_i\chi_i(10^{-\eta_i\theta_s}), i=\text{矿物质土壤、有机质土壤或砾石}
+\end{equation}
+$K_e$表达为：
+\begin{equation}
+K_e=\frac{\kappa S_r}{1+(\kappa -1)S_r}
+\end{equation}
+其中$\chi_i$、$\eta_i$和$\kappa$为经验参数，按照下表取值：
+\begin{table}[htbp]
+    \centering
+    \caption{\citet{cote2005}方案中$k_{dry}$计算公式中的参数取值}
+    \begin{tabular}{@{}lcc@{}}
+    \toprule
+    土壤成分               & $\chi$     & $\eta$  \\
+    \midrule
+    砾石                  & 1.70      & 1.80  \\
+    有机质土壤                  & 0.30    & 0.87   \\
+    矿物质土壤         & 0.75   & 1.20    \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \caption{\citet{cote2005}方案中$K_e$计算公式中$\kappa$的参数取值}
+    \begin{tabular}{@{}lcccc@{}}
+    \toprule
+    土壤状态               & 粗质颗粒土壤     & 中等颗粒或砂质土壤 & 粉粒或黏粒土壤 & 有机质土壤  \\
+    \midrule
+    未冻结土壤             & 4.60      & 3.55   & 1.90    &  0.60  \\
+    冻结土壤              & 1.70    & 0.95     & 0.85  & 0.25   \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{\citet{balland2005}方案}
+在\citet{balland2005}方案中，土壤导热率$k$、干土壤导热率$k_{dry}$和饱和土壤导热率$k_{sat}$的计算方式与\citet{Johansen1975}方案完全一致（\ref{eq:STC}，\ref{eq:STC_dry}和\ref{eq:STC_wet}）。而Kersten数$K_e$的计算方案则通过大量实测数据得到从干土壤到饱和土壤、细颗粒土壤到粗颗粒土壤过渡更为平滑的计算方式，表达式为：
+\begin{equation}
+K_e=\begin{cases}
+S_r^{0.5(1+v_{om}-\alpha v_{sand}-v_g)}\left\{\left[\frac{1}{1+e^{-\beta S_r}}\right]^3-\left(\frac{1-S_r}{2}\right)^3\right\}^{1-v_{om}} & \text {对于未冻结土壤时} \\ 
+S_r^{1+v_{om}} & \text {对于冻结土壤时}
+\end{cases}
+\end{equation}
+其中，$v_{sand}$、$v_{om}$和$v_g$分别表示砂质土壤、有机质土壤和砾石在整体土壤柱内的体积分数。$\alpha$和$\beta$为经验参数，取值见下表(来自\citet{Barry2015thermal})：
+\begin{table}[htbp]
+    \centering
+    \caption{\citet{balland2005}方案中$K_e$计算公式中的参数取值}
+    \begin{tabular}{@{}lcc@{}}
+    \toprule
+    土壤成分               & $\alpha$     & $\beta$  \\
+    \midrule
+    粗质颗粒土壤                  & 0.38      & 35.0  \\
+    中等颗粒土壤                  & 0.24    & 26.0   \\
+    细质颗粒土壤         & 0.20   & 10.0    \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{\citet{lu2007improved}方案}
+在\citet{lu2007improved}方案中，土壤导热率$k$与饱和土壤导热率$k_{sat}$的计算方式与\citet{Johansen1975}方案完全一致（\ref{eq:STC}和\ref{eq:STC_wet}）。而干土壤导热率$k_{dry}$也沿用\citet{Johansen1975}方案中的计算公式（\ref{eq:STC_dry}），但矿物质土壤在干燥状态下的导热率$k_{minerals\_dry}$则通过观测数据重新拟合了新的公式，表达为：
+\begin{equation}\label{eq:STC_dry_Lu}
+k_{minerals\_dry}=-0.56\theta_s+0.51
+\end{equation}
+
+此外，Kersten数$K_e$的计算方案也通过大量实测数据拟合得到了新的经验关系式，表达为：$$K_e=e^{\alpha\left[1-S_r^{\alpha-\beta}\right]}$$
+其中，$\alpha$和$\beta$为经验参数，取值见下表：
+\begin{table}[htbp]
+    \centering
+    \caption{\citet{lu2007improved}方案中$K_e$计算公式中的参数取值}
+    \begin{tabular}{@{}lcc@{}}
+    \toprule
+    土壤成分               & $\alpha$     & $\beta$  \\
+    \midrule
+    粗质颗粒土壤                  & 0.728      & 1.165  \\
+    细质颗粒土壤                  & 0.37    & 1.29   \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{\citet{Yan2019thermal}方案}
+在Yan et al. [2019]方案中，土壤导热率$k$与饱和土壤导热率$k_{sat}$的计算方式与\citet{Johansen1975}方案完全一致（\ref{eq:STC}和\ref{eq:STC_wet}）。而干土壤导热率$k_{dry}$则通过观测数据重新拟合了新的公式，表达为：
+\begin{equation}\label{eq:STC_dry_Yan}
+k_{dry}=-0.5815\theta_s + 0.4999
+\end{equation}
+
+此外，Kersten数$K_e$的计算方案也通过大量实测数据拟合得到了新的经验关系式，表达为：$$K_e=\frac{1+\left(\frac{\theta_s}{\beta}\right)^{-\beta}}{1+\left(\frac{\theta_{liq}}{\beta}\right)^{-\beta}}$$
+其中，$\theta_{liq}$表示液态土壤体积含水量，$\beta$为经验参数，表达为：$$\beta = -0.303k_{sat} - 0.201m_{sand} + 1.532$$
+$m_{sand}$表示砂质土壤在整体土壤柱内的质量分数。
+
+\subsubsection{\citet{tarnawski2012series}方案}
+在\citet{Johansen1975}方案及其衍生方案中，假设土壤组分的排列方式在热流方向上是并行的或处在并行和串行之间的某种方式，因此总热导率可计算为所有土壤组分热导率的算术或几何平均值。作为更为复杂的方案，\citet{tarnawski2012series}提出了一种基于土壤组分串行-并行混合排列下的土壤导热率计算方案。他们假设热流通过三种介质通道传导，即固体均匀介质通道（$\Theta_{sb}$），由土壤固体与一部分土壤水($n_w$)和一部分土壤空气($n_a$)的并联路径相连构成的串行-并行通道，以及土壤水($\Theta_w$)和空气($\Theta_a$)并行排列的通道。括号中的符号表示土壤中每个组分的体积分数。通过将经典电阻模型应用于每个热流通道，\citet{tarnawski2012series}提出的总热导率计算方案可以通过以下方程计算：
+\begin{equation}
+\begin{aligned}
+k=&k_s\Theta_{sb}+\frac{(1-\theta_s-\Theta_{sb}+n_{wm})^2}{\frac{1-\theta_s-\Theta_{sb}}{k_s}+\frac{n_{wm}}{k_w\frac{n_w}{n_{wm}}+k_a\left(1-\frac{n_w}{n_{wm}}\right)}}+k_w\left(\theta_sS_r-n_{wm}\frac{n_w}{n_{wm}}\right) \\
++&k_a\left[\theta_s(1-S_r)-n_{wm}\left(1-\frac{n_w}{n_{wm}}\right)\right]
+\end{aligned}
+\end{equation}
+其中，$k_s$，$k_w$和$k_a$分别表示固体土壤、水（冰）和空气的导热率，而固体土壤导热率由矿物质土壤、有机质土壤和砾石在饱和土壤状态下的导热率基于其体积分数进行几何加权平均得到，每种土壤组分在饱和状态下的导热率计算方案与\citet{Johansen1975}方案完全一致。$\Theta_{sb}$和$n_{wm}$可通过砾石和砂质土壤含量拟合得到，计算表达式为：$$\Theta_{sb}=0.0237-0.0175\left(m_{gravel}+m_{sand}\right)^3$$$$n_{wm}=n_a+n_w=0.088-0.037\left(m_{gravel}+m_{sand}\right)^3$$
+其中，$m_{gravel}$和$m_{sand}$表示砾石和砂质土壤在整体土壤柱内的质量分数。$\frac{n_w}{n_{wm}}$可由如下关系近似得到：
+\begin{equation}
+\frac{n_w}{n_{wm}}=\begin{cases}
+0  & \text{当} Sr=0 \text{时} \\ 
+e^{1-S_r^{-X}} & \text{当}0<S_r\leq1\text{时}
+\end{cases}
+\end{equation}
+其中，$X=0.6-0.3\left(m_{gravel}+m_{sand}\right)^3$为表征小土壤空隙持水能力的因子。
+
+\subsubsection{\citet{de1963thermal}方案}
+\citet{de1963thermal}方案是一种经典的理论方案，其发展基于麦克斯韦方程。在该方案中，假设土壤结构由椭球形颗粒组成，这些颗粒在连续的孔隙流体（空气或水）中可自由浮动。因此，土壤总热导率可被估算为考虑土壤各组分形状因子的基础上各热导率的加权平均值，表达式如下：$$k=\frac{F_w\theta_sS_rk_w+F_a\theta_s\left(1-S_r\right)k_a+F_s\left(1-\theta_s\right)k_s}{F_w\theta_sS_r+F_a\theta_s\left(1-S_r\right)+F_s\left(1-\theta_s\right)}$$
+其中，$F_s$、$F_w$和$F_a$分别表示固体土壤、水和空气的形状因子，它们可通过如下经验公式得到：
+\begin{equation}
+F_i=\frac{1}{3}\left[\frac{2}{1+\left(\frac{k_i}{k_w}-1\right)g_i}+\frac{1}{1+\left(\frac{k_i}{k_w}-1\right)(1-2g_i)}\right], i=w,a,s
+\end{equation}
+$g_i$为表征椭球形颗粒的拟合参数，可由下式计算：
+\begin{equation}
+g_i=\begin{cases}
+0.013+0.944\theta_sS_r  & \text{对于空气分子且}\theta_sS_r\leq 0.09 \text{时} \\ 
+0.333-\left(0.333-0.035\right)\left(1-S_r\right) & \text{对于空气分子且}\theta_sS_r>0.09\text{时} \\
+0.125 &\text{对于固体土壤颗粒}
+\end{cases}
+\end{equation}
+
+\subsubsection{积雪导热率计算方案}
+根据 \citet{jordan1991one}，雪盖热力传导率$\lambda_i$ (\unit{W.m^{-1}.K^{-1}}, $i=snl+1,\ldots,0$)的计算公式如下：
+\begin{equation}
+\lambda_{i}=\lambda_{a}+\left(7.75 \times 10^{-5} \rho_{sno, i}+1.105 \times 10^{-6} \rho_{sno, i}^{2}\right)\left(\lambda_{ice}-\lambda_{a}\right)
+\end{equation}
+其中$\lambda_a$表示空气的热力传导率(\unit{W.m^{-1}.K^{-1}})，$\rho_{sno,i}$表示第 $i$ 层雪的平均密度(\unit{kg.m^{-3}})：
+\begin{equation}
+\rho_{sno, i}=\frac{w_{liq, i}+w_{ice, i}}{\Delta z_{i}}
+\end{equation}
 
 \section{雪的压实，雪层的合并和细分}
 \subsection{雪层的建立}

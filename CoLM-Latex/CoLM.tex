@@ -68,7 +68,7 @@
  \upshape
  \large%\\[0.5in]
 % \vskip 0.5in
-2023 年 7 月
+2023 年 11 月
 }
 
 %\normallinespacing
@@ -88,33 +88,33 @@
 \include{模式构架/模式构架}
 \include{基础数据/基础数据}
 
-\part{地表通量方案}
+\part{地表通量方案}\label{part:flux}
 \include{辐射通量方案/辐射通量方案}
 \include{地表湍流通量方案/地表湍流通量方案}
 \include{气孔导度和光合作用/气孔导度和光合作用}
 \include{植被水力模式/植被水力模式}
 \include{降水与地表的能量交换/降水与地表的能量交换}
 
-\part{植被冠层、积雪和土壤温度计算方案}
+\part{植被冠层、积雪和土壤温度计算方案}\label{part:temp}
 \include{植被叶片温度计算/植被叶片温度计算}
 \include{雪盖土壤热力过程/雪盖土壤热力过程}
 
-\part{植被冠层、积雪和土壤水分计算方案}
+\part{植被冠层、积雪和土壤水分计算方案}\label{part:SPC}
 \include{植被冠层和土壤水分/植被冠层和土壤水分}
 
-\part{水文过程}
-\include{水文过程/产流参数化方案}
-\include{水文过程/径流模式CaMa-Flood}
-\include{水文过程/侧向流物理方案}
+\part{水文过程}\label{part:hydro}
+\include{水文过程/耦合径流模型的产流和汇流过程}
+% \include{水文过程/径流模式CaMa-Flood}
+\include{水文过程/基于物理过程的侧向流模拟}
 \include{湖泊模式/湖泊模式}
 
-\part{生物地球化学循环过程}
+\part{生物地球化学循环过程}\label{part:BGC}
 \include{碳氮库结构/碳氮库结构}
 \include{植被生物地球化学循环过程/植被生物地球化学循环过程}
 \include{土壤凋落物生物地球化学循环过程/土壤凋落物生物地球化学循环过程}
 \include{生物地球化学循环预热加速/生物地球化学循环预热加速}
 
-\part{人类活动}
+\part{人类活动}\label{part:human}
 \include{城市模式/城市模式}
 \include{作物模式/作物模式}
 \include{水文过程/水库模式}

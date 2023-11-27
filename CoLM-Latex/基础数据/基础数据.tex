@@ -2,7 +2,8 @@
 %\addcontentsline{toc}{chapter}{地表输入数据}
 
 
-\section{DEM数据}
+\section{高程数据}
+高程数据来自MERIT DEM数据集 \citep{yamazaki2017high}。该数据集是通过从已有的遥感DEM (SRTM3 v2.1和AW3D-30m v1) 中去除多种误差 (绝对偏差、条纹噪声、散斑噪声和树高偏差) 而开发的，它的分辨率为3秒 (赤道处约90米) ，覆盖了90N-60S之间的陆地区域。
 
 \section{地表覆盖数据}\label{地表覆盖数据}
 \subsection{USGS地表覆盖数据}\label{USGS地表覆盖数据}
@@ -65,7 +66,6 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \begin{tabular}{@{}ll@{}}
 \toprule
 编号 & IGBP覆盖类型     \\ \midrule
-0  & 水体           \\
 1  & 常绿针叶林           \\
 2  & 常绿阔叶林      \\
 3  & 落叶针叶林     \\
@@ -81,7 +81,8 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 13 & 城市        \\
 14 & 耕地和自然植被混合带        \\
 15 & 积雪和冰川        \\
-16 & 裸土或稀疏植被覆盖       \\ \bottomrule
+16 & 裸土或稀疏植被覆盖       \\ 
+17 & 水体           \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -93,12 +94,12 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 
 \subsection{基岩深度}\label{基岩深度}
 
-模式的土壤层数可以根据基岩深度数据集进行设定，使得空间上每个格点有不同土壤层数。采用的基岩深度数据为Global Depth to Bedrock Dataset for Earth System Modeling (GDBDESM，\url{http://globalchange.bnu.edu.cn/research/dtb.jsp}, \citet{shangguan2017mapping})。该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。
+基岩深度数据来自Global Depth to Bedrock Dataset for Earth System Modeling (GDBDESM，\url{http://globalchange.bnu.edu.cn/research/dtb.jsp}, \citet{shangguan2017mapping})。该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。
 
 
 \section{植被结构及属性数据}\label{植被结构及属性数据}
 \subsection{叶面积指数数据}\label{叶面积指数数据}
-叶面积指数数据来自重处理的MODIS LAI数据~\citep{yuan20143d}。目前模式提供MODIS第5版和第6.1版数据。其中MODIS第5版数据 (MOD15A2) 为全球 \ang{;;30} (1公里) 分辨率，经纬度网格，时间覆盖2000--2016年，时间分辨率为每8天。MODIS第6.1版数据 (MCD15A2H)，空间分辨率为全球 \ang{;;15} (约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
+叶面积指数数据来自重处理的MODIS LAI数据~\citep{yuan2011reprocessing}。目前模式提供MODIS第5版和第6.1版数据。其中MODIS第5版数据 (MOD15A2) 为全球 \ang{;;30} (1公里) 分辨率，经纬度网格，时间覆盖2000--2016年，时间分辨率为每8天。MODIS第6.1版数据 (MCD15A2H)，空间分辨率为全球 \ang{;;15} (约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
 
 
 \subsection{树高数据}\label{树高数据}
@@ -114,7 +115,7 @@ PC聚合方案同LCT，但是PC跟PFT方案一样，对每种LCT内的PFT进行�
 PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 所示：
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
 \centering
 \caption{植被功能型-PFT分类}
 \label{tab:PFT分类}
@@ -122,14 +123,14 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 \toprule
 \multicolumn{1}{l}{编号} & \multicolumn{1}{l}{植被功能型} \\ \midrule
 0                      & 裸土                        \\
-1                      & 温带常绿针叶林                   \\
-2                      & 北方常绿针叶林                   \\
-3                      & 北方落叶针叶林                   \\
-4                      & 热带常绿阔叶林                   \\
-5                      & 温带常绿阔叶林                   \\
-6                      & 热带落叶阔叶林                   \\
-7                      & 温带落叶阔叶林                   \\
-8                      & 北方落叶阔叶林                   \\
+1                      & 温带常绿针叶树                   \\
+2                      & 北方常绿针叶树                   \\
+3                      & 北方落叶针叶树                   \\
+4                      & 热带常绿阔叶树                   \\
+5                      & 温带常绿阔叶树                   \\
+6                      & 热带落叶阔叶树                   \\
+7                      & 温带落叶阔叶树                   \\
+8                      & 北方落叶阔叶树                   \\
 9                      & 常绿阔叶灌木                    \\
 10                     & 温带落叶阔叶灌木                  \\
 11                     & 北方落叶阔叶灌木                  \\
@@ -141,7 +142,7 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 \end{table}
 
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/基础数据/次网格聚合方案.png}
 \caption{CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图。}
@@ -360,14 +361,12 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 
 
 \subsection{水库}
-模式中水库调度模块所用的水库基础数据主要包括：全球水库基本属性数据、全球水库水面面积数据和全球水库几何数据（如表~\ref{tab:水库模块所用的水库基础数据} 所示），根据这些数据可以进一步得到：
+模式中水库调度模块所用的水库基础数据主要包括：全球水库基本属性数据(GRanD)、全球水库水面面积数据(GRSAD)和全球水库几何数据(ReGeom)，如表~\ref{tab:水库模块所用的水库基础数据} 所示，根据这些数据可以进一步得到：
 \begin{enumerate}
-\item 与不同分辨率河网数据相匹配的水库位置；
+\item 与不同分辨率河网数据相匹配的水库位置信息；
 \item 水库调度模拟所需的特征流量和特征库容数据；
-\item 每个水库的需水网格；
+\item 与水库相对应的蓄水网格信息；
 \end{enumerate}
-这些计算过程将在水库中详细说明，本章节主要介绍所用基础数据。
-
 
 \begin{table}[htbp]
     \centering
@@ -376,16 +375,16 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
     \begin{tabular}{ccccc}
     \toprule
     数据集 & 数据描述 & 水库数量 & 时间分辨率 & 数据源 \\ \midrule
-    GRanD  & \text{\makecell{全球水库\\基本属性数据}} & \text{\makecell{7320 - v1.3\\6862 - v1.1}} & /    & \text{\makecell{https://doi.org/\\10.7927/H4N877QK\\(\cite{lehner2011high})}} \\
-    GRSAD  & \text{\makecell{全球水库\\水面面积数据}} & 6817 (GRanD v1.1) & \text{\makecell{1984-2015\\月尺度}} & \text{\makecell{https://doi.org/\\10.18738/T8/DF80WG\\(\cite{zhao2018automatic})}}  \\
-    ReGeom & \text{\makecell{全球水库\\几何数据}} & 6868 (GRanD v1.1)  & / & \text{\makecell{https://doi.org/\\110.5281/zenodo.1322884\\(\cite{yigzaw2018new})}}  \\
+    GRanD  & \text{\makecell{全球水库\\基本属性数据}} & \text{\makecell{7320 - v1.3\\6862 - v1.1}} & /    & \text{\makecell{https://doi.org/\\10.7927/H4N877QK\\(\citep{lehner2011high})}} \\
+    GRSAD  & \text{\makecell{全球水库\\水面面积数据}} & 6817 (GRanD v1.1) & \text{\makecell{1984-2015\\月尺度}} & \text{\makecell{https://doi.org/\\10.18738/T8/DF80WG\\(\citep{zhao2018automatic})}}  \\
+    ReGeom & \text{\makecell{全球水库\\几何数据}} & 6868 (GRanD v1.1)  & / & \text{\makecell{https://doi.org/\\110.5281/zenodo.1322884\\(\citep{yigzaw2018new})}}  \\
     \bottomrule
     \end{tabular}
     \end{table}
     
 
 \subsubsection{全球水库基本属性数据}
-全球水库基本属性数据来自Global Reservoir and Dam Database (GranD; \citet{lehner2011high})，该数据集目前提供v1.1和v1.3两个版本。v1.1版本包含了全球范围内6862个水库及其关联大坝（图~\ref{fig:GranD-v1.1所包含水库的位置和主要用途}）的基本属性数据，水库的累积库容为6197 km$^{3}$，水库数量较多、库容较大的区域主要集中在中国、美国、加拿大、印度和欧洲。v1.3版本包含的水库在v1.1版本的基础上增加到7320个，累积库容增加到6863.5 \unit{km^3}。GranD提供了水库及其关联大坝的地理位置和基本属性信息（对于其包含的大部分水库）。其中，水库模块所用属性主要包括水库编码（\texttt{GRAND\_ID}）、水库名称（\texttt{DAM\_NAME}）、经度（\texttt{LONG\_DD}）、纬度（\texttt{LAT\_DD}）、水库总库容（\texttt{CAP\_MCM}）、汇流面积（\texttt{CATCH\_SKM}）、主要用途（\texttt{MAIN\_USE}）、建坝年份（\texttt{YEAR}）等。
+全球水库基本属性数据来自Global Reservoir and Dam Database (GranD; \citet{lehner2011high})，该数据集目前提供v1.1和v1.3两个版本。v1.1版本包含了全球范围内6862个水库及其关联大坝（图~\ref{fig:GranD-v1.1所包含水库的位置和主要用途}）的基本属性数据，水库的累积库容为6197 km$^{3}$，水库数量较多、库容较大的区域主要集中在中国、美国、加拿大、印度和欧洲。v1.3版本包含的水库在v1.1版本的基础上增加到7320个，累积库容增加到6863.5 \unit{km^3}。GranD提供了水库及其关联大坝的地理位置和基本属性信息（对于其包含的大部分水库）。其中，水库模块(章节 \ref{水库模式})所用属性主要包括水库编码（\texttt{GRAND\_ID}）、水库名称（\texttt{DAM\_NAME}）、经度（\texttt{LONG\_DD}）、纬度（\texttt{LAT\_DD}）、水库总库容（\texttt{CAP\_MCM}）、汇流面积（\texttt{CATCH\_SKM}）、主要用途（\texttt{MAIN\_USE}）、建坝年份（\texttt{YEAR}）等。
 
 {
 \begin{figure}[htbp]
@@ -421,7 +420,7 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 模式对城市覆盖地区不同城市类型进行细分。城市类型分类数据目前采取两种方案：
 \begin{enumerate}
     \item 传统的3类城市——高建筑街区 (Tall Building Distinct, TBD)、高密度(High Density, HD) 和中密度 (Medium Density, MD);
-    \item 10类Local Climate Zone (LCZ)分类，如图~\ref{fig:LCZ分类图示}  所示。
+    \item 10类Local Climate Zone (LCZ 1-10)分类，如图~\ref{fig:LCZ分类图示}  所示。
 \end{enumerate}
 
 {
@@ -453,7 +452,7 @@ LCZ数据目前使用的 \citet{demuzere2022global} 全球LCZ分类数据，该�
 该工具根据一定规则将全球所有国家分为33类 (图~\ref{fig:地区分类})，并根据传统城市分类进一步划分，不同类的国家不同类型建筑具有不同的性质。
 %
 而LCZ分类本身包含了一些建筑材料信息，不同地区的同类LCZ虽然有差别但是可能不会太大，
-因此LCZ形态参数目前采用典型值设定，该部分数据一部分来源于~\citet{stewart2014evaluation}，另一部分参考了WRF中的参数设置。
+因此LCZ形态参数目前采用典型值设定，该部分数据一部分来源于~\citet{stewart2014evaluation}，另一部分参考了WRF中的参数设置，LCZ参数如表 \ref{tab:lcz局地气候区建筑属性参数}所示。
 {
 \begin{figure}[htbp]
 \centering
@@ -465,10 +464,10 @@ LCZ数据目前使用的 \citet{demuzere2022global} 全球LCZ分类数据，该�
 
 
 \subsection{建筑高度与建筑比例数据}\label{建筑高度与建筑比例数据}
-
+建筑高度和建筑比例数据采用\citet{li2022global}等人发布的数据，该数据利用随机森林模型使用世界各地的参考数据进行训练得到。为了增加代表性，\citet{li2022global}对参考数据进行了人工分类和补充。该数据分辨率为1km，相比于其他陆面模型使用的根据区域或者LCZ类型查找表赋值建筑高度和比例的方法，该数据作为格点数据，精度较高，能更加真实的还原城市内部建筑的分布以及异质性。
 
 \subsection{人口数据}\label{人口数据}
-
+人口数据目前使用由美国能源部橡树岭国家实验室(ORNL)推出的LandScan数据，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是最好的全球人口动态统计分析数据集之一，该数据空间分辨率高(1km)，时间可覆盖2000-2022年。
 
 \subsection{城市树覆盖数据}\label{城市树覆盖数据}
 NCAR CLM城市数据集比较全面的描述了全球城市的形态特征和物理性质，但是其城市数据缺少关于植被(树)和水体的描述，
@@ -477,8 +476,9 @@ LCZ分类虽然有植被描述但通常是一个范围值。由于城市只占�
 GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 2000年、2005年、2010年和2015年四个年代的全球树木覆盖度信息，分辨率为30 m，可用于了解森林变化。
 该数据的投影方式为UTM，与陆面模式使用的等经纬度网格不同，需对数据进行投影转换，由UTM投影转换为经纬度投影 ($\sim$0.00025\textdegree)。
-经过投影转换后，通过对全球数据每个区域的文件进行读取，并统计500 m ($\sim$0.0041667\textdegree)分辨率下30 m高分辨网格植被总占比，
-对四个年份求平均得到500 m分辨率下城市格点的树覆盖数据作为城市模式的基础输入数据。
+经过投影转换后，通过对全球数据每个区域的文件进行读取，并统计500 m 
+ ($\sim$0.0041667\textdegree)分辨率下30 m高分辨网格植被总占比，
+求平均得到500 m分辨率下城市格点的树覆盖数据作为城市模式的基础输入数据。
 
 
 \subsection{城市内水体数据}\label{城市内水体数据}
@@ -500,17 +500,18 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 
 
 \subsection{城市树高数据}\label{城市树高数据}
-树高数据使用的~\citet{simard2011mapping} 全球树高数据，分辨率为1 km。除该数据外， \citet{potapov2021mapping} 
-利用GEDI卫星数据反演的30 m树高数据也同样作为模式树高数据。但由于卫星运行轨道限制，
-该数据目前只发布了51.6\textdegree N$\sim$51.6\textdegree S范围内的数据，北半球高纬度地区数据缺失，因此目前该数据集仅作为备用数据。
+在CoLM2014版本中，树高数据采用\cite{simard2011mapping}发布的全球树高数据，该数据虽然应用广泛，但是分辨率较低(1km)，无法满足城市模拟的需求，近年来，关于树高的高分辨率数据发展迅速，\cite{potapov2021mapping}利用GEDI卫星数据反演的树高数据具有较高的空间分辨率(30m,)，但是由于卫星运行轨道限制，该数据目前只发布了$51.6°N$ $\sim$ $51.6°S$范围内的数据。\cite{lang2022global}则开发了一种从Sentinel-2光学图像中检索冠层高度的深度学习模型，该模型可以有效降低卫星观测树高偏低的问题，\cite{lang2022global}利用该模型并结合GEDI 30m树高数据生成了全球10m树高地图。相比于GEDI数据，该数据更全(全球)，同时改善了GEDI偏低的问题，并且分别率更高(10m)，因此将该数据集作为城市树高基础数据。
 
 
 \subsection{城市LAI/SAI数据}\label{城市LAISAI数据}
-由于城市中建筑物的遮掩，卫星反演数据中城市 LAI 存在一定问题，目前模式中城市 LAI 数据利用以下公式根据 0.5\textdegree 范围内的其它PFT (只考虑树，即1-9类PFT)的 LAI/SAI，通过插值并加权平均的办法为城市地区LAI/SAI赋值：
+城市模式中，植被另一个比较重要的参数——树木的LAI目前采取插值方法计算得到。主要因为目前LAI没有高于500m分辨率的数据，大部分遥感LAI数据为500m甚至1km(比如MODIS LAI)，然而在城市中，由于城市中建筑物的遮掩，这种分辨率下卫星观测的城市LAI存在一定问题，但是作为描述植被的重要参数，LAI数据是不可或缺的。因此为了补充该数据，目前模式中城市LAI/SAI数据是根据格点内其它PFTs(只考虑树，即1-9类PFT)的LAI/SAI生成，具体方法为通过城市树高与PFTs树高比值插值并加权平均计算城市LAI/SAI，方法如下:
 \begin{equation}
-L A I_{u r}=\sum_{i=1}^{9} L A I_{P F T_{-} i} \cdot \frac{H T O P_{u r}}{H T O P_{P F T_{-} i}} \cdot P C T_{P F T_{-} i}
+LAI_{urb}=\sum_{i=1}^{9} LAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \cdot PCT_{PFT_{i}}
 \end{equation}
-其中$LAI_{PFT_{-}i}$为PFT的LAI(SAI)，$HTOP_{ur}$和 $HTOP_{PFT_{-} i}$分别为城市树高和PFT树高，$PCT_{PFT_{-} i}$为PFT占比。城市树木SAI数据采用同样的方法进行计算。
+\begin{equation}
+SAI_{urb}=\sum_{i=1}^{9} SAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \cdot PCT_{PFT_{i}}
+\end{equation}
+其中$LAI_{PFT_{i}}$($SAI_{PFT_{i}}$)为PFT的LAI(SAI)，$HTOP_{urb}$和 $HTOP_{PFT_{i}}$分别为城市树高和PFT树高，$PCT_{PFT_{i}}$为PFT占比。$HTOP_{urb}$分辨率为500m，PFT占比、LAI/SAI以及PFT树高均为0.5°分辨率，通过插值计算后便得到500m分辨率下LAI/SAI数据。
 
 
 \section{作物数据}
@@ -528,11 +529,9 @@ L A I_{u r}=\sum_{i=1}^{9} L A I_{P F T_{-} i} \cdot \frac{H T O P_{u r}}{H T O 
 
 
 \subsection{灌溉方式数据}\label{灌溉方式数据}
-
-
+灌溉模拟所需的灌溉方式数据来源于~\citet{yao2022Irrigation}全球灌溉方式地图数据，数据中共包括了32种灌溉作物的灌溉方式分布，每种作物在数据网格中仅考虑一种灌溉方式（滴灌、喷灌、漫灌）。~\citet{jagermeyr2015irrigation}采用决策树算法对AQUASTAT数据\citep{fao2014aquastat}进行了重处理，该算法根据不同作物灌溉面积、土壤类型、作物特性、社会经济等要素，划分了全球14种CFT的灌溉方式（每种作物在网格上均可有3种不同的灌溉方式）,分辨率为0.5\textdegree $\times$0.5\textdegree。\citep{yao2022Irrigation},则进一步将该数据中14种CFT与CLM5中的32种灌溉作物CFT进行匹配，并对数据进行重采样，得到新的全球灌溉方式数据。
 
 \section{生物地球化学数据}
-
 
 \subsection{氮沉降数据}\label{氮沉降数据}
 氮沉降是陆地生态系统的重要氮输入之一。近几十年来，人类活动造成大气氮沉降增加对生态系统生物地球化学循环产生了重要影响。由于区域地表氮沉降数据尚无法利用卫星直接观测得到，目前生物地球化学循环模式更多地利用大气模式或地球系统模式模拟得出。CoLM生物地球化学循环模块的氮沉降输入是$\mathrm{NO_y}$和$\mathrm{NH_x}$的总和，数据来源于CESM-WACCM的CMIP6历史时期和未来SSP情景模拟的集合平均。氮沉降历史时期数据包含1849年到2013年的时空变化，氮沉降未来时期数据包含1849--2101年的时空变化，未来情景包括SSP126，SSP245，SSP370和SSP585四种情景的预测模拟结果。数据的空间分辨率为0.9375\textdegree\ $\times$ 1.25\textdegree，数据在月尺度上刻画大气氮沉降的季节和年际变化。
