@@ -1,4 +1,4 @@
-\usepackage{xeCJK}
+%\usepackage{xeCJK}
 \usepackage{float}
 %\usepackage{afterpage}
 \usepackage{graphicx}
@@ -15,11 +15,13 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{etoolbox}
+\usepackage{pifont}
 
 \makeatletter
 \patchcmd{\NAT@test}{\else\NAT@nm}{\else\NAT@nmfmt{\NAT@nm}}{}{}
 \let\NAT@up\itshape
 \makeatother
+
 %\usepackage[none]{hyphenat}
 \usepackage{fancyhdr}
 \fancypagestyle{fancy}{%
@@ -32,11 +34,11 @@
 
 %Making the pagestyle of part and chapter page fancier
 \fancypagestyle{plain}{%
-   \fancyhf{} 
+   \fancyhf{}
    \cfoot{--\ \thepage\ --}
    \renewcommand{\headrulewidth}{0pt}
 }
-\pagestyle{fancy}
+%\pagestyle{fancy}
 % \sectionmark 的重定义需要在 \pagestyle 之后生效
 %\renewcommand\sectionmark[1]{%
 %    \markboth{\CTEXifname{\CTEXthesection}{}#1}}
@@ -49,13 +51,13 @@
 %\input{uhead.sty}
 \input{boxit.sty}
 \input{icthesis.sty}
-\addtolength{\parskip}{8pt}
+%\addtolength{\parskip}{8pt}
 
 \usepackage[framemethod=default]{mdframed}
 
 \global\mdfdefinestyle{exampledefault}{%
 linecolor=lightgray,linewidth=1pt,%
-leftmargin=1cm,rightmargin=1cm,
+leftmargin=1cm,rightmargin=1cm,%
 }
 
 \newenvironment{mymdframed}[1]{%
@@ -195,3 +197,8 @@ frametitlealignment=\raggedright
  }
  \end{figure}
 }
+
+\setlength{\abovedisplayskip}{8pt}
+\setlength{\belowdisplayskip}{8pt}
+\setlength{\abovedisplayshortskip}{8pt}
+\setlength{\belowdisplayshortskip}{8pt}

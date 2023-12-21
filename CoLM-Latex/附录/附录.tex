@@ -4,35 +4,63 @@
 %\section{附录 A: 模式相关物理常数/参数}
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
+
 \begin{table}[htbp]
-    \centering
-    \caption{物理常数}
-    \label{tab:物理常数}
-    \begin{tabular}{@{}lc@{}}
-    \toprule
-    名称 {[}单位{]}                                     & 常数值       \\
-    \midrule
-    固态水密度 {[}\unit{kg.m^{-3}}{]}                  & 917.0        \\
-    液态水密度 {[}\unit{kg.m^{-3}}{]}                  & 1000.0       \\
-    液态水比热容 {[}\unit{J.kg^{-1}.K^{-1}}{]}         & 4188.0       \\
-    固态水比热容 {[}\unit{J.kg^{-1}.K^{-1}}{]}         & 2117.27     \\
-    干空气比热容 {[}\unit{J.kg^{-1}.K.^{-1}}{]}        & 1004.64     \\
-    固态水液化潜热 {[}\unit{J.kg^{-1}}{]}             & \num{0.3336e6}  \\
-    液态水蒸发潜热 {[}\unit{J.kg^{-1}}{]}             & \num{2.5104e6}  \\
-    固态水升华潜热 {[}\unit{J.kg^{-1}}{]}             & \num{2.8440e6}  \\
-    空气热力传导率 {[}\unit{W.m^{-1}.K^{-1}}{]}       & 0.023       \\
-    固态水热力传导率 {[}\unit{W.m^{-1}.K^{-1}}{]}      & 2.290       \\
-    液态水热力传导率 {[}\unit{W.m^{-1}.K^{-1}}{]}      & 0.6         \\
-    液态水凝结温度 {[}K{]}                             & 273.16      \\
-    干空气气体常数 {[}\unit{J.kg^{-1}.K^{-1}}{]}       & 287.04      \\
-    rw/g = (8.3144/0.018)/(9.80616)*1000. {[}\unit{mm.K^{-1}}{]} & \num{4.71047e4} \\
-    水汽气体常数{[}\unit{J.kg^{-1}.K^{-1}}{]}         & 461.296     \\
-    重力加速度 {[}\unit{m.s^{-2}}{]}                  & 9.80616     \\
-    von K\'arman常数 {[}-{]}                         & 0.4         \\
-    Stefan-Boltzmann常数 {[}\unit{W.m^{-2}.K^{-4}}{]} & \num{5.67e-8}\\
-    \bottomrule
-    \end{tabular}
+\centering
+\caption{物理常数}
+\label{tab:物理常数}
+\begin{tabular}{lccc}
+\toprule
+变量名&缩写&数值&单位 \\\midrule
+干空气气体常数            & $R_{da}$                      & \num{287.04}     & \unit{J.kg^{-1}.K^{-1}}  \\ 
+水汽气体常数             & $R_{wv}$                       & \num{461.296}     & \unit{J.kg^{-1}.K^{-1}}  \\
+干空气比热容             & $C_{pa} $                      & \num{1004.64}    & \unit{J.kg^{-1}.K^{-1}}  \\
+液态水比热容             & $C_{pl}$                       & \num{4188.0}     & \unit{J.kg^{-1}.K^{-1}}  \\
+固态水比热容             & $C_{pi}$                       & \num{2117.27}    & \unit{J.kg^{-1}.K^{-1}}  \\
+von K\'arman常数       & $\kappa$                        & \num{0.4}        &    -     \\
+重力加速度              & $g$                             & \num{9.80616}    & \unit{m.s^{-2}}    \\
+Stefan-Boltzmann常数 & $\sigma$                          & \num{5.67e-8}    & \unit{W.m^{-2}.K^{-4}} \\
+液态水凝结温度            & $T_f$                         & \num{273.16}     & K       \\
+液态水密度              & $\rho_{liq}$                   & \num{1000}        & \unit{kg.m^{-3}}   \\
+固态水密度              & $\rho_{ice}$                   & \num{917}         & \unit{kg.m^{-3}}   \\
+液态水蒸发潜热            & $\lambda_v$                  & \num{2.5104e6}    & \unit{J.kg^{-1}}    \\
+固态水升华潜热            & $\lambda_s$                  & \num{2.8440e6}    & \unit{J.kg^{-1}}    \\
+固态水液化潜热            & $L_f$                        & \num{0.3336e6}    & \unit{J.kg^{-1}}    \\
+液态水热力传导率           & $\lambda_{liq}$             & \num{0.57}         & \unit{W.m^{-1}.K^{-1}}   \\
+固态水热力传导率           & $\lambda_{ice}$             & \num{2.29}         & \unit{W.m^{-1}.K^{-1}}   \\
+空气热力传导率            & $\lambda_a$                 & \num{0.023}         & \unit{W.m^{-1}.K^{-1}}      \\\bottomrule
+\end{tabular}
 \end{table}
+
+%\begin{table}[htbp]
+%    \centering
+%    \caption{物理常数}
+%    \label{tab:物理常数}
+%    \begin{tabular}{@{}lc@{}}
+%    \toprule
+%    名称 {[}单位{]}                                     & 常数值       \\
+%    \midrule
+%    固态水密度 {[}\unit{kg.m^{-3}}{]}                  & 917.0        \\
+%    液态水密度 {[}\unit{kg.m^{-3}}{]}                  & 1000.0       \\
+%    液态水比热容 {[}\unit{J.kg^{-1}.K^{-1}}{]}         & 4188.0       \\
+%    固态水比热容 {[}\unit{J.kg^{-1}.K^{-1}}{]}         & 2117.27     \\
+%    干空气比热容 {[}\unit{J.kg^{-1}.K.^{-1}}{]}        & 1004.64     \\
+%    固态水液化潜热 {[}\unit{J.kg^{-1}}{]}             & \num{0.3336e6}  \\
+%    液态水蒸发潜热 {[}\unit{J.kg^{-1}}{]}             & \num{2.5104e6}  \\
+%    固态水升华潜热 {[}\unit{J.kg^{-1}}{]}             & \num{2.8440e6}  \\
+%    空气热力传导率 {[}\unit{W.m^{-1}.K^{-1}}{]}       & 0.023       \\
+%    固态水热力传导率 {[}\unit{W.m^{-1}.K^{-1}}{]}      & 2.290       \\
+%    液态水热力传导率 {[}\unit{W.m^{-1}.K^{-1}}{]}      & 0.6         \\
+%    液态水凝结温度 {[}K{]}                             & 273.16      \\
+%    干空气气体常数 {[}\unit{J.kg^{-1}.K^{-1}}{]}       & 287.04      \\
+%    rw/g = (8.3144/0.018)/(9.80616)*1000. {[}\unit{mm.K^{-1}}{]} & \num{4.71047e4} \\
+%    水汽气体常数{[}\unit{J.kg^{-1}.K^{-1}}{]}         & 461.296     \\
+%    重力加速度 {[}\unit{m.s^{-2}}{]}                  & 9.80616     \\
+%    von K\'arman常数 {[}-{]}                         & 0.4         \\
+%    Stefan-Boltzmann常数 {[}\unit{W.m^{-2}.K^{-4}}{]} & \num{5.67e-8}\\
+%    \bottomrule
+%    \end{tabular}
+%\end{table}
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -1026,3 +1054,319 @@ length & 0 & 4 & 2 & 4 & 2 & 3 & 3 & 3 & 3 & 4 & 2 & 3 & 3 \\ \midrule
 pe\_loc & 1/2 & 3 & 4 & 3 & 4 & 5 & 4 & 5 & 4 & 5 & 6 & 5 & 6 \\ \bottomrule
 \end{tabular}
 \end{table}
+
+
+\chapter{CoLM离线运行可选的大气驱动数据集}
+
+%\begin{landscape}
+%\begin{longtable}
+%\end{longtable}
+%\end{landscape}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{landscape}
+%\begin{threeparttable}
+\begin{ThreePartTable}
+\begin{TableNotes}
+\footnotesize
+%\item 注：
+\item[1] 模式中针对以上数据会自动对比湿协调性做检查，当比湿数据大于通过近地面空气温度和气压数据计算得到的饱和比湿时，比湿将被更新为饱和比湿的计算结果。
+
+\item[2] 凡原始数据带有$offset$ 和 $scale\_{factor}$ 属性的均需转换为无 $offset$ 和$scale\_{factor}$ 属性的数据。
+
+\item[3] 大气 $\mathrm{O_2}$ 分压由公式 0.209 $P_{atm}$ 计算得到，其中 $P_{atm}$ 为大气压强。
+
+\item[4] 默认大气风速参考高度为100 米，大气温度和比湿参考高度为50米。
+
+\item[5] 当驱动仅给出总风速时，纬向风速和经向风速平均分配：$u_{atm}=v_{atm}=W_{atm}/\sqrt2$
+
+\end{TableNotes}
+\begin{center}
+\begin{longtable}{p{3cm}p{3cm}p{2cm}<{\centering}p{2cm}<{\centering}p{4cm}<{\centering}p{6cm}<{\centering}}
+\caption{CoLM 离线运行可选的全球/区域大气驱动格点数据集}
+\label{tab:可用于驱动CoLM离线运行的大气驱动数据集}
+\\
+\hline 
+\textbf{驱动名} & \textbf{分辨率}& \textbf{时间范围} & \textbf{空间范围} & \textbf{参考文献} & \textbf{附加说明} \\ 
+\hline 
+\endfirsthead
+
+\multicolumn{6}{c}%
+{{\bfseries \tablename\ \thetable{} -- \kaishu 续表}} \\
+\hline
+\textbf{驱动名} & \textbf{分辨率} & \textbf{时间范围} & \textbf{空间范围} & \textbf{参考文献} & \textbf{附加说明} \\ 
+\hline 
+\endhead
+
+\hline 
+\multicolumn{6}{r}{{\kaishu 接下一页表格}} \\ 
+\hline
+\endfoot
+
+\hline
+\insertTableNotes 
+\endlastfoot
+
+\textbf{QIAN}              & 1.875\textdegree/6-hourly  & 1948-2004             & Global                              & \citet{qian2006simulation}                                                                                                                                                                    & 长波辐射由空气温度和水汽压计算得到                                                                      \\\midrule 
+\textbf{CRU-NCEP\_V4}      & 0.5\textdegree/6-hourly    & 1980-2014             & Global                              &\citet{Viovy2011}                                                                                                             & –                                                                                      \\\midrule 
+\textbf{CRU-NCEP\_V7}      & 0.5\textdegree/6-hourly    & 1901-2016             & Global                              &\citet{Viovy2018}                                                                                                                                                                                                   & –                                                                                      \\\midrule 
+\textbf{CRUJRA2.3}         & 0.5\textdegree/6-hourly    & 1901-2021             & Global                              & \citet{Harris2019}                                                                                                                                                            & 降水与短波辐射在模式中自动由6小时累计值转换为6小时平均值                                                          \\\midrule 
+\textbf{Princeton}         & 0.5\textdegree/6-hourly    & 1901-2012             & Global                              & \citet{sheffield2006development}                                                                                                                       & 垂直维度需去除                                                                                \\\midrule 
+\textbf{GSWP3}             & 0.5\textdegree/3-hourly    & 1901-2014             & Global                              & \citet{Kim2017}                                                                                                                                                                                                  & 数据在海洋、陆地水体和南极洲的缺省值或异常值已由QIAN数据填充                                                       \\\midrule 
+\textbf{GDAS\_GPCP（GLDAS）} & 0.5\textdegree/3-hourly    & 2002-2021             & Global (land only)                  &\citet{rodell2004global}; \citet{kumar2006land}                                                                                                                                                                        & 数据文件需按月为存储单位进行合并                                                                       \\\midrule 
+\textbf{WFDEI}             & 0.5\textdegree/3-hourly    & 1979-2016             & Global (land only)                  & \citet{weedon2011creation}; \citet{weedon2014wfdei}& –                                                                                      \\\midrule 
+\textbf{ERA5}              & 0.25\textdegree/hourly     & 1979-2021             & Global                              & \citet{hersbach2020era5}; \citet{bell2021era5})                                                                                                                            & 比湿需根据近地面空气温度和露点温度计算得到                                                                  \\\midrule 
+\textbf{ERA5LAND}          & 0.1\textdegree/hourly      & 1951-2021             & Global (land only)                  & \citet{munoz2021era5}                                                                                                                              & 比湿需根据近地面空气温度和露点温度计算得到，降水需按照m/hr读入                                                      \\\midrule 
+\textbf{MSWX\_V100}        & 0.1\textdegree/3-hourly    & 1979-2021             & Global                              &\citet{beck2022mswx}                                                                                                                                                        & 降水在模式中自动由3小时累计值转换为3小时平均值；温度在模式中自动转换为单位开尔文；数据文件需按月为存储单位进行合并                             \\\midrule 
+\textbf{JRA55}             & 0.5625\textdegree/3-hourly & 1979-2022             & Global                              & \citet{kobayashi2015jra}                                                                                                                                                                                & 降水在模式中自动由每天累计值转换为每天平均值；垂直维度需去除                                                         \\\midrule 
+\textbf{WFDE5}             & 0.5\textdegree/hourly      & 1979-2019             & Global (land only)                  & \citet{cucchi2020wfde5}                                                                                                           \\\midrule 
+\textbf{CLDAS}             & 0.0625\textdegree/hourly   & 2008-2020             & 东亚区域; 60\textdegree $\sim$ 160\textdegree E, 0\textdegree $\sim$ 65\textdegree N   & 国家气象信息中心                                                                                                                                                                              & 降水在模式中自动由逐小时累计值转换为逐小时平均值；异常或缺省值需补充                                                     \\\midrule 
+\textbf{CMFD}              & 0.1\textdegree/3-hourly    & 1979-2018             & 中国区域;  70\textdegree $\sim$ 140 \textdegree E, 15\textdegree $\sim$55 \textdegree N & \citet{He2019CMFD,Yang2019CMFD}                                                                                                                                          & 降水在模式中自动由逐小时累计值转换为逐小时平均值                                                               \\\midrule 
+\textbf{TPMFD}             & 0.01\textdegree/hourly     & 1979-2020             & 青藏高原 (25\textdegree $\sim$ 106\textdegree E, 41\textdegree $\sim$ 61\textdegree N) & \citet{Yang2023TPMFD}                                                                                 & 降水在模式中自动由逐小时累计值转换为逐小时平均值；气压在模式中自动转换为单位帕                                                \\
+\textbf{CMIP6/SSPs}        & 1\textdegree /3-hourly      & 1850-2100             & Global                              & \citet{cmip6}                                                                                                                                                                               & 数据文件需按月为存储单位进行合并；需采用异常值叠加方式产生未来情景下的大气驱动数据（见下文说明）                                       \\\midrule
+\textbf{PLUMBER2}          & 单点/hourly         &1990-2019         & Global                              & \citet{ukkola2022flux}                                                                                                                                               & 需制作 surface data 给定站点的USGS/IGBP分类和经纬度等信息                                                 \\\midrule 
+\textbf{大气$\mathrm{CO_2}$ 浓度}           & 全球统一值 /yearly     & 1849-2100             & Global                              & \citet{Buchner2022,keeling1994atmospheric}                                & 1849-1957 \& 2023-2100 $\mathrm{CO_2}$ 浓度来自ISIMIP3b 大气组份浓度输入数据集；1958-2022 $\mathrm{CO_2}$ 浓度来自夏威夷 Mauna Loa 观测站监测数据 \\\midrule 
+\textbf{臭氧浓度}              & 0.1\textdegree /daily       & 2013-2022             & 中国区域 (73\textdegree $\sim$135\textdegree E, 18\textdegree$\sim$54\textdegree N)                                                                                  & -                                                                                                                                                                     & 来自中科院大气所李芳研究员                                                                        \\\midrule 
+\textbf{大气气溶胶沉降速率}         & 0.9\textdegree $\times$ 1.25\textdegree /monthly & 1849-2001 /climatology & Global                              & CLM5 Documentation \& \citet{Lamarque2010Historical}    & 来自NCAR-CAM模式模拟结果                                                                       \\\midrule 
+\textbf{氮沉降速率}             & 1.9\textdegree $\times$ 2.5\textdegree/yearly   & 1849-2006             & Global                              & CLM5 Documentation                                                                                                                                                                                                             & 来自NCAR-WACCM模式模拟结果                                                                     \\\midrule 
+\textbf{闪电频率}              & 2\textdegree/3-hourly      & climatology           & Global                              & CLM5 Documentation                                                                                                                                                                                                       & 由1995-2011年 NASA LIS/OTD 格点数据产品 v2.2 版通过双线性插值得到        \\\hline
+
+\end{longtable}
+\end{center}
+
+%\rule{\linewidth}{0.8pt}
+%\hrule height 1pt
+\end{ThreePartTable}
+
+\end{landscape}
+
+\begin{center}
+\begin{longtable}{lcccccc}
+\caption{CoLM离线运行已经测试的站点列表}
+\label{tab:CoLM离线运行已经测试的站点列表}
+\\
+\hline 
+\multicolumn{1}{l}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年}} & \multicolumn{1}{c}{\textbf{终止年}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
+\endfirsthead
+
+\multicolumn{7}{c}%
+{{\bfseries \tablename\ \thetable{} -- \kaishu 续表}} \\
+\hline \multicolumn{1}{l}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年}} & \multicolumn{1}{c}{\textbf{终止年}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
+\endhead
+
+\hline \multicolumn{7}{r}{{\kaishu 接下一页表格}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+
+AR-SLu & 2010 & 2010 & FLUXNET2015 & 5      & -66.45980072 & -33.46480179 \\
+AT-Neu & 2002 & 2012 & FLUXNET2015 & 10     & 11.31750011  & 47.1166687   \\
+AU-ASM & 2011 & 2017 & OzFlux      & 1      & 133.2489929  & -22.28300095 \\
+AU-Cow & 2010 & 2015 & OzFlux      & 2      & 145.4271545  & -16.2381897  \\
+AU-Cpr & 2011 & 2017 & OzFlux      & 9      & 140.5891266  & -34.00205994 \\
+AU-Ctr & 2010 & 2017 & OzFlux      & 2      & 145.4468536  & -16.10327911 \\
+AU-Cum & 2013 & 2018 & OzFlux      & 2      & 150.7224731  & -33.61329651 \\
+AU-DaP & 2009 & 2012 & OzFlux      & 10     & 131.3181     & -14.06330013 \\
+AU-DaS & 2010 & 2017 & OzFlux      & 9      & 131.3880005  & -14.15928268 \\
+AU-Dry & 2011 & 2015 & OzFlux      & 9      & 132.3706055  & -15.25879955 \\
+AU-Emr & 2012 & 2013 & OzFlux      & 10     & 148.4745941  & -23.8586998  \\
+AU-GWW & 2013 & 2017 & OzFlux      & 9      & 120.6540985  & -30.19129944 \\
+AU-Gin & 2012 & 2017 & OzFlux      & 8      &  115.6500015  & -31.375      \\
+AU-How & 2003 & 2017 & OzFlux      & 8      & 131.1499939  & -12.49520016 \\
+AU-Lit & 2016 & 2017 & OzFlux      & 8      & 130.7944946  & -13.17903996 \\
+AU-Otw & 2009 & 2010 & OzFlux      & 10     & 142.816803   & -38.532341   \\
+AU-Rig & 2011 & 2016 & OzFlux      & 10     & 145.5758972  & -36.64989853 \\
+AU-Rob & 2014 & 2017 & OzFlux      & 2      & 145.6300964  & -17.11750031 \\
+AU-Sam & 2011 & 2017 & OzFlux      & 10     & 152.8778076  & -27.38809967 \\
+AU-Stp & 2010 & 2017 & OzFlux      & 10     & 133.3502045  & -17.15069962 \\
+AU-TTE & 2013 & 2017 & OzFlux      & 7      & 133.6399994  & -22.28700066 \\
+AU-Tum & 2002 & 2017 & OzFlux      & 2      & 148.1517029  & -35.65660095 \\
+AU-Whr & 2015 & 2016 & OzFlux      & 2      & 145.0294037  & -36.6731987  \\
+AU-Wrr & 2016 & 2017 & OzFlux      & 2      & 146.6544952  & -43.09502029 \\
+AU-Ync & 2011 & 2017 & OzFlux      & 10     & 146.2906952  & -34.98929977 \\
+BE-Bra & 2004 & 2014 & FLUXNET2015 & 5      & 4.520559788  & 51.30916595  \\
+BE-Lon & 2005 & 2014 & FLUXNET2015 & 12     & 4.74612999   & 50.55158997  \\
+BE-Vie & 1997 & 2014 & FLUXNET2015 & 5      & 5.998050213  & 50.30506897  \\
+BR-Sa3 & 2001 & 2003 & FLUXNET2015 & 2      & -54.97143555 & -3.018029213 \\
+BW-Ma1 & 2000 & 2000 & LaThuile    & 9      & 23.56032944  & -19.91650009 \\
+CA-NS1 & 2003 & 2003 & FLUXNET2015 & 1      & -98.48390198 & 55.87919998  \\
+CA-NS2 & 2002 & 2004 & FLUXNET2015 & 1      & -98.52469635 & 55.90579987  \\
+CA-NS4 & 2003 & 2004 & FLUXNET2015 & 1      & -98.38059998 & 55.91439819  \\
+CA-NS5 & 2003 & 2004 & FLUXNET2015 & 1      & -98.48500061 & 55.86309814  \\
+CA-NS6 & 2002 & 2004 & FLUXNET2015 & 7      & -98.96440125 & 55.91669846  \\
+CA-NS7 & 2003 & 2004 & FLUXNET2015 & 7      & -99.94830322 & 56.63579941  \\
+CA-Qcu & 2002 & 2006 & LaThuile    & 1      & -74.03652954 & 49.2670784   \\
+CA-Qfo & 2004 & 2010 & FLUXNET2015 & 1      & -74.34210205 & 49.69250107  \\
+CA-SF1 & 2004 & 2006 & FLUXNET2015 & 1      & -105.8175964 & 54.48500061  \\
+CA-SF2 & 2003 & 2005 & FLUXNET2015 & 1      & -105.8775024 & 54.25389862  \\
+CA-SF3 & 2003 & 2005 & FLUXNET2015 & 7      & -106.0053024 & 54.09159851  \\
+CH-Cha & 2006 & 2014 & FLUXNET2015 & 10     & 8.410440445  & 47.21022034  \\
+CH-Dav & 1997 & 2014 & FLUXNET2015 & 1      & 9.855919838  & 46.81533432  \\
+CH-Fru & 2007 & 2014 & FLUXNET2015 & 10     & 8.537779808  & 47.11583328  \\
+CH-Oe1 & 2002 & 2008 & FLUXNET2015 & 10     & 7.731939793  & 47.28583145  \\
+CN-Cha & 2003 & 2005 & FLUXNET2015 & 5      & 128.0957947  & 42.40250015  \\
+CN-Cng & 2008 & 2009 & FLUXNET2015 & 10     & 123.509201   & 44.59339905  \\
+CN-Dan & 2004 & 2005 & FLUXNET2015 & 10     & 91.06639862  & 30.49780083  \\
+CN-Din & 2003 & 2005 & FLUXNET2015 & 2      & 112.5361023  & 23.17329979  \\
+CN-Du2 & 2007 & 2008 & FLUXNET2015 & 10     & 116.2835999  & 42.04669952  \\
+CN-HaM & 2002 & 2003 & FLUXNET2015 & 10     & 101.1800003  & 37.36999893  \\
+CN-Qia & 2003 & 2005 & FLUXNET2015 & 1      & 115.0580978  & 26.74139977  \\
+CZ-wet & 2007 & 2014 & FLUXNET2015 & 11     & 14.77035046  & 49.02465057  \\
+DE-Bay & 1997 & 1999 & LaThuile    & 1      & 11.86693954  & 50.14194107  \\
+DE-Geb & 2001 & 2014 & FLUXNET2015 & 12     & 10.91429996  & 51.10010147  \\
+DE-Gri & 2004 & 2014 & FLUXNET2015 & 10     & 13.51253033  & 50.94947052  \\
+DE-Hai & 2000 & 2012 & FLUXNET2015 & 4      & 10.45300007  & 51.07916641  \\
+DE-Kli & 2005 & 2014 & FLUXNET2015 & 12     & 13.52237988  & 50.89305878  \\
+DE-Meh & 2004 & 2006 & LaThuile    & 5      & 10.65546989  & 51.27531052  \\
+DE-Obe & 2008 & 2014 & FLUXNET2015 & 1      & 13.72128963  & 50.78665924  \\
+DE-Seh & 2008 & 2010 & FLUXNET2015 & 12     & 6.449649811  & 50.87062454  \\
+DE-SfN & 2013 & 2014 & FLUXNET2015 & 11     & 11.32750034  & 47.80638885  \\
+DE-Tha & 1998 & 2014 & FLUXNET2015 & 1      & 13.56694031  & 50.9636116   \\
+DE-Wet & 2002 & 2006 & LaThuile    & 1      & 11.45753002  & 50.45349884  \\
+DK-Fou & 2005 & 2005 & FLUXNET2015 & 12     & 9.587220192  & 56.48419952  \\
+DK-Lva & 2005 & 2006 & LaThuile    & 10     & 12.08329964  & 55.68330002  \\
+DK-Ris & 2004 & 2005 & LaThuile    & 12     & 12.09722042  & 55.53028107  \\
+DK-Sor & 1997 & 2014 & FLUXNET2015 & 4      & 11.64463997  & 55.48587036  \\
+DK-ZaH & 2000 & 2013 & FLUXNET2015 & 10     & -20.5503006  & 74.47319794  \\
+ES-ES1 & 1999 & 2006 & LaThuile    & 1      & -0.318809986 & 39.34597015  \\
+ES-ES2 & 2005 & 2006 & LaThuile    & 12     & -0.31527999  & 39.27555847  \\
+ES-LMa & 2004 & 2006 & LaThuile    & 9      & -5.773359776 & 39.9426918   \\
+ES-LgS & 2007 & 2007 & FLUXNET2015 & 7      & -2.965830088 & 37.09793472  \\
+ES-VDA & 2004 & 2004 & LaThuile    & 10     & 1.448500037  & 42.15217972  \\
+FI-Hyy & 1996 & 2014 & FLUXNET2015 & 1      & 24.29500008  & 61.84749985  \\
+FI-Kaa & 2000 & 2002 & LaThuile    & 11     & 27.29503059  & 69.14069366  \\
+FI-Lom & 2007 & 2009 & FLUXNET2015 & 11     & 24.20918083  & 67.99720001  \\
+FI-Sod & 2008 & 2014 & FLUXNET2015 & 1      & 26.63783073  & 67.36186218  \\
+FR-Fon & 2005 & 2013 & FLUXNET2015 & 4      & 2.780139923  & 48.47639847  \\
+FR-Gri & 2005 & 2013 & FLUXNET2015 & 12     & 1.951910019  & 48.84421921  \\
+FR-Hes & 1997 & 2006 & LaThuile    & 4      & 7.065559864  & 48.67416     \\
+FR-LBr & 2003 & 2008 & FLUXNET2015 & 1      & -0.769299984 & 44.71710968  \\
+FR-Lq1 & 2004 & 2006 & LaThuile    & 10     & 2.735830069  & 45.64305878  \\
+FR-Lq2 & 2004 & 2006 & LaThuile    & 10     & 2.737030029  & 45.63919067  \\
+FR-Pue & 2000 & 2014 & FLUXNET2015 & 2      & 3.595829964  & 43.74139023  \\
+GF-Guy & 2004 & 2014 & FLUXNET2015 & 2      & -52.92485809 & 5.278771877  \\
+HU-Bug & 2003 & 2006 & LaThuile    & 10     & 19.60129929  & 46.69110107  \\
+ID-Pag & 2002 & 2003 & LaThuile    & 2      & 113.9000015  & -2.319999933 \\
+IE-Ca1 & 2004 & 2006 & LaThuile    & 12     & -6.918139935 & 52.85879135  \\
+IE-Dri & 2003 & 2005 & LaThuile    & 10     & -8.751810074 & 51.98669052  \\
+IT-Amp & 2003 & 2006 & LaThuile    & 10     & 13.60515976  & 41.90409851  \\
+IT-BCi & 2005 & 2010 & FLUXNET2015 & 12     & 14.95744038  & 40.5237999   \\
+IT-CA1 & 2012 & 2013 & FLUXNET2015 & 4      & 12.02655983  & 42.38040924  \\
+IT-CA2 & 2012 & 2013 & FLUXNET2015 & 12     & 12.02604008  & 42.37722015  \\
+IT-CA3 & 2012 & 2013 & FLUXNET2015 & 4      & 12.02219963  & 42.38000107  \\
+IT-Col & 2007 & 2014 & FLUXNET2015 & 4      & 13.58813953  & 41.84936142  \\
+IT-Cpz & 2001 & 2008 & FLUXNET2015 & 2      & 12.37611008  & 41.70524979  \\
+IT-Isp & 2013 & 2014 & FLUXNET2015 & 4      & 8.633580208  & 45.81264114  \\
+IT-LMa & 2003 & 2004 & LaThuile    & 4      & 7.582590103  & 45.15258026  \\
+IT-Lav & 2005 & 2014 & FLUXNET2015 & 1      & 11.28131962  & 45.95619965  \\
+IT-MBo & 2003 & 2012 & FLUXNET2015 & 10     & 11.04582977  & 46.01467896  \\
+IT-Mal & 2003 & 2003 & LaThuile    & 10     & 11.70333958  & 46.1140213   \\
+IT-Noe & 2004 & 2014 & FLUXNET2015 & 6      & 8.151689529  & 40.60617828  \\
+IT-Non & 2002 & 2002 & LaThuile    & 4      & 11.0910902   & 44.69018936  \\
+IT-PT1 & 2003 & 2004 & FLUXNET2015 & 4      & 9.061039925  & 45.20087051  \\
+IT-Ren & 2010 & 2013 & FLUXNET2015 & 1      & 11.43369007  & 46.58686066  \\
+IT-Ro1 & 2002 & 2006 & FLUXNET2015 & 4      & 11.93000984  & 42.4081192   \\
+IT-Ro2 & 2002 & 2008 & FLUXNET2015 & 4      & 11.92092991  & 42.39025879  \\
+IT-SR2 & 2013 & 2014 & FLUXNET2015 & 1      & 10.29090977  & 43.73202896  \\
+IT-SRo & 2003 & 2012 & FLUXNET2015 & 1      & 10.28444004  & 43.7278595   \\
+JP-SMF & 2003 & 2006 & FLUXNET2015 & 5      & 137.0787964  & 35.26169968  \\
+NL-Ca1 & 2003 & 2006 & LaThuile    & 10     & 4.927000046  & 51.97100067  \\
+NL-Hor & 2008 & 2011 & FLUXNET2015 & 10     & 5.07130003   & 52.24034882  \\
+NL-Loo & 1997 & 2013 & FLUXNET2015 & 1      & 5.743559837  & 52.1665802   \\
+PL-wet & 2004 & 2005 & LaThuile    & 11     & 16.30940056  & 52.7621994   \\
+PT-Esp & 2002 & 2004 & LaThuile    & 2      & -8.601799965 & 38.63940048  \\
+PT-Mi1 & 2005 & 2005 & LaThuile    & 2      & -8.000060081 & 38.54064178  \\
+PT-Mi2 & 2005 & 2006 & LaThuile    & 10     & -8.024550438 & 38.47650146  \\
+RU-Che & 2003 & 2004 & FLUXNET2015 & 11     & 161.3414307  & 68.61303711  \\
+RU-Fyo & 2003 & 2014 & FLUXNET2015 & 1      & 32.92208099  & 56.46152878  \\
+RU-Zot & 2003 & 2003 & LaThuile    & 8      & 89.35079956  & 60.80080032  \\
+SD-Dem & 2005 & 2009 & FLUXNET2015 & 9      & 30.47830009  & 13.28289986  \\
+SE-Deg & 2002 & 2005 & LaThuile    & 10     & 19.55653954  & 64.18196869  \\
+UK-Gri & 2000 & 2001 & LaThuile    & 1      & -3.79805994  & 56.6072197   \\
+UK-Ham & 2004 & 2004 & LaThuile    & 4      & -0.858299971 & 51.15353012  \\
+UK-PL3 & 2005 & 2006 & LaThuile    & 5      & -1.266669989 & 51.45000076  \\
+US-AR1 & 2010 & 2012 & FLUXNET2015 & 10     & -99.41999817 & 36.42670059  \\
+US-AR2 & 2010 & 2011 & FLUXNET2015 & 10     & -99.59750366 & 36.63579941  \\
+US-ARM & 2003 & 2012 & FLUXNET2015 & 12     & -97.48880005 & 36.60580063  \\
+US-Aud & 2003 & 2005 & LaThuile    & 10     & -110.509201  & 31.59070015  \\
+US-Bar & 2005 & 2005 & LaThuile    & 5      & -71.28807831 & 44.06464005  \\
+US-Bkg & 2005 & 2006 & LaThuile    & 10     & -96.83616638 & 44.34529114  \\
+US-Blo & 2000 & 2006 & FLUXNET2015 & 1      & -120.6327515 & 38.89530182  \\
+US-Bo1 & 1997 & 2006 & LaThuile    & 12     & -88.29039764 & 40.00619888  \\
+US-Cop & 2002 & 2003 & FLUXNET2015 & 10     & -109.3899994 & 38.09000015  \\
+US-FPe & 2000 & 2006 & LaThuile    & 10     & -105.1018982 & 48.30770111  \\
+US-GLE & 2009 & 2014 & FLUXNET2015 & 1      & -106.2398987 & 41.36650085  \\
+US-Goo & 2004 & 2006 & LaThuile    & 10     & -89.87349701 & 34.25469971  \\
+US-Ha1 & 1992 & 2012 & FLUXNET2015 & 4      & -72.17150116 & 42.53779984  \\
+US-Ho1 & 1996 & 2004 & LaThuile    & 1      & -68.74019623 & 45.20410156  \\
+US-KS2 & 2003 & 2006 & FLUXNET2015 & 6      & -80.67153168 & 28.60857773  \\
+US-Los & 2000 & 2008 & FLUXNET2015 & 11     & -89.97920227 & 46.08269882  \\
+US-MMS & 1999 & 2014 & FLUXNET2015 & 4      & -86.4131012  & 39.32320023  \\
+US-MOz & 2005 & 2006 & LaThuile    & 4      & -92.20001221 & 38.74411011  \\
+US-Me2 & 2002 & 2014 & FLUXNET2015 & 1      & -121.5574036 & 44.45230103  \\
+US-Me4 & 1996 & 2000 & LaThuile    & 1      & -121.6223984 & 44.49919891  \\
+US-Me6 & 2011 & 2014 & FLUXNET2015 & 1      & -121.6078033 & 44.32329941  \\
+US-Myb & 2011 & 2014 & FLUXNET2015 & 11     & -121.7650986 & 38.04980087  \\
+US-NR1 & 1999 & 2014 & FLUXNET2015 & 1      & -105.546402  & 40.03290176  \\
+US-Ne1 & 2002 & 2012 & FLUXNET2015 & 12     & -96.47660065 & 41.1651001   \\
+US-Ne2 & 2002 & 2012 & FLUXNET2015 & 12     & -96.4701004  & 41.16490173  \\
+US-Ne3 & 2002 & 2012 & FLUXNET2015 & 12     & -96.43969727 & 41.17969894  \\
+US-PFa & 1995 & 2014 & FLUXNET2015 & 5      & -90.27230072 & 45.94589996  \\
+US-Prr & 2011 & 2013 & FLUXNET2015 & 1      & -147.4875946 & 65.123703    \\
+US-SP1 & 2005 & 2005 & LaThuile    & 1      & -82.21877289 & 29.73806953  \\
+US-SP2 & 2000 & 2004 & LaThuile    & 1      & -82.24481964 & 29.76479912  \\
+US-SP3 & 1999 & 2004 & LaThuile    & 2      & -82.16327667 & 29.75477028  \\
+US-SRG & 2009 & 2014 & FLUXNET2015 & 10     & -110.8276978 & 31.7894001   \\
+US-SRM & 2004 & 2014 & FLUXNET2015 & 8      & -110.8659973 & 31.82139969  \\
+US-Syv & 2002 & 2008 & FLUXNET2015 & 5      & -89.34770203 & 46.24200058  \\
+US-Ton & 2001 & 2014 & FLUXNET2015 & 8      & -120.9660034 & 38.43159866  \\
+US-Tw4 & 2014 & 2014 & FLUXNET2015 & 11     & -121.6413269 & 38.10274506  \\
+US-Twt & 2010 & 2014 & FLUXNET2015 & 12     & -121.6530991 & 38.1086998   \\
+US-UMB & 2000 & 2014 & FLUXNET2015 & 4      & -84.71379852 & 45.55979919  \\
+US-Var & 2001 & 2014 & FLUXNET2015 & 10     & -120.9507599 & 38.41329956  \\
+US-WCr & 1999 & 2006 & FLUXNET2015 & 4      & -90.07990265 & 45.80590057  \\
+US-Whs & 2008 & 2014 & FLUXNET2015 & 7      & -110.0522003 & 31.74379921  \\
+US-Wkg & 2005 & 2014 & FLUXNET2015 & 10     & -109.9419022 & 31.73649979  \\
+ZA-Kru & 2000 & 2002 & FLUXNET2015 & 9      & 31.49690056  & -25.0196991  \\
+ZM-Mon & 2008 & 2008 & FLUXNET2015 & 4      & 23.25278091  & -15.43777847 \\ 
+\end{longtable}
+\end{center}
+
+\begin{center}
+\begin{longtable}{lcccccc}
+\caption{CoLM城市模式离线运行已经测试的站点列表}
+\label{tab:CoLM城市模式离线运行已经测试的站点列表}
+\\
+\hline 
+\multicolumn{1}{l}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年}} & \multicolumn{1}{c}{\textbf{终止年}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
+\endfirsthead
+
+\multicolumn{7}{c}%
+{{\bfseries \tablename\ \thetable{} -- \kaishu 续表}} \\
+\hline \multicolumn{1}{l}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年}} & \multicolumn{1}{c}{\textbf{终止年}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
+\endhead
+
+\hline \multicolumn{7}{r}{{\kaishu 接下一页表格}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+AU-Preston & 1993 & 2004 & Urban-Plumer2 & 13 & -37.7306 & 145.0145 \\
+AU-SurreyHills & 1994 & 2004 & Urban-Plumber2 & 13 & -37.8265 & 145.099 \\
+CA-Sunset & 2002 & 2016 & Urban-Plumber2 & 13 & 49.2261 & -123.078 \\
+FI-Kumpula & 2000 & 2013 & Urban-Plumber2 & 13 & 60.2028 & 24.9611 \\
+FI-Torni & 2000 & 2013 & Urban-Plumber2 & 13 & 60.1678 & 24.9387 \\
+FR-Capitole & 1994 & 2005 & Urban-Plumber2 & 13 & 43.6035 & 1.4454 \\
+GR-HECKOR & 2009 & 2020 & Urban-Plumber2 & 13 & 35.3361 & 25.1328 \\
+JP-Yoyogi & 2006 & 2020 & Urban-Plumber2 & 13 & 36.5545 & 139.6845 \\
+NL-Amsterdan & 2009 & 2020 & Urban-Plumber2 & 13 & 52.3665 & 4.8929 \\
+PL-Lipowa & 1998 & 2012 & Urban-Plumber2 & 13 & 51.7625 & 19.4453 \\
+PL-Narutowicza & 1998 & 2012 & Urban-Plumber2 & 13 & 51.7733 & 19.4811 \\
+SG-TeloKurau06 & 1996 & 2007 & Urban-Plumber2 & 13 & 1.3141 & 103.9112 \\
+UK-KingsCollege & 2002 & 2014 & Urban-Plumber2 & 13 & 51.5118 & -0.1167 \\
+UK-Swindon & 2001 & 2013 & Urban-Plumber2 & 13 & 51.5846 & -1.7981 \\
+\end{longtable}
+\end{center}
+

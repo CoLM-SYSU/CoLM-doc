@@ -2,7 +2,8 @@
 %\addcontentsline{toc}{chapter}{模式结构}
 \section{网格构建}\label{网格构建}
 
-通用陆面模式（CoLM，Common Land Model）首先对陆地表面进行剖分，将模拟区域按一定规则划分成单元（Element），模拟分辨率决定了单元平均面积的大小。CoLM中包含三种单元划分规则：1）经纬度网格(图~\ref{fig:经纬度网格})；2）非结构网格（三角形/六边形）(图~\ref{fig:六边形单元网格},~\ref{fig:三角形单元网格})；3）流域单元（Catchment）(图~\ref{fig:流域单元网格})。
+通用陆面模式（CoLM，Common Land Model）首先对陆地表面进行剖分，将模拟区域按一定规则划分成单元（Element），模拟分辨率决定了单元平均面积的大小。CoLM中包含三种单元划分规则：1）经纬度网格(图~\ref{fig:经纬度网格})；2）非结构网格（三角形/六边形）(图~\ref{fig:六边形单元网格},~\ref{fig:三角形单元网格})；3）流域单元（Catchment）(图~\ref{fig:流域单元网格})。除默认的三种网格外，CoLM实际可使用任意形状单元的网格。
+
 
  {
 \begin{figure}[htbp]
@@ -37,29 +38,16 @@
 \end{figure}
 }
 
-经纬度网格通过规定经度和纬度分割线的位置来建立，单元的边界由东西两段经线和南北两段纬线组成。经纬度网格的分辨率通常使用经纬度分割线的间距来表达，例如，分辨率为0.5\textdegree 表示相邻两条纬度分割线和经度分割线的距离均为0.5\textdegree。
-
-
-包括三角形网格和六边形网格在内的非结构网格是一种无规则拓扑关系的网格。与经纬度网格相比，非结构网格的分辨率取决于指定一个或者多个目标的分布特征（例如高程、坡度、土地利用、植被类型等），在目标变化梯度较大的地区采用高分辨率，而在变化梯度较小的地区采用低分辨率。因此非结构化基于网格的多分辨率模拟保留了全局模型的整体结构，同时支持局部区域的高分辨率模拟。非结构网格的构建是基于 Delaunay 三角网等值线生成算法，首先将经纬度网格数据转化插值，生成铺盖整个球面的三角形网格数据；接着根据所选取的目标进行一次或者多次细化；再通过连接具有相同顶点的六个三角形三条边的重心生成蜂窝六边形（使用六边形网格的情况下），最后生成全球或者区域的三角形或六边形可变分辨率网格。
-
-流域单元网格通过对河网进行分段来建立，一个单元定义为一段河道的集水区域，流域单元之间具有明确的上下游关系。流域单元网格的分辨率使用单元的面积阈值（即河道集水区域的面积阈值）来表达，自然连通的湖泊设置为独立的单元，不受面积阈值的限制。
-
-
 \subsection{经纬度网格}\label{经纬度网格}
-
-
-\subsection{流域单元网格}\label{流域单元网格}
-
+经纬度网格通过规定经度和纬度分割线的位置来建立，单元的边界由东西两段经线和南北两段纬线组成。经纬度网格的分辨率通常使用经纬度分割线的间距来表达，例如，分辨率为0.5\textdegree 表示相邻两条纬度分割线和经度分割线的距离均为0.5\textdegree。经度分割线和纬度分割线分别可以是不等间距的，当间距不等时，需从外部数据读入分割线的位置来定义模拟区域的经纬度网格。
 
 \subsection{非结构网格}\label{非结构网格}
-非结构网格是一种无规则拓扑关系的网格，通常由各种不规则多边形组成。与结构（方形）网格相比，非结构网格的分辨率取决于指定目标的分布特征[]。非结构化基于网格的多分辨率模拟保留了全局模型的整体结构，同时支持局部区域的高分辨率模拟。与结构网格相比，非结构网格具有灵活性强、节点和单元的分布可控性好、能较好地控制网格的大小和节点的密度的优点，并且它弥补了结构网格不能够解决任意形状和连通区域的网格剖分的缺陷。
-
-在原有的经纬度网格的基础上，CoLM新开发了一个非结构化网格构建工具，可以基于多目标（水平分布特征），如高程、坡度、地形、土地利用和植被类型，自动识别不同区域所需的网格分辨率。模式运行流程如图~\ref{fig:非结构化网格CoLM总体运行流程图} 所示：
+在原有的经纬度网格的基础上，CoLM新开发了一个非结构化网格构建工具，可以基于多个水平分布特征，自动识别不同区域所需的网格分辨率，生成包括三角形网格和六边形网格在内的无规则拓扑关系网格。具体而言，非结构网格的分辨率取决于指定一个或者多个目标的分布特征（例如高程、坡度、土地利用、植被类型等），在目标变化梯度较大的地区采用高分辨率，而在变化梯度较小的地区采用低分辨率。因此非结构化基于网格的可变分辨率模拟保留了全局模型的整体结构，同时支持局部区域的高分辨率模拟。非结构网格的构建是基于 Delaunay 三角网等值线生成算法，首先将经纬度网格数据转化插值，生成铺盖整个球面的三角形网格数据；接着根据所选取的目标进行一次或者多次细化与网格结构调整；再依次连接具有相同顶点的五至七个三角形重心生成多边形网格（以六边形网格为主），最后输出全球或者区域的三角形或多边形可变分辨率网格。总之，非结构网格具有灵活性强、节点和单元的分布可控性好、能较好地控制网格的大小和节点的密度的优点。模式运行流程如图~\ref{fig:非结构化网格CoLM总体运行流程图} 所示：
  {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/模式构架/非结构化网格CoLM总体运行流程图.png}
-\caption{非结构化网格CoLM总体运行流程图，摘自Fan et al. [2023, in preparation]。}
+\includegraphics[width=0.8\textwidth]{Figures/模式构架/非结构化网格CoLM总体运行流程图.png}
+\caption{非结构化网格CoLM总体运行流程图。}
 \label{fig:非结构化网格CoLM总体运行流程图}
 \end{figure}
 }
@@ -69,7 +57,7 @@
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/非结构化网格生成流程图.png}
-\caption{非结构化网格生成流程图，摘自Fan et al. [2023, in preparation]。}
+\caption{非结构化网格生成流程图。}
 \label{fig:非结构化网格生成流程图}
 \end{figure}
 }
@@ -100,7 +88,7 @@ tksatu         & 土壤导热系数（未冻结、饱和） \\\bottomrule
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/三角形网格简易细化.png}
-\caption{三角形网格简易细化，摘自Fan et al. [2023, in preparation]}
+\caption{三角形网格简易细化}
 \label{fig:三角形网格简易细化}
 \end{figure}
 }
@@ -116,7 +104,7 @@ tksatu         & 土壤导热系数（未冻结、饱和） \\\bottomrule
 
 \item 弹簧动态调整
 
-虽然通过初步的细化生成的三角形在平面上看起来是等边三角形，但实际上并不完全等同于等边三角形，有一定的角度偏差。实际上，如果考虑到经纬度基础数据在高纬度形变的影响，三角形的变形也会随着纬度的增加而增加。\citet{tomita2002optimization}描述了一种称为“Spring Dynamics”的计算方法，用于在准均匀的全局网格上调整三角形网格单元的形状和大小。该方法代表了一种物理模拟，其中网格中的每个边都像弹簧一样在其端点（顶点）之间施加吸引力或相反的力，该弹力取决于其自身的长度、平衡长度和弹簧系数。该研究表明，将平衡长度设置为使弹簧松弛在数值上稳定的最大可能值，即接近整个网格的平均边长，会产生最小的网格单元尺寸的空间变化，并且调整过程能显著提高模型的数值精度。
+虽然通过初步的细化生成的三角形在平面上看起来是等边三角形，但实际上如果考虑到经纬度基础数据在高纬度形变的影响，三角形的变形也会随着纬度的增加而增加。\citet{tomita2002optimization}描述了一种称为“Spring Dynamics”的计算方法，用于在准均匀的全局网格上调整三角形网格单元的形状和大小。该方法代表了一种物理模拟，其中网格中的每个边都像弹簧一样在其端点（顶点）之间施加吸引力或相反的力，该弹力取决于其自身的长度、平衡长度和弹簧系数。该研究表明，将平衡长度设置为使弹簧松弛在数值上稳定的最大可能值，即接近整个网格的平均边长，会产生最小的网格单元尺寸的空间变化，并且调整过程能显著提高模型的数值精度。
 
 \item 计算包含关系
 
@@ -131,20 +119,20 @@ CoLM非结构网格的空间细分基于三角形网格与阈值数据（部分�
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/多阈值非结构网格细化.png}
-\caption{多阈值非结构网格细化示例，摘自Fan et al. [2023, in preparation]}
+\caption{多阈值非结构网格细化示例。}
 \label{fig:多阈值非结构网格细化}
 \end{figure}
 }
 
 \item 阈值细化
 
-如图~\ref{fig:非结构化网格生成流程图} 所示，本步骤主要实现三角网格的阈值细化。利用生成的初始三角网格包含关系，计算三角网格下各阈值类型的数组，然后根据阈值标记网格是否需要细化。如图~\ref{fig:三角形网格简易细化} 所示，通过将三角网格“分成四格”，提高了三角网格的分辨率。然后，将新生成的网格信息添加到原始数组中，并添加精细的网格标记。在计算更新网格的包含关系时，只需要遍历精化三角形最小外围矩形内的经纬度网格，可以大大减少计算时间。当迭代次数超过最大迭代阈值，或所有三角形网格满足阈值时，三角形非结构化网格阈值细化终止。程序将输出最终生成的带有包含信息的三角网格信息数据(见表~\ref{tab:细化阈值文件})。图~\ref{fig:根据LAI对非结构网格进行多重细化} 展示了基于叶面积指数特征不同细化的区域六边形网格结构。
+如图~\ref{fig:非结构化网格生成流程图} 所示，本步骤主要实现三角网格的阈值细化。利用生成的初始三角网格包含关系，计算三角网格下各阈值类型的数组，然后根据阈值标记网格是否需要细化。如图~\ref{fig:三角形网格简易细化} 所示，通过将三角网格“分成四格”，提高了三角网格的分辨率。然后，将新生成的网格信息添加到原始数组中，并添加精细的网格标记。在计算更新网格的包含关系时，只需要遍历细化三角形最小外围矩形内的经纬度网格，可以大大减少计算时间。当迭代次数超过最大迭代阈值，或所有三角形网格满足阈值时，三角形非结构化网格阈值细化终止。程序将输出最终生成的带有包含信息的三角网格信息数据(见表~\ref{tab:细化阈值文件})。图~\ref{fig:根据LAI对非结构网格进行多重细化} 展示了基于叶面积指数特征不同细化的区域六边形网格结构。
 
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/根据LAI对非结构网格进行多重细化.png}
-\caption{根据LAI对非结构网格进行多重细化，摘自Fan et al. [2023, in preparation]}
+\caption{根据LAI对非结构网格进行多重细化。}
 \label{fig:根据LAI对非结构网格进行多重细化}
 \end{figure}
 }
@@ -157,15 +145,71 @@ CoLM非结构网格的空间细分基于三角形网格与阈值数据（部分�
 \item 遍历所有未细化的三角网格。当其相邻的3个三角形网格中有1个以上被细化时，该三角形网格需要被细化。
 \item 在三角形网格中找到并记录凹陷区域（即图~\ref{fig:非结构化网格生成流程图} 底部细化区域）。当两个凹陷区域有一个公共三角形网格时，细化组成它们的三个三角形网格。
 \item 循环遍历所有三角形网格顶点，计算剔除悬挂节点后该点将添加的邻接边数，当增加后邻接边数大于7时，细化该点的所有邻接三角形网格。
+
+
 在预处理过程中，三个进程依次进入迭代。当三个过程同时没有添加新的细化网格时，视为预处理完成。预处理后，可以进行消除挂节点的操作（即图~\ref{fig:非结构化网格生成流程图}），得到可以用多边形网格构建的三角形网格。
 \end{enumerate}
 \item 网格调整和多边形网格生成\\
-三角形网格构造完成后，消除凹陷区域后会生成许多钝角三角形，而多边形网格是由三角形网格重心连接而成的。因此，这会导致在多边形网格的生成过程中，一些多边形与正多边形偏差较大，降低了网格的各向同性，从而影响了网格在CoLM等水文模型中的应用。为了在不过度影响原有网格结构的情况下对网格进行校正。
+三角形网格构造完成后，消除凹陷区域后会生成许多钝角三角形，而多边形网格是由三角形网格重心连接而成的。因此，这会导致在多边形网格的生成过程中，一些多边形与正多边形偏差较大，降低了网格的各向同性，从而影响了网格在CoLM等水文模型中的应用。为了在不过度影响原有网格结构的情况下对网格进行校正。三角形网格构造完成后，消除凹陷区域后会生成许多钝角三角形，而多边形网格是由三角形网格重心连接而成的。因此，这会导致在多边形网格的生成过程中，一些多边形与正多边形偏差较大，降低了网格的各向同性，从而影响了网格在CoLM等水文模型中的应用。为了在不过度影响原有网格结构的情况下对网格进行校正，本文根据钝角三角形角度与边长计算经纬度位移分量，通过迭代对钝角三角形进行调整，当不存在钝角三角形或超过最大迭代次数时，调整结束。
+在每次迭代过程中，通过三角网格的重心构造多边形网格，并计算三角形网格与正三角形、多边形网格与正多边形的标准差，这是衡量网格自身物理结构质量的标准之一。迭代完成后，通过三角网格重心所构造处的最后一个多边形网格即为最终结果。
 \item 输出网格文件\\
 在上述步骤完成之后，可以输出两种类型的网格。第一种一是最后一次迭代生成的三角形网格，第二种是根据三角形网格重心连接的六边形网格。在MPI版本中，无需将地表、大气等初始数据的存储方式由经纬度网格转换为非结构化网格，就可以实现CoLM中地表水文过程在非结构化网格上的模拟。
 \end{enumerate}
 
 更为详细的网格制作过程参考附录。
+
+\subsection{流域单元网格}\label{流域单元网格}
+流域单元为面积大致相同的集水区域(图~\ref{fig:流域单元网格})。流域单元考虑了网格单元之间的水文关联以及单元内部的水文结构，基于流域单元网格，可建立对产流和汇流动力学过程的模拟方案。此外，流域单元及其次级单元（高度带单元）的划分主要依赖高程数据，在陆面过程受地形影响较为显著的区域，采用流域单元网格可显著减少网格内陆表变量的异质性，提高模式模拟的精度。
+
+CoLM中的流域单元网格为三级结构：第一级为流域单元，第二级为高度带单元，第三级为次网格单元（图~\ref{fig:流域单元示意图}）。其中，流域单元和高度带单元使用水文学数据生成，次网格单元的生成方法与其他网格中的次网格单元相同（见~\ref{次网格}~节）。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figures/模式构架/流域单元示意图.jpg}
+\caption{CoLM中的流域单元网格划分示意图}
+\label{fig:流域单元示意图}
+\end{figure}
+}
+
+流域单元（第一级）为面积大致相同的集水区域（图~\ref{fig:流域单元示意图}(2)）。流域单元网格的分辨率表示为一个单元的面积阈值（即河道集水区域的面积阈值，记为Cat-size）。流域单元的划分使用高分辨率的“上游集水面积”（UPA）和“水流方向”格点数据（其中的格点以下称为像素点），分为两个步骤。
+第一步，提取研究区域的河道像素点并将其分段。此处的河道像素点定义为上游集水面积大于或等于Cat-size的像素点，未必为真实的河道。提取完成后，根据以下三个规则从下游至上游将河道分段：1.一段河道内没有河道分支；2.局部集水面积（定义为该河段的总集水面积减去上游河道的集水面积）不超过Cat-size；3.河道长度小于Cat-size的平方根。其中，规则1的目的是排除汇流点在流域单元内部的情况，以更合理地进行汇流过程的模拟；规则3的目的是避免流域单元较为狭长，以减少单元内部陆表变量的变化。
+第二步，根据河道分段将研究区域划分为流域单元。一个流域单元定义为一段河道的局部集水区域。对每个像素点，可根据水流方向数据向下找到其所在的流域单元。
+
+高度带单元（第二级）为主要依赖高程进行划分的流域单元内部子区域（图~\ref{fig:流域单元示意图}(3)）。因流域面积较大时，一段河道的上下游会有落差，CoLM中不直接使用高程数据对流域单元进行划分，而是使用像素点的排水高度。排水高度定义为一个像素点和它流入的河道点的高度差（Height above nearest drainage, HAND），可根据高程数据和像素点与河道的汇流关系计算得出。此外，为了基于高度带单元进行产流动力学过程的模拟，CoLM对高度带单元的划分进行了进一步的约束，划分后的高度带单元需满足：1）连通性；2）每个高度带单元都有唯一的下游单元。对高度带单元进行划分的算法见图~\ref{fig:高度带单元算法流程}。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/模式构架/高度带单元划分算法.jpg}
+\caption{高度带单元划分算法流程图}
+\label{fig:高度带单元算法流程}
+\end{figure}
+}
+
+图~\ref{fig:高度带单元约束示意}~显示了对高度带单元的划分进行上述约束的作用。仅使用HAND数据进行高度带单元的划分时，会产生空间上不连通的单元（图~\ref{fig:高度带单元约束示意}b~中的6号和7号单元），一个高度带单元的不同部分在地理位置上可能相隔较远，增加连通性约束后，可避免这种情形。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figures/模式构架/高度带单元的约束示意图.jpg}
+\caption{对高度带单元进行约束的作用：a）排水高度（HAND）；b）仅根据排水高度划分高度带单元；c）具有连通性的高度带单元；d）满足连通性和具有唯一下游单元的高度带单元。上图中的箭头表示水流的方向。}
+\label{fig:高度带单元约束示意}
+\end{figure}
+}
+
+在流域单元网格中，每个流域单元关联了一段河道。目前未考虑河道向下游分叉的情况，因此，除入海口和内陆洼地单元外，每个流域单元都有唯一的下游单元，整个模拟区域的流域单元在水文上都是连通的（见图~\ref{fig:湖泊划分}~左）。
+
+自然连通的湖泊设置为独立的单元，不受面积阈值的限制。生成流域单元网格时，首先使用HydroLAKES数据\citep{messager2016nc}将区域内的湖泊标识出来，再将模拟区域内的其余部分划分为流域单元。为了避免单个湖泊的面积过大，使用CVT算法\citep{du1999siam}对湖泊进行了进一步的划分（见图~\ref{fig:湖泊划分}~右）。
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figures/模式构架/湖泊划分.jpg}
+\caption{流域单元网格中的湖泊。左图为模拟区域（淮河流域）的范围、高程以及河道和湖泊网络。右图表示采用CVT算法将湖泊区域进一步划分为更小的单元。}
+\label{fig:湖泊划分}
+\end{figure}
+}
+
 
 
 \section{次网格结构}\label{次网格}
@@ -176,7 +220,7 @@ CoLM非结构网格的空间细分基于三角形网格与阈值数据（部分�
 Patch是通过使用高分辨率的精细化网格数据，根据网格单元内部地表覆盖类型、植被功能类型、叶面积指数、土壤属性和地形等分布特征，按一定方式进行划分并聚合而来。Patch是用于模拟网格单元内部不同下垫面覆盖过程(对地表异质性考虑)，同时也起到了减少计算量作用。
 
 
-由patch可以组成按经纬度网格(章节~\ref{经纬度网格})、流域单元网格(章节~\ref{流域单元网格})及非结构(章节~\ref{非结构网格})网格。
+由patch可以组成按经纬度网格、流域单元网格(章节~\ref{流域单元网格})及非结构(章节~\ref{非结构网格})网格。
 在patch尺度计算得到的通量按其所在网格覆盖比例进行面积加权平均，作为地表网格通量模拟结果。
 地表状态或预报变量一般情况下亦是如此，在patch尺度计算得到的结果按照面积加权平均后作为模式结果输出。
 
@@ -190,27 +234,36 @@ Patch是通过使用高分辨率的精细化网格数据，根据网格单元内
 }
 
 
-CoLM非海洋patch从大类上分为五类：植被(含裸土)、城市、湿地、冰川和水体，如图\ref{fig:次网格结构示意图}所示。在模式中的编号依次为0--4。其中植被和城市patch可根据不同类型进一步细分。
+CoLM非海洋patch从大类上分为五类：植被(含裸土)、城市、湿地、冰川和水体，如图~\ref{fig:次网格结构示意图}所示。在模式中的编号依次为0--4。其中植被和城市patch可根据不同类型进一步细分。
 
 \subsection{植被次网格结构}
-植被patch可以分为自然植被和作物。自然植被patch采用三种次网格植被结构进行表征(图\ref{fig:植被次网格方案})：1) 地表覆盖类型--LCT (Land Cover Type)；2) 植被功能型--PFT (Plant Function Type)和3) 植物群落--PC (Plant Community)。以上三种方式，模式运行时只能选择其中一种。
-
-LCT方案为CoLM2014版原有方案(图~\ref{fig:植被次网格方案}a所示)，即将某一地表覆盖类型可能包含的多种功能型植被当成混合植被进行模拟，其设置的相关参数可视为等效参数。例如热带大草原，虽然可能包含树和草，但仍视为一种植被，因此相应的植被参数只有一套。
-
-PFT是目前陆面模式(如CLM和JULES)常采用的次网格表征方式，也是本版本CoLM新添加的方式(图\ref{fig:植被次网格方案}b所示)。
-PFT方案是将每一个细网格地表覆盖类型进行拆解，得到其PFT的组成种类和各自面积占比，并将其聚合到模式网格中。本版本CoLM PFT方案类似于CLM PFT方案，即模式格点中的所有PFT作为1个植被patch，共享土壤水热等环境，但各PFT的辐射和通量等过程计算相对独立。
-
-PC方案保留LCT方案中模拟对象，即地表覆盖类型，同时还进一步对LCT中的地表覆盖植被类型进行PFT细分(图\ref{fig:植被次网格方案}c所示)。
-不同于LCT方案把某一类型地表覆盖的所有植被视为混合植被，PC方案对某一地表覆盖类型所组成的PFT进行显式表达计算，所有PFT在同一地表覆盖类型中共享土壤水热等环境，同时辐射和通量计算等过程相互影响、同时求解，即考虑了PFT之间的共存与竞争。这一方案类似于植物群落的概念，故命名为PC (Plant Community)方案。
+植被patch可以分为自然植被和作物。自然植被patch采用三种次网格植被结构进行表征(图~\ref{fig:植被次网格方案})：1) 地表覆盖类型--LCT (Land Cover Type)；2) 植被功能型--PFT (Plant Function Type)和3) 植物群落--PC (Plant Community)。以上三种方式，模式运行时只能选择其中一种。
 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{Figures/模式构架/植被次网格方案示意图-v2.jpg}
-\caption{CoLM植被次网格方案示意图}
+\includegraphics[width=0.55\textwidth]{Figures/模式构架/植被次网格方案示意图_v4.jpg}
+\caption{CoLM植被次网格方案示意图。图中a (LCT方案)、b (PFT方案)中虚线框蒙版表示其包含的植被结构水平均一；图c (PC方案)与图a的差别在于缺少虚线框所示蒙版，即对次网格中的植被结构进行显式表达}
 \label{fig:植被次网格方案}
 \end{figure}
 }
+
+LCT方案为CoLM2014版原有方案(图~\ref{fig:植被次网格方案}a所示)，即将某一地表覆盖类型可能包含的多种功能型植被当成混合(水平均一)植被进行模拟，其设置的相关参数可视为等效参数，图~\ref{fig:植被次网格方案}a中虚线框所示蒙版表示其中所包含植被结构水平均一。例如热带大草原，虽然可能包含树和草，但仍视为一种植被，因此相应的植被参数只有一套。
+
+PFT是目前陆面模式(如CLM和JULES)常采用的次网格表征方式，也是本版本CoLM新添加的方式(图~\ref{fig:植被次网格方案}b所示)。
+PFT方案是将每一个细网格地表覆盖类型进行拆解，得到其PFT的组成种类和各自面积占比，并将其聚合到模式网格中。同样，每种PFT植被结构也假设为水平均一，在图~\ref{fig:植被次网格方案}b中用虚线蒙版表示。本版本CoLM PFT方案类似于CLM PFT方案，即模式格点中的所有PFT作为1个植被patch，共享土壤水热等环境，但各PFT的辐射和通量等过程计算相对独立。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\textwidth]{Figures/模式构架/植物群落示意图.png}
+\caption{CoLM植物群落(PC)次网格概念示意图}
+\label{fig:植物群落示意图}
+\end{figure}
+}
+
+PC方案保留LCT方案中模拟对象，即地表覆盖类型，同时还进一步对LCT中的地表覆盖植被类型进行PFT细分(图~\ref{fig:植被次网格方案}c所示)。
+不同于LCT方案把某一类型地表覆盖的所有植被视为混合植被，PC方案对某一地表覆盖类型所组成的PFT进行显式表达计算，所有PFT在同一次网格patch中共享辐射、风、水热及营养元素等环境，同时辐射和通量计算等过程PFT之间相互影响、同时求解，即考虑了PFT之间的共存与竞争(如图~\ref{fig:植物群落示意图}所示)。这一方案类似于植物群落的概念，故命名为PC (Plant Community)方案。
 
 LCT方案所依赖的地表覆盖类型数据可以直接由USGS (章节~\ref{USGS地表覆盖数据})或者MODIS-IGBP地表覆盖数据获取(章节~\ref{IGBP地表覆盖数据})。PFT和PC方案所需要的植被结构及属性数据由MODIS-IGBP地表覆盖数据加以其他辅助数据制作而成(章节~\ref{PFTPC数据及其依赖数据})。
 
@@ -237,27 +290,82 @@ LCT方案所依赖的地表覆盖类型数据可以直接由USGS (章节~\ref{US
 每种城市类型由屋顶、(地面)不透水面、透水面、阴/阳面墙、植被和水体组成。
 城市分类及其相关属性数据主要从外部文件读取(章节~\ref{城市数据})。
 
+\section{土壤和积雪的垂直分层}\label{土壤和积雪的垂直分层}
+
+CoLM默认将土壤分为10层，每一层土壤的中心深度$z_i$~(m)定义为：
+\begin{equation}
+z_{i} = f_{s}\left( \exp{\left\lbrack 0.5(i - 0.5) \right\rbrack - 1} \right)
+\end{equation}
+其中尺度因子$f_s=0.025$. 因为土壤水热梯度在接近土壤与大气的交界面时往往较大，采用指数定义可以保证土壤接近表面时得到更细的分层。每一层土壤的厚度$\Delta z_i$~(m)计算为：
+\begin{equation}
+\Delta z_{i}=\left\{\begin{array}{ll}0.5\left(z_{1}+z_{2}\right) & i=1 \\
+0.5\left(z_{i+1}-z_{i-1}\right) & i=2, \ldots, 9 \\ 
+z_{10}-z_{9} & i=10\end{array}\right.
+\end{equation}
+相邻两层土壤交界处的深度$z_{h,i}$ (m)可计算为：
+\begin{equation}
+z_{h, i}=\left\{\begin{array}{ll}0.5\left(z_{i}+z_{i+1}\right) & i=1, \ldots, 9 \\
+z_{10}+0.5 \Delta z_{10} & i=10\end{array}\right.
+\end{equation}
+CoLM中每层土壤中心的深度及每层下边界的深度见表~\ref{table:土壤分层}。
+
+\begin{table}[b]
+\caption{CoLM中的土壤分层（单位：米）} \label{table:土壤分层}
+\centering \renewcommand{\arraystretch}{1.2} \footnotesize
+\begin{tabular}{ccccccccccc}
+\toprule
+层 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\midrule
+中心位置 & 0.0071 & 0.0279 & 0.0623 & 0.1189 & 0.2122 & 0.3661 & 0.6198 & 1.0380 & 1.7276 & 2.8646 \\
+下边界位置 & 0.0175 & 0.0451 & 0.0906 & 0.1655 & 0.2891 & 0.4929 & 0.8289 & 1.3828 & 2.2961 & 3.4331 \\
+\bottomrule
+\end{tabular} 
+\end{table}
+
+
+雪盖位于土壤之上，可根据其厚度划分为至多5层。为与土壤层编号一致，
+这里与土壤表层相邻的雪层记为第0层，逐渐向上依次记为第 -1 层直至至多为第 -4 层。
+记$snl$为划分的雪层总层数的相反数，则最上层雪层即为第$snl+1$层。记雪层的厚度为$z_{sno}$，当$z_{sno}<0.01$时，这时积雪较少，不单独划分为层，$snl=0$，当$z_{sno}>=0.01$时，积雪分层的方案见图~\ref{fig:积雪分层}。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/模式构架/积雪分层.jpg}
+\caption{CoLM积雪分层方案。当$z_{sno}<0.01$时不形成积雪层}
+\label{fig:积雪分层}
+\end{figure}
+}
+    
+$z_{h,0}=0$为雪盖底层与土壤表层交界处的高度，$\Delta z_{i}$为第$i$层积雪的厚度。将交界面以上的高度定义为负值，则每一层雪的中心高度$z_i$~(m)与相邻两层雪交界处的高度$z_{h,i}$~(m)计算为：
+\begin{equation}
+\begin{aligned}
+z_{i} &= z_{h, i}-0.5 \Delta z_{i} \quad i=0, \ldots, snl+1 \\ 
+z_{h, i} &= z_{h, i+1}-\Delta z_{i+1}  \quad i=-1, \ldots, snl
+\end{aligned}
+\end{equation}
+
 
 \section{计算框架}\label{计算框架}
 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{Figures/模式构架/CoLM计算框图-v4.png}
+\includegraphics[width=\textwidth]{Figures/模式构架/CoLM计算框图_v5.png}
 \caption{CoLM计算框图}
 \label{fig:CoLM计算框图}
 \end{figure}
 }
 
-CoLM主程序计算流程主要包括数据的读取，模式结果输出以及时间步循环过程(图~\ref{fig:CoLM计算框图})。涉及的过程主要在\texttt{main}文件夹下源文件\texttt{CoLM.F90}，\texttt{CoLMDRIVER.F90}及\allowbreak \texttt{CoLMMAIN.F90}
-\allowbreak (\texttt{URBAN\allowbreak /Urban\allowbreak \_CoLMMAIN.F90}，当城市模式打开时)中进行调用。
+CoLM主程序计算流程主要包括模式数据的读取，时间步循环，次网格循环，以及模式数据输出(图~\ref{fig:CoLM计算框图})。涉及的过程主要在\texttt{main}文件夹下\texttt{CoLM.F90}，\texttt{CoLMDRIVER.F90}及\allowbreak \texttt{CoLMMAIN.F90}
+\allowbreak (\texttt{URBAN\allowbreak /Urban\allowbreak \_CoLMMAIN.F90}，当城市模式打开时)文件中进行调用。
 
-读取的数据大概可分为驱动数据和地表数据。其中驱动数据可以通过在离线模式下读取大气强迫数据，包括温度、风速、辐射、降雨等必要变量，以及气溶胶、氮沉降等可选变量，具体可参见表\ref{tab:陆面模式所需的大气状态变量}。目前可用于驱动CoLM离线运行的驱动数据集详见表\ref{tab:可用于驱动CoLM离线运行的大气驱动数据集}。在读取过程中可根据需要进行适当数据尺度转换(章节~\ref{大气强迫降尺度})；如时间尺度不匹配，可进行简单插值，详见\hyperlink{驱动数据时间尺度插值}{驱动数据时间尺度插值}；另外，驱动数据可以通过与大气模式耦合来获得(章节~\ref{CoLM与大气模式耦合})。模式输出变量可通过既定的网格在用户设定的时间间隔内进行变量聚合，作为模式运行结果输出(history
-file)或者对耦合大气模式的反馈，具体可参见表\ref{tab:大气模式所需的陆面模式输出变量}。地表数据涉及的内容繁多，根据模式运行所选择的功能选项按需读取，涉及的数据详见章节\nameref{基础数据}部分。
+\textbf{模式数据读取}大概可分为驱动数据和地表数据。其中驱动数据可以通过在离线模式下读取大气强迫数据，包括温度、风速、辐射、降雨等必要变量，以及气溶胶、氮沉降等可选变量，具体可参见表~\ref{tab:陆面模式所需的大气状态变量}。目前可用于驱动CoLM离线运行的大气驱动数据集详见表~\ref{tab:可用于驱动CoLM离线运行的大气驱动数据集}。在读取过程中可根据需要进行适当数据尺度转换(章节~\ref{大气强迫降尺度})；如时间尺度不匹配，可进行简单时间维插值，详见\hyperlink{驱动数据时间尺度插值}{驱动数据时间尺度插值}；另外，驱动数据可以通过与大气模式耦合来获得(章节~\ref{CoLM与大气模式耦合})。
 
-\textbf{时间步循环}主要包括次网格循环(涉及的过程在\texttt{CoLMDRIVER.F90}和\texttt{CoLMMAIN.F90\allowbreak /Urban\allowbreak \_CoLMMAIN.F90}进行调用)以及可选模块(侧向流、河道径流、数据同化和土地利用土地覆盖变化等模块，在\texttt{CoLM.F90}进行调用)的运行(图\ref{fig:CoLM计算框图} \textbf{时间步循环}所示)。
+\textbf{模式数据输出}可通过既定的网格在用户设定的时间间隔内进行变量聚合(次网格聚合到网格，章节~\ref{次网格})，作为模式运行结果输出(history file)或者对耦合大气模式的反馈，具体可参见表~\ref{tab:大气模式所需的陆面模式输出变量}。网格输出类型包括经纬度网格、流域单元网格(章节~\ref{流域单元网格})及非结构网格(章节~\ref{非结构网格})，同时也可以根据用户需求进行网格转换。地表数据涉及的内容繁多，根据模式运行所选择的功能选项按需读取，涉及的数据详见章节~\ref{基础数据} \nameref{基础数据}部分。
 
-\textbf{次网格循环}沿用了原CoLM运行方式，对5种非海洋patch进行循环计算，即植被(含裸土)、城市、湿地、冰川和水体。如果打开海洋模块，则在循环中加入对海洋热力过程的模拟(图\ref{fig:CoLM计算框图} \textbf{次网格循环}所示)。图中\textbf{次网格循环}所列过程为其简要列表，具体物理过程将从\nameref{part:flux}、\nameref{part:temp}、\nameref{part:SPC}、\nameref{part:hydro}、\nameref{part:BGC}、\nameref{part:human}六大部分各相关章节进行详细阐述。
+\textbf{时间步循环}主要包括次网格循环(涉及的过程在\texttt{CoLMDRIVER.F90}和\texttt{CoLMMAIN.F90\allowbreak /Urban\allowbreak \_CoLMMAIN.F90}进行调用)以及可选模块(侧向流、河道径流、数据同化和土地利用土地覆盖变化等模块，在\texttt{CoLM.F90}进行调用)的运行(图~\ref{fig:CoLM计算框图} \textbf{时间步循环}所示)。
+
+\textbf{次网格循环}沿用了原CoLM运行方式，对5种非海洋patch进行循环计算，即植被(含裸土)、城市、湿地、冰川和水体。如果打开海洋模块，则在循环中加入对海洋热力过程的模拟(图~\ref{fig:CoLM计算框图} \textbf{次网格循环}所示)。图中\textbf{次网格循环}所列过程为其简要列表，具体物理过程将从\nameref{part:flux}、\nameref{part:temp}、\nameref{part:SPC}、\nameref{part:hydro}、\nameref{part:BGC}、\nameref{part:human}六大部分各相关章节进行详细阐述。
 
 \section{陆气耦合}\label{陆气耦合}
 \subsection{陆面模式与大气模式的数据交换}
@@ -282,8 +390,8 @@ file)或者对耦合大气模式的反馈，具体可参见表\ref{tab:大气模
 位于$z_{atm,h}$高度的大气温度 & $T_{atm}$     & K            \\
 位于$z_{atm,w}$高度的大气比湿 & $q_{atm}$     & \unit{kg.kg^{-1}} \\
 近地面气压                & $P_{atm}$     & Pa           \\
-近地面下行长波辐射            & $L\downarrow$ & \unit{W.m^{-2}}   \\
-近地面下行短波辐射            & $S\downarrow$ & \unit{W.m^{-2}}   \\
+近地面下行长波辐射            & $L ^\downarrow$ & \unit{W.m^{-2}}   \\
+近地面下行短波辐射            & $S ^\downarrow$ & \unit{W.m^{-2}}   \\
 降水                   & $p$           & \unit{mm.s^{-1}}      \\
 二氧化碳浓度               & $c_a$         & ppmv         \\
 臭氧浓度                 & $c_o$         & \unit{mol.mol^{-1}}  \\
@@ -309,12 +417,12 @@ file)或者对耦合大气模式的反馈，具体可参见表\ref{tab:大气模
 \begin{tabular}{lcc}
 \toprule
 陆面模式输出变量    & 变量名                            & 单位      \\ \midrule
-潜热通量        & $\lambda_vE_p$+$\lambda\ E_g$+ & \unit{W.m^{-2}}    \\
-感热通量        & $H_p$+$H_g$                    & \unit{W.m^{-2}}    \\
-水汽通量        & $E_p$+$E_g$                    & \unit{mm.s^{-1}}    \\
-纬向动量通量      & $\tau_{p,x}$+$\tau_{g,x}$      & \unit{kg.m^{-1}.s^{-2}} \\
-经向动量通量      & $\tau_{p,y}$+$\tau_{g,y}$      & \unit{kg.m.s^{-2}} \\
-地表出射长波辐射通量  & $L_p\uparrow$+$L_g\uparrow$    & \unit{W.m^{-2}}    \\
+潜热通量        & $\lambda E$ & \unit{W.m^{-2}}    \\
+感热通量        & $H$                    & \unit{W.m^{-2}}    \\
+水汽通量        & $E$                    & \unit{mm.s^{-1}}    \\
+纬向动量通量      & $\tau_{x}$      & \unit{kg.m^{-1}.s^{-2}} \\
+经向动量通量      & $\tau_{y}$      & \unit{kg.m.s^{-2}} \\
+地表出射长波辐射通量  & $L ^\uparrow$    & \unit{W.m^{-2}}    \\
 直射光可见光波段反照率 & $\alpha_{vis,dir}$             & -       \\
 直射光近红外波段反照率 & $\alpha_{nir,dir}$             & -       \\
 漫射光可见光波段反照率 & $\alpha_{vis,dif}$             & -       \\
@@ -332,8 +440,7 @@ file)或者对耦合大气模式的反馈，具体可参见表\ref{tab:大气模
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item[1] 下标 $p$ 和 $g$ 分别代表网格单元内植被覆盖部分和无植被覆盖部分的计算结果
-\item[2] $\lambda_v$ 表示蒸发潜热(\unit{J.kg^{-1}})，$\lambda$ 根据地表水份是否冻结取为蒸发潜热 $\lambda_v$ 或升华潜热 $\lambda_s$。
+\item[1] $\lambda$ 表示蒸发潜热(\unit{J.kg^{-1}})，$\lambda$ 根据地表水份是否冻结取为蒸发潜热或升华潜热。
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -341,102 +448,17 @@ file)或者对耦合大气模式的反馈，具体可参见表\ref{tab:大气模
 
 
 \subsection{离线运行CoLM可使用的大气驱动数据集}\label{离线大气驱动数据集}
-CoLM支持多套大气驱动数据集的使用，包括全球格点数据和单点数据，可用数据集列表见表~\ref{tab:可用于驱动CoLM离线运行的大气驱动数据集}。用户也可使用其他数据，只需参照任意一种目前支持的数据集制作成对应的数据格式，并参照该数据对应的namelist提供相应的信息即可使用。特别地，当运行区域或单点模式时，大气驱动数据可选择任意一套覆盖该区域或该点的数据，模式可自动从大气驱动数据中提取出该区域或该点的数据信息来驱动CoLM。
-
-%\begin{landscape}
-%\begin{longtable}
-%\end{longtable}
-%\end{landscape}
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{landscape}
-%\begin{threeparttable}
-\begin{ThreePartTable}
-\begin{TableNotes}
-\footnotesize
-%\item 注：
-\item[1] 模式中针对以上数据会自动对比湿协调性做检查，当比湿数据大于通过近地面空气温度和气压数据计算得到的饱和比湿时，比湿将被更新为饱和比湿的计算结果。
-
-\item[2] 凡原始数据带有$offset$ 和 $scale\_{factor}$ 属性的均需转换为无 $offset$ 和$scale\_{factor}$ 属性的数据。
-
-\item[3] 大气 $\mathrm{O_2}$ 分压由公式 0.209 $P_{atm}$ 计算得到，其中 $P_{atm}$ 为大气压强。
-
-\item[4] 默认大气风速参考高度为100 米，大气温度和比湿参考高度为50米。
-
-\item[5] 当驱动仅给出总风速时，纬向风速和经向风速平均分配：$u_{atm}=v_{atm}=W_{atm}/\sqrt2$
-
-\end{TableNotes}
-\begin{center}
-\begin{longtable}{p{3cm}p{3cm}p{2cm}<{\centering}p{2cm}<{\centering}p{4cm}<{\centering}p{6cm}<{\centering}}
-\caption{可用于驱动 CoLM 离线运行的大气驱动数据集}
-\label{tab:可用于驱动CoLM离线运行的大气驱动数据集}
-\\
-\hline 
-\textbf{驱动名} & \textbf{分辨率}& \textbf{时间范围} & \textbf{空间范围} & \textbf{参考文献} & \textbf{附加说明} \\ 
-\hline 
-\endfirsthead
-
-\multicolumn{6}{c}%
-{{\bfseries \tablename\ \thetable{} -- \kaishu 续表}} \\
-\hline
-\textbf{驱动名} & \textbf{分辨率} & \textbf{时间范围} & \textbf{空间范围} & \textbf{参考文献} & \textbf{附加说明} \\ 
-\hline 
-\endhead
-
-\hline 
-\multicolumn{6}{r}{{\kaishu 接下一页表格}} \\ 
-\hline
-\endfoot
-
-\hline
-\insertTableNotes 
-\endlastfoot
-
-\textbf{QIAN}              & 1.875\textdegree/6-hourly  & 1948-2004             & Global                              & \citet{qian2006simulation}                                                                                                                                                                    & 长波辐射由空气温度和水汽压计算得到                                                                      \\\midrule 
-\textbf{CRU-NCEP\_V4}      & 0.5\textdegree/6-hourly    & 1980-2014             & Global                              &\citet{Viovy2011}                                                                                                             & –                                                                                      \\\midrule 
-\textbf{CRU-NCEP\_V7}      & 0.5\textdegree/6-hourly    & 1901-2016             & Global                              &\citet{Viovy2018}                                                                                                                                                                                                   & –                                                                                      \\\midrule 
-\textbf{CRUJRA2.3}         & 0.5\textdegree/6-hourly    & 1901-2021             & Global                              & \citet{Harris2019}                                                                                                                                                            & 降水与短波辐射在模式中自动由6小时累计值转换为6小时平均值                                                          \\\midrule 
-\textbf{Princeton}         & 0.5\textdegree/6-hourly    & 1901-2012             & Global                              & \citet{sheffield2006development}                                                                                                                       & 垂直维度需去除                                                                                \\\midrule 
-\textbf{GSWP3}             & 0.5\textdegree/3-hourly    & 1901-2014             & Global                              & \citet{Kim2017}                                                                                                                                                                                                  & 数据在海洋、陆地水体和南极洲的缺省值或异常值已由QIAN数据填充                                                       \\\midrule 
-\textbf{GDAS\_GPCP（GLDAS）} & 0.5\textdegree/3-hourly    & 2002-2021             & Global (land only)                  &\citet{rodell2004global}; \citet{kumar2006land}                                                                                                                                                                        & 数据文件需按月为存储单位进行合并                                                                       \\\midrule 
-\textbf{WFDEI}             & 0.5\textdegree/3-hourly    & 1979-2016             & Global (land only)                  & \citet{weedon2011creation}; \citet{weedon2014wfdei}& –                                                                                      \\\midrule 
-\textbf{ERA5}              & 0.25\textdegree/hourly     & 1979-2021             & Global                              & \citet{hersbach2020era5}; \citet{bell2021era5})                                                                                                                            & 比湿需根据近地面空气温度和露点温度计算得到                                                                  \\\midrule 
-\textbf{ERA5LAND}          & 0.1\textdegree/hourly      & 1951-2021             & Global (land only)                  & \citet{munoz2021era5}                                                                                                                              & 比湿需根据近地面空气温度和露点温度计算得到，降水需按照m/hr读入                                                      \\\midrule 
-\textbf{MSWX\_V100}        & 0.1\textdegree/3-hourly    & 1979-2021             & Global                              &\citet{beck2022mswx}                                                                                                                                                        & 降水在模式中自动由3小时累计值转换为3小时平均值；温度在模式中自动转换为单位开尔文；数据文件需按月为存储单位进行合并                             \\\midrule 
-\textbf{JRA55}             & 0.5625\textdegree/3-hourly & 1979-2022             & Global                              & \citet{kobayashi2015jra}                                                                                                                                                                                & 降水在模式中自动由每天累计值转换为每天平均值；垂直维度需去除                                                         \\\midrule 
-\textbf{WFDE5}             & 0.5\textdegree/hourly      & 1979-2019             & Global (land only)                  & \citet{cucchi2020wfde5}                                                                                                           \\\midrule 
-\textbf{CLDAS}             & 0.0625\textdegree/hourly   & 2008-2020             & 东亚区域; 60\textdegree $\sim$ 160\textdegree E, 0\textdegree $\sim$ 65\textdegree N   & 国家气象信息中心                                                                                                                                                                              & 降水在模式中自动由逐小时累计值转换为逐小时平均值；异常或缺省值需补充                                                     \\\midrule 
-\textbf{CMFD}              & 0.1\textdegree/3-hourly    & 1979-2018             & 中国区域;  70\textdegree $\sim$ 140 \textdegree E, 15\textdegree $\sim$55 \textdegree N & \citet{He2019CMFD,Yang2019CMFD}                                                                                                                                          & 降水在模式中自动由逐小时累计值转换为逐小时平均值                                                               \\\midrule 
-\textbf{TPMFD}             & 0.01\textdegree/hourly     & 1979-2020             & 青藏高原 (25\textdegree $\sim$ 106\textdegree E, 41\textdegree $\sim$ 61\textdegree N) & \citet{Yang2023TPMFD}                                                                                 & 降水在模式中自动由逐小时累计值转换为逐小时平均值；气压在模式中自动转换为单位帕                                                \\
-\textbf{CMIP6/SSPs}        & 1\textdegree /3-hourly      & 1850-2100             & Global                              & \citet{cmip6}                                                                                                                                                                               & 数据文件需按月为存储单位进行合并；需采用异常值叠加方式产生未来情景下的大气驱动数据（见下文说明）                                       \\\midrule
-\textbf{PLUMBER2}          & 单点/hourly         &1990-2019         & Global                              & \citet{ukkola2022flux}                                                                                                                                               & 需制作 surface data 给定站点的USGS/IGBP分类和经纬度等信息                                                 \\\midrule 
-\textbf{大气$\mathrm{CO_2}$ 浓度}           & 全球统一值 /yearly     & 1849-2100             & Global                              & \citet{Buchner2022,keeling1994atmospheric}                                & 1849-1957 \& 2023-2100 $\mathrm{CO_2}$ 浓度来自ISIMIP3b 大气组份浓度输入数据集；1958-2022 $\mathrm{CO_2}$ 浓度来自夏威夷 Mauna Loa 观测站监测数据 \\\midrule 
-\textbf{臭氧浓度}              & 0.1\textdegree /daily       & 2013-2022             & 中国区域 (73\textdegree $\sim$135\textdegree E, 18\textdegree$\sim$54\textdegree N)                                                                                  & -                                                                                                                                                                     & 来自中科院大气所李芳研究员                                                                        \\\midrule 
-\textbf{大气气溶胶沉降速率}         & 0.9\textdegree $\times$ 1.25\textdegree /monthly & 1849-2001 /climatology & Global                              & CLM5 Documentation \& \citet{Lamarque2010Historical}    & 来自NCAR-CAM模式模拟结果                                                                       \\\midrule 
-\textbf{氮沉降速率}             & 1.9\textdegree $\times$ 2.5\textdegree/yearly   & 1849-2006             & Global                              & CLM5 Documentation                                                                                                                                                                                                             & 来自NCAR-WACCM模式模拟结果                                                                     \\\midrule 
-\textbf{闪电频率}              & 2\textdegree/3-hourly      & climatology           & Global                              & CLM5 Documentation                                                                                                                                                                                                       & 由1995-2011年 NASA LIS/OTD 格点数据产品 v2.2 版通过双线性插值得到        \\\hline
-
-\end{longtable}
-\end{center}
-
-%\rule{\linewidth}{0.8pt}
-%\hrule height 1pt
-\end{ThreePartTable}
-
-\end{landscape}
-
+CoLM支持多套大气驱动数据集的使用，包括全球/区域格点数据和单点数据。其中，全球/区域格点数据见表~\ref{tab:可用于驱动CoLM离线运行的大气驱动数据集}。用户也可使用其他数据，只需参照任意一种目前支持的数据集制作成对应的数据格式，并参照该数据对应的namelist提供相应的信息即可使用。特别地，当运行区域或单点模式时，大气驱动数据可选择任意一套覆盖该区域或该点的数据，模式可自动从大气驱动数据中提取出该区域或该点的数据信息来驱动CoLM。
 
 \hypertarget{驱动数据时间尺度插值}{CoLM默认的积分时间步长为1800秒}。当大气驱动数据的时间分辨率不满足这一积分步长时，相邻数据之间将进行插值以保持大气驱动数据的时间分辨率与积分步长相同。其中，温度、气压、比湿、风速、长波辐射通量默认采用线性插值获得，降水速率采用临近时刻插值获得，短波辐射通量采用基于太阳高度角的余弦值加权平均获得。短波辐射通量的插值具体操作为：对于插值时刻$t_M$，短波辐射通量S($t_M$)计算为
 \begin{equation}\label{t_M}
-S\left(t_{M}\right)=\left\{\begin{array}{ll}\frac{\frac{\Delta t_{FD}}{\Delta t_{M}} S\left(t_{F D}\right) \mu\left(t_{M}\right)}{\sum_{i=1}^{\frac{\Delta t_{FD}}{\Delta t_{M}}} \mu\left(t_{M_{i}}\right)} & \text { 当 }\ \mu\left(t_{M}\right)>0.001 \\
+S\left(t_{M}\right)=\left\{\begin{array}{ll}\frac{ \mu\left(t_{M}\right)}{\overline {\sum_{i=1}^{\frac{\Delta t_{FD}}{\Delta t_{M}}} \mu\left(t_{M_{i}}\right)}}S\left(t_{F D}\right)  & \text { 当 }\ \mu\left(t_{M}\right)>0.001 \\
 0 & \text { 当 }\ \mu\left(t_{M}\right) \leq 0.001\end{array}\right.
 \end{equation}
-其中，$\Delta t_{FD}$代表驱动数据的时间间隔（例如，对于3-hourly数据$\Delta t_{FD}$=10800秒），$\Delta t_{M}$代表模式积分步长，$S(t_{FD})$ 代表比$t_M$时刻早的最接近$t_M$时刻的短波辐射驱动数据，$\mu\left(t_M\right)$代表$t_M$时刻的太阳高度角的余弦值，$
-\sum_{i=1}^{\frac{\Delta t_{F D}}{\Delta t_{M}}} \mu\left(t_{M_{i}}\right)$
-代表落在驱动数据时间间隔内的所有模式积分时刻的太阳高度角余弦值的总和。以上插值方式可根据原数据特征及用户需求在大气强迫namelist配置文件中进行修改。
+其中，$\Delta t_{FD}$代表驱动数据的时间间隔（例如，对于3-hourly数据$\Delta t_{FD}$=10800秒），$\Delta t_{M}$代表模式积分步长，$S(t_{FD})$ 代表比$t_M$时刻早的最接近$t_M$时刻的短波辐射驱动数据，$\mu\left(t_M\right)$代表$t_M$时刻的太阳高度角的余弦值，$\overline{
+\sum_{i=1}^{\frac{\Delta t_{F D}}{\Delta t_{M}}} \mu\left(t_{M_{i}}\right)}$代表落在驱动数据时间间隔内的所有模式积分时刻的太阳高度角余弦值的平均值。以上插值方式可根据原数据特征及用户需求在大气强迫namelist配置文件中进行修改。
 
-短波太阳辐射在模式中被分为可见光与近红外两个波段，分配系数$\alpha=0.5$。对于任意波段，太阳辐射被进一步分为直射光与漫射光。直射光在可见光波段的比例系数为
+短波太阳辐射在模式中被分为可见光与近红外两个波段，分配系数$\alpha=0.5$。对于任意波段，太阳辐射被进一步分为直射光与漫射光。对于QIAN强迫驱动，直射光在可见光波段的比例系数为
 \begin{equation}\label{R_vis}
 R_{vis}=a_{0}+a_{1} \alpha S+a_{2}(\alpha S)^{2}+a_{3}(\alpha S)^{3} \quad 0.01 \leq R_{vis} \leq 0.99
 \end{equation}
@@ -446,11 +468,9 @@ R_{nir}=b_{0}+b_{1}(1-\alpha) S+b_{2}((1-\alpha) S)^{2}+b_{3}((1-\alpha) S)^{3} 
 \end{equation}
 其中$a_0$=0.17639, $a_1$=0.0038, $a_2=-9.0039\times{10}^{-8}$, $a_3=8.1351\times10^{-9}$, $b_0=0.29548$, $b_1=0.00504$, $b_2=-1.4957\times10^{-5}$, $b_3=1.4881\times10^{-8}$。这些系数来自对 NCAR-CAM 模式模拟结果的拟合。
 
-
-
 当大气驱动数据未提供下行长波辐射通量时，模式将根据大气温度$T_{atm}$、比湿$q_{atm}$和水汽压$e_{atm}$计算获得(Idso 1981)，计算方案为
 \begin{equation}\label{L_downarrow}
-L \downarrow=\left[0.70+5.95 \times 10^{-5} \times 0.01 e_{a t m} \exp \left(\frac{1500}{T_{a t m}}\right)\right] \sigma T_{a t m}^{4}
+L ^\downarrow=\left[0.70+5.95 \times 10^{-5} \times 0.01 e_{a t m} \exp \left(\frac{1500}{T_{a t m}}\right)\right] \sigma T_{a t m}^{4}
 \end{equation}
 其中大气水汽压计算为$e_{a t m}=\frac{P_{a t m} q_{a t m}}{0.622+0.378 q_{a t m}}$，$\sigma$为Stefan-Boltzmann常数。
 
@@ -459,207 +479,12 @@ L \downarrow=\left[0.70+5.95 \times 10^{-5} \times 0.01 e_{a t m} \exp \left(\fr
 
 最后，针对单点模拟，CoLM已经收集整理测试的站点信息见表~\ref{tab:CoLM离线运行已经测试的站点列表}。
 
-\begin{center}
-\begin{longtable}{lcccccc}
-\caption{CoLM离线运行已经测试的站点列表}
-\label{tab:CoLM离线运行已经测试的站点列表}
-\\
-\hline 
-\multicolumn{1}{l}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年}} & \multicolumn{1}{c}{\textbf{终止年}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
-\endfirsthead
-
-\multicolumn{7}{c}%
-{{\bfseries \tablename\ \thetable{} -- \kaishu 续表}} \\
-\hline \multicolumn{1}{l}{\textbf{站点名称}} & \multicolumn{1}{c}{\textbf{起始年}} & \multicolumn{1}{c}{\textbf{终止年}} & \multicolumn{1}{c}{\textbf{数据来源}} & \multicolumn{1}{c}{\textbf{IGBP分类}} & \multicolumn{1}{c}{\textbf{纬度坐标}} & \multicolumn{1}{c}{\textbf{经度坐标}}\\ \hline 
-\endhead
-
-\hline \multicolumn{7}{r}{{\kaishu 接下一页表格}} \\ \hline
-\endfoot
-
-\hline
-\endlastfoot
-
-AR-SLu & 2010 & 2010 & FLUXNET2015 & 5      & -66.45980072 & -33.46480179 \\
-AT-Neu & 2002 & 2012 & FLUXNET2015 & 10     & 11.31750011  & 47.1166687   \\
-AU-ASM & 2011 & 2017 & OzFlux      & 1      & 133.2489929  & -22.28300095 \\
-AU-Cow & 2010 & 2015 & OzFlux      & 2      & 145.4271545  & -16.2381897  \\
-AU-Cpr & 2011 & 2017 & OzFlux      & 9      & 140.5891266  & -34.00205994 \\
-AU-Ctr & 2010 & 2017 & OzFlux      & 2      & 145.4468536  & -16.10327911 \\
-AU-Cum & 2013 & 2018 & OzFlux      & 2      & 150.7224731  & -33.61329651 \\
-AU-DaP & 2009 & 2012 & OzFlux      & 10     & 131.3181     & -14.06330013 \\
-AU-DaS & 2010 & 2017 & OzFlux      & 9      & 131.3880005  & -14.15928268 \\
-AU-Dry & 2011 & 2015 & OzFlux      & 9      & 132.3706055  & -15.25879955 \\
-AU-Emr & 2012 & 2013 & OzFlux      & 10     & 148.4745941  & -23.8586998  \\
-AU-GWW & 2013 & 2017 & OzFlux      & 9      & 120.6540985  & -30.19129944 \\
-AU-Gin & 2012 & 2017 & OzFlux      & 8      &  115.6500015  & -31.375      \\
-AU-How & 2003 & 2017 & OzFlux      & 8      & 131.1499939  & -12.49520016 \\
-AU-Lit & 2016 & 2017 & OzFlux      & 8      & 130.7944946  & -13.17903996 \\
-AU-Otw & 2009 & 2010 & OzFlux      & 10     & 142.816803   & -38.532341   \\
-AU-Rig & 2011 & 2016 & OzFlux      & 10     & 145.5758972  & -36.64989853 \\
-AU-Rob & 2014 & 2017 & OzFlux      & 2      & 145.6300964  & -17.11750031 \\
-AU-Sam & 2011 & 2017 & OzFlux      & 10     & 152.8778076  & -27.38809967 \\
-AU-Stp & 2010 & 2017 & OzFlux      & 10     & 133.3502045  & -17.15069962 \\
-AU-TTE & 2013 & 2017 & OzFlux      & 7      & 133.6399994  & -22.28700066 \\
-AU-Tum & 2002 & 2017 & OzFlux      & 2      & 148.1517029  & -35.65660095 \\
-AU-Whr & 2015 & 2016 & OzFlux      & 2      & 145.0294037  & -36.6731987  \\
-AU-Wrr & 2016 & 2017 & OzFlux      & 2      & 146.6544952  & -43.09502029 \\
-AU-Ync & 2011 & 2017 & OzFlux      & 10     & 146.2906952  & -34.98929977 \\
-BE-Bra & 2004 & 2014 & FLUXNET2015 & 5      & 4.520559788  & 51.30916595  \\
-BE-Lon & 2005 & 2014 & FLUXNET2015 & 12     & 4.74612999   & 50.55158997  \\
-BE-Vie & 1997 & 2014 & FLUXNET2015 & 5      & 5.998050213  & 50.30506897  \\
-BR-Sa3 & 2001 & 2003 & FLUXNET2015 & 2      & -54.97143555 & -3.018029213 \\
-BW-Ma1 & 2000 & 2000 & LaThuile    & 9      & 23.56032944  & -19.91650009 \\
-CA-NS1 & 2003 & 2003 & FLUXNET2015 & 1      & -98.48390198 & 55.87919998  \\
-CA-NS2 & 2002 & 2004 & FLUXNET2015 & 1      & -98.52469635 & 55.90579987  \\
-CA-NS4 & 2003 & 2004 & FLUXNET2015 & 1      & -98.38059998 & 55.91439819  \\
-CA-NS5 & 2003 & 2004 & FLUXNET2015 & 1      & -98.48500061 & 55.86309814  \\
-CA-NS6 & 2002 & 2004 & FLUXNET2015 & 7      & -98.96440125 & 55.91669846  \\
-CA-NS7 & 2003 & 2004 & FLUXNET2015 & 7      & -99.94830322 & 56.63579941  \\
-CA-Qcu & 2002 & 2006 & LaThuile    & 1      & -74.03652954 & 49.2670784   \\
-CA-Qfo & 2004 & 2010 & FLUXNET2015 & 1      & -74.34210205 & 49.69250107  \\
-CA-SF1 & 2004 & 2006 & FLUXNET2015 & 1      & -105.8175964 & 54.48500061  \\
-CA-SF2 & 2003 & 2005 & FLUXNET2015 & 1      & -105.8775024 & 54.25389862  \\
-CA-SF3 & 2003 & 2005 & FLUXNET2015 & 7      & -106.0053024 & 54.09159851  \\
-CH-Cha & 2006 & 2014 & FLUXNET2015 & 10     & 8.410440445  & 47.21022034  \\
-CH-Dav & 1997 & 2014 & FLUXNET2015 & 1      & 9.855919838  & 46.81533432  \\
-CH-Fru & 2007 & 2014 & FLUXNET2015 & 10     & 8.537779808  & 47.11583328  \\
-CH-Oe1 & 2002 & 2008 & FLUXNET2015 & 10     & 7.731939793  & 47.28583145  \\
-CN-Cha & 2003 & 2005 & FLUXNET2015 & 5      & 128.0957947  & 42.40250015  \\
-CN-Cng & 2008 & 2009 & FLUXNET2015 & 10     & 123.509201   & 44.59339905  \\
-CN-Dan & 2004 & 2005 & FLUXNET2015 & 10     & 91.06639862  & 30.49780083  \\
-CN-Din & 2003 & 2005 & FLUXNET2015 & 2      & 112.5361023  & 23.17329979  \\
-CN-Du2 & 2007 & 2008 & FLUXNET2015 & 10     & 116.2835999  & 42.04669952  \\
-CN-HaM & 2002 & 2003 & FLUXNET2015 & 10     & 101.1800003  & 37.36999893  \\
-CN-Qia & 2003 & 2005 & FLUXNET2015 & 1      & 115.0580978  & 26.74139977  \\
-CZ-wet & 2007 & 2014 & FLUXNET2015 & 11     & 14.77035046  & 49.02465057  \\
-DE-Bay & 1997 & 1999 & LaThuile    & 1      & 11.86693954  & 50.14194107  \\
-DE-Geb & 2001 & 2014 & FLUXNET2015 & 12     & 10.91429996  & 51.10010147  \\
-DE-Gri & 2004 & 2014 & FLUXNET2015 & 10     & 13.51253033  & 50.94947052  \\
-DE-Hai & 2000 & 2012 & FLUXNET2015 & 4      & 10.45300007  & 51.07916641  \\
-DE-Kli & 2005 & 2014 & FLUXNET2015 & 12     & 13.52237988  & 50.89305878  \\
-DE-Meh & 2004 & 2006 & LaThuile    & 5      & 10.65546989  & 51.27531052  \\
-DE-Obe & 2008 & 2014 & FLUXNET2015 & 1      & 13.72128963  & 50.78665924  \\
-DE-Seh & 2008 & 2010 & FLUXNET2015 & 12     & 6.449649811  & 50.87062454  \\
-DE-SfN & 2013 & 2014 & FLUXNET2015 & 11     & 11.32750034  & 47.80638885  \\
-DE-Tha & 1998 & 2014 & FLUXNET2015 & 1      & 13.56694031  & 50.9636116   \\
-DE-Wet & 2002 & 2006 & LaThuile    & 1      & 11.45753002  & 50.45349884  \\
-DK-Fou & 2005 & 2005 & FLUXNET2015 & 12     & 9.587220192  & 56.48419952  \\
-DK-Lva & 2005 & 2006 & LaThuile    & 10     & 12.08329964  & 55.68330002  \\
-DK-Ris & 2004 & 2005 & LaThuile    & 12     & 12.09722042  & 55.53028107  \\
-DK-Sor & 1997 & 2014 & FLUXNET2015 & 4      & 11.64463997  & 55.48587036  \\
-DK-ZaH & 2000 & 2013 & FLUXNET2015 & 10     & -20.5503006  & 74.47319794  \\
-ES-ES1 & 1999 & 2006 & LaThuile    & 1      & -0.318809986 & 39.34597015  \\
-ES-ES2 & 2005 & 2006 & LaThuile    & 12     & -0.31527999  & 39.27555847  \\
-ES-LMa & 2004 & 2006 & LaThuile    & 9      & -5.773359776 & 39.9426918   \\
-ES-LgS & 2007 & 2007 & FLUXNET2015 & 7      & -2.965830088 & 37.09793472  \\
-ES-VDA & 2004 & 2004 & LaThuile    & 10     & 1.448500037  & 42.15217972  \\
-FI-Hyy & 1996 & 2014 & FLUXNET2015 & 1      & 24.29500008  & 61.84749985  \\
-FI-Kaa & 2000 & 2002 & LaThuile    & 11     & 27.29503059  & 69.14069366  \\
-FI-Lom & 2007 & 2009 & FLUXNET2015 & 11     & 24.20918083  & 67.99720001  \\
-FI-Sod & 2008 & 2014 & FLUXNET2015 & 1      & 26.63783073  & 67.36186218  \\
-FR-Fon & 2005 & 2013 & FLUXNET2015 & 4      & 2.780139923  & 48.47639847  \\
-FR-Gri & 2005 & 2013 & FLUXNET2015 & 12     & 1.951910019  & 48.84421921  \\
-FR-Hes & 1997 & 2006 & LaThuile    & 4      & 7.065559864  & 48.67416     \\
-FR-LBr & 2003 & 2008 & FLUXNET2015 & 1      & -0.769299984 & 44.71710968  \\
-FR-Lq1 & 2004 & 2006 & LaThuile    & 10     & 2.735830069  & 45.64305878  \\
-FR-Lq2 & 2004 & 2006 & LaThuile    & 10     & 2.737030029  & 45.63919067  \\
-FR-Pue & 2000 & 2014 & FLUXNET2015 & 2      & 3.595829964  & 43.74139023  \\
-GF-Guy & 2004 & 2014 & FLUXNET2015 & 2      & -52.92485809 & 5.278771877  \\
-HU-Bug & 2003 & 2006 & LaThuile    & 10     & 19.60129929  & 46.69110107  \\
-ID-Pag & 2002 & 2003 & LaThuile    & 2      & 113.9000015  & -2.319999933 \\
-IE-Ca1 & 2004 & 2006 & LaThuile    & 12     & -6.918139935 & 52.85879135  \\
-IE-Dri & 2003 & 2005 & LaThuile    & 10     & -8.751810074 & 51.98669052  \\
-IT-Amp & 2003 & 2006 & LaThuile    & 10     & 13.60515976  & 41.90409851  \\
-IT-BCi & 2005 & 2010 & FLUXNET2015 & 12     & 14.95744038  & 40.5237999   \\
-IT-CA1 & 2012 & 2013 & FLUXNET2015 & 4      & 12.02655983  & 42.38040924  \\
-IT-CA2 & 2012 & 2013 & FLUXNET2015 & 12     & 12.02604008  & 42.37722015  \\
-IT-CA3 & 2012 & 2013 & FLUXNET2015 & 4      & 12.02219963  & 42.38000107  \\
-IT-Col & 2007 & 2014 & FLUXNET2015 & 4      & 13.58813953  & 41.84936142  \\
-IT-Cpz & 2001 & 2008 & FLUXNET2015 & 2      & 12.37611008  & 41.70524979  \\
-IT-Isp & 2013 & 2014 & FLUXNET2015 & 4      & 8.633580208  & 45.81264114  \\
-IT-LMa & 2003 & 2004 & LaThuile    & 4      & 7.582590103  & 45.15258026  \\
-IT-Lav & 2005 & 2014 & FLUXNET2015 & 1      & 11.28131962  & 45.95619965  \\
-IT-MBo & 2003 & 2012 & FLUXNET2015 & 10     & 11.04582977  & 46.01467896  \\
-IT-Mal & 2003 & 2003 & LaThuile    & 10     & 11.70333958  & 46.1140213   \\
-IT-Noe & 2004 & 2014 & FLUXNET2015 & 6      & 8.151689529  & 40.60617828  \\
-IT-Non & 2002 & 2002 & LaThuile    & 4      & 11.0910902   & 44.69018936  \\
-IT-PT1 & 2003 & 2004 & FLUXNET2015 & 4      & 9.061039925  & 45.20087051  \\
-IT-Ren & 2010 & 2013 & FLUXNET2015 & 1      & 11.43369007  & 46.58686066  \\
-IT-Ro1 & 2002 & 2006 & FLUXNET2015 & 4      & 11.93000984  & 42.4081192   \\
-IT-Ro2 & 2002 & 2008 & FLUXNET2015 & 4      & 11.92092991  & 42.39025879  \\
-IT-SR2 & 2013 & 2014 & FLUXNET2015 & 1      & 10.29090977  & 43.73202896  \\
-IT-SRo & 2003 & 2012 & FLUXNET2015 & 1      & 10.28444004  & 43.7278595   \\
-JP-SMF & 2003 & 2006 & FLUXNET2015 & 5      & 137.0787964  & 35.26169968  \\
-NL-Ca1 & 2003 & 2006 & LaThuile    & 10     & 4.927000046  & 51.97100067  \\
-NL-Hor & 2008 & 2011 & FLUXNET2015 & 10     & 5.07130003   & 52.24034882  \\
-NL-Loo & 1997 & 2013 & FLUXNET2015 & 1      & 5.743559837  & 52.1665802   \\
-PL-wet & 2004 & 2005 & LaThuile    & 11     & 16.30940056  & 52.7621994   \\
-PT-Esp & 2002 & 2004 & LaThuile    & 2      & -8.601799965 & 38.63940048  \\
-PT-Mi1 & 2005 & 2005 & LaThuile    & 2      & -8.000060081 & 38.54064178  \\
-PT-Mi2 & 2005 & 2006 & LaThuile    & 10     & -8.024550438 & 38.47650146  \\
-RU-Che & 2003 & 2004 & FLUXNET2015 & 11     & 161.3414307  & 68.61303711  \\
-RU-Fyo & 2003 & 2014 & FLUXNET2015 & 1      & 32.92208099  & 56.46152878  \\
-RU-Zot & 2003 & 2003 & LaThuile    & 8      & 89.35079956  & 60.80080032  \\
-SD-Dem & 2005 & 2009 & FLUXNET2015 & 9      & 30.47830009  & 13.28289986  \\
-SE-Deg & 2002 & 2005 & LaThuile    & 10     & 19.55653954  & 64.18196869  \\
-UK-Gri & 2000 & 2001 & LaThuile    & 1      & -3.79805994  & 56.6072197   \\
-UK-Ham & 2004 & 2004 & LaThuile    & 4      & -0.858299971 & 51.15353012  \\
-UK-PL3 & 2005 & 2006 & LaThuile    & 5      & -1.266669989 & 51.45000076  \\
-US-AR1 & 2010 & 2012 & FLUXNET2015 & 10     & -99.41999817 & 36.42670059  \\
-US-AR2 & 2010 & 2011 & FLUXNET2015 & 10     & -99.59750366 & 36.63579941  \\
-US-ARM & 2003 & 2012 & FLUXNET2015 & 12     & -97.48880005 & 36.60580063  \\
-US-Aud & 2003 & 2005 & LaThuile    & 10     & -110.509201  & 31.59070015  \\
-US-Bar & 2005 & 2005 & LaThuile    & 5      & -71.28807831 & 44.06464005  \\
-US-Bkg & 2005 & 2006 & LaThuile    & 10     & -96.83616638 & 44.34529114  \\
-US-Blo & 2000 & 2006 & FLUXNET2015 & 1      & -120.6327515 & 38.89530182  \\
-US-Bo1 & 1997 & 2006 & LaThuile    & 12     & -88.29039764 & 40.00619888  \\
-US-Cop & 2002 & 2003 & FLUXNET2015 & 10     & -109.3899994 & 38.09000015  \\
-US-FPe & 2000 & 2006 & LaThuile    & 10     & -105.1018982 & 48.30770111  \\
-US-GLE & 2009 & 2014 & FLUXNET2015 & 1      & -106.2398987 & 41.36650085  \\
-US-Goo & 2004 & 2006 & LaThuile    & 10     & -89.87349701 & 34.25469971  \\
-US-Ha1 & 1992 & 2012 & FLUXNET2015 & 4      & -72.17150116 & 42.53779984  \\
-US-Ho1 & 1996 & 2004 & LaThuile    & 1      & -68.74019623 & 45.20410156  \\
-US-KS2 & 2003 & 2006 & FLUXNET2015 & 6      & -80.67153168 & 28.60857773  \\
-US-Los & 2000 & 2008 & FLUXNET2015 & 11     & -89.97920227 & 46.08269882  \\
-US-MMS & 1999 & 2014 & FLUXNET2015 & 4      & -86.4131012  & 39.32320023  \\
-US-MOz & 2005 & 2006 & LaThuile    & 4      & -92.20001221 & 38.74411011  \\
-US-Me2 & 2002 & 2014 & FLUXNET2015 & 1      & -121.5574036 & 44.45230103  \\
-US-Me4 & 1996 & 2000 & LaThuile    & 1      & -121.6223984 & 44.49919891  \\
-US-Me6 & 2011 & 2014 & FLUXNET2015 & 1      & -121.6078033 & 44.32329941  \\
-US-Myb & 2011 & 2014 & FLUXNET2015 & 11     & -121.7650986 & 38.04980087  \\
-US-NR1 & 1999 & 2014 & FLUXNET2015 & 1      & -105.546402  & 40.03290176  \\
-US-Ne1 & 2002 & 2012 & FLUXNET2015 & 12     & -96.47660065 & 41.1651001   \\
-US-Ne2 & 2002 & 2012 & FLUXNET2015 & 12     & -96.4701004  & 41.16490173  \\
-US-Ne3 & 2002 & 2012 & FLUXNET2015 & 12     & -96.43969727 & 41.17969894  \\
-US-PFa & 1995 & 2014 & FLUXNET2015 & 5      & -90.27230072 & 45.94589996  \\
-US-Prr & 2011 & 2013 & FLUXNET2015 & 1      & -147.4875946 & 65.123703    \\
-US-SP1 & 2005 & 2005 & LaThuile    & 1      & -82.21877289 & 29.73806953  \\
-US-SP2 & 2000 & 2004 & LaThuile    & 1      & -82.24481964 & 29.76479912  \\
-US-SP3 & 1999 & 2004 & LaThuile    & 2      & -82.16327667 & 29.75477028  \\
-US-SRG & 2009 & 2014 & FLUXNET2015 & 10     & -110.8276978 & 31.7894001   \\
-US-SRM & 2004 & 2014 & FLUXNET2015 & 8      & -110.8659973 & 31.82139969  \\
-US-Syv & 2002 & 2008 & FLUXNET2015 & 5      & -89.34770203 & 46.24200058  \\
-US-Ton & 2001 & 2014 & FLUXNET2015 & 8      & -120.9660034 & 38.43159866  \\
-US-Tw4 & 2014 & 2014 & FLUXNET2015 & 11     & -121.6413269 & 38.10274506  \\
-US-Twt & 2010 & 2014 & FLUXNET2015 & 12     & -121.6530991 & 38.1086998   \\
-US-UMB & 2000 & 2014 & FLUXNET2015 & 4      & -84.71379852 & 45.55979919  \\
-US-Var & 2001 & 2014 & FLUXNET2015 & 10     & -120.9507599 & 38.41329956  \\
-US-WCr & 1999 & 2006 & FLUXNET2015 & 4      & -90.07990265 & 45.80590057  \\
-US-Whs & 2008 & 2014 & FLUXNET2015 & 7      & -110.0522003 & 31.74379921  \\
-US-Wkg & 2005 & 2014 & FLUXNET2015 & 10     & -109.9419022 & 31.73649979  \\
-ZA-Kru & 2000 & 2002 & FLUXNET2015 & 9      & 31.49690056  & -25.0196991  \\
-ZM-Mon & 2008 & 2008 & FLUXNET2015 & 4      & 23.25278091  & -15.43777847 \\ 
-\end{longtable}
-\end{center}
-
-
 \subsection{通过耦合器实现CoLM与大气模式的耦合模拟}\label{CoLM与大气模式耦合}
 陆面是天气/气候/地球系统的重要组成部分，其物理、化学、生物过程深刻影响着陆地与大气、陆地与海洋之间的能量与物质交换(戴永久, 2020)。因此，在天气/气候/地球系统模式的耦合框架下运行陆面过程模式，既可刻画在特定条件下陆面系统内部复杂的多圈层多尺度过程，又可将陆面系统变化反馈给大气和海洋系统，充分刻画地球系统各分量之间紧密的相互作用。
 
 地球系统模式通过耦合器连接大气、海洋、陆面、海冰等多个分量模式，形成一个包含地球系统各圈层演化和相互作用过程的完整模式软件。耦合器负责多个分量模式之间的数据交换、不同网格之间数据的插值、以及物质能量等的守恒性诊断，并控制整个地球系统模式的积分模拟（唐彦丽等，2015; 陈怡然等，2016）。耦合器的“可插拔式”框架更有利于促进地球系统模式的模块化和高效并行化。现有的耦合器主要有美国国家大气研究中心(National Center For Atmospheric Research, NCAR)开发的CPL(Coupler)耦合器、美国普林斯顿大学地球物理流体动力学实验室(Geophysical Fluid Dynamics Laboratory)开发的FMS (Flexible Modelling System)、美国的耦合工具库ESMF(Earth System Modelling Framework)、法国欧洲气候模拟和全球变化研究中心开发的OASIS等，其中美国NCAR的CPL和法国的OASIS应用最为广泛。近年来，国内自主研发的耦合器得到了显著发展，其中由清华大学研制的耦合器C-Coupler取得了一系列自主创新，完成了三个版本的研制，并逐渐成长为国际首个面向地球系统数值预报的一体化软件平台，已稳定应用于国内多家业务和科研单位。目前，CoLM已经通过CPL7实现与中国科学院地球系统模式CAS-ESM和区域气候模式CWRF的耦合，使得CoLM成为其中的陆面分量模式。其他使用CPL7的地球系统模式可通过类似流程实现与CoLM的耦合。CoLM将在后续尝试通过国产耦合器C-Coupler实现与中国气象局全球数值天气预报系统CMA-GFS等更多国内业务预报模式的耦合，使得CoLM能够更好地服务于我国天气气候研究与业务预报，有效提升天气气候模拟与预测精度。本节将简要介绍CoLM与CPL7的基本耦合原理，CoLM与CAS-ESM和CWRF的耦合流程见附录。
 
 CPL7作为目前使用最为广泛的耦合器之一，其功能不再仅局限于地球系统模式中不同分量模式的数据连通器，它可直接作为模式的顶层驱动，控制各个分量模式运行的先后次序。CPL7作为总控程序控制CAS-ESM的运行流程可参见图~\ref{fig:CAS-ESM的运行流程}，其中每个分量模式均需进行初始化，之后从耦合器读入需要的数据、运行模式、将必要的运行结果发送回耦合器，以此流程逐步积分直至结束。CPL7通过标准代码接口调用各个分量模式的初始化、运行和结束子程序，并在分量模式需要进行数据交换时调用耦合器函数（网格插值、数据发送与接收、重排与融合、通量计算等）实现分量模式之间的相互作用。分量模式之间的并发关系可根据模式计算量和用户需求来指定。总体上，CPL7实现总控调度和各分量模式之间的耦合主要基于三个方面的设计：并行机制、网格映射和时间管理。下面对这三方面逐一进行简要介绍。
-
 {
 \begin{figure}[htbp]
 \centering

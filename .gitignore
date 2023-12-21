@@ -9,5 +9,5 @@
 *.bbl
 *.synctex.gz
 *.blg
-*.pdf
+CoLM.pdf
 .DS_Store

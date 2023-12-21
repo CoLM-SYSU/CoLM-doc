@@ -9,15 +9,15 @@ CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等�
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式概念图.png}
+\includegraphics[width=0.9\textwidth]{Figures/城市模式/CoLM城市模式概念图.png}
 \caption{CoLM城市模式概念图。}
 \label{fig:CoLM城市模式概念图}
 \end{figure}
 }
 
-\section{城市模式结构}
+\section{CoLM城市模式结构与功能}
 不同于传统的城市街谷假设模型，CoLM采用由单栋建筑物组成的建筑群落来表征城市，如图~\ref{fig:CoLM城市模式结构和功能示意图} 所示。
-建筑物随机分布，包括建筑物位置及朝向。城市几何参数包括建筑物覆盖度$f_b$(即屋顶覆盖面积占比)，地面(透水、不透水面)覆盖度$f_g$($f_{gimp}$，$f_{gper}$)，建筑物高度$H$，建筑物高度与建筑物平均边长比$H/L$(建筑物底面考虑为正方形，边长为记为$L$)，植被冠层中心高度$H_v$，城市树木叶面积指数 LAI 及茎面积指数 SAI，植被(树)覆盖面积比例记为$f_v$。
+建筑物随机分布，包括建筑物位置及朝向。城市几何参数包括建筑物覆盖度$f_b$(即屋顶覆盖面积占比$f_{roof}$)，地面(透水、不透水面)覆盖度$f_g$($f_{gimp}$，$f_{gper}$)，建筑物高度$H$，建筑物高度与建筑物平均边长比$\rm H/L$(建筑物底面考虑为正方形，边长为记为$\rm L$)，植被冠层中心高度$h_v$，城市树木叶面积指数 LAI 及茎面积指数 SAI，植被(树)覆盖面积比例记为$f_v$。
 其中$f_b+f_g=1$，$f_{gimp}+f_{gper}=1$。城市水体覆盖单独表征，其过程考虑为等效湖泊进行计算。
 
 {
@@ -29,21 +29,20 @@ CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等�
 \end{figure}
 }
 
-现有的城市模式往往不对平均单栋建筑物进行表征，而是采用街谷宽度比$H/W$描述城市结构主要特征($W$表示楼与楼之间平均距离。在已知$f_b$和$H/W$参数，而未知$L$时，$L$可以简单计算为：
-
+现有的城市模式往往不对平均单栋建筑物进行表征，而是采用街谷宽度比$\rm H/W$描述城市结构主要特征($\rm W$表示楼与楼之间平均距离。在已知$f_b$和$\rm H/W$参数，而未知$\rm L$时，$\rm L$可以简单计算为：
 \begin{equation}
-\frac{H}{L}=\frac{H}{W} \cdot \frac{1-\sqrt{f_{b}}}{\sqrt{f_{b}}}, \text { 即 } L=W \frac{\sqrt{f_{b}}}{1-\sqrt{f_{b}}}
+\frac{\rm H}{\rm L}=\frac{\rm H}{\rm W} \cdot \frac{1-\sqrt{f_{b}}}{\sqrt{f_{b}}}, \text { 即 } {\rm L=W} \frac{\sqrt{f_{b}}}{1-\sqrt{f_{b}}}
 \end{equation}
-
+%
 对于同一所在地城市覆盖，单栋建筑物几何参数一致，目前未显式考虑建筑物之间的几何差异，即以上参数代表为统计平均值。
 
 在以下分模块公式推导中，变量下标约定如下：天空($s$)，地面($g$，包括透水面$gper$和不透水面$gimp$)，墙面($w$，包括阳面墙$wsun$和阴面墙$wsha$)，植被($v$)和屋顶$(r$)。$F$表示可视因子，例如$F_{gs}$表示从地面到天空的可视因子。
-$S$表示阴影，$H/W$在推导过程中表示为$\rm HW$，$H/L$表示为$\rm HL$，总的直射入射和漫射入射太阳辐射能量通量采用单位能量1表示。
+$S$表示阴影，$\rm H/W$在推导过程中表示为$\rm HW$，$\rm H/L$表示为$\rm HL$，总的直射入射和漫射入射太阳辐射能量通量采用单位能量1表示。
 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式建筑植被结构示意图.png}
+\includegraphics[width=0.7\textwidth]{Figures/城市模式/CoLM城市模式建筑植被结构示意图.png}
 \caption{CoLM城市模式建筑及植被几何结构示意图。}
 \label{fig:CoLM城市模式几何结构示意图}
 \end{figure}
@@ -110,12 +109,12 @@ $E_{wsun}\alpha_w，E_{wsha}\alpha_w，E_{gimp}\alpha_{gimp}，E_{gper}\alpha_{g
 当经过墙面地面之间多次散射后，达到辐射平衡时的墙面和地面辐射出射通量为$M$，可建立如下辐射平衡方程：
 \begin{landscape}
 \begin{equation}
-\begin{array}{l}
-    M_{ {wsun }}=E_{wsun} \alpha_{w}+M_{wsun} F_{ww} f_{wsun} \alpha_{w}+M_{wsha} F_{ww} f_{wsun} \alpha_{w}+M_{gimp} F_{g w} f_{wsun} \alpha_{w}+M_{gper} F_{g w} f_{wsun} \alpha_{w} \\ 
-    M_{wsha}=E_{wsha} \alpha_{w}+M_{wsha} F_{ww} f_{wsha} \alpha_{w}+M_{wsun} F_{ww} f_{wsha} \alpha_{w}+M_{gimp} F_{g w} f_{wsha} \alpha_{w}+M_{gper} F_{g w} f_{wsha} \alpha_{w} \\ 
-    M_{gimp}=E_{gimp} \alpha_{gimp}+M_{wsun} F_{w g} f_{ gimp} \alpha_{gimp}+M_{wsha} F_{w g} f_{ gimp} \alpha_{gimp} \\ 
-    M_{gper}=E_{gper} \alpha_{gper}+M_{wsun} F_{w g} f_{gper} \alpha_{gper}+M_{wsha} F_{w g} f_{gper} \alpha_{gper}
-\end{array}
+\begin{aligned}
+    M_{ {wsun }} &=E_{wsun} \alpha_{w}+M_{wsun} F_{ww} f_{wsun} \alpha_{w}+M_{wsha} F_{ww} f_{wsun} \alpha_{w}+M_{gimp} F_{g w} f_{wsun} \alpha_{w}+M_{gper} F_{g w} f_{wsun} \alpha_{w} \\ 
+    M_{wsha} &=E_{wsha} \alpha_{w}+M_{wsha} F_{ww} f_{wsha} \alpha_{w}+M_{wsun} F_{ww} f_{wsha} \alpha_{w}+M_{gimp} F_{g w} f_{wsha} \alpha_{w}+M_{gper} F_{g w} f_{wsha} \alpha_{w} \\ 
+    M_{gimp} &=E_{gimp} \alpha_{gimp}+M_{wsun} F_{w g} f_{ gimp} \alpha_{gimp}+M_{wsha} F_{w g} f_{ gimp} \alpha_{gimp} \\ 
+    M_{gper} &=E_{gper} \alpha_{gper}+M_{wsun} F_{w g} f_{gper} \alpha_{gper}+M_{wsha} F_{w g} f_{gper} \alpha_{gper}
+\end{aligned}
 \end{equation}
 通过整理得到：
 \begin{equation}\label{城市无植被辐射传输方程}
@@ -134,28 +133,28 @@ $E_{wsun}\alpha_w，E_{wsha}\alpha_w，E_{gimp}\alpha_{gimp}，E_{gper}\alpha_{g
 
 经过整理的公式(\ref{城市无植被辐射传输方程})可简单表示为
 \begin{equation}\label{mathbf_AX}
-\mathbf{A X}=\mathbf{B}
+\mathbf{A x}=\mathbf{B}
 \end{equation}
 $\mathbf{A}$为辐射传输矩阵，$\mathbf{B}$为向量($E_{wsun}\alpha_w$,$E_{wsha}\alpha_w$,
 $E_{gimp}\alpha_{gimp}$,$E_{gper}\alpha_{gper}$)，
-即太阳辐射初始到达墙面和地面射辐射通量(未经散射)。$\mathbf{X}$为求解变量组成的向量($M_{wsun}$,$M_{wsha}$,$M_{gimp}$,$M_{gper}$)，
+即太阳辐射初始到达墙面和地面射辐射通量(未经散射)。$\mathbf{x}$为求解变量组成的向量(\allowbreak$M_{wsun}$,\allowbreak$M_{wsha}$,\allowbreak$M_{gimp}$,\allowbreak$M_{gper}$)，
 计算为：
 \begin{equation}\label{mathbf_X}
-\mathbf{X}=\mathbf{A}^{-1} \mathbf{B}
+\mathbf{x}=\mathbf{A}^{-1} \mathbf{B}
 \end{equation}
-矩阵$\mathbf{A}$是由已知变量组成的常数矩阵，可直接进行求逆计算，向量$\mathbf{B}$已计算，因此可计算得到$\mathbf{X}$。从而墙面和地面的辐射吸收计算为：
+矩阵$\mathbf{A}$是由已知变量组成的常数矩阵，可直接进行求逆计算，向量$\mathbf{B}$已计算，因此可计算得到$\mathbf{x}$。从而墙面和地面的辐射吸收计算为：
 \begin{equation}\label{s_wsun_wsha_gimp_gper_1}
-\begin{array}{c}s_{wsun}=\frac{M_{wsun}}{\alpha_{w}}\left(1-\alpha_{w}\right) \\ 
-    s_{wsha}=\frac{M_{wsha}}{\alpha_{w}}\left(1-\alpha_{w}\right) \\
-    s_{gimp}=\frac{M_{gimp}}{\alpha_{gimp}}\left(1-\alpha_{gimp}\right) \\
-    s_{gper}=\frac{M_{gper}}{\alpha_{gper}}\left(1-\alpha_{gper}\right)\end{array}
+\begin{aligned}s_{wsun} &=\frac{M_{wsun}}{\alpha_{w}}\left(1-\alpha_{w}\right) \\ 
+    s_{wsha} &=\frac{M_{wsha}}{\alpha_{w}}\left(1-\alpha_{w}\right) \\
+    s_{gimp} &=\frac{M_{gimp}}{\alpha_{gimp}}\left(1-\alpha_{gimp}\right) \\
+    s_{gper} &=\frac{M_{gper}}{\alpha_{gper}}\left(1-\alpha_{gper}\right)\end{aligned}
 \end{equation}
 注意，以上辐射吸收为各组成面总吸收量，其各自单面面积辐射吸收量修改为：
 \begin{equation}\label{s_wsun_wsha_gimp_gper_2}
-\begin{array}{c}s_{wsun}=\frac{f_{g}}{4 f_{wsun} \mathrm{HL} f_{b}} s_{wsun} \\ 
-    s_{wsha}=\frac{f_{g}}{4 f_{wsha} \mathrm{HL} f_{b}} s_{wsha} \\ 
-    s_{gimp}=\frac{1}{f_{gimp}} s_{gimp} \\ 
-    s_{gper}=\frac{1}{f_{gper}} s_{gper}\end{array}
+\begin{aligned}s_{wsun} &=\frac{f_{g}}{4 f_{wsun} \mathrm{HL} f_{b}} s_{wsun} \\ 
+    s_{wsha} &=\frac{f_{g}}{4 f_{wsha} \mathrm{HL} f_{b}} s_{wsha} \\ 
+    s_{gimp} &=\frac{1}{f_{gimp}} s_{gimp} \\ 
+    s_{gper} &=\frac{1}{f_{gper}} s_{gper}\end{aligned}
 \end{equation}
 不考虑屋顶时的城市反照率为：
 \begin{equation}\label{alpha_u}
@@ -163,7 +162,7 @@ $E_{gimp}\alpha_{gimp}$,$E_{gper}\alpha_{gper}$)，
 \end{equation}
 屋顶的吸收计算为$s_{roof}=1-\alpha_{roof}$，考虑屋顶的城市反照率(\ref{alpha_u})修订为：
 \begin{equation}\label{alpha_u2}
-\alpha_{u}=\alpha_{{roof }} f_{b}+\alpha_{u} f_{g}
+\alpha_{u}=\alpha_{{roof }} f_{roof}+\alpha_{u} f_{g}
 \end{equation}
 对于城市水体(湖泊)考虑同屋顶，最终城市区域地表反照率为面积加权(类似公式~\ref{alpha_u2})
 
@@ -171,7 +170,7 @@ $E_{gimp}\alpha_{gimp}$,$E_{gper}\alpha_{gper}$)，
 
 对于漫射情况，计算过程与直射入射辐射过程基本类似，同样采用公式(\ref{城市无植被辐射传输方程})所示的矩阵形式进行求解，不同之处在于初始到达墙面和地面的辐射通量，分别计算为：
 $F_{sw}f_{wsun}$、$F_{sw}f_{wsha}$、$F_{sg}f_{gimp}$、$F_{sg}f_{gper}$，即公式(\ref{mathbf_AX})中的$\mathbf{B}$。
-漫射入射辐射的传输矩阵同直射入射辐射情景，即A。其求逆后的结果可以直接用于漫射入射辐射，利用公式(\ref{mathbf_X})计算得到墙面和地面的辐射出射通量，
+漫射入射辐射的传输矩阵同直射入射辐射情景，即$\mathbf{A}$。其求逆后的结果可以直接用于漫射入射辐射，利用公式(\ref{mathbf_X})计算得到墙面和地面的辐射出射通量，
 单位面积的辐射吸收和城市反照率同公式(\ref{s_wsun_wsha_gimp_gper_1})、(\ref{alpha_u})和(\ref{alpha_u2})，在此不再列出。
 
 \subsection{有植被覆盖时短波辐射传输}\label{有植被覆盖时短波辐射传输}
@@ -180,11 +179,11 @@ $F_{sw}f_{wsun}$、$F_{sw}f_{wsha}$、$F_{sg}f_{gimp}$、$F_{sg}f_{gper}$，即�
 \end{mymdframed}
 
 城市中考虑植被后的短波辐射传输过程是在无植被辐射传输的基础上，考虑植被在内的各组分之间的可视因子，从而计算辐射平衡时的传输矩阵，采用类似的方法求解墙面、地面和植被的辐射吸收。
-相比章节 \ref{无植被覆盖时短波辐射传输} 增加的部分为考虑植被在内的可视因子和阴影面积计算。
+相比章节~\ref{无植被覆盖时短波辐射传输}增加的部分为考虑植被在内的可视因子和阴影面积计算。
 
-在植被树冠中心高度$h_v$处，墙面的阴影比例可根据公式(\ref{S_w})计算，利用$\frac{H-h_v}{L}$代替$\rm HL$，记为$S_w^\prime$，即
+在植被树冠中心高度$h_v$处，墙面的阴影比例可根据公式(\ref{S_w})计算，利用$\frac{{\rm H}-h_v}{\rm L}$代替$\rm HL$，记为$S_w^\prime$，即
 \begin{equation}
-S_{w}^{\prime}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} \frac{H-h_{v}}{L} \cdot \tan \left(\theta_{s}\right)\right)
+S_{w}^{\prime}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} \frac{{\rm H}-h_{v}}{\rm L} \cdot \tan \left(\theta_{s}\right)\right)
 \end{equation}
 假设该阴影部分与植被覆盖$f_v$随机重叠，则植被被阴影遮挡的面积比例为$f_vS_w^\prime$，未覆盖的植被覆盖面积占比为$f_v^\prime=f_v-f_vS_w^\prime$。
 该未被覆盖植被在整个城市覆盖区域的阴影覆盖$S_v$可根据公式(\ref{S_area})计算得到。将其覆盖比例转化为地面所占比例为：
@@ -203,12 +202,12 @@ S_{w}=S_{w}-S_{v w}
 阴面墙和阳面墙的面积占比计算同公式(\ref{f_wsun})和(\ref{f_wsha})。
 
 在不考虑植被存在时，可视因子$F_{sw}$, $F_{sg}$, $F_{gw}$, $F_{gs}$, $F_{ws}$, $F_{wg}$ 和 $F_{ww}$的
-计算同章节 \ref{无植被覆盖时短波辐射传输}，下面需要考虑植被的遮挡，对以上可视因子进行修改，并添加植被到各个面的可视因子。
+计算同章节~\ref{无植被覆盖时短波辐射传输}，下面需要考虑植被的遮挡，对以上可视因子进行修改，并添加植被到各个面的可视因子。
 
 同公式(\ref{S_v2})和(\ref{S_w2})，计算在漫射等效角度下的墙面和植被在地面的“阴影”占比(辐射遮挡) $S_w^\ast$和$S_v^\ast$，
 利用公式(\ref{f_sw})进行计算，则天空到达植被($F_{sv}$)、天空通过植被到墙面($F_{svw}$)，以及天空通过植被到达地面的可视因子($F_{svg}$)分别计算为：
 \begin{equation}\label{F_sv_svw_svg}
-\begin{array}{c}F_{s v}=S_{v}^{*} \\ F_{s v w}=S_{v w}^{*} \\ F_{s v g}=F_{s v}-F_{s v w}\end{array}
+\begin{aligned}F_{s v} &=S_{v}^{*} \\ F_{s v w} &=S_{v w}^{*} \\ F_{s v g} &=F_{s v}-F_{s v w}\end{aligned}
 \end{equation}
 同理，地面到达植被($F_{gv}$)、地面通过植被到天空($F_{gvs}$)，以及地面通过植被到达天空的可视因子($F_{gvs}$)可类似公式(\ref{F_sv_svw_svg})计算。
 
@@ -231,7 +230,7 @@ F_{w v}=F_{v w} \frac{f_{v}}{f_{b} \cdot {\rm HL}}
 \begin{equation}
 F_{wvw}: F_{wvs}: F_{wvg}=F_{ww}: f_{1} F_{ws}: f_{2} F_{w g}
 \end{equation}
-其中$f_1=h_v/H$，$f_2=\left(H-h_v\right)/H$。根据能量守恒：
+其中$f_1=h_v/{\rm H}$，$f_2=\left({\rm H}-h_v\right)/{\rm H}$。根据能量守恒：
 \begin{equation}
 F_{wvw}+F_{wvs}+F_{wvg}=F_{w v}
 \end{equation}
@@ -278,10 +277,10 @@ F_{ws}^{\prime}=F_{ww}-F_{wvs}+F_{wvs} T_{d}
 到达地面的辐射通量$E_g=1-S_w-S_v+\left(S_v-S_{vw}\right)T_d$，其中$E_{gimp}=E_gf_{gimp}$，$E_{gper}=E_gf_{gper}$，
 $E_v=S_v$。阳面墙、阴面墙、不透水面、透水面和植被第一次散射辐射通量可分别计算为：$E_{wsun}\alpha_w$，$E_{wsha}\alpha_w$，
 $E_{gimp}\alpha_{gimp}$，$E_{gper}\alpha_{gper}$，$E_v\alpha_v$，
-其中$\alpha$表示反照率(对于植被表示所有向外散射辐射比例)，不分区阳面和阴面墙，不区分漫射和直射照射，且反射后的辐射假设为漫射辐射。假设经过墙面、地面和植被之间多次散射，达到辐射平衡时的墙面和地面辐射出射通量为$M$，利用各组分之间的可视因子，可建立如下辐射平衡方程：
+其中$\alpha$表示反照率(对于植被表示所有向外散射辐射与入射辐射比例)，不分区阳面和阴面墙，不区分漫射和直射照射，且反射后的辐射假设为漫射辐射。经过墙面、地面和植被之间多次散射，达到辐射平衡时的墙面、地面和植被辐射出射通量用符号$M$表示，利用各组成面之间的可视因子，可建立如下辐射平衡方程：
 \begin{landscape}
 \begin{equation}
-\begin{array}{l}M_{wsun}=E_{wsun} \alpha_{w}+M_{wsun} F_{ww}^{\prime} f_{wsun} \alpha_{w}+M_{wsha} F_{ww}^{\prime} f_{wsun} \alpha_{w}+M_{gimp} F_{g w}^{\prime} f_{wsun} \alpha_{w}+M_{gper} F_{g w}^{\prime} f_{wsun} \alpha_{w}+M_{v} F_{v w} f_{wsun} \alpha_{w} \\ M_{wsha}=E_{wsha} \alpha_{w}+M_{wsha} F_{ww}^{\prime} f_{wsha} \alpha_{w}+M_{wsun} F_{ww}^{\prime} f_{wsha} \alpha_{w}+M_{gimp} F_{g w}^{\prime} f_{wsha} \alpha_{w}+M_{gper} F_{g w}^{\prime} f_{wsha} \alpha_{w}+M_{v} F_{v w} f_{wsha} \alpha_{w} \\ M_{gimp}=E_{gimp} \alpha_{gimp}+M_{wsun} F_{w g}^{\prime} f_{gimp} \alpha_{gimp}+M_{wsha} F_{w g}^{\prime} f_{gimp} \alpha_{gimp}+M_{v} F_{v g} f_{gimp} \alpha_{gimp} \\ M_{gper}=E_{gper} \alpha_{gper}+M_{wsun} F_{w g}^{\prime} f_{gper} \alpha_{gper}+M_{wsha} F_{w g}^{\prime} f_{gper} \alpha_{gper}+M_{v} F_{v g} f_{gper} \alpha_{gper} \\ M_{v}=E_{v} \alpha_{v}+M_{wsun} F_{w v} \alpha_{v}+M_{wsha} F_{w v} \alpha_{v}+M_{gimp} F_{g v} \alpha_{v}+M_{gper} F_{g v} \alpha_{v}\end{array}
+\begin{aligned}M_{wsun} &=E_{wsun} \alpha_{w}+M_{wsun} F_{ww}^{\prime} f_{wsun} \alpha_{w}+M_{wsha} F_{ww}^{\prime} f_{wsun} \alpha_{w}+M_{gimp} F_{g w}^{\prime} f_{wsun} \alpha_{w}+M_{gper} F_{g w}^{\prime} f_{wsun} \alpha_{w}+M_{v} F_{v w} f_{wsun} \alpha_{w} \\ M_{wsha} &=E_{wsha} \alpha_{w}+M_{wsha} F_{ww}^{\prime} f_{wsha} \alpha_{w}+M_{wsun} F_{ww}^{\prime} f_{wsha} \alpha_{w}+M_{gimp} F_{g w}^{\prime} f_{wsha} \alpha_{w}+M_{gper} F_{g w}^{\prime} f_{wsha} \alpha_{w}+M_{v} F_{v w} f_{wsha} \alpha_{w} \\ M_{gimp} &=E_{gimp} \alpha_{gimp}+M_{wsun} F_{w g}^{\prime} f_{gimp} \alpha_{gimp}+M_{wsha} F_{w g}^{\prime} f_{gimp} \alpha_{gimp}+M_{v} F_{v g} f_{gimp} \alpha_{gimp} \\ M_{gper} &=E_{gper} \alpha_{gper}+M_{wsun} F_{w g}^{\prime} f_{gper} \alpha_{gper}+M_{wsha} F_{w g}^{\prime} f_{gper} \alpha_{gper}+M_{v} F_{v g} f_{gper} \alpha_{gper} \\ M_{v} &=E_{v} \alpha_{v}+M_{wsun} F_{w v} \alpha_{v}+M_{wsha} F_{w v} \alpha_{v}+M_{gimp} F_{g v} \alpha_{v}+M_{gper} F_{g v} \alpha_{v}\end{aligned}
 \end{equation}
 整理后化简为:
 \begin{equation}
@@ -302,7 +301,7 @@ s_{v}=\frac{f_{g}}{f_{v}} s_{v}
 \end{equation}
 屋顶的吸收计算为$s_{roof}=1-\alpha_{roof}$，考虑屋顶的城市反照率(\ref{alpha_u_a1})修订为：
 \begin{equation}
-\alpha_{u}=\alpha_{roof} f_{b}+\alpha_{u} f_{g}
+\alpha_{u}=\alpha_{roof} f_{roof}+\alpha_{u} f_{g}
 \end{equation}
 
 \textit{b. 漫射入射太阳辐射}
@@ -317,9 +316,9 @@ $F_{sw}^\prime f_{wsha}$、$F_{sg}^\prime f_{gimp}$、$F_{sg}^\prime f_{gper}$�
 本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Longwave.F90}。
 \end{mymdframed}
 
-无植被时的长波辐射传输类似与无植被时短波辐射传输时的漫射入射情景(长波辐射近似为漫射光源处理)。首次达到各组分表面的长波辐射通量为：
+无植被时的长波辐射传输类似于无植被时短波辐射传输时的漫射入射情景(长波辐射近似为漫射光源处理)。首次达到各组分表面的长波辐射通量为：
 \begin{equation}
-\begin{aligned} I_{wsun} &=L_{W} F_{s w} f_{wsun} \\ I_{wsha} &=L_{W} F_{s w} f_{wsha} \\ I_{gimp} &=L_{W} F_{s g} f_{gimp} \\ I_{gper} &=L_{W} F_{s g} f_{gper} \end{aligned}
+\begin{aligned} I_{wsun} &=L ^\downarrow F_{s w} f_{wsun} \\ I_{wsha} &=L^\downarrow F_{s w} f_{wsha} \\ I_{gimp} &=L^\downarrow F_{s g} f_{gimp} \\ I_{gper} &=L^\downarrow F_{s g} f_{gper} \end{aligned}
 \end{equation}
 第一次反射的长波辐射通量依次分别为：
 \begin{equation}
@@ -336,10 +335,10 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
 \begin{landscape}
 \begin{equation}
     \begin{aligned}
-        L_{wsun}^{\uparrow}=I_{wsun}\left(1-\varepsilon_{w}\right)+L_{wsun}^{\uparrow} F_{ww} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{wsha}^{\uparrow} F_{ww} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{gimp}^{\uparrow} F_{g w} f_{wsun}\left(1-\varepsilon_{w}\right)\\+L_{gper}^{\uparrow} F_{g w} f_{wsun}\left(1-\varepsilon_{w}\right)+4 f_{wsun} H L * \frac{f_{b}}{f_{g}} * \sigma \varepsilon_{w} T_{wsun}^{4}\\
-        L_{wsha}^{\uparrow}=I_{wsha}\left(1-\varepsilon_{w}\right)+L_{wsha}^{\uparrow} F_{ww} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{wsun}^{\uparrow} F_{ww} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{gimp}^{\uparrow} F_{g w} f_{wsha}\left(1-\varepsilon_{w}\right)\\+L_{gper}^{\uparrow} F_{g w} f_{wsha}\left(1-\varepsilon_{w}\right)+4 f_{wsha} H L * \frac{f_{b}}{f_{g}} * \sigma \varepsilon_{w} T_{wsha}^{4}\\
-        L_{gimp}^{\uparrow}=I_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{wsun}^{\uparrow} F_{w g} f_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{wsha}^{\uparrow} F_{w g} f_{gimp}\left(1-\varepsilon_{gimp}\right)+\sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp}\\
-        L_{gper}^{\uparrow}=I_{gper}\left(1-\varepsilon_{gper}\right)+L_{wsun}^{\uparrow} F_{w g} f_{gper}\left(1-\varepsilon_{gper}\right)+L_{wsha}^{\uparrow} F_{w g} f_{gper}\left(1-\varepsilon_{gper}\right)+\sigma \varepsilon_{gper} T_{gper}^{4} f_{gper}
+        L_{wsun}^{\uparrow} &=I_{wsun}\left(1-\varepsilon_{w}\right)+L_{wsun}^{\uparrow} F_{ww} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{wsha}^{\uparrow} F_{ww} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{gimp}^{\uparrow} F_{g w} f_{wsun}\left(1-\varepsilon_{w}\right) +L_{gper}^{\uparrow} F_{g w} f_{wsun}\left(1-\varepsilon_{w}\right) \\ &+4 f_{wsun} {\rm HL} \frac{f_{b}}{f_{g}} \sigma \varepsilon_{w} T_{wsun}^{4}\\
+        L_{wsha}^{\uparrow} &=I_{wsha}\left(1-\varepsilon_{w}\right)+L_{wsha}^{\uparrow} F_{ww} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{wsun}^{\uparrow} F_{ww} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{gimp}^{\uparrow} F_{g w} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{gper}^{\uparrow} F_{g w} f_{wsha}\left(1-\varepsilon_{w}\right) \\ &+4 f_{wsha} {\rm HL} \frac{f_{b}}{f_{g}} \sigma \varepsilon_{w} T_{wsha}^{4}\\
+        L_{gimp}^{\uparrow} &=I_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{wsun}^{\uparrow} F_{w g} f_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{wsha}^{\uparrow} F_{w g} f_{gimp}\left(1-\varepsilon_{gimp}\right)+\sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp}\\
+        L_{gper}^{\uparrow} &=I_{gper}\left(1-\varepsilon_{gper}\right)+L_{wsun}^{\uparrow} F_{w g} f_{gper}\left(1-\varepsilon_{gper}\right)+L_{wsha}^{\uparrow} F_{w g} f_{gper}\left(1-\varepsilon_{gper}\right)+\sigma \varepsilon_{gper} T_{gper}^{4} f_{gper}
     \end{aligned}
 \end{equation}
 其中$L^\uparrow$表示各组分表面总的向外长波辐射量(反射部分+自身发射部分)。经过整理，可得：
@@ -354,15 +353,19 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
 
 以上方程也可以记为矩阵形式：
 \begin{equation}
-\mathbf{A X}=\mathbf{B}
+\mathbf{A x}=\mathbf{B}
 \end{equation}
-求解以上方程得到$\mathbf{X}$，各组分表面长波净辐射量为：
+求解以上方程得到$\mathbf{x}$，各组分表面长波净辐射量为：
 \begin{equation}\label{L_wsun_wsha_gimp_pger_1}
-\begin{array}{c}L_{wsun}=\frac{\varepsilon L_{wsun}^{\uparrow}-4 f_{wsun} \mathrm{HL} * \frac{f_{b}}{f_{g}} * \sigma \varepsilon_{w} T_{wsun}^{4}}{1-\varepsilon_{w}} \\ L_{wsha}=\frac{\varepsilon L_{wsha}^{\uparrow}-4 f_{wsha} \mathrm{HL} * \frac{f_{b}}{f_{g}} * \sigma \varepsilon_{w} T_{wsha}^{4}}{1-\varepsilon_{w}} \\ L_{gimp}=\frac{\varepsilon L_{w gimp}^{\uparrow}-\sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp}}{1-\varepsilon_{gimp}} \\ L_{p g e r}=\frac{\varepsilon L_{w gper}^{\uparrow}-\sigma \varepsilon_{gper} T_{gper}^{4} f_{gper}}{1-\varepsilon_{gper}}\end{array}
+\begin{aligned}
+L_{wsun} &=\frac{\varepsilon L_{wsun}^{\uparrow}-4 f_{wsun} \mathrm{HL} \frac{f_{b}}{f_{g}} \sigma \varepsilon_{w} T_{wsun}^{4}}{1-\varepsilon_{w}} \\ L_{wsha} &=\frac{\varepsilon L_{wsha}^{\uparrow}-4 f_{wsha} \mathrm{HL} \frac{f_{b}}{f_{g}} \sigma \varepsilon_{w} T_{wsha}^{4}}{1-\varepsilon_{w}} \\ L_{gimp} &=\frac{\varepsilon L_{w gimp}^{\uparrow}-\sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp}}{1-\varepsilon_{gimp}} \\ L_{p g e r} &=\frac{\varepsilon L_{w gper}^{\uparrow}-\sigma \varepsilon_{gper} T_{gper}^{4} f_{gper}}{1-\varepsilon_{gper}}
+\end{aligned}
 \end{equation}
 转化为单位面积净辐射时上式修改为：
 \begin{equation}\label{L_wsun_wsha_gimp_pger_2}
-\begin{array}{c}L_{wsun}=\frac{f_{g}}{4 f_{wsun} \mathrm{HL} f_{b}} L_{wsun} \\ L_{wsha}=\frac{f_{g}}{4 f_{wsha} \mathrm{HL} f_{b}} L_{wsha} \\ L_{gimp}=\frac{1}{f_{gimp}} L_{gimp} \\ L_{gper}=\frac{1}{f_{gper}} L_{gper}\end{array}
+\begin{aligned}
+L_{wsun} &=\frac{f_{g}}{4 f_{wsun} \mathrm{HL} f_{b}} L_{wsun} \\ L_{wsha} &=\frac{f_{g}}{4 f_{wsha} \mathrm{HL} f_{b}} L_{wsha} \\ L_{gimp} &=\frac{1}{f_{gimp}} L_{gimp} \\ L_{gper} &=\frac{1}{f_{gper}} L_{gper}
+\end{aligned}
 \end{equation}
 在不考虑屋顶时的向外长波辐射通量计算为：
 \begin{equation}
@@ -379,17 +382,17 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}+L_{wsha}^{\uparrow} F_{ws}+L_{gimp}^{\up
 \begin{landscape}
 \begin{equation}
     \begin{aligned}
-    L_{{wsun }}^{\uparrow}=I_{{wsun }}\left(1-\varepsilon_{w}\right)+L_{wsun}^{\uparrow} F_{ww}^{\prime} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{wsha}^{\uparrow} F_{ww}^{\prime} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{gimp}^{\uparrow} F_{g w}^{\prime} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{gper}^{\uparrow} F_{g w}^{\prime} f_{wsun}\left(1-\varepsilon_{w}\right)\\+L_{v}^{\uparrow} F_{v w} f_{wsun}\left(1-\varepsilon_{w}\right)+4 f_{wsun} H L * \frac{f_{b}}{f_{g}} * \sigma \varepsilon_{w} T_{wsun}^{4} \\
-    L_{wsha}^{\uparrow}=I_{wsha}\left(1-\varepsilon_{w}\right)+L_{wsha}^{\uparrow} F_{ww}^{\prime} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{wsun}^{\uparrow} F_{ww}^{\prime} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{gimp}^{\uparrow} F_{g w}^{\prime} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{gper}^{\uparrow} F_{g w}^{\prime} f_{wsha}\left(1-\varepsilon_{w}\right)\\+L_{v}^{\uparrow} F_{v w} f_{wsha}\left(1-\varepsilon_{w}\right)+4 f_{wsha} H L * \frac{f_{b}}{f_{g}} * \sigma \varepsilon_{w} T_{wsha}^{4}\\
-    L_{gimp}^{\uparrow}=I_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{wsun}^{\uparrow} F_{w g}^{\prime} f_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{wsha}^{\uparrow} F_{w g}^{\prime} f_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{v}^{\uparrow} F_{v g} f_{gimp}\left(1-\varepsilon_{gimp}\right)+\sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp} \\
-    L_{gper}^{\uparrow}=I_{gper}\left(1-\varepsilon_{gper}\right)+L_{wsun}^{\uparrow} F_{w g}^{\prime} f_{gper}\left(1-\varepsilon_{gper}\right)+L_{wsha}^{\uparrow} F_{w g}^{\prime} f_{gper}\left(1-\varepsilon_{gper}\right)+L_{v}^{\uparrow} F_{v g} f_{gper}\left(1-\varepsilon_{gper}\right)+\sigma \varepsilon_{{gpre }} T_{{gpre }}^{4} f_{{gpre }} \\
-    L_{v}^{\uparrow}=4 f_{v} / f_{g} \sigma \varepsilon_{v} T_{v}^{4}
+    L_{{wsun }}^{\uparrow} &=I_{{wsun }}\left(1-\varepsilon_{w}\right)+L_{wsun}^{\uparrow} F_{ww}^{\prime} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{wsha}^{\uparrow} F_{ww}^{\prime} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{gimp}^{\uparrow} F_{g w}^{\prime} f_{wsun}\left(1-\varepsilon_{w}\right)+L_{gper}^{\uparrow} F_{g w}^{\prime} f_{wsun}\left(1-\varepsilon_{w}\right)\\ &+L_{v}^{\uparrow} F_{vw} f_{wsun}\left(1-\varepsilon_{w}\right)+4 f_{wsun} {\rm HL} \frac{f_{b}}{f_{g}} \sigma \varepsilon_{w} T_{wsun}^{4} \\
+    L_{wsha}^{\uparrow} &=I_{wsha}\left(1-\varepsilon_{w}\right)+L_{wsha}^{\uparrow} F_{ww}^{\prime} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{wsun}^{\uparrow} F_{ww}^{\prime} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{gimp}^{\uparrow} F_{g w}^{\prime} f_{wsha}\left(1-\varepsilon_{w}\right)+L_{gper}^{\uparrow} F_{g w}^{\prime} f_{wsha}\left(1-\varepsilon_{w}\right)\\ &+L_{v}^{\uparrow} F_{v w} f_{wsha}\left(1-\varepsilon_{w}\right)+4 f_{wsha} { \rm HL} \frac{f_{b}}{f_{g}} \sigma \varepsilon_{w} T_{wsha}^{4}\\
+    L_{gimp}^{\uparrow} &=I_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{wsun}^{\uparrow} F_{w g}^{\prime} f_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{wsha}^{\uparrow} F_{w g}^{\prime} f_{gimp}\left(1-\varepsilon_{gimp}\right)+L_{v}^{\uparrow} F_{v g} f_{gimp}\left(1-\varepsilon_{gimp}\right)+\sigma \varepsilon_{gimp} T_{gimp}^{4} f_{gimp} \\
+    L_{gper}^{\uparrow} &=I_{gper}\left(1-\varepsilon_{gper}\right)+L_{wsun}^{\uparrow} F_{w g}^{\prime} f_{gper}\left(1-\varepsilon_{gper}\right)+L_{wsha}^{\uparrow} F_{w g}^{\prime} f_{gper}\left(1-\varepsilon_{gper}\right)+L_{v}^{\uparrow} F_{v g} f_{gper}\left(1-\varepsilon_{gper}\right)+\sigma \varepsilon_{{gpre }} T_{{gpre }}^{4} f_{{gpre }} \\
+    L_{v}^{\uparrow} &=4 f_{v} / f_{g} \sigma \varepsilon_{v} T_{v}^{4}
     \end{aligned}
 \end{equation}
 \end{landscape}
 
 \begin{landscape}
-上式中的$F$, $F^\prime$表示可视因子，同章节 \ref{有植被覆盖时短波辐射传输}。经过整理，可以得到：
+上式中的$F$, $F^\prime$表示可视因子，同章节~\ref{有植被覆盖时短波辐射传输}。经过整理，可以得到：
 \begin{equation}
     \begin{split}
     \left(\begin{matrix}1-\ F_{ww}^\prime f_{wsun}\left(1-\varepsilon_w\right)&-\ F_{ww}^\prime f_{wsun}\left(1-\varepsilon_w\right)&-F_{gw}^\prime f_{wsun}\left(1-\varepsilon_w\right)&-F_{gw}^\prime f_{wsun}\left(1-\varepsilon_w\right)&-F_{vw}f_{wsun}\left(1-\varepsilon_w\right)\\
@@ -398,8 +401,8 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}+L_{wsha}^{\uparrow} F_{ws}+L_{gimp}^{\up
     -F_{wg}^\prime f_{gper}\left(1-\varepsilon_{gper}\right)&-F_{wg}^\prime f_{gper}\left(1-\varepsilon_{gper}\right)&0&1&-F_{vg}f_{gper}\left(1-\varepsilon_{gper}\right)\\
     0&0&0&0&1\\\end{matrix}\right)\cdot \\
     \left(\begin{matrix}L_{wsun}^\uparrow\\L_{wsha}^\uparrow\\L_{gimp}^\uparrow\\L_{gper}^\uparrow\\L_v^\uparrow\\\end{matrix}\right)
-    =\left(\begin{matrix}I_{wsun}\left(1-\varepsilon_w\right)+4f_{wsun}HL \times \frac{f_b}{f_g} \times \sigma\varepsilon_wT_{wsun}^4 \\
-        I_{wsha}\left(1-\varepsilon_w\right)+4f_{wsha}HL \times \frac{f_b}{f_g} \times \sigma\varepsilon_wT_{wsha}^4  \\
+    =\left(\begin{matrix}I_{wsun}\left(1-\varepsilon_w\right)+4f_{wsun} {\rm HL} \frac{f_b}{f_g} \sigma\varepsilon_wT_{wsun}^4 \\
+        I_{wsha}\left(1-\varepsilon_w\right)+4f_{wsha}{ \rm HL} \frac{f_b}{f_g}\sigma\varepsilon_wT_{wsha}^4  \\
         I_{gimp}\left(1-\varepsilon_{gimp}\right)+\sigma\varepsilon_{gimp}T_{gimp}^4f_{gimp} \\
         I_{gper}\left(1-\varepsilon_{gper}\right)+\sigma\varepsilon_{gper}T_{gper}^4f_{gper}\\
         4f_v/f_g\sigma\varepsilon_vT_v^4\\\end{matrix}\right)
@@ -409,7 +412,7 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}+L_{wsha}^{\uparrow} F_{ws}+L_{gimp}^{\up
 
 求解以上方程，墙面和地面长波净辐射及单位面积净辐射计算公式同(\ref{L_wsun_wsha_gimp_pger_1})和(\ref{L_wsun_wsha_gimp_pger_2})。植被净辐射吸收为：
 \begin{equation}
-L_{v}=\left(L_{wsun}^{\uparrow} F_{w v}+L_{wsha}^{\uparrow} F_{w v}+L_{gimp}^{\uparrow} F_{g v}+L_{gper}^{\uparrow} F_{g v}+L_{W} F_{s v}\right) \varepsilon_{v}-4 f_{v} / f_{g} \sigma \varepsilon_{v} T_{v}^{4}
+L_{v}=\left(L_{wsun}^{\uparrow} F_{wv}+L_{wsha}^{\uparrow} F_{wv}+L_{gimp}^{\uparrow} F_{gv}+L_{gper}^{\uparrow} F_{g v}+L_{W} F_{sv}\right) \varepsilon_{v}-4 f_{v} / f_{g} \sigma \varepsilon_{v} T_{v}^{4}
 \end{equation}
 植被单位面积覆盖长波净辐射修改为：
 \begin{equation}
@@ -419,7 +422,7 @@ L_{v}=\frac{f_{g}}{f_{v}} L_{v}
 \begin{equation}
 L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}^{\prime}+L_{wsha}^{\uparrow} F_{ws}^{\prime}+L_{gimp}^{\uparrow} F_{gs}^{\prime}+L_{gper}^{\uparrow} F_{gs}^{\prime}+L_{v}^{\uparrow} F_{v s}
 \end{equation}
-\section{湍流交换过程}
+\section{湍流交换过程}\label{城市湍流过程}
 \begin{mymdframed}{代码}
 本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Flux.F90}。
 \end{mymdframed}
@@ -427,102 +430,422 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}^{\prime}+L_{wsha}^{\uparrow} F_{ws}^{\pr
 城市湍流交换过程与三维植被湍流交换过程类似，计算屋顶、墙面(阴、阳面)、地面和植被的感热、潜热交换量，同样是基于相似性理论，建立每层(等效高度)通量守恒方程，联立求解。不同之处在于其粗糙度、迎风面积指数、零平面位移高度、风速/湍流交换系数衰减系数、建筑表面边界层阻抗计算与植被有所不同。
 下面就无植被覆盖和有植被覆盖时对不同于自然植被湍流交换过程的部分进行简要说明。
 
-\subsection{无植被覆盖时湍流交换过程}
+\subsection{无植被覆盖时湍流交换过程}\label{无植被覆盖时湍流交换过程}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}。
+\end{mymdframed}
 
 建筑物的零平面位移高度采用~\citet{macdonald1998improved}方案：
 \begin{equation}
-\frac{d}{H}=1+A^{-f_{b}}\left(f_{b}-1\right)
+\frac{d}{\rm H}=1+A^{-f_{b}}\left(f_{b}-1\right)
 \end{equation}
 其中$A$取值为4.43。迎风面积指数可以计算为：
 \begin{equation}
-\lambda_{f}=\frac{2}{\pi} \cdot \rm {HL} \cdot f_{b} \int_{0}^{\frac{\pi}{2}}(\cos \theta+\sin \theta) d \theta=\frac{4}{\pi} \cdot \rm{HL} f_{b}
+\lambda_{f}=\frac{2}{\pi} \cdot {\rm HL} \cdot f_{b} \int_{0}^{\frac{\pi}{2}}(\cos \theta+\sin \theta) d \theta=\frac{4}{\pi} \cdot {\rm HL} f_{b}
 \end{equation}
 粗糙度计算为：
 \begin{equation}
-\frac{z_{0}}{H}=\left(1-\frac{d}{H}\right) \exp \left[-\left(0.5 \frac{c_{D}}{\kappa^{2}}\left(1-\frac{d}{H}\right) \lambda_{f}\right)^{-0.5}\right]
+\frac{z_{0}}{\rm H}=\left(1-\frac{d}{\rm H}\right) \exp \left[-\left(0.5 \frac{c_{D}}{\kappa^{2}}\left(1-\frac{d}{\rm H}\right) \lambda_{f}\right)^{-0.5}\right]
 \end{equation}
 其中$C_D=1.2$，$\kappa=0.4$为 von K\'arman 常数。
 
 城市冠层内的风速和湍流交换系数同样假设为指数衰减，但衰减系数与植被不同，
-采用\citet{masson2000physically}方案，计算为0.5$HW$。建筑物(屋顶、墙面)边界层阻抗$r_b$计算为\citep{oleson2008urban}：
+采用\citet{masson2000physically}方案，计算为0.5${\rm HW}$。建筑物(屋顶、墙面)边界层阻抗$r_b$计算为\citep{oleson2008urban}：
 \begin{equation}
 r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 \end{equation}
 其中$u_{eff}$表示屋顶高度/墙面交换高度的等效风速值，$\rho_a$表示空气密度，$C_p$表示干空气定压比热容。
 
-以上为主要区别于三维植被湍流交换过程计算的部分，整个正式湍流交换计算阻抗网络如图~\ref{fig:无植被覆盖时城市湍流交换阻抗示意图} 所示。
-湍流交换计算过程与三维植被湍流交换方案类似，先通过相似性理论计算屋顶高度风速和湍流交换系数；
-然后根据指数衰减假设，参考三维植被湍流交换方案~\citep{dai2019different}，
-根据公式(\ref{uz})和(\ref{Kz})计算风速和湍流交换系数在城市冠层内部剖面。屋顶的等效风速即为H高度时的风速，
-墙面的等效风速为H到地面的平均风速，通过风速剖面积分计算得到。同理，屋顶与墙面等效交换高度之间的动力学交换阻抗，
-以及墙面等效交换高度与地面之间的动力学阻抗$r_d$均是通过对交换系数剖面积分计算得到(公式(\ref{r_d1}))。
-同多层植被湍流交换计算一样，对上图所示的屋顶和墙面等效交换高度建立感热和潜热通量守恒方程，
-迭代求解其高度处的空气温度、湿度以及相似性理论交换长度(即空气不稳定程度)。
-因为这部分过程与三维植被湍流交换过程完全一致，在此不再阐述。
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式无植被阻抗交换网络.png}
+\includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式无植被阻抗交换网络.png}
 \caption{CoLM城市模式无植被覆盖时湍流交换阻抗示意图。}
 \label{fig:无植被覆盖时城市湍流交换阻抗示意图}
 \end{figure}
 }
 
+以上为主要区别于三维植被湍流交换过程计算的部分，整个正式湍流交换计算阻抗网络如图~\ref{fig:无植被覆盖时城市湍流交换阻抗示意图} 所示。
+湍流交换计算过程与三维植被湍流交换方案类似，先通过相似性理论计算屋顶高度风速和湍流交换系数；然后根据指数衰减假设，参考三维植被湍流交换方案~\citep{dai2019different}，根据公式(\ref{uz})和(\ref{Kz})计算风速和湍流交换系数在城市冠层内部剖面。屋顶的等效风速即为H高度时的风速，墙面的等效风速为H到地面的平均风速，通过风速剖面积分计算得到。同理，屋顶与墙面等效交换高度之间的动力学交换阻抗，以及墙面等效交换高度与地面之间的动力学阻抗$r_d$均是通过对交换系数剖面积分计算得到(公式(\ref{r_d1}))。
+同多层植被湍流交换计算一样，对上图所示的屋顶和墙面等效交换高度建立感热和潜热通量守恒方程，迭代求解其高度处的空气温度、湿度以及相似性理论交换长度(即空气不稳定程度)。
+
+%感热通量
+湍流交换过程在迭代计算时，需要求解城市内部第一、第二交换层的温度(比湿)$T_1$($q_1$)与$T_2$($q_2$)，以计算不同城市表面的湍流通量交换，在不考虑城市植被时，只存在地面(透水面$gper$与不透水面$gimp$)、阳面墙($wsun$)、阴面墙($wsha$)以及屋顶($roof$)的交换过程，其中地面、墙体均在第一层交换，屋顶则在第二层交换，如图~\ref{fig:无植被覆盖时城市湍流交换阻抗示意图}所示，在多层湍流交换方案中，层与层之间的通量交换保持平衡，通过建立不同层的通量交换方程即可求解$T_1$($q_1$)与$T_2$($q_2$)，进而计算得到不同表面的感热/潜热通量。
+
+对于感热而言，在不考虑城市植被时，其不同层的感热通量$H$可表达为：
+\begin{equation}\label{2lays_noveg_H_layer1}
+    H_{1} = H_{g}
+\end{equation}
+%
+\begin{equation}\label{2lays_noveg_H_layer2}
+    H_{2} = H_{g} + H_{wsun} + H_{wsha} = \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}}
+\end{equation}
+%
+\begin{equation}\label{2lays_noveg_H}
+    H = H_{2} + H_{roof} = \frac{\rho _a C_p \left( T_{2} - T_a \right)}{r_{ah}}
+\end{equation}
+其中，$H_1$、$H_2$和$H$分别表示地面与第一层、第一层与第二层以及第二层与参考高度的感热通量交换，$H_{g}$、$H_{wsun}$、$H_{wsha}$、$H_{roof}$分别为地面、阳面墙、阴面墙以及屋顶的感热通量，其各自的表达式分别为：
+\begin{equation}\label{urban_noveg_Hg}
+    H_{g} = \frac{\rho _a C_p \left( T_{g} - T_{1} \right) \cdot f_{g}}{r_{d1}}
+\end{equation}
+%
+\begin{equation}
+    H_{wsun} = \frac{\rho  _a C_p \left( T_{wsun} - T_{1} \right) \cdot f_{wsun}}{r_{wsun}}
+\end{equation}
+%
+\begin{equation}
+    H_{wsha} = \frac{\rho _a C_p \left( T_{wsha} - T_{1} \right) \cdot f_{wsha}}{r_{wsha}}
+\end{equation}
+%
+\begin{equation}\label{urban_noveg_Hroof}
+    H_{roof} = \frac{\rho _a C_p \left( T_{roof} - T_{2} \right) \cdot f_{roof}}{r_{roof}}
+\end{equation}
+$T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面与不透水面温度加权得到的平均温度，$r$为空气动力学阻抗，\allowbreak $f_{roof}$,\allowbreak  $f_{wsun}$,\allowbreak  $f_{wsha}$分表代表屋顶、阳面墙以及阴面墙覆盖比例，$f_{g}$则为除去建筑覆盖外的路面占比(包含透水面$f_{gper}$以及不透水面$f_{gimp}$)，将以上表达式代回式 \ref{2lays_noveg_H_layer1}--\ref{2lays_noveg_H}，可得：
+\begin{equation}
+    \begin{split}
+        & \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} = \\
+        & \frac{\rho _a C_p \left( T_{g} - T_{1} \right) \cdot f_{g}}{r_{d1}} + \frac{\rho _a C_p \left( T_{wsun} - T_{1} \right) \cdot f_{wsun}}{r_{wsun}} + \frac{\rho _a C_p \left( T_{wsha} - T_{1} \right) \cdot f_{wsha}}{r_{wsha}}
+    \end{split}
+\end{equation}
+%
+\begin{equation}
+    \begin{split}
+        \frac{\rho _a C_p \left( T_{2} - T_a \right)}{r_{ah}} = 
+        \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} + \frac{\rho _a C_p \left( T_{roof} - T_{2} \right)\cdot f_{roof}}{r_{roof}}
+    \end{split}
+\end{equation}
+进而得到关于$T_{1}$和$T_{2}$的二元一次方程：
+\begin{equation}
+%    \begin{split}
+         T_{1} =
+         \frac{\frac{T_{g} \cdot f_{g}}{r_{d1}} + \frac{H_{AHE,1}}{\rho _a C_p} + \frac{T_{wsun} \cdot f_{wsun}}{r_{wsun}} + \frac{T_{wsha} \cdot f_{wsha}}{r_{wsha}} + \frac{T_{2}}{r_{d2}}}{\frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}}}
+%    \end{split}
+\end{equation}
+%
+\begin{equation}\label{result_noveg_T_layer2}
+    T_{2} = \frac{\frac{T_{1}}{r_{d2}} + \frac{T_{roof} \cdot f_{roof}}{r_{roof}} + \frac{T_a}{r_{ah}}}{\frac{1}{r_{ah}} + \frac{1}{r_{d2}} + \frac{f_{roof}}{r_{roof}}}
+\end{equation}
+求解该二元一次方程可得：
+\begin{equation}
+    \begin{split}
+    % \hspace{-1cm}
+         T_{1} = 
+         \frac{\frac{T_{g} \cdot f_{g}}{r_{d1}} + \frac{T_{wsun} \cdot f_{wsun}}{r_{wsun}} + \frac{T_{wsha} \cdot f_{wsha}}{r_{wsha}} + a_{H}}{c_{H} \cdot \left( 1 - \frac{b_H}{c_{H} r_{d2}} \right)}
+    \end{split}
+\end{equation}
+%
+\begin{equation}
+    a_{H} = \left(\frac{T_{roof} \cdot f_{roof}}{r_{roof}} + \frac{T_a}{r_{ah}}\right) \cdot b_{H}
+\end{equation}
+%
+\begin{equation}
+    b_{H} = \frac{1}{r_{d2} \cdot \left(\frac{1}{r_{ah}} + \frac{1}{r_{d2}} + \frac{f_{roof}}{r_{roof}} \right)}
+\end{equation}
+%
+\begin{equation}
+    c_{H} = \frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}}
+\end{equation}
+将$T_{1}$代回式~\ref{result_noveg_T_layer2}，即可求得$T_{2}$。
+
+将求解得到的$T_{1}$与$T_{2}$分别代回公式~\ref{urban_noveg_Hg}--\ref{urban_noveg_Hroof}，即可得到城市每个表面的感热通量，其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，需要提供各表面感热对各自温度的变化率，各表面相应值分别计算为：
+\begin{equation}
+\frac{\partial H_{g}}{\partial T_{g}} = \frac{\rho _a C_p}{r_{d1}} \left(1-\frac{f_g}{c_{H} r_{d1} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial H_{wsun}}{\partial T_{wsun}} = \frac{\rho _a C_p}{r_{wsun}} \left(1-\frac{f_{wsun}}{c_{H} r_{wsun} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial H_{wsha}}{\partial T_{wsha}} = \frac{\rho _a C_p}{r_{wsha}} \left(1-\frac{f_{wsha}}{c_{H} r_{wsha} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial H_{roof}}{\partial T_{roof}} = \frac{\rho _a C_p}{r_{roof}} \left(1-\frac{f_{roof} b_{H}}{c_{H} r_{roof} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}-\frac{f_{roof}}{r_{roof}\left(\frac{1}{r_{ah}}+\frac{1}{r_{d2}}+\frac{f_{roof}}{r_{roof}}\right)}\right)
+\end{equation}
+
+%潜热通量
+潜热通量同样通过建立通量守恒方程分别求解第一层与第二层的比湿，即$q_1$与$q_2$。由于墙体难以表达积水过程，模式中未考虑墙体的潜热通量，因此，在第一层发生交换的仅有地面，由于考虑土壤阻抗，透水面与不透水面需要单独计算，在第二层发生交换的则仅有屋顶，对于不透水面与屋顶，仅考虑积水部分，所以对于建筑群落内部不同层次的潜热通量计算，在不考虑植被的情景下，其表达式为：
+\begin{equation}\label{2lays_noveg_L_layer1}
+    \lambda E_{1} = \lambda E_{g}
+\end{equation}
+%
+\begin{equation}
+    \lambda E_{2} = \lambda E_{g}
+\end{equation}
+%
+\begin{equation}\label{2lays_noveg_L}
+    \lambda E = \lambda E_{2} + \lambda E_{roof}
+\end{equation}
+其中，$\lambda E_{g}$、$\lambda E_{roof}$分别为地面以及屋顶的潜热通量，其表达式分别为：
+\begin{equation}\label{urban_noveg_Eg}
+    \lambda E_{g} = \frac{\rho _a \left( q_{gper}-q_{1} \right) \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{\rho _a \left( q_{gimp}-q_{1} \right) \cdot f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}}
+\end{equation}
+%
+\begin{equation}\label{urban_noveg_Eroof}
+    \lambda E_{roof} = \frac{\rho _a \left( q_{roof}-q_{2}\right) \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}}
+\end{equation}
+对于城市内的透水面，因为其本质是土壤，因此在计算其潜热通量时，考虑土壤阻抗($r_{ss}$)，因此透水面阻抗为第一层空气动力学阻抗与土壤阻抗之和($r_{d1}$+$r_{ss}$)，$f_{wet}$表示各表面干湿的比例，$q$为不同表面的比湿，将以上表达式代回公式~\ref{2lays_noveg_L_layer1} -- \ref{2lays_noveg_L}，可知：
+\begin{equation}
+    \frac{\rho _a \left( q_{1}-q_{2}\right)}{r_{d2}} =
+    \frac{\rho _a \left( q_{gper}-q_{1}\right) \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{\rho _a \left( q_{gimp}-q_{1} \right) \cdot f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}}
+\end{equation}
+%
+\begin{equation}
+    \frac{\rho _a \left( q_{2} - q_a\right)}{r_{aw}} = \frac{\rho _a \left( q_{1} - q_{2}\right)}{r_{d2}} + \frac{\rho _a \left( q_{roof}-q_{2}\right) \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}}
+\end{equation}
+同样可得关于$q_{1}$以及$q_{2}$的二元一次方程：
+\begin{equation}
+    q_{1} = \\
+    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{d1} + r_{ss}} + \frac{q_{gimp} \cdot f_{g} \cdot f_{wet,gimp} \cdot f_{gimp}}{r_{d1}} + \frac{q_{2}}{r_{d2}}}{\frac{1}{r_{d2}} + \frac{f_{g} \cdot f_{gper}}{r_{d1} + r_{ss}} + \frac{f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}}}
+\end{equation}
+%
+\begin{equation}\label{equ_2lays_noveg_Q_lay2}
+    q_{2} = \frac{\frac{q_{1}}{r_{d2}} + \frac{q_{roof} \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}} + \frac{q_a}{r_{aw}}}{\frac{1}{r_{aw}} + \frac{1}{r_{d2}} + \frac{f_{wet,roof} \cdot f_{roof}}{r_{roof}}}
+\end{equation}
+求解可得：
+\begin{equation}
+    q_{1} = \\
+    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{q_{gimp} \cdot f_{g} \cdot f_{wet,gimp} \cdot f_{gimp}}{r_{d1} } + a_{\lambda}}{c_{\lambda} \cdot \left( 1 - \frac{b_{\lambda}}{c_{\lambda} \cdot r_{d2}}\right)}
+\end{equation}
+%
+\begin{equation}
+    a_{\lambda}= \left(\frac{q_{roof} \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}} + \frac{q_a}{r_{aw}}\right) \cdot b_{\lambda}
+\end{equation}
+%
+\begin{equation}
+    b_{\lambda} = \frac{1}{r_{d2} \cdot \left( \frac{1}{r_{aw}} + \frac{1}{r_{d2}} + \frac{f_{wet,roof} \cdot f_{roof}}{r_{roof}} \right)}
+\end{equation}
+%
+\begin{equation}
+    c_{\lambda} = \frac{1}{r_{d2}}+\frac{f_g \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{f_{wet,gimp} \cdot f_g \cdot f_{gimp}}{r_{d1}}
+\end{equation}
+同理，将$q_{1}$代入公式\eqref{equ_2lays_noveg_Q_lay2}即可求得$q_{2}$。
+
+将求解得到的$q_{1}$与$q_{2}$分别代回公式~\ref{urban_noveg_Eg}--\ref{urban_noveg_Eroof}，即可得到城市每个表面的潜热通量，其后计算城市各表面温度并基于该温度变化对潜热通量进行更新时，同样需要提供各表面潜热对各自温度的变化率，计算为：
+\begin{equation}
+\frac{\partial \lambda E_{gper}}{\partial T_{gper}} = \frac{\rho _a}{r_{d1}+r_{ss}} \frac{dq_{gper}}{dT_{gper}} \left(1-\frac{f_{g}f_{gper}}{c_{\lambda} \left(r_{d1}+rss\right) \left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial \lambda E_{gimp}}{\partial T_{gimp}} = \frac{\rho _a}{r_{d1}} \frac{dq_{gimp}}{dT_{gimp}} \left(1-\frac{f_{wet,gimp} f_{g} f_{gimp}}{c_{\lambda} r_{d2}\left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial \lambda E_{roof}}{\partial T_{roof}} = \frac{\rho _a}{r_{roof}} \frac{dq_{roof}}{dT_{roof}} \left(1-\frac{f_{wet,roof}f_{roof} b_{\lambda}}{c_{\lambda} r_{roof} \left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}-\frac{f_{wet,roof}f_{roof}}{r_{roof}\left(\frac{1}{r_{ah}}+\frac{1}{r_{d2}}+\frac{f_{wet,roof} f_{roof}}{r_{roof}}\right)}\right)
+\end{equation}
 
 \subsection{有植被覆盖时湍流交换过程}
-有植被覆盖时的湍流交换网络如图~\ref{fig:有植被覆盖时城市湍流交换阻抗示意图} 所示，其计算过程与无植被覆盖时类似，不同之处在于新增植被组分。因此，在建立通量守恒方程式时，需要考虑植被的感热、潜热交换，涉及到植被光合作用(蒸腾)和长波辐射吸收计算。
-光合作用过程同自然植被光合作用过程，长波辐射吸收计算在章节 \ref{有植被覆盖时长波辐射传输} 已给出。
-在实际计算过程中，可根据植被与建筑物高度差异，视情况分为两层或三层等效交换(三层时，即植被单独考虑为一层)。
-整个过程也是迭代求解，但此时需要新增迭代求解变量叶片温度，其他过程同无植被覆盖时湍流交换过程。
-
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式包含植被湍流交换阻抗网络.png}
+\includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式包含植被湍流交换阻抗网络.png}
 \caption{CoLM城市模式有植被覆盖时湍流交换阻抗示意图。}
 \label{fig:有植被覆盖时城市湍流交换阻抗示意图}
 \end{figure}
 }
+有植被覆盖时的湍流交换网络如图~\ref{fig:有植被覆盖时城市湍流交换阻抗示意图} 所示，其计算过程与无植被覆盖时类似，不同之处在于新增植被组分。因此，在建立通量守恒方程式时，需要考虑植被的感热、潜热交换，涉及到植被光合作用(蒸腾)和长波辐射吸收计算。
+光合作用过程同自然植被光合作用过程，长波辐射吸收计算在章节~\ref{有植被覆盖时长波辐射传输} 已给出。
+在实际计算过程中，可根据植被与建筑物高度差异，视情况分为两层或三层等效交换(三层时，即植被单独考虑为一层)。
+整个过程也是迭代求解，但此时需要新增迭代求解变量叶片温度，其他过程同无植被覆盖时湍流交换过程。
+
+因此，根据层与层之间通量交换守恒的原则，考虑城市植被时，其感热通量计算相较于无植被情景仅在第一层增加了植被的感热通量计算，即：
+\begin{equation}
+    H_{v} = \frac{\rho _a C_p \left( T_{v} - T_{1} \right) \cdot f_v}{r_{v}}
+\end{equation}
+此时，通量平衡方程变为：
+\begin{equation}\label{2lays_veg_H_layer1}
+    H_{1} = H_{g}
+\end{equation}
+%
+\begin{equation}\label{2lays_veg_H_layer2}
+    H_{2} = H_{g} + H_{wsun} + H_{wsha} + H_{v} = \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}}
+\end{equation}
+%
+\begin{equation}\label{2lays_veg_H}
+    H = H_{2} + H_{roof} = \frac{\rho _a C_p \left( T_{2} - T_a \right)}{r_{ah}}
+\end{equation}
+除植被感热通量$H_v$以及植被覆盖比例$f_v$外，上述公式其它各项含义与章节~\ref{无植被覆盖时湍流交换过程}相同，将各表面的感热通量计算公式代回公式 ~\ref{2lays_veg_H_layer1}--\ref{2lays_veg_H}，可得：
+\begin{equation}
+    \begin{split}
+        & \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} = \\
+        & \frac{\rho _a C_p \left( T_{g} - T_{1} \right) \cdot f_{g}}{r_{d1}} + \frac{\rho _a C_p \left( T_{wsun} - T_{1} \right) \cdot f_{wsun}}{r_{wsun}} + \frac{\rho _a C_p \left( T_{wsha} - T_{1} \right) \cdot f_{wsha}}{r_{wsha}} + 
+        \\ 
+        & \frac{\rho _a C_p \left( T_{v} - T_{1} \right) \cdot f_v}{r_{v}}
+    \end{split}
+\end{equation}
+%
+\begin{equation}
+    \begin{split}
+        \frac{\rho _a C_p \left( T_{2} - T_a \right)}{r_{ah}} = 
+        \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} + \frac{\rho _a C_p \left( T_{roof} - T_{2} \right)\cdot f_{roof}}{r_{roof}}
+    \end{split}
+\end{equation}
+进而得到关于$T_{1}$和$T_{2}$的二元一次方程：
+\begin{equation}
+    \begin{split}
+         T_{1} =
+         \frac{\frac{T_{g} \cdot f_{g}}{r_{d1}} + \frac{T_{wsun} \cdot f_{wsun}}{r_{wsun}} + \frac{T_{wsha} \cdot f_{wsha}}{r_{wsha}} + \frac{T_{v} \cdot f_v}{r_{v}} + \frac{T_{2}}{r_{d2}}}{\frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}} + \frac{f_v}{r_{v}}}
+    \end{split}
+\end{equation}
+%
+\begin{equation}\label{result_veg_T_layer2}
+    T_{2} = \frac{\frac{T_{1}}{r_{d2}} + \frac{T_{roof} \cdot f_{roof}}{r_{roof}} + \frac{T_a}{r_{ah}}}{\frac{1}{r_{ah}} + \frac{1}{r_{d2}} + \frac{f_{roof}}{r_{roof}}}
+\end{equation}
+求解该二元一次方程可得：
+\begin{equation}
+    \begin{split}
+    % \hspace{-1cm}
+         T_{1} = 
+         \frac{\frac{T_{g} \cdot f_{g}}{r_{d1}} + \frac{T_{wsun} \cdot f_{wsun}}{r_{wsun}} + \frac{T_{wsha} \cdot f_{wsha}}{r_{wsha}} + \frac{T_{v} \cdot f_{v}}{r_{v}} + a_{H}}{c_{H} \cdot \left( 1 - \frac{b_H}{c_{H} r_{d2}} \right)}
+    \end{split}
+\end{equation}
+%
+\begin{equation}
+    a_{H} = \left(\frac{T_{roof} \cdot f_{roof}}{r_{roof}} + \frac{T_a}{r_{ah}}\right) \cdot b_{H}
+\end{equation}
+%
+\begin{equation}
+    b_{H} = \frac{1}{r_{d2} \cdot \left(\frac{1}{r_{ah}} + \frac{1}{r_{d2}} + \frac{f_{roof}}{r_{roof}} \right)}
+\end{equation}
+%
+\begin{equation}
+    c_{H} = \frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}} + \frac{f_v}{r_{v}}
+\end{equation}
+将$T_{1}$代回公式~\ref{result_veg_T_layer2}，即可求得$T_{2}$。
+
+将求解得到的$T_{1}$与$T_{2}$分别代回各表面的通量表达式，即可得到城市每个表面的感热通量，其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，需要提供各表面感热对各自温度的变化率，各表面分别计算为：
+\begin{equation}
+\frac{\partial H_{g}}{\partial T_{g}} = \frac{\rho _a C_p}{r_{d1}} \left(1-\frac{f_g}{c_{H} r_{d1} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial H_{wsun}}{\partial T_{wsun}} = \frac{\rho _a C_p}{r_{wsun}} \left(1-\frac{f_{wsun}}{c_{H} r_{wsun} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial H_{wsha}}{\partial T_{wsha}} = \frac{\rho _a C_p}{r_{wsha}} \left(1-\frac{f_{wsha}}{c_{H} r_{wsha} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial H_{v}}{\partial T_{v}} = \frac{\rho _a C_p}{r_{v}} \left(1-\frac{f_{v}}{c_{H} r_{v} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial H_{roof}}{\partial T_{roof}} = \frac{\rho _a C_p}{r_{roof}} \left(1-\frac{f_{roof} b_{H}}{c_{H} r_{roof} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}-\frac{f_{roof}}{r_{roof}\left(\frac{1}{r_{ah}}+\frac{1}{r_{d2}}+\frac{f_{roof}}{r_{roof}}\right)}\right)
+\end{equation}
+
+同样，对于潜热通量，相比章节~\ref{无植被覆盖时湍流交换过程}，仅需要第一层加入植被的潜热通量计算，即：
+\begin{equation}
+    \lambda E_{v} = \frac{\rho _a \left( q_{v}-q_{1}\right) \cdot f_v}{r_{v}}
+\end{equation}
+$r_v$为植被与空气之间水汽交换总阻抗，是叶片边界层阻抗以及气孔阻抗之和，此时，通量平衡方程可表达为：
+\begin{equation}\label{2lays_veg_L_layer1}
+    \lambda E_{1} = \lambda E_{g}
+\end{equation}
+%
+\begin{equation}
+    \lambda E_{2} = \lambda E_{g} + \lambda E_{v}
+\end{equation}
+%
+\begin{equation}\label{2lays_veg_L}
+    \lambda E = \lambda E_{2} + \lambda E_{roof}
+\end{equation}
+其中，$\lambda E_{v}$、$f_v$分别为植被的潜热通量以及覆盖比例，上述公式其余各项含义同章节~\ref{无植被覆盖时湍流交换过程}，将各表面通量的表达式代回公式~\ref{2lays_veg_L_layer1} -- \ref{2lays_veg_L}，可知：
+\begin{equation}
+   \begin{split}
+    & \frac{\rho _a \left( q_{1}-q_{2}\right)}{r_{d2}} = \\
+    & \frac{\rho _a \left( q_{gper}-q_{1}\right) \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{\rho _a \left( q_{gimp}-q_{1} \right) \cdot f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}} + \frac{\rho _a \left( q_{v}-q_{1}\right) \cdot f_v}{r_{v}}
+   \end{split} 
+\end{equation}
+%
+\begin{equation}
+    \frac{\rho _a \left( q_{2} - q_a\right)}{r_{aw}} = \frac{\rho _a \left( q_{1} - q_{2}\right)}{r_{d2}} + \frac{\rho _a \left( q_{roof}-q_{2}\right) \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}}
+\end{equation}
+同样可得关于$q_{1}$以及$q_{2}$的二元一次方程：
+\begin{equation}
+    q_{1} = \\
+    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{d1} + r_{ss}} + \frac{q_{gimp} \cdot f_{g} \cdot f_{wet,gimp} \cdot f_{gimp}}{r_{d1}} + \frac{q_{v} \cdot f_v}{r_{v}} + \frac{q_{2}}{r_{d2}}}{\frac{1}{r_{d2}} + \frac{f_{g} \cdot f_{gper}}{r_{d1} + r_{ss}} + \frac{f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}}+\frac{f_v}{r_{v}}}
+\end{equation}
+%
+\begin{equation}\label{equ_2lays_veg_Q_lay2}
+    q_{2} = \frac{\frac{q_{1}}{r_{d2}} + \frac{q_{roof} \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}} + \frac{q_a}{r_{aw}}}{\frac{1}{r_{aw}} + \frac{1}{r_{d2}} + \frac{f_{wet,roof} \cdot f_{roof}}{r_{roof}}}
+\end{equation}
+求解可得：
+\begin{equation}
+    q_{1} = \\
+    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{q_{gimp} \cdot f_{g} \cdot f_{wet,gimp} \cdot f_{gimp}}{r_{d1} } + \frac{q_{v} \cdot f_v}{r_{v}} + a_{\lambda}}{c_{\lambda} \cdot \left( 1 - \frac{b_{\lambda}}{c_{\lambda} \cdot r_{d2}}\right)}
+\end{equation}
+%
+\begin{equation}
+    a_{\lambda}= \left(\frac{q_{roof} \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}} + \frac{q_a}{r_{aw}}\right) \cdot b_{\lambda}
+\end{equation}
+%
+\begin{equation}
+    b_{\lambda} = \frac{1}{r_{d2} \cdot \left( \frac{1}{r_{aw}} + \frac{1}{r_{d2}} + \frac{f_{wet,roof} \cdot f_{roof}}{r_{roof}} \right)}
+\end{equation}
+%
+\begin{equation}
+    c_{\lambda} = \frac{1}{r_{d2}}+\frac{f_g \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{f_{wet,gimp} \cdot f_g \cdot f_{gimp}}{r_{d1}} + \frac{f_v}{r_{v}}
+\end{equation}
+同理，将$q_{1}$代入公式~\ref{equ_2lays_Q_lay2}即可求得$q_{2}$。
+
+其后计算城市各表面温度并基于该温度变化对潜热通量进行更新时，同样需要提供各表面潜热对各自温度的变化率，计算为：
+\begin{equation}
+\frac{\partial \lambda E_{gper}}{\partial T_{gper}} = \frac{\rho _a}{r_{d1}+r_{ss}} \frac{dq_{gper}}{dT_{gper}} \left(1-\frac{f_{g}f_{gper}}{c_{\lambda} \left(r_{d1}+r_{ss}\right) \left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial \lambda E_{gimp}}{\partial T_{gimp}} = \frac{\rho _a}{r_{d1}} \frac{dq_{gimp}}{dT_{gimp}} \left(1-\frac{f_{wet,gimp} f_{g} f_{gimp}}{c_{\lambda} r_{d2}\left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial \lambda E_{v}}{\partial T_{v}} = \frac{\rho _a C_p}{r_{v}} \frac{dq_{v}}{dT_{v}} \left(1-\frac{f_{v}}{c_{\lambda} r_{v}\left(1-\frac{b_{\lambda}}{c_{\lambda} r_{v}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial \lambda E_{roof}}{\partial T_{roof}} = \frac{\rho _a}{r_{roof}} \frac{dq_{roof}}{dT_{roof}} \left(1-\frac{f_{wet,roof}f_{roof} b_{\lambda}}{c_{\lambda} r_{roof} \left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}-\frac{f_{wet,roof}f_{roof}}{r_{roof}\left(\frac{1}{r_{ah}}+\frac{1}{r_{d2}}+\frac{f_{wet,roof} f_{roof}}{r_{roof}}\right)}\right)
+\end{equation}
 
 
 \section{城市温度传导计算}
-城市内透水面、不透水面、墙面和屋顶的温度传导计算以自然界土壤温度传导计算为基础，基本过程一致，下面重点介绍城市的不同之处。
+城市内透水面、不透水面(地面)、墙面和屋顶的温度传导计算以自然地表土壤温度传导计算为基础，基本计算过程一致，下面主要介绍城市的不同之处。
 
 \subsection{透水面温度计算}
 \begin{mymdframed}{代码}
-本节及下节对应的代码文件为\texttt{MOD\_Urban\_PerviousTemperature.F90}。
+本节对应的代码文件为\texttt{MOD\_Urban\_PerviousTemperature.F90}。
 \end{mymdframed}
 
-城市透水面即为土壤，与自然界土壤的热传递计算一致 (分层方案与土壤一致，土壤热力参数也从全球数据中读取)，只是上表面接收的短波、长波辐射及湍流交换通量(感热、潜热)由城市相应模块求解得到。
+城市透水面即为土壤，与自然地表土壤的热传递过程计算一致 ，考虑10层土壤和最多5层积雪，分层方案与土壤(积雪)一致，考虑相变过程，土壤热力参数从全球数据中读取。不同之处在于表面接收的短波、长波辐射及湍流交换通量(感热、潜热)由城市相应模块求解得到。
 
 \subsection{不透水面温度计算}
 \begin{mymdframed}{代码}
-本节及下节对应的代码文件为\texttt{MOD\_Urban\_ImperviousTemperature.F90}。
+本节对应的代码文件为\texttt{MOD\_Urban\_ImperviousTemperature.F90}。
 \end{mymdframed}
 
 不透水面的温度传导计算与透水面最大的不同之处在于需要将不透水面层的热力属性(导热率和热容)替换掉所在层的土壤热力属性。
-另外在有雪、冰和水存在时，需要对第一层不透水面的热容进行订正。不透水面不考虑水分在内部的传递，相变过程只考虑第一层及以上积雪覆盖。
+另外在有雪、冰和水存在时，需要对第一层不透水面的热容进行订正。不透水面不考虑水在地表以下的传输，相变过程只考虑第一层不透水面(地表积水/冰)及以上积雪覆盖层。
 
 \subsection{墙面温度计算}
 
 \begin{mymdframed}{代码}
-本节及下节对应的代码文件为\texttt{MOD\_Urban\_WallTemperature.F90}。
+本节对应的代码文件为\texttt{MOD\_Urban\_WallTemperature.F90}。
 \end{mymdframed}
 
-墙面(包括阴面墙、阳面墙)厚度从外部数据读取，同土壤一样，也分为10层，每层厚度一样，其热力参数从外部数据读取。
-不同于透水面/不透水面，墙面不考虑积水、积雪覆盖，因此其热力属性完全由自身材料决定，同时也不考虑水传递、相变过程和潜热交换。
+墙面(包括阴面墙、阳面墙)厚度从外部数据读取，同土壤一样，也分为10层，每层厚度设置为一样，其热力参数从外部数据读取。
+不同于透水面/不透水面，墙面不考虑积水、积雪覆盖，因此其热力属性完全由自身材料决定，同时也不考虑水传输、相变过程和潜热交换。
 
-另一个不同之处在于最里(下)层的热量交换设置，对于土壤、不透水面，考虑最下一层无热量交换，但对于墙壁，考虑室内墙壁表面温度与最里层墙壁的热量交换。除此之外，其他方面及其求解过程与土壤温度类似。
+另一个不同之处在于最里(下)层的热量交换设置，对于土壤、不透水面，考虑最下一层无热量交换，但对于墙壁，考虑室内墙壁表面空气与最里层墙壁的热量交换。除此之外，其他方面及其求解过程与土壤温度求解类似。
 
 
 \subsection{屋顶温度计算}
 
 \begin{mymdframed}{代码}
-本节及下节对应的代码文件为\texttt{MOD\_Urban\_RoofTemperature.F90}。
+本节对应的代码文件为\texttt{MOD\_Urban\_RoofTemperature.F90}。
 \end{mymdframed}
 
-屋顶的分层方案与墙壁一致。温度传递类似于墙面，但考虑屋顶积雪、积水覆盖时对屋顶第一层热力属性的影响，同不透水面。
-同时最里层屋顶与室内屋顶表面温度考虑热量交换，相变过程只考虑第一层屋顶。
+屋顶的分层方案与墙壁一致，厚度从外部数据读取。温度传递类似于墙面，但考虑屋顶积雪、积水覆盖时对屋顶第一层热力属性的影响，同不透水面。
+同时屋顶最里层与室内屋顶表面空气考虑热量交换，相变过程只考虑第一层屋顶和积雪覆盖层。
 
 
 \section{城市水文过程}
@@ -531,94 +854,136 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 本节对应的代码文件为\texttt{MOD\_Urban\_Hydrology.F90}。
 \end{mymdframed}
 
-对城市水文过程考虑主要分为三类：1) 透水面；2) 屋顶和不透水面；3) 城市水体。
+对城市水文过程考虑主要分为三类：1) 透水面；2) 屋顶和不透水面；3) 城市水体(湖泊)。
 
-对于透水面的处理同土壤水过程，计算产流和土壤水传输。对于城市水体，采用湖泊方案进行模拟。对于屋顶和不透水面，
-考虑积雪和积水过程，类似与土壤积雪过程，但第一层为不透水面，液态水的最大承载量为不超过设定的值(max ponding)，
-超过的部分均当成地表产流处理。
+对于透水面的处理同土壤水过程，计算产流和土壤水传输。对于城市水体，采用湖泊方案进行模拟。对于屋顶和不透水面，考虑积雪和积水过程。积雪过程与自然土壤积雪过程一致。积水过程考虑表层为不透水面，液态水的最大承载量不超过预先设定的值($\text{max ponding}=1$ \unit{kg.m^{-2}})，超过的部分当成产流处理。积水区覆盖占比采用类似叶片$f_{wet}$计算方案(公式~\ref{eq:fwet})。
 
-由于目前城市水文过程比较简单，相应过程在土壤和湖泊模拟部分均有描述，在此不再赘述。
+由于目前城市水文过程较为简单，主要调用CoLM陆面过程原有方案，相应过程在土壤(积雪)水分垂直运动过程(第~\ref{积雪和土壤中水分的垂直运动} 章)和湖泊模式(第~\ref{ch:湖泊模式} 章)部分均有描述，在此不再赘述。
 
 
 \section{城市人为热模拟}
 
-\subsection{建筑能耗模型}
+\subsection{建筑能耗模型}\label{建筑能耗模型}
 
 \begin{mymdframed}{代码}
 本节对应的代码文件为\texttt{MOD\_Urban\_BEM.F90}。
 \end{mymdframed}
 
-CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，同样是基于三维城市建筑群落结构假设，其过程类似于CLM5.0建筑能耗模型。
-模型考虑墙体、屋顶的热传导过程，同时考虑室内空气与内墙壁、屋顶和室外的热量交换。根据室内设定的最高、
-最低参考温度，来计算空调对应能耗，以感热的形式增加到湍流交换计算的源项中。
-首先计算热交换通量并建立能量平衡方程，进而求解室内温度$T_{room}$，室内墙壁表面空气温度$T_{wsun,in}$，$T_{wsua,in}$和室内屋顶表面空气温度$T_{roof,in}$。
-通量交换包括最里层墙壁/屋顶与屋内墙壁/屋顶表面空气热量交换，屋内墙壁/屋顶表面空气与室内空气热量交换以及室内空气与室外空气热量交换，通量平衡方程为： 
-
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式建筑能耗示意图.png}
-\caption{CoLM城市模式建筑能耗模型示意图。}
+\caption{CoLM城市模式建筑能耗模型示意图。图中所示由窗户透射、电器及室内储热带来的热交换依赖于建筑属性，在已知相关参数的前提下可以加入到能耗模型平衡方程中进行计算}
 \label{fig:建筑能耗模型示意图}
 \end{figure}
 }
 
+CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，同样是基于三维城市建筑群落结构假设。
+模型考虑墙体、屋顶的热传导过程，同时考虑室内空气与内墙壁、屋顶和室外的热量交换。根据室内设定的最高、最低参考温度，来计算空调对应能耗，以感热的形式增加到湍流交换计算的源项中。也可以部分分配为潜热的形式排放，在已知空调排放形式前提下。
+
+基本思路如下：
+
+\begin{enumerate}
+    \item 在不打开空调的情况下，通过室内能量平衡方程预报室内温度；
+    \item 如果室内温度在预先设定的舒适度范围内，则不再进一步进行能耗计算，仅计算室内外热交换；
+    \item 如果室内温度在预先设定的舒适度范围外，则根据空调使用策略计算达到的最低/最高温度制热/制冷量；
+    \item 根据3所计算的制热/制冷量计算室内外交换热、废热排放(涉及能源利用效率)，最后可根据总的热量通量来计算能源消耗。
+\end{enumerate}
+
+求解过程首先列出热通量交换表达式，并建立能量平衡方程，进而求解室内温度$T_{room}$，室内墙壁表面空气温度$T_{wsun,in}$，$T_{wsua,in}$和室内屋顶表面空气温度$T_{roof,in}$。
+通量交换包括最里层墙壁/屋顶与屋内墙壁/屋顶表面空气热量交换，屋内墙壁/屋顶表面空气与室内空气热量交换以及室内空气与室外空气热量交换，通量平衡方程为： 
 \begin{landscape}
 \begin{equation}
     \begin{array}{l}
         \begin{split}
-        0.5 h_{{roof }, c v}\left(t_{{roof }, { in }}-t_{{room }}\right)+0.5 h_{{roof }, c v}\left(t_{{roof,in }}^{\prime}-t_{{room }}^{\prime}\right)=0.5 h_{{roof }, t k}\left(T_{{roof }, n}-T_{{roof }, { in }}\right)+0.5 h_{{roof }, t k}\left(T_{{roof }, n}-T_{{roof,in }}^{\prime}\right) \\
-        0.5 h_{{wsun, }, v}\left(t_{{wsun,in }}-t_{{room }}\right)+0.5 h_{{wsun, cv }}\left(t_{wsun, i n}^{\prime}-t_{{room }}^{\prime}\right)=0.5 h_{{wsun,tk }}\left(T_{{wsun, } n}-T_{{wsun,in }}\right)+0.5 h_{{roof,tk }}\left(T_{{wsun, } n}-T_{{wsun,in }}^{\prime}\right)\\
-        0.5 h_{wsha, c v}\left(t_{wsha, i n}-t_{{room }}\right)+0.5 h_{wsha, c v}\left(t_{wsha, i n}^{\prime}-t_{{room }}^{\prime}\right)=0.5 h_{wsha, t k}\left(T_{wsha, n}-T_{{roof }, i n}\right)+0.5 h_{wsha, t k}\left(T_{wsha, n}-T_{wsha, i n}^{\prime}\right)\\
+        0.5 h_{cv,{roof }}\left(t_{{roof }, { in }}-t_{{room }}\right)+0.5 h_{cv,{roof }}\left(t_{{roof,in }}^{\prime}-t_{{room }}^{\prime}\right)=0.5 h_{tk,{roof}}\left(T_{{roof }, n}-T_{{roof }, { in }}\right)+0.5 h_{tk,{roof }}\left(T_{{roof }, n}-T_{{roof,in }}^{\prime}\right) \\
+        0.5 h_{cv,{wsun}}\left(t_{{wsun,in }}-t_{{room }}\right)+0.5 h_{cv,{wsun}}\left(t_{wsun, i n}^{\prime}-t_{{room }}^{\prime}\right)=0.5 h_{tk,{wsun}}\left(T_{{wsun, } n}-T_{{wsun,in }}\right)+0.5 h_{tk,{roof}}\left(T_{{wsun, } n}-T_{{wsun,in }}^{\prime}\right)\\
+        0.5 h_{cv,wsha}\left(t_{wsha, i n}-t_{{room }}\right)+0.5 h_{cv,wsha}\left(t_{wsha, i n}^{\prime}-t_{{room }}^{\prime}\right)=0.5 h_{tk,wsha}\left(T_{wsha, n}-T_{{roof }, i n}\right)+0.5 h_{tk,wsha}\left(T_{wsha, n}-T_{wsha, i n}^{\prime}\right)\\
         H \rho_{a} C_{p} \frac{T_{{room }}^{\prime}-T_{{room }}}{\Delta t}
-        =\frac{ACH}{3600} H \rho_{a} C_{p}\left(T_{a f}-T_{{room }}^{\prime}\right)+0.5 h_{{roof }, c v}\left(t_{{roof }, { in }}-t_{{room }}\right)+0.5 h_{{roof }, c v}\left(t_{{roof }, { in }}^{\prime}-t_{{room }}^{\prime}\right)\\
-        +0.5 h_{wsun, c v}\left(t_{wsun, i n}-t_{{room }}\right) f_{{wsun }}+0.5 h_{wsun, c v}\left(t_{wsun, i n}^{\prime}-t_{{room }}^{\prime}\right) f_{wsun} \\
-        +0.5 h_{wsha, c v}\left(t_{wsha, i n}-t_{{room }}\right) f_{wsha}+0.5 h_{wsha, c v}\left(t_{wsha, i n}^{\prime}-t_{r o o m}^{\prime}\right) f_{wsha}
+        =\frac{ACH}{3600} H \rho_{a} C_{p}\left(T_{a f}-T_{{room }}^{\prime}\right)+0.5 h_{cv,{roof}}\left(t_{{roof }, { in }}-t_{{room }}\right)+0.5 h_{cv,{roof }}\left(t_{{roof }, { in }}^{\prime}-t_{{room }}^{\prime}\right)\\
+        +0.5 h_{cv,wsun}\left(t_{wsun, i n}-t_{{room }}\right) f_{{wsun }}+0.5 h_{cv,wsun}\left(t_{wsun, i n}^{\prime}-t_{{room }}^{\prime}\right) f_{wsun} \\
+        +0.5 h_{cv,wsha}\left(t_{wsha, i n}-t_{{room }}\right) f_{wsha}+0.5 h_{cv,wsha}\left(t_{wsha, i n}^{\prime}-t_{r o o m}^{\prime}\right) f_{wsha}
         \end{split}
     \end{array}
 \end{equation}
+\vspace{-5pt}
 以上方程组可写成矩阵形式：
-\begin{equation}
+\vspace{-5pt}
+\begin{equation}\label{eq:建筑能耗平衡方程矩阵}
     \begin{split}
-\left(\begin{array}{cccc}0.5 h_{r o o f, c v}+0.5 h_{r o o f, t k} & 0 & 0 & -0.5 h_{r o o f, c v} \\ 0 & 0.5 h_{wsun, c v}+0.5 h_{wsun, t k} & 0 & -0.5 h_{wsun, c v} \\ 0 & 0 & 0.5 h_{wsha, c v}+0.5 h_{wsha, t k} & -0.5 h_{wsha, c v} \\ -0.5 h_{r o o f, c v} & -0.5 h_{wsun, c v} f_{wsun} & -0.5 h_{wsha, c v} f_{wsha} & \frac{H \rho_{a} C_{p}}{\Delta t}+\frac{{ ACH }}{3600} H \rho_{a} C_{p}\end{array}\right)
+\left(\begin{array}{cccc}0.5 h_{cv,roof}+0.5 h_{tk,roof} & 0 & 0 & -0.5 h_{cv,roof} \\ 0 & 0.5 h_{cv,wsun}+0.5 h_{tk,wsun} & 0 & -0.5 h_{cv,wsun} \\ 0 & 0 & 0.5 h_{cv,wsha}+0.5 h_{tk,wsha} & -0.5 h_{cv,wsha} \\ -0.5 h_{cv,roof} & -0.5 h_{cv,wsun} f_{wsun} & -0.5 h_{cv,wsha} f_{wsha} & \xi + \frac{H \rho_{a} C_{p}}{\Delta t}+\frac{{ ACH }}{3600} H \rho_{a} C_{p}\end{array}\right)
     \left(\begin{array}{c}T_{{roof,in }}^{\prime} \\ T_{wsun, i n}^{\prime} \\ T_{wsha, i n}^{\prime} \\ T_{{room }}^{\prime}\end{array}\right)=
     \\
-    \left(\begin{array}{c}-0.5h_{roof,cv}\left(t_{roof,in}-t_{room}\right)+0.5h_{roof,tk}\left(T_{roof,n}-T_{roof,in}\right)+0.5h_{roof,tk}T_{roof,n}\\
-        -0.5h_{wsun,cv}\left(t_{wsun,in}-t_{room}\right)+0.5h_{wsun,tk}\left(T_{wsun,n}-T_{wsun,in}\right)+0.5h_{wsun,tk}T_{wsun,n}\\
-        -0.5h_{wsha,cv}\left(t_{wsha,in}-t_{room}\right)+0.5h_{wsun,tk}\left(T_{wsun,n}-T_{wsun,in}\right)+0.5h_{wsha,tk}T_{wsun,n}\\
-        \frac{H \rho_{a} C_{p} T_{{room }}}{\Delta T}+\frac{ACH}{3600} H \rho_{a} C_{p} T_{a f}+0.5 h_{{roof,cv }}\left(t_{{roof,in }}-t_{{room }}\right)+0.5 h_{{wsun, cv }}\left(t_{{wsun,in }}-t_{{room }}\right) f_{{wsun }}+0.5 h_{{wsha,cv }}\left(t_{wsha, i n}-t_{{room }}\right) f_{{wsha }}  
+    \left(\begin{array}{c}-0.5h_{cv,roof}\left(t_{roof,in}-t_{room}\right)+0.5h_{tk,roof}\left(T_{roof,n}-T_{roof,in}\right)+0.5h_{tk,roof}T_{roof,n}\\
+        -0.5h_{cv,wsun}\left(t_{wsun,in}-t_{room}\right)+0.5h_{tk,wsun}\left(T_{wsun,n}-T_{wsun,in}\right)+0.5h_{tk,wsun}T_{wsun,n}\\
+        -0.5h_{cv,wsha}\left(t_{wsha,in}-t_{room}\right)+0.5h_{tk,wsun}\left(T_{wsun,n}-T_{wsun,in}\right)+0.5h_{tk,wsha}T_{wsun,n}\\
+        \frac{H \rho_{a} C_{p} T_{{room }}}{\Delta T}+\frac{ACH}{3600} H \rho_{a} C_{p} T_{a f}+0.5 h_{{cv,roof}}\left(t_{{roof,in }}-t_{{room }}\right)+0.5 h_{{cv,wsun}}\left(t_{{wsun,in }}-t_{{room }}\right) f_{{wsun }}+0.5 h_{{cv,wsha}}\left(t_{wsha, i n}-t_{{room }}\right) f_{{wsha }}  
     \end{array}\right)
     \end{split}
 \end{equation}
+注：上式中$\xi = 0.5 h_{cv,roof} + 0.5 h_{cv,wsun}f_{wsun} + 0.5 h_{cv,wsha} f_{wsha} $。
 \end{landscape}
+\noindent 上式可简写为以下矩阵形式：
+\begin{equation}
+\mathbf{Ax}=\mathbf{B}
+\end{equation}
+公式~\ref{eq:建筑能耗平衡方程矩阵}中$T_{roof,in}^\prime$、$T_{wsun,in}^\prime$、$T_{wsha,in}^\prime$、$T_{room}^\prime$为需求解(预报)变量，其他变量均为已知量。
+$T_{roof,in}$、$T_{wsun,in}$、$T_{wsha,in}$、$T_{room}$分别为上一时刻相应温度，$T_{af}$为建筑室外空气温度。
+$h_{cv,roof}$、$h_{cv,wsun}$、$h_{cv,wsha}$分别为室内屋顶表面空气、阳面、阴面墙表面空气与室内空气温度热交换系数，参考CLM5.0 \citep{oleson2020parameterization}，$h_{cv,roof}=4.04$，$h_{cv,wsun}=h_{cv,wsha}=3.076$。$ACH$为室内外空气热交换系数，设置为0.3。
+$T_{roof}$、$T_{wsun,n}$、$T_{wsha,n}$为最里层(用$n$表示)
+屋顶、阴面墙、阳面墙的温度，为$h_{tk,roof}$、$h_{wsun,tk}$、$h_{wsha,tk}$为其与各自室内表面空气温度热交换系数，通过墙壁导热率和厚度计算得到。
+以上方程组可通过矩阵求逆的方式进行求解，计算得到$T_{roof,in}^\prime$、$T_{wsun,in}^\prime$、$T_{wsha,in}^\prime$、$T_{room}^\prime$。
 
-上式中$T_{roof,in}^\prime$、$T_{wsun,in}^\prime$、$T_{wsha,in}^\prime$、$T_{room}^\prime$为需求解变量，其他变量均为已知量。
-$T_{roof,in}$、$T_{wsun,in}$、$T_{wsha,in}$、$T_{room}$分别为上一时刻相应温度，
-$T_{af}$为建筑室外空气温度。$h_{roof,cv}$、$h_{wsun,cv}$、$h_{wsha,cv}$
-分别为室内屋顶表面空气、阳面、阴面墙表面空气与室内空气温度热交换系数，参考CLM5.0 \citep{oleson2020parameterization}，$h_{roof,cv}=4.04$，
-$h_{wsun,cv}=h_{wsha,cv}=3.076$。$ACH$为室内外空气热交换系数，设置为0.3。$T_{roof}$、$T_{wsun,n}$、$T_{wsha,n}$为最里层(用$n$表示)
-屋顶、阴面墙、阳面墙的温度，为$h_{roof,tk}$、$h_{wsun,tk}$、$h_{wsha,tk}$为其与各自室内表面空气温度热交换系数，通过墙壁导热率和厚度计算得到。
-
-以上方程组可通过矩阵求逆的方式进行求解，计算得到$T_{roof,in}^\prime$、$T_{wsun,in}^\prime$、
-$T_{wsha,in}^\prime$、$T_{room}^\prime$。室内外热交换通量$F_{ach}$计算为：
+当$T_{room,min}\le T_{room}^\prime \le T_{room,max} $ ($T_{room,min}$和$T_{room,max}$为预设屋内最低/最高温度，从外部数据读取)时，室内空调不开启，仅考虑室内外热交换通量$F_{ach}$，计算为：
 \begin{equation}
 F_{a c h}=\frac{ACH}{3600} H \rho_{a} C_{p}\left(T_{{room }}^{\prime}-T_{a f}\right)
 \end{equation}
-当$T_{room}^\prime>T_{room,max} $($T_{room,max}$为预设屋内最高温度，从外部数据读取)时，打开空调制冷，
-使屋内温度维持在$T_{room,max}$，由此产生的空调热排放量$F_{hac}$为：
+
+当$T_{room}^\prime>T_{room,max}$或者$T_{room}^\prime<T_{room,min}$时，需要打开空调进行制冷或制热。目前CoLM提供两种空调使用策略：1) 按需制冷/制热；2) 持续制冷/制热。分别描述如下：
+
+\textit{1) 按需制冷/制热}
+
+当$T_{room}^\prime>T_{room,max}$时，需打开空调制冷，制冷量为使屋内温度下降到$T_{room,max}$，由此所需要的空调制冷量$F_{hac}$计算为：
 \begin{equation}
 F_{{hac }}=H \rho_{a} C_{p} \frac{T_{{room }}^{\prime}-T_{{room,max }}}{\Delta t}
 \end{equation}
-当$T_{room}^\prime<T_{room,min}$ ($T_{room,min}$为预设屋内最高温度，从外部数据读取)时，
-打开制暖设备，使屋内温度维持在$T_{room,min}$，由此产生的空调热排放量$F_{hac}$为：
-\begin{equation}
-F_{h a c}=H \rho_{a} C_{p} \frac{T_{{room }}^{\prime}-T_{{room,min }}}{\Delta t}
-\end{equation}
-在以上两种情况下，$T_{room}^\prime$更新为$T_{room,max}/T_{room,min}$。
-由于制冷/制暖所浪费的热量排放分别计算为$0.6F_{hac}$和|$0.2F_{hac}$| (| |表示取绝对值)。
-总的建筑热排放量为制冷/制暖热排放量加上其过程中浪费的热排放量。以上计算的热排放量均需乘以$f_b$来转化为单位城市面积通量，
-并作为感热项 (源项) 加入到城市湍流交换平衡方程中，参考图~\ref{fig:建筑能耗模型示意图}。
 
+当$T_{room}^\prime<T_{room,min}$时，需打开制暖设备，制热量为使屋内温度上升到$T_{room,min}$，由此产生的空调热制热量$F_{hac}$计算为：
+\begin{equation}
+F_{h a c}=H \rho_{a} C_{p} \frac{T_{{room,min }} -T_{{room }}^{\prime}}{\Delta t}
+\end{equation}
+在以上两种情况下，$T_{room}^\prime$最终更新为$T_{room,max}/T_{room,min}$。
+由于制冷/制暖所浪费的热量排放分别计算为$0.6F_{hac}$和$0.2F_{hac}$。
+
+\textit{2) 持续制冷/制热}
+
+按需制冷方案是一种比较理想的空调使用策略，最大程度节约能源，但实际中一般难以实现，更多的空调使用情况是持续制冷/制热，来维持室内空气温度到固定值。因此，本方案较方案(1)会更消耗能源。
+
+当$T_{room}^\prime>T_{room,max}$或$T_{room}^\prime<T_{room,min}$时，设置室内空气温度恒定为$T_{room,max}$ \allowbreak($T_{room,min}$)，室内外热交换通量$F_{ach}$计算为：
+\begin{equation}
+F_{a c h}=\frac{ACH}{3600} H \rho_{a} C_{p}\left(T_{{room,max/min}}-T_{a f}\right)
+\end{equation}
+
+由于$T_{room}^\prime$维持在恒定温度，因此$T_{roof,in}^\prime$、$T_{wsun,in}^\prime$、$T_{wsha,in}^\prime$需重新进行计算，根据热通量平衡方程可得：
+\begin{equation}
+\begin{aligned}
+T_{roof,in}^\prime & = \left ( \mathbf{B}\left(1\right)-\mathbf{A}\left(1,4\right)T_{room}^\prime\right) / \mathbf{A}\left(1,1\right) \\
+T_{wsun,in}^\prime & = \left ( \mathbf{B}\left(2\right)-\mathbf{A}\left(2,4\right)T_{room}^\prime\right) / \mathbf{A}\left(2,2\right) \\
+T_{wsha,in}^\prime & = \left ( \mathbf{B}\left(3\right)-\mathbf{A}\left(3,4\right)T_{room}^\prime\right) / \mathbf{A}\left(3,3\right)
+\end{aligned}
+\end{equation}
+空调制冷/热制热量$F_{hac}$计算为：
+\begin{equation}
+\begin{aligned}
+F_{ach} & = 0.5h_{cv,roof}\left(T_{roof,in}-T_{room}\right) + 0.5h_{cv,roof}\left(T_{roof,in}^\prime-T_{room}^\prime\right) \\
+& + 0.5h_{cv,wsun}\left(T_{wsun,in}-T_{room}\right)f_{wsun} + 0.5h_{cv,wsun}\left(T_{wsun,in}^\prime-T_{room}^\prime\right)f_{wsun} \\
+& + 0.5h_{cv,wsha}\left(T_{wsha,in}-T_{room}\right)f_{wsha} + 0.5h_{cv,wsha}\left(T_{wsha,in}^\prime-T_{room}^\prime\right)f_{wsha}
+\end{aligned}
+\end{equation}
+由于制冷/制暖所浪费的热排放$F_{wst}$分别计算为$0.6\left( |F_{hac}|+|F_{ach}|\right)$和$0.2\left( |F_{hac}|+|F_{ach}|\right)$，| |表示取绝对值。
+
+总的建筑热排放量为制冷/制暖热排放量加上其过程中浪费的热排放量。需要注意，制冷时，$F_{hac}+F_{wst}$作为人为热在室外排放；制热时，仅$F_{wst}$作为室外人为热排放，此时$F_{hac}$作为室内空气加热。以上计算的热通量均需乘以$f_b$来转化为单位城市面积通量，
+并作为感热项 (源项) 加入到城市湍流交换平衡方程中，参考图~\ref{fig:建筑能耗模型示意图}。
 
 \subsection{人体代谢热}
 
@@ -626,18 +991,17 @@ F_{h a c}=H \rho_{a} C_{p} \frac{T_{{room }}^{\prime}-T_{{room,min }}}{\Delta t}
 本节及下节对应的代码文件为\texttt{MOD\_Urban\_LUCY.F90}。
 \end{mymdframed}
 
-人体代谢热($Q_M$, \unit{W.m^{-2}})根据 \citet{allen2011} 的方法，按照能源清单法及 Top-Down 方法，利用人口密度数据，
-将不同时刻的人体热排放映射到每个城市格点上，具体计算如下：
+% 人体代谢热($Q_M$, \unit{W/m^{2}})根据 \citet{allen2011} 的方法，\colorbox{yellow}{按照能源清单法及 Top-Down 方法}，利用人口密度数据，将不同时刻的人体热排放映射到每个城市格点上，具体计算如下：
+人体代谢热($Q_M$, \unit{W/m^{2}})根据 \citet{allen2011} 的方法，根据城市网格内的人口密度数据，以及每天不同时刻的人体热排放计算得到，具体计算如下：
 \begin{equation}
 Q_{M}=P \cdot H_{M} \cdot 10^{-6}
 \end{equation}
-其中$P$为格点内人口密度(\unit{pop.km^{-2}})，目前使用的是 LandScan 数据，
-分辨率为1km，$H_M$为不同时刻人体排放的热量。人体排放的热量遵循一个基本假设：
-人在活动时每小时排放的热量为175 W (工作)，非活动时排放量为75 W (休息)，以及一个中间值125 W~\citep{sailor2004top}；
-除此之外，也没有考虑人口在不同格点间的移动。
+其中$P$为格点内人口密度(\unit{pop/km^{2}})，目前使用的是 LandScan 数据(表~\ref{tab:人口密度数据})，分辨率为1km，$H_M$为不同时刻人体排放的热量。人体排放的热量采用简单假设：
+人在活动时每小时排放的热量为175 W (工作)，非活动时排放量为75 W (休息)，以及一个中间值125 W~\citep{sailor2004top}。
+除此之外，没有考虑人口在不同格点间的移动。
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
     \centering
     \caption{人口密度数据}
     \label{tab:人口密度数据}
@@ -648,32 +1012,26 @@ Q_{M}=P \cdot H_{M} \cdot 10^{-6}
     \end{tabular}
 \end{table}
 
-
 \subsection{交通热}
-交通热排放($Q_v$, \unit{W.m^{-2}})同样根据利用能源清单法进行计算，
-采用Top-Down的方法，利用人口密度以及各个国家的汽车拥有量计算出格点内的汽车数量，
-然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
-其数据来源如表~\ref{tab:交通热数据及来源}，具体计算方法如下：
+% 交通热排放($Q_v$, \unit{W/m^{2}})同样根据利用能源清单法进行计算，采用Top-Down的方法，利用人口密度以及各个国家的汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
+交通热排放($Q_v$, \unit{W/m^{2}})则根据城市网格内的汽车数量以及行驶路程得到，首先根据城市网格内的人口密度以及各个国家每千人汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
+其数据来源如表~\ref{tab:交通热数据及来源}，$Q_v$计算如下：
 \begin{equation}
-Q_{v}=\frac{\left(V_{c} E_{c}+V_{M} E_{M}+V_{F R} E_{F R}\right)  \cdot P \cdot H_{t r a c} \cdot D}{3600 \cdot 10^{6}}
+Q_{v}=\frac{\left(V_{c} E_{c}+V_{M} E_{M}+V_{F R} E_{FR}\right)  \cdot P \cdot H_{traf} \cdot D}{3600 \cdot 10^{6}}
 \end{equation}
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[]
+其中$V_c$、$V_M$、$V_{FR}$分别为每千人拥有的汽车、摩托车、货车(巴士)的数量，$H_{traf}$为工作日/休息日某一时间段交通流量，以上数据采用 \citet{allen2011}；$E_c$、$E_M$、$E_{FR}$则为三种机动车的排放系数，目前使用 \citet{sailor2004top} 的系数设置(3975J/m)；
+$P$为格点内人口密度 (pop/km$^2$)，由LandScan数据得到；$D$为行驶的距离，目前模型设置为20km。
+
+\begin{table}[htbp]
     \centering
-\caption{交通热数据及来源}
-\label{tab:交通热数据及来源}
+\caption{交通热数据及来源}\label{tab:交通热数据及来源}
     \begin{tabular}{@{}lll@{}}
     \toprule
     数据名称                       & 来源                          & Spatial/administrative unit   \\ \midrule
     Vehicles density and types & World mapper                & All countries and territories \\
-    Daily vehicle pattern      & \citet{Hallenbeck1997} & All countries and territories \\
-    Vehicle heat emissions     & \citet{smith2009estimating}       & All countries and territories \\ \bottomrule
+    Daily vehicle pattern      & \citet{Hallenbeck1997} & All countries and territories \\\bottomrule
     \end{tabular}
-    \end{table}
-其中$V_c$、$V_M$、$V_{FR}$分别为每千人拥有的汽车、摩托车、货车(巴士)的数量，$H_{trac}$为时间步长内交通流量分布，以上数据采用 \citet{allen2011}；
-$E_c$、$E_M$、$E_{FR}$则为三种机动车的排放系数，目前使用 \citet{sailor2004top} 的系数设置(3975J/m)；
-$P$为格点内人口密度 (pop/km$^2$)，由LandScan数据得到；$D$为行驶的距离，目前模型设置为20km。
+\end{table}
 
 \subsection{考虑人为热时城市内部湍流交换}
 
@@ -683,135 +1041,199 @@ $P$为格点内人口密度 (pop/km$^2$)，由LandScan数据得到；$D$为行�
 {
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式人为热阻抗交换网络.png}
+\includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式人为热阻抗交换网络.png}
 \caption{考虑人为热时城市内部湍流交换过程}
 \label{fig:考虑人为热时城市内部湍流交换过程}
 \end{figure}
 }
 
-考虑人为热时，城市内部湍流过程示意图 \ref{fig:考虑人为热时城市内部湍流交换过程} 所示，在建筑群落中，不同的城市组成部分在不同层次进行交换，其中，与第一层($layer_{1}$)直接交换的有地面(透水面与不透水面)、前面(阳面墙与阴面墙)、植被以及部分在墙面排放的人为热，屋顶与屋顶释放的人为热则与第二层($layer_{2}$)直接交换，层与层交换总是守恒的。因此，对于感热而言，其不同层次的感热通量$H$可表达为：
+考虑人为热时，城市内部湍流过程示意图~\ref{fig:考虑人为热时城市内部湍流交换过程} 所示，与章节~\ref{城市湍流过程}相同，在建筑群落中，不同的城市组成部分在不同层次进行交换。以两层交换阻抗网络为例，与第一层($layer1$，城市等效交换高度$z_0+d$)直接交换的有地面(透水面与不透水面)、墙面(阳面墙与阴面墙)、植被、交通热、代谢热以及部分在墙面排放的人为热，屋顶与屋顶释放的人为热则与第二层($layer2$，即屋顶)直接交换，层与层交换保持通量平衡。因此，对于感热而言，其不同层次的感热通量$H$可表达为：
 \begin{equation}\label{2lays_H_layer1}
-    H_{layer_{1}} = H_{g}
+    H_{1} = H_{g}
 \end{equation}
+%
 \begin{equation}\label{2lays_H_layer2}
-    H_{layer_{2}} = H_{g} + H_{wsun} + H_{wsha} + H_{veg} + H_{whac} = \frac{\rho \cdot c \cdot \left( T_{layer_{1}} - T_{layer_{2}} \right)}{r_{d}}
+    H_{2} = H_{g} + H_{wsun} + H_{wsha} + H_{v} + H_{whac} = \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}}
 \end{equation}
+%
 \begin{equation}\label{2lays_H}
-    H = H_{layer_{2}} + H_{roof} + H_{rhac} = \frac{\rho \cdot c \cdot \left( T_{layer_{2}} - \theta \right)}{r_{ah}}
+    H = H_{2} + H_{roof} + H_{rhac} = \frac{\rho _a C_p \left( T_{2} - T_a \right)}{r_{ah}}
 \end{equation}
-其中，$H_{g}$、$H_{wsun}$、$H_{wsha}$、$H_{veg}$、$H_{roof}$分别为地面、阳面墙、阴面墙、植被以及屋顶的感热通量，$H_{whac}$、$H_{rhac}$为墙面以及屋顶释放的建筑热，其各自的表达式分别为：
-\begin{equation}
-    H_{g} = \frac{\rho \cdot c \cdot \left( T_{g} - T_{layer_{1}} \right) \cdot f_{g}}{r_{gh}} + H_{vehc} + H_{humMeta}
+其中，$H_1$、$H_2$以及$H$同样为地面与第一层、第一层与第二层以及第二层与参考高度的感热通量交换，$H_{whac}$、$H_{rhac}$为墙面以及屋顶释放的建筑热，根据建筑能耗模型计算得到(章节~\ref{建筑能耗模型})，$H_{g}$、$H_{wsun}$、$H_{wsha}$、$H_{v}$、$H_{roof}$分别为地面、阳面墙、阴面墙、植被以及屋顶的感热通量，其各自的表达式分别为：
+\begin{equation}\label{urban_Hg}
+    H_{g} = \frac{\rho _a C_p \left( T_{g} - T_{1} \right) \cdot f_{g}}{r_{d1}} + H_{vehc} + H_{meta}
 \end{equation}
+%
 \begin{equation}
-    H_{wsun} = \frac{\rho \cdot c \cdot \left( T_{wsun} - T_{layer_{1}} \right) \cdot fc(1)}{r_{wsun}}
+    H_{wsun} = \frac{\rho  _a C_p \left( T_{wsun} - T_{1} \right) \cdot f_{wsun}}{r_{wsun}}
 \end{equation}
+%
 \begin{equation}
-    H_{wsha} = \frac{\rho \cdot c \cdot \left( T_{wsha} - T_{layer_{1}} \right) \cdot fc(2)}{r_{wsha}}
-\end{equation} 
-\begin{equation}
-    H_{veg} = \frac{\rho \cdot c \cdot \left( T_{veg} - T_{layer_{1}} \right) \cdot fc(3)}{r_{t}}
+    H_{wsha} = \frac{\rho _a C_p \left( T_{wsha} - T_{1} \right) \cdot f_{wsha}}{r_{wsha}}
 \end{equation}
+%
 \begin{equation}
-    H_{roof} = \frac{\rho \cdot c \cdot \left( T_{roof} - T_{layer_{2}} \right) \cdot fc(0)}{r_{roof}}
+    H_{v} = \frac{\rho _a C_p \left( T_{v} - T_{1} \right) \cdot f_v}{r_{v}}
 \end{equation}
-由于代谢热与交通热($H_{humMeta}$ 、$H_{vehc}$)都在地面释放，因此我们将其纳入地面感热$H_{g}$，其中$T_{g}$为透水面与不透水面温度加权得到的平均温度，$r$为空气动力学阻抗，$fc(0-3)$分表代表屋顶、阳面墙、阴面墙以及植被的覆盖比例，$f_{g}$则为除去建筑覆盖外的路面占比(包含透水面$f_{gper}$以及不透水面$f_{gimp}$)，将以上表达式代回式 \ref{2lays_H_layer1} $\sim$ \ref{2lays_H}，可得：
-\begin{equation}
-    \begin{split}
-        & \frac{\rho \cdot c \cdot \left( T_{layer_{1}} - T_{layer_{2}} \right)}{r_{d}} = \\
-        & \frac{\rho \cdot c \cdot \left( T_{g} - T_{layer_{1}} \right) \cdot f_{g}}{r_{gh}} + H_{vehc} + H_{humMeta} + \frac{\rho \cdot c \cdot \left( T_{wsun} - T_{layer_{1}} \right) \cdot {fc}\left( 1 \right)}{r_{wsun}} + \\
-        & \frac{\rho \cdot c \cdot \left( T_{wsha} - T_{layer_{1}} \right) \cdot fc\left( 2 \right)}{r_{wsha}} + \frac{\rho \cdot c \cdot \left( T_{veg} - T_{layer_{1}} \right) \cdot {fc}\left( 3 \right)}{r_{t}} + H_{whac}
-    \end{split}
+%
+\begin{equation}\label{urban_Hroof}
+    H_{roof} = \frac{\rho _a C_p \left( T_{roof} - T_{2} \right) \cdot f_{roof}}{r_{roof}}
 \end{equation}
+$T_1$和$T_2$分别表示第一层和第二层空气温度。由于代谢热与交通热($H_{meta}$ 、$H_{vehc}$)都在地面释放，因此我们将其纳入地面感热$H_{g}$。其中$T_{g}$为透水面与不透水面温度加权得到的平均温度，$r$为空气动力学阻抗，\allowbreak $f_{roof}$,\allowbreak  $f_{wsun}$,\allowbreak  $f_{wsha}$,\allowbreak  $f_v$分表代表屋顶、阳面墙、阴面墙以及植被的覆盖比例，$f_{g}$则为除去建筑覆盖外的路面占比(包含透水面$f_{gper}$以及不透水面$f_{gimp}$)，将以上表达式代回式 ~\ref{2lays_H_layer1}--\ref{2lays_H}，可得：
 \begin{equation}
     \begin{split}
-        & \frac{\rho \cdot c \cdot \left( T_{layer_{2}} - \theta \right)}{r_{ah}} = \\
-        & \frac{\rho \cdot c \cdot \left( T_{layer_{1}} - T_{layer_{2}} \right)}{r_{d}} + \frac{\rho \cdot c \cdot \left( T_{roof} - T_{layer_{2}} \right)*fc\left( 0 \right)}{r_{roof}} + H_{rhac}
+        & \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} = \\
+        & \frac{\rho _a C_p \left( T_{g} - T_{1} \right) \cdot f_{g}}{r_{d1}} + \frac{\rho _a C_p \left( T_{wsun} - T_{1} \right) \cdot f_{wsun}}{r_{wsun}} + \frac{\rho _a C_p \left( T_{wsha} - T_{1} \right) \cdot f_{wsha}}{r_{wsha}} + 
+        \\ 
+        & \frac{\rho _a C_p \left( T_{v} - T_{1} \right) \cdot f_v}{r_{v}} + H_{AHE,1}
+        % + H_{whac} + H_{vehc} + H_{meta} 
     \end{split}
 \end{equation}
-进而得到关于$T_{layer1}$和$T_{layer2}$的二元一次方程：
+%
 \begin{equation}
     \begin{split}
-        & T_{layer_{1}} = \\
-        & \frac{\frac{T_{g} \cdot f_{g}}{r_{gh}} + \frac{H_{vehc} + H_{humMeta} + H_{whac}}{\rho \cdot c} + \frac{T_{wsun} \cdot fc\left( 1 \right)}{r_{wsun}} + \frac{T_{wsha} \cdot fc\left( 2 \right)}{r_{wsha}} + \frac{T_{veg} \cdot fc\left( 3 \right)}{r_{t}} + \frac{T_{layer_{2}}}{r_{d}}}{\frac{1}{r_{d}} + \frac{f_{g}}{r_{gh}} + \frac{fc\left( 1 \right)}{r_{wsun}} + \frac{fc\left( 2 \right)}{r_{wsha}} + \frac{fc\left( 3 \right)}{r_{t}}}
+        \frac{\rho _a C_p \left( T_{2} - T_a \right)}{r_{ah}} = 
+        \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} + \frac{\rho _a C_p \left( T_{roof} - T_{2} \right)\cdot f_{roof}}{r_{roof}} + H_{AHE,2}
     \end{split}
 \end{equation}
+其中，
+\begin{equation}
+    H_{AHE,1} = H_{whac} + H_{vehc} + H_{meta} 
+\end{equation}
+%
+\begin{equation}
+    H_{AHE,2} = H_{rhac}
+\end{equation}
+进而得到关于$T_{1}$和$T_{2}$的二元一次方程：
+\begin{equation}
+    \begin{split}
+         T_{1} =
+         \frac{\frac{T_{g} \cdot f_{g}}{r_{d1}} + \frac{H_{AHE,1}}{\rho _a C_p} + \frac{T_{wsun} \cdot f_{wsun}}{r_{wsun}} + \frac{T_{wsha} \cdot f_{wsha}}{r_{wsha}} + \frac{T_{v} \cdot f_v}{r_{v}} + \frac{T_{2}}{r_{d2}}}{\frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}} + \frac{f_v}{r_{v}}}
+    \end{split}
+\end{equation}
+%
 \begin{equation}\label{result_T_layer2}
-    T_{layer_{2}} = \frac{\frac{T_{layer_{1}}}{r_{d}} + \frac{T_{roof} \cdot fc\left( 0 \right)}{r_{roof}} + \frac{H_{rhac}}{\rho \cdot c} + \frac{\theta}{r_{ah}}}{r_{d} \cdot \left(\frac{1}{r_{ah}} + \frac{1}{r_{d}} + \frac{fc\left( 0 \right)}{r_{roof}} \right)}
+    T_{2} = \frac{\frac{T_{1}}{r_{d2}} + \frac{T_{roof} \cdot f_{roof}}{r_{roof}} + \frac{H_{AHE,2}}{\rho _a C_p} + \frac{T_a}{r_{ah}}}{\frac{1}{r_{ah}} + \frac{1}{r_{d2}} + \frac{f_{roof}}{r_{roof}}}
 \end{equation}
-求解该二元一次方程可知：
+求解该二元一次方程可得：
 \begin{equation}
     \begin{split}
     % \hspace{-1cm}
-        & T_{layer_{1}} = \\
-        & \frac{\frac{T_{g} \cdot f_{g}}{r_{gh}} + \frac{H_{vehc} + H_{humMeta} + H_{whac}}{\rho \cdot c} + \frac{T_{wsun} \cdot fc\left( 1 \right)}{r_{wsun}} + \frac{T_{wsha} \cdot fc\left( 2 \right)}{r_{wsha}} + \frac{T_{veg} \cdot fc\left( 3 \right)}{r_{t}} + a}{c \cdot \left( 1 - \frac{b}{r_{d} \cdot c} \right)}
+         T_{1} = 
+         \frac{\frac{T_{g} \cdot f_{g}}{r_{d1}} + \frac{H_{AHE,1}}{\rho _a C_p} + \frac{T_{wsun} \cdot f_{wsun}}{r_{wsun}} + \frac{T_{wsha} \cdot f_{wsha}}{r_{wsha}} + \frac{T_{v} \cdot f_{v}}{r_{v}} + a_{H}}{c_{H} \cdot \left( 1 - \frac{b_H}{c_{H} r_{d2}} \right)}
     \end{split}
 \end{equation}
+%
+\begin{equation}
+    a_{H} = \left(\frac{T_{roof} \cdot f_{roof}}{r_{roof}} + \frac{H_{AHE,2}}{\rho _a C_p} + \frac{T_a}{r_{ah}}\right) \cdot b_{H}
+\end{equation}
+%
+\begin{equation}
+    b_{H} = \frac{1}{r_{d2} \cdot \left(\frac{1}{r_{ah}} + \frac{1}{r_{d2}} + \frac{f_{roof}}{r_{roof}} \right)}
+\end{equation}
+%
+\begin{equation}
+    c_{H} = \frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}} + \frac{f_v}{r_{v}}
+\end{equation}
+将$T_{1}$代回式~\ref{result_T_layer2}，即可求得$T_{2}$。
 
+将求解得到的$T_{1}$与$T_{2}$分别代回~\ref{urban_Hg}--\ref{urban_Hroof}，即可得到城市每个表面的感热通量，其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，需要提供各表面感热对各自温度的变化率，各表面分别计算为：
 \begin{equation}
-    a = \left(\frac{T_{roof} \cdot fc\left( 0 \right)}{r_{roof}} + \frac{H_{rhac}}{\rho \cdot c} + \frac{\theta}{r_{ah}}\right) \cdot b
+\frac{\partial H_{g}}{\partial T_{g}} = \frac{\rho _a C_p}{r_{d1}} \left(1-\frac{f_g}{c_{H} r_{d1} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
 \end{equation}
+%
 \begin{equation}
-    b = \frac{1}{r_{d} \cdot \left(\frac{1}{r_{ah}} + \frac{1}{r_{d}} + \frac{fc\left( 0 \right)}{r_{roof}} \right)}
+\frac{\partial H_{wsun}}{\partial T_{wsun}} = \frac{\rho _a C_p}{r_{wsun}} \left(1-\frac{f_{wsun}}{c_{H} r_{wsun} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
 \end{equation}
+%
 \begin{equation}
-    c = \frac{1}{r_{d}} + \frac{f_{g}}{r_{gh}} + \frac{fc\left( 1 \right)}{r_{wsun}} + \frac{fc\left( 2 \right)}{r_{wsha}} + \frac{fc\left( 3 \right)}{r_{t}}
+\frac{\partial H_{wsha}}{\partial T_{wsha}} = \frac{\rho _a C_p}{r_{wsha}} \left(1-\frac{f_{wsha}}{c_{H} r_{wsha} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
 \end{equation}
-将$T_{layer_{1}}$代回式\ref{result_T_layer2}，即可求得$T_{layer_{2}}$。
+%
+\begin{equation}
+\frac{\partial H_{v}}{\partial T_{v}} = \frac{\rho _a C_p}{r_{v}} \left(1-\frac{f_{v}}{c_{H} r_{v} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
+\end{equation}
+%
+\begin{equation}
+\frac{\partial H_{roof}}{\partial T_{roof}} = \frac{\rho _a C_p}{r_{roof}} \left(1-\frac{f_{roof} b_{H}}{c_{H} r_{roof} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}-\frac{f_{roof}}{r_{roof}\left(\frac{1}{r_{ah}}+\frac{1}{r_{d2}}+\frac{f_{roof}}{r_{roof}}\right)}\right)
+\end{equation}
 
-对于潜热通量而言，其求解过程与感热通量的计算类似，但是在计算潜热通量时，由于墙体难以表达积水过程，因此认为墙体没有潜热交换，并且人为热目前全部作为感热释放，因此，对于潜热通量而言，在第一层发生交换的仅有地面、植被，并且由于考虑土壤阻抗，透水面与不透水面需要单独计算，在第二层发生交换的仅有屋顶，对于不透水面与屋顶，仅考虑其淹没部分($fwet$)，所以对于建筑群落内部不同层次的潜热通量计算，其表达式为：
+对于潜热通量而言，其求解过程与感热通量的计算类似，但是在计算潜热通量时，由于墙体难以表达积水过程，因此认为墙体没有潜热交换，并且人为热目前全部作为感热释放，因此，对于潜热通量而言，在第一层发生交换的仅有地面、植被，并且由于考虑土壤阻抗，透水面与不透水面需要单独计算，在第二层发生交换的仅有屋顶，对于不透水面与屋顶，仅考虑积水部分($f_{wet}$)，所以对于建筑群落内部不同层次的潜热通量计算，其表达式为：
 \begin{equation}\label{2lays_L_layer1}
-    L_{layer_{1}} = L_{g}
+    \lambda E_{1} = \lambda E_{g}
 \end{equation}
+%
 \begin{equation}
-    L_{layer_{2}} = L_{g} + L_{veg}
+    \lambda E_{2} = \lambda E_{g} + \lambda E_{v}
 \end{equation}
+%
 \begin{equation}\label{2lays_L}
-    L = L_{layer_{2}} + L_{roof}
+    \lambda E = \lambda E_{2} + \lambda E_{roof}
 \end{equation}
-其中，$L_{g}$、$L_{veg}$、$L_{roof}$分别为地面、植被以及屋顶的潜热通量，其表达式分别为：
+其中，$\lambda E_{g}$、$\lambda E_{v}$、$\lambda E_{roof}$分别为地面、植被以及屋顶的潜热通量，其表达式分别为：
+\begin{equation}\label{urban_Eg}
+    \lambda E_{g} = \frac{\rho _a \left( q_{gper}-q_{1} \right) \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{\rho _a \left( q_{gimp}-q_{1} \right) \cdot f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}}
+\end{equation}
+%
 \begin{equation}
-    L_{g} = \frac{\rho \cdot \left( q_{gper}-q_{layer_{1}} \right) \cdot f_{g} \cdot f_{gper}}{r_{gw}+rss} + \frac{\rho \cdot \left( q_{gimp}-q_{layer_{1}} \right) \cdot fwet_{gimp} \cdot f_{g} \cdot f_{gimp}}{r_{gw}}
+    \lambda E_{v} = \frac{\rho _a \left( q_{v}-q_{1}\right) \cdot f_v}{r_{v}}
 \end{equation}
-\begin{equation}
-    L_{veg} = \frac{\rho \cdot \left( q_{veg}-q_{layer_{1}}\right) \cdot fc\left( 3 \right)}{r_{t}}
+%
+\begin{equation}\label{urban_Eroof}
+    \lambda E_{roof} = \frac{\rho _a \left( q_{roof}-q_{2}\right) \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}}
 \end{equation}
-\begin{equation}
-    L_{roof} = \frac{\rho \cdot \left( q_{roof}-q_{layer_{2}}\right) \cdot fwet_{roof} \cdot fc\left( 0 \right)}{r_{roof}}
-\end{equation}
-由于城市中的地面可以分为透水面和不透水面，对于透水面，因为其本质是土壤，因此在计算其潜热通量时，考虑土壤阻抗(rss)，$fwet$表示各部分干湿的比例，q为不同表面的比湿，将以上表达式代回\ref{2lays_L_layer1} $\sim$ \ref{2lays_L}，可知：
+由于城市中的地面可以分为透水面和不透水面，对于透水面，因为其本质是土壤，因此在计算其潜热通量时，考虑土壤阻抗($r_{ss}$)，$f_{wet}$表示各部分干湿的比例，$q$为不同表面的比湿，$r$为空气动力学阻抗，其中$r_v$是叶片边界层阻抗以及气孔阻抗之和，将以上表达式代回~\ref{2lays_L_layer1} -- \ref{2lays_L}，可知：
 \begin{equation}
    \begin{split}
-    & \frac{\rho \cdot \left( q_{layer_{1}}-q_{layer_{2}}\right)}{r_{d}} = \\
-    & \frac{\rho \cdot \left( q_{gper}-q_{layer_{1}}\right) \cdot f_{g} \cdot f_{gper}}{r_{gw}+rss} + \frac{\rho \cdot \left( q_{gimp}-q_{layer_{1}} \right) \cdot fwet_{gimp} \cdot f_{g} \cdot f_{gimp}}{r_{gw}} + \\
-    &\frac{\rho \cdot \left( q_{veg}-q_{layer_{1}}\right) \cdot fc\left( 3 \right)}{r_{t}}
+    & \frac{\rho _a \left( q_{1}-q_{2}\right)}{r_{d2}} = \\
+    & \frac{\rho _a \left( q_{gper}-q_{1}\right) \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{\rho _a \left( q_{gimp}-q_{1} \right) \cdot f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}} + \frac{\rho _a \left( q_{v}-q_{1}\right) \cdot f_v}{r_{v}}
    \end{split} 
 \end{equation}
-
+%
 \begin{equation}
-    \frac{\rho \cdot \left( q_{layer_{2}} - Q\right)}{r_{aw}} = \frac{\rho \cdot \left( q_{layer_{1}} - q_{layer_{2}}\right)}{r_{d}} + \frac{\rho \cdot \left( q_{roof}-q_{layer_{2}}\right) \cdot fwet_{roof} \cdot fc\left( 0 \right)}{r_{roof}}
+    \frac{\rho _a \left( q_{2} - q_a\right)}{r_{aw}} = \frac{\rho _a \left( q_{1} - q_{2}\right)}{r_{d2}} + \frac{\rho _a \left( q_{roof}-q_{2}\right) \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}}
 \end{equation}
-同样可得关于$q_{layer_{1}}$以及$q_{layer_{2}}$的二元一次方程：
+同样可得关于$q_{1}$以及$q_{2}$的二元一次方程：
 \begin{equation}
-    q_{layer_{1}} = \\
-    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{gw} + rss} + \frac{q_{gimp} \cdot f_{g} \cdot fwet_{gimp} \cdot f_{gimp}}{r_{gw}} + \frac{q_{veg} \cdot fc\left( 3 \right)}{r_{t}} + \frac{q_{layer_{2}}}{r_{d}}}{\frac{1}{r_{d}} + \frac{f_{g} \cdot f_{gper}}{r_{gw} + rss} + \frac{fwet_{gimp} \cdot f_{g} \cdot f_{gimp}}{r_{gw}}+\frac{fc\left(3\right)}{r_{t}}}
+    q_{1} = \\
+    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{d1} + r_{ss}} + \frac{q_{gimp} \cdot f_{g} \cdot f_{wet,gimp} \cdot f_{gimp}}{r_{d1}} + \frac{q_{v} \cdot f_v}{r_{v}} + \frac{q_{2}}{r_{d2}}}{\frac{1}{r_{d2}} + \frac{f_{g} \cdot f_{gper}}{r_{d1} + r_{ss}} + \frac{f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}}+\frac{f_v}{r_{v}}}
 \end{equation}
+%
 \begin{equation}\label{equ_2lays_Q_lay2}
-    q_{layer_{2}} = \frac{\frac{q_{layer_{1}}}{r_{d}} + \frac{q_{roof} \cdot fwet_{roof} \cdot fc\left( 0 \right)}{r_{roof}} + \frac{Q}{r_{aw}}}{\frac{1}{r_{aw}} + \frac{1}{r_{d}} + \frac{fwet_{roof} \cdot fc\left( 0 \right)}{r_{roof}}}
+    q_{2} = \frac{\frac{q_{1}}{r_{d2}} + \frac{q_{roof} \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}} + \frac{q_a}{r_{aw}}}{\frac{1}{r_{aw}} + \frac{1}{r_{d2}} + \frac{f_{wet,roof} \cdot f_{roof}}{r_{roof}}}
 \end{equation}
 求解可得：
 \begin{equation}
-    q_{layer_{1}} = \\
-    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{gw}+rss} + \frac{q_{gimp} \cdot f_{g} \cdot fwet_{gimp} \cdot f_{gimp}}{r_{gw} } + \frac{q_{veg} \cdot fc\left( 3 \right)}{r_{t}} + a}{c \cdot \left( 1 - \frac{b}{r_{d} \cdot c}\right)}
+    q_{1} = \\
+    \frac{\frac{q_{gper} \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{q_{gimp} \cdot f_{g} \cdot f_{wet,gimp} \cdot f_{gimp}}{r_{d1} } + \frac{q_{v} \cdot f_v}{r_{v}} + a_{\lambda}}{c_{\lambda} \cdot \left( 1 - \frac{b_{\lambda}}{c_{\lambda} \cdot r_{d2}}\right)}
 \end{equation}
+%
+\begin{equation}
+    a_{\lambda}= \left(\frac{q_{roof} \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}} + \frac{q_a}{r_{aw}}\right) \cdot b_{\lambda}
+\end{equation}
+%
+\begin{equation}
+    b_{\lambda} = \frac{1}{r_{d2} \cdot \left( \frac{1}{r_{aw}} + \frac{1}{r_{d2}} + \frac{f_{wet,roof} \cdot f_{roof}}{r_{roof}} \right)}
+\end{equation}
+%
+\begin{equation}
+    c_{\lambda} = \frac{1}{r_{d2}}+\frac{f_g \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{f_{wet,gimp} \cdot f_g \cdot f_{gimp}}{r_{d1}} + \frac{f_v}{r_{v}}
+\end{equation}
+同理，将$q_{1}$代入式~\ref{equ_2lays_Q_lay2}即可求得$q_{2}$。
 
+将求解得到的$q_{1}$与$q_{2}$分别代回~\ref{urban_Eg}--\ref{urban_Eroof}，即可得到城市每个表面的潜热通量，其后计算城市各表面温度并基于该温度变化对潜热通量进行更新时，同样需要提供各表面潜热对各自温度的变化率，计算为：
 \begin{equation}
-    a = \left(\frac{q_{roof} \cdot fc\left(0\right)}{r_{roof}} + \frac{Q}{r_{aw}}\right) \cdot b
+\frac{\partial \lambda E_{gper}}{\partial T_{gper}} = \frac{\rho _a}{r_{d1}+rss} \frac{dq_{gper}}{dT_{gper}} \left(1-\frac{f_{g}f_{gper}}{c_{\lambda} \left(r_{d1}+r_{ss}\right) \left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}\right)
 \end{equation}
+%
 \begin{equation}
-    b = \frac{1}{r_{d} \cdot \left( \frac{1}{r_{aw}} + \frac{1}{r_{d}} + \frac{fc\left(0\right)}{r_{roof}} \right)}
+\frac{\partial \lambda E_{gimp}}{\partial T_{gimp}} = \frac{\rho _a}{r_{d1}} \frac{dq_{gimp}}{dT_{gimp}} \left(1-\frac{f_{wet,gimp} f_{g} f_{gimp}}{c_{\lambda} r_{d2}\left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}\right)
 \end{equation}
+%
 \begin{equation}
-    c = \frac{1}{r_{d}}+\frac{f_g \cdot f_{gper}}{r_{gw}+rss} + \frac{fwet_{gimp} \cdot f_g \cdot f_{gimp}}{r_{gw}} + \frac{fc\left( 3 \right)}{r_t}
+\frac{\partial \lambda E_{v}}{\partial T_{v}} = \frac{\rho _a C_p}{r_{v}} \frac{dq_{v}}{dT_{v}} \left(1-\frac{f_{v}}{c_{\lambda} r_{v}\left(1-\frac{b_{\lambda}}{c_{\lambda} r_{v}}\right)}\right)
 \end{equation}
-同理，将$q_{layer_{1}}$带入式\ref{equ_2lays_Q_lay2}即可求得$q_{layer_{2}}$。
+%
+\begin{equation}
+\frac{\partial \lambda E_{roof}}{\partial T_{roof}} = \frac{\rho _a}{r_{roof}} \frac{dq_{roof}}{dT_{roof}} \left(1-\frac{f_{wet,roof}f_{roof} b_{\lambda}}{c_{\lambda} r_{roof} \left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}-\frac{f_{wet,roof}f_{roof}}{r_{roof}\left(\frac{1}{r_{ah}}+\frac{1}{r_{d2}}+\frac{f_{wet,roof} f_{roof}}{r_{roof}}\right)}\right)
+\end{equation}

@@ -33,7 +33,7 @@ and Energy Conservation, MEC)。
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\columnwidth]{Figures/土地利用与土地覆盖变化模拟/LULCCDRIVER流程图.jpg}
-\caption{LULCC主程序流程图 (MOD\_LULCC\_Driver.F90)}
+\caption{LULCC主程序流程图 (\texttt{MOD\_LULCC\_Driver.F90})}
 \label{fig:LULCC主程序流程图}
 \end{figure}
 }
@@ -63,7 +63,7 @@ and Energy Conservation, MEC)。
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=1\columnwidth]{Figures/土地利用与土地覆盖变化模拟/LULCC流程图.png}
+\includegraphics[width=\textwidth]{Figures/土地利用与土地覆盖变化模拟/LULCC流程图.png}
 \caption{地表覆盖变化的物质能量守恒方案示意图}
 \label{fig:LULCC流程图}
 \end{figure}
@@ -81,9 +81,9 @@ and Energy Conservation, MEC)。
 
 2) \textbf{能量守恒}。与能量相关的变量，包括雪层和土壤层的温度$T$，是基于所有来源patch变化到新的温度之后，热量的变化总和为0的假设来计算：
 \begin{equation}
-T^{n} = \sum_{i = 1}^{np}{\ \lbrack T_{i}^{n - 1}\text{~}\text{*}\text{~}\frac{C_{vi}^{n - 1}\text{~}\text{*}\text{~}S_{i}^{n - 1}}{\sum_{i = 1}^{np}{(C_{vi}^{n - 1}\text{~}\text{*}\text{~}S_{i}^{n - 1})}}\text{]~~}}
+T^{n} = \sum_{i = 1}^{\rm np}{\ \lbrack T_{i}^{n - 1}\text{~}\cdot\text{~}\frac{C_{vi}^{n - 1}\text{~}\text{*}\text{~}S_{i}^{n - 1}}{\sum_{i = 1}^{\rm np}{(C_{vi}^{n - 1}\text{~}\text{*}\text{~}S_{i}^{n - 1})}}\text{]~~}}
 \end{equation}
-其中\(T_{i}^{n - 1}\)是去年来源patch的土壤温度，\(T^{n}\)是今年的patch的土壤温度，\(S_{i}^{n - 1}\)是来源patch的面积百分比，\(C_{vi}^{n - 1}\)是土壤热容量(单位：\( \rm Jm^{-2}K^{-1}\)，\(C_{vi}^{n - 1}\)的计算同土壤温度计算\texttt{MOD\_GroundTemperature.F90}中的方案。因此土壤温度调整的权重为来源patch的面积与土壤热容量的乘积。
+其中\(T_{i}^{n - 1}\)是去年来源patch的土壤温度，\(T^{n}\)是今年的patch的土壤温度，\(S_{i}^{n - 1}\)是来源patch的面积百分比，np为来源patch数量，\(C_{vi}^{n - 1}\)是土壤热容量(单位：\( \rm Jm^{-2}K^{-1}\)，\(C_{vi}^{n - 1}\)的计算同土壤温度计算\texttt{MOD\_GroundTemperature.F90}中的方案。因此土壤温度调整的权重为来源patch的面积与土壤热容量的乘积。
 
 3) \textbf{通过物理过程计算调整}。经过以上物质和能量守恒调整后，一些变量会因物理过程的计算受到影响，此时需要根据物理过程部分的代码进行调整，包括雪层的厚度$\delta z$、雪层的深度$z$、雪水当量$W_{sno}$、积雪厚度$z_{sno}$、被积雪覆盖的地表面积比例$f_{sno}$、斑块中的有效植被比例$f_{sig}$等等。这些变量的调整需要首先确定雪的层数，雪的层数被设置为来源patch中面积占比最多的patch的雪层数，即以主要来源patch为准。其中每一层的含水量、含冰量以及雪的密度可通过来源patch对应层的数值做面积加权平均调整。当出现其他patch的雪层数多于主要patch的层数的情况时，则将多出来的部分采用同样的方式加到最上层。此时即可根据含水量、含冰量和雪的密度来计算雪层的厚度，同时也可计算出雪层的深度$z$、雪水当量$W_{sno}$和积雪厚度$z_{sno}$。被积雪覆盖的地表面积比例$f_{sno}$和斑块中的有效植被比例$f_{sig}$通过调用雪盖比例子程序\texttt{snowfraction}进行计算，同时将茎面积指数$SAI$更新。地表温度$T_{g}$采用调整后的最上层的温度(没有雪则采用土壤第一层的温度)。地下水位$z_{wt}$采用来源patch中水位最低的patch进行赋值。
 
