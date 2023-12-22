@@ -16,7 +16,7 @@ CoLM的自养呼吸$CF_{ar,total}$计算包括维持呼吸$CF_{mr,total}$和生�
 CF_{ar,total}=CF_{mr, total}+CF_{gr,total}
 \end{equation}
 \subsection{维持呼吸}
-叶片的维持呼吸($R_d$)由光合作用模块中公式(\ref{R_d1})计算。
+叶片的维持呼吸($R_d$)由光合作用模块中公式\eqref{R_d1_sun}和\eqref{R_d1_sha}计算。
 除此之外，活茎、活粗根和细根同样存在维持呼吸。
 维持呼吸和植被器官单位面积的氮含量成正比，同时受到温度的调控：
 \begin{equation}
@@ -80,7 +80,7 @@ CF_{GPP, xs}=\left\{\begin{array}{ll}0 & CS_{xs} \geq 0 \\ \min \left(-\frac{CS_
 即$\max{\left(CF_{GPP}-CF_{GPP,mr},0\right)}$。
 
 
-\subsection{植被的碳氮生长分配比例}
+\subsection{植被的碳氮生长分配比例}\label{植被的碳氮生长分配比例}
 用于植被生长的碳收入，即可分配碳($CF_{avail\_alloc}$)，是光合作用碳通量($CF_{GPP}$)扣除维持呼吸($CF_{GPP,mr}$)和对植被呼吸碳存储的补充($CF_{GPP,xs}$)后的剩余碳收入：
 \begin{equation}
 CF_{ {avail\_alloc }}=CF_{GPP}-CF_{GPP, mr}-CF_{GPP, xs}
@@ -162,104 +162,39 @@ NF_{sminn\_alloc} = NF_{plant\_demand\_soil}\cdot f_{plant\_demand}
 \begin{equation}
   CF_{alloc\_leaf\_total} = CF_{actual\_alloc}/C_{allom}
 \end{equation}
-假设碳分配到组织碳库和非结构碳库的比例固定 $\left(f_{cur}:\left(1-f_{cur}\right)\right)$，
-$f_{cur}$为新生长的组织库所占的比例。根据分配系数参数，各个器官的碳生长可以被计算：
-\begin{equation}\label{CF_alloc_{leaf}}
-  CF_{alloc,leaf} = CF_{alloc_{leaf\_total}}\cdot  f_{cur}
+$f_{cur}$是碳分配到组织库或存储库的指示系数，取值0或1，当$f_{cur}=1$时，植被物候为常绿类型，碳分配直接到组织库，当$f_{cur}=0$时，植被物候为落叶类型，碳分配需先经过存储库再分配到组织库。根据各器官相对于叶的碳分配系数，各个器官的碳生长($CF_{alloc,i}$)可以被计算：
+\begin{equation}\label{CF_alloc_i}
+  CF_{alloc,i} = CF_{alloc,leaf}\cdot f_{alloc,i} \cdot f_{cur}
 \end{equation}
+\begin{equation}\label{CF_alloc_istorage}
+  CF_{alloc,i\_storage} = CF_{alloc,leaf} \cdot f_{alloc,i} \left(1-f_{cur}\right)
+\end{equation}
+其中，$CF_{alloc,leaf}$代表叶的碳生长或叶的碳分配总量。对于草本植物来说，$i$代表叶和细根，$f_{alloc,i}$代表叶和细根组织库相对于叶的碳分配系数，即对叶来说，$f_{alloc,i}=1$，对细根来说，$f_{alloc,i}=a_1$，$a_1$是植被碳的根叶分配比。
+
+如果是木本植物类型，$i$除了代表叶和细根以外，还代表活茎、死茎、活粗根和死粗根，公式\eqref{CF_alloc_i}和\eqref{CF_alloc_istorage}仍然适用，$f_{cur}$仍然代表碳分配到组织库或存储库的指示系数。$f_{alloc,i}$作为相对于叶的碳分配系数，有不同于草本植物的表达。叶和细根的分配系数$f_{alloc,i}$与草本植物相同，活茎和死茎相对于叶的碳分配系数$f_{alloc,i}$分别为$a_3a_4$和$a_3\left(1-a_4\right)$，活粗根和死粗根相对于叶的碳分配系数$f_{alloc,i}$分别为$a_2a_3a_4$和$a_2a_3\cdot \left(1-a_4\right)$。其中，$a_2$代表粗根相对于茎的分别配比例，$a_3$代表茎相对于叶的分配比例，$a_4$代表植被活根或活茎在总根或总茎碳库中所占的比例，见\ref{植被的碳氮生长分配比例}
+
+将公式 \eqref{CF_alloc_i}和\eqref{CF_alloc_istorage} 中的所有$i$求和可得植被整体的碳生长量，因此碳平衡得以保证：
 \begin{equation}
-  CF_{alloc,leaf\_storage} = CF_{alloc\_leaf\_total}\cdot \left(1-f_{cur}\right)
+  \sum_{i}{CF_{alloc,i}}+\sum_{i}{CF_{alloc,i_storage}}=CF_{alloc}
 \end{equation}
-\begin{equation}
-  CF_{alloc,froot} = CF_{alloc_{leaf\_total}}\cdot a_1\cdot f_{cur}
-\end{equation}
-\begin{equation}
-  CF_{alloc,{froot\_storage}} = CF_{alloc\_leaf\_total}\cdot a_1\cdot \left(1-f_{cur}\right)
-\end{equation}
-如果是木本植物类型，碳分配器官还包括茎和粗根：
-\begin{equation}
-  CF_{alloc,livestem} = CF_{alloc\_leaf\_total}\cdot a_3a_4\cdot f_{cur}
-\end{equation}
-\begin{equation}
-  CF_{alloc,livestem\_storage} = CF_{alloc\_leaf\_total}\cdot a_3a_4\cdot \left(1-f_{cur}\right)
-\end{equation}
-\begin{equation}
-  CF_{alloc,deadstem} = CF_{alloc\_leaf\_total}\cdot a_3\left(1-a_4\right)\cdot f_{cur}
-\end{equation}
-\begin{equation}
-  CF_{alloc,deadstem\_storage} = CF_{alloc\_leaf\_total}\cdot a_3\left(1-a_4\right)\cdot \left(1-f_{cur}\right)
-\end{equation}
-\begin{equation}
-  CF_{alloc,livecroot} = CF_{alloc\_leaf\_total}\cdot a_2a_3a_4\cdot f_{cur}
-\end{equation}
-\begin{equation}
-  CF_{alloc,livecroot\_storage} = CF_{alloc\_leaf\_total}\cdot a_2a_3a_4\cdot \left(1-f_{cur}\right)
-\end{equation}
-\begin{equation}
-  CF_{alloc,deadcroot} = CF_{alloc\_leaf\_total}\cdot a_2a_3\cdot \left(1-a_4\right)\cdot f_{cur}
-\end{equation}
-\begin{equation}\label{CF_alloc_deadcroot_{storage}}
-  CF_{alloc,deadcroot\_storage} = CF_{alloc\_leaf\_total}\cdot a_2a_3\left(1-a_4\right)\cdot \left(1-f_{cur}\right)
-\end{equation}
-将公式 \eqref{CF_alloc_{leaf}}--\eqref{CF_alloc_deadcroot_{storage}} 求和可得，因此碳平衡得以保证：
-\begin{equation}
-  \sum_{i}{CF_{alloc,i}}=CF_{actuall\_alloc}
-\end{equation}
-其中 $CF_{alloc,i}$ 代表每个植被库的新生长碳含量，
-$i$等于$leaf$、$leaf\_storage$、$froot$、$froot\_storage$、$livestem$、$livestem\_storage$、$deadstem$、
- $deadsteam\_storage$、$livecroot$、 $livecroot\_storage$、$deadcroot$
- 和 $deadcroot\_storage$ 分别代表叶库、叶存储库、细根库、细根存储库、活茎库、
- 活茎存储库、死茎库、死茎存储库、活粗根库、活粗根存储库、死粗根库和死粗根存储库的新生长碳含量。
+其中 $CF_{alloc,i}$ 代表每个植被库的新生长碳含量或碳分配，$CF_{alloc}$是植被总的碳生长，是植被各器官组织库和存储库新生长碳库的总和。
 
 
- 对应各个器官的氮生长也可以计算：
-\begin{equation}\label{eq:NF_alloc_leaf}
-  NF_{alloc,leaf} = \frac{CF_{alloc\_leaf_total}}{CN_{leaf}}\cdot f_{cur}
+ 对应各个器官的氮分配($NF_{alloc,i}$)也可以根据植被各部分的碳氮比$CN_i$来计算：
+\begin{equation}\label{eq:NF_alloc_i}
+  NF_{alloc,i} = \frac{CF_{alloc,i}}{CN_i}
 \end{equation}
-\begin{equation}
-  NF_{alloc,leaf\_storage} = \frac{CF_{alloc\_leaf\_total}}{CN_{leaf}}\cdot \left(1-f_{cur}\right)
+\begin{equation}\label{eq:NF_alloc_istorage}
+  NF_{alloc,i\_storage} = \frac{CF_{alloc,i\_storage}}{CN_{i}}
 \end{equation}
-\begin{equation}
-  NF_{alloc,froot} = CF_{alloc\_leaf\_total}\cdot \frac{a_1}{CN_{froot}}\cdot f_{cur}
-\end{equation}
-\begin{equation}
-  NF_{alloc,froot\_storage} = CF_{alloc\_leaf\_total}\cdot \frac{a_1}{CN_{froot}}\cdot \left(1-f_{cur}\right)
-\end{equation}
+对于草本植物来说，$i$代表叶和细根，而$CN_{i}$代表叶和细根的碳氮比。对于木本植物来说，$i$除了代表叶和细根以外，还代表活茎、死茎、活粗根和死粗根，活茎和活粗根共享植被活木的碳氮比($CN_{lw}$)，死茎和死粗根共享植被死木的碳氮比($CN_{dw}$)。
 
-如果是木本植物类型，碳分配器官还包括茎和粗根：
+
+将公式 \eqref{eq:NF_alloc_i}和公式\eqref{eq:NF_alloc_istorage}中的所有$i$求和可得植被整体的氮生长量，因此氮平衡得以保证：
 \begin{equation}
-  NF_{alloc,livestem} = CF_{alloc\_leaf\_total}\cdot \frac{a_3a_4}{CN_{lw}}\cdot f_{cur}
+  \sum_{i}{NF_{alloc,i}}+\sum_{i}{NF_{alloc,i_storage}}=CF_{alloc}\cdot \frac{N_{allom}}{C_{allom}}=NF_{alloc}
 \end{equation}
-\begin{equation}
-  NF_{alloc,livestem\_storage} = CF_{alloc\_leaf\_total}\cdot \frac{a_3a_4}{CN_{lw}}\cdot \left(1-f_{cur}\right)
-\end{equation}
-\begin{equation}
-  NF_{alloc,deadstem} = CF_{alloc\_leaf\_total}\cdot \frac{a_3\left(1-a_4\right)}{CN_{dw}}\cdot f_{cur}
-\end{equation}
-\begin{equation}
-  NF_{alloc,deadstem\_storage} = CF_{alloc\_leaf\_total}\cdot \frac{a_3\left(1-a_4\right)}{CN_{dw}}\cdot \left(1-f_{cur}\right)
-\end{equation}
-\begin{equation}
-  NF_{alloc,livecroot} = CF_{alloc\_leaf\_total}\cdot \frac{a_2a_3a_4}{CN_{lw}}\cdot f_{cur}
-\end{equation}
-\begin{equation}
-  NF_{alloc,livecroot\_storage} = CF_{alloc\_leaf\_total}\cdot \frac{a_2a_3a_4}{CN_{lw}}\cdot \left(1-f_{cur}\right)
-\end{equation}
-\begin{equation}
-  NF_{alloc,deadcroot} = CF_{alloc\_leaf\_total}\cdot \frac{a_2a_3\left(1-a_4\right)}{CN_{dw}}\cdot f_{cur}
-\end{equation}
-\begin{equation}\label{eq:NF_alloc_deadcroot_storage}
-  NF_{alloc,deadcroot\_storage} = CF_{alloc\_leaf\_total}\cdot \frac{a_2a_3\left(1-a_4\right)}{CN_{dw}}\cdot \left(1-f_{cur}\right)
-\end{equation}
-将公式 \eqref{eq:NF_alloc_leaf}--\eqref{eq:NF_alloc_deadcroot_storage} 求和可得，因此氮平衡得以保证：
-\begin{equation}
-  \sum_{i}{NF_{alloc,i}}=CF_{actuall,alloc}\cdot \frac{N_{allom}}{C_{allom}}=NF_{actuall\_alloc}
-\end{equation}
-其中$NF_{alloc,i}$代表每个植被库的新生长氮含量， 
-$i$ 等于 $leaf$，$leaf\_storage$，$froot$，$froot\_storage$，$livestem$，$livestem\_storage$，
-$deadstem$，$deadsteam\_storage$，$livecroot$，$livecroot\_storage$，$deadcroot$，
- 和 $deadcroot\_storage$ 分别代表叶库、叶存储库、细根库、细根存储库、活茎库、
- 活茎存储库、死茎库、死茎存储库、活粗根库、活粗根存储库、死粗根库和死粗根存储库的新生长氮含量。
+其中 $NF_{alloc,i}$ 代表每个植被库的新生长氮库或氮分配，$NF_{alloc}$是植被总的氮生长，是植被各器官组织库和存储库新生长氮库的总和。$C_{allom}$和$N_{allom}$分别是单位叶片碳氮生长对应的植被总碳氮生长，见公式\eqref{C_allom}和\eqref{N_allom}。
 
 
 \section{植被物候过程的耦合预报方案}\label{植被物候过程的耦合预报方案}

@@ -57,7 +57,7 @@ USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global 
 IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging Spectroradiometer 
 （MODIS）MCD12Q1 Version 6（The Terra and Aqua combined MODIS Land Cover Type data product）
 的数据（\url{https://lpdaac.usgs.gov/products/mcd12q1v006/}），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生 
- \citep{Friedl2019}。数据为全球 \ang{;;15}（约500 m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表 \ref{tab:IGBP覆盖类型} 所示。
+ \citep{Friedl2019}。数据为全球 \ang{;;15}（约500 m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表~\ref{tab:IGBP覆盖类型} 所示。
 
 \begin{table}[]
 \centering
@@ -99,7 +99,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 
 \section{植被结构及属性数据}\label{植被结构及属性数据}
 \subsection{叶面积指数数据}\label{叶面积指数数据}
-叶面积指数数据来自重处理的MODIS LAI数据~\citep{yuan2011reprocessing}。目前模式提供MODIS第5版和第6.1版数据。其中MODIS第5版数据 (MOD15A2) 为全球 \ang{;;30} (1公里) 分辨率，经纬度网格，时间覆盖2000--2016年，时间分辨率为每8天。MODIS第6.1版数据 (MCD15A2H)，空间分辨率为全球 \ang{;;15} (约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
+叶面积指数数据来自重处理的MODIS LAI数据~\citep{yuan2011reprocessing,lin2023ReprocessedMODISVersion}。目前模式提供MODIS第5版和第6.1版数据。其中MODIS第5版数据 (MOD15A2) 为全球 \ang{;;30} (1公里) 分辨率，经纬度网格，时间覆盖2000--2016年，时间分辨率为每8天。MODIS第6.1版数据 (MCD15A2H)，空间分辨率为全球 \ang{;;15} (约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
 
 
 \subsection{树高数据}\label{树高数据}
@@ -107,7 +107,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 (Ice, Cloud, and land Elevation Satellite)卫星数据~\citep{simard2011mapping}，
 全球 \ang{;;30} (1公里) 分辨率，经纬度网格，单时次数据。
 
-\subsection{PFT/PC数据及其依赖数据}\label{PFTPC数据及其依赖数据}
+\subsection{PFT/PC数据及其制作所依赖数据}\label{PFTPC数据及其依赖数据}
 模式如采用PFT或PC植被次网格方式运行，则不能像LCT方案一样直接进行地表覆盖类型聚合(图~\ref{fig:次网格聚合方案} LCT方案所示)，
 需要对每一个细网格地表覆盖类型进行拆解，得到其网格内PFT的组成种类和各自面积占比。
 PFT方案则根据细网格计算得到的PFT种类及占比来聚合到模式网格(图~\ref{fig:次网格聚合方案} PFT方案)。
@@ -180,23 +180,28 @@ Canopy height                         & Global 1 km forest canopy height map    
 %\end{sidewaystable}
 \end{table}
 \end{landscape}
-如采用PFT/PC方案进行植被次网格模拟，其不同类型相关参数请参考附录~\ref{植被功能型PFT相关参数} 和附录~\ref{植物群落PC次网格PFT相关参数}。
+如采用PFT/PC方案进行植被次网格模拟，其不同类型相关参数请参考附录~\ref{植被功能型PFT相关参数} 和附录~\ref{植物群落PC次网格PFT相关参数}。PFT/PC植被结构数据制作流程及其尺度转换详见章节~\ref{植被尺度转换}。
 
 
 \section{水文数据}\label{水文数据}
+
 \subsection{水文学基础数据}
+水文学基础数据主要用于流域单元网格，CoLM中使用高程、水流方向、集水面积和湖泊范围等变量。
+
+水流方向和集水面积数据来自MERIT Hydro~\citep{yamazaki2019merit}。 MERIT Hydro为全球格点数据，分辨率为3弧秒（赤道处约90米），由高程数据（MERIT DEM）和水体数据集（G1WBM、GSWO和OpenStreetMap）融合生成。MERIT Hydro使用算法识别和分辨实际的内陆流域和高程数据中误差引起的伪洼地，可近于自动地提取河网。除自动算法外，也进行了一定量的人工检查和编辑。评估结果表明，MERIT Hydro构建的水文学数据在集水面积和流域形状方面与其他经过质量控制的河网数据集显示出良好的一致性。
+
 \subsection{河网}
-CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分辨率的全球流动方向地图 (MERIT-Hydro)\citep{yamazaki2019merit}，
+CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分辨率的全球流动方向地图 (MERIT-Hydro)~\citep{yamazaki2019merit}，
 水文调整高程 DEM~\citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据~\citep{yamazaki2014development}; 
 使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。
 相关数据以纯``二进制''格式 ($nx\times ny$)存储于 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，
-从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是'little endian'。
+从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是`little endian'。
 具体而言，除了需要陆面模式计算得出的产流量 (runoff) 之外，CaMa-Flood还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，
 漫滩 (洪水淹没) 面积，以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河流的宽度和深度以外，
 所有的地形相关参数均可由 MERIT-hydro 水文地形数据中获取。以下以全球~0.25\textdegree ~的河网为例进行详细介绍。
 
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/流域单元分布图.png}
 \caption{流域单元分布图。每个流域单元的出口用白色四边形标记。蓝色线条连接不同流域单元，箭头指向下游流域单元。
@@ -216,7 +221,7 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
 \centering
 \caption{河网图及地形参数文件列表}
 \label{tab:河网图及地形参数文件列表}
@@ -245,7 +250,7 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
 
     % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
 \centering
 \caption{河网图及地形参数文件列表续}
 \label{tab:河网图及地形参数文件列表2}
@@ -406,17 +411,67 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 
 
 \subsection{湖泊}
+HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多边形数据\citep{messager2016nc}。原HydroLAKE数据为矢量数据，在CoLM中，将其转化为了与MERIT Hydro相同的3弧秒分辨率的格点数据进行使用。
+
 湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球\ang{;;30} (约1公里)分辨率，经纬度网格，单时次数据。
 
 
 \section{城市数据}\label{城市数据}
+城市模式所需基础数据主要包含城市覆盖、城市类型、建筑形态、辐射与热力属性、生态数据以及人类活动相关数据。由于城市内部强异质性且近年来城市化迅速发展，为体现更为精细化的城市内部空间属性特征和其时空变化，城市模式基础数据在选取时主要遵循高分辨率、多时次的原则，通过以下两方面完成城市基础城市数据制作：
 
-\subsection{城市地表覆盖}\label{城市地表覆盖}
-城市地表覆盖数据采用MODIS-IGBP地表覆盖数据(章节 \ref{IGBP地表覆盖数据})中的城市覆盖类型作为判别依据。
+\begin{enumerate}
+\item 集成目前已有的高分辨率数据。搜集目前已经发布的高分辨率数据，通过一定处理使其用于城市模式；
+\item 自主研制部分高分辨率(主要为城市LAI/SAI)。由于部分数据的缺失，通过多源数据发展适用于城市模式的基础数据；
+\end{enumerate}
+目前城市模式所用基础数据如表~\ref{tab:城市数据分类及来源}所示。
+{
+\begin{landscape}
+\begin{table}[htbp]
+    \centering
+    \caption{CoLM城市模式基础数据列表}
+    \label{tab:城市数据分类及来源}
+    \begin{tabular}{ccccc>{\centering\arraybackslash}p{5.5cm}}
+    \toprule
+    数据类型 & 数据名称 & 分辨率 & 时间范围 & 参考文献\\ \midrule
+    城市覆盖 & MODIS Land Cover Type & 500m & 2000-2020 & \citet{Friedl2019}  \\
+    \hline
+    \multirow{2}*{城市类型}  & NCAR Urban Density Class & 1km & 单时次 & \citet{jackson2010parameterization} \\
+                    & LCZ Class  & 100m & 单时次 & \citet{demuzere2022global} \\
+    \hline
+    \multirow{4}*{建筑形态数据}  & \makecell{建筑高度\\建筑比例} & 1km & 单时次 & \citet{li2022global} \\
+                    % & 透水面/不透水面比例 & / & / & 待补充 \\
+                    % & 街谷高宽比 & / & / & 待补充 \\
+                    % & 屋顶/墙面厚度 & / & / & 待补充 \\
+                    & 透水面/不透水面占比 & \multirow{3}*{/} &  \multirow{3}*{/} & \multirow{3}*{\makecell{\citet{oleson2020parameterization}\\\citet{stewart2014evaluation}}} \\
+                    & 街谷高宽比 \\
+                    & 屋顶/墙体厚度  \\
+    \hline
+    \multirow{4}*{建筑辐射与热力数据} & 屋顶/墙体/透水面/不透水面反照率 & \multirow{4}*{/} &  \multirow{4}*{/} & \multirow{4}*{\makecell{\citet{oleson2020parameterization}\\\citet{stewart2014evaluation}}} \\
+                                   & 屋顶/墙体/透水面/不透水面发射率 \\
+                                   & 屋顶/墙体/不透水面热容量 \\
+                                   & 屋顶/墙体/不透水面热导率 \\
+                                   % & 屋顶/墙面/透水面/不透水面发射率 & / & / & 待补充 \\
+                                   % & 屋顶/墙面/不透水面热容量 & / & / & 待补充 \\
+                                   % & 屋顶/墙面/不透水面热导率 & / & /& 待补充 \\
+    \hline
+    \multirow{4}*{城市生态数据} & 城市树LAI & 500m & 2000-2020 & / \\
+                              & 城市树高 & 10m & 单时次 & \citet{lang2023high}  \\
+                              & 城市树覆盖度 & 30m & 2000,2005,2010,2015 & \citet{townshend2016gfcc} \\
+                              & 城市水体覆盖度 & 30m & 2000,2010,2020 & \citet{陈军2017} \\
+    \hline
+    \multirow{2}*{城市人类活动数据} & LandScan人口密度 & 1km & 2000-2020 & \citet{dobson2000landscan} \\
+                                 & LUCY国家分类 & 5km & / & \citet{allen2011} \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+\end{landscape}
+}
+\subsection{城市覆盖}\label{城市覆盖}
+城市地表覆盖数据采用MODIS-IGBP地表覆盖数据(章节~\ref{IGBP地表覆盖数据})中的城市覆盖类型作为判别依据。
 模式利用该数据集区分不同年份网格城市覆盖类型，获得城市在网格中的覆盖度，反应不同年份的城市覆盖变化。
 
 
-\subsection{城市类型划分}\label{城市类型划分}
+\subsection{城市类型}\label{城市类型}
 模式对城市覆盖地区不同城市类型进行细分。城市类型分类数据目前采取两种方案：
 \begin{enumerate}
     \item 传统的3类城市——高建筑街区 (Tall Building Distinct, TBD)、高密度(High Density, HD) 和中密度 (Medium Density, MD);
@@ -426,53 +481,84 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/基础数据/LCZ分类图示.png}
-\caption{LCZ分类示意图}
+\includegraphics[width=\textwidth]{Figures/基础数据/LCZ分类图示.jpg}
+\caption{LCZ分类示意图~\citep{demuzere2020combining,stewart2012local}。}
 \label{fig:LCZ分类图示}
 \end{figure}
 }
 
-
+\subsubsection{传统城市分类}\label{传统城市分类}
 模式对于传统的城市类型分类与NCAR CLM--Urban Model~\citep{oleson2020parameterization} 相同，
-根据 \citet{jackson2013parameterization} 的城市分类数据对全球城市化程度进行分类。该数据集中，城市化有三个水平，
-及TBD、HD和MD，每1 km格点被划分为三个密度类别之一，通过该数据集对urban patch分为3类。其中，
+根据 \citet{jackson2010parameterization} 的城市分类数据对全球城市化程度进行分类。该数据集中，城市化有三个水平，
+即TBD、HD和MD，每1 km格点被划分为三个密度类别之一，通过该数据集对urban patch分为3类。其中，
 TBD类城市指至少在1平方公里内，建筑高度全部大于或等于10层楼高且透水面比例较小(5$\sim$15\%)；HD类城市建筑高度为3$\sim$10层，
 透水面比例通常为5$\sim$25\%，这些地区通常为商业、住宅或工业区；MD类城市建筑高度通常为1$\sim$3层，且透水面比例较高，为20$\sim$60\%。
-LCZ数据目前使用的 \citet{demuzere2022global} 全球LCZ分类数据，该数据空间分辨率为100米，
+\subsubsection{LCZ分类}\label{LCZ分类}
+LCZ数据目前使用 \citet{demuzere2022global} 发布的全球LCZ分类数据，该数据空间分辨率为100米，
 通过向轻量级随机森林模型输入大量标记训练区域和地球观测图像来生成，并对150个选定的功能城市地区采用自助交叉验证和专题基准测试评估了其质量。
 
 
-\subsection{建筑形态及属性数据}\label{建筑形态及属性数据}
-对于城市覆盖而言，建筑物的形态和物理性质(如反照率，导热率等)与其它地表覆盖类型完全不同，
-这些物理性质取决于建筑物的材质及城市几何结构数据，比如: 不透水面比例分布(impervious fraction)、
-建筑物屋顶面比例分布(roof fraction)、建筑物高度(building height)以及街区宽高比(H/W ratio)、反照率、发射率、导热率以及比热容等等。
-目前使用 \citet{oleson2020parameterization} 基于 \citet{jackson2013parameterization} 的建筑数据开发的NCAR城市工具
-(Toolbox for Human-Earth SystemIntegration \& Scaling (THESIS) toolset, \url{http://www.cgd.ucar.edu/iam/projects/thesis/thesis-urbanproperties-tool.html})
-为模式生成各类城市形态以及物理性质输入参数。
-该工具根据一定规则将全球所有国家分为33类 (图~\ref{fig:地区分类})，并根据传统城市分类进一步划分，不同类的国家不同类型建筑具有不同的性质。
-%
-而LCZ分类本身包含了一些建筑材料信息，不同地区的同类LCZ虽然有差别但是可能不会太大，
-因此LCZ形态参数目前采用典型值设定，该部分数据一部分来源于~\citet{stewart2014evaluation}，另一部分参考了WRF中的参数设置，LCZ参数如表 \ref{tab:lcz局地气候区建筑属性参数}所示。
+\subsection{建筑形态数据}\label{建筑形态数据}
+\subsubsection{建筑高度}\label{建筑高度}
+建筑高度采用\citet{li2022global}发布的数据，该数据利用随机森林模型使用世界各地的参考数据进行训练得到。为了增加代表性，\citet{li2022global}对参考数据进行了人工分类和补充。该数据分辨率为1km，单时次数据。
+\subsubsection{建筑比例}\label{建筑比例}
+建筑比例同样采用\citet{li2022global}发布的数据，相比于其他陆面模型使用的根据区域或者LCZ类型查找表赋值的方法，该数据精度较高，能更加真实的还原城市内部建筑的分布以及异质性。
+
+\subsubsection{透水面占比}\label{透水面占比}
+对于传统城市分类，城市的透水面占比通过33个国家/地区分类以及3种城市类型查找表获得，国家/地区分类由~\citet{oleson2020parameterization}数据得到，其全球分类如图~\ref{fig:地区分类}所示。
+LCZ同样根据LCZ类型查找表，形态参数设置参考~\citet{stewart2014evaluation}，如表~\ref{tab:lcz局地气候区建筑属性参数}所示。
+
+\subsubsection{街谷高宽比}\label{街谷高宽比}
+同透水面占比，传统城市分类通过33个国家/地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置。
+
+\subsubsection{屋顶/墙体厚度}\label{屋顶/墙体厚度}
+屋顶/墙体厚度同样基于查找表，传统城市分类通过33个国家/地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置。
+
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/基础数据/地区分类.png}
+\includegraphics[width=.7\paperwidth]{Figures/基础数据/地区分类.jpg}
 \caption{地区分类示意图}
 \label{fig:地区分类}
 \end{figure}
 }
 
+\subsection{建筑辐射及热力数据}\label{建筑辐射及热力数据}
+对于传统城市分类，建筑辐射及热力参数目前根据\citet{oleson2020parameterization}基于\citet{jackson2010parameterization}的建筑数据开发的NCAR城市工具
+(Toolbox for Human-Earth SystemIntegration \& Scaling (THESIS) toolset, \url{http://www.cgd.ucar.edu/iam/projects/thesis/thesis-urbanproperties-tool.html})得到，该工具通过不同地区建筑材料构成为全球33个分区及3类城市生成建筑辐射及热力参数表。
+LCZ分类建筑辐射参数参考~\citet{stewart2014evaluation}，热力参数则参考WRF设置，如附录表~\ref{tab:lcz局地气候区建筑属性参数}所示。
 
-\subsection{建筑高度与建筑比例数据}\label{建筑高度与建筑比例数据}
-建筑高度和建筑比例数据采用\citet{li2022global}等人发布的数据，该数据利用随机森林模型使用世界各地的参考数据进行训练得到。为了增加代表性，\citet{li2022global}对参考数据进行了人工分类和补充。该数据分辨率为1km，相比于其他陆面模型使用的根据区域或者LCZ类型查找表赋值建筑高度和比例的方法，该数据作为格点数据，精度较高，能更加真实的还原城市内部建筑的分布以及异质性。
+\subsubsection{建筑反照率}\label{建筑反照率}
+对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
-\subsection{人口数据}\label{人口数据}
-人口数据目前使用由美国能源部橡树岭国家实验室(ORNL)推出的LandScan数据，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是最好的全球人口动态统计分析数据集之一，该数据空间分辨率高(1km)，时间可覆盖2000-2022年。
+\subsubsection{建筑发射率}\label{建筑发射率}
+反射率设置同反照率，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
-\subsection{城市树覆盖数据}\label{城市树覆盖数据}
+\subsubsection{建筑热容量}\label{建筑热容量}
+建筑热容量同样基于查找表，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+
+\subsubsection{建筑热导率}\label{建筑热导率}
+建筑热导率同建筑热容量，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+
+\subsection{城市生态数据}\label{城市生态数据}
 NCAR CLM城市数据集比较全面的描述了全球城市的形态特征和物理性质，但是其城市数据缺少关于植被(树)和水体的描述，
 LCZ分类虽然有植被描述但通常是一个范围值。由于城市只占全球陆地的1\%左右，相比于自然地表，在大尺度上城市占比仍然比较小，
 因此在补充城市内部的植被覆盖数据时，需要尽量选择高分辨率的数据。否则，如果分辨率过低，城市中的植被等信息很可能无法识别。
+
+\subsubsection{城市LAI/SAI数据}\label{城市LAISAI数据}
+由于目前全球LAI数据大部分为光学遥感数据，分辨率为500 m甚至1 km(比如MODIS LAI)，然而在城市中，由于城市中建筑物的遮掩以及混合像元的干扰，这种分辨率下卫星观测的城市LAI存在一定问题，但是作为描述植被的重要参数，LAI数据是不可或缺的。因此为了补充该数据，城市模式中树木的LAI采取插值方法计算得到，即根据格点内其它PFTs(只考虑树，即1-9类PFT)的LAI/SAI生成，具体方法为通过城市树高与PFTs树高比值插值并加权平均计算城市LAI/SAI，方法如下:
+\begin{equation}
+LAI_{urb}=\sum_{i=1}^{9} LAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \cdot PCT_{PFT_{i}}
+\end{equation}
+\begin{equation}
+SAI_{urb}=\sum_{i=1}^{9} SAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \cdot PCT_{PFT_{i}}
+\end{equation}
+其中$LAI_{PFT_{i}}$($SAI_{PFT_{i}}$)为PFT的LAI(SAI)，$HTOP_{urb}$和 $HTOP_{PFT_{i}}$分别为城市树高和PFT树高，$PCT_{PFT_{i}}$为PFT占比。$HTOP_{urb}$分辨率为500 m，PFT占比、LAI/SAI以及PFT树高均为0.5\textdegree{}分辨率，通过插值计算后便得到500m分辨率下LAI/SAI数据。
+
+\subsubsection{城市树高}\label{城市树高数据}
+CoLM自然植被树高采用\cite{simard2011mapping}发布的全球树高数据，该数据虽然应用广泛，但是分辨率较低(1 km)，无法满足城市模拟的需求，近年来，关于树高的高分辨率数据发展迅速，\cite{potapov2021mapping}利用GEDI卫星数据反演的树高数据具有较高的空间分辨率(30m,)，但是由于卫星运行轨道限制，该数据目前只发布了$51.6°N$ $\sim$ $51.6°S$范围内的数据。\cite{lang2023high}则开发了一种从Sentinel-2光学图像中检索冠层高度的深度学习模型，该模型可以有效降低卫星观测树高偏低的问题，\cite{lang2023high}利用该模型并结合GEDI 30m树高数据生成了全球10m树高地图。相比于GEDI数据，该数据更全(全球)，同时改善了GEDI偏低的问题，并且分别率更高(10m)，因此将该数据集作为城市树高基础数据。
+
+\subsubsection{城市树覆盖度}
 GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 2000年、2005年、2010年和2015年四个年代的全球树木覆盖度信息，分辨率为30 m，可用于了解森林变化。
 该数据的投影方式为UTM，与陆面模式使用的等经纬度网格不同，需对数据进行投影转换，由UTM投影转换为经纬度投影 ($\sim$0.00025\textdegree)。
@@ -480,56 +566,44 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
  ($\sim$0.0041667\textdegree)分辨率下30 m高分辨网格植被总占比，
 求平均得到500 m分辨率下城市格点的树覆盖数据作为城市模式的基础输入数据。
 
-
-\subsection{城市内水体数据}\label{城市内水体数据}
-基于与城市树覆盖同样的原因，水体数据也需要尽量选择高分辨率数据，30米全球地表覆盖数据GlobeLand30是中国研制的30 m空间分辨率全球地表覆盖数据，
-2014年发布GlobeLand30 2000和2010版。自然资源部于2017年启动对该数据的更新。目前，GlobeLand30 2020版已发布 (\url{http://www.globallandcover.com/})。
-除极地地区外，GlobeLand30同样采用了UTM投影，因此需要进行投影转换，
-其中数据覆盖如图~\ref{fig:GlobeLand30数据覆盖示意图} 所示 (除2020年外，其他年份不包含极地地区数据)。
-该数据集水体精度最高，达到了92.09\%~\citep{陈军2017}，且时空分辨率高，
-因此投影转换后用同样的方法生成了水体覆盖度数据作为城市模式的原始数据。
+\subsubsection{城市水体覆盖度}\label{城市水体覆盖度}
+城市水体覆盖度数据由GlobeLand30得到，2014年GlobeLand30发布2000和2010版，自然资源部于2017年启动对该数据的更新,目前，GlobeLand30 2020版已发布 (\url{http://www.globallandcover.com/})。
+除极地地区外，GlobeLand30采用了UTM投影，因此需要进行投影转换，其数据覆盖如图~\ref{fig:GlobeLand30数据覆盖示意图} 所示(除2020年外，其他年份不包含极地地区数据)。
+该数据时空分辨率高，且水体精度最高，达到了92.09\%~\citep{陈军2017}，因此投影转换后计算得到的水体覆盖度作为城市模式的原始数据。
 
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/基础数据/GlobeLand30数据覆盖示意图.png}
-\caption{GlobeLand30数据覆盖示意图}
+\captionsetup{justification=centering}
+\caption[GlobeLand30数据覆盖示意图]{GlobeLand30数据覆盖示意图, 摘自GlobeLand30官网(\url{http://www.globallandcover.com/})}
 \label{fig:GlobeLand30数据覆盖示意图}
 \end{figure}
 }
 
 
-\subsection{城市树高数据}\label{城市树高数据}
-在CoLM2014版本中，树高数据采用\cite{simard2011mapping}发布的全球树高数据，该数据虽然应用广泛，但是分辨率较低(1km)，无法满足城市模拟的需求，近年来，关于树高的高分辨率数据发展迅速，\cite{potapov2021mapping}利用GEDI卫星数据反演的树高数据具有较高的空间分辨率(30m,)，但是由于卫星运行轨道限制，该数据目前只发布了$51.6°N$ $\sim$ $51.6°S$范围内的数据。\cite{lang2022global}则开发了一种从Sentinel-2光学图像中检索冠层高度的深度学习模型，该模型可以有效降低卫星观测树高偏低的问题，\cite{lang2022global}利用该模型并结合GEDI 30m树高数据生成了全球10m树高地图。相比于GEDI数据，该数据更全(全球)，同时改善了GEDI偏低的问题，并且分别率更高(10m)，因此将该数据集作为城市树高基础数据。
+\subsection{城市人类活动数据}\label{城市人类活动数据}
 
+\subsubsection{人口密度数据}\label{人口密度数据}
+人口密度数据目前使用由美国能源部橡树岭国家实验室(ORNL)推出的LandScan数据~\citep{dobson2000landscan}，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是常用的全球人口动态统计分析数据集之一，该数据空间分辨率高(1km)，时间可覆盖2000-2022年。
 
-\subsection{城市LAI/SAI数据}\label{城市LAISAI数据}
-城市模式中，植被另一个比较重要的参数——树木的LAI目前采取插值方法计算得到。主要因为目前LAI没有高于500m分辨率的数据，大部分遥感LAI数据为500m甚至1km(比如MODIS LAI)，然而在城市中，由于城市中建筑物的遮掩，这种分辨率下卫星观测的城市LAI存在一定问题，但是作为描述植被的重要参数，LAI数据是不可或缺的。因此为了补充该数据，目前模式中城市LAI/SAI数据是根据格点内其它PFTs(只考虑树，即1-9类PFT)的LAI/SAI生成，具体方法为通过城市树高与PFTs树高比值插值并加权平均计算城市LAI/SAI，方法如下:
-\begin{equation}
-LAI_{urb}=\sum_{i=1}^{9} LAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \cdot PCT_{PFT_{i}}
-\end{equation}
-\begin{equation}
-SAI_{urb}=\sum_{i=1}^{9} SAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \cdot PCT_{PFT_{i}}
-\end{equation}
-其中$LAI_{PFT_{i}}$($SAI_{PFT_{i}}$)为PFT的LAI(SAI)，$HTOP_{urb}$和 $HTOP_{PFT_{i}}$分别为城市树高和PFT树高，$PCT_{PFT_{i}}$为PFT占比。$HTOP_{urb}$分辨率为500m，PFT占比、LAI/SAI以及PFT树高均为0.5°分辨率，通过插值计算后便得到500m分辨率下LAI/SAI数据。
+\subsubsection{LUCY国家分类}\label{LUCY国家分类}
+LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国家的汽车拥有量以及不同时刻的交通流量，用于交通热模拟，该数据分辨率为5km，单时次数据。
 
 
 \section{作物数据}
 
 \subsection{作物种类分布数据}\label{作物种类分布数据}
-
-
+64种作物相对分布数据来自CTSM 5.2陆表数据集。然后按此比例，放入CoLM作物总的覆盖率中，得到每种作物随时间变化的分布。
 
 \subsection{施肥数据}\label{施肥数据}
-
-
+格点工业肥施肥率 (\unit{m^2.(g\ N)^{-1}.yr^{-1}}) 数据来自 LUH2 数据~\citep{hurtt2011harmonization}，是每年变化的。\citet{lawrence2016land} 将其转换为每种作物类型的施肥率。
 
 \subsection{播种时间数据}\label{播种时间数据}
-
-
+播种日数据采用 GGCMI phase 3 全球作物播种日数据集~\citep{jagermeyr2021climate}。为当前多年平均的播种日数据，无时间变化，空间分辨率为 0.5\textdegree。
 
 \subsection{灌溉方式数据}\label{灌溉方式数据}
-灌溉模拟所需的灌溉方式数据来源于~\citet{yao2022Irrigation}全球灌溉方式地图数据，数据中共包括了32种灌溉作物的灌溉方式分布，每种作物在数据网格中仅考虑一种灌溉方式（滴灌、喷灌、漫灌）。~\citet{jagermeyr2015irrigation}采用决策树算法对AQUASTAT数据\citep{fao2014aquastat}进行了重处理，该算法根据不同作物灌溉面积、土壤类型、作物特性、社会经济等要素，划分了全球14种CFT的灌溉方式（每种作物在网格上均可有3种不同的灌溉方式）,分辨率为0.5\textdegree $\times$0.5\textdegree。\citep{yao2022Irrigation},则进一步将该数据中14种CFT与CLM5中的32种灌溉作物CFT进行匹配，并对数据进行重采样，得到新的全球灌溉方式数据。
+灌溉模拟所需的灌溉方式数据来源于~\citet{yao2022Irrigation}全球灌溉方式地图数据，数据中共包括了32种灌溉作物的灌溉方式分布，每种作物在数据网格中仅考虑一种灌溉方式（滴灌、喷灌、漫灌）。~\citet{jagermeyr2015irrigation}采用决策树算法对AQUASTAT数据\citep{fao2014aquastat}进行了重处理，该算法根据不同作物灌溉面积、土壤类型、作物特性、社会经济等要素，划分了全球14种CFT的灌溉方式 (每种作物在网格上均可有3种不同的灌溉方式)，分辨率为0.5\textdegree。\citet{yao2022Irrigation} 则进一步将该数据中14种CFT与CLM5中的32种灌溉作物CFT进行匹配，并对数据进行重采样，得到新的全球灌溉方式数据。
 
 \section{生物地球化学数据}
 

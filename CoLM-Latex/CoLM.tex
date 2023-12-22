@@ -1,7 +1,7 @@
 % !TEX encoding = UTF-8 Unicode
 \documentclass[a4paper,12pt,twoside]{report}
 \usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \usepackage[UTF8,heading=true,scheme=chinese]{ctex}
 \ctexset{
     chapter/number = \arabic{chapter},
@@ -10,9 +10,9 @@
     %   name={附录},
        %numbering=false,
        number={\Alph{chapter}}
-       }
-   }
-   
+    }
+}
+
 \usepackage[nottoc]{tocbibind} % used to add bibliography to toc with correct bookmark and page number
    
 %\usepackage[T1]{fontenc}
@@ -25,7 +25,7 @@
 \input{CoLM.preamble}
 \setlength{\parskip}{0em}
 \setcounter{secnumdepth}{3}
-\usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage{wasysym}
 \usepackage{textcomp}
 \usepackage{rotating}
@@ -45,7 +45,7 @@
 \usepackage{siunitx}
 %\PassOptionsToPackage{hyphens}{url}
 \usepackage[%hidelinks
-   citecolor=blue,linkcolor=black,urlcolor=black,colorlinks=True,breaklinks=true]{hyperref}
+   citecolor=Blue,linkcolor=Blue,urlcolor=black,colorlinks=True,breaklinks=true]{hyperref}
 \usepackage{xurl}
 \usepackage{setspace}
 \setstretch{1.5}
@@ -61,21 +61,20 @@
 % \vskip 3in
 }
 
-\author{
+\author{%
  \large{ 中山大学 }\\[0.1in]
  {\bf 大气科学学院}\\[1in]
 % \vskip 1in
  \upshape
  \large%\\[0.5in]
 % \vskip 0.5in
-2023 年 11 月
+2023 年 12 月%
 }
 
 %\normallinespacing
 \maketitle
 
 \preface
-
 %\input{acknowledgements/acknowledgements}
 %\input{symbols/symbols}
 %\input{dedication/dedication}
@@ -100,13 +99,15 @@
 \include{雪盖土壤热力过程/雪盖土壤热力过程}
 
 \part{植被冠层、积雪和土壤水分计算方案}\label{part:SPC}
-\include{植被冠层和土壤水分/植被冠层和土壤水分}
+\include{植被冠层和土壤水分/植被冠层水分}
+\include{植被冠层和土壤水分/积雪土壤水分}
 
 \part{水文过程}\label{part:hydro}
 \include{水文过程/耦合径流模型的产流和汇流过程}
 % \include{水文过程/径流模式CaMa-Flood}
 \include{水文过程/基于物理过程的侧向流模拟}
 \include{湖泊模式/湖泊模式}
+\include{冰川模式/冰川模式}
 
 \part{生物地球化学循环过程}\label{part:BGC}
 \include{碳氮库结构/碳氮库结构}
@@ -120,8 +121,10 @@
 \include{水文过程/水库模式}
 \include{土地利用与土地覆盖变化模拟/土地利用与土地覆盖变化模拟}
 
-\part{其他}
-\include{尺度转换/尺度转换}
+\part{尺度转换}\label{part:scaling}
+\include{尺度转换/土壤属性参数尺度转换}
+\include{尺度转换/植被属性参数尺度转换}
+\include{尺度转换/大气强迫降尺度}
 
 \clearpage
 \phantomsection % Correct the link in toc for Appendix

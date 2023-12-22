@@ -3,7 +3,7 @@
 
 %\begin{植被水力模式}
 CoLM植被水力模式根据土壤-植物-大气连通体的概念计算陆气水分交换的蒸腾分量。
-CoLM植被水力模式中的植物水分传输得益于土壤、根、茎和叶之间形成的水势梯度。植物各部位的水势也密切影响着各植被水力过程。
+CoLM植被水力模式中的植物水分传输得益于土壤、根、茎、叶和大气之间形成的水势梯度。植物各部位的水势也密切影响着各植被水力过程。
 首先，根、茎、叶的水势通过植物栓塞过程影响着植物水分传输能力 (详见章节~\ref{植被水力导度的衰减})。
 其次，植物根与每层土壤的水势梯度将影响根的水力重分配过程 (详见章节~\ref{地下植被水力过程})。最后，叶片的水势降低将影响叶片气孔导度，
 同时影响植物水分传输和光合作用 (详见章节~\ref{气孔导度的水分胁迫})。
@@ -11,7 +11,7 @@ CoLM植被水力模式中的植物水分传输得益于土壤、根、茎和叶�
 
 \section{植物水势动态}\label{植物水势动态}
 植物水势的动态模拟是CoLM植被水力模式的关键。CoLM植被水力模式的水势模拟包括地上和地下植被水力过程两部分。
-地上部分包括在阳叶、阴叶、茎和地表根四个节点间的水势 ($\Psi_{sunleaf}$，$\Psi_{shaleaf}$，$\Psi_{stem}$，$\Psi_{root,0}$)
+地上部分包括在阳叶、阴叶、茎和地表根四个节点间的水势 ($\Psi_{sun}$，$\Psi_{sha}$，$\Psi_{stem}$，$\Psi_{root,0}$)
 %
  模拟；地下部分包括地表根以及$n$层地下根 $n+1$个节点的水势 ($\Psi_{root,i}$，$i=0,1,2,\ldots,n$) 模拟。地上、地下两部分通过地表根水势
  ($\Psi_{root,0}$)的模拟被密切的耦合(如图~\ref{fig:CoLM植被水力模型示意图})。
@@ -30,10 +30,10 @@ CoLM植物水势的动态模拟假设植物水分传输为稳恒流，并将其�
 \citep{van1948water}，即水分传输速率正比于水势差和水力导度。
 地上部分四个节点的水势梯度和水通量之间的关系由Darcy定律表达，满足以下方程：
 \begin{equation}\label{q_sunstem}
-q_{ {sun \leftarrow stem }}=k_{{sun} \leftarrow  {stem}}\left(\Psi_{sunleaf}-\Psi_{stem}\right)
+q_{ {sun \leftarrow stem }}=k_{{sun} \leftarrow  {stem}}\left(\Psi_{sun}-\Psi_{stem}\right)
 \end{equation}
 \begin{equation}
-q_{ {sha \leftarrow stem }}=k_{ {sha} \leftarrow {stem}}\left(\Psi_{shaleaf}-\Psi_{ {stem }}\right)
+q_{ {sha \leftarrow stem }}=k_{ {sha} \leftarrow {stem}}\left(\Psi_{sha}-\Psi_{ {stem }}\right)
 \end{equation}
 \begin{equation}
 q_{ {stem \leftarrow root }}=k_{ {stem } \leftarrow  { root }}\left(\Psi_{ {stem }}-\Psi_{ {root }, 0}\right)
@@ -59,7 +59,7 @@ q_{ {sun \leftarrow stem }}+q_{ {sha \leftarrow stem }}=q_{ {stem \leftarrow roo
 q_{stem \leftarrow root}=q_{root, 0}
 \end{equation}
 $E_{sun}$代表阳叶蒸腾速率，$E_{sha}$代表阴叶蒸腾速率。它们是由无水分胁迫情况下的叶片蒸腾 ($E_{sun,max}$， $E_{sha,max}$) 
-和受叶片水势 ($\Psi_{sunleaf}$，$\Psi_{shaleaf}$) 控制的蒸腾衰减函数所组成(详见章节~\ref{植被水力导度的衰减})。
+和受叶片水势 ($\Psi_{sun}$，$\Psi_{sha}$) 控制的蒸腾衰减函数所组成(详见章节~\ref{植被水力导度的衰减})。
 
 
 \section{植被水力导度的衰减}\label{植被水力导度的衰减}
@@ -119,7 +119,7 @@ q_{ax,1}+q_{rad, 1}=q_{root,0}
 
 
 \section{气孔导度的水分胁迫}\label{气孔导度的水分胁迫}
-土壤水分亏缺对植物的影响主要表现在对植被生理过程的限制，通常用水分胁迫因子来量化，CoLM中的水分胁迫因子作为取值 $0\sim 1$ 的无量纲变量，限制气孔导度和光合羧化能力，见公式~\eqref{V_cmax_a}--~\eqref{R_d1}。
+土壤水分亏缺对植物的影响主要表现在对植被生理过程的限制，通常用水分胁迫因子来量化，CoLM中的水分胁迫因子作为取值 $0\sim 1$ 的无量纲变量，限制气孔导度和光合羧化能力，见公式~\eqref{V_cmaxsun_a}--~\eqref{R_d1_sha}。
 
 植被水力模式关闭时(土壤水分胁迫方案SMS)，水分胁迫因子 ($\beta$) 取决于根的垂直分布比例和土壤水势：
 \begin{equation}\label{beta_0}
@@ -139,7 +139,7 @@ $froot_i$是第i层土壤中根的比例，$\beta_i$是第$i$层土壤的水分�
 \begin{equation}\label{beta_sha}
 \beta_{sha}=\frac{g_{s}^{sha}}{g_{s,max}^{sha}}
 \end{equation}
-$g_{s}^{sun}$和$g_{s}^{sha}$分别为阳叶和阴叶实际的气孔导度，$g_{s,max}^{sun}$和$g_{s,max}^{sha}$分别为阳叶和阴叶无水分胁迫条件下的气孔导度。其计算从无水分胁迫条件出发($\beta_{sun}=1$, $\beta_{sha}=1$)，应用光和气孔耦合模型($FvCB$)，计算得出无水分胁迫条件下的气孔导度。光合气孔耦合模型($FvCB$)由气孔导度经验模型~\eqref{ei_cs}，气体扩散方程~\eqref{ci_1}，和Farquhar光合作用模型~\eqref{An1}三个模型或方程联立而成，气孔导度是该模型重要的输出变量：
+$g_{s}^{sun}$和$g_{s}^{sha}$分别为阳叶和阴叶实际的气孔导度，$g_{s,max}^{sun}$和$g_{s,max}^{sha}$分别为阳叶和阴叶无水分胁迫条件下的气孔导度。其计算从无水分胁迫条件出发($\beta_{sun}=1$, $\beta_{sha}=1$)，应用光和气孔耦合模型($FvCB$)，计算得出无水分胁迫条件下的气孔导度。光合气孔耦合模型($FvCB$)由气孔导度经验模型~\eqref{ei_cssun}和~\eqref{ei_cssha}，气体扩散方程~\eqref{ci_1sun}和~\eqref{ci_1sha}，和Farquhar光合作用模型~\eqref{An1sun}和~\eqref{An1sha}联立而成，气孔导度是该模型重要的输出变量：
 \begin{equation}\label{gs_sunmax}
 g_{s,max}^{sun}=FvCB\left(\beta_{sun}=1\right)
 \end{equation}
@@ -148,7 +148,7 @@ g_{s,max}^{sha}=FvCB\left(\beta_{sha}=1\right)
 \end{equation}
 
 
-相应地，最大蒸腾速率($E_{sun,max}$和$E_{sha,max}$)可由最大气孔导度结合地表冠层湍流参数化方案~\eqref{Epv}在阳叶和阴叶上分别计算得出 (如图~\ref{fig:光合气孔模式和植被水力模式的耦合示意图})。
+相应地，最大蒸腾速率($E_{sun,max}$和$E_{sha,max}$)可由最大气孔导度结合地表冠层湍流参数化方案~\eqref{Ev}在阳叶和阴叶上分别计算得出 (如图~\ref{fig:光合气孔模式和植被水力模式的耦合示意图})。
 
 \begin{equation}\label{E_sunmax}
 E_{sun,max}=\rho_{atm} c_{vsun,max}^{w} \cdot \frac{c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}-
@@ -200,7 +200,7 @@ c_{v,wet}=\frac{f_{wet}\left(\text{LAI}+\text{SAI}\right)g_b}{cf}
 \section{数值计算方案}\label{数值计算方案}
 求解植物水势、水分胁迫、气孔导度和叶片蒸腾速率，需要耦合植被水力模式、光合气孔模式和地表冠层参数化方案。
 耦合描述植物水势变化的动力方程组(公式(\ref{q_sunstem})--(\ref{q_stemroot}), (\ref{Esun_psi}) 和(\ref{Esha_psi}))，
-地表冠层参数化方案 (公式(\ref{E_sunmax})--(\ref{gs_Esha}))，
+地表冠层参数化方案 (公式(\ref{E_sunmax})--(\ref{cvsha_gsmax}))，
 光合气孔模式的最大气孔导度计算 (公式(\ref{gs_sunmax})和(\ref{gs_shamax})), 植物水分胁迫计算(公式(\ref{beta_sun})和(\ref{beta_sha}))，共18个方程，
 求解包括4个植物地上水势节点 ($\Psi_{sunleaf}$, $\Psi_{shaleaf}$, $\Psi_{stem}$和$\Psi_{root,0}$)，8个水分传输速率 
 ($q_{sun-stem}$，$q_{sha-stem}$，$q_{stem-root}$，$q_{root,0}$，$E_{sun}$，$E_{sun,max}$和$E_{sun,max}$) ，4个气孔导度变量

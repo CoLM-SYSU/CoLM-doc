@@ -1,6 +1,32 @@
 \chapter{基于物理过程的侧向流模拟}
 
+CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下水侧向流的模拟方案（图~\ref{fig:主要水文过程}）。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figures/侧向流/主要水文过程.jpg}
+\caption{基于物理过程的侧向流模拟中的主要水文过程}
+\label{fig:主要水文过程}
+\end{figure}
+}
+
+河道径流发生在流域单元之间。流域单元网格基于集水和汇流关系对模拟区域进行剖分，一个流域单元与一段河道相关联。模式中假设一个流域单元内的水分在地形的主要作用下汇集到河道后，在河道中沿地势而向下流动。
+
+坡面流发生在高度带单元之间，在流域单元内部进行。流域单元内部的高度带都是连通的，且每个高度带具有唯一的下游单元，因此，水流在高度带单元之间的流动路径是清晰的，可基于物理方程进行模拟。通过将河道作为最低处的高度带，CoLM实现了对河道径流和坡面流的相互作用的描述。
+
+地下水的侧向流动包含三个级别：流域单元之间、高度带单元之间以及次网格单元之间。在模拟高度带单元之间的地下水侧向流时，通过将河道作为最低处的单元，实现了对河道径流和地下水侧向流的相互作用的描述。
+
 \section{坡面流、河道径流}
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figures/侧向流/坡面流和河道径流.pdf}
+\caption{CoLM中的坡面流和河道径流}
+\label{fig:坡面流和河道径流}
+\end{figure}
+}
+
 对坡面流和河道径流的模拟基于完整的浅水波方程.
  \subsection{浅水波方程}
  质量方程
@@ -15,6 +41,18 @@
 
 
 \subsection{数值离散格式}
+坡面流是指在一个流域单元内部地表水的流动，它主要描述地表水从集水区域到河道的过程，即产流的过程。CoLM中将一个流域单元划分为多个面积相近的高度带单元，作为计算坡面流的基本离散单元。一般情况下，水流由地势较高的单元流向地势较低的单元，发生洪水时，也可由河道向上淹没地势较高的区域。浅水波方程的预报变量水深$h$和水流速度$u$定义在高度带单元上（图~\ref{fig:坡面流和河道径流}）。
+
+河道径流是指流域单元之间地表水的流动，主要沿河道进行。CoLM基于水文学数据划分流域单元，与流域单元关联的分段河道之间有明确的上下游关系，为计算河道径流的基本离散单元。一般情况下，水流由地势较高的河道流向地势较低的河道，可经过湖泊或者水库，最后汇流入海，或者终止于内陆洼地。浅水波方程的预报变量水深$h$和水流速度$u$定义在分段河道上（图~\ref{fig:坡面流和河道径流}）。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/侧向流/浅水波方程求解.pdf}
+\caption{浅水波方程求解方案中的变量}
+\label{fig:浅水波方程求解}
+\end{figure}
+}
 
  质量方程离散为
   \begin{equation}
@@ -24,7 +62,7 @@
  \begin{equation}
  \frac{ \left(uh\right)^{n+1}_i - \left(uh\right)^n_i}{\Delta t} A_i + \sum_{j\in K_i} F^n_{ij} = \sum_{j\in K_i} G^n_{ij}  + T^{n+1}_i  A_i \label{swe-d-2}
   \end{equation}
-其中，
+其中（图~\ref{fig:浅水波方程求解}），
 \begin{itemize}
 \item $n$和$n+1$表示时间步数，时间步长为$\Delta t$；
 \item $C_i$表示标号为$i$的空间单元，$A_i$表示$C_i$的面积；
@@ -36,12 +74,23 @@
 
 假设两个相邻的水文单元为$C_i$和$C_j$，其中$C_i$为上游单元，$C_j$为下游单元。离散格式中各项的计算方法如下：
 
-（1）首先对边界上的$h$进行重构\citep{audusse2004scientificcomputing}，
-\begin{eqnarray}
-z_{b,ij} & = & \max\left(z_{b,i}, z_{b,j}\right) \\
-h_{ij-} & = & \max\left(0, h_i + z_{b,i} - z_{b,ij} \right) \\
-h_{ij+} & = & \max\left(0, h_j + z_{b,j} - z_{b,ij} \right)
-\end{eqnarray}
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{Figures/侧向流/水深重构.pdf}
+\caption{浅水波方程求解方案中对水深的重构（公式见~\ref{formula:water_depth_reconstruction}）}
+\label{fig:水深重构}
+\end{figure}
+}
+
+（1）首先对边界上的$h$进行重构~\citep{audusse2004scientificcomputing}（见图~\ref{fig:水深重构}），
+\begin{equation} \label{formula:water_depth_reconstruction}
+\begin{aligned}
+z_{b,ij} & = \max\left(z_{b,i}, z_{b,j}\right) \\
+h_{ij-} & =  \max\left(0, h_i + z_{b,i} - z_{b,ij} \right) \\
+h_{ij+} & =  \max\left(0, h_j + z_{b,j} - z_{b,ij} \right)
+\end{aligned}
+\end{equation}
 其中$h_{ij-}$表示界面处$C_i$一侧的重构值，$h_{ij+}$表示界面处$C_j$一侧的重构值。
 
 （2）局部黎曼问题中，中间区域的速度$u_{ij*}$计算为
@@ -118,7 +167,7 @@ T^{n+1}_i = -g \left(\frac{n^2}{h^{7/3}} \left|q\right|\right)^n_i q^{n+1}_i
 q^{n+1}_i = \frac{q^n_i - \frac{\Delta t}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G^n_{ij}\right)}{1 + g \left(\frac{n^2}{h^{7/3}} \left|q\right|\right)^n_i \Delta t}
 \end{equation}
 
-\subsection{时间步长的约束}
+\subsection{自适应时间步长方法}
 对时间步长的约束包含三个，$\Delta t = \min \Delta t_i \quad (i=1, \ldots, N)$，
 \begin{enumerate}
 \item CFL条件
@@ -137,15 +186,28 @@ q^{n+1}_i = \frac{q^n_i - \frac{\Delta t}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G
  \Delta t_i \leq \frac{q^n_i}{\frac{1}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G^n_{ij} \right)}
  \end{equation}
 其含义为在一个时间步长内，速度不改变方向。
-% \item 大小单元之间的限制
-%   \begin{equation}
-% \Delta t < \frac{A_j}{A_i + A_j} \Delta t_0
-% \end{equation}
-%  其含义为在一个时间步长内，流向下游单元的水量不能使得下游单元的液面高于上游单元
  \end{enumerate}
+
+\subsection{数值算法在模式中的实现}
+
+离散算法中需要的参数有平均水流路径的长度$D_i$，两个单元的边界线的长度$L_{ij}$，单元的面积$A_i$和单元表面的高度$z_{b,i}$，以及曼宁系数$n$.
+
+对高度带单元：1）单元面积$A_i$指土壤、城市和湿地面积的总和（排除冰川和水体）；2）单元表面的高度$z_{b,i}$定义为排水高度（一个像素点和它流入的河道点的高度差Height Above Nearest Drainage, HAND）；3）长度$L_{ij}$为实际两个单元的边界线的长度；4）单元内一个像素点的水流路径定义为自这个像素点开始，沿水流方向直至离开这个单元前的最后一个像素点，平均水流路径为所有像素点的水流路径的算术平均值；5）曼宁系数$n$取常数$0.3$.
+
+对分段河道：1）单元面积$A_i$指河道的面积；2）单元表面的高度$z_{b,i}$定义为河床的高度；3）长度$L_{ij}$为相邻两段河道的宽度的算术平均值，河道的宽度使用河道的面积除以河道的长度计算得到；4）平均水流路径$D_i$为河道的长度；5）曼宁系数$n$取常数$0.03$.
 
 
 \section{地下水侧向流}
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figures/侧向流/地下水侧向流.pdf}
+\caption{CoLM中的地下水侧向流}
+\label{fig:地下水侧向流}
+\end{figure}
+}
+
 \subsection{坡面蓄水型Boussinesq方程}
 守恒形式的方程为
 \begin{equation}
@@ -220,12 +282,5 @@ $\alpha_p$为第$p$个patch在整个单元占据的面积比。
 $$\sum^P_{p=1} \alpha_p q^{\mathrm{I}}_{i,p} =0$$
 即$q^{\mathrm{I}}_{i,p}$表达了单元内部的地下水交换。
 
+\subsection{数值算法在模式中的实现}
 
-% \section{参考文献}
-% Toro EF. Shock-capturing methods for free-surface shallow flows. Chichester: John Wiley \& Sons; 2001.
-
-% Audusse, E., Bouchut, F., Bristeau, M.-O., Klein, R., \&; Perthame, B. (2004). A Fast and Stable Well-Balanced Scheme with Hydrostatic Reconstruction for Shallow Water Flows. SIAM Journal on Scientific Computing, 25(6), 2050–2065.
-
-% Liang, Q., \& Borthwick, A. G. L. (2009). Adaptive quadtree simulation of shallow flows with wet-dry fronts over complex topography. Computers and Fluids, 38(2), 221–234.
-
-% Troch, P. A., Paniconi, C., \& van Loon, E. E. (2003). Hillslope-storage Boussinesq model for subsurface flow and variable source areas along complex hillslopes: 1. Formulation and characteristic response. \textit{Water Resources Research}, 39(11).
