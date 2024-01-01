@@ -16,7 +16,7 @@ CaMa-Flood 模型的主要优势之一在于除了能够精确描述河道径流
 CaMa-Flood 模型的另一个优势在于它具有极高的模拟计算效率。通过引入次网格地形参数，复杂的漫滩淹没物理过程被合理地简化。
 与此同时，通过实现局部惯性方程和自适应时间步长等物理方案\citep{bates2010}，
 河流流量和蓄水量的预测计算成本得到压缩,有利于进行集成/长期实验等计算要求高的实验或者与陆面模式之间的动态耦合。
-以下对 CaMa-Flood 内部各个模块进行详细的介绍。目前耦合版本陆面过程模式分系统已经包含 CaMa-Flood v4.07版本。
+以下对 CaMa-Flood 内部各个模块进行详细的介绍。目前耦合版本陆面过程模式分系统已经包含 CaMa-Flood v4.12版本。
 
 
 
@@ -44,7 +44,7 @@ CaMa-Flood 假设不存在漫滩 (洪泛) 事件，上述参数则通过如下�
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/CaMa-Flood流域单位示意图.png}
-\caption{CaMa-Flood流域单位示意图，摘自\citet{yamazaki2011physically}。 }
+\caption{CaMa-Flood流域单位示意图，摘自\citet{yamazaki2011physically} }
 \label{fig:CaMa-Flood流域单位示意图}
 \end{figure}
 }
@@ -78,7 +78,7 @@ CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/蓄水量变化计算流程图.png}
-\caption{蓄水量变化计算流程图。 }
+\caption{蓄水量变化计算流程图}
 \label{fig:蓄水量变化计算流程图}
 \end{figure}
 }
@@ -98,7 +98,7 @@ CaMa-Flood 采用了\citet{bates2010}提出的基于局部惯性方程并满足 
 {DT}_{\max }=\boldsymbol{\alpha} \frac{\Delta x}{\sqrt{g h_{t}}}
 \end{equation}
 上式中$DT_{max}$是最大可接受的时间步长，$∆x$是该流域单元连接下游流域单元的河道长度 (river length) (m)，
-$\alpha$是稳定性系数设为0.9，$h_t$是该流域单元在时刻$t$的水流深度 (water depth) (m)，$g$是重力加速度设为9.81 (\unit{m.s^{-2}})。
+$\alpha$是稳定性系数设为0.7，$h_t$是该流域单元在时刻$t$的水流深度 (water depth) (m)，$g$是重力加速度设为9.81 (\unit{m.s^{-2}})。
 图~\ref{fig:自适应时间步长的估算} 展示了基于上述公式计算的某一时刻的$DT_{max}$ (minute)。
 在计算过程中，如果用户指定的默认时间步长$DT$大于$DT_{max}$，则$DT$将被划分为满足$CFL$条件的更小的时间等分的时间步长$DT_{adp}$；
 如果用户指定的默认时间步长$DT$小于$DT_{max}$，则实际计算步长按照用户指定的默认时间步长。
@@ -107,7 +107,7 @@ $\alpha$是稳定性系数设为0.9，$h_t$是该流域单元在时刻$t$的水�
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/自适应时间步长的估算.png}
-\caption{自适应时间步长的估算，摘自\citet{yamazaki2013improving}。}
+\caption{自适应时间步长的估算，摘自\citet{yamazaki2013improving}}
 \label{fig:自适应时间步长的估算}
 \end{figure}
 }

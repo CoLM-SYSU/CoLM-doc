@@ -3,12 +3,12 @@
 %\begin{辐射通量方案}
 
 \begin{mymdframed}{代码}
-章节~\ref{sec:土壤表面反照率} -- \ref{sec:改进的二流近似植被辐射传输模型} 对应的代码文件为\texttt{MOD\_Albedo.F90}。
+章节~\ref{sec:土壤反照率} -- \ref{sec:改进的二流近似植被辐射传输模型} 对应的代码文件为\texttt{MOD\_Albedo.F90}。
 \end{mymdframed}
 
 
-\section{土壤表面反照率}\label{sec:土壤表面反照率}
-土壤表面反照率采用陆面模式BATS方案 \citep{dickinson1986biosphere,dickinson1993biosphere}，利用土壤颜色和土壤表层含水量计算得到，公式如下：
+\section{土壤反照率}\label{sec:土壤反照率}
+土壤反照率采用陆面模式BATS方案 \citep{dickinson1986biosphere,dickinson1993biosphere}，利用土壤颜色和土壤表层含水量计算得到，公式如下：
 \begin{equation}\label{eq:soil_albedo1}
 \alpha_{soi,vis,dir}=\alpha_{soi,vis,dif}=\min\left(\alpha_{sat, vis}+\max\left(0,0.11-0.40 \theta_{l}\right), \alpha_{dry, vis}\right)
 \end{equation}
@@ -50,14 +50,13 @@
 \alpha_{wat,nir,dir}=\alpha_{wat,nir,dif}=0.4
 \end{equation}
 
-\section{雪盖表面反照率}
+\section{积雪反照率}
 
-!    - Scheme 1: snow albedo depends on snow-age, zenith angle, and thickness
-                 of snow age gives reduction of visible radiation [CoLM2014].
+CoLM提供两种积雪反照率方案可供选择：1) BATS积雪反照率方案(章节~\ref{BATS积雪反照率})；2) SNICAR积雪反照率方案(章节~\ref{SNICAR积雪反照率})。
 
-!    - Scheme 2: SNICAR model [待补充]
+\subsection{BATS积雪反照率方案}\label{BATS积雪反照率}
 
-CoLM2014采用 \citet{dickinson1986biosphere} 方案，当不打开SNICAR积雪反照率模块时采用，主要考虑太阳高度角和雪龄 (snow age) 两个主要参数，计算如下：
+CoLM2014以及之前版本采用 \citet{dickinson1986biosphere} BATS方案，当不打开SNICAR积雪反照率模块时采用，主要考虑太阳高度角和雪龄 (snow age) 两个主要参数，计算如下：
 \begin{equation}
 \alpha_{sno, vis, dir}=\alpha_{sno, vis, dif}+0.4 f(\mu)\left(1-\alpha_{sno, vis, dif}\right)
 \end{equation}
@@ -77,7 +76,7 @@ CoLM2014采用 \citet{dickinson1986biosphere} 方案，当不打开SNICAR积雪�
 \begin{equation}\label{fmu}
 f(\mu)=\max\left[0,\left(\frac{1.5}{1+4 \mu}-0.5\right)\right]
 \end{equation}
-公式(\ref{alpha_sno_vis_dif}),(\ref{alpha_sno_nir_dif})中0.85和0.65分别表示可见光和近红外波段新雪反照率，
+公式~\eqref{alpha_sno_vis_dif}、\eqref{alpha_sno_nir_dif} 中0.85和0.65分别表示可见光和近红外波段新雪反照率，
 $F_{age}$表示雪龄影响因子，使得雪的反照率随着雪盖中雪晶颗粒的增长和灰尘等杂质的积累而降低，其计算为：
 \begin{equation}
 F_{a g e}=\frac{\tau_{sno}}{1+\tau_{sno}}
@@ -91,7 +90,7 @@ $\tau_{sno}$表示无量纲雪龄，是一预报变量，它随时间的变化�
 r_{1} &= \exp \left[5000\left(\frac{1}{273.16}-\frac{1}{T_{g}}\right)\right] \\
 %\end{equation}
 %\begin{equation}
-r_{2} &= r_{1}^{10} \leq 1 \\
+r_{2} &= r_{1}^{10} \leqslant 1 \\
 %\end{equation}
 %\begin{equation}
 r_{3} &= 0.3
@@ -110,26 +109,76 @@ r_{3} &= 0.3
 \end{equation}
 其中等式右边$\alpha_{g}$表示土壤、冰川或水体地表覆盖时的反照率，等式左边$\alpha_{g}$表示考虑积雪覆盖订正后的地表反照率。对直射光/漫射光，可见光/近红外波段均按上式计算。
 
+\subsection{SNICAR积雪反照率方案}\label{SNICAR积雪反照率}
 
 \section{海洋反照率}\label{海洋反照率}
-%\begin{mymdframed}{代码}
-%对应代码为\texttt{MOD\_Albedo.F90}。注：需进一步补充
-%\end{mymdframed}
+\begin{mymdframed}{代码}
+对应代码为\texttt{MOD\_Albedo.F90}文件中\texttt{albocean()}函数。
+\end{mymdframed}
 
-对于有冰雪覆盖海洋，首先设置冰与雪覆盖的反照率。在直射入射及太阳天顶角余弦值小于0.5情况下，对积雪覆盖反照率进行余弦值($\mu$)订正。然后根据雪水当量计算积雪覆盖度，最终反照率通过冰反照率与雪反照率及各自面积覆盖比加权平均得到。
-
-对于无冰雪覆盖海洋，采用太阳高度角计算直射入射反照率，漫射反射率则设为常数。计算中，假设反照率与波段和海表面风速等其他物理量无关。可见光和近红外波段的漫射反射率均设为0.06；而两个波段的直射反照率均通过以下公式计算：
+对于有冰雪覆盖的海洋，当\(\mu < 0.5\)时，积雪区域反照率计算为：
+%
 \begin{equation}
-\alpha_{s}= \frac{0.026}{\mu^{1.7}+0.065}+0.15\times(\mu-0.1)\times(\mu-0.5)\times(\mu-1)
+\alpha_{sno,vis,dir} = \min\left( 0.98,\alpha_{sno,vis,dif} + 0.5\frac{1 - \alpha_{sno,vis,dif}}{\frac{3}{1 + 4\mu} - 1} \right)
+\end{equation}
+%
+\begin{equation}
+\alpha_{sno,nir,dir} = \min\left( 0.98,\alpha_{sno,nir,dif} + 0.5\frac{1 - \alpha_{sno,nir,dif}}{\frac{3}{1 + 4\mu} - 1} \right)
+\end{equation}
+%
+其中\(\alpha_{sno,vis,dif} = \alpha_{newsno,vis} = 0.95\)，\(\alpha_{sno,nir,dif} = \alpha_{newsno,nir} = 0.7\)。当\(\mu \geq 0.5\)时，相应值计算为：
+%
+\begin{equation}
+\alpha_{sno,vis,dir} = \alpha_{newsno,vis}
+\end{equation}
+%
+\begin{equation}
+\alpha_{sno,nir,dir} = \alpha_{newsno,nir}
+\end{equation}
+%
+积雪厚度计算为：
+%
+\begin{equation}
+z_{sno} = \frac{20W_{sno}}{1000}
+\end{equation}
+%
+其中\(W_{sno}\)为雪水当量(mm)。海面积雪覆盖度计算为：
+\begin{equation}
+f_{sno} = \frac{z_{sno}}{0.25 + z_{sno}}
+\end{equation}
+考虑积雪覆盖的海洋总体反照率计算为：
+\begin{equation}
+\alpha_{sea,vis,dir} = \alpha_{ice,vis}\left( 1 - f_{sno} \right) + \alpha_{sno,vis,dir}f_{sno}
+\end{equation}
+%
+\begin{equation}
+\alpha_{sea,nir,dir} = \alpha_{ice,nir}\left( 1 - f_{sno} \right) + \alpha_{sno,nir,dir}f_{sno}
+\end{equation}
+%
+\begin{equation}
+\alpha_{sea,vis,dif} = \alpha_{ice,vis}\left( 1 - f_{sno} \right) + \alpha_{sno,vis,dif}f_{sno}
+\end{equation}
+%
+\begin{equation}
+\alpha_{sea,nir,dif} = \alpha_{ice,nir}\left( 1 - f_{sno} \right) + \alpha_{sno,nir,dif}f_{sno}
+\end{equation}
+其中\(\alpha_{ice,vis} = 0.7\)，\(\alpha_{ice,nir} = 0.5\)。
+
+对于无冰雪覆盖海洋，假设反照率与波段和海表面风速等其他物理量无关，采用太阳高度角计算直射入射反照率，漫射反射率则设为常数，公式表达为：
+\begin{equation}
+\alpha_{sea,vis,dir}=\alpha_{sea,nir,dir} = \frac{0.026}{\mu^{1.7}+0.065}+0.15(\mu-0.1)(\mu-0.5)(\mu-1)
+\end{equation}
+%
+\begin{equation}
+\alpha_{sea,vis,dif}=\alpha_{sea,nir,dif} = 0.06
 \end{equation}
 
-
-\section{植被反照率-二流近似模型}\label{植被反照率二流近似模型}
+\section{植被反照率---二流近似模型}\label{植被反照率二流近似模型}
 {
 \begin{figure}[]
 \centering
 \includegraphics[width=0.7\columnwidth]{Figures/辐射过程及辐射通量计算/二流近似模型示意图.png}
-\caption{植被辐射传输二流近似模型示意图}
+\caption{二流近似植被辐射传输模型示意图}
 \label{fig:二流近似模型示意图}
 \end{figure}
 }
@@ -151,7 +200,7 @@ G(\mu)=\phi_{1}+\phi_{2} \mu
 \chi_{L}=\pm \int_{0}^{\frac{\pi}{2}}\left|\sin \theta_{L}-f_{S}\left(\theta_{L}\right)\right| d \theta_{L}
 \end{equation}
 上式中$\sin \theta_{L}$为球形叶倾角分布函数，$f_{S}\left(\theta_{L}\right)$为植被的叶倾角分布函数。
-因此，对于球形分布来说，$\chi_{L}=0$。 一般来讲，$-0.4 \leq \chi_{L} \leq 0.6$，分别对应竖直型和平面型叶倾角分布。
+因此，对于球形分布来说，$\chi_{L}=0$。 一般来讲，$-0.4 \leqslant \chi_{L} \leqslant 0.6$，分别对应竖直型和平面型叶倾角分布。
 模型中实际应用时采用通过查找表得到的不同植被类型$\chi_{L}$设定值。根据 $G(\mu)$ 的表达式，$\bar{\mu}$可以计算为：
 \begin{equation}
 \bar{\mu}=\int_{0}^{1} \frac{\mu^{\prime}}{G\left(\mu^{\prime}\right)}
@@ -161,8 +210,8 @@ G(\mu)=\phi_{1}+\phi_{2} \mu
 上面计算表达式是假设$\phi_{1} \neq 0$以及$\phi_{2} \neq 0$，但实际上两者均可为0 \citep{dai2004two}。当$\phi_{1}$、$\phi_{2}$为0时，计算为：
 \begin{equation}
 \bar{\mu}= \begin{cases} 
-1 / 0.877, & \text { 当 } \phi_{1}=0 \\
-1 /\left(2 \phi_{1}\right), & \text { 当 } \phi_{2}=0
+1 / 0.877, & \text { 当 }\ \phi_{1}=0 \\
+1 /\left(2 \phi_{1}\right), & \text { 当 }\ \phi_{2}=0
 \end{cases}
 \end{equation}
 假设叶片上的散射辐射各项同性(理想朗伯体)，漫射辐射和直射辐射向上散射系数$\beta$、$\beta_0$可近似计算为：
@@ -517,7 +566,7 @@ s_{2}^{\prime}}{h-K^{\prime}}\right]+h_{6}\left[\frac{1 / s_{1} / s_{2}^{\prime}
 \begin{figure}[]
 \centering
 \includegraphics[width=0.95\columnwidth]{Figures/辐射过程及辐射通量计算/三维植被辐射传输模型基本框架.png}
-\caption{三维植被辐射传输模型的基本框架示意图}
+\caption{三维植被辐射传输模型计算基本框架示意图}
 \label{fig:三维植被辐射传输模型的基本框架}
 \end{figure}
 }
@@ -741,7 +790,7 @@ y^{\prime}=\frac{R}{c} y, \text { and } x^{\prime}=x
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\columnwidth]{Figures/辐射过程及辐射通量计算/三层植被结构示意图.png}
-\caption{三层植被直射辐射传输示意图。[注：图中树冠大小和形状仅作为示意，每层植被树冠大小不必一致，形状不必为正球体]}
+\caption[三层植被直射辐射传输示意图]{三层植被直射辐射传输示意图。[注：图中树冠大小和形状仅作为示意，每层植被树冠大小不必一致，形状不必为正球体]}
 \label{fig:三层植被结构示意图}
 \end{figure}
 }
@@ -849,9 +898,9 @@ I_{\downarrow, 3}^{*} &=I_{3} T_{i, 3}+I_{\downarrow, 2}^{*} S_{3}^{*} T_{i, 3}^
 
 为了说明三维植被情况下长波辐射传输与一维情况下最大的不同，我们举一个极端的例子加以说明，如图~\ref{fig:单棵树冠长波辐射传输示意图} 所示,
 {
-\begin{figure}[]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=0.5\columnwidth]{Figures/辐射过程及辐射通量计算/单棵树冠长波辐射传输示意图.png}
+\includegraphics[width=0.5\textwidth]{Figures/辐射过程及辐射通量计算/单棵树冠长波辐射传输示意图.png}
 \caption{三维长波辐射计算示意图(对于单棵树冠)}
 \label{fig:单棵树冠长波辐射传输示意图}
 \end{figure}
@@ -918,7 +967,7 @@ L_{g} ^\uparrow=\left(1-\varepsilon_{g}\right) L_{v} ^\downarrow+\varepsilon_{g}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\columnwidth]{Figures/辐射过程及辐射通量计算/三层植被长波辐射传输示意图.png}
-\caption{三层植被长波辐射传输示意图。4：天空，0：地面，1-3为植被层次，$L_{4 \rightarrow 3}$表示大气到达第三层植被的长波辐射，其他同}
+\caption[三层植被长波辐射传输示意图]{三层植被长波辐射传输示意图。4：天空，0：地面，1-3为植被层次，$L_{4 \rightarrow 3}$表示大气到达第三层植被的长波辐射，其他同}
 \label{fig:三层植被长波辐射传输示意图}
 \end{figure}
 }

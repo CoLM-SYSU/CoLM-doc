@@ -47,7 +47,7 @@
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/模式构架/非结构化网格CoLM总体运行流程图.png}
-\caption{非结构化网格CoLM总体运行流程图。}
+\caption{非结构化网格CoLM总体运行流程图}
 \label{fig:非结构化网格CoLM总体运行流程图}
 \end{figure}
 }
@@ -56,8 +56,8 @@
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/模式构架/非结构化网格生成流程图.png}
-\caption{非结构化网格生成流程图。}
+\includegraphics[width=\textwidth]{Figures/模式构架/非结构化网格生成流程图.png}
+\caption{非结构化网格生成流程图}
 \label{fig:非结构化网格生成流程图}
 \end{figure}
 }
@@ -87,7 +87,7 @@ tksatu         & 土壤导热系数（未冻结、饱和） \\\bottomrule
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/模式构架/三角形网格简易细化.png}
+\includegraphics[width=\textwidth]{Figures/模式构架/三角形网格简易细化.png}
 \caption{三角形网格简易细化}
 \label{fig:三角形网格简易细化}
 \end{figure}
@@ -118,8 +118,8 @@ CoLM非结构网格的空间细分基于三角形网格与阈值数据（部分�
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/模式构架/多阈值非结构网格细化.png}
-\caption{多阈值非结构网格细化示例。}
+\includegraphics[width=\textwidth]{Figures/模式构架/多阈值非结构网格细化.png}
+\caption{多阈值非结构网格细化示例}
 \label{fig:多阈值非结构网格细化}
 \end{figure}
 }
@@ -131,8 +131,8 @@ CoLM非结构网格的空间细分基于三角形网格与阈值数据（部分�
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/模式构架/根据LAI对非结构网格进行多重细化.png}
-\caption{根据LAI对非结构网格进行多重细化。}
+\includegraphics[width=0.8\textwidth]{Figures/模式构架/根据LAI对非结构网格进行多重细化.png}
+\caption{根据LAI对非结构网格进行多重细化}
 \label{fig:根据LAI对非结构网格进行多重细化}
 \end{figure}
 }
@@ -193,7 +193,7 @@ CoLM中的流域单元网格为三级结构：第一级为流域单元，第二�
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{Figures/模式构架/高度带单元的约束示意图.jpg}
-\caption{对高度带单元进行约束的作用：a）排水高度（HAND）；b）仅根据排水高度划分高度带单元；c）具有连通性的高度带单元；d）满足连通性和具有唯一下游单元的高度带单元。上图中的箭头表示水流的方向。}
+\caption[对高度带单元进行约束的作用]{对高度带单元进行约束的作用：a）排水高度（HAND）；b）仅根据排水高度划分高度带单元；c）具有连通性的高度带单元；d）满足连通性和具有唯一下游单元的高度带单元。上图中的箭头表示水流的方向}
 \label{fig:高度带单元约束示意}
 \end{figure}
 }
@@ -205,7 +205,7 @@ CoLM中的流域单元网格为三级结构：第一级为流域单元，第二�
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{Figures/模式构架/湖泊划分.jpg}
-\caption{流域单元网格中的湖泊。左图为模拟区域（淮河流域）的范围、高程以及河道和湖泊网络。右图表示采用CVT算法将湖泊区域进一步划分为更小的单元。}
+\caption[流域单元网格中的湖泊]{流域单元网格中的湖泊。左图为模拟区域（淮河流域）的范围、高程以及河道和湖泊网络。右图表示采用CVT算法将湖泊区域进一步划分为更小的单元}
 \label{fig:湖泊划分}
 \end{figure}
 }
@@ -228,13 +228,13 @@ Patch是通过使用高分辨率的精细化网格数据，根据网格单元内
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{Figures/模式构架/CoLM次网格结构示意图-v2.jpg}
-\caption{CoLM次网格结构示意图。次网格植被(Sub-grid vegetation)结构提供三种可选方式：LCT, PFT以及PC；当城市模式打开时，次网格城市(Sub-grid urban)结构提供两种可选方式：NCAR 3种城市分类和LCZ 10种分类}
+\caption[CoLM次网格结构示意图]{CoLM次网格结构示意图。次网格植被(Sub-grid vegetation)结构提供三种可选方式：LCT, PFT以及PC；当作物模式打开时，每种作物当成一种独立的PFT (CFT)进行模拟；当城市模式打开时，次网格城市(Sub-grid urban)结构提供两种可选方式：NCAR 3种城市分类和LCZ 10种分类}
 \label{fig:次网格结构示意图}
 \end{figure}
 }
 
 
-CoLM非海洋patch从大类上分为五类：植被(含裸土)、城市、湿地、冰川和水体，如图~\ref{fig:次网格结构示意图}所示。在模式中的编号依次为0--4。其中植被和城市patch可根据不同类型进一步细分。
+CoLM非海洋patch从大类上分为五类：植被(含裸土)、城市、湿地、冰川和水体，如图~\ref{fig:次网格结构示意图} 所示。在模式中的编号依次为0--4。其中植被和城市patch可根据不同类型进一步细分。
 
 \subsection{植被次网格结构}
 植被patch可以分为自然植被和作物。自然植被patch采用三种次网格植被结构进行表征(图~\ref{fig:植被次网格方案})：1) 地表覆盖类型--LCT (Land Cover Type)；2) 植被功能型--PFT (Plant Function Type)和3) 植物群落--PC (Plant Community)。以上三种方式，模式运行时只能选择其中一种。
@@ -243,7 +243,7 @@ CoLM非海洋patch从大类上分为五类：植被(含裸土)、城市、湿地
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\textwidth]{Figures/模式构架/植被次网格方案示意图_v4.jpg}
-\caption{CoLM植被次网格方案示意图。图中a (LCT方案)、b (PFT方案)中虚线框蒙版表示其包含的植被结构水平均一；图c (PC方案)与图a的差别在于缺少虚线框所示蒙版，即对次网格中的植被结构进行显式表达}
+\caption[CoLM植被次网格方案示意图]{CoLM植被次网格方案示意图。图中a (LCT方案)、b (PFT方案)中虚线框蒙版表示其包含的植被结构水平均一；图c (PC方案)与图a的差别在于缺少虚线框所示蒙版，即对次网格中的植被结构进行显式表达}
 \label{fig:植被次网格方案}
 \end{figure}
 }
@@ -256,14 +256,14 @@ PFT方案是将每一个细网格地表覆盖类型进行拆解，得到其PFT�
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=1\textwidth]{Figures/模式构架/植物群落示意图.png}
-\caption{CoLM植物群落(PC)次网格概念示意图}
+\includegraphics[width=0.95\textwidth]{Figures/模式构架/植物群落示意图.png}
+\caption[CoLM植物群落(PC)次网格概念示意图]{CoLM植物群落(PC)次网格概念示意图。同一植物群落中的PFT环境共享，资源竞争。包括辐射、风速、水热及营养元素等}
 \label{fig:植物群落示意图}
 \end{figure}
 }
 
 PC方案保留LCT方案中模拟对象，即地表覆盖类型，同时还进一步对LCT中的地表覆盖植被类型进行PFT细分(图~\ref{fig:植被次网格方案}c所示)。
-不同于LCT方案把某一类型地表覆盖的所有植被视为混合植被，PC方案对某一地表覆盖类型所组成的PFT进行显式表达计算，所有PFT在同一次网格patch中共享辐射、风、水热及营养元素等环境，同时辐射和通量计算等过程PFT之间相互影响、同时求解，即考虑了PFT之间的共存与竞争(如图~\ref{fig:植物群落示意图}所示)。这一方案类似于植物群落的概念，故命名为PC (Plant Community)方案。
+不同于LCT方案把某一类型地表覆盖的所有植被视为混合植被，PC方案对某一地表覆盖类型所组成的PFT进行显式表达计算，所有PFT在同一次网格patch中共享辐射、风、水热及营养元素等环境，同时辐射和通量计算等过程PFT之间相互影响、同时求解，即考虑了PFT之间的共存与竞争(如图~\ref{fig:植物群落示意图} 所示)。这一方案类似于植物群落的概念，故命名为PC (Plant Community)方案。
 
 LCT方案所依赖的地表覆盖类型数据可以直接由USGS (章节~\ref{USGS地表覆盖数据})或者MODIS-IGBP地表覆盖数据获取(章节~\ref{IGBP地表覆盖数据})。PFT和PC方案所需要的植被结构及属性数据由MODIS-IGBP地表覆盖数据加以其他辅助数据制作而成(章节~\ref{PFTPC数据及其依赖数据})。
 
@@ -276,8 +276,8 @@ LCT方案所依赖的地表覆盖类型数据可以直接由USGS (章节~\ref{US
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{Figures/模式构架/CoLM城市次网格示意图.jpg}
-\caption{CoLM城市模式次网格结构示意图}
+\includegraphics[width=0.95\textwidth]{Figures/模式构架/CoLM城市次网格示意图.jpg}
+\caption[CoLM城市模式次网格结构示意图]{CoLM城市模式次网格结构示意图}
 \label{fig:城市次网格}
 \end{figure}
 }
@@ -294,7 +294,7 @@ LCT方案所依赖的地表覆盖类型数据可以直接由USGS (章节~\ref{US
 
 CoLM默认将土壤分为10层，每一层土壤的中心深度$z_i$~(m)定义为：
 \begin{equation}
-z_{i} = f_{s}\left( \exp{\left\lbrack 0.5(i - 0.5) \right\rbrack - 1} \right)
+z_{i} = f_{s}\left[ \exp{\left\lbrack 0.5(i - 0.5) \right\rbrack - 1} \right]
 \end{equation}
 其中尺度因子$f_s=0.025$. 因为土壤水热梯度在接近土壤与大气的交界面时往往较大，采用指数定义可以保证土壤接近表面时得到更细的分层。每一层土壤的厚度$\Delta z_i$~(m)计算为：
 \begin{equation}
@@ -325,13 +325,13 @@ CoLM中每层土壤中心的深度及每层下边界的深度见表~\ref{table:�
 
 雪盖位于土壤之上，可根据其厚度划分为至多5层。为与土壤层编号一致，
 这里与土壤表层相邻的雪层记为第0层，逐渐向上依次记为第 -1 层直至至多为第 -4 层。
-记$snl$为划分的雪层总层数的相反数，则最上层雪层即为第$snl+1$层。记雪层的厚度为$z_{sno}$，当$z_{sno}<0.01$时，这时积雪较少，不单独划分为层，$snl=0$，当$z_{sno}>=0.01$时，积雪分层的方案见图~\ref{fig:积雪分层}。
+记$snl$为划分的雪层总层数的相反数，则最上层雪层即为第$snl+1$层。记雪层的厚度为$z_{sno}$，当$z_{sno}<0.01$时，这时积雪较少，不单独划分为层，$snl=0$，当$z_{sno}\geqslant 0.01$时，积雪分层的方案见图~\ref{fig:积雪分层}。
 
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/模式构架/积雪分层.jpg}
-\caption{CoLM积雪分层方案。当$z_{sno}<0.01$时不形成积雪层}
+\caption[CoLM积雪分层方案]{CoLM积雪分层方案。当$z_{sno}<0.01$时不形成积雪层}
 \label{fig:积雪分层}
 \end{figure}
 }
@@ -356,7 +356,7 @@ z_{h, i} &= z_{h, i+1}-\Delta z_{i+1}  \quad i=-1, \ldots, snl
 \end{figure}
 }
 
-CoLM主程序计算流程主要包括模式数据的读取，时间步循环，次网格循环，以及模式数据输出(图~\ref{fig:CoLM计算框图})。涉及的过程主要在\texttt{main}文件夹下\texttt{CoLM.F90}，\texttt{CoLMDRIVER.F90}及\allowbreak \texttt{CoLMMAIN.F90}
+CoLM主程序计算流程主要包括模式数据的读取，时间步循环，次网格循环，以及模式数据输出(图~\ref{fig:CoLM计算框图})。涉及的过程主要在\texttt{main}文件夹下\texttt{CoLM.F90}，\texttt{CoLMDRIVER.F90}及 \allowbreak \texttt{CoLMMAIN.F90}
 \allowbreak (\texttt{URBAN\allowbreak /Urban\allowbreak \_CoLMMAIN.F90}，当城市模式打开时)文件中进行调用。
 
 \textbf{模式数据读取}大概可分为驱动数据和地表数据。其中驱动数据可以通过在离线模式下读取大气强迫数据，包括温度、风速、辐射、降雨等必要变量，以及气溶胶、氮沉降等可选变量，具体可参见表~\ref{tab:陆面模式所需的大气状态变量}。目前可用于驱动CoLM离线运行的大气驱动数据集详见表~\ref{tab:可用于驱动CoLM离线运行的大气驱动数据集}。在读取过程中可根据需要进行适当数据尺度转换(章节~\ref{大气强迫降尺度})；如时间尺度不匹配，可进行简单时间维插值，详见\hyperlink{驱动数据时间尺度插值}{驱动数据时间尺度插值}；另外，驱动数据可以通过与大气模式耦合来获得(章节~\ref{CoLM与大气模式耦合})。
@@ -365,7 +365,7 @@ CoLM主程序计算流程主要包括模式数据的读取，时间步循环，�
 
 \textbf{时间步循环}主要包括次网格循环(涉及的过程在\texttt{CoLMDRIVER.F90}和\texttt{CoLMMAIN.F90\allowbreak /Urban\allowbreak \_CoLMMAIN.F90}进行调用)以及可选模块(侧向流、河道径流、数据同化和土地利用土地覆盖变化等模块，在\texttt{CoLM.F90}进行调用)的运行(图~\ref{fig:CoLM计算框图} \textbf{时间步循环}所示)。
 
-\textbf{次网格循环}沿用了原CoLM运行方式，对5种非海洋patch进行循环计算，即植被(含裸土)、城市、湿地、冰川和水体。如果打开海洋模块，则在循环中加入对海洋热力过程的模拟(图~\ref{fig:CoLM计算框图} \textbf{次网格循环}所示)。图中\textbf{次网格循环}所列过程为其简要列表，具体物理过程将从\nameref{part:flux}、\nameref{part:temp}、\nameref{part:SPC}、\nameref{part:hydro}、\nameref{part:BGC}、\nameref{part:human}六大部分各相关章节进行详细阐述。
+\textbf{次网格循环}沿用了原CoLM运行方式，对5种非海洋patch进行循环计算，即植被(含裸土)、城市、湿地、冰川和水体。如果打开海洋模块，则在循环中加入对海洋热力过程的模拟(图~\ref{fig:CoLM计算框图} \textbf{次网格循环}所示)。图中\textbf{次网格循环}所列过程为其简要列表，具体物理过程将从\nameref{part:flux}、\nameref{part:temp}、\nameref{part:SPC}、\nameref{part:hydro}、\nameref{part:BGC}、\nameref{part:human}六大部分各相关章节进行阐述。
 
 \section{陆气耦合}\label{陆气耦合}
 \subsection{陆面模式与大气模式的数据交换}
@@ -450,46 +450,99 @@ CoLM主程序计算流程主要包括模式数据的读取，时间步循环，�
 \subsection{离线运行CoLM可使用的大气驱动数据集}\label{离线大气驱动数据集}
 CoLM支持多套大气驱动数据集的使用，包括全球/区域格点数据和单点数据。其中，全球/区域格点数据见表~\ref{tab:可用于驱动CoLM离线运行的大气驱动数据集}。用户也可使用其他数据，只需参照任意一种目前支持的数据集制作成对应的数据格式，并参照该数据对应的namelist提供相应的信息即可使用。特别地，当运行区域或单点模式时，大气驱动数据可选择任意一套覆盖该区域或该点的数据，模式可自动从大气驱动数据中提取出该区域或该点的数据信息来驱动CoLM。
 
-\hypertarget{驱动数据时间尺度插值}{CoLM默认的积分时间步长为1800秒}。当大气驱动数据的时间分辨率不满足这一积分步长时，相邻数据之间将进行插值以保持大气驱动数据的时间分辨率与积分步长相同。其中，温度、气压、比湿、风速、长波辐射通量默认采用线性插值获得，降水速率采用临近时刻插值获得，短波辐射通量采用基于太阳高度角的余弦值加权平均获得。短波辐射通量的插值具体操作为：对于插值时刻$t_M$，短波辐射通量S($t_M$)计算为
+\hypertarget{驱动数据时间尺度插值}{CoLM默认的积分时间步长为1800秒}。当大气驱动数据的时间分辨率不满足这一积分步长时，相邻数据之间将进行插值以保持大气驱动数据的时间分辨率与积分步长相同。其中，温度、气压、比湿、风速、长波辐射通量默认采用线性插值获得，降水速率采用临近时刻插值获得，短波辐射通量采用基于太阳高度角的余弦值加权平均获得。短波辐射通量的插值具体操作为：对于插值时刻$t_M$，短波辐射通量$S^{\downarrow}$($t_M$)计算为
 \begin{equation}\label{t_M}
-S\left(t_{M}\right)=\left\{\begin{array}{ll}\frac{ \mu\left(t_{M}\right)}{\overline {\sum_{i=1}^{\frac{\Delta t_{FD}}{\Delta t_{M}}} \mu\left(t_{M_{i}}\right)}}S\left(t_{F D}\right)  & \text { 当 }\ \mu\left(t_{M}\right)>0.001 \\
-0 & \text { 当 }\ \mu\left(t_{M}\right) \leq 0.001\end{array}\right.
+S^{\downarrow}\left(t_{M}\right)=\left\{\begin{array}{ll}\frac{ \mu\left(t_{M}\right)}{\overline {\sum_{i=1}^{\frac{\Delta t_{FD}}{\Delta t_{M}}} \mu\left(t_{M_{i}}\right)}}S^{\downarrow}\left(t_{F D}\right)  & \text { 当 }\ \mu\left(t_{M}\right)>0.001 \\
+0 & \text { 当 }\ \mu\left(t_{M}\right) \leqslant 0.001\end{array}\right.
 \end{equation}
-其中，$\Delta t_{FD}$代表驱动数据的时间间隔（例如，对于3-hourly数据$\Delta t_{FD}$=10800秒），$\Delta t_{M}$代表模式积分步长，$S(t_{FD})$ 代表比$t_M$时刻早的最接近$t_M$时刻的短波辐射驱动数据，$\mu\left(t_M\right)$代表$t_M$时刻的太阳高度角的余弦值，$\overline{
+其中，$\Delta t_{FD}$代表驱动数据的时间间隔（例如，对于3-hourly数据$\Delta t_{FD}$=10800秒），$\Delta t_{M}$代表模式积分步长，$S^{\downarrow}(t_{FD})$ 代表比$t_M$时刻早的最接近$t_M$时刻的短波辐射驱动数据，$\mu\left(t_M\right)$代表$t_M$时刻的太阳高度角的余弦值，$\overline{
 \sum_{i=1}^{\frac{\Delta t_{F D}}{\Delta t_{M}}} \mu\left(t_{M_{i}}\right)}$代表落在驱动数据时间间隔内的所有模式积分时刻的太阳高度角余弦值的平均值。以上插值方式可根据原数据特征及用户需求在大气强迫namelist配置文件中进行修改。
 
-短波太阳辐射在模式中被分为可见光与近红外两个波段，分配系数$\alpha=0.5$。对于任意波段，太阳辐射被进一步分为直射光与漫射光。对于QIAN强迫驱动，直射光在可见光波段的比例系数为
+当大气强迫只有总的入射太阳辐射时，CoLM采用源于Sib2的经验方法对其进行直射/漫射，可见光/近红外分解。根据网格所在经纬度和Julian
+day计算太阳高度角余弦值\(\mu\)，由此计算云覆盖比例：
+%
+\begin{equation}
+f_{cloud} = \min\left( 1,\max\left( 0.58,\frac{1160\mu - S^{\downarrow}}{963\mu} \right) \right)
+\end{equation}
+%
+入射漫射辐射比例首先计算为：
+%
+\begin{equation}
+f_{dif} = \min\left( 1,\max\left( 0,\frac{0.0604}{\mu - 0.0223} + 0.0683 \right) \right)
+\end{equation}
+%
+然后根据云覆盖比例调整为：
+%
+\begin{equation}
+f_{dif} = f_{dif} + \left( 1 - f_{dif} \right)f_{cloud}
+\end{equation}
+%
+太阳辐射可见光波段占比计算为：
+%
+\begin{equation}
+f_{vis} = \frac{500. - {464f}_{could}}{\left( 580. - {499f}_{could} \right) + \left( 580. - {464f}_{could} \right)}
+\end{equation}
+%
+最终分波段的直射/漫射入射太阳辐射计算为：
+%
+\begin{equation}
+\begin{aligned}
+S_{vis,dir}^{\downarrow} &= S^{\downarrow}\left( 1 - f_{dif} \right)f_{vis}\\
+%
+S_{nir,dir}^{\downarrow} &= S^{\downarrow}\left( 1 - f_{dif} \right)\left( 1 - f_{vis} \right)\\
+%
+S_{vis,dif}^{\downarrow} &= S^{\downarrow}f_{dif}f_{vis}\\
+%
+S_{nir,dif}^{\downarrow} &= S^{\downarrow}f_{dif}\left( 1 - f_{vis} \right)
+\end{aligned}
+\end{equation}
+%
+
+对于QIAN强迫驱动太阳辐射，CoLM采用CLM4.5方案，可见光和近红外分配系数$f_{vis}=f_{nir}=0.5$。对于以上两个波段，太阳辐射被进一步分为直射光与漫射光。直射光在可见光波段的比例系数为
 \begin{equation}\label{R_vis}
-R_{vis}=a_{0}+a_{1} \alpha S+a_{2}(\alpha S)^{2}+a_{3}(\alpha S)^{3} \quad 0.01 \leq R_{vis} \leq 0.99
+f_{vis,dir}=a_{0}+a_{1} f_{vis} S^{\downarrow}+a_{2}(f_{vis} S^{\downarrow})^{2}+a_{3}(f_{vis} S^{\downarrow})^{3} \quad 0.01 \leqslant f_{vis,dir} \leqslant 0.99
 \end{equation}
 直射光在近红外波段的比例系数为
 \begin{equation}
-R_{nir}=b_{0}+b_{1}(1-\alpha) S+b_{2}((1-\alpha) S)^{2}+b_{3}((1-\alpha) S)^{3} \quad 0.01 \leq R_{nir} \leq 0.99
+f_{nir,dir}=b_{0}+b_{1}(1-f_{nir}) S^{\downarrow}+b_{2}((1-f_{nir}) S^{\downarrow})^{2}+b_{3}((1-f_{nir}) S^{\downarrow})^{3} \quad 0.01 \leqslant f_{nir,dir} \leqslant 0.99
 \end{equation}
 其中$a_0$=0.17639, $a_1$=0.0038, $a_2=-9.0039\times{10}^{-8}$, $a_3=8.1351\times10^{-9}$, $b_0=0.29548$, $b_1=0.00504$, $b_2=-1.4957\times10^{-5}$, $b_3=1.4881\times10^{-8}$。这些系数来自对 NCAR-CAM 模式模拟结果的拟合。
+相应分波段的直射/漫射入射太阳辐射计算为：
+%
+\begin{equation}
+\begin{aligned}
+S_{vis,dir}^{\downarrow} &= S^{\downarrow}f_{vis,dir} f_{vis}\\
+%
+S_{nir,dir}^{\downarrow} &= S^{\downarrow}f_{nir,dir} f_{nir} \\
+%
+S_{vis,dif}^{\downarrow} &= S^{\downarrow}\left ( 1 - f_{vis,dir} \right ) f_{vis}\\
+%
+S_{nir,dif}^{\downarrow} &= S^{\downarrow}\left ( 1 - f_{nir,dir} \right ) f_{nir}
+\end{aligned}
+\end{equation}
 
-当大气驱动数据未提供下行长波辐射通量时，模式将根据大气温度$T_{atm}$、比湿$q_{atm}$和水汽压$e_{atm}$计算获得(Idso 1981)，计算方案为
+当大气驱动数据未提供下行长波辐射通量时，模式将根据大气温度$T_{atm}$、比湿$q_{atm}$和水汽压$e_{atm}$计算获得~\citep{idso1981SetEquationsFull}，计算方案为
 \begin{equation}\label{L_downarrow}
 L ^\downarrow=\left[0.70+5.95 \times 10^{-5} \times 0.01 e_{a t m} \exp \left(\frac{1500}{T_{a t m}}\right)\right] \sigma T_{a t m}^{4}
 \end{equation}
 其中大气水汽压计算为$e_{a t m}=\frac{P_{a t m} q_{a t m}}{0.622+0.378 q_{a t m}}$，$\sigma$为Stefan-Boltzmann常数。
 
-未来情景下的大气驱动数据可采用CMIP6气候模式的模拟输出结果。当历史时期与未来情景共同模拟时，未来时期CMIP6气候模式的模拟结果往往不能直接使用，因为当模拟历史时期使用的大气驱动数据来自观测或再分析数据时，其均值、时空变率、数据拼接时刻的取值与CMIP6气候模式的模拟结果往往存在较大差异。这里可使用异常值叠加方式来融合历史与未来的大气驱动数据。举例说明：当模拟1850-2099年的陆面状态时，1850-2014年的历史时期模拟可采用GSWP3大气驱动数据，2015-2099年的未来时期模拟可采用CMIP6气候模式的模拟结果，两套数据的融合方式如下：首先，将2015-2100年各驱动变量的逐月数据去除气候态的季节循环，得到带有某种社会经济排放情景下的各驱动变量的异常值序列，此序列可表征未来气候变化趋势的影响；其次，将历史时期有限时间段的各大气驱动变量反复叠加到未来时期各驱动变量的异常值序列（例如将2010-2014年的大气驱动数据反复叠加到2015-2019、2020-2024、…、2095-2099年的异常值序列），得到可使用的未来时期的大气驱动数据。此种数据融合方式既得到了未来时期的气候变化趋势，又保留了历史时期大气驱动数据的年际变率，缩小了历史时期与未来时期数据拼接时刻的数据阶跃程度。对于不同的大气驱动变量，历史时期数据与未来时期异常值序列的叠加方式不同：对于温度、气压、比湿、风速等大气状态变量，叠加方式采用加法叠加（$S_{new}=S_{old}+k_{anomaly}$），对于降水、下行短波辐射通量、下行长波辐射通量，叠加方式采用乘法叠加（$F_{new}=F_{old}\times k_{anomaly}$）。
+未来情景下的大气驱动数据可采用CMIP6气候模式的模拟输出结果。当历史时期与未来情景共同模拟时，未来时期CMIP6气候模式的模拟结果往往不能直接使用，因为当模拟历史时期使用的大气驱动数据来自观测或再分析数据时，其均值、时空变率、数据拼接时刻的取值与CMIP6气候模式的模拟结果往往存在较大差异。这里可使用异常值叠加方式来融合历史与未来的大气驱动数据。举例说明：当模拟1850--2099年的陆面状态时，1850--2014年的历史时期模拟可采用GSWP3大气驱动数据，2015--2099年的未来时期模拟可采用CMIP6气候模式的模拟结果，两套数据的融合方式如下：首先，将2015--2100年各驱动变量的逐月数据去除气候态的季节循环，得到带有某种社会经济排放情景下的各驱动变量的异常值序列，此序列可表征未来气候变化趋势的影响；其次，将历史时期有限时间段的各大气驱动变量反复叠加到未来时期各驱动变量的异常值序列（例如将2010-2014年的大气驱动数据反复叠加到2015--2019、2020--2024、…、2095--2099年的异常值序列），得到可使用的未来时期的大气驱动数据。此种数据融合方式既得到了未来时期的气候变化趋势，又保留了历史时期大气驱动数据的年际变率，缩小了历史时期与未来时期数据拼接时刻的数据阶跃程度。对于不同的大气驱动变量，历史时期数据与未来时期异常值序列的叠加方式不同：对于温度、气压、比湿、风速等大气状态变量，叠加方式采用加法叠加（$S_{new}=S_{old}+k_{anomaly}$），对于降水、下行短波辐射通量、下行长波辐射通量，叠加方式采用乘法叠加（$F_{new}=F_{old}\times k_{anomaly}$）。
 
 
 最后，针对单点模拟，CoLM已经收集整理测试的站点信息见表~\ref{tab:CoLM离线运行已经测试的站点列表}。
 
 \subsection{通过耦合器实现CoLM与大气模式的耦合模拟}\label{CoLM与大气模式耦合}
-陆面是天气/气候/地球系统的重要组成部分，其物理、化学、生物过程深刻影响着陆地与大气、陆地与海洋之间的能量与物质交换(戴永久, 2020)。因此，在天气/气候/地球系统模式的耦合框架下运行陆面过程模式，既可刻画在特定条件下陆面系统内部复杂的多圈层多尺度过程，又可将陆面系统变化反馈给大气和海洋系统，充分刻画地球系统各分量之间紧密的相互作用。
+陆面是天气/气候/地球系统的重要组成部分，其物理、化学、生物过程深刻影响着陆地与大气、陆地与海洋之间的能量与物质交换~\citep{Dai2020}。因此，在天气/气候/地球系统模式的耦合框架下运行陆面过程模式，既可刻画在特定条件下陆面系统内部复杂的多圈层多尺度过程，又可将陆面系统变化反馈给大气和海洋系统，充分刻画地球系统各分量之间紧密的相互作用。
 
-地球系统模式通过耦合器连接大气、海洋、陆面、海冰等多个分量模式，形成一个包含地球系统各圈层演化和相互作用过程的完整模式软件。耦合器负责多个分量模式之间的数据交换、不同网格之间数据的插值、以及物质能量等的守恒性诊断，并控制整个地球系统模式的积分模拟（唐彦丽等，2015; 陈怡然等，2016）。耦合器的“可插拔式”框架更有利于促进地球系统模式的模块化和高效并行化。现有的耦合器主要有美国国家大气研究中心(National Center For Atmospheric Research, NCAR)开发的CPL(Coupler)耦合器、美国普林斯顿大学地球物理流体动力学实验室(Geophysical Fluid Dynamics Laboratory)开发的FMS (Flexible Modelling System)、美国的耦合工具库ESMF(Earth System Modelling Framework)、法国欧洲气候模拟和全球变化研究中心开发的OASIS等，其中美国NCAR的CPL和法国的OASIS应用最为广泛。近年来，国内自主研发的耦合器得到了显著发展，其中由清华大学研制的耦合器C-Coupler取得了一系列自主创新，完成了三个版本的研制，并逐渐成长为国际首个面向地球系统数值预报的一体化软件平台，已稳定应用于国内多家业务和科研单位。目前，CoLM已经通过CPL7实现与中国科学院地球系统模式CAS-ESM和区域气候模式CWRF的耦合，使得CoLM成为其中的陆面分量模式。其他使用CPL7的地球系统模式可通过类似流程实现与CoLM的耦合。CoLM将在后续尝试通过国产耦合器C-Coupler实现与中国气象局全球数值天气预报系统CMA-GFS等更多国内业务预报模式的耦合，使得CoLM能够更好地服务于我国天气气候研究与业务预报，有效提升天气气候模拟与预测精度。本节将简要介绍CoLM与CPL7的基本耦合原理，CoLM与CAS-ESM和CWRF的耦合流程见附录。
+地球系统模式通过耦合器连接大气、海洋、陆面、海冰等多个分量模式，形成一个包含地球系统各圈层演化和相互作用过程的完整模式软件。耦合器负责多个分量模式之间的数据交换、不同网格之间数据的插值、以及物质能量等的守恒性诊断，并控制整个地球系统模式的积分模拟~\citep{tangyanli_2015, chenyiran_2017}。耦合器的“可插拔式”框架更有利于促进地球系统模式的模块化和高效并行化。现有的耦合器主要有美国国家大气研究中心(National Center For Atmospheric Research, NCAR)开发的CPL (Coupler)耦合器、美国普林斯顿大学地球物理流体动力学实验室(Geophysical Fluid Dynamics Laboratory)开发的FMS (Flexible Modelling System)、美国的耦合工具库ESMF(Earth System Modelling Framework)、法国欧洲气候模拟和全球变化研究中心开发的OASIS等，其中美国NCAR的CPL和法国的OASIS应用最为广泛。近年来，国内自主研发的耦合器得到了显著发展，其中由清华大学研制的耦合器C-Coupler取得了一系列自主创新，完成了三个版本的研制~\citep{LiuLi_2023}，并逐渐成长为国际首个面向地球系统数值预报的一体化软件平台，已稳定应用于国内多家业务和科研单位。目前，CoLM已经通过CPL7实现与中国科学院地球系统模式CAS-ESM和区域气候模式CWRF的耦合，使得CoLM成为其中的陆面分量模式。其他使用CPL7的地球系统模式可通过类似流程实现与CoLM的耦合。CoLM将在后续尝试通过国产耦合器C-Coupler实现与中国气象局全球数值天气预报系统CMA-GFS等更多国内业务预报模式的耦合，使得CoLM能够更好地服务于我国天气气候研究与业务预报，有效提升天气气候模拟与预测精度。本节将简要介绍CoLM与CPL7的基本耦合原理，CoLM与CAS-ESM和CWRF的耦合流程见附录。
 
 CPL7作为目前使用最为广泛的耦合器之一，其功能不再仅局限于地球系统模式中不同分量模式的数据连通器，它可直接作为模式的顶层驱动，控制各个分量模式运行的先后次序。CPL7作为总控程序控制CAS-ESM的运行流程可参见图~\ref{fig:CAS-ESM的运行流程}，其中每个分量模式均需进行初始化，之后从耦合器读入需要的数据、运行模式、将必要的运行结果发送回耦合器，以此流程逐步积分直至结束。CPL7通过标准代码接口调用各个分量模式的初始化、运行和结束子程序，并在分量模式需要进行数据交换时调用耦合器函数（网格插值、数据发送与接收、重排与融合、通量计算等）实现分量模式之间的相互作用。分量模式之间的并发关系可根据模式计算量和用户需求来指定。总体上，CPL7实现总控调度和各分量模式之间的耦合主要基于三个方面的设计：并行机制、网格映射和时间管理。下面对这三方面逐一进行简要介绍。
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/CAS-ESM的运行流程.png}
-\caption{CPL7作为总控程序控制CAS-ESM的运行流程（引自何卷雄关于“地球系统数值模拟装置项目地球系统模式数值模拟系统集成模块分系统培训”PPT）}
+\caption[CPL7作为总控程序控制CAS-ESM的运行流程]{CPL7作为总控程序控制CAS-ESM的运行流程（引自何卷雄关于“地球系统数值模拟装置项目地球系统模式数值模拟系统集成模块分系统培训”PPT）}
 \label{fig:CAS-ESM的运行流程}
 \end{figure}
 }
@@ -500,7 +553,7 @@ CPL7作为目前使用最为广泛的耦合器之一，其功能不再仅局限�
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/CPL7并行机制示意图.png}
-\caption{CPL7并行机制示意图。对于有5个组件（大气、陆面、海洋、海冰和耦合器）组成的地球系统模式，共划分为10个通讯域：5个组件各自形成通讯域、4个分量模式分别与耦合器形成通讯域、以及5个组件整体形成一个通讯域（引自何卷雄关于“地球系统数值模拟装置项目地球系统模式数值模拟系统集成模块分系统培训”PPT）}
+\caption[CPL7并行机制示意图]{CPL7并行机制示意图。对于有5个组件（大气、陆面、海洋、海冰和耦合器）组成的地球系统模式，共划分为10个通讯域：5个组件各自形成通讯域、4个分量模式分别与耦合器形成通讯域、以及5个组件整体形成一个通讯域（引自何卷雄关于“地球系统数值模拟装置项目地球系统模式数值模拟系统集成模块分系统培训”PPT）}
 \label{fig:CPL7并行机制示意图}
 \end{figure}
 }
@@ -522,7 +575,7 @@ CPL7作为目前使用最为广泛的耦合器之一，其功能不再仅局限�
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/大气接收数据.png}
-\caption{大气模式接收数据的数据迁移基本流程（修改自何卷雄关于“地球系统数值模拟装置项目地球系统模式数值模拟系统集成模块分系统培训”PPT）}
+\caption[大气模式接收数据的数据迁移基本流程]{大气模式接收数据的数据迁移基本流程（修改自何卷雄关于“地球系统数值模拟装置项目地球系统模式数值模拟系统集成模块分系统培训”PPT）}
 \label{fig:大气接收数据}
 \end{figure}
 }
@@ -531,11 +584,11 @@ CPL7作为目前使用最为广泛的耦合器之一，其功能不再仅局限�
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/模式构架/陆面接收数据.png}
-\caption{陆面模式接收数据的数据迁移基本流程（修改自何卷雄关于“地球系统数值模拟装置项目地球系统模式数值模拟系统集成模块分系统培训”PPT）}
+\caption[陆面模式接收数据的数据迁移基本流程]{陆面模式接收数据的数据迁移基本流程（修改自何卷雄关于“地球系统数值模拟装置项目地球系统模式数值模拟系统集成模块分系统培训”PPT）}
 \label{fig:陆面接收数据}
 \end{figure}
 }
 
 最后，在时间管理方面，CPL7的时间管理一般采用esmf\_wrf\_timemgr软件。它包含了一系列的ESMF时间管理接口，各个分量模式和顶层驱动的时间管理都采用ESMF时间管理库来控制。基于ESMF时间管理库，模式中通常包含由顶层驱动管理的主时钟和控制分量模式的组件时钟以及由各分量模式自行管理的内部时钟。模式运行之前需要对所有时钟进行初始化，包括对各分量模式起止时间、重启时间、时间步长、耦合时间、当前步数、输入输出时间、以及运行闹钟等信息进行设置。当顶层驱动将主时钟和分量模式组件时钟初始化后，各分量模式会根据组件时钟来初始化模式内部的时钟。主时钟的步长是各个组件时钟的最小时间步长，并同时记录各个分量模式运行的闹钟信息。当模式向前推进一个主时钟步长后，将检查各个分量模式是否到达闹钟时间，并通知到达闹钟时间的分量模式开始运行，同时更新下一次闹钟时间。以此过程循环直至模式整体积分结束。
 
-以上即是CPL7实现总控调度和各分量模式耦合主要涉及的三个方面。事实上，为方便用户接入新的分量模式，CPL7为各个分量模式提供了公共程序调用接口，存储于*\_comp\_mct.F90文件中。公共接口主要由三个子程序组成：Init（分量模式初始化）、run（分量模式运行）和final（分量模式积分结束）。在三个子程序内部，同样提供了可实现上述分量模式与CPL7完成耦合的内部接口，如Setgsmap和domain格点分布和映射函数、import和export分量模式从（向）耦合器输入（出）数据函数、read\_srfrest和write\_srfrest读（写）重启动文件函数等。用户可参考已有的*\_comp\_mct.F90文件对相应的接口程序进行修改，从而实现新分量模式与CPL7的耦合。CoLM与CPL7的耦合即是借助lnd\_comp\_mct.F90中的公共程序调用接口实现。CoLM与中国科学院地球系统模式CAS-ESM和区域气候模式CWRF的大致耦合流程将在附录中给出。
+以上即是CPL7实现总控调度和各分量模式耦合主要涉及的三个方面。事实上，为方便用户接入新的分量模式，CPL7为各个分量模式提供了公共程序调用接口，存储于\texttt{*\_comp\_mct.F90}文件中。公共接口主要由三个子程序组成：Init（分量模式初始化）、run（分量模式运行）和final（分量模式积分结束）。在三个子程序内部，同样提供了可实现上述分量模式与CPL7完成耦合的内部接口，如Setgsmap和domain格点分布和映射函数、import和export分量模式从（向）耦合器输入（出）数据函数、read\_srfrest和write\_srfrest读（写）重启动文件函数等。用户可参考已有的\texttt{*\_comp\_mct.F90}文件对相应的接口程序进行修改，从而实现新分量模式与CPL7的耦合。CoLM与CPL7的耦合即是借助\texttt{lnd\_comp\_mct.F90}中的公共程序调用接口实现。CoLM与中国科学院地球系统模式CAS-ESM和区域气候模式CWRF的大致耦合流程将在附录中给出。

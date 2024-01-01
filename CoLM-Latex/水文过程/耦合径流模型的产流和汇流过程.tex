@@ -34,9 +34,13 @@ q_{infl}={G}_{water}-r_{surface}
 其中，$q_{drai,max}$为径流的最大值，取决于地形坡面的大小，
 模式中取全球统一的数值；$f_{drai}=2.5$ \unit{m^{-1}} 为衰减因子。当土壤中含有冰时，需考虑冰对地下径流的阻力作用，
 \begin{equation}
-\begin{array}{c} { fracice }_{ {sub }}=\frac{\exp \left(-3 \times\left(1-\frac{i c e f r a c s u m}{d z s u m}\right)\right)
-    -\exp (-3)}{1-\exp (-3)} \\ f_{ {imped }}=1- { fracice }_{s u b} \\ {q}_{{drai}}=f_{ {imped }} \times q_{ {drai,max }} 
-    \exp \left(-f_{d r a i} \times z_{w t}\right)\end{array}
+\begin{aligned}
+ fracice_{sub}&=\frac{\exp \left[-3 \times\left(1-\frac{i c e f r a c s u m}{d z s u m}\right)\right]
+    -\exp (-3)}{1-\exp (-3)} \\
+ f_{imped}&=1- { fracice }_{sub} \\
+ q_{drai}&=f_{imped} \times q_{drai,max} 
+    \exp \left(-f_{d r a i} \times z_{w t}\right)
+\end{aligned}
 \end{equation}
 模式中只考虑地下径流的流出，不考虑流入。土壤中含水量的变化及地下水位变化的计算方案同土壤水对地下水的补给：
 当地下水位位于最下层土壤之下时，地下径流造成地下水位的下降；当地下水位位于分层土壤区域之内时，
@@ -51,14 +55,14 @@ CaMa-Flood将全球河流网络分割为称为流域单元 (unit catchment) 的�
 并进一步实现对河道及漫滩流量 (river discharge and flood discharge)，漫滩面积 (flood area) 以及平均漫滩水深 (flood depth) 
 等日常所需的诊断量的高速计算。总蓄水量和总流量的时间演变通过求解局部惯性方程 \citep{bates2010} 得出。
 CaMa-Flood同时考虑了上游单元的入流、下游单元的流出和每个流域单元的径流强迫输入，是目前高速求解河道水动力方程-圣维南方程最为高速有效的方法之一。
-关于CaMa-Flood模型的详细描述可以从相关文献获取\citep{yamazaki2011physically,yamazaki2013improving,yamazaki2014regional,yamazaki2014development}。
+关于CaMa-Flood模型的详细描述可以从相关文献获取~\citep{yamazaki2011physically,yamazaki2013improving,yamazaki2014development,yamazaki2014regional}。
 
 
 CaMa-Flood 模型的主要优势之一在于除了能够精确描述河道径流以外，还能够模拟包括漫滩水位和漫滩面积变化等洪泛过程。
 因此，对模拟结果的验证不仅仅局限于传统测量河流流量，还可以直接将模拟结果与卫星高度计对水面高程的观测以及微波成像仪对洪泛面积的估算进行比较；
-能够有效加强全球河流模型各个输出的校准/验证\citep{yamazaki2012adjustment,yamazaki2012analysis}。
+能够有效加强全球河流模型各个输出的校准/验证~\citep{yamazaki2012analysis,yamazaki2012adjustment}。
 CaMa-Flood 模型的另一个优势在于它具有极高的模拟计算效率。通过引入次网格地形参数，复杂的漫滩淹没物理过程被合理地简化。
-与此同时，通过实现局部惯性方程和自适应时间步长等物理方案\citep{bates2010}，
+与此同时，通过实现局部惯性方程和自适应时间步长等物理方案~\citep{bates2010}，
 河流流量和蓄水量的预测计算成本得到压缩,有利于进行集成/长期实验等计算要求高的实验或者与陆面模式之间的动态耦合。
 以下对 CaMa-Flood 内部各个模块进行详细的介绍。目前耦合版本陆面过程模式分系统已经包含 CaMa-Flood v4.12版本。
 
@@ -78,7 +82,13 @@ CaMa-Flood 假设不存在漫滩 (洪泛) 事件，上述参数则通过如下�
 \end{equation}
 当总蓄水量$S$大于引发洪水蓄水量$S_{ini}$时，触发漫滩 (洪泛) 事件，则上述参数通过联立如下方程计算得出:
 \begin{equation}
-\begin{array}{l}S_r=S-S_f \\ D_r=\frac{S_r}{W L} \\ S_f=\int_{0}^{A_f}(D_f-D(A)) d_A \\ D_f=D_r-B \\ A_f=D^{-1}(D_f)\end{array}
+\begin{aligned}
+S_r &=S-S_f \\ 
+D_r &=\frac{S_r}{W L} \\
+S_f &=\int_{0}^{A_f}(D_f-D(A)) d_A \\
+D_f &=D_r-B \\ 
+A_f &=D^{-1}(D_f)
+\end{aligned}
 \end{equation}
 上式中的$D_f = D_r - B$表示河道与漫滩的水面高度相同。该方程是基于河道与漫滩之间的水量瞬间完成交换的假设。
 函数$D^{-1}(D_f)$是漫滩高程剖面$D(A_f)$的反函数，它将泛滥地区$A_f$描述为漫滩水深$D_f$的函数 (见图~\ref{fig:CaMa-Flood流域单位示意图})。
@@ -87,22 +97,22 @@ CaMa-Flood 假设不存在漫滩 (洪泛) 事件，上述参数则通过如下�
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/陆地表面的水分循环/CaMa-Flood流域单位示意图.png}
-\caption{CaMa-Flood流域单位示意图，摘自\citet{yamazaki2011physically}。 }
+\includegraphics[width=\textwidth]{Figures/陆地表面的水分循环/CaMa-Flood流域单位示意图.png}
+\caption{CaMa-Flood流域单位示意图}
 \label{fig:CaMa-Flood流域单位示意图}
 \end{figure}
 }
 
 \subsection{河道径流流量计算}
 CaMa-Flood 分别计算了各流域单元向其下游单元的河流径流量和漫滩流量。
-二者的计算均通过忽略如下 St. Venant 动量方程式第二项，得到径流计算所使用的局部惯性方程 \cite{bates2010}:
+二者的计算均通过忽略如下 St. Venant 动量方程式第二项，得到径流计算所使用的局部惯性方程~\citep{bates2010}:
 \begin{equation}
 \frac{\partial Q}{\partial t}+\frac{\partial}{\partial x}\left[\frac{Q^{2}}{A}\right]+\frac{g A \partial(h+z)}{\partial x}+\frac{g n^{2} Q^{2}}{R^{4 / 3} A}=0
 \end{equation}
 式中$Q$为河流流量 (\unit{m^3.s^{-1}})，$A$为水流横截面面积 (\unit{m^2})，$h$为水流深度 (m)，$z$为河床高程 (m)，
 $R$为水力半径 (m)，$g$为重力加速度 (\unit{m.s^{-2}})，$n$为曼宁摩擦系数(\unit{m^{-1/3}.s^{-1}})。
 $x$和$t$分别为流动距离和时间。第一项、第二项、第三项和第四项分别表示局部加速度、平流、水面坡度和摩擦坡度。CaMa-Flood模型采用局部惯性方程的显式形式: 
-
+%
 \begin{equation}
 Q^{t+\Delta t}=\frac{Q^{t}+\Delta t g A i S}{1+\frac{\Delta t g n^{2}\left|Q^{t \mid}\right|}{R^{4 / 3} A}}
 \end{equation}
@@ -121,8 +131,8 @@ CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/陆地表面的水分循环/蓄水量变化计算流程图.png}
-\caption{蓄水量变化计算流程图。 }
+\includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/蓄水量变化计算流程图.png}
+\caption{CaMa-Flood~蓄水量变化计算流程图 }
 \label{fig:蓄水量变化计算流程图}
 \end{figure}
 }
@@ -136,13 +146,13 @@ $Q_k^t$代表在时间 $t$ 该单元从上游网格接收的河流径流流入�
 
 \subsection{自适应时间步长的估算}
 为避免固定时间步长计算所产生的数值振荡，提高数值方案稳定性，
-CaMa-Flood 采用了\citet{bates2010}提出的基于局部惯性方程并满足 Courant-Friedrichs-Lewy (CFL) 
+CaMa-Flood 采用了~\citet{bates2010}提出的基于局部惯性方程并满足 Courant-Friedrichs-Lewy (CFL) 
 条件的自适应时间步长 ($DT_{adp}$) 的估算方法:
 \begin{equation}
-{DT}_{\max }=\boldsymbol{\alpha} \frac{\Delta x}{\sqrt{g h_{t}}}
+{DT}_{\max }={\alpha} \frac{\Delta x}{\sqrt{g h_{t}}}
 \end{equation}
-上式中$DT_{max}$是最大可接受的时间步长，$∆x$是该流域单元连接下游流域单元的河道长度 (river length) (m)，
-$\alpha$是稳定性系数设为0.9，$h_t$是该流域单元在时刻$t$的水流深度 (water depth) (m)，$g$是重力加速度设为9.81 (\unit{m.s^{-2}})。
+上式中$DT_{max}$是最大可接受的时间步长，$\delta{x}$是该流域单元连接下游流域单元的河道长度 (river length) (\unit{m})，
+$\alpha$是稳定性系数设为0.97，$h_t$是该流域单元在时刻$t$的水流深度 (water depth) (\unit{m})，$g$是重力加速度设为9.81 (\unit{m.s^{-2}})。
 图~\ref{fig:自适应时间步长的估算} 展示了基于上述公式计算的某一时刻的$DT_{max}$ (minute)。
 在计算过程中，如果用户指定的默认时间步长$DT$大于$DT_{max}$，则$DT$将被划分为满足$CFL$条件的更小的时间等分的时间步长$DT_{adp}$；
 如果用户指定的默认时间步长$DT$小于$DT_{max}$，则实际计算步长按照用户指定的默认时间步长。
@@ -150,8 +160,27 @@ $\alpha$是稳定性系数设为0.9，$h_t$是该流域单元在时刻$t$的水�
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/陆地表面的水分循环/自适应时间步长的估算.png}
-\caption{自适应时间步长的估算，摘自\citet{yamazaki2013improving}。}
+\includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/自适应时间步长的估算.png}
+\caption{CaMa-Flood自适应时间步长的估算案例}
 \label{fig:自适应时间步长的估算}
 \end{figure}
 }
+\subsection{双向耦合过程}
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/双向耦合.png}
+\caption{CaMa-Flood和CoLM双向耦合示意图}
+\label{fig:双向耦合}
+\end{figure}
+}
+
+CoLM 和CaMa-Flood已经实现了双向耦合，能够进行对水文过程的完整描述。如图~\ref{fig:双向耦合}所示，其耦合模拟包含一下过程：
+\begin{enumerate}
+\item CoLM~模拟每个计算网格的地表能量平衡和地表水量平衡(融雪过程等)
+\item CoLM~模拟地表径流、各次表层的土壤含水量和地下水动态变化，并将土壤/地下水动态变化，并将运移结果分别反馈给~CoLM~和~CaMa-Flood~
+\item 通过接收CoLM的产流量，CaMa-Flood 计算河道径流、泛滥区域以及泛区水深，将是否发生洪水、洪水发生的区域、网格占比和洪水深度等相关结果反馈给CoLM
+\item 如果发生洪水，则在下一个时间步长、在非洪泛的网格占比，按原有的下垫面类型进行正常的~CoLM~模拟。而在洪水发生的网格占比，则将洪水深度作类似降水水量处理，并假设洪泛网格占比的下垫面为水面进行陆面状态模拟。最后再通过面积加权平均求出各类通量和状态变量
+\item 将加权平均后的下渗量和蒸发量传回给~CaMa-Flood，从总水量中扣除，更新水文水动力各项变量。
+
+\end{enumerate}

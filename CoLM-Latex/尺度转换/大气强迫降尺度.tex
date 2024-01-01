@@ -14,7 +14,7 @@
 \hat{T_{atm}}=T_{atm}-{\Gamma}_{t} \left(\hat{z}-z\right)
 \end{equation}
 其中，
-${\Gamma}_{t}=0.006$（每上升1000m下降6度）。
+${\Gamma}_{t}=0.006$（每上升1000 m下降6度）。
 $z$, $\hat{z}$分别为模式网格和次网格上的海拔高度,
 $T_{atm}$, $\hat{T_{atm}}$分别为模式网格和次网格上的温度。
 
@@ -44,7 +44,7 @@ $P_{atm}$, $\hat{P_{atm}}$分别为模式网格和次网格上的气压。
 对大气温度和近地面气压降尺度后，更新次网格上的位温：
 
 位温定义为：
-\begin{equation}
+\begin{equation}\label{eq:位温定义}
 \theta_{atm}=T_{atm} \left(\frac{P_0}{P_{atm}}\right)^\frac{R}{C_{p}}
 \end{equation}
 
@@ -52,8 +52,8 @@ $P_{atm}$, $\hat{P_{atm}}$分别为模式网格和次网格上的气压。
 \begin{equation}\label{eq:近地面气压}
 {P_{atm}}=P_{0} e^{-\frac{z_{atm}}{\bar{H}}}
 \end{equation}
-
-代入~\eqref{eq:近地面气压}，可得：
+%
+代入~\eqref{eq:位温定义}，可得：
 \begin{equation}\label{eq:theta_atm}
 \theta_{atm}=T_{atm} e^{\frac{z_{atm}}{\bar{H}} \frac{R}{C_{p}}}
 \end{equation}
@@ -69,8 +69,7 @@ $z_{atm}$为参考高度。
 $\theta_{atm}$, $\hat{\theta_{atm}}$分别为模式网格和次网格上的位温。
 
 \section{比湿降尺度}
-大气比湿由估计的饱和比湿比例来调整：\\
-
+大气比湿由估计的饱和比湿比例来调整：
 \begin{equation}
 \hat{q_{atm}}=q_{atm} \frac{\hat{q_{sat}^T}}{q_{sat}^T} 
 \end{equation}
@@ -78,7 +77,6 @@ $\theta_{atm}$, $\hat{\theta_{atm}}$分别为模式网格和次网格上的位�
 
 \section{大气密度降尺度}
 调整大气温度，近地面气压和大气比湿后，更新次网格上的大气密度：
-
 \begin{equation}
 \rho_{atm}=\frac{P_{atm}-(1-\phi)A}{R T_{atm}}
 \end{equation}
@@ -97,7 +95,7 @@ $\theta_{atm}$, $\hat{\theta_{atm}}$分别为模式网格和次网格上的位�
 \begin{equation}
 \alpha=\arctan \sqrt{\frac{\partial z}{\partial x}+\frac{\partial z}{\partial y}}
 \end{equation}
-
+%
 \begin{equation}
 \beta=\begin{cases}
     \frac{3\pi}{2}-\arctan \frac{\frac{\partial z}{\partial y}}{\frac{\partial z}{\partial x}} & \text{当}\quad \frac{\partial z}{\partial x}>0 \\
@@ -108,10 +106,10 @@ $\theta_{atm}$, $\hat{\theta_{atm}}$分别为模式网格和次网格上的位�
 \end{equation}
 $\omega_{c}$为地形的曲率，计算为：
 \begin{equation}
-    \begin{split}
-    \omega_{c}=&\frac{1}{4}[\frac{z-1/2\left(z_{W}+z_{E}\right)}{2\eta}+\frac{z-1/2\left(z_{S}+z_{N}\right)}{2\eta} \\
-    & +\frac{z-1/2\left(z_{SW}+z_{NE}\right)}{2\sqrt{2}\eta}+\frac{z-1/2\left(z_{NW}+z_{SE}\right)}{2\sqrt{2}\eta}]
-    \end{split}
+   \begin{split}
+    \omega_{c}=&\frac{1}{4}\left[\frac{z-1/2\left(z_{W}+z_{E}\right)}{2\eta}+\frac{z-1/2\left(z_{S}+z_{N}\right)}{2\eta}\right. \\
+    & \left.+\frac{z-1/2\left(z_{SW}+z_{NE}\right)}{2\sqrt{2}\eta}+\frac{z-1/2\left(z_{NW}+z_{SE}\right)}{2\sqrt{2}\eta}\right]
+   \end{split}
 \end{equation}
 其中，$z_{[W,E,S,N,SW,NE,NW,SE]}$分别代表临近的8个网格的海拔。$\eta$是网格的长度。坡度与曲率均被归一化至$[-0.5,0.5]$。$\zeta_{s}$和$\zeta_{c}$为根据地形的坡度和曲率调整风速的比例，两者求和为1。在CoLM中设定为$\zeta_{s}=0.58$，$\zeta_{c}=0.42$。为保证风速降尺度后处于合理的数值范围，其调整的权重（$1+\zeta_{s}\omega_{s}+\zeta_{c}\omega_{c}$）被限制在$[0.5,1.5]$。
 
@@ -163,13 +161,13 @@ k=a_{0}+a_{1} \times \exp \left(- \exp \left( a_{2}+a_{3} \times k_{t} \right) \
 \begin{equation}
 I_{0}=S \times \cos{\left(\theta_{z}\right)} \times R^{2}
 \end{equation}
-其中，太阳常数$S=1370W/m^{2}$，$\theta_{z}$为太阳天顶角。$R$为日地距离，可由年积日（day of year，$DOY$）计算得~\citep{eva1998}:
+其中，太阳常数$S=1370$ \unit{W.m^{2}}，$\theta_{z}$为太阳天顶角。$R$为日地距离，可由年积日（day of year，$DOY$）计算得~\citep{eva1998}:
 \begin{equation}
 R=1-0.01672 \times \cos{\left( 0.9856 \times \left(DOY-4 \right)\right)}
 \end{equation}
-由所得漫射比例（$k$），可将入射短波辐射（$S\downarrow$）分解为漫射辐射（$S_{d}\downarrow$）与直射辐射（$S_{b}\downarrow$）（图\ref{fig:短波直射调整图}(A)）。
+由所得漫射比例（$k$），可将入射短波辐射（$S\downarrow$）分解为漫射辐射（$S_{d}\downarrow$）与直射辐射（$S_{b}\downarrow$）（图~\ref{fig:短波直射调整图}(A)）。
 
-直射辐射由三个因子订正，消光系数（图\ref{fig:短波直射调整图}(B))，局地照明角（图\ref{fig:短波直射调整图}(C))和遮蔽系数（图\ref{fig:遮蔽因子示意图})。
+直射辐射由三个因子订正，消光系数（图~\ref{fig:短波直射调整图}(B))，局地照明角（图~\ref{fig:短波直射调整图}(C))和遮蔽系数（图~\ref{fig:遮蔽因子示意图})。
 
 消光系数（$k_{e}$）由大气透明度（$k_{t}$）~\citep{gupta2016}计算获得：
 \begin{equation}
@@ -177,7 +175,7 @@ k_{e}=\frac{\ln{\left(k_{t}\right)}}{P_{a t m}}
 \end{equation}
 基于Beer-Lambert定律，降尺度后，直射辐射随光程变化的调整因子计算为：
 \begin{equation}
-\hat{\psi}=\exp{\left( -k_{e} \times \left(\hat{P_{a t m}}-P_{a t m} \right) \right)} 
+\hat{\psi}=\exp{\left[ -k_{e} \times \left(\hat{P_{a t m}}-P_{a t m} \right) \right]} 
 \end{equation}
 其中，$\hat{P_{a t m}}$为降尺度后的近地面气压。
 
@@ -185,33 +183,33 @@ k_{e}=\frac{\ln{\left(k_{t}\right)}}{P_{a t m}}
 \begin{equation}
 \cos{\theta_{i}}=\cos{\theta_{z}}\cos{\beta}+\sin{\theta_{z}}\sin{\beta}\cos{\left(\theta_{a}-\alpha\right)}
 \end{equation}
-其中，$\theta_{a}$是太阳方位角。$\alpha$和$\beta$是地形的坡向和坡度（计算方式见\ref{大气风速降尺度}）。
+其中，$\theta_{a}$是太阳方位角。$\alpha$和$\beta$是地形的坡向和坡度（计算方式见~\ref{大气风速降尺度}）。
 
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.97\textwidth]{Figures/尺度转换/短波直射调整图.png}
-\caption{短波直射调整示意图。(A) 短波基于大气透明度分解为直射(1)和漫射(3)。(B) 由于地形变化（$\Delta Z$）导致光程的变化($\Delta M$)，模式网格上的直射(1)通过消光系数订正为次网格上的直射(2)。(C) 由于地形的差异，直射辐射经过照明角调整至与地形垂直的法线方向。图片摘自~\citep{fiddes2014toposcale}}
+\caption[短波直射调整示意图]{短波直射调整示意图。(A) 短波基于大气透明度分解为直射(1)和漫射(3)。(B) 由于地形变化（$\Delta Z$）导致光程的变化($\Delta M$)，模式网格上的直射(1)通过消光系数订正为次网格上的直射(2)。(C) 由于地形的差异，直射辐射经过照明角调整至与地形垂直的法线方向。图片摘自~\citep{fiddes2014toposcale}}
 \label{fig:短波直射调整图}
 \end{figure}
 }
 
 遮蔽系数用于判断格点是否处于地形遮挡而形成的投射阴影下。采用WRF中对遮蔽系数的计算方式，流程如下：
 \begin{enumerate}
-    \item 根据太阳方位角确定太阳相对于地形的位置（北、东、南、西侧），从而确定搜索地形的方向。具体搜索方向见表\ref{tab:遮蔽因子搜索方向}。
-    \item 沿着搜索方向逐网格搜索，计算投影在太阳方位角方向的坐标位置。以太阳处于地形北部为例（见图\ref{fig:遮蔽因子示意图}），假设沿y轴正半轴搜索到第$j$个网格，则投影在方位角方向的坐标为$(ii,j)=(j \tan\theta_{a},j)$，其中$i \leq ii \leq i+1$。
+    \item 根据太阳方位角确定太阳相对于地形的位置（北、东、南、西侧），从而确定搜索地形的方向。具体搜索方向见表~\ref{tab:遮蔽因子搜索方向}。
+    \item 沿着搜索方向逐网格搜索，计算投影在太阳方位角方向的坐标位置。以太阳处于地形北部为例（见图~\ref{fig:遮蔽因子示意图}），假设沿y轴正半轴搜索到第$j$个网格，则投影在方位角方向的坐标为$(ii,j)=(j \tan\theta_{a},j)$，其中$i \leqslant ii \leqslant i+1$。
     \item 计算$(ii,j)$相对于$(0,0)$坐标的长度，即$l_{\left(ii,j\right)}=\eta\sqrt{ii^{2}+j^{2}}$。同时通过加权平均的方式计算$(ii,j)$位置的海拔，即$z_{\left(ii,j\right)}=\left(ii-i\right)z_{\left(i+1,j\right)}+\left(1+i-ii\right)z_{\left(i,j\right)}$。
     \item 计算沿太阳方位角方向的地形坡度角$\theta_{s}=\arctan\left(z_{\left(ii,j\right)}/l_{\left(ii,j\right)}\right)$。
     \item 最后通过地形坡度角与太阳高度角的位置判断该地区是否被遮蔽。如果当前搜索网格没有遮蔽，则会继续搜索，直到到达搜索半径（$d$）。
     \begin{equation}
-    \delta=\left\{\begin{array}{ll}
-        0 & \text{当}\ \theta_{z} \leq \theta_{s} \\
+    \delta=\begin{cases}
+        0 & \text{当}\ \theta_{z} \leqslant \theta_{s} \\
         1 & \text{当}\ \theta_{z} > \theta_{s} \\ 
-    \end{array}\right.
+    \end{cases}
     \end{equation}
 \end{enumerate}
 
-由于该方案针对每个网格均需搜索$d$次，在高分辨率模拟中计算复杂度过高，只适用于粗分辨率的模拟。CoLM基于~\citep{zhang3d2022}额外提供查找表的简化方案。即将$[0,360]$的方位角进行240等分，针对原始高程数据的每个网格，分别计算240种太阳方位角对应的遮蔽系数。在模式中，只需判断方位角的位置，即可获得对应网格点的遮蔽系数值。
+由于该方案针对每个网格均需搜索$d$次，在高分辨率模拟中计算复杂度过高，只适用于粗分辨率的模拟。CoLM基于~\citet{zhang3d2022}额外提供查找表的简化方案。即将$[0,360]$的方位角进行240等分，针对原始高程数据的每个网格，分别计算240种太阳方位角对应的遮蔽系数。在模式中，只需判断方位角的位置，即可获得对应网格点的遮蔽系数值。
 
 \begin{table}[htbp]
     \centering
@@ -221,10 +219,10 @@ k_{e}=\frac{\ln{\left(k_{t}\right)}}{P_{a t m}}
     \begin{tabular}{ccc}
     \toprule
     太阳相对于地形位置 & 搜索方向 & 太阳方位角范围  \\  \midrule
-    北 & y轴正半轴 & $1.75\pi \leq \theta_{a} \leq 2\pi$ \text{或} $0 \leq \theta_{a} < 0.25\pi$   \\
-    东 & x轴正半轴 & $0.25\pi \leq \theta_{a} < 0.75\pi$ \\
-    南 & y轴负半轴 & $0.75\pi \leq \theta_{a} < 1.25\pi$ \\
-    西 & x轴负半轴 & $1.25\pi \leq \theta_{a} < 1.75\pi$ \\
+    北 & y轴正半轴 & $1.75\pi \leqslant \theta_{a} \leqslant 2\pi$ \text{或} $0 \leqslant \theta_{a} < 0.25\pi$   \\
+    东 & x轴正半轴 & $0.25\pi \leqslant \theta_{a} < 0.75\pi$ \\
+    南 & y轴负半轴 & $0.75\pi \leqslant \theta_{a} < 1.25\pi$ \\
+    西 & x轴负半轴 & $1.25\pi \leqslant \theta_{a} < 1.75\pi$ \\
     \bottomrule
     \end{tabular}
     \end{threeparttable}
@@ -234,7 +232,7 @@ k_{e}=\frac{\ln{\left(k_{t}\right)}}{P_{a t m}}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/尺度转换/遮蔽因子示意图.png}
-\caption{遮蔽因子示意图。}
+\caption{遮蔽因子示意图}
 \label{fig:遮蔽因子示意图}
 \end{figure}
 }
@@ -248,7 +246,7 @@ k_{e}=\frac{\ln{\left(k_{t}\right)}}{P_{a t m}}
 \begin{equation}
 \hat{S_{d}\downarrow}=S_{d}\downarrow F_{v}
 \end{equation}
-其中，$F_{v}$采用~\citep{dozier1990}的方案：
+其中，$F_{v}$采用~\citet{dozier1990}的方案：
 \begin{equation}
 V_{d}=\frac{1}{2\pi} \int_{0}^{2\pi} [\cos{\alpha}\sin^2{\zeta}+\sin{\alpha}\cos{\left(\theta_{a}-\beta\right)}\left(\zeta-\sin{\zeta}\cos{\zeta}\right)]d\theta_{a}
 \end{equation}
@@ -276,7 +274,7 @@ F_{t}=0.5 \times \left(1+\cos{\beta}\right)-V_{d}
 \hat{p}=p \left({1+\frac{\hat{z}-z}{\hat{z_{max}}}}\right)
 \end{equation}
 其中，$\hat{z_{max}}$为次网格上最大海拔高度，
-$p$, $\hat{p}$分别为模式网格和次网格上的降水。
+$p$、$\hat{p}$分别为模式网格和次网格上的降水。
 
 第二种方案~\citep{liston2006Meteorological}为：
 \begin{equation}
@@ -288,10 +286,10 @@ $p$, $\hat{p}$分别为模式网格和次网格上的降水。
 基于机器学习的降水降尺度需要构建分类模型和预报模型。分类模型用于提供是否降水的判断，预报模型用于降水量的估计。其训练过程如下：
 
 \begin{enumerate}
-    \item 生成模式网格下的降水掩码$p_{m}$（设定阈值为$0.01mm/h$，高于阈值为$1$，低于阈值为$0$）。
+    \item 生成模式网格下的降水掩码$p_{m}$（设定阈值为$0.01$ \unit{mm.h^{-1}}，高于阈值为$1$，低于阈值为$0$）。
     \item 选定模型的预报因子$\Omega$（见表~\ref{tab:降水降尺度模型的输入特征}）。
     \item 基于粗分辨率数据拟合$p_{m}=G_{c}\left(\Omega\right)$关系。$G_{c}$为随机森林分类模型。
-    \item 基于粗分辨率数据拟合$p[p_{m}=1]=G_{r}\left(\Omega\left[p_{m}=1]\right)\right)$关系。$G_{r}$为随机森林回归模型。
+    \item 基于粗分辨率数据拟合$p[p_{m}=1]=G_{r}\left(\Omega[p_{m}=1]\right)$关系。$G_{r}$为随机森林回归模型。
     \item 基于上述地形降尺度方案对$u_{atm}$、$d_{atm}$、$T_{atm}$、$q_{atm}$、$P_{atm}$、$L\downarrow$和$S\downarrow$降尺度，得到的细分辨率特征。则降尺度后的降水$\hat{p}=G_{c}\left(\hat{\Omega}\right) \cdot G_{r}\left(\hat{\Omega}\right)$。
 \end{enumerate}
 
@@ -335,9 +333,9 @@ $p$, $\hat{p}$分别为模式网格和次网格上的降水。
     \begin{tabular}{ccc}
     \toprule
     参数 & 变量名 & 取值 \\ \midrule
-    树的个数 & $n\_estimators$ & [50, 100, 150, 200] \\
-    树的最大深度 & $max\_depth$ & [1, 10] \\
-    叶节点上最少样本量 & $min\_samples\_leaf$ & [5, 10, 15, 20, 25, 30] \\
+    树的个数 & \texttt{n\_estimators} & [50, 100, 150, 200] \\
+    树的最大深度 & \texttt{max\_depth} & [1, 10] \\
+    叶节点上最少样本量 & \texttt{min\_samples\_leaf} & [5, 10, 15, 20, 25, 30] \\
     \bottomrule
     \end{tabular}
     \begin{tablenotes}
@@ -346,6 +344,7 @@ $p$, $\hat{p}$分别为模式网格和次网格上的降水。
     \end{tablenotes}
     \end{threeparttable}
 \end{table}
+
 
 \section{CoLM和机器学习模型的耦合}\label{CoLM和机器学习模型在线耦合}
 CoLM与机器学习模型的在线耦合，本质是解决Fortran与Python的异构问题。在当前CoLM中实现的方案流程如下（图~\ref{fig:colmml耦合图}）：
@@ -357,7 +356,7 @@ CoLM与机器学习模型的在线耦合，本质是解决Fortran与Python的异
     
     b. 在Fortran中准备好机器学习模型中所需的输入特征; 
     
-    c. 将输入变量打包（或不打包，皆可）通过mpi$\_$send程序传递给Python进程，此时mpi$\_$send需要在全局通讯空间进行，索引到Python的进程空间中。索引方式可以多种多样，只需要指向正确的python进程即可。Python部分需要做的事情相对简单类似于若干台长期开机的服务器，做好接收-计算-返回三个环节即可。
+    c. 将输入变量打包（或不打包，皆可）通过mpi$\_$send程序传递给Python进程，此时mpi$\_$send需要在全局通讯空间进行，索引到Python的进程空间中。索引方式可以多种多样，只需要指向正确的Python进程即可。Python部分需要做的事情相对简单类似于若干台长期开机的服务器，做好接收-计算-返回三个环节即可。
     \item 在整个环节中，需要注意的额外问题：
     
     a. 总体计算效率，尤其Python中的算法计算效率需要重点关注，采用负载均衡的设计使得Python进程可以以合理的效率处理好计算任务。
@@ -371,7 +370,7 @@ CoLM与机器学习模型的在线耦合，本质是解决Fortran与Python的异
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/尺度转换/colmml耦合图.jpg}
-\caption{CoLM与机器学习在线耦合示意图。}
+\caption{CoLM与机器学习在线耦合示意图}
 \label{fig:colmml耦合图}
 \end{figure}
 }

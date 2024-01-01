@@ -53,7 +53,7 @@ USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global 
 替换方式是将以上辅助数据中水体、冰川和城市网格直接对USGS地表数据进行替换。USGS高程数据用于判断海洋，即将高程低于0米的地方设置为海洋格点。
 如采用USGS地表覆盖类型进行模拟 (LCT方案)，其不同类型相关参数请参考附录~\ref{USGS地表覆盖类型相关参数}。
 
-\subsection{IGBP地表覆盖数据}\label{IGBP地表覆盖数据}
+\subsection{MODIS IGBP地表覆盖数据}\label{IGBP地表覆盖数据}
 IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging Spectroradiometer 
 （MODIS）MCD12Q1 Version 6（The Terra and Aqua combined MODIS Land Cover Type data product）
 的数据（\url{https://lpdaac.usgs.gov/products/mcd12q1v006/}），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生 
@@ -86,6 +86,189 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \end{tabular}
 \end{table}
 
+\subsection{ESA CCI地表覆盖数据}\label{ESA地表覆盖数据}
+ESA CCI地表覆盖产品是由欧洲宇航局(ESA)的气候变化计划(CCI)提供(\url{http://maps.elie.ucl.ac.be})，全球覆盖，空间分辨率300 m，时间覆盖1992--2020年。采用联合国粮食及农业组织地表覆盖分类系统(UNLCCS)，共分为36个土地覆盖类别(包括22种一级分类，14种二级分类)，如表~\ref{tab:ESA覆盖类型} 所示。
+
+\begin{table}[]
+\centering
+\caption[ESA CCI地表覆盖类型]{ESA CCI地表覆盖类型。正体编号表示联合国粮食及农业组织地表覆盖分类系统22种一级分类，斜体编号表示14种二级分类}
+\label{tab:ESA覆盖类型}
+\begin{tabular}{lll}
+\toprule
+\multicolumn{2}{c}{编号} & ESA CCI地表覆盖类型     \\ \midrule
+10& & Cropland, rainfed\\
+& \textit{11}& Herbaceous cover\\
+& \textit{12}& Tree or shrub cover\\
+20&& Cropland, irrigated or post-filooding\\
+30&& Mosaic cropland (> 50 \%) nat. veg. (tree, shrub, herb.) (< 50 \% )\\
+40&& Mosaic nat. veg. (tree, shrub, herb.) (> 50 \%)/cropland (< 50 \%) \\
+50&& Tree cover, broadleaf, evergreen, closed to open (> 15 \%)          \\
+60&& Tree cover, broadleaf, deciduous, closed to open (> 15 \%)        \\
+& \textit{61}& Tree cover, broadleaf, deciduous, closed (> 40 \%)    \\
+& \textit{62}& Tree cover, broadleaf, deciduous, open (15-40 \%)         \\
+70&& Tree cover, needleleaf, evergreen, closed to open (> 15 \%)        \\
+& \textit{71}& Tree cover, needleleaf, evergreen, closed (> 40 \%)        \\
+& \textit{72}& Tree cover, needleleaf, evergreen, open (15-40 \%)       \\
+80&& Tree cover, needleleaf, deciduous, closed to open (> 15 \%)        \\
+& \textit{81}& Tree cover, needleleaf, deciduous, closed (> 40 \%)       \\
+& \textit{82}& Tree cover, needleleaf, deciduous, open (15-40 \%)      \\ 
+90&& Tree cover, mixed leaf type (broadleaf and needleleaf)          \\ 
+ 100&& Mosaic tree and shrub (> 50 \%) herbaceous cover (< 50 \%) \\
+ 110&& Mosaic herbaceous cover (> 50 \%) /tree and shrub (< 50 \%) \\
+ 120&& Shrubland\\
+ & \textit{121}& Shrubland evergreen\\
+ & \textit{122}& Shrubland deciduous\\
+ 130 && Grassland\\
+ 140 && Lichens and mosses\\
+ 150 && Sparse vegetation (tree, shrub, herbaceous cover) (< 15 \%)\\
+ & \textit{152}& Sparse shrub (< 15 \%)\\
+ & \textit{153}& Sparse herbaceous cover (< 15 \%) \\
+ 160&& Tree cover, flooded, fresh or brackish water\\
+ 170&& Tree cover, flooded, saline water\\
+ 180&& Shrub/herbaceous cover, flooded, fresh/saline/brackish water\\
+ 190&& Urban areas\\
+ 200&& Bare areas\\
+ & \textit{201}& Consolidated bare areas\\
+ & \textit{202}& Unconsolidated bare areas\\
+ 210 && Water bodies\\
+ 220 && Permanent snow and ice\\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{GLC FCS30地表覆盖数据}\label{GLC FCS30地表覆盖数据}
+USGS、MODIS、ESA CCI地表覆盖产品空间分辨率主要为公里级或者次公里级，近年来，地表覆盖产品分辨率已经达到了30m。GLC FSC30地表覆盖产品是由\cite{zhang2023glc_fcs30d}提供的全球地表覆盖数据，该数据空间分辨率为30m，在GEE平台通过结合多时相Landsat图像和局部自适应随机森林模型开发生成，采用了气候变化倡议土地覆盖数据集(CCI LC)分类系统，包含16个一级土地覆盖类型以及35个细分土地覆盖类型，对土地覆盖的描述更加全面。此外，GLC FCS30为提高湿地以及城市两种地表覆盖的准确性，对上述两类地表覆盖进行了单独处理，湿地和城市均采用了独立的数据。GLC FCS30产品覆盖1985-2022年，其中1985-2000年数据为每五年更新一次，2000-2022则逐年更新。由于目前模式基础植被分类采用IGBP方案，因此需要对GLC FCS30进行重分类处理，从而使每种地表覆盖都分配对应的IGBP分类编号，两种分类的对应关系如表~\ref{tab:GLC FCS30与IGBP分类对应关系} 所示。
+%
+% \begin{table}[]
+% \fontsize{9.5}{9.5}\selectfont
+% \renewcommand\arraystretch{1.85}
+% \centering
+% \caption{GLC FCS30与IGBP分类对应关系}
+% \label{tab:GLC FCS30与IGBP对应分类}
+% \begin{tabular}{c|c|c}
+% \hline
+% IGBP编号 & IGBP分类 & GLC FCS30细分类 \\
+% \hline
+% \multirow{2}{*}{1} & \multirow{2}{*}{常绿针叶林} & Closed evergreen needleleaved forest \\ 
+% \cline{3-3}& & Open evergreen needleleaved forest \\
+% \hline
+% \multirow{2}{*}{2} & \multirow{2}{*}{常绿阔叶林} & Closed evergreen broadleaved forest \\ 
+% \cline{3-3}& & Open evergreen broadleaved forest \\
+% \hline
+% \multirow{2}{*}{3} & \multirow{2}{*}{落叶针叶林} & Closed deciduous needleleaved forest \\ 
+% \cline{3-3}& & Open deciduous needleleaved forest \\
+% \hline
+% \multirow{2}{*}{4} & \multirow{2}{*}{落叶阔叶林} & Closed deciduous broadleaved forest \\ 
+% \cline{3-3}& & Open deciduous broadleaved forest \\
+% \hline
+% \multirow{2}{*}{5} & \multirow{2}{*}{混合林} & Closed mixed-leaf forest \\ 
+% \cline{3-3}& & Open mixed-leaf forest \\
+% \hline
+% \multirow{3}{*}{6} & \multirow{3}{*}{郁闭灌丛} & Shrubland \\ 
+% \cline{3-3}& & Evergreen shrubland \\
+% \cline{3-3}& & Deciduous shrubland \\
+% \hline
+% 7 & 稀疏灌丛 & Sparse shrubland \\
+% \hline
+% 8 & 稀疏大草原(木本为主) & Sparse vegetation \\
+% \hline
+% 9 & 稀疏大草原 & Sparse herbaceous cover \\
+% \hline
+% \multirow{2}{*}{10} & \multirow{2}{*}{草地} & Grassland \\ 
+% \cline{3-3}& & Lichens and mosses \\
+% \hline
+% \multirow{7}{*}{11} & \multirow{7}{*}{湿地} & Swamp \\ 
+% \cline{3-3}& & Marsh \\
+% \cline{3-3}& & Flooded flat \\
+% \cline{3-3}& & Saline \\
+% \cline{3-3}& & Mangrove \\
+% \cline{3-3}& & Salt marsh \\
+% \cline{3-3}& & Tidal flat \\
+% \hline
+% \multirow{2}{*}{12} & \multirow{2}{*}{耕地} & Rainfed cropland \\ 
+% \cline{3-3}& & Irrigated cropland \\
+% \hline
+% 13 & 城市 & Impervious surface \\
+% \hline
+% \multirow{2}{*}{14} & \multirow{2}{*}{耕地和自然植被混合带} & Herbaceous cover cropland \\ 
+% \cline{3-3}& & Tree or shrub cover cropland \\
+% \hline
+% 15 & 积雪和冰川 & Permanent snow and ice \\
+% \hline
+% \multirow{3}{*}{16} & \multirow{3}{*}{裸土或稀疏植被覆盖} & Bare areas \\ 
+% \cline{3-3}& & Consolidated bare areas \\
+% \cline{3-3}& & Unconsolidated bare areas \\
+% \hline
+% 17 & 水体 & Water body \\
+% \hline
+% \end{tabular}
+% \end{table}
+%
+\begin{table}[]
+\fontsize{9.5}{9.5}\selectfont
+\renewcommand\arraystretch{1.85}
+\centering
+\caption{GLC FCS30与IGBP分类对应关系}
+\label{tab:GLC FCS30与IGBP分类对应关系}
+\begin{tabular}{cccc}
+\toprule
+LC ID & GLC FCS30分类 & 对应IGBP分类 & IGBP编号 \\
+%
+\midrule
+ 10 & Rainfed cropland & \multirow{2}{*}{耕地} & \multirow{2}{*}{12} \\
+  20 & Irrigated cropland & & \\
+%
+\cline{1-4}  \textit{11} & Herbaceous cover cropland & \multirow{2}{*}{耕地和自然植被混合带} & \multirow{2}{*}{14} \\
+  \textit{12} & Tree or shrub cover cropland & & \\
+%
+\cline{1-4}  \textit{51} & Closed evergreen broadleaved forest & \multirow{2}{*}{常绿阔叶林} & \multirow{2}{*}{2} \\
+  \textit{52} & Open evergreen broadleaved forest & & \\
+%
+\cline{1-4}  \textit{61} & Closed deciduous broadleaved forest & \multirow{2}{*}{落叶阔叶林} & \multirow{2}{*}{4} \\
+  \textit{62} & Open deciduous broadleaved forest & & \\
+%
+\cline{1-4}  \textit{71} & Closed evergreen needleleaved forest & \multirow{2}{*}{常绿针叶林} & \multirow{2}{*}{1} \\
+  \textit{72} & Open evergreen needleleaved forest & & \\
+%
+\cline{1-4}  \textit{81} & Closed deciduous needleleaved forest & \multirow{2}{*}{落叶针叶林} & \multirow{2}{*}{3} \\
+  \textit{82} & Open deciduous needleleaved forest & & \\
+%
+\cline{1-4}  \textit{91} & Closed mixed-leaf forest & \multirow{2}{*}{混合林} & \multirow{2}{*}{5} \\
+  \textit{92} & Open mixed-leaf forest & & \\
+%
+\cline{1-4} 120 & Shrubland & \multirow{3}{*}{郁闭灌丛} & \multirow{3}{*}{6} \\
+ \textit{121} & Evergreen shrubland & & \\
+ \textit{122} & Deciduous shrubland & & \\
+%
+\cline{1-4} 130 & Grassland & \multirow{2}{*}{草地} & \multirow{2}{*}{10} \\
+ 140 & Lichens and mosses & & \\
+%
+\cline{1-4} 150 & Sparse vegetation & 稀疏大草原(木本为主) & 8 \\
+%
+\cline{1-4} \textit{152} & Sparse shrubland & 稀疏灌丛 & 7 \\
+%
+\cline{1-4} \textit{153} & Sparse herbaceous cover & 稀疏大草原 & 9 \\
+%
+\cline{1-4} \textit{181} & Swamp & \multirow{7}{*}{湿地} & \multirow{7}{*}{11} \\
+ \textit{182} & Marsh & & \\
+ \textit{183} & Flooded flat & & \\
+ \textit{184} & Saline & & \\
+ \textit{185} & Mangrove & & \\
+ \textit{186} & Salt marsh & & \\
+ \textit{187} & Tidal flat & & \\
+%
+\cline{1-4} 190 & Impervious surface & 城市 & 13 \\
+%
+\cline{1-4} 200 & Bare areas & \multirow{3}{*}{裸土或稀疏植被覆盖} & \multirow{3}{*}{16} \\
+ \textit{201} & Consolidated bare areas & & \\
+ \textit{202} & Unconsolidated bare areas & & \\
+%
+\cline{1-4} 210 & Water body & 水体 & 17 \\
+%
+\cline{1-4} 220 & Permanent snow and ice & 积雪和冰川 & 15 \\
+%
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{土壤数据}\label{土壤数据}
 \subsection{土壤基础属性}\label{土壤基础属性}
@@ -99,7 +282,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 
 \section{植被结构及属性数据}\label{植被结构及属性数据}
 \subsection{叶面积指数数据}\label{叶面积指数数据}
-叶面积指数数据来自重处理的MODIS LAI数据~\citep{yuan2011reprocessing,lin2023ReprocessedMODISVersion}。目前模式提供MODIS第5版和第6.1版数据。其中MODIS第5版数据 (MOD15A2) 为全球 \ang{;;30} (1公里) 分辨率，经纬度网格，时间覆盖2000--2016年，时间分辨率为每8天。MODIS第6.1版数据 (MCD15A2H)，空间分辨率为全球 \ang{;;15} (约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
+叶面积指数数据来自重处理的MODIS LAI数据~\citep{yuan2011reprocessing,lin2023ReprocessedMODISVersion}。目前模式提供MODIS第5版(\url{http://globalchange.bnu.edu.cn/research/lai})和第6.1版数据(\url{http://globalchange.bnu.edu.cn/research/laiv061})。其中MODIS第5版数据 (MOD15A2) 为全球 \ang{;;30} (1公里) 分辨率，经纬度网格，时间覆盖2000--2016年，时间分辨率为每8天。MODIS第6.1版数据 (MCD15A2H)，空间分辨率为全球 \ang{;;15} (约500米)，经纬度网格，时间覆盖从2000年至今，时间分辨率每8天或每月。
 
 
 \subsection{树高数据}\label{树高数据}
@@ -108,11 +291,13 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 全球 \ang{;;30} (1公里) 分辨率，经纬度网格，单时次数据。
 
 \subsection{PFT/PC数据及其制作所依赖数据}\label{PFTPC数据及其依赖数据}
+PFT/PC植被属性相关数据主要包括：1）网格所包含PFT种类；2）网格内各PFT占比；3）网格内各PFT LAI/SAI值；4）网格内各PFT高度。
+
 模式如采用PFT或PC植被次网格方式运行，则不能像LCT方案一样直接进行地表覆盖类型聚合(图~\ref{fig:次网格聚合方案} LCT方案所示)，
 需要对每一个细网格地表覆盖类型进行拆解，得到其网格内PFT的组成种类和各自面积占比。
 PFT方案则根据细网格计算得到的PFT种类及占比来聚合到模式网格(图~\ref{fig:次网格聚合方案} PFT方案)。
 PC聚合方案同LCT，但是PC跟PFT方案一样，对每种LCT内的PFT进行表征 (包括类型和组成比例，图~\ref{fig:次网格聚合方案} PC方案)。
-PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 所示：
+PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 所示。
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[htbp]
@@ -144,15 +329,13 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/基础数据/次网格聚合方案.png}
-\caption{CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图。}
+\includegraphics[width=0.9\textwidth]{Figures/基础数据/次网格聚合方案.png}
+\caption[CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图]{CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图。具体聚合过程见章节~\ref{sec:次网格聚合}}
 \label{fig:次网格聚合方案}
 \end{figure}
 }
 
-
-由于PFT和PC方案都需要对细网格地表覆盖数据进行PFT分解，而地表覆盖原数据并不包含此信息，
-需要借助辅助数据进行计算，其数据来源如表~\ref{tab:网格划分辅助数据} 所列。
+由于PFT和PC方案都需要对细网格地表覆盖数据进行PFT分解，而地表覆盖原数据并不包含PFT植被结构属性信息，需要借助辅助数据进行计算，其数据来源如表~\ref{tab:网格划分辅助数据} 所列。
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -169,18 +352,21 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 \toprule
 数据名称      & 描述        & 分辨率   & 坐标投影     & 参考文献           \\ \midrule
 MODIS Land Cover Type & The Terra and Aqua combined MODIS Land Cover Type (LC\_Type1) data product, Version 6 (MCD12Q1) & 500 m & Sinusoidal        & \citet{Friedl2019}                \\\midrule
-ESA LC-CCI land cover type         & ESA CCI land cover type products                                                                & 300 m & Latitude-Longitude & \url{http://maps.elie.ucl.ac.be} \\\midrule
+ESA CCI-LC land cover type         & ESA CCI land cover type products                                                                & 300 m & Latitude-Longitude & \url{http://maps.elie.ucl.ac.be} \\\midrule
 MODIS VCF      & MODIS Vegetation Continuous Fields product, Version 6 (MOD44B)                                           & 250 m    & Sinusoidal         & \citet{DiMiceli2015}                        \\\midrule
 AVHRR VCF& AVHRR Tree Cover (evergreen, deciduous and broadleaf, needleleaf) Continuous Fields                      & 1 km  & Latitude-Longitude & \citet{defries2000new}                         \\\midrule
 Köppen-Geiger climate classification        & Present Köppen-Geiger climate classification maps at 1-km resolution                            & 1 km  & Latitude-Longitude & \citet{beck2018}     \\\midrule
-Reprocessed MODIS LAI                 & Reprocessed MODIS leaf area index produces, Version 6                                           & 500 m & Sinusoidal         & \citet{yuan2011reprocessing}     \\\midrule
+Reprocessed MODIS LAI                 & Reprocessed MODIS leaf area index produces, Version 6                                           & 500 m & Sinusoidal         & \citet{yuan2011reprocessing,lin2023ReprocessedMODISVersion}     \\\midrule
 WorldClim Version2                    & Worldclim 2: New 1-km spatial resolution climate surfaces for global land areas                          & 1 km  & Latitude-Longitude & \citet{fick2017worldclim}   \\\midrule
 Canopy height                         & Global 1 km forest canopy height map                                                            & 1 km  & Latitude-Longitude & \citet{simard2011mapping}             \\ \bottomrule
 \end{tabular}
 %\end{sidewaystable}
 \end{table}
 \end{landscape}
-如采用PFT/PC方案进行植被次网格模拟，其不同类型相关参数请参考附录~\ref{植被功能型PFT相关参数} 和附录~\ref{植物群落PC次网格PFT相关参数}。PFT/PC植被结构数据制作流程及其尺度转换详见章节~\ref{植被尺度转换}。
+
+ESA CCI PFT v2.0.8全球植被功能类型数据是由欧洲宇航局 (ESA) 的气候变化计划 (CCI) 提供  (\url{https://doi.org/10.5285/26a0f46c95ee4c29b5c650b129aab788})，空间分辨率300 m，时间覆盖1992--2020年。该产品将提供了300米网格广泛特征的ESA CCI地表覆盖数据进行细化，借助现有的高分辨率数据集(主要有树冠高度、树冠覆盖、城市、水体数据)，描述了共14种PFT在网格内的覆盖度，包括：常绿阔叶树、落叶阔叶树、常绿针叶树、落叶针叶树、常绿阔叶灌木、落叶阔叶灌木、常绿针叶灌木、落叶针叶灌木、天然草、草本作物、城市、水体、裸地、冰川和雪盖。
+
+如采用PFT/PC方案进行植被次网格模拟，其不同类型相关参数请参考附录~\ref{植被功能型PFT相关参数} 和附录~\ref{植物群落PC次网格PFT相关参数}。PFT/PC植被结构数据制作流程及植被属性尺度转换详见章节~\ref{植被尺度转换}。
 
 
 \section{水文数据}\label{水文数据}
@@ -191,33 +377,15 @@ Canopy height                         & Global 1 km forest canopy height map    
 水流方向和集水面积数据来自MERIT Hydro~\citep{yamazaki2019merit}。 MERIT Hydro为全球格点数据，分辨率为3弧秒（赤道处约90米），由高程数据（MERIT DEM）和水体数据集（G1WBM、GSWO和OpenStreetMap）融合生成。MERIT Hydro使用算法识别和分辨实际的内陆流域和高程数据中误差引起的伪洼地，可近于自动地提取河网。除自动算法外，也进行了一定量的人工检查和编辑。评估结果表明，MERIT Hydro构建的水文学数据在集水面积和流域形状方面与其他经过质量控制的河网数据集显示出良好的一致性。
 
 \subsection{河网}
-CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分辨率的全球流动方向地图 (MERIT-Hydro)~\citep{yamazaki2019merit}，
-水文调整高程 DEM~\citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据~\citep{yamazaki2014development}; 
-使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。
-相关数据以纯``二进制''格式 ($nx\times ny$)存储于 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，
-从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是`little endian'。
-具体而言，除了需要陆面模式计算得出的产流量 (runoff) 之外，CaMa-Flood还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$)，
-漫滩 (洪水淹没) 面积，以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河流的宽度和深度以外，
-所有的地形相关参数均可由 MERIT-hydro 水文地形数据中获取。以下以全球~0.25\textdegree ~的河网为例进行详细介绍。
-
-{
-\begin{figure}[htbp]
-\centering
-\includegraphics{Figures/陆地表面的水分循环/流域单元分布图.png}
-\caption{流域单元分布图。每个流域单元的出口用白色四边形标记。蓝色线条连接不同流域单元，箭头指向下游流域单元。
-橙色和黄色边界代表了不同的流域单元。图片摘自\citet{yamazaki2013improving}。 }
-\label{fig:流域单元分布图}
-\end{figure}
-}
+CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米超高精细分辨率的水文基础数据集 MERIT-Hydro ~\citep{yamazaki2019merit}，
+水文调整高程DEM数据 ~\citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据~\citep{yamazaki2014development}; 
+使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。目前CaMa-Flood已经制备了01min（弧分）、03min、05min、06min、15min、30min和60min下运行所需的河网基础数据。相关数据以纯``二进制''格式 ($nx\times ny$)存储于 \texttt{map/} 目录下。默认的数据存储顺序是从180 \textdegree W到180 \textdegree E，从 90 \textdegree N 到 90 \textdegree S；数据的字节顺序是`little endian'。具体而言，除了需要陆面模式计算得出的产流量 (runoff) 之外，CaMa-Flood模块还需要包括流域面积 ($A_s$)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$) 以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河道横截面的宽度和深度数据以外，其他地形相关参数均可由 MERIT-hydro 直接计算得出。以下以全球~0.25\textdegree ~的河网为例进行详细介绍。
 
 
-在目录\texttt{glb\_15min}下包含了全球 0.25\textdegree 分辨率的网格-矢量-混合 (grid-vector-hybrid) 河网图，
-该河网地图是由 90m MERIT Hydro 数据使用 FLOW 模式升尺度而来 (图~\ref{fig:流域单元分布图})；
-具体文件内容如表~\ref{tab:河网图及地形参数文件列表} 和表~\ref{tab:河网图及地形参数文件列表2} 所示。
-河网地图的维度信息，包括东西方向网格数目$nx$，南北方向网格数目$ny$，泛滥平原层数 ($nfpl$)，
+在目录\texttt{map/glb\_15min}下包含了全球 0.25\textdegree 分辨率的网格-矢量-混合 (grid-vector-hybrid) 河网数据 (图~\ref{fig:流域单元分布图})；具体文件内容如表~\ref{tab:河网图及地形参数文件列表} 和表~\ref{tab:河网图及地形参数文件列表2} 所示。 河网地图的维度信息，包括东西方向网格数目$nx$，南北方向网格数目$ny$，泛滥平原层数 ($nfpl$)，
 网格大小 ($gsize$)和区域边界 (西、东、南、北)，记录在 \texttt{params.txt} 之中。\texttt{nextxy.bin} 文件包含了2个参数 ($nextx$和$nexty$)，
 分别记录了每个网格的下游单元的相对位置，
-其中与海洋接口的河口标记为 -9，内陆河流终点标记为 -10，海洋 (未定义) 标记为 -9999。
+其中与海洋接口的河口标记为-9，内陆河流终点标记为-10，海洋 (未定义) 标记为 -9999。
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -264,16 +432,25 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
     \texttt{inpmat.bin}       & \texttt{inpx}     & -                                  & Corresponding input grid X (rec=1) & -        & integer \\
                                        & \texttt{inpy}     & -                               & Corresponding input grid Y (rec=2)    & -        & integer  \\
     \texttt{ctmare.bin}       & \texttt{inpa}     & $A_{ij}$                            & Area of input grid XY (rec=3)              & \unit{m^2}     & real    \\
-    \texttt{diminfo.txt}      & -        & -                                  & Dimension infomation                         & text     &         \\
+    \texttt{diminfo.txt}      & -        & -                                  & Dimension information                         & text     &         \\
     \texttt{lsmask.bin}       & -        & -                                  & Land ID of corresponding hi resolution area Basin ID & -        & integer \\
     \texttt{basin.bin}        & -        & -                                  & Basin ID                                             & -        & integer \\
     \texttt{bsncol.bin}       & -        & -                                  & Basin Color Pattern for Visualization                & -        & integer \\
     \texttt{lonlat.bin}       & \texttt{lon}      & -                                  & Longitude, catchment outlet (rec=1)     & \textdegree      & real    \\
                                      & \texttt{lat}       & -                                 & Latitude, catchment outlet (rec=2)        & \textdegree       & real    \\
-    \texttt{uparea.bin}       & \texttt{uparea}   & -                           & Upstream Drainage Area                       & \unit{m^2}        & real    \\ \bottomrule
+    \texttt{uparea.bin}       & \texttt{uparea}   & -                           & Upstream Drainage Area                       & \unit{m^2}        & real    \\ 
+    \texttt{outclm.bin}       & \texttt{outclm}   & -                           & Averaged Discharge (for channel parameters)                       & \unit{m^3 s^-1}        & real    \\  \bottomrule
     \end{tabular}
 \end{table}
 
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{Figures/陆地表面的水分循环/CaMa-Flood流域单元分布图.png}
+\caption[CaMa-Flood流域单元分布图]{CaMa-Flood所使用的流域单元分布图。每个流域单元的出口用白色圆点标记。红色线条连接不同流域单元，箭头指向下游流域单元。蓝色代表真实河道（源自于90米MERIT-Hydro数据）}
+\label{fig:流域单元分布图}
+\end{figure}
+}
 
 假设任意网格的洪水事件是从高程低的区域到高程高的区域发生淹没，
 任意流域单元(图~\ref{fig:基于流域单元的漫滩高程剖面函数}) 的漫滩面积可以由漫滩水深$D_f$ (m) 
@@ -285,8 +462,8 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/陆地表面的水分循环/基于流域单元的漫滩高程剖面函数.png}
-\caption{基于流域单元的漫滩高程剖面函数。图片摘自\citet{yamazaki2013improving}。  }
+\includegraphics[width=1.0\textwidth]{Figures/陆地表面的水分循环/基于流域单元的漫滩高程剖面函数.png}
+\caption{基于流域单元的漫滩高程剖面函数。}
 \label{fig:基于流域单元的漫滩高程剖面函数}
 \end{figure}
 }
@@ -294,7 +471,7 @@ CaMa-Flood 模拟所需的相关次网格地形参数是由 90m 超高精细分�
 
 河道断面参数(河道长度$W$ (m)和河道深度 $B$ (m))是水动力模拟的主要参数之一。在CaMa-Flood中的该参数是流域产流量的气候态的经验函数，由以下公式推导得出：
 \begin{equation}
-W=\max \left(W_{min}, c_{w} * Q_{ave}{}^{p_{w}}+W_{0}\right)
+W=\max \left(W_{min},\ c_{w} * Q_{ave}{}^{p_{w}}+W_{0}\right)
 \end{equation}
 \begin{equation}
 B=\max \left(B_{min}, c_{H} * Q_{ave}{}^{p_{H}}+B_{0}\right)
@@ -310,8 +487,8 @@ CaMa-Flood推荐使用通过 \texttt{set\_gwdlr.F90} 子程序生成组合宽度
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/陆地表面的水分循环/基于卫星数据生成的河道宽度示意图.png}
-\caption{基于卫星数据生成的河道宽度示意图。图片摘自\citet{yamazaki2011physically}。}
+\includegraphics[width=1.0\textwidth]{Figures/陆地表面的水分循环/基于卫星数据生成的河道宽度示意图.png}
+\caption{基于卫星数据生成的河道宽度示意图}
 \label{fig:基于卫星数据生成的河道宽度示意图}
 \end{figure}
 }
@@ -329,9 +506,7 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
  ，例如 \texttt{test\_1deg.bin})。同时，还需准备一个文本文件 (比如说 \texttt{diminfo\_test-1deg.txt}) 用来指定模拟的维度
   (比如说区域，分辨率，流域单元数量，输入经纬度网格数量，输入的映射文件名 \texttt{test\_***.bin})。
 
-在 \texttt{map} 目录中，CaMa-Flood 还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据 (如 \texttt{3sec}，\texttt{1min}，\texttt{15min}，
-\texttt{3min} 等目录之下)。
-高分辨率数据被划分为\texttt{\$(TILE).\$(VAR).bin}，每个TILE的区域记录在 \texttt{location.txt} 文件之中；
+在 \texttt{map} 目录中，CaMa-Flood 还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据 (即 \texttt{3sec}，\texttt{15sec}和\texttt{1min})。高分辨率数据被划分为\texttt{\$(TILE).\$(VAR).bin}，每个TILE的区域记录在 \texttt{location.txt} 文件之中；
 具体提供的参数 \texttt{\$(VAR)} 如表~\ref{tab:河网图及地形参数文件列表2} 所示。其中 \texttt{\$(TILE).flwdir.bin} 和
 \texttt{\$(TILE).downxy.bin} 分别以基于 D8 格式和 downstreamXY 格式描述了河流流向；\texttt{\$(TILE).catmzy.bin} 表示流域单元内的网格 (ix, iy) 
 在高分辨率经纬度网格 (iXX, iYY)上的映射；\texttt{\$(TILE).catmzz.bin} 表示每个网格对应的漫滩层；\texttt{\$(TILE).flddif.bin} 表示每个网格堤坝平均高度 [m]，
@@ -420,10 +595,10 @@ HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多�
 城市模式所需基础数据主要包含城市覆盖、城市类型、建筑形态、辐射与热力属性、生态数据以及人类活动相关数据。由于城市内部强异质性且近年来城市化迅速发展，为体现更为精细化的城市内部空间属性特征和其时空变化，城市模式基础数据在选取时主要遵循高分辨率、多时次的原则，通过以下两方面完成城市基础城市数据制作：
 
 \begin{enumerate}
-\item 集成目前已有的高分辨率数据。搜集目前已经发布的高分辨率数据，通过一定处理使其用于城市模式；
+\item 集成目前已有的高分辨率数据。搜集目前已经发布的高分辨率数据，通过一定处理使其适用于城市模式；
 \item 自主研制部分高分辨率(主要为城市LAI/SAI)。由于部分数据的缺失，通过多源数据发展适用于城市模式的基础数据；
 \end{enumerate}
-目前城市模式所用基础数据如表~\ref{tab:城市数据分类及来源}所示。
+目前城市模式所用基础数据如表~\ref{tab:城市数据分类及来源} 所示。
 {
 \begin{landscape}
 \begin{table}[htbp]
@@ -433,7 +608,7 @@ HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多�
     \begin{tabular}{ccccc>{\centering\arraybackslash}p{5.5cm}}
     \toprule
     数据类型 & 数据名称 & 分辨率 & 时间范围 & 参考文献\\ \midrule
-    城市覆盖 & MODIS Land Cover Type & 500m & 2000-2020 & \citet{Friedl2019}  \\
+    城市覆盖 & MODIS Land Cover Type & 500m & 2000--2020 & \citet{Friedl2019}  \\
     \hline
     \multirow{2}*{城市类型}  & NCAR Urban Density Class & 1km & 单时次 & \citet{jackson2010parameterization} \\
                     & LCZ Class  & 100m & 单时次 & \citet{demuzere2022global} \\
@@ -448,18 +623,18 @@ HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多�
     \hline
     \multirow{4}*{建筑辐射与热力数据} & 屋顶/墙体/透水面/不透水面反照率 & \multirow{4}*{/} &  \multirow{4}*{/} & \multirow{4}*{\makecell{\citet{oleson2020parameterization}\\\citet{stewart2014evaluation}}} \\
                                    & 屋顶/墙体/透水面/不透水面发射率 \\
-                                   & 屋顶/墙体/不透水面热容量 \\
+                                   & 屋顶/墙体/不透水面比热容 \\
                                    & 屋顶/墙体/不透水面热导率 \\
                                    % & 屋顶/墙面/透水面/不透水面发射率 & / & / & 待补充 \\
-                                   % & 屋顶/墙面/不透水面热容量 & / & / & 待补充 \\
+                                   % & 屋顶/墙面/不透水面比热容 & / & / & 待补充 \\
                                    % & 屋顶/墙面/不透水面热导率 & / & /& 待补充 \\
     \hline
-    \multirow{4}*{城市生态数据} & 城市树LAI & 500m & 2000-2020 & / \\
+    \multirow{4}*{城市生态数据} & 城市树LAI & 500m & 2000--2020 & / \\
                               & 城市树高 & 10m & 单时次 & \citet{lang2023high}  \\
                               & 城市树覆盖度 & 30m & 2000,2005,2010,2015 & \citet{townshend2016gfcc} \\
                               & 城市水体覆盖度 & 30m & 2000,2010,2020 & \citet{陈军2017} \\
     \hline
-    \multirow{2}*{城市人类活动数据} & LandScan人口密度 & 1km & 2000-2020 & \citet{dobson2000landscan} \\
+    \multirow{2}*{城市人类活动数据} & LandScan人口密度 & 1km & 2000--2020 & \citet{dobson2000landscan} \\
                                  & LUCY国家分类 & 5km & / & \citet{allen2011} \\
     \bottomrule
     \end{tabular}
@@ -482,20 +657,16 @@ HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多�
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{Figures/基础数据/LCZ分类图示.jpg}
-\caption{LCZ分类示意图~\citep{demuzere2020combining,stewart2012local}。}
+\caption{LCZ分类示意图~\citep{demuzere2020combining,stewart2012local}}
 \label{fig:LCZ分类图示}
 \end{figure}
 }
 
 \subsubsection{传统城市分类}\label{传统城市分类}
 模式对于传统的城市类型分类与NCAR CLM--Urban Model~\citep{oleson2020parameterization} 相同，
-根据 \citet{jackson2010parameterization} 的城市分类数据对全球城市化程度进行分类。该数据集中，城市化有三个水平，
-即TBD、HD和MD，每1 km格点被划分为三个密度类别之一，通过该数据集对urban patch分为3类。其中，
-TBD类城市指至少在1平方公里内，建筑高度全部大于或等于10层楼高且透水面比例较小(5$\sim$15\%)；HD类城市建筑高度为3$\sim$10层，
-透水面比例通常为5$\sim$25\%，这些地区通常为商业、住宅或工业区；MD类城市建筑高度通常为1$\sim$3层，且透水面比例较高，为20$\sim$60\%。
+根据 \citet{jackson2010parameterization} 的城市分类数据对全球城市种类进行分类。该数据将城市地表覆盖进一步划分为TBD、HD和MD三种类型，其中，TBD类城市指至少在1平方公里内，建筑高度全部大于或等于10层楼高且透水面比例较小(5$\sim$15\%)；HD类城市建筑高度为3$\sim$10层，透水面比例通常为5$\sim$25\%，这些地区通常为商业、住宅或工业区；MD类城市建筑高度通常为1$\sim$3层，透水面比例约为20$\sim$60\%。原数据由1km重采样到500m后，将城市类型赋予对应格点的MODIS城市地表。
 \subsubsection{LCZ分类}\label{LCZ分类}
-LCZ数据目前使用 \citet{demuzere2022global} 发布的全球LCZ分类数据，该数据空间分辨率为100米，
-通过向轻量级随机森林模型输入大量标记训练区域和地球观测图像来生成，并对150个选定的功能城市地区采用自助交叉验证和专题基准测试评估了其质量。
+LCZ数据目前使用 \citet{demuzere2022global} 发布的全球LCZ分类数据，该数据空间分辨率为100米，通过向轻量级随机森林模型输入大量标记训练区域和地球观测图像来生成，并对150个选定的功能城市地区采用自助交叉验证和专题基准测试评估了其质量。将原始数据由100m聚合到500m，并把占比最高的LCZ作为500m网格的LCZ类型，进而将LCZ类型赋予对应格点的MODIS城市地表。
 
 
 \subsection{建筑形态数据}\label{建筑形态数据}
@@ -505,14 +676,14 @@ LCZ数据目前使用 \citet{demuzere2022global} 发布的全球LCZ分类数据�
 建筑比例同样采用\citet{li2022global}发布的数据，相比于其他陆面模型使用的根据区域或者LCZ类型查找表赋值的方法，该数据精度较高，能更加真实的还原城市内部建筑的分布以及异质性。
 
 \subsubsection{透水面占比}\label{透水面占比}
-对于传统城市分类，城市的透水面占比通过33个国家/地区分类以及3种城市类型查找表获得，国家/地区分类由~\citet{oleson2020parameterization}数据得到，其全球分类如图~\ref{fig:地区分类}所示。
-LCZ同样根据LCZ类型查找表，形态参数设置参考~\citet{stewart2014evaluation}，如表~\ref{tab:lcz局地气候区建筑属性参数}所示。
+对于传统城市分类，城市的透水面占比通过33个国家/地区分类以及3种城市类型查找表获得，国家/地区分类由~\citet{oleson2020parameterization}数据得到，其全球分类如图~\ref{fig:地区分类} 所示。
+LCZ同样根据LCZ类型查找表，形态参数设置参考~\citet{stewart2014evaluation}，如表~\ref{tab:lcz局地气候区建筑属性参数} 所示。
 
 \subsubsection{街谷高宽比}\label{街谷高宽比}
-同透水面占比，传统城市分类通过33个国家/地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置。
+同透水面占比，传统城市分类通过33个国家/地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsubsection{屋顶/墙体厚度}\label{屋顶/墙体厚度}
-屋顶/墙体厚度同样基于查找表，传统城市分类通过33个国家/地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置。
+屋顶/墙体厚度同样基于查找表，传统城市分类通过33个国家/地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 {
 \begin{figure}[htbp]
@@ -526,23 +697,22 @@ LCZ同样根据LCZ类型查找表，形态参数设置参考~\citet{stewart2014e
 \subsection{建筑辐射及热力数据}\label{建筑辐射及热力数据}
 对于传统城市分类，建筑辐射及热力参数目前根据\citet{oleson2020parameterization}基于\citet{jackson2010parameterization}的建筑数据开发的NCAR城市工具
 (Toolbox for Human-Earth SystemIntegration \& Scaling (THESIS) toolset, \url{http://www.cgd.ucar.edu/iam/projects/thesis/thesis-urbanproperties-tool.html})得到，该工具通过不同地区建筑材料构成为全球33个分区及3类城市生成建筑辐射及热力参数表。
-LCZ分类建筑辐射参数参考~\citet{stewart2014evaluation}，热力参数则参考WRF设置，如附录表~\ref{tab:lcz局地气候区建筑属性参数}所示。
+LCZ分类建筑辐射参数参考~\citet{stewart2014evaluation}，热力参数则参考WRF设置，如附录表~\ref{tab:lcz局地气候区建筑属性参数} 所示。
 
 \subsubsection{建筑反照率}\label{建筑反照率}
-对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+对于传统城市分类，反照率(包括屋顶、墙面、不透水面和透水面)通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsubsection{建筑发射率}\label{建筑发射率}
-反射率设置同反照率，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+反射率设置同反照率，包括屋顶、墙面、不透水面和透水面，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
-\subsubsection{建筑热容量}\label{建筑热容量}
-建筑热容量同样基于查找表，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+\subsubsection{建筑比热容}\label{建筑比热容}
+建筑比热容(包括屋顶、墙壁和不透水面)同样基于查找表，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsubsection{建筑热导率}\label{建筑热导率}
-建筑热导率同建筑热容量，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+建筑热导率同建筑比热容，包括屋顶、墙壁和不透水面，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsection{城市生态数据}\label{城市生态数据}
-NCAR CLM城市数据集比较全面的描述了全球城市的形态特征和物理性质，但是其城市数据缺少关于植被(树)和水体的描述，
-LCZ分类虽然有植被描述但通常是一个范围值。由于城市只占全球陆地的1\%左右，相比于自然地表，在大尺度上城市占比仍然比较小，
+现有的城市模式数据集主要关注城市建筑形态和物理性质，但是缺少关于植被(树)和水体(即城市生态功能)的描述，LCZ分类虽然有植被描述但通常是一个范围值。由于城市只占全球陆地的1\%左右，相比于自然地表，在大尺度上城市占比仍然比较小，
 因此在补充城市内部的植被覆盖数据时，需要尽量选择高分辨率的数据。否则，如果分辨率过低，城市中的植被等信息很可能无法识别。
 
 \subsubsection{城市LAI/SAI数据}\label{城市LAISAI数据}
@@ -556,7 +726,7 @@ SAI_{urb}=\sum_{i=1}^{9} SAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \
 其中$LAI_{PFT_{i}}$($SAI_{PFT_{i}}$)为PFT的LAI(SAI)，$HTOP_{urb}$和 $HTOP_{PFT_{i}}$分别为城市树高和PFT树高，$PCT_{PFT_{i}}$为PFT占比。$HTOP_{urb}$分辨率为500 m，PFT占比、LAI/SAI以及PFT树高均为0.5\textdegree{}分辨率，通过插值计算后便得到500m分辨率下LAI/SAI数据。
 
 \subsubsection{城市树高}\label{城市树高数据}
-CoLM自然植被树高采用\cite{simard2011mapping}发布的全球树高数据，该数据虽然应用广泛，但是分辨率较低(1 km)，无法满足城市模拟的需求，近年来，关于树高的高分辨率数据发展迅速，\cite{potapov2021mapping}利用GEDI卫星数据反演的树高数据具有较高的空间分辨率(30m,)，但是由于卫星运行轨道限制，该数据目前只发布了$51.6°N$ $\sim$ $51.6°S$范围内的数据。\cite{lang2023high}则开发了一种从Sentinel-2光学图像中检索冠层高度的深度学习模型，该模型可以有效降低卫星观测树高偏低的问题，\cite{lang2023high}利用该模型并结合GEDI 30m树高数据生成了全球10m树高地图。相比于GEDI数据，该数据更全(全球)，同时改善了GEDI偏低的问题，并且分别率更高(10m)，因此将该数据集作为城市树高基础数据。
+CoLM自然植被树高采用~\citet{simard2011mapping}发布的全球树高数据，该数据虽然应用广泛，但是分辨率较低(1 km)，无法满足城市模拟的需求，近年来，关于树高的高分辨率数据发展迅速，\citet{potapov2021mapping}利用GEDI卫星数据反演的树高数据具有较高的空间分辨率(30m,)，但是由于卫星运行轨道限制，该数据目前只发布了$51.6°N$ $\sim$ $51.6°S$范围内的数据。\citet{lang2023high}则开发了一种从Sentinel-2光学图像中检索冠层高度的深度学习模型，该模型可以有效降低卫星观测树高偏低的问题，\citet{lang2023high}利用该模型并结合GEDI 30m树高数据生成了全球10m树高地图。相比于GEDI数据，该数据更全(全球)，同时改善了GEDI偏低的问题，并且分别率更高(10m)，因此将该数据集作为城市树高基础数据。
 
 \subsubsection{城市树覆盖度}
 GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
@@ -585,7 +755,7 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 \subsection{城市人类活动数据}\label{城市人类活动数据}
 
 \subsubsection{人口密度数据}\label{人口密度数据}
-人口密度数据目前使用由美国能源部橡树岭国家实验室(ORNL)推出的LandScan数据~\citep{dobson2000landscan}，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是常用的全球人口动态统计分析数据集之一，该数据空间分辨率高(1km)，时间可覆盖2000-2022年。
+人口密度数据目前使用由美国能源部橡树岭国家实验室(ORNL)发布的LandScan数据~\citep{dobson2000landscan}，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是常用的全球人口动态统计分析数据集之一，该数据空间分辨率为1km，时间覆盖2000--2022年。
 
 \subsubsection{LUCY国家分类}\label{LUCY国家分类}
 LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国家的汽车拥有量以及不同时刻的交通流量，用于交通热模拟，该数据分辨率为5km，单时次数据。

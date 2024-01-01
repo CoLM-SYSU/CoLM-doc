@@ -20,7 +20,7 @@ A_{n,sha}=\min \left(A_{c,sha}, A_{j,sha}, A_{p,sha}\right)-R_{d,sha}
 其中，下标$sun$和$sha$分别代表在阳叶和阴叶冠层尺度上的光合同化速率和呼吸速率。
 
 
-RuBP羧化酶限制主要指当羧化酶活性较低时，光合作用羧化速率受限，也称为Rubisco限制。由于Rubisco同时催化RuBP的羧化反应和氧化反应，羧化反应需要CO$_2$而氧化反应需要O$_2$，羧化反应和氧化反应同时进行。因此，C3植物的胞间CO$_2$分压$c_i$和O$_2$分压$o_i$的比例极大影响了Rubisco作为羧化酶的效率。基于这个原因，C3植物的Rubisco限制下的光合同化速率($A_c$)可表达为Michaelis-Menten关于$c_i$和$o_i$的函数。此外，C4植物Rubisco限制下的光合羧化速率不再受胞间CO$_2$分压和O$_2$分压的影响，这是由于C4植物的光合作用途径的最初步骤是PEP的羧化，PEP羧化酶的活性很高,所以转运到维管束鞘细胞中的CO$_2$的浓度很高,大约是空气中的十倍。C4植物的卡尔文循环在在维管束鞘细胞进行，CO$_2$分压和O$_2$分压的变化对羧化速率的影响较小，因此，Rubisco限制下的光合同化速率在阳叶和阴叶冠层尺度($A_{c,sun}$和$A_{c,sha}$)下可表示为CO$_2$分压($c_{i,sun}$和$c_{i,sha}$)，O$_2$分压($o_{i,sun}$和$o_{i,sha}$)和最大羧化速率的函数($V_{c \max,sun}$和$V_{c \max,sha}$)：
+RuBP羧化酶限制主要指当羧化酶活性较低时，光合作用羧化速率受限，也称为Rubisco限制。由于Rubisco同时催化RuBP的羧化反应和氧化反应，羧化反应需要CO$_2$而氧化反应需要O$_2$，羧化反应和氧化反应同时进行。因此，C3植物的胞间CO$_2$分压$c_i$和O$_2$分压$o_i$的比例极大影响了Rubisco作为羧化酶的效率。基于这个原因，C3植物的Rubisco限制下的光合同化速率($A_c$)可表达为Michaelis-Menten关于$c_i$和$o_i$的函数。此外，C4植物Rubisco限制下的光合羧化速率不再受胞间CO$_2$分压和O$_2$分压的影响，这是由于C4植物的光合作用途径的最初步骤是PEP的羧化，PEP羧化酶的活性很高,所以转运到维管束鞘细胞中的CO$_2$的浓度很高,大约是空气中的十倍。C4植物的卡尔文循环在在维管束鞘细胞进行，CO$_2$分压和O$_2$分压的变化对羧化速率的影响较小，因此，Rubisco限制下的光合同化速率在阳叶和阴叶冠层尺度($A_{c,sun}$和$A_{c,sha}$)下可表示为胞间CO$_2$分压($c_{i,sun}$和$c_{i,sha}$)，大气分压($o_{i}$)和最大羧化速率的函数($V_{c \max,sun}$和$V_{c \max,sha}$)：
 \begin{equation}\label{A_C1sun}
 A_{c,sun}=\begin{cases}
 \frac{V_{c \max,sun}\left(c_{i,sun}-\Gamma_{sun}\right)}{c_{i,sun}+K_{c}\left(1+\frac{o_{i}}{K_{o}}\right)}
@@ -156,7 +156,7 @@ R_{d,sha}=\tau_{{base }} \cdot V_{cmax 25} \cdot \frac{2.0^{\frac{T_{leaf}-T_{op
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/气孔导度和光合作用/叶片气孔光合作用导度模型示意图.png}
-\caption{叶片气孔光合作用导度模型示意图。}
+\caption{叶片气孔光合作用导度模型示意图}
 \label{fig:叶片气孔光合作用导度模型示意图}
 \end{figure}
 }
@@ -189,7 +189,7 @@ $r_{s,sun}$和$r_{s,sha}$代表阳叶和阴叶冠层尺度的气孔阻抗，单�
 是气温的函数，单位: Pa；$p_s$是大气压强，单位: Pa，$\beta_{sun}$和$\beta_{sha}$是阳叶和阴叶的水分胁迫因子，取值范围0$\sim$1。
 
 
-因为气孔控制植被大气气体交换的同时受植被自身的光合能力和土壤水分水分亏缺的影响，需要联立光合作用模块方程、气体扩散方程，气孔导度模型和土壤水分胁迫方案，在阳叶和阴叶上分别求解冠层尺度气孔导度。
+因为气孔控制植被大气气体交换的同时受植被自身的光合能力和土壤水分亏缺的影响，需要联立光合作用模块方程、气体扩散方程，气孔导度模型和土壤水分胁迫方案，在阳叶和阴叶上分别求解冠层尺度气孔导度。
 由方程~\eqref{A_n2_sun}和~\eqref{A_n2_sha} 可知：
 \begin{equation}\label{cs_a1sun}
 c_{s,sun}=c_{a}-\frac{1.37 A_{n,sun}}{G_{b}} p_{s}
@@ -221,7 +221,170 @@ c_{i,sun}=c_{s,sun}-\frac{1.6 A_{n,sun} p_{s}}{G_{s,sun}}
 \begin{equation}\label{ci_1sha}
 c_{i,sha}=c_{s,sha}-\frac{1.6 A_{n,sha} p_{s}}{G_{s,sha}}
 \end{equation}
-气孔导度问题可以被抽象为求解方程组问题，即联立方程~\eqref{An1sun}, ~\eqref{An1sha}, \eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ei_cssun}, \eqref{ei_cssha}, \eqref{ci_1sun}和\eqref{ci_1sha}，求解未知变量 $G_{s,sun}$, $G_{s,sha}$, $c_{i,sun}$, $c_{i,sha}$, $c_{s,sun}$, $c_{s,sha}$, $A_{n,sun}$和 $A_{n,sha}$。详细求解方案见(章节~\ref{气孔导度数值计算方案})。
+气孔导度-光合作用耦合问题可以被数学地抽象为求解非线性方程组问题，即联立方程~\eqref{An1sun}, ~\eqref{An1sha}, \eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ei_cssun}--%
+%, \eqref{ei_cssha}, \eqref{ci_1sun}和
+\eqref{ci_1sha}，求解未知变量 $G_{s,sun}$, $G_{s,sha}$, $c_{i,sun}$, $c_{i,sha}$, $c_{s,sun}$, $c_{s,sha}$, $A_{n,sun}$和 $A_{n,sha}$。详细求解方案见章节~\ref{光合气孔耦合模型的数值计算方案}。
 
-\section{气孔导度数值计算方案}\label{气孔导度数值计算方案}
-气孔导度问题的求解，由于光合作用Farquhar模型的非线性，CoLM采用牛顿迭代法对该问题进行数值求解。
+
+\section{光合气孔耦合模型的数值计算方案}\label{光合气孔耦合模型的数值计算方案}
+由于光合作用Farquhar模型的非线性，且同时需要联立气体扩散方程和气孔导度方程，CoLM采用割线法和抛物线法的混合方法对气孔导度-光合作用耦合问题进行数值求解。上一节已经介绍过关于气孔导度--光合作用耦合问题需联立求解的8个方程~\eqref{An1sun}, \eqref{An1sha}, \eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ei_cssun}--%
+%, \eqref{ei_cssha}, \eqref{ci_1sun}和
+\eqref{ci_1sha}。其中，胞间$\mathrm{CO_2}$浓度是连接气孔导度模型和光合作用模型的关键，胞间$\mathrm{CO_2}$浓度既是Farquhar光合作用模型的输入，即方程~\eqref{An1sun}和~\eqref{An1sha}的自变量，又是气体扩散方程的输入，即方程~\eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ci_1sun} 和~\eqref{ci_1sha} 的自变量。同时，胞间$\mathrm{CO_2}$浓度($c_{s,sun}$)和叶表$\mathrm{CO_2}$浓度$c_{s,sha}$)之间的浓度梯度也是刻画光合同化速率($A_{n,sun}$和$A_{n,sha}$)和气孔导度关系的重要变量。因此原方程组可简化为两个零点方程$f_1(c_{i,sun})=0$和$f_2(c_{i,sha})=0$。方程组的求解问题可等价为对目标函数$f_1(c_{i,sun})$和$f_2(c_{i,sha})$的零点搜索问题，具体目标函数可化为：
+\begin{align}\label{f1_cisun}
+f_{1}\left(c_{i,sun}\right)=&\,c_{i,sun}-c_{s,sun}\left(A_{n,sun}\left(c_{i,sun}\right)\right) \nonumber \\[1ex] 
++& \, \frac{1.6A_{n,sun}\left(c_{i,sun}\right)p_s}{G_{s,sun}\left(A_{n,sun}\left(c_{i,sun}\right),c_{s,sun}\left(A_{n,sun}\left(c_{i,sun}\right)\right)\right)}
+\end{align}
+\begin{align}\label{f1_cisha}
+f_{2}\left(c_{i,sha}\right)=&\,c_{i,sha}-c_{s,sha}\left(A_{n,sha}\left(c_{i,sha}\right)\right) \nonumber \\[1ex] 
++& \, \frac{1.6A_{n,sha}\left(c_{i,sha}\right)p_s}{G_{s,sha}\left(A_{n,sha}\left(c_{i,sha}\right),c_{s,sha}\left(A_{n,sha}\left(c_{i,sha}\right)\right)\right)}
+\end{align}
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/气孔导度和光合作用/光合气孔耦合模型数值解法示意图.png}
+\caption[光合气孔耦合模型数值解法示意图]{光合气孔耦合模型数值解法示意图，割线法对前两次迭代结果进行线性拟合，拟合结果和$x=0$的交点即为下一轮迭代的胞间$\rm CO_2$浓度的取值，拟合方程$y=ax+b$,其中$a=\frac{c_{i,n-1}-c_{i,n-2}}{f\left(c_{i,n-1}-c_{i,n-2}\right)}$，$b=c_{i,n-2}-a\cdot f\left(c_{i,n-2}\right)$}
+\label{fig:光合气孔耦合模型数值解法示意图}
+\end{figure}
+}
+
+对目标函数的零点搜索过程中，我们采用割线法和二次方程拟合法，两种方法相结合的办法(如图~\ref{fig:光合气孔耦合模型数值解法示意图})。在割线法中，$c_{i,sun,se,n}$和$c_{i,sha,se,n}$是第$n$次迭代的胞间$\rm CO_2$浓度，存在与任意两次之前迭代结果(不妨设为第$k$次和第$l$次)的递推关系：
+\begin{equation}\label{cisunn}
+c_{i,sun,se,n}=c_{i,sun,se,k}-f_{1}\left(c_{i,sun,se,k}\right)\frac{c_{i,sun,se,k}-c_{i,sun,se,l}}{ f_{1}\left(c_{i,sun,se,k}\right)-f_{1}\left(c_{i,sun,se,l}\right)} 
+\end{equation}
+\begin{equation}\label{cishan}
+c_{i,sha,se,n}=c_{i,sha,se,k}-f_{2}\left(c_{i,sha,se,k}\right)\frac{c_{i,sha,se,k}-c_{i,sha,se,l}}{ f_{2}\left(c_{i,sha,se,k}\right)-f_{2}\left(c_{i,sha,se,l}\right)} 
+\end{equation}
+
+在二次方程拟合法中，$c_{i,sun,qd,n}$和$c_{i,sha,qd,n}$是第$n$次迭代的胞间$\rm CO_2$浓度，可由任意三次之前迭代的结果(不妨设为第$k$次，第$l$次和第$m$次)推导而出：
+\begin{equation}\label{cisunq}
+c_{i,sun,qd,n} =c_{i,sun,qd,l} \\
+  -a_{sun}\cdot f^2_{1}(c_{i,sun,qd,l}) - b_{sun}\cdot f_{1}(c_{i,sun,qd,l})
+\end{equation}
+\begin{equation}\label{cishaq}
+c_{i,sha,qd,n} =c_{i,sha,qd,l} \\
+  -a_{sha}\cdot f^2_{2}(c_{i,sha,qd,l}) - b_{sha}\cdot f_{2}(c_{i,sha,qd,l})
+\end{equation}
+
+其中$a_{sun}$，$a_{sha}$，$b_{sun}$和$b_{sha}$分别由前两次和前三次迭代结果递推而得：
+\begin{equation}\label{iterbsun}
+b_{sun} = \frac{\Delta c_{i,sun}\left(k,l\right)\Delta f^2_1\left(l,m\right)-\Delta c_{i,sun}(l,m) \Delta f^2_1\left(k,l\right)}{\Delta f^2_1\left(l,m\right) \Delta f_1 \left(k,l\right)-\Delta f^2_1\left(k,l\right)\Delta f_1 \left(l,m\right)}
+\end{equation}
+\begin{equation}\label{iterasun}
+a_{sun} = \frac{\left(c_{i,sun,dq,k}-c_{i,sun,dq,l}\right)-\left(f_1(c_{i,sun,dq,k})-f_1(c_{i,sun,dq,l})\right)\cdot b_{sun}}{f^2_1(c_{i,sun,dq,k})-f^2_1(c_{i,sun,dq,l})}
+\end{equation}
+\begin{equation}\label{iterbsha}
+b_{sha} = \frac{\Delta c_{i,sha}\left(k,l\right)\Delta f^2_2\left(l,m\right)-\Delta c_{i,sha}(l,m) \Delta f^2_2\left(k,l\right)}{\Delta f^2_2\left(l,m\right) \Delta f_2 \left(k,l\right)-\Delta f^2_2\left(k,l\right)\Delta f_2 \left(l,m\right)}
+\end{equation}
+\begin{equation}\label{iterasha}
+a_{sha} = \frac{\left(c_{i,sha,dq,k}-c_{i,sha,dq,l}\right)-\left(f_1(c_{i,sha,dq,k})-f_1(c_{i,sha,dq,l})\right)\cdot b_{sha}}{f^2_1(c_{i,sha,dq,k})-f^2_1(c_{i,sha,dq,l})}
+\end{equation}
+$\Delta$ 用于表示之前第$p$次和第$q$次迭代结果之间的差值：
+\begin{equation}
+\Delta c_{i,sun}(p,q)\equiv c_{i,sun,qd,p} - c_{i,sun,qd,q} 
+\end{equation}
+\begin{equation}
+\Delta c_{i,sha}(p,q)\equiv c_{i,sha,qd,p} - c_{i,sha,qd,q} 
+\end{equation}
+\begin{equation}
+\Delta f_1 \left(p,q\right)\equiv f_1(c_{i,sun,qd,p})-f_1(c_{i,sun,qd,q})
+\end{equation}
+\begin{equation}
+\Delta f_2 \left(p,q\right)\equiv f_2(c_{i,sha,qd,p})-f_2(c_{i,sha,qd,q})
+\end{equation}
+\begin{equation}
+\Delta f^2_1 \left(p,q\right)\equiv f^2_1(c_{i,sun,qd,p})-f^2_1(c_{i,sun,qd,q})
+\end{equation}
+\begin{equation}
+\Delta f^2_2 \left(p,q\right)\equiv f^2_2(c_{i,sha,qd,p})-f^2_2(c_{i,sha,qd,q})
+\end{equation}
+另外，$k$，$l$和$m$的选择见数值方案解法流程图 (图~\ref{fig:气孔数值解法流程图})。
+
+对于割线法来说，因为要运用方程~\eqref{cisunn} 和~\eqref{cishan} 对胞间$\rm CO_2$浓度进行猜解，需要至少两次之前迭代的结果。所以，胞间$\rm CO_2$浓度的前两次初始迭代的取值($c_{i,sun,1}$，$c_{i,sha,1}$，$c_{i,sun,2}$和$c_{i,sha,2}$)需要预先给定；对于二次方程拟合方法来说，因为方程~\eqref{cisunq} 和~\eqref{cishaq} 需要三次之前迭代的结果进行拟合，前三次初始迭代的胞间$\rm CO_2$浓度的取值也需要预先给定。由于两种方法都需要至少两次初始迭代结果，我们令割线法和二次方程拟合法的前两次初始迭代的胞间$\rm CO_2$浓度取值一致。
+
+胞间$\rm CO_2$浓度的第1个初始迭代取值($c_{i,sun,1}$和$c_{i,sha,1}$)，按C3、C4植物类型被区分：
+\begin{align}\label{ci_1}
+\begin{cases}
+c_{i,sun,1}=c_{i,sha,1}=\frac{0.25 \cdot o_{i}} {2600 \cdot 0.57 ^\frac{T_{{leaf }} -  T_{o p}}{10}} + 0.5\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right) &\rm for\,\, C3\\
+c_{i,sun,1}=c_{i,sha,1}=0.5\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right)   &\rm for\,\, C4
+\end{cases}
+\end{align}
+
+胞间$\rm CO_2$浓度的第2个初始迭代取值($c_{i,sun,2}$和$c_{i,sha,2}$)，和C3、C4植物类型和第一次猜解结果$f_{1}\left(c_{i,sun,1}\right)$，$f_{2}\left(c_{i,sha,1}\right)$的符号有关，这是为了让目标函数尽量接近0点：
+
+如果$f_{1}\left(c_{i,sun,1}\right)\geqslant 0$则阳叶胞间$\rm CO2$浓度的第二次迭代取值为：
+\begin{align}\label{cisun_2_fp}
+c_{i,sun,2}=
+\begin{cases}
+\frac{0.4 \cdot o_{i}} {2600 \cdot 0.57 ^\frac{T_{{leaf }} -  T_{o p}}{10}} + 0.2\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right)  &\rm for\,\, C3\\
+0.2\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right) &\rm for\,\, C4
+\end{cases}
+\end{align}
+
+如果$f_{2}\left(c_{i,sha,1}\right)\geqslant0$，则阴叶胞间$\rm CO2$浓度的第二次迭代取值为：
+\begin{align}\label{cisha_2_fp}
+c_{i,sha,2}=
+\begin{cases}
+\frac{0.4 \cdot o_{i}} {2600 \cdot 0.57 ^\frac{T_{{leaf }} -  T_{o p}}{10}} + 0.2\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right)  &\rm for\,\, C3\\
+0.2\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right) &\rm for\,\, C4
+\end{cases}
+\end{align}
+
+如果$f_{1}\left(c_{i,sun,1}\right)<0$，则阳叶胞间$\rm CO2$浓度的第二次迭代取值为：
+\begin{align}\label{cisun_2_fn}
+c_{i,sun,2}=
+\begin{cases}
+\frac{0.1 \cdot o_{i}} {2600 \cdot 0.57 ^\frac{T_{{leaf }} -  T_{o p}}{10}} + 0.8\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right)  &\rm for\,\, C3\\
+0.8\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right) &\rm for\,\, C4
+\end{cases}
+\end{align}
+
+如果$f_{2}\left(c_{i,sha,1}\right)<0$，则阴叶胞间$\rm CO2$浓度的第二次迭代取值为：
+\begin{align}\label{cisha_2_fn}
+c_{i,sha,2}=
+\begin{cases}
+\frac{0.1 \cdot o_{i}} {2600. \cdot 0.57 ^\frac{T_{{leaf }} -  T_{o p}}{10}} + 0.8\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right)  &\rm for\,\, C3\\
+0.8\cdot c_{a}\cdot\left(1-\frac{1.6}{m}\right) &\rm for\,\, C4
+\end{cases}
+\end{align}
+
+二次方程拟合法的第三次迭代胞间$\rm CO2$浓度取值由割线法，按方程~\eqref{cisunn} 和~\eqref{cishan}计算得到：
+
+\begin{equation}\label{cisun3}
+c_{i,sun,qd,3}=c_{i,sun,1}-f_{1}\left(c_{i,sun,1}\right)\frac{c_{i,sun,1}-c_{i,sun,2}}{ f_{1}\left(c_{i,sun,1}\right)-f_{1}\left(c_{i,sun,2}\right)} 
+\end{equation}
+\begin{equation}\label{cisha3}
+c_{i,sha,qd,3}=c_{i,sha,1}-f_{2}\left(c_{i,sha,1}\right)\frac{c_{i,sha,1}-c_{i,sha,2}}{ f_{2}\left(c_{i,sha,1}\right)-f_{2}\left(c_{i,sha,2}\right)} 
+\end{equation}
+
+三次初始迭代以后，迭代所估计的每一步胞间$\rm CO_2$浓度$\left(c_{i,sun,k}和c_{i,sha,k}\right)$由割线法和二次方程拟合法的平均值共同确定：
+\begin{equation}
+c_{i,sun,k}=\frac{c_{i,sun,se,k}+c_{i,sun,qd,k}}{2}
+\end{equation}
+\begin{equation}
+c_{i,sha,k}=\frac{c_{i,sha,se,k}+c_{i,sha,qd,k}}{2}
+\end{equation}
+
+光合气孔耦合模型求解迭代算法的总体流程如流程图\ref{fig:气孔数值解法流程图}所示，包含一下几个步骤和规则：
+\begin{enumerate}
+\item 
+根据方程~\eqref{ci_1}--\eqref{cisha3}，分别计算最初三次迭代的胞间$\rm CO_2$浓度；
+\item 
+根据方程~\eqref{f1_cisun} 和~\eqref{f1_cisha} 和胞间$\rm CO_2$浓度初始值，计算前三次初始迭代的目标函数$f_1\left(c_{i,sun,k}\right)$，$f_2\left(c_{i,sha,k}\right)$ $\left(k=1,2,3\right)$；
+\item
+记录已有迭代结果按目标函数值进行排序，并找到最接近零点的两次(割线法)或三次迭代结果(二次方程拟合法)，计算下一迭代的胞间$\rm CO_2$浓度；
+\item
+根据胞间$\rm CO_2$浓度猜解，计算一迭代的目标函数。
+\item
+判断目标函数是否满足退出条件，如果目标函数的绝对值小于阈值0.1，则停止迭代，否则，重复步骤3--5。最终结果将保存最后一次迭代的各个状态。
+\end{enumerate}
+此外，步骤5的迭代退出判断不仅在步骤4之后进行，在初始迭代的目标函数计算之后同样需要判断退出条件。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{Figures/气孔导度和光合作用/气孔数值解法流程图.png}
+\caption{气孔数值解法流程图}
+\label{fig:气孔数值解法流程图}
+\end{figure}
+}

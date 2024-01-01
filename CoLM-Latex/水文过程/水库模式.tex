@@ -13,20 +13,20 @@
     \begin{tabular}{cc>{\centering\arraybackslash}p{5.5cm}}
     \toprule
     方案类型 & 方案代码 & 代表模式 \\ \midrule
-    \multirow{2}*{基于入流和需求的调度方案}  & H06 & H08, WaterGAP, WBMplus, MATSIRO, DBH, LPJmL \\
+    \multirow[b]{2}{*}{基于入流和需求的调度方案}  & H06 & H08, WaterGAP, WBMplus, MATSIRO, DBH, LPJmL \\\cline{2-3}
                     & V13  & MOSART‐WM \\
     \hline
-    \multirow{2}*{基于目标库容的分段调度方案}  & LIS & LISFLOOD, CWatM \\
+    \multirow{2}{*}{基于目标库容的分段调度方案}  & LIS & LISFLOOD, CWatM \\\cline{2-3}
                     & H22  & CAMA-Flood \\
     \bottomrule
     \end{tabular}
 \end{table}
 
 \subsection{H06方案}
-H06表示~\cite{hanasaki2006reservoir}提出的基于入流和需求的调度方案，该方案根据水库用途、水库初始库容、水库最大库容、模拟入流量和下游需水量等信息，分别为灌溉水库和非灌溉水库（除灌溉之外的用途均为非灌溉）设定调度规则，计算公式如下：
+H06表示~\citet{hanasaki2006reservoir}提出的基于入流和需求的调度方案，该方案根据水库用途、水库初始库容、水库最大库容、模拟入流量和下游需水量等信息，分别为灌溉水库和非灌溉水库（除灌溉之外的用途均为非灌溉）设定调度规则，计算公式如下：
 \begin{equation}
 Q_{out}=\begin{cases}
-k_{rls} \times Q_{out}^{'}, & \quad c \geq 0.5 \\
+k_{rls} \times Q_{out}^{'}, & \quad c \geqslant 0.5 \\
 R \times k_{rls} \times Q_{out}^{'}+\left(1-R\right) \times Q_{in}, & \quad c<0.5
   \end{cases}
 \end{equation}
@@ -36,7 +36,7 @@ R \times k_{rls} \times Q_{out}^{'}+\left(1-R\right) \times Q_{in}, & \quad c<0.
 \begin{cases}
 \text{灌溉水库，} Q_{out}^{'}= \begin{cases}
 Q_{n}+D-\overline{D}, &\quad DPI<(1-M)\\
-Q_{n} \times \left(M+\frac{\left(1-M\right)D}{\overline{D}}\right), &\quad DPI \geq (1-M)
+Q_{n} \times \left(M+\frac{\left(1-M\right)D}{\overline{D}}\right), &\quad DPI \geqslant (1-M)
 \end{cases}\\
 \text{非灌溉水库，} Q_{out}^{'}=Q_{n}
 \end{cases}
@@ -75,7 +75,7 @@ Q_{n} \times \left(M+\frac{\left(1-M\right)D}{\overline{D}}\right), &\quad DPI \
 \end{table}
 
 \subsection{V13方案}
-V13表示~\cite{voisin2013improved}提出的调度方案，在H06方案的基础上增加了防洪期以同时实现防洪和灌溉目标。该方案根据水库多年平均入库流量的季节变化，定义了三个特征时刻：NDFC表示防洪期结束月，为运营期开始前的湿润期的第一个月；STFC表示防洪期开始月，为运营期开始前的枯水期内流量最低的月份；STOp表示运营期的开始月，~\cite{hanasaki2006reservoir}将运营期的开始定义为长期平均月流量低于长期平均年流量的第一个月。
+V13表示~\citet{voisin2013improved}提出的调度方案，在H06方案的基础上增加了防洪期以同时实现防洪和灌溉目标。该方案根据水库多年平均入库流量的季节变化，定义了三个特征时刻：NDFC表示防洪期结束月，为运营期开始前的湿润期的第一个月；STFC表示防洪期开始月，为运营期开始前的枯水期内流量最低的月份；STOp表示运营期的开始月，\citet{hanasaki2006reservoir}将运营期的开始定义为长期平均月流量低于长期平均年流量的第一个月。
 在STFC到NDFC时段内，V13方案在H06方案的基础上增加额外的出流，从而使水库为汛期的到来留出更多库容，在原V13方案中该时段内每个时刻的额外出流:
 \begin{equation}
     drop = \frac{\sum_{i = STFC}^{NDFC - 1}{{(Q}_{\text{in}}^{i} - Q_{n})}}{\left( NDFC - \text{STFC} \right)}
@@ -90,33 +90,33 @@ V13表示~\cite{voisin2013improved}提出的调度方案，在H06方案的基础
 LIS表示LISFLOOD所采用的基于目标库容的分段调度方案(\url{https://ec-jrc.github.io/lisflood-model/3\_03\_optLISFLOOD\_reservoirs/})，计算公式如下：
 \begin{equation}
 \begin{aligned}
-    F > L_{f}, \quad &Q_{out}={max(Q_{max}, (F-L_{f}-0.01) \times \frac{V_t}{\Delta t})} \\
-    \quad &Q_{max} = {min(Q_{f}, {max(1.2 \times Q_{in},Q_{adj,n})})}
+    F > L_{f}, \quad &Q_{out}=\max\left[Q_{max},\ (F-L_{f}-0.01) \times \frac{V_t}{\Delta t}\right] \\
+    \quad &Q_{max} = \min\left[Q_{f},\ {\max(1.2 \times Q_{in},Q_{adj,n})}\right]
 \end{aligned}
 \end{equation}
 \begin{equation}
     L_{adj,f} < F < L_{f}, \quad Q_{out}=Q_{adj,n}+\left(Q_{f}-Q_{adj,n}\right) \times \frac{F-L_{adj,f}}{L_{f}-L_{adj,f}}
 \end{equation}
 \begin{equation}
-    L_{n} < F < L_{adj,f}, \quad Q_{out}=Q{adj,n}
+    L_{n} < F < L_{adj,f}, \quad Q_{out}=Q_{adj,n}
 \end{equation}
 \begin{equation}
     2L_{c} < F < L_{n}, \quad Q_{out}=Q_{min}+\left(Q_{adj,n}-Q_{min}\right) \times \frac{F-2L_{c}}{L_{n}-2L_{c}}
 \end{equation}
 \begin{equation}
-    F < 2L_{c}, \quad Q_{out}={min(Q_{min}, \frac{V_t}{\Delta t})}
+    F < 2L_{c}, \quad Q_{out}=\min\left[Q_{min}, \frac{V_t}{\Delta t}\right]
 \end{equation}
-如果出现$F<L_{f}$且$Q_{out}>{min(1.2 \times Q_{in}, Q_{adj,n})}$，则对水库出流结果进行以下修正：
+如果出现$F<L_{f}$且$Q_{out}>\min(1.2 \times Q_{in},\ Q_{adj,n})$，则对水库出流结果进行以下修正：
 \begin{equation}
-    Q_{out} = {min(Q_{out}, {max(Q_{in}, Q_{adj,n})})}
+    Q_{out} = \min\left[Q_{out}, \max(Q_{in}, Q_{adj,n})\right]
 \end{equation}
-上式中变量和参数的含义如下:
+上式中变量和参数的含义如表~\ref{tab:LIS方案变量参数表} 所示。
 
 \begin{table}[htbp]
     \centering
     \caption{LIS方案中的变量和参数的含义}
     \label{tab:LIS方案变量参数表}
-    \begin{threeparttable}
+%    \begin{threeparttable}
     \begin{tabular}{ccc}
     \toprule
     名称 & 含义/计算方法 & 量纲 \\ \midrule
@@ -132,27 +132,27 @@ LIS表示LISFLOOD所采用的基于目标库容的分段调度方案(\url{https:
     $Q_{f}$ & 防洪流量[参数] & [\unit{L^3.T^{-1}}]  \\
     $Q_{n}$ & 正常流量[参数] & [\unit{L^3.T^{-1}}]  \\
     $Q_{min}$ & 最小环境流量[参数] & [\unit{L^3.T^{-1}}] \\
-    $Q_{adj,n}$ & \makecell{调整正常流量[参数]，\\$Q_{adj,n}={max(Q_{min},{min(AdjQ_{n} \times Q_{n},Q_{f})})}$} & [\unit{L^3}] \\
+    $Q_{adj,n}$ & \makecell{调整正常流量[参数]，\\$Q_{adj,n}=\max(Q_{min},\,\min(AdjQ_{n} \times Q_{n},\,Q_{f}))$} & [\unit{L^3}] \\
     $AdjQ_{n}$ & 无量纲调整系数[参数]，取值$\left(0.25,2\right)$ &
     [-]\\
     \bottomrule
     \end{tabular}
-    \end{threeparttable}
+%    \end{threeparttable}
 \end{table}
 
 \subsection{H22方案}
-H22表示~\cite{hanasaki2022development}提出的调度方案，根据水库入流量和实时库容大小，调节出库流量以削减汛期峰值流量，控制出库流量不超过防洪流量，且根据汛期发展时段调整出流系数，计算公式如下:
+H22表示~\citet{hanasaki2022development}提出的调度方案，根据水库入流量和实时库容大小，调节出库流量以削减汛期峰值流量，控制出库流量不超过防洪流量，且根据汛期发展时段调整出流系数，计算公式如下:
 \begin{equation}
-    V_{e} < V < V_{t}, \quad Q_{out} = {max(Q}_{f}, Q_{\text{in}})\
+    V_{e} < V < V_{t}, \quad Q_{out} = \max(Q_{f},\, Q_{\text{in}})\
 \end{equation}
 \begin{equation}
-    V_{f}<V<V_{e}, Q_{out} = \begin{cases}
+    V_{f}<V<V_{e},\ Q_{out} = \begin{cases}
     Q_{f}+k \times \frac{V-V_{c}}{V_{e}-V_{c}} \times \left((Q_{in}-Q_{f})\right), & \quad Q_{in} > Q_{f}\\
     0.5Q_{n}+k \times \left(\frac{V-V_{c}}{V_{e}-V_{c}}\right)^2 \times (Q_{f}-Q_{n}), & \quad Q_{in} < Q_{f}
 \end{cases}   
 \end{equation}
 \begin{equation}
-    V_{c}<V<V_{f}, Q_{out} = \begin{cases}
+    V_{c}<V<V_{f},\ Q_{out} = \begin{cases}
     0.5Q_{n}+k \times \frac{V-V_{c}}{V_{f}-V_{c}} \times \left((Q_{f}-Q_{n})\right), & \quad Q_{in} > Q_{f} \\
     0.5Q_{n}+k \times \left(\frac{V-V_{c}}{V_{e}-V_{c}}\right)^2 \times (Q_{f}-Q_{n}), & \quad Q_{in} < Q_{f}
 \end{cases}   
@@ -160,13 +160,13 @@ H22表示~\cite{hanasaki2022development}提出的调度方案，根据水库入�
 \begin{equation}
     V < V_{c}, \quad Q_{out} = Q_{n} \times \frac{V}{V_{f}}
 \end{equation}
-上式中变量和参数的含义如下：
+上式中变量和参数的含义如表~\ref{tab:H22方案变量参数表} 所示。
 
 \begin{table}[htbp]
     \centering
     \caption{H22方案中的变量和参数的含义}
     \label{tab:H22方案变量参数表}
-    \begin{threeparttable}
+%    \begin{threeparttable}
     \begin{tabular}{ccc}
     \toprule
     名称 & 含义/计算方法 & 量纲 \\ \midrule
@@ -179,11 +179,11 @@ H22表示~\cite{hanasaki2022development}提出的调度方案，根据水库入�
     $V_{c}$  & 保留库容[参数] & [\unit{L^3}]  \\
     $Q_{f}$ & 防洪流量[参数] & [\unit{L^3.T^{-1}}]  \\
     $Q_{n}$ & 正常流量[参数] & [\unit{L^3.T^{-1}}]  \\
-    $K$ & \makecell{出流调节系数[参数]，\\取值${max(1-\frac{V_{t}-V_{f}}{A},0)}$} & [-] \\
+    $K$ & \makecell{出流调节系数[参数]，\\取值$\max\left(1-\frac{V_{t}-V_{f}}{A},0\right)$} & [-] \\
     $A$ & 水库汇流面积[参数] & [\unit{L^2}] \\
     \bottomrule
     \end{tabular}
-    \end{threeparttable}
+%    \end{threeparttable}
 \end{table}
 
 \section{考虑大坝影响的河道汇流参数化方案}
@@ -204,7 +204,7 @@ S_{i}^{t+\Delta t}=S_{i}^{t}+\sum_{k}^{Upstream-2} Q_{k}^{t} \Delta t-Q_{i}^{t} 
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/陆地表面的水分循环/大坝对下游河道汇流计算方案的影响示意图.png}
-\caption{大坝对下游河道汇流计算方案的影响示意图。}
+\caption{大坝对下游河道汇流计算方案的影响示意图}
 \label{fig:大坝对下游河道汇流计算方案的影响示意图}
 \end{figure}
 }

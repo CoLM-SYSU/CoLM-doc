@@ -7,7 +7,10 @@
 
 CoLM的土壤和凋落物存在垂直分层结构，碳氮动态变化根据平衡方程在每一层分别积分：
 \begin{equation}
-\begin{array}{r}\frac{\partial C_{i}(z)}{\partial t}=R_{i}(z)+\sum_{i \neq j}\left(1-r f_{j}\right) T_{j i} k_{j}(z) C_{j}(z)-k_{i}(z) C_{i}(z) \\ +\frac{\partial}{\partial z}\left(D(z) \frac{\partial C_{i}}{\partial z}\right)+\frac{\partial}{\partial z}\left(A(z) C_{i}(z)\right)\end{array}
+\begin{aligned}
+\frac{\partial C_{i}(z)}{\partial t}=R_{i}(z) &+\sum_{i \neq j}\left(1-r f_{j}\right) T_{j i} k_{j}(z) C_{j}(z)-k_{i}(z) C_{i}(z) \\
+&+\frac{\partial}{\partial z}\left(D(z) \frac{\partial C_{i}}{\partial z}\right)+\frac{\partial}{\partial z}\left(A(z) C_{i}(z)\right)
+\end{aligned}
 \end{equation}
 其中，$C_i\left(z\right)$是第$z$层的土壤碳密度(\unit{g.C.m^{-3}}); $R_i (z)$ 是第 $z$ 层土壤的凋落物碳输入，
 $\sum_{i\neq j}{\left(1-{rf}_j\right)T_{ji}k_j\left(z\right)C_j\left(z\right)}$代表土壤碳库$j$到碳库$i$的碳转变；
@@ -39,19 +42,23 @@ CoLM生物地球化学模块，控制土壤分解的环境因子包括土壤温�
 \end{equation}
 土壤水分因子根据土壤水势的计算而得出，刻画土壤水分对土壤分解的影响：
 \begin{equation}
-\xi_{w a t e r}(z)=\left\{\begin{array}{ll}\frac{\log \left(\frac{\Psi_{\min }}{\Psi(z)}\right)}{\log \left(\frac{\Psi_{\min }}{\Psi_{\max }}\right)} 
-    & \Psi(\mathrm{z})>\Psi_{\min } \\ 0  & \Psi(z)<\Psi_{\min }\end{array}\right.
+\xi_{w a t e r}(z)=\begin{cases}
+\frac{\log \left(\frac{\Psi_{\min }}{\Psi(z)}\right)}{\log \left(\frac{\Psi_{\min }}{\Psi_{\max }}\right)} 
+    & \Psi(\mathrm{z})>\Psi_{\min } \\
+0  & \Psi(z)<\Psi_{\min }
+\end{cases}
 \end{equation}
 其中，$\xi_{water}\left(z\right)$是第$z$层的土壤水分因子，$\Psi\left(z\right)$是第$z$层的土壤水势，
 $\Psi_{min}$是最小土壤水势，$\Psi_{max}$是最大土壤水势。当土壤水势小于最小土壤水势时，土壤周转速率为0。
 
 
-深度因子参数化了影响土壤分解的一些其他环境因素，比如，微生物过程、矿化表面或聚合稳定等过程 \citep{koven2013effect}，
-是拟合碳垂直浓度剖面的重要因素\citep{jenkinson2008turnover}:
+深度因子参数化了影响土壤分解的一些其他环境因素，比如，微生物过程、矿化表面或聚合稳定等过程~\citep{koven2013effect}，
+是拟合碳垂直浓度剖面的重要因素~\citep{jenkinson2008turnover}:
 \begin{equation}
 \xi_{d e p t h}=e^{-\frac{z}{10}}
 \end{equation}
 其中$z$是土壤深度(m)。
+
 
 \subsection{土壤分解的氮限制}\label{土壤分解的氮限制}
 土壤分解速率同样会受到土壤中无机氮含量的限制，但量化氮限制对土壤分解速率的影响，需要先计算无氮限制条件下的潜在土壤分解，其中土壤/凋落物库$i$ (第$z$层) 的潜在土壤分解为：
@@ -64,11 +71,13 @@ C F_{pot, i \rightarrow j}=C_{i}(z) k_{i}(z) \cdot\left(1-r f_{i}\right) \cdot T
 \end{equation}
 相应的从库$i$到库$j$的传输中，潜在的净无机氮增加等于矿化作用引起的无机氮增加减去有机氮固定引起的无机氮减少:
 \begin{equation}
-\begin{array}{l}NF_{pot\_{min, i \rightarrow j}}=\frac{C_{i}(z) k_{i}(z) \cdot T_{ij}}{C N_{i}}-\frac{C F_{pot, i \rightarrow j}}{C N_{j}} \\
-     =\frac{C_{i}(z) k_{i}(z) \cdot T_{i j} \cdot \frac{C N_{j}}{C N_{i}}-C_{i}(z) k_{i}(z) \cdot T_{i j} \cdot\left(1-r f_{i}\right)}{C N_{j}}=
-     -\frac{C_{i}(z) k_{i}(z) T_{i j}\left(1-r f_{i}-\frac{C N_{j}}{C N_{i}}\right)}{C N_{j}}\end{array}
+\begin{aligned}
+NF_{pot\_{min, i \rightarrow j}}&=\frac{C_{i}(z) k_{i}(z) \cdot T_{ij}}{C N_{i}}-\frac{C F_{pot, i \rightarrow j}}{C N_{j}} \\
+& =\frac{C_{i}(z) k_{i}(z) \cdot T_{i j} \cdot \frac{C N_{j}}{C N_{i}}-C_{i}(z) k_{i}(z) \cdot T_{i j} \cdot\left(1-r f_{i}\right)}{C N_{j}} \\
+&=-\frac{C_{i}(z) k_{i}(z) T_{i j}\left(1-r f_{i}-\frac{C N_{j}}{C N_{i}}\right)}{C N_{j}}
+\end{aligned}
 \end{equation}
-如图~\ref{fig:CoLM土壤凋落物碳氮循环网络示意图}所示共有10个土壤/凋落物之间的碳氮传输，所有10个传输引起的潜在净无机氮增加可具体表示为：
+如图~\ref{fig:CoLM土壤凋落物碳氮循环网络示意图} 所示共有10个土壤/凋落物之间的碳氮传输，所有10个传输引起的潜在净无机氮增加可具体表示为：
 \begin{equation}\label{NF_pot_minmet}
     NF_{{pot}\_{min,met \rightarrow {soil1,vr}}}(z)=-\frac{C_{{met}}(z) k_{{met}}(z) T_{met, soil1}\left(1-r f_{met}-\frac{C N_{{soil1 }}}{C N_{met}}\right)}{C N_{{soil1 }}}
 \end{equation}
@@ -99,7 +108,7 @@ C F_{pot, i \rightarrow j}=C_{i}(z) k_{i}(z) \cdot\left(1-r f_{i}\right) \cdot T
 \begin{equation}\label{NF_pot_min_soil3}
     NF_{pot\_{min,soil3 \rightarrow {soil1,vr}}}(z)=-\frac{C_{soil3}\left(z\right)k_{soil3}\left(z\right)T_{soil3,soil1}\left(1-rf_{soil3}-\frac{CN_{soil1}}{CN_{soil3}}\right)}{CN_{soil1}}
 \end{equation}
-把公式 \eqref{NF_pot_minmet}--\eqref{NF_pot_min_soil3} 所有正项求和，得到总矿化作用生成的无机氮：
+把公式~\eqref{NF_pot_minmet}--\eqref{NF_pot_min_soil3} 所有正项求和，得到总矿化作用生成的无机氮：
 \begin{equation}\label{NF_immob_demand_vr}
     NF_{immob,demand,vr}(z)=-\sum_{k=1}^{10}\min{\left(NF_{pot\_min,i(k)\rightarrow j (k)}, 0\right)}
 \end{equation}
@@ -136,52 +145,52 @@ CoLM在每层土壤中分别考虑无机氮的供需关系及其和每层无机�
 实际碳传输，也可根据氮限制因子 ($f_{immob\_{demand},vr}(z)$) 进一步得出：
 \begin{equation}
 CF_{met \rightarrow { soil1,vr }}(z)=\left\{\begin{array}{ll}C F_{pot, met \rightarrow soil1, vr}(z) \cdot f_{{immob}\_{demand}, vr}(z) & NF_{pot\_{min}, met \rightarrow {soil1}} <0 \\ 
-CF_{pot, met \rightarrow { soil1,vr }}(z) & NF_{pot\_{min}, met \rightarrow {soil1}} \geq 0
+CF_{pot, met \rightarrow { soil1,vr }}(z) & NF_{pot\_{min}, met \rightarrow {soil1}} \geqslant 0
 \end{array}\right.
 \end{equation}
 \begin{equation}
 CF_{cel \rightarrow { soil1,vr }}(z)=\left\{\begin{array}{ll}CF_{pot, cel \rightarrow { soil1,vr }}(z) \cdot f_{immob\_{demand, vr}}(z) & NF_{pot\_{min, cel \rightarrow {soil1}}}<0 \\ 
-CF_{pot, cel \rightarrow { soil1,vr }}(z) & NF_{pot\_{min,cel } \rightarrow { soil1 }} \geq 0
+CF_{pot, cel \rightarrow { soil1,vr }}(z) & NF_{pot\_{min,cel } \rightarrow { soil1 }} \geqslant 0
 \end{array}\right.
 \end{equation}
 \begin{equation}
 CF_{{lig } \rightarrow { soil2,vr }}(z)=\left\{\begin{array}{ll}C F_{pot, lig \rightarrow { soil2,vr }}(z) \cdot f_{immob\_{demand, vr}}(z) & NF_{pot\_{min, lig \rightarrow { soil2 }}} <0 \\ 
-CF_{pot, lig \rightarrow { soil2,vr }}(z) &  NF_{pot\_{min, lig \rightarrow { soil2}}} \geq 0
+CF_{pot, lig \rightarrow { soil2,vr }}(z) &  NF_{pot\_{min, lig \rightarrow { soil2}}} \geqslant 0
   \end{array}\right.
 \end{equation}
 \begin{equation}
     C F_{{soil1 } \rightarrow { soil2,vr }}(z)=\left\{\begin{array}{ll}C F_{pot, soil1 \rightarrow { soil2,vr }}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil2 }}<0 \\ 
-    CF_{pot, soil1 \rightarrow { soil2,vr }}(z) & NF_{pot\_{min, soil1 \rightarrow { soil2}}} \geq 0
+    CF_{pot, soil1 \rightarrow { soil2,vr }}(z) & NF_{pot\_{min, soil1 \rightarrow { soil2}}} \geqslant 0
   \end{array}\right.
 \end{equation}
 \begin{equation}
 CF_{cwd \rightarrow cel, vr}(z)=\left\{\begin{array}{ll} CF_{pot, cwd \rightarrow cel, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, cwd \rightarrow cel}} <0 \\ 
-CF_{pot, cwd \rightarrow cel, vr}(z) & NF_{pot\_{min, cwd \rightarrow cel}} \geq 0
+CF_{pot, cwd \rightarrow cel, vr}(z) & NF_{pot\_{min, cwd \rightarrow cel}} \geqslant 0
   \end{array}\right.
 \end{equation}
 \begin{equation}
 CF_{cwd \rightarrow lig, vr}(z)=\left\{\begin{array}{ll} CF_{pot, cwd \rightarrow lig, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, cwd \rightarrow lig}} <0 \\ 
-CF_{pot, cwd \rightarrow lig, vr}(z) & NF_{pot\_{min, cwd \rightarrow lig}} \geq 0
+CF_{pot, cwd \rightarrow lig, vr}(z) & NF_{pot\_{min, cwd \rightarrow lig}} \geqslant 0
   \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil1 \rightarrow soil3, vr}(z)=\left\{\begin{array}{ll} CF_{pot, soil1 \rightarrow soil3, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil3}} <0 \\ 
-    CF_{pot, soil1 \rightarrow soil3, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil3}} \geq 0
+    CF_{pot, soil1 \rightarrow soil3, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil3}} \geqslant 0
   \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil2 \rightarrow soil1, vr}(z)=\left\{\begin{array}{ll} CF_{pot, soil2 \rightarrow soil1, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil1}} <0 \\ 
-    CF_{pot, soil2 \rightarrow soil1, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil1}} \geq 0
+    CF_{pot, soil2 \rightarrow soil1, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil1}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil2 \rightarrow soil3, vr}(z)=\left\{\begin{array}{ll} CF_{pot, soil2 \rightarrow soil3, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil3}} <0 \\ 
-    CF_{pot, soil2 \rightarrow soil3, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil3}} \geq 0
+    CF_{pot, soil2 \rightarrow soil3, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil3}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil3 \rightarrow soil1, vr}(z)=\left\{\begin{array}{ll} CF_{pot, soil3 \rightarrow soil1, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil3 \rightarrow soil1}} <0 \\ 
-    CF_{pot, soil3 \rightarrow soil1, vr}(z) & NF_{pot\_{min, soil3 \rightarrow soil1}} \geq 0
+    CF_{pot, soil3 \rightarrow soil1, vr}(z) & NF_{pot\_{min, soil3 \rightarrow soil1}} \geqslant 0
    \end{array}\right.
 \end{equation}
 每个土壤凋落物碳库在每层土壤的实际碳分解：
@@ -208,64 +217,67 @@ C F_{{soil3,vr }}(z)=\frac{C F_{{soil } 3 \rightarrow { soil1,vr}}(z)}{1-r f_{{s
 \end{equation}
 其中每层土壤的异养呼吸$CF_{hr,vr}\left(z\right)$：
 \begin{equation}
-\begin{array}{l}C F_{h r, vr}(z)=C F_{met, vr}(z) \cdot r f_{met}+C F_{cel, vr}(z) \cdot r f_{cel}+C F_{lig, vr}(z) \cdot r f_{lig} \\ +C F_{{soill } 1, vr}(z) \cdot r f_{{soil1 }}+C F_{{soil2,vr }}(z) \cdot r f_{{soil2 }}+C F_{{soil3,vr }}(z) \cdot r f_{{soil3 }}\end{array}
+\begin{aligned}
+C F_{h r, vr}(z)&=C F_{met, vr}(z) \cdot r f_{met}+C F_{cel, vr}(z) \cdot r f_{cel}+C F_{lig, vr}(z) \cdot r f_{lig} \\ 
+&+C F_{{soill } 1, vr}(z) \cdot r f_{{soil1 }}+C F_{{soil2,vr }}(z) \cdot r f_{{soil2 }}+C F_{{soil3,vr }}(z) \cdot r f_{{soil3 }}
+\end{aligned}
 \end{equation}
 同样的，实际氮传输，也根据氮限制因子下降：
 \begin{equation}
     CF_{met \rightarrow soil1, vr}(z)=\left\{\begin{array}{ll} CF_{pot, met \rightarrow soil1, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, met \rightarrow soil1}} <0 \\ 
-    CF_{pot, met \rightarrow soil1, vr}(z) & NF_{pot\_{min, met \rightarrow soil1}} \geq 0
+    CF_{pot, met \rightarrow soil1, vr}(z) & NF_{pot\_{min, met \rightarrow soil1}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{cel \rightarrow soil1, vr}(z)=\left\{\begin{array}{ll} CF_{pot, cel \rightarrow soil1, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, cel \rightarrow soil1}} <0 \\ 
-    CF_{pot, cel \rightarrow soil1, vr}(z) & NF_{pot\_{min, cel \rightarrow soil1}} \geq 0
+    CF_{pot, cel \rightarrow soil1, vr}(z) & NF_{pot\_{min, cel \rightarrow soil1}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{lig \rightarrow soil2, vr}(z)=\left\{\begin{array}{ll} CF_{pot, lig \rightarrow soil2, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, lig \rightarrow soil2}} <0 \\ 
-    CF_{pot, lig \rightarrow soil2, vr}(z) & NF_{pot\_{min, lig \rightarrow soil2}} \geq 0
+    CF_{pot, lig \rightarrow soil2, vr}(z) & NF_{pot\_{min, lig \rightarrow soil2}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil1 \rightarrow soil2, vr}(z)=\left\{\begin{array}{ll} CF_{pot, soil1 \rightarrow soil2, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil2}} <0 \\ 
-    CF_{pot, soil1 \rightarrow soil2, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil2}} \geq 0
+    CF_{pot, soil1 \rightarrow soil2, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil2}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{cwd \rightarrow cel, vr}(z)=\left\{\begin{array}{ll} CF_{pot, cwd \rightarrow cel, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, cwd \rightarrow cel}} <0 \\ 
-    CF_{pot, cwd \rightarrow cel, vr}(z) & NF_{pot\_{min, cwd \rightarrow cel}} \geq 0
+    CF_{pot, cwd \rightarrow cel, vr}(z) & NF_{pot\_{min, cwd \rightarrow cel}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{cwd \rightarrow lig, vr}(z)=\left\{\begin{array}{ll} F_{pot, cwd \rightarrow lig, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, cwd \rightarrow lig}} <0 \\ 
-    CF_{pot, cwd \rightarrow lig, vr}(z) & NF_{pot\_{min, cwd \rightarrow lig}} \geq 0
+    CF_{pot, cwd \rightarrow lig, vr}(z) & NF_{pot\_{min, cwd \rightarrow lig}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil1 \rightarrow soil3, vr}(z)=\left\{\begin{array}{ll} CF_{pot, soil1 \rightarrow soil3, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil3}} <0 \\ 
-    CF_{pot, soil1 \rightarrow soil3, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil3}} \geq 0
+    CF_{pot, soil1 \rightarrow soil3, vr}(z) & NF_{pot\_{min, soil1 \rightarrow soil3}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil2 \rightarrow soil1, vr}(z)=\left\{\begin{array}{ll} CF_{pot, soil2 \rightarrow soil1, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil1}} <0 \\ 
-    CF_{pot, soil2 \rightarrow soil1, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil1}} \geq 0
+    CF_{pot, soil2 \rightarrow soil1, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil1}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil2 \rightarrow soil3, vr}(z)=\left\{\begin{array}{ll} CF_{pot, soil2 \rightarrow soil3, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil3}} <0 \\ 
-    CF_{pot, soil2 \rightarrow soil3, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil3}} \geq 0
+    CF_{pot, soil2 \rightarrow soil3, vr}(z) & NF_{pot\_{min, soil2 \rightarrow soil3}} \geqslant 0
    \end{array}\right.
 \end{equation}
 \begin{equation}
     CF_{soil3 \rightarrow soil1, vr}(z)=\left\{\begin{array}{ll}C F_{pot, soil3 \rightarrow soil1, vr}(z) \cdot f_{immob\_demand, vr}(z) & NF_{pot\_{min, soil3 \rightarrow soil1}} <0 \\ 
-    CF_{pot, soil3 \rightarrow soil1, vr}(z) & NF_{pot\_{min, soil3 \rightarrow soil1}} \geq 0
+    CF_{pot, soil3 \rightarrow soil1, vr}(z) & NF_{pot\_{min, soil3 \rightarrow soil1}} \geqslant 0
    \end{array}\right.
 \end{equation}
 实际土壤氮固化作用同样受氮限制因子的影响：
 \begin{equation}
 NF_{immob,vr}(z)=NF_{immob,demand,vr}(z)\ \cdot\ f_{immob\_{demand},vr}(z)
 \end{equation}
-但因为氮矿化作用为土壤提供无机氮，实际的土壤氮矿化作用仍然运用公式 \eqref{NF_immob_demand_vr}。
+但因为氮矿化作用为土壤提供无机氮，实际的土壤氮矿化作用仍然运用公式~\eqref{NF_immob_demand_vr}。
 
 
 \section{土壤凋落物的垂直传输}\label{土壤凋落物的垂直传输}
