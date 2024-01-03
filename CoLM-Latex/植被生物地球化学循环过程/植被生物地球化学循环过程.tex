@@ -42,22 +42,24 @@ CF_{mr,total}=R_{d}+CF_{livestem}+CF_{livecroot}+CF_{froot}
 CF_{gr,total}=NPP \cdot 0.11
 \end{equation}
 植被单位面积单位时间的净生长速率由净初级生产力($NPP$)来代表，$NPP$是光合作用速率和自养呼吸速率的差值，
-并且同时考虑了土壤的氮限制，其详细计算见章节 \ref{植被土壤的氮竞争} 植被土壤的氮竞争。生长呼吸的计算方案是基于\citet{atkins2018quantifying}
+并且同时考虑了土壤的氮限制，其详细计算见章节 \ref{植被土壤的氮竞争} 植被土壤的氮竞争。生长呼吸的计算方案是基于~\citet{atkins2018quantifying}
 的通量站点的木质和非木质组织的构造消耗研究得出的。在模型中，假设生长呼吸发生时间与碳分配的发生同步。
+
+
 \section{植被碳氮分配}\label{植被碳氮分配}
 \subsection{维持呼吸的碳消耗}
 CoLM碳分配首先满足维持呼吸($CF_{mr,total}$)的需求，其次碳分配需要填补由于夜间或冬天光合作用少于维持呼吸所造成的碳存储亏缺，
 最后剩余碳分配才能用于植被各营养器官库的生长。所以由光合作用支持的维持呼吸碳供给($CF_{GPP,mr}$)可以表达为：
 \begin{equation}\label{F_GPP_mr}
-CF_{GPP,mr}=\left\{\begin{array}{cl}CF_{mr, total} & \text{当}\quad CF_{mr, total} \leq CF_{GPP} \\ CF_{GPP} & \text{当}\quad CF_{mr,total}>CF_{GPP} \end{array}\right.
+CF_{GPP,mr}=\left\{\begin{array}{cl}CF_{mr, total} & \text{当}\quad CF_{mr, total} \leqslant CF_{GPP} \\ CF_{GPP} & \text{当}\quad CF_{mr,total}>CF_{GPP} \end{array}\right.
 \end{equation}
 其中，$CF_{GPP}$代表实际光合作用碳收入，正常情况，$CF_{GPP}\geq CF_{mr,total}$,
 维持呼吸的消耗($CF_{mr,total}$)可以完全由光合作用($CF_{GPP}$)提供。
 但夜间和冬天光合作用的碳收入通常会低于呼吸作用的碳消耗，维持呼吸仅部分由光合作用支持，另外一部分($CF_{xs,mr}$)由植被呼吸碳储存库($CS_{xs}$)支持：
 \begin{equation}\label{CF_xs_mr}
-CF_{xs, mr}=\left\{\begin{array}{cl}0 & \text{当}\quad CF_{mr, total} \leq CF_{GPP} \\ CF_{mr, total}-CF_{GPP} & \text{当}\quad CF_{mr, total}>CF_{GPP}\end{array}\right.
+CF_{xs, mr}=\left\{\begin{array}{cl}0 & \text{当}\quad CF_{mr, total} \leqslant CF_{GPP} \\ CF_{mr, total}-CF_{GPP} & \text{当}\quad CF_{mr, total}>CF_{GPP}\end{array}\right.
 \end{equation}
-联合公式(\ref{F_GPP_mr})和(\ref{CF_xs_mr})，可以保证维持呼吸的碳平衡关系：
+联合公式~\eqref{F_GPP_mr} 和~\eqref{CF_xs_mr}，可以保证维持呼吸的碳平衡关系：
 \begin{equation}
 CF_{GPP, mr}+CF_{xs, mr}=CF_{mr, total}
 \end{equation}
@@ -73,7 +75,7 @@ $\Delta t$代表模型时间步长，$CF_{GPP,xs}$是光合作用对植被的呼
 由于光合作用对维持呼吸存在亏缺的可能性，植被的呼吸碳储存库($CS_{xs}$)也存在负值。
 光合作用对植被呼吸碳存储库($CS_{xs}$)的补充($CF_{GPP,xs}$)仅当该库为负值时存在，并且须首先满足维持呼吸的需要。
 \begin{equation}
-CF_{GPP, xs}=\left\{\begin{array}{ll}0 & CS_{xs} \geq 0 \\ \min \left(-\frac{CS_{xs}}{86400 \cdot \tau_{xs}}, \max \left(CF_{GPP}-CF_{GPP, mr}, 0\right)\right) & CS_{xs}<0\end{array}\right.
+CF_{GPP, xs}=\left\{\begin{array}{ll}0 & CS_{xs} \geqslant 0 \\ \min \left(-\frac{CS_{xs}}{86400 \cdot \tau_{xs}}, \max \left(CF_{GPP}-CF_{GPP, mr}, 0\right)\right) & CS_{xs}<0\end{array}\right.
 \end{equation}
 其中$\tau_{xs}=30$天，$-\frac{CS_{xs}}{86400 \tau_{xs}}$代表如果光合作用碳收入充足，最快需要30天将亏缺的植被呼吸碳存储库($CS_{xs}$)填补上。
 当然，如果扣除维持呼吸后的碳收入不足以维持$-\frac{CS_{xs}}{86400 \tau_{xs}}$，其补充的碳通量为光合作用扣除维持呼吸后的剩余碳收入，
@@ -171,7 +173,7 @@ $f_{cur}$是碳分配到组织库或存储库的指示系数，取值0或1，当
 \end{equation}
 其中，$CF_{alloc,leaf}$代表叶的碳生长或叶的碳分配总量。对于草本植物来说，$i$代表叶和细根，$f_{alloc,i}$代表叶和细根组织库相对于叶的碳分配系数，即对叶来说，$f_{alloc,i}=1$，对细根来说，$f_{alloc,i}=a_1$，$a_1$是植被碳的根叶分配比。
 
-如果是木本植物类型，$i$除了代表叶和细根以外，还代表活茎、死茎、活粗根和死粗根，公式\eqref{CF_alloc_i}和\eqref{CF_alloc_istorage}仍然适用，$f_{cur}$仍然代表碳分配到组织库或存储库的指示系数。$f_{alloc,i}$作为相对于叶的碳分配系数，有不同于草本植物的表达。叶和细根的分配系数$f_{alloc,i}$与草本植物相同，活茎和死茎相对于叶的碳分配系数$f_{alloc,i}$分别为$a_3a_4$和$a_3\left(1-a_4\right)$，活粗根和死粗根相对于叶的碳分配系数$f_{alloc,i}$分别为$a_2a_3a_4$和$a_2a_3\cdot \left(1-a_4\right)$。其中，$a_2$代表粗根相对于茎的分别配比例，$a_3$代表茎相对于叶的分配比例，$a_4$代表植被活根或活茎在总根或总茎碳库中所占的比例，见\ref{植被的碳氮生长分配比例}
+如果是木本植物类型，$i$除了代表叶和细根以外，还代表活茎、死茎、活粗根和死粗根，公式~\eqref{CF_alloc_i} 和~\eqref{CF_alloc_istorage} 仍然适用，$f_{cur}$仍然代表碳分配到组织库或存储库的指示系数。$f_{alloc,i}$作为相对于叶的碳分配系数，有不同于草本植物的表达。叶和细根的分配系数$f_{alloc,i}$与草本植物相同，活茎和死茎相对于叶的碳分配系数$f_{alloc,i}$分别为$a_3a_4$和$a_3\left(1-a_4\right)$，活粗根和死粗根相对于叶的碳分配系数$f_{alloc,i}$分别为$a_2a_3a_4$和$a_2a_3\cdot \left(1-a_4\right)$。其中，$a_2$代表粗根相对于茎的分别配比例，$a_3$代表茎相对于叶的分配比例，$a_4$代表植被活根或活茎在总根或总茎碳库中所占的比例，见章节~\ref{植被的碳氮生长分配比例}
 
 将公式 \eqref{CF_alloc_i}和\eqref{CF_alloc_istorage} 中的所有$i$求和可得植被整体的碳生长量，因此碳平衡得以保证：
 \begin{equation}
@@ -190,11 +192,11 @@ $f_{cur}$是碳分配到组织库或存储库的指示系数，取值0或1，当
 对于草本植物来说，$i$代表叶和细根，而$CN_{i}$代表叶和细根的碳氮比。对于木本植物来说，$i$除了代表叶和细根以外，还代表活茎、死茎、活粗根和死粗根，活茎和活粗根共享植被活木的碳氮比($CN_{lw}$)，死茎和死粗根共享植被死木的碳氮比($CN_{dw}$)。
 
 
-将公式 \eqref{eq:NF_alloc_i}和公式\eqref{eq:NF_alloc_istorage}中的所有$i$求和可得植被整体的氮生长量，因此氮平衡得以保证：
+将公式~\eqref{eq:NF_alloc_i} 和公式~\eqref{eq:NF_alloc_istorage} 中的所有$i$求和可得植被整体的氮生长量，因此氮平衡得以保证：
 \begin{equation}
   \sum_{i}{NF_{alloc,i}}+\sum_{i}{NF_{alloc,i_storage}}=CF_{alloc}\cdot \frac{N_{allom}}{C_{allom}}=NF_{alloc}
 \end{equation}
-其中 $NF_{alloc,i}$ 代表每个植被库的新生长氮库或氮分配，$NF_{alloc}$是植被总的氮生长，是植被各器官组织库和存储库新生长氮库的总和。$C_{allom}$和$N_{allom}$分别是单位叶片碳氮生长对应的植被总碳氮生长，见公式\eqref{C_allom}和\eqref{N_allom}。
+其中 $NF_{alloc,i}$ 代表每个植被库的新生长氮库或氮分配，$NF_{alloc}$是植被总的氮生长，是植被各器官组织库和存储库新生长氮库的总和。$C_{allom}$和$N_{allom}$分别是单位叶片碳氮生长对应的植被总碳氮生长，见公式~\eqref{C_allom} 和~\eqref{N_allom}。
 
 
 \section{植被物候过程的耦合预报方案}\label{植被物候过程的耦合预报方案}
@@ -250,24 +252,28 @@ $deadcroot$ 分别代表叶、细根、活茎、死茎、活粗根和死粗根)�
 \end{equation}
 其中，$r_{{xfer}\_{on}}$ 是控制传输库碳转移到组织库速率的变量 ($\mathrm{s^{-1}}$)，是随时间变化的变量。
 \begin{equation}
-r_{xfer\_{on}}=\left\{\begin{array}{ll}\frac{2}{t_{ {onset}}} &  \text{ 当 }  t_{ {onset}} \neq \Delta t \\ 
-\frac{1}{\Delta t} &  \text{ 当 }  t_{onset}=\Delta t\end{array}\right.
+r_{xfer\_{on}}=\begin{cases}
+\frac{2}{t_{ {onset}}} &  \text{ 当 }\ t_{ {onset}} \neq \Delta t \\ 
+\frac{1}{\Delta t} &  \text{ 当 }\ t_{onset}=\Delta t
+\end{cases}
 \end{equation}
 $t_{onset}$以倒计时的形式记录发芽展叶期还剩多少秒，$\Delta t$是模型时间步长$t_{onset}\neq\Delta t$时，
 $\frac{2}{t_{onset}}$随着时间的推移转移速率，
-即叶片生长速率逐渐加快；$t_{onset}=\Delta t$时为发芽展叶期最后一个时间步长，所有传输库都将转移给组织库。\\
+即叶片生长速率逐渐加快；$t_{onset}=\Delta t$时为发芽展叶期最后一个时间步长，所有传输库都将转移给组织库。
 
 \item 落叶期 \\
 CoLM物候模块同样假设落叶植被功能型存在落叶期，在落叶期内，叶碳库和细根碳库在为期10多天时间里逐渐降为0：
 \begin{equation}
-CF_{ {leaf,litter }}^{n}=\left\{\begin{array}{ll}CF_{ {leaf,litter }}^{n-1}+r_{xfer\_{off}}\left(CS_{ {leaf }}-CF_{ {leaf }}^{n-1} t_{ {offset }}\right) & \text{ 当 }  t_{ {offset }} \neq \Delta t \\ 
-\frac{CS_{ {leaf }}}{\Delta t}+CF_{ {alloc,leaf }} &  \text{ 当 }  t_{offset}=\Delta t
-\end{array}\right.
+CF_{ {leaf,litter }}^{n}=\begin{cases}
+CF_{ {leaf,litter }}^{n-1}+r_{xfer\_{off}}\left(CS_{ {leaf }}-CF_{ {leaf }}^{n-1} t_{ {offset }}\right) & \text{ 当 }\ t_{ {offset }} \neq \Delta t \\ 
+\frac{CS_{ {leaf }}}{\Delta t}+CF_{ {alloc,leaf }} &  \text{ 当 }\ t_{offset}=\Delta t
+\end{cases}
 \end{equation}
 \begin{equation}
-CF_{ {froot },  { litter }}^{n}=\left\{\begin{array}{ll}CF_{ {froot }, litter}^{n-1}+r_{xfer\_off}\left(CS_{ {froot }}-CF_{ {froot }}^{n-1} t_{offset}\right) &  \text{ 当 }  t_{offset} \neq \Delta t \\ 
-\frac{CS_{ {froot }}}{\Delta t}+CF_{ {alloc,froot }} &  \text{ 当 }  t_{offset}=\Delta t
-\end{array}\right.
+CF_{ {froot },  { litter }}^{n}=\begin{cases}
+CF_{ {froot }, litter}^{n-1}+r_{xfer\_off}\left(CS_{ {froot }}-CF_{ {froot }}^{n-1} t_{offset}\right) &  \text{ 当 }\ t_{offset} \neq \Delta t \\ 
+\frac{CS_{ {froot }}}{\Delta t}+CF_{ {alloc,froot }} &  \text{ 当 }\ t_{offset}=\Delta t
+\end{cases}
 \end{equation}
 \begin{equation}
 r_{xfer\_off}=\frac{2 \Delta t}{t_{offset}^{2}}
@@ -293,13 +299,12 @@ NF_{leaf,retrans} = \frac{CF_{leaf,litter}}{CN_{leaf}}-NF_{leaf,litter}
 \end{equation}
 
 落叶植被功能型的发芽展叶期和落叶期一般成对出现，其触发条件和温度、
-土壤湿度以及落叶植被类型有关，详细描述在章节~\ref{季节落叶植被的物候} 和 \ref{物候凋落物} 中介绍。物候示意图如图~\ref{fig:CoLM物候示意图}。\\
-
+土壤湿度以及落叶植被类型有关，详细描述在章节~\ref{季节落叶植被的物候} 和 \ref{物候凋落物} 中介绍。物候示意图如图~\ref{fig:CoLM物候示意图}。
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics{Figures/植被生物地球化学循环过程/CoLM物候示意图.png}
-\caption{CoLM物候示意图~\citep{lawrence2018}。 }
+\caption{CoLM物候示意图~\citep{lawrence2018} }
 \label{fig:CoLM物候示意图}
 \end{figure}
 }
@@ -372,7 +377,10 @@ N F_{leaf,retrans}=\left(\frac{CF_{leaf,litter }}{CN_{leaf}}\right)-N F_{leaf,li
 季节性落叶植被功能型假设植被每年仅存在一次发芽展叶期和落叶期。由于南北半球冬夏反季，
 所以，通过白昼时长的变化判断冬季转变节点，积温($GDD$)的计算在冬季转变节点开始累积\citep{white1997continental}：
 \begin{equation}
-GDD _{sum}^{n}=\left\{\begin{array}{ll}GDD _{sum}^{n-1}+T_{s, 3} \cdot \Delta t \cdot 86400 & T_{s, 3} \geq \text{0 \textcelsius} \\ GDD _{sum}^{n-1} & T_{s, 3}< \text{0 \textcelsius}\end{array}\right.
+GDD _{sum}^{n}=\begin{cases}
+GDD _{sum}^{n-1}+T_{s, 3} \cdot \Delta t \cdot 86400 & T_{s, 3} \geqslant \text{0 \textcelsius} \\ 
+GDD _{sum}^{n-1} & T_{s, 3}< \text{0 \textcelsius}
+\end{cases}
 \end{equation}
 其中$GDD_{sum}^n$是第$n$天后的积温，积温通过对高于0 \textcelsius 的第三层土壤温度 $T_{s,3}$ (\textcelsius) 进行累加。
 当$GDD_{sum}^n>{GDD}_{sum\_{crit}}$时，季节性落叶树开始发芽展叶期。${GDD}_{sum\_{crit}}$ 为发芽物候关键参量，
@@ -457,7 +465,7 @@ t_{onset}^n=t_{onset}^{n-1}-\Delta t
 
 当温度暖和，干旱成为触发胁迫的主要条件。当上一次落叶期结束后，土壤水分因子就开始从0累加：
 \begin{equation}
-SWI_{sum}^{n}=\left\{\begin{array}{ll}SWI_{sum}^{n-1}+f_{d a y} & \text{ 当 }\ \Psi_{s, 3} \geq-0.6\ \mathrm{MPa} \\ 
+SWI_{sum}^{n}=\left\{\begin{array}{ll}SWI_{sum}^{n-1}+f_{d a y} & \text{ 当 }\ \Psi_{s, 3} \geqslant -0.6\ \mathrm{MPa} \\ 
 SWI_{sum}^{n} &  \text{ 当 }\ \Psi_{s, 3}<-0.6\ \mathrm{MPa}
 \end{array}\right.
 \end{equation}
@@ -468,7 +476,7 @@ SWI_{sum}^{n} &  \text{ 当 }\ \Psi_{s, 3}<-0.6\ \mathrm{MPa}
 同时，因为土壤温度过低 ($FD_{sum}^n>15$)，需要应用冷气候标准
 \begin{equation}
 FD_{sum}^{n}=\left\{\begin{array}{ll}FD_{sum}^{n-1}+f_{day} &  \text{ 当 }\ T_{s, 3} > \text{0 \textcelsius} \\ 
-FD_{sum}^{n-1} &  \text{ 当 }\ T_{s, 3} \leq \text{0 \textcelsius}
+FD_{sum}^{n-1} &  \text{ 当 }\ T_{s, 3} \leqslant \text{0 \textcelsius}
 \end{array}\right.
 \end{equation}
 即当气温低，发芽展叶期的触发需要土壤温度和土壤湿度同时满足条件：
@@ -481,19 +489,19 @@ t_{o n s e t}^{n}=t_{o n s e t}^{n-1}-\Delta t
 土壤干旱用累积落叶土壤水分因子($OSWI_{sum}^n$)来量化：
 \begin{equation}
 OSWI_{sum}^{n}=\left\{\begin{array}{ll}OSWI_{sum}^{n-1}+f_{d a y}, &  \text{ 当 }\ \Psi_{s, 3}<-2\ \mathrm{MPa} \\ 
-\max \left(OSWI_{sum}^{n-1}-f_{d a y}, 0\right) &  \text{ 当 }\ \Psi_{s, 3}>-2\ \mathrm{MPa}
+\max \left(OSWI_{sum}^{n-1}-f_{d a y},\ 0\right) &  \text{ 当 }\ \Psi_{s, 3}>-2\ \mathrm{MPa}
 \end{array}\right.
 \end{equation}
-当前面一个发芽展叶期已经完成时，且$OSWI_{sum}^n\geq15$，即触发落叶期。
+当前面一个发芽展叶期已经完成时，且$OSWI_{sum}^n\geqslant 15$，即触发落叶期。
 冷温胁迫用累积落叶冷冻天数来量化：
 \begin{equation}
-OFD_{sum}^{n}=\left\{\begin{array}{ll}OFD_{sum}^{n-1}+f_{d a y} &  \text{ 当 }\ {T}_{s, 3} \leq \text{0 \textcelsius} \\ 
+OFD_{sum}^{n}=\left\{\begin{array}{ll}OFD_{sum}^{n-1}+f_{d a y} &  \text{ 当 }\ {T}_{s, 3} \leqslant \text{0 \textcelsius} \\ 
 \max \left(OFD_{sum}^{n-1}-f_{d a y}, 0\right) & \text{ 当 }\ {T}_{s, 3}> \text{0 \textcelsius}\end{array}\right.
 \end{equation}
 当前面一个发芽展叶期已经完成时，且$OFD_{sum}^n\geq15$，即触发落叶期。
 
 
-总而言之，当以上三个条件($OSWI_{sum}^n\geq15$，$OFD_{sum}^n\geq15$，日照时长小于6小时)满足其一，植被进入落叶期，落叶期倒计时为15天：
+总而言之，当以上三个条件($OSWI_{sum}^n\geqslant 15$，$OFD_{sum}^n\geqslant 15$，日照时长小于6小时)满足其一，植被进入落叶期，落叶期倒计时为15天：
 \begin{equation}
 t_{offset}^{n}=t_{offset}^{n-1}-\Delta t
 \end{equation}
@@ -504,10 +512,11 @@ t_{offset}^{n}=t_{offset}^{n-1}-\Delta t
 \end{equation}
 
 \begin{equation}
-L G S=\left\{\begin{array}{cc}0 &  \text{ 当 }\ n_{ {days}\_{active}}<365 \\ 
-\frac{n_{ {days\_{active}}}}{365}-1 &  \text{ 当 }\ 365 \leq n_{ {days }\_{active} }<730 \\ 
-1 & \text{ 当 }\ n_{ {days}\_{active}} \geq 730
-\end{array}\right.
+L G S=\begin{cases}
+0 &  \text{ 当 }\ n_{ {days}\_{active}}<365 \\ 
+\frac{n_{ {days\_{active}}}}{365}-1 &  \text{ 当 }\ 365 \leqslant n_{ {days }\_{active} }<730 \\ 
+1 & \text{ 当 }\ n_{ {days}\_{active}} \geqslant 730
+\end{cases}
 \end{equation}
 $n_{days\_{active}}$ 是植被只从上次发芽开始的天数。
 

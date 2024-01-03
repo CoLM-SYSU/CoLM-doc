@@ -58,7 +58,7 @@ $\theta_{v\ast}$为虚温尺度(K)，计算为：
 
 
 为计算得到$u_\ast$、$\theta_\ast$、$q_\ast$，通常将上述关于$\phi_m\left(\zeta\right)$、$\phi_h\left(\zeta\right)$、
-$\phi_w(\zeta)$的微分方程(公式\eqref{kz_u}--\eqref{kz_q})在近地层的两个任意高度$z_1$和$z_2$ ($z_2>z_1$)进行积分，积分结果如下：
+$\phi_w(\zeta)$的微分方程(公式~\eqref{kz_u}--\eqref{kz_q})在近地层的两个任意高度$z_1$和$z_2$ ($z_2>z_1$)进行积分，积分结果如下：
 \begin{equation}
 |u|_{2}-|u|_{1}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\psi_{m}\left(\frac{z_{2}-d}{L}\right)+\psi_{m}\left(\frac{z_{1}-d}{L}\right)\right]
 \end{equation}
@@ -76,7 +76,7 @@ q_{2}-q_{1}=\frac{q_{*}}{\kappa}\left[\ln \left(\frac{z_{2}-d}{z_{1}-d}\right)-\
 \end{equation}
 $z_{0x}\ (x=m,\ h,\ w)$分别表示动量、感热和水汽的粗糙长度(m)。取$z_1$为地表高度，$z_2$为大气强迫参考（观测）高度，则有如下积分边界条件：
 \begin{equation}\label{VaIni}
-\begin{array}{ll}z_{1}=z_{0 m}+d:|u|_{1}=0, \quad & z_{2}=z_{atm, m}: |u|_{2}=V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geq 0.1 \\ 
+\begin{array}{ll}z_{1}=z_{0 m}+d:|u|_{1}=0, \quad & z_{2}=z_{atm, m}: |u|_{2}=V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geqslant 0.1 \\ 
      z_{1}=z_{0 h}+d: \theta_{1}=\theta_{s}, & z_{2}=z_{atm, h}: \theta_{2}=\theta_{atm} \\ 
      z_{1}=z_{0 w}+d: q_{1}=q_{s}, & z_{2}=z_{atm, w}: q_{2}=q_{atm}\end{array}
 \end{equation}
@@ -92,10 +92,10 @@ V_{a}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\p
 \begin{equation}\label{q_atm-qs}
 q_{atm}-q_{s}=\frac{q_{*}}{\kappa}\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]
 \end{equation}
-这里限制$V_a\geq0.1$是为了避免太小的风速使得感热与潜热过小导致数值溢出。对流速度$U_c$表示对流边界层中的大涡对近地层湍流通量的贡献，计算方案为：
+这里限制$V_a\geqslant0.1$是为了避免太小的风速使得感热与潜热过小导致数值溢出。对流速度$U_c$表示对流边界层中的大涡对近地层湍流通量的贡献，计算方案为：
 \begin{equation}
 U_{c}= \begin{cases}
- 0, & \text { 当 }\ \zeta_{atm}=\frac{z_{atm, m}-d}{L} \geq 0 \text { 时(即稳定条件下) } \\
+ 0, & \text { 当 }\ \zeta_{atm}=\frac{z_{atm, m}-d}{L} \geqslant 0 \text { 时(即稳定条件下) } \\
 \beta w_{*}, & \text { 当 }\ \zeta_{atm}<0 \text { 时 (即不稳定条件下) }
 \end{cases}
 \end{equation}
@@ -118,32 +118,32 @@ U_{c}= \begin{cases}
 \begin{equation}\label{phim_zeng}
    \phi_{m}(\zeta)=\begin{cases}
      0.7 \kappa^{\frac{2}{3}}(-\zeta)^{\frac{1}{3}}, & \zeta<-1.574 \text { 时 (即非常不稳定条件下) } \\
-     (1-16 \zeta)^{-\frac{1}{4}}, & -1.574 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\
-     1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\ 
+     (1-16 \zeta)^{-\frac{1}{4}}, & -1.574 \leqslant \zeta<0 \text { 时 (即不稳定条件下) } \\
+     1+5 \zeta, & 0 \leqslant \zeta \leqslant 1 \text { 时 (即稳定条件下) } \\ 
      5+\zeta, & \zeta>1 \text { 时 (即非常稳定条件下) }
    \end{cases}
 \end{equation}
 \begin{equation}
   \phi_{h}(\zeta)=\phi_{w}(\zeta)=\begin{cases}
      0.9 \kappa^{\frac{4}{3}}(-\zeta)^{-\frac{1}{3}}, & \zeta<-0.465 \text { 时 (即非常不稳定条件下) } \\ 
-     (1-16 \zeta)^{-\frac{1}{2}}, & -0.465 \leq \zeta<0 \text { 时 (即不稳定条件下) } \\ 
-     1+5 \zeta, & 0 \leq \zeta \leq 1 \text { 时 (即稳定条件下) } \\
+     (1-16 \zeta)^{-\frac{1}{2}}, & -0.465 \leqslant \zeta<0 \text { 时 (即不稳定条件下) } \\ 
+     1+5 \zeta, & 0 \leqslant \zeta \leqslant 1 \text { 时 (即稳定条件下) } \\
      5+\zeta, & \zeta>1 \text { 时 (即非常稳定条件下) }
    \end{cases}
 \end{equation}
 
-将$\phi_m$代入风速廓线方程(\ref{Va})，即可得到风速廓线在不同条件下的具体形式：
+将$\phi_m$代入风速廓线方程~\eqref{Va}，即可得到风速廓线在不同条件下的具体形式：
 
 \noindent 非常不稳定条件下($\zeta_{atm}=\frac{z_{atm,m}-d}{L}<-1.574$)
 \begin{equation}\label{Va_VU}
 V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{-1.574 L}{z_{0 m}}-\psi_{mu}(-1.574)+
 1.14\left[\left(-\zeta_{atm}\right)^{\frac{1}{3}}-(1.574)^{\frac{1}{3}}\right]+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
-不稳定条件下($-1.574\le\zeta_{atm}<0$)
+不稳定条件下($-1.574\leqslant\zeta_{atm}<0$)
 \begin{equation}\label{Va_U}
 V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
-稳定条件下($0\le\zeta_{atm}\le1$)
+稳定条件下($0\leqslant\zeta_{atm}\leqslant1$)
 \begin{equation}\label{Va_S}
 V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}+5 \zeta_{atm}-5 \frac{z_{0 m}}{L}\right\}
 \end{equation}
@@ -162,16 +162,20 @@ V_{a}=\frac{u_{*}}{\kappa}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \l
 
 \noindent 非常不稳定条件下($\zeta_{atm}=\frac{z_{atm,h}-d}{L}$ 或$ \ \frac{z_{atm,w}-d}{L}\ <-0.465$)
 \begin{equation}\label{theta_VU}
-\begin{array}{l}\theta_{atm}-\theta_{s}= \\ 
-     \frac{\theta_{*}}{\kappa}\left\{\ln \frac{-0.465 L}{z_{0 h}}-\psi_{hu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-\left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]
-     +\psi_{hu}\left(\frac{z_{0 h}}{L}\right)\right\}\end{array}
+\begin{aligned}
+&\theta_{atm}-\theta_{s}= \\ 
+&\frac{\theta_{*}}{\kappa}\left\{\ln \frac{-0.465 L}{z_{0 h}}-\psi_{hu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-\left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]
+     +\psi_{hu}\left(\frac{z_{0 h}}{L}\right)\right\}
+\end{aligned}
 \end{equation}
 \begin{equation}\label{q_VU}
-\begin{array}{l}q_{atm}-q_{s}= \\ 
-     \quad \frac{q_{*}}{\kappa}\left\{\ln \frac{-0.465 L}{z_{0 w}}-\psi_{wu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-
-     \left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]+\psi_{wu}\left(\frac{z_{0 w}}{L}\right)\right\}\end{array}
+\begin{aligned}
+&q_{atm}-q_{s}= \\ 
+&\frac{q_{*}}{\kappa}\left\{\ln \frac{-0.465 L}{z_{0 w}}-\psi_{wu}(-0.465)+0.8\left[(0.465)^{-\frac{1}{3}}-
+     \left(-\zeta_{atm}\right)^{-\frac{1}{3}}\right]+\psi_{wu}\left(\frac{z_{0 w}}{L}\right)\right\}
+\end{aligned}
 \end{equation}
-不稳定条件下($-0.465\le\zeta_{atm}<0$)
+不稳定条件下($-0.465\leqslant\zeta_{atm}<0$)
 \begin{equation}
 \theta_{atm}-\theta_{s}=\frac{\theta_{*}}{\kappa}\left\{\ln \frac{z_{atm, h}-d}{z_{0 h}}-\psi_{hu}
 \left(\zeta_{atm}\right)+\psi_{hu}\left(\frac{z_{0 h}}{L}\right)\right\}
@@ -180,7 +184,7 @@ V_{a}=\frac{u_{*}}{\kappa}\left\{\left[\ln \frac{L}{z_{0 m}}+5\right]+\left[5 \l
 q_{atm}-q_{s}=\frac{q_{*}}{\kappa}\left\{\ln \frac{z_{atm, w}-d}{z_{0 w}}-
 \psi_{wu}\left(\zeta_{atm}\right)+\psi_{wu}\left(\frac{z_{0 w}}{L}\right)\right\}
 \end{equation}
-稳定条件下($0\le\zeta_{atm}\le1$)
+稳定条件下($0\leqslant\zeta_{atm}\leqslant1$)
 \begin{equation}
 \theta_{atm}-\theta_{s}=\frac{\theta_{*}}{\kappa}\left\{\left[\ln \frac{z_{atm, h}-d}{z_{0 h}}+5 \zeta_{atm}\right]-5 \frac{z_{0 h}}{L}\right\}
 \end{equation}
@@ -210,8 +214,8 @@ R_{ib}=\zeta\left[\ln{\left(\frac{z_{atm,h}-d}{z_{0h}}\right)-\psi_h(\zeta)}\rig
 与稳定条件下$\phi_h\left(\zeta\right)=\phi_m\left(\zeta\right)=1+5\zeta$确定，从而$\zeta$进而$L$可以通过以下反算关系式得到初始猜测值
 \begin{equation}\label{ZetaRib}
   \zeta=\begin{cases}
-    \frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)}, \qquad 10^{-6} \leq \zeta \leq 2, & \text{ 当 } R_{i b} \geq 0\ \text{（即中性或稳定条件下）} \\
-    R_{ib} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right),  \quad -100 \leq \zeta \leq-10^{-6}, & \text{ 当 } R_{i b}<0\ \text{（即不稳定条件下）}
+    \frac{R_{i b} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)}{1-5 \min \left(R_{i b}, 0.19\right)}, \qquad 10^{-6} \leqslant \zeta \leqslant 2, & \text{ 当 }\ R_{i b} \geqslant 0\ \text{（即中性或稳定条件下）} \\
+    R_{ib} \ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right),  \quad -100 \leqslant \zeta \leqslant-10^{-6}, & \text{ 当 }\ R_{i b}<0\ \text{（即不稳定条件下）}
   \end{cases}
 \end{equation}
 
@@ -229,7 +233,7 @@ H=-C_{p a} \rho_{atm} \theta_{*} u_{*}=-\rho_{atm} C_{p a} \frac{\left(\theta_{a
 \begin{equation}\label{LH}
 E=-\rho_{atm} q_{*} u_{*}=-\rho_{atm} \frac{\left(q_{atm}-q_{s}\right)}{r_{a w}}
 \end{equation}
-其中，空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ (\unit{s.m^{-1}}) (结合方程\eqref{Va}--\eqref{q_atm-qs})为
+其中，空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ (\unit{s.m^{-1}}) (结合方程~\eqref{Va}--\eqref{q_atm-qs})为
 \begin{equation}\label{ram}
 r_{a m}=\frac{1}{\kappa^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]^{2}
 \end{equation}
@@ -240,14 +244,14 @@ r_{a m}=\frac{1}{\kappa^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\r
 \begin{array}{c}r_{a w}=\frac{1}{\kappa^{2} V_{a}}\left[\ln \left(\frac{z_{atm, m}-d}{z_{0 m}}\right)-\psi_{m}\left(\frac{z_{atm, m}-d}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right] \\ {\left[\ln \left(\frac{z_{atm, w}-d}{z_{0 w}}\right)-\psi_{w}\left(\frac{z_{atm, w}-d}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]}\end{array}
 \end{equation}
 
-为方便与地面观测资料进行比较，可定义2 m温度和湿度、以及10 m风速，它们实际上为$z_{0x}+d$以上2 m高度的温度、比湿，和10 m高度的风速，计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ (或$z_{0x}+d+10$) 进行积分)如下：
+为方便与地面观测资料进行比较，可定义2 m温度和湿度、以及10 m风速，它们实际上为$z_{0x}+d$以上2 m高度的温度、比湿，和10 m高度的风速，计算公式(即对原始微分方程从$z_{0x}+d$到$z_{0x}+d+2$ (或$z_{0x}+d+10$进行积分)如下：
 \begin{equation}\label{T2m}
 T_{2 m}=\theta_{s}+\frac{\theta_{*}}{\kappa}\left[\ln \left(\frac{2+z_{0 h}}{z_{0 h}}\right)-\psi_{h}\left(\frac{2+z_{0 h}}{L}\right)+\psi_{h}\left(\frac{z_{0 h}}{L}\right)\right]
 \end{equation}
 \begin{equation}\label{q2m}
 q_{2 m}=q_{s}+\frac{q_{*}}{\kappa}\left[\ln \left(\frac{2+z_{0 w}}{z_{0 w}}\right)-\psi_{w}\left(\frac{2+z_{0 w}}{L}\right)+\psi_{w}\left(\frac{z_{0 w}}{L}\right)\right]
 \end{equation}
-\begin{equation}
+\begin{equation}\label{u10m}
 u_{10 m}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\psi_{m}\left(\frac{10+z_{0 m}}{L}\right)+\psi_{m}\left(\frac{z_{0 m}}{L}\right)\right]
 \end{equation}
 
@@ -265,13 +269,13 @@ u_{10 m}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\
      B_{m} &= 0.0047(-\frac{z_{i}}{L})+0.1854
   \end{aligned}
 \end{equation}
-该方案(称为LZD2022方案)适用于不稳定条件($\zeta \leq -0.13$)。在弱不稳定条件下($\zeta > -0.13$)，则仍然采用方程(\ref{phim_zeng})(即Zeng1998方案)所列形式，确保
+该方案(称为LZD2022方案)适用于不稳定条件($\zeta \leqslant -0.13$)。在弱不稳定条件下($\zeta > -0.13$)，则仍然采用方程~\eqref{phim_zeng} (即Zeng1998方案)所列形式，确保
 通用函数在由不稳定过渡到中性条件的连续性。
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=0.7]{Figures/地表湍流交换过程/LZD2022方案概念图.png}
-\caption{考虑大涡影响的地表通量方案示意图。}
+\caption{考虑大涡影响的地表通量方案示意图}
 \label{fig:LZD2022方案概念图}
 \end{figure}
 }
@@ -287,11 +291,11 @@ u_{10 m}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\
 \begin{equation}
 \phi_{m}(\zeta)= \begin{cases}
    B_{m2}(-\zeta)^{-1/2}, & \zeta<\zeta_{m2} \text { 时} \\
-   (1-16 \zeta)^{-1/4}, & \zeta_{m2} \leq \zeta<0 \text { 时} \\
+   (1-16 \zeta)^{-1/4}, & \zeta_{m2} \leqslant \zeta<0 \text { 时} \\
 \end{cases}
 \end{equation}
-其中$B_{m2}=\max(B_{m},0.2722)$，$\zeta_{m2}=\min(\zeta_{m},-0.13)$，稳定条件下的$\phi_{m}$则直接采用方程(\ref{phim_zeng})中形式。基于风速廓线方程(\ref{Va})，注意当
-$\zeta_{atm}=\frac{z_{atm,m}-d}{L}<\zeta_{m2}$时，方程(\ref{Va})中的$\psi_{m}\left(\zeta_{atm}\right)$为：
+其中$B_{m2}=\max(B_{m},0.2722)$，$\zeta_{m2}=\min(\zeta_{m},-0.13)$，稳定条件下的$\phi_{m}$则直接采用方程~\eqref{phim_zeng} 中形式。基于风速廓线方程~\eqref{Va}，注意当
+$\zeta_{atm}=\frac{z_{atm,m}-d}{L}<\zeta_{m2}$时，方程~\eqref{Va} 中的$\psi_{m}\left(\zeta_{atm}\right)$为：
 \begin{align}
 \psi_{m}\left(\zeta_{atm}\right) &= \int_{0}^{\zeta_{atm}} \frac{1-\phi_{m}(s)}{s} d s  \nonumber \\[1ex]
  & = \int_{0}^{\zeta_{m2}} \frac{1-\phi_{m}(s)}{s} d s + \int_{\zeta_{m2}}^{\zeta_{atm}} \frac{1-\phi_{m}(s)}{s} d s  \nonumber \\[1.5ex]
@@ -304,19 +308,19 @@ $\zeta_{atm}=\frac{z_{atm,m}-d}{L}<\zeta_{m2}$时，方程(\ref{Va})中的$\psi_
 \begin{equation}\label{Va_U_LZD1}
 V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{L\zeta_{m2}}{z_{0 m}}-\psi_{mu}\left(\zeta_{m2}\right)-2B_{m2}\left[(-\zeta_{atm})^{-1/2}-(-\zeta_{m2})^{-1/2}\right]+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
-\noindent 当$ \zeta_{m2} \leq \zeta_{atm}<0$时
+\noindent 当$ \zeta_{m2} \leqslant \zeta_{atm}<0$时
 \begin{equation}\label{Va_U_LZD2}
 V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
 其中$\psi_{mu}$的定义同方程(\ref{Psim})，这里同样限制$V_a\geq0.1$以避免风速过小问题，参考高度风速亦引入对流速度$U_c$ (公式(\ref{VaIni}))，其代表大涡在水平方向的影响，即
-$V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geq 0.1$。稳定条件下的风速积分形式则同方程\eqref{Va_S}和\eqref{Va_VS}。
+$V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geqslant 0.1$。稳定条件下的风速积分形式则同方程~\eqref{Va_S} 和~\eqref{Va_VS}。
 
 后面的迭代求解过程参见~\ref{基本理论} 节内容，所得空气动力学阻抗系数$r_{am}$、$r_{ah}$和$r_{aw}$，以及诊断量2 m温度和湿度、10 m风速等的形式都和~\ref{基本理论} 节完全一致。
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=0.7]{Figures/地表湍流交换过程/LZD2022方案与Zeng1998方案曲线比较图.png}
-\caption{LZD2022方案与Zeng1998方案曲线比较图。}
+\caption{LZD2022方案与Zeng1998方案曲线比较图}
 \label{fig:LZD2022方案与Zeng1998方案曲线比较图}
 \end{figure}
 }
@@ -374,7 +378,7 @@ wt=\frac{0.1 z_{{sno}}}{z_{0mv}+0.1 z_{{sno}}}
 陆地表面可分为被积雪覆盖与未被积雪覆盖两部分。根据 \citet{swenson2012new}提供的方法，
 被积雪覆盖的地表面积比例$f_{sno}$可分为两步计算：在积分开始时若有降雪发生，则新一步的$f_{sno}$更新为
 \begin{equation}
-f_{{sno }}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{i} \Delta t\right)\right]\left(1-f_{{sno }}^{(n)}\right) \leq 1.0
+f_{{sno }}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{i} \Delta t\right)\right]\left(1-f_{{sno }}^{(n)}\right) \leqslant 1.0
 \end{equation}
 其中$p_i$为降雪率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{sno}$更新为
 \begin{equation}
@@ -395,7 +399,7 @@ H_{g}=-\rho_{atm} C_{pa} \frac{\theta_{atm}-T_{g}}{r_{a h}}
 \begin{equation}\label{Eg}
 E_{g}=-\rho_{atm} \frac{q_{atm}-q_{g}}{r_{a w}}
 \end{equation}
-其中$T_g$表示地表温度(K)。当不区分对待表层土壤和积雪时(namelist \allowbreak \texttt{DEF\_SPLIT\_SOILSNOW} \allowbreak = \allowbreak false)，有积雪覆盖(即$f_{sno}>0$)时，$T_g$为最上层积雪的温度$T_{snl+1}$；无积雪覆盖时，$T_g$为第一层土壤的温度$T_1$。$q_g$表示地表空气比湿(\unit{kg.kg^{-1}})，其计算公式为：
+其中$T_g$表示地表温度(K)。当不区分对待表层土壤和积雪时(namelist \allowbreak \texttt{DEF\_SPLIT\_\allowbreak SOILSNOW \allowbreak = \allowbreak false})，有积雪覆盖(即$f_{sno}>0$)时，$T_g$为最上层积雪的温度$T_{snl+1}$；无积雪覆盖时，$T_g$为第一层土壤的温度$T_1$。$q_g$表示地表空气比湿(\unit{kg.kg^{-1}})，其计算公式为：
 \begin{equation}\label{qg}
 q_{g}=\left(1-f_{{sno }}\right) q_{{soil }}+f_{{sno }} q_{{sno }}
 \end{equation}
@@ -406,8 +410,8 @@ q_{g}=\left(1-f_{{sno }}\right) q_{{soil }}+f_{{sno }} q_{{sno }}
 $\psi_{sat,1}$表示表层饱和土壤水势(mm)，$B_1$表示表层土壤\citep{clapp1978empirical}参数(均由地表参数数据集提供)。$s_1$表示表层土壤对于饱和状态时的相对湿度：
 \begin{equation}
 s_{1}= \begin{cases}
-   0.001, & \text {if } \theta_{sat, 1}<1 \times 10^{-6} \\ 
-   \frac{1}{\Delta z_{1} \theta_{sat, 1}}\left[\frac{w_{liq, 1}}{\rho_{liq}}+\frac{w_{ice, 1}}{\rho_{ice}}\right]  \text{ 且  }\  0.001 \leq s_{1} \leq 1.0, & \text {if } \theta_{sat, 1} \geq 1 \times 10^{-6}
+   0.001, & \text {如果 }\ \theta_{sat, 1}<1 \times 10^{-6} \\ 
+   \frac{1}{\Delta z_{1} \theta_{sat, 1}}\left[\frac{w_{liq, 1}}{\rho_{liq}}+\frac{w_{ice, 1}}{\rho_{ice}}\right]  \text{ 且  }\  0.001 \leqslant s_{1} \leqslant 1.0, & \text {如果 }\ \theta_{sat, 1} \geqslant 1 \times 10^{-6}
    \end{cases}
 \end{equation}
 其中$\Delta z_{1}$为表层土壤厚度(m)，$\rho_{liq}$和$\rho_{ice}$分别为液态水和固态水密度(\unit{kg.m^{-3}})，
@@ -419,7 +423,7 @@ $\theta_{sat,1}$表示表层土壤体积含水量(即孔隙度，\unit{mm^3.mm^{
 
 由于地表无植被覆盖，在计算阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$时，零平面位移取为$d=0$。动量粗糙度在无积雪覆盖时取为$z_{0m}=0.01$，有积雪覆盖(即$f_{sno}>0$)时为积雪、裸土覆盖面积加权平均，即$z_{0m}=0.01\left( 1-f_{sno} \right )+ 0.0024 f_{sno}$。
 由于动量输送会受到粗糙物后面湍流波中气压波动的影响，而热量和水汽的输送过程不涉及这种动力学机制，热量和水汽必须通过界面的分子扩散进行传输，
-故感热和水汽的粗糙度($z_{0h}$,$z_{0w}$)不同于动量粗糙度，根据~\citet{zeng1998effect}：
+故感热和水汽的粗糙度($z_{0h}$，$z_{0w}$)不同于动量粗糙度，根据~\citet{zeng1998effect}：
 \begin{equation}\label{z0hw}
 z_{0 h} = z_{0 w} = z_{0 m} \exp \left[-0.13\left(Re_{*}\right)^{0.45}\right]
 \end{equation}
@@ -431,7 +435,7 @@ z_{0 h} = z_{0 w} = z_{0 m} \exp \left[-0.13\left(Re_{*}\right)^{0.45}\right]
      \item 根据公式(\ref{VaIni})给出风速$V_{a}$的初始猜测，其中对流速度$U_c$的初始猜测值为：
        \begin{equation}
           U_{c}= \begin{cases}
-           0, & \theta_{v, atm}-\theta_{v, s} \geq 0\ \text { (即稳定条件下) } \\ 
+           0, & \theta_{v, atm}-\theta_{v, s} \geqslant 0\ \text { (即稳定条件下) } \\ 
            0.5, & \theta_{v, atm}-\theta_{v, s}<0\ \text { (即不稳定条件下) }
           \end{cases}
        \end{equation}
@@ -440,10 +444,10 @@ z_{0 h} = z_{0 w} = z_{0 m} \exp \left[-0.13\left(Re_{*}\right)^{0.45}\right]
      a. 计算$u_\ast$ (Zeng1998方案：公式(\ref{Va_VU})-(\ref{Va_VS})；LZD2022方案：公式(\ref{Va_U_LZD1})、(\ref{Va_U_LZD2})、(\ref{Va_S})--(\ref{Va_VS})) \\
      b. 计算$\theta_\ast$ (公式(\ref{theta_VU})--(\ref{theta_VS})) \\
      c. 计算$q_\ast$ (公式(\ref{q_VU})--(\ref{q_VS})) \\
-     d. 更新感热和水汽粗糙度$z_{0h}$、$z_{0w}$ (公式(\ref{z0hw})) \\
+     d. 更新感热和水汽粗糙度$z_{0h}$、$z_{0w}$ (公式~\eqref{z0hw}) \\
      e. 计算虚位温特征尺度$\theta_{v\ast}$ (公式(\ref{thvstar})) \\
-     f. 更新大气风速$V_a$(公式(\ref{VaIni})) \\
-     g. 计算新一步$L$ (公式(\ref{ObukL})) \\
+     f. 更新大气风速$V_a$ (公式~\eqref{VaIni}) \\
+     g. 计算新一步$L$ (公式~\eqref{ObukL}) \\
      注：每次迭代完成后，判断$L$是否改变符号，若改变符号超过4次，则视为中性条件，跳出迭代过程，以避免在稳定与不稳定条件之间来回变化；
      \item 计算空气动力学阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ (公式(\ref{ram})--(\ref{raw}))
      \item 计算动量通量$\tau_{x}$和$\tau_{y}$、感热通量$H$、水汽通量$E$ (公式(\ref{tau_x})--(\ref{Eg}))
@@ -490,7 +494,7 @@ E=-\rho_{atm} \frac{q_{atm}-q_{s}}{r_{a w}}
 \begin{equation}
 f_{sun}=\frac{1-\exp (-K \cdot \text {LAI})}{K \cdot \text {LAI}}
 \end{equation}
-其中LAI为叶面积指数，$K$为直射太阳辐射消光系数(见章节~\ref{短波吸收辐射通量})，${10}^{-6}\le K \cdot \text {LAI}\le40$。
+其中LAI为叶面积指数，$K$为直射太阳辐射消光系数(见章节~\ref{短波吸收辐射通量})，${10}^{-6}\leqslant K \cdot \text {LAI}\le40$。
 当白天植被吸收的太阳辐射小于1 \unit{W.m^{-2}} 或白天结束时，$f_{sun}=0.5$。叶面积指数也对应表达为两部分：
 \begin{equation}
 \begin{array}{c} \text {LAI}_{sun}= \text {LAI} \cdot f_{sun} \\ \text {LAI}_{sha}=\text {LAI} \cdot \left(1-f_{sun}\right)\end{array}
@@ -514,7 +518,7 @@ H_{v}=-\rho_{atm} C_{pa}(\text {LAI}+\text {SAI}) \frac{T_{s}-T_{v}}{r_{b}}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.6\linewidth]{Figures/地表湍流交换过程/有植被感热交换阻抗示意图.png}
-\caption{有植被覆盖部分的陆地表面感热通量示意图。}
+\caption{有植被覆盖时的陆地表面感热通量计算示意图}
 \label{fig:有植被覆盖部分的陆地表面感热通量示意图}
 \end{figure}
 }
@@ -549,7 +553,7 @@ $r_{v}$表示植被表面与植被冠层顶空气之间水汽交换总阻抗 (\u
 植被冠层与其周围空气之间的水汽交换包含两部分：湿的叶面及茎面的蒸发水汽交换(通过阻抗$r_b$)和干叶表面的蒸腾水汽通量(通过阻抗$r_b$，$r_{s,sun}$和$r_{s,sha}$)。
 湿的叶面茎面积占总叶面茎面积的比例 \citep{dickinson1993biosphere} 为：
 \begin{equation}\label{eq:fwet}
-f_{w e t}=\left(\frac{W_{c a n}}{W_{c a n, \max }}\right)^{2 / 3} \leq 1.0
+f_{w e t}=\left(\frac{W_{c a n}}{W_{c a n, \max }}\right)^{2 / 3} \leqslant 1.0
 \end{equation}
 其中$W_{can}$表示植被表面储水量(\unit{kg.m^{-2}}，其计算见章节~\ref{植被冠层截留})，$W_{can,max}$表示植被表面最大储水量
 (\unit{kg.m^{-2}})，$W_{can,max}=0.1\left(\text {LAI}+ \text {SAI}\right)$。
@@ -558,7 +562,7 @@ f_{w e t}=\left(\frac{W_{c a n}}{W_{c a n, \max }}\right)^{2 / 3} \leq 1.0
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.6\linewidth]{Figures/地表湍流交换过程/有植被潜热交换阻抗示意图.png}
-\caption{有植被覆盖部分的陆地表面水汽通量示意图。}
+\caption{有植被覆盖时的陆地表面水汽通量计算示意图}
 \label{fig:有植被覆盖部分的陆地表面水汽通量示意图}
 \end{figure}
 }
@@ -585,7 +589,7 @@ E_{v}=-\rho_{atm}\left[c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}+c_{v}^{w} q_{s a t}^{T_
 \begin{equation}
 c_{v}^{w}=\frac{1}{r_{v}}=\frac{(\text {LAI}+\text {SAI}) \cdot f_{{wet }}}{r_{b}}+\text {LAI} \cdot \left(1-f_{wet}\right)\left(\frac{f_{sun}}{r_{b}+r_{s,sun}} + \frac{f_{sha}}{r_{b}+r_{s,sha}}\right)
 \end{equation}
-当$q_{sat}^{T_v}\le q_s$即植被冠层空气中的水蒸气可以发生液化时，
+当$q_{sat}^{T_v}\leqslant q_s$即植被冠层空气中的水蒸气可以发生液化时，
 $-\rho_{atm}\frac{q_s-q_{sat}^{T_v}}{r_{v}}\ =-\rho_{atm} \frac{q_s-q_{sat}^{T_v}}{r_b/\left(\text {LAI}+\text {SAI}\right)}$，于是
 \begin{equation}
 c_{v}^{w}=\frac{1}{r_{{v }}}=\frac{\text {LAI}+\text {SAI}}{r_{b}}
@@ -593,7 +597,7 @@ c_{v}^{w}=\frac{1}{r_{{v }}}=\frac{\text {LAI}+\text {SAI}}{r_{b}}
 
 下面给出各个阻抗系数的计算方案。首先，植被冠层周围空气与大气的湍流阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$的计算方案同章节~\ref{无植被覆盖地表湍流通量的计算方案}，
 动量、热量与水汽通量的零平面位移$d$与粗糙度$z_{0m}$、$z_{0h}$、$z_{0w}$可以通过土地覆盖类型查找表得到(见
-表~\ref{tab:USGS地表覆盖粗糙度及零平面位移与植被高度比值})，或者通过计算得到(见章节~\ref{百分百植被覆盖湍流}和~\ref{考虑稳定度粗糙度方案})。
+表~\ref{tab:USGS地表覆盖粗糙度及零平面位移与植被高度比值})，或者通过计算得到(见章节~\ref{百分百植被覆盖湍流} 和~\ref{考虑稳定度粗糙度方案})。
 
 其次，对于地表与植被冠层空气的湍流阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$，方案之一为CoLM2014原有方案，计算公式为：
 \begin{equation}
@@ -638,7 +642,7 @@ CoLM2014假设$d$和$z_0$与植被高度成固定比例，即$d=\frac{2}{3}h$，
 这对于稀疏植被可能并不成立~\citep{zeng2007consistent}。在本版本，$d$的计算采用~\citet{choudhury1988}的方案，
 是通过拟合~\citet{shaw1982aerodynamic}二阶闭合理论结果得到：
 \begin{equation}\label{dOh}
-\frac{d}{h}=1.1 \ln \left(1+\left(c_{d} \cdot (\text {LAI} + \text {SAI})\right)^{0.25}\right)
+\frac{d}{h}=1.1 \ln \left[1+\left(c_{d} \cdot (\text {LAI} + \text {SAI})\right)^{0.25}\right]
 \end{equation}
 其中$c_d=0.2$，表示单位面积叶片平均拖曳系数。粗糙度计算采用~\citet{raupach1992drag,raupach1994simplified}方案：
 \begin{equation}\label{zOh}
@@ -650,7 +654,7 @@ $\Psi_h$为植被冠层对风速廓线影响函数，设置为0.193。$u_\ast$�
 \begin{equation}\label{ustrarOuh}
 \frac{u_{*}}{u_{h}}=\min \left[\left(C_{S}+C_{R} \lambda\right)^{0.5}, 0.3\right]
 \end{equation}
-其中$C_S=0.003$，为无植被情况时$h$高度的拖曳系数；$C_R$为植被覆盖区域的拖曳系数。$\lambda$表示植被迎风面积指数 (FAI)：$\lambda=1-\exp{\left(-0.5 (\text {LAI}+\text {SAI})\right)}$。
+其中$C_S=0.003$，为无植被情况时$h$高度的拖曳系数；$C_R$为植被覆盖区域的拖曳系数。$\lambda$表示植被迎风面积指数 (FAI)：$\lambda=1-\exp{\left[-0.5 (\text {LAI}+\text {SAI})\right]}$。
 
 
 CoLM2014 假设$r_b$和$r_d$分别与$u_\ast^{0.5}$和$u_\ast$成正比例关系，
@@ -704,8 +708,8 @@ r_{d}=\int_{z_{0 \mathrm{hg}}}^{d+z_{0}} \frac{1}{K(z)} d z
 \end{mymdframed}
 
 \citet{raupach1992drag,raupach1994simplified}的植被粗糙度计算方案假设中性条件，也就是忽略了稳定度的影响，
-而诸多研究表明稳定度对粗糙度具有不可忽略的影响。以\citet{raupach1992drag,raupach1994simplified}方案为基础，
-我们发展了一个考虑稳定度影响的植被粗糙度计算方案 \citep{liu2023roughnesslength}，详述如下。
+而诸多研究表明稳定度对粗糙度具有不可忽略的影响。以~\citet{raupach1992drag,raupach1994simplified}方案为基础，
+我们发展了一个考虑稳定度影响的植被粗糙度计算方案~\citep{liu2023roughnesslength}，详述如下。
 
 考虑具有以下一般形式的湍流扩散系数：
 \begin{equation}\label{eddydiffusivity}
@@ -715,19 +719,19 @@ K=\frac{\kappa u_{*} (z-d)} {\varphi \phi }
 \begin{equation}
 \varphi = \begin{cases}
    \frac{z-d} {z_{w}-d}, & h<z<z_{w} \text { 时} \\
-   1, & z \geq z_{w} \text { 时} \\
+   1, & z \geqslant z_{w} \text { 时} \\
 \end{cases}
 \end{equation}
 其中$h$为树高，$z_{w}$为粗糙子层顶(见图~\ref{fig:修正Raupach粗糙度方案示意图})。$\phi$为稳定度函数，采用~\citet{dyer1974review}关系式：
 \begin{equation}
 \phi(\zeta) = \begin{cases}
    (1-16\zeta)^{-1/4}, & \zeta<0 \text { 时} \\
-   1+5\zeta, & \zeta \geq 0 \text { 时} \\
+   1+5\zeta, & \zeta \geqslant 0 \text { 时} \\
 \end{cases}
 \end{equation}
 其中$\zeta = (z-d)/L$为无量纲稳定度参数，$L$为Monin-Obukhov长度(定义见章节~\ref{基本理论})。
 
-根据一阶湍流闭合(即$K$理论)，粗糙子层以上($z>h$)及以下($z_0 + d<z \leq h$)的风速梯度可表达为：
+根据一阶湍流闭合(即$K$理论)，粗糙子层以上($z>h$)及以下($z_0 + d<z \leqslant h$)的风速梯度可表达为：
 \begin{equation}\label{kz_u_rsl}
 \frac{\kappa (z-d) u_{*}}{\varphi \phi} \frac{\partial U}{\partial z}=u_{*}^2
 \end{equation}
@@ -741,7 +745,7 @@ z_{0} = (h-d)\exp (-\kappa \gamma + \Psi_{h})
 \end{equation}
 其中$\Psi_{h}=\int_{z_{0}+d}^{h} \frac{\varphi \phi - 1}{z-d} d z$，$\gamma \equiv U_{h}/u_{*}$(由公式(\ref{ustrarOuh})计算)。
 
-方程(\ref{kz_u_rsl})从$z=z_0+d$积分到粗糙子层以上的惯性层(即$z\geq z_{w}$)，有：
+方程(\ref{kz_u_rsl})从$z=z_0+d$积分到粗糙子层以上的惯性层(即$z\geqslant z_{w}$)，有：
 \begin{align}\label{u_rsl_iner}
 \frac{\kappa U_{h}}{u_{*}} =& \ln \left(\frac{z-d}{z_{0}}\right) + \Psi_{h} + \int_{h}^{z_{w}} \frac{\varphi \phi - 1}{z-d} \,dz
 + \int_{z_{w}}^{z} \frac{\varphi \phi - 1}{z-d} \,dz \nonumber \\[1ex]
@@ -756,7 +760,7 @@ z_{0} = (h-d)\exp (-\kappa \gamma + \Psi_{h})
 \begin{equation}
    \psi_u(\chi ) = \begin{cases}
       2\ln \left(\frac{1+x}{2} \right) + \ln \left(\frac{1+x^2}{2} \right) - 2\tan^{-1}x + \frac {\pi}{2}, & \chi<0 \text { 时} \\[1ex]
-      -5\chi, & \chi \geq 0 \text { 时} \\
+      -5\chi, & \chi \geqslant 0 \text { 时} \\
 \end{cases}
 \end{equation}
 其中$x=(1-16\chi)^{\frac{1}{4}}$。
@@ -783,7 +787,7 @@ z_{0} = (h-d)\exp (-\kappa \gamma + \Psi_{h})
 \Psi_{h} = \ln \left(c_{w}\right) + \frac{L}{12\left(z_{w}-d\right)} \left[\left(1-16\frac{z_{w}}{L}\right)^{3/4} 
 - \left(1-16\frac{h}{L}\right)^{3/4} \right] - \psi_u \left(\frac{z_{w}-d}{L} \right) + \psi_u \left(\frac{z_{0}}{L} \right)
 \end{equation}
-在稳定条件下($z_{w}/L \geq 0$):
+在稳定条件下($z_{w}/L \geqslant 0$):
 \begin{equation}\label{Psih_stable}
 \Psi_{h} = \ln \left(c_{w}\right) + \left(1-\frac{1}{c_{w}}\right) \left[1+\frac{5\left(z_{w}+h\right)}{2L}\right]
 + \frac{5\left(z_{w}-d\right)}{L} - \frac{5z_{0}}{L}
@@ -795,7 +799,7 @@ z_{0} = (h-d)\exp (-\kappa \gamma + \Psi_{h})
 \begin{figure}[]
 \centering
 \includegraphics[scale=0.7]{Figures/地表湍流交换过程/修正Raupach粗糙度方案示意图.jpg}
-\caption{考虑稳定度影响的植被粗糙度计算方案意图。}
+\caption{考虑稳定度影响的植被粗糙度计算方案意图}
 \label{fig:修正Raupach粗糙度方案示意图}
 \end{figure}
 }
@@ -811,8 +815,8 @@ z_{0} = (h-d)\exp (-\kappa \gamma + \Psi_{h})
 \frac{d}{h}=1-\frac{1-\exp \left(-\sqrt{c_{d1} 2 \lambda}\right)}{\sqrt{c_{d1} 2 \lambda}}
 \end{equation}
 其中$c_{d1}=7.5$，$\lambda$%表示植被迎风面积指数 ($FAI$)，
-计算为$f_c\left(1-\exp{\left(-0.5\text{(LAI+SAI)}\right)}\right)$。
-当植被覆盖$f_c$等于100\%时，$\lambda$计算同100\%植被覆盖情景。为了同时适用与稀疏和浓密覆盖植被，
+计算为$f_c\left[1-\exp{\left(-0.5\text{(LAI+SAI)}\right)}\right]$。
+当植被覆盖$f_c$等于100\%时，$\lambda$计算同100\%植被覆盖情景。为了同时适用于稀疏和浓密覆盖植被，
 本版本采用~\citet{dai2019different}方案计算$d$：
 \begin{equation}\label{dooh}
 \frac{d}{h}=f_{c} \cdot 1.1 \ln \left(1+\left(c_{d} f_{c} \text{LAI}\right)^{0.25}\right)+\left(1-f_{c}\right) \cdot\left(1-\frac{1-\exp \left(-\sqrt{c_{d1} 2 \lambda}\right)}{\sqrt{c_{d1} 2 \lambda}}\right)
@@ -867,8 +871,8 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.6\textwidth]{Figures/地表湍流交换过程/土壤阻抗示意图_v2.jpg}
-\caption{土壤阻抗示意图。其中，\(q_{a}\)、\(q_{g}\)、\(q_{soil}\)分别代表一定高度空气比湿(高度取决于有无植被及采用的阻抗交换网络)、地表比湿和土壤孔隙中水附近的比湿，\(r_{aw}\)、\(r_{ss}\)分别代表空气动力学阻抗和土壤阻抗}
+\includegraphics[width=0.75\textwidth]{Figures/地表湍流交换过程/土壤阻抗示意图_v3.jpg}
+\caption[土壤阻抗示意图]{土壤阻抗示意图。其中，\(q_{a}\)、\(q_{g}\)、\(q_{soil}\)分别代表一定高度空气比湿(高度取决于有无植被及采用的阻抗交换网络)、地表比湿和土壤孔隙中水附近的比湿，\(r_{aw}\)、\(r_{ss}\)分别代表空气动力学阻抗和土壤阻抗}
 \label{fig:土壤阻抗示意图}
 \end{figure}
 }
@@ -876,35 +880,6 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 目前CoLM支持5种土壤阻抗方案，每种方案的计算表达式和模型中对应方案的选择如表~\ref{tab:土壤阻抗方案列表} 所示。如果用户需要打开土壤阻抗选项，需设置\texttt{DEF\_RSS\_SCHEME}
 = {[}土壤阻抗选项{]}，不打开则设置\texttt{DEF\_RSS\_SCHEME} =
 0。在CoLM模型默认打开方案1。
-
-{
-\begin{landscape}
-\begin{table}[htbp]
-\caption{土壤阻抗计算方案列表}
-\label{tab:土壤阻抗方案列表}
-\begin{tabular}{@{}clll@{}}
-\toprule
-模式选项   & 土壤阻抗表达式  & 方法/假设   &  参考文献  \\  
-\midrule
-1 & \(r_{ss} = \frac{DSL}{D_{g}}\) & 菲克定律 & \cite{sl2014}, SL14  \\
-2 & \(r_{ss} = \frac{DSL}{D_{g}}\) & 菲克定律 & \cite{sz2009}, SZ09  \\
-3 & \(\frac{1}{r_{ss}} = \frac{1}{r_{g\ }} + \frac{1}{r_{w\ }}\) & 菲克定律, 
-达西定律 & \cite{tang2013}, TR13  \\ 
-4 & \(\beta_{soil} = \left\{ \begin{array}{r}
-\frac{1}{4}{\lbrack 1 - \cos(\frac{\theta_{1}}{\theta_{fc,1}}\pi)\rbrack}^{2} \\ 1 \end{array} \right.\ \begin{matrix}
- & \theta_{1} < \theta_{fc} \\
- & \theta_{1} \geq \theta_{fc}\text{ or }q_{\text{atm }} > q_{soil}
-\end{matrix}\) & 经验拟合 &
-\cite{lp1992}\textsuperscript{a}, LP92  \\
-5 & \(r_{ss} = \exp\left( 8.206 - 6.0\frac{\theta_{1}}{\theta_{sat,1}} \right)\)
-& 经验拟合 & \cite{s1992}\textsuperscript{b}, S92  \\ \bottomrule    
-\end{tabular}
-\footnotesize \\
-\textsuperscript{a} $\beta_{soil}$为限制土壤蒸发的因子，范围为{[}0-1{]}，无单位 \\
-\textsuperscript{b} Sellers原方案为$r_{ss} = \exp\left( 8.206 - 4.255\frac{\theta_{1}}{\theta_{sat,1}} \right)\ $，然而~\cite{sz2009}指出该方案在土壤水饱和时，$r_{ss}$计算值不合理，为了降低土壤较为湿润的$r_{ss}$，Noah-MP v5对其进行修正为$r_{ss} = \exp\left( 8.206 - 6.0 \frac{{\theta}_{1}}{\theta_{sat,1}} \right)$
-\end{table}
-\end{landscape}
-}
 
 图~\ref{fig:土壤阻抗方案差异图} 代表不同土壤含水量下阻抗方案的\(r_{ss}\)和$\beta$的差异，$\beta$代表了不同方案对潜在蒸发的限制，$\beta$值越大，限制越小，通过\(r_{ss}\)和\(r_{aw}\)计算得到：
 \begin{equation}
@@ -916,10 +891,39 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/地表湍流交换过程/土壤阻抗方案差异图.png}
-\caption{土壤阻抗方案差异图。采用Clapp and Hornberger的土壤参数，其中\(\theta_{sat}\)为0.45 \unit{m^{3}.m^{-3}}，b为7.12，\(\varphi_{sat}\)为\num{-478} \unit {mm}，土壤表层温度为282.15 K，\(K_{sat}\)为 \num{1.25e-6} \unit{m.s^{-1}}。设定厚度为1.75 cm，SL14方案中K为0.8，SZ09方案中w为5，\(r_{aw}\)=50 \unit {s.m^{-1}}。图中灰色虚线从左到右依次为土壤萎蔫点和田间持水量时的土壤水含量}
+\includegraphics[width=0.7\textwidth]{Figures/地表湍流交换过程/土壤阻抗方案差异图.png}
+\caption[土壤阻抗方案差异图]{土壤阻抗方案差异图。采用Clapp and Hornberger的土壤参数，其中\(\theta_{sat}\)为0.45 \unit{m^{3}.m^{-3}}，b为7.12，\(\varphi_{sat}\)为\num{-123} \unit {mm}，土壤表层温度为282.15 K，\(K_{sat}\)为 \num{1.25e-6} \unit{m.s^{-1}}。设定厚度为1.75 cm，SL14方案中\(K_{sl}\)为0.8，SZ09方案中\(w_{sz}\)为5，\(r_{aw}\)=50 \unit {s.m^{-1}}。图中灰色虚线从左到右依次为土壤萎蔫点和田间持水量时的土壤水含量}
 \label{fig:土壤阻抗方案差异图}
 \end{figure}
+}
+
+{
+\begin{landscape}
+\begin{table}[htbp]
+\caption{土壤阻抗计算方案列表}
+\label{tab:土壤阻抗方案列表}
+\begin{tabular}{@{}clll@{}}
+\toprule
+模式选项   & 土壤阻抗表达式  & 方法/假设   &  参考文献  \\  
+\midrule
+1 & \(r_{ss} = \frac{DSL}{D_{g}}\) & 菲克定律 & \citet{sl2014}, SL14  \\
+2 & \(r_{ss} = \frac{DSL}{D_{g}}\) & 菲克定律 & \citet{sz2009}, SZ09  \\
+3 & \(\frac{1}{r_{ss}} = \frac{1}{r_{g\ }} + \frac{1}{r_{w\ }}\) & 菲克定律, 
+达西定律 & \citet{tang2013}, TR13  \\ 
+4 & \(\beta_{soil} = \left\{ \begin{array}{r}
+\frac{1}{4}{\lbrack 1 - \cos(\frac{\theta_{1}}{\theta_{fc,1}}\pi)\rbrack}^{2} \\ 1 \end{array} \right.\ \begin{matrix}
+ & \theta_{1} < \theta_{fc} \\
+ & \theta_{1} \geqslant \theta_{fc}\text{ or }q_{\text{atm }} > q_{soil}
+\end{matrix}\) & 经验拟合 &
+\citet{lp1992}\textsuperscript{a}, LP92  \\
+5 & \(r_{ss} = \exp\left( 8.206 - 6.0\frac{\theta_{1}}{\theta_{sat,1}} \right)\)
+& 经验拟合 & \citet{s1992}\textsuperscript{b}, S92  \\ \bottomrule    
+\end{tabular}
+\footnotesize \\
+\textsuperscript{a} $\beta_{soil}$为限制土壤蒸发的因子，范围为{[}0-1{]}，无单位 \\
+\textsuperscript{b} Sellers原方案为$r_{ss} = \exp\left( 8.206 - 4.255\frac{\theta_{1}}{\theta_{sat,1}} \right)\ $，然而~\citet{sz2009}指出该方案在土壤水饱和时，$r_{ss}$计算值不合理，为了降低土壤较为湿润的$r_{ss}$，Noah-MP v5对其进行修正为$r_{ss} = \exp\left( 8.206 - 6.0 \frac{{\theta}_{1}}{\theta_{sat,1}} \right)$
+\end{table}
+\end{landscape}
 }
 
 以下针对不同的方案进行简单介绍。
@@ -934,7 +938,7 @@ $r_b$和$r_d$的计算都是对$u$和$K$廓线的积分。
 \begin{equation}
 DSL = \begin{cases}
 \Delta z_{1} \times \frac{\theta_{init,1\ \ } - \theta_{1}}{\theta_{init,2\ \ } - \theta_{air}} & \theta_{1} < K_{sl}\theta_{sat,1} \\
-0   & \theta_{1} \geq K_{sl}\theta_{sat,1}
+0   & \theta_{1} \geqslant K_{sl}\theta_{sat,1}
 \end{cases}
 \end{equation}
 其中，$\Delta z_{1}$ 代表第一层的土壤厚度 (\unit{m})，\(\theta_{init,1}\)和\(\theta_{init,2}\)代表干燥层启动时的土壤体积含水量 (\unit{m^{3}.m^{-3}})，计算为：
@@ -944,7 +948,7 @@ DSL = \begin{cases}
 \begin{equation}
 \theta_{init,2} = K_{sl}\theta_{sat,1}\
 \end{equation}
-\(\theta_{1}\)代表第一层土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{sat,1}\)为第一层土壤的饱和体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{ice,1}\)为第一层土壤冰的体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{air}\)代表风干后即\(\psi_{air} = - 10^{7}\) mm时的土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(K_{sl}\)为人为设定的参数，在CoLM中，按照~\cite{sl2014}文章中的测试，\(K_{sl}\)=0.8。
+\(\theta_{1}\)代表第一层土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{sat,1}\)为第一层土壤的饱和体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{ice,1}\)为第一层土壤冰的体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{air}\)代表风干后即\(\psi_{air} = - 10^{7}\) mm时的土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(K_{sl}\)为人为设定的参数，在CoLM中，按照~\citet{sl2014}文章中的测试，\(K_{sl}\)=0.8。
 
 水汽分子在土壤中的扩散系数\(D_{g}\)则是通过计算水汽分子在空气中的扩散系数\(\ D_{0}\)和水汽穿过土壤基质的路径\(\tau\)得到的，计算如下：
 \begin{equation}
@@ -967,7 +971,7 @@ SZ09方案与SL14方案同样都是基于土壤干燥层中水汽扩散的菲克
 \begin{equation}
 DSL = \Delta z_{1} \times \frac{e^{\left( 1 - \frac{\theta_{1}}{\theta_{sat,1}} \right)^{w_{sz}}} - 1}{e - 1}\
 \end{equation}
-其中，\(w_{sz}\)为人为设定的参数，在CoLM中，按照~\cite{sz2009}中的测试，\(w_{sz}\)设置为5。\(D_{g}\)、\(\tau\)和\(D_{0\ }\)的计算与SL14方案相同。
+其中，\(w_{sz}\)为人为设定的参数，在CoLM中，按照~\citet{sz2009}中的测试，\(w_{sz}\)设置为5。\(D_{g}\)、\(\tau\)和\(D_{0\ }\)的计算与SL14方案相同。
 
 %\begin{enumerate}
 %\def\labelenumi{\arabic{enumi}.}
@@ -976,12 +980,14 @@ DSL = \Delta z_{1} \times \frac{e^{\left( 1 - \frac{\theta_{1}}{\theta_{sat,1}} 
   TR13方案
 %\end{enumerate}
 
-与SL14方案和SZ09方案仅仅只考虑土壤干燥层中的水汽扩散不同，TR13方案同时考虑了土壤层中液态水和气态水的扩散。TR13方案计算的\(r_{soil}\)进一步被划分为\(r_{g\ }\)代表土壤孔隙中水汽扩散的阻抗 (\unit{s.m^{-1}})和\(r_{w\ }\)代表液态水挥发阻抗(\unit{s.m^{-1}})。它们的计算如下：
+与SL14方案和SZ09方案仅仅只考虑土壤干燥层中的水汽扩散不同，TR13方案同时考虑了土壤层中液态水和气态水的扩散。TR13方案计算的\(r_{ss}\)进一步被划分为\(r_{g\ }\)代表土壤孔隙中水汽扩散的阻抗 (\unit{s.m^{-1}})和\(r_{w\ }\)代表液态水挥发阻抗(\unit{s.m^{-1}})。它们的计算如下：
 \begin{equation}
-r_{g\ } = \frac{2D_{g\ }\varepsilon_{1}}{\mathrm{\Delta}z_{1}}\ \ 
+\frac{1}{r_{\mathrm{g}}} = \frac{2D_{g\ }\varepsilon_{1}}
+{\Delta z_{1}}\ \ 
 \end{equation}
 \begin{equation}
-r_{w\ } = \frac{2D_{w}B\theta_{1}}{\mathrm{\Delta}z_{1}}\
+\frac{1}{r_{\mathrm{w}}} = \frac{2D_{w}B\theta_{1}}
+{\Delta z_{1}}\
 \end{equation}
 其中，\(D_{w\ }\)代表液态水的扩散系数(\unit{m^{2}.s^{- 1}})，\(\varepsilon_{1}\)代表第一层土壤中空气填充的孔隙空间(\unit{m^{3}.m^{-3}})，\(B\)为Bunsen溶解系数，计算如下：
 \begin{equation}
@@ -989,7 +995,7 @@ D_{w} = K_{1}\frac{\partial\varphi_{1}}{\partial\theta_{1}}\
 \end{equation}
 在Clapp and Hornberger土壤水力模型中，\(\frac{\partial\varphi_{1}}{\partial\theta_{1}}\)计算为：
 \begin{equation}
-\frac{\partial\varphi_{1}}{\partial\theta_{1}}\  = - \frac{B_{1}\varphi_{1}}{\theta_{1}}\
+\frac{\partial\varphi_{1}}{\partial\theta_{1}}\  = - \frac{b_{1}\varphi_{1}}{\theta_{1}}\
 \end{equation}
 在van Genuchten土壤水力模型中，\(\frac{\partial\varphi_{1}}{\partial\theta_{1}}\)计算为：
 \begin{equation}
@@ -1013,7 +1019,7 @@ B = \ \frac{\rho_{liquid}}{\rho_{vapor}} = \frac{\rho_{liquid}}{\rho_{air} \time
   LP92方案
 %\end{enumerate}
 
-与前三个方案不同，LP92方案直接计算\(\beta_{soil}\)，\(\beta_{soil}\)是将潜在蒸发降到实际蒸发的经验因子，范围为{[}0,1{]}。\(\theta_{fc,1}\)为第一层土壤的田间持水量(\unit{m{^3}.m^{-3}})，即土壤水势为\qty{-3399}{mm}时的土壤含水量。
+与前三个方案不同，LP92方案直接计算\(\beta_{soil}\)，\(\beta_{soil}\)是将潜在蒸发降到实际蒸发的经验因子，范围为{[}0,1{]}，如表~\ref{tab:土壤阻抗方案列表} 所示。\(\theta_{fc,1}\)为第一层土壤的田间持水量(\unit{m{^3}.m^{-3}})，即土壤水势为\qty{-3399}{mm}时的土壤含水量。
 
 %\begin{enumerate}
 %\def\labelenumi{\arabic{enumi}.}
@@ -1039,83 +1045,83 @@ B = \ \frac{\rho_{liquid}}{\rho_{vapor}} = \frac{\rho_{liquid}}{\rho_{air} \time
 模式选项 & 表达式 & 参考文献 \\ 
 \midrule
 1 &
-\(\varepsilon_{1}^{2} \times {(\frac{\varepsilon_{1}}{\theta_{sat,1}})}^{3/B_{1}}\)
-& \cite{BBC1999}
+\(\varepsilon_{1}^{2} \times {(\frac{\varepsilon_{1}}{\theta_{sat,1}})}^{3/b_{1}}\)
+& \citet{BBC1999}
 
 BBC \\
 2 &
-\(0.66 \times \varepsilon_{1}{\times (\frac{\varepsilon_{1}}{\theta_{sat,1}})}^{2}\)
-& \cite{moldrup2000}
+\(0.66 \times \varepsilon_{1}{\times (\frac{\varepsilon_{1}}{\theta_{sat,1}})}\)
+& \citet{moldrup2000}
 
 P\_WLR \\
 3 &
 \(\varepsilon_{1}^{3/2} \times (\frac{\varepsilon_{1}}{\theta_{sat,1}})\)
-& \cite{moldrup2000}
+& \citet{moldrup2000}
 
 MA\_WLR \\
 4 &
 \(\varepsilon_{1}^{4/3} \times (\frac{\varepsilon_{1}}{\theta_{sat,1}})\)
-& \cite{moldrup2000}
+& \citet{moldrup2000}
 
 MI\_WLR \\
 5 &
 \(\varepsilon_{1}^{4/3} \times {(\frac{\varepsilon_{1}}{\theta_{sat,1}})}^{2}\)
-& \cite{millington_permeability_1961}
+& \citet{millington_permeability_1961}
 
 MQ \\
 6 &
 \({\theta_{sat,1}}^{2} \times {(\frac{\varepsilon_{1}}{\theta_{sat,1}})}^{2 + \frac{\log\varepsilon_{100}^{\frac{1}{4}}}{\log\frac{\varepsilon_{100}}{\theta_{sat,1}}}}\)
-& \cite{POE2004}
+& \citet{POE2005}
 
-POE \\ \bottomrule    
+3POE \\ \bottomrule    
 \end{tabular}
 \end{table}
 }
 
 {
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/地表湍流交换过程/tau方案差异图.png}
-\caption{\(\ \tau\)方案差异图。参数设置与图~\ref{fig:土壤阻抗方案差异图}参数设置相同，土壤阻抗方案为SL14方案}
+\includegraphics[width=0.7\textwidth]{Figures/地表湍流交换过程/tau方案差异图.png}
+\caption[\(\ \tau\)方案差异图]{$\tau$方案差异图。参数设置与图~\ref{fig:土壤阻抗方案差异图} 参数设置相同，土壤阻抗方案为SL14方案}
 \label{fig:tau方案差异图}
 \end{figure}
 }
 
 土壤阻抗方案1-3需要计算\(\tau\)，而方案4和5无需计算\(\tau\)。当开启Clapp and Hornberger土壤参数方案时，所有\(\tau\)方案都可以被选取；当开启van Genuchten方案时，由于van Genuchten参数方案没有Clapp and Hornberger参数方案的b参数，因此\(\tau\)方案的方案1不适用van Genuchten土壤参数方案，其余方案都可以被选取。在CoLM模型中，当开启Clapp and Hornberger土壤参数方案时，\(\tau\)的默认选项为1；开启van Genuchten土壤参数方案时，\(\tau\)的默认选项为6。\(\tau\)的选项可直接在源代码\texttt{MOD\_SoilSurfaceResistance.F90}中进行修改。
 
-土壤阻抗方案仅在地面非凝结或凝华时有效。当使用土壤阻抗方案为1--3、5时，在无植被覆盖下地面蒸发水汽通量\(E_{g}\)即式~\eqref{Eg} 修改为：
+土壤阻抗方案仅在地面非凝结或凝华时有效。当使用土壤阻抗方案为1-3、5时，在无植被覆盖下地面蒸发水汽通量\(E_{g}\)即公式~\eqref{Eg} 修改为：
 \begin{equation}
 E_{g}=-\rho_{atm} \frac{q_{atm}-q_{g}}{r_{a w} + r_{s s}}
 \end{equation}
-地面蒸发相对地面温度的变化率，即式~\eqref{Eg/Tg_1}修改为：
+地面蒸发相对地面温度的变化率，即公式~\eqref{Eg/Tg_1} 修改为：
 \begin{equation}
      \frac{\partial E_{g}}{\partial T_{g}}= \frac{\rho_{atm}}{r_{a w} + r_{s s}} \frac{d q_{g}}{d T_{g}}
 \end{equation}
-在有植被覆盖下，地面与植被冠层周围空气间水汽通量\(E_{g}\)，即式~\eqref{eq:Eg}修改为:
+在有植被覆盖下，地面与植被冠层周围空气间水汽通量\(E_{g}\)，即公式~\eqref{eq:Eg} 修改为:
 \begin{equation}
 E_{g}=-\rho_{atm} \frac{q_{s}-q_{g}}{r_{a w}^{\prime}+r_{ss}}
 \end{equation}
-$c_g^w=\frac{1}{r_{aw}^\prime}$修正为$c_g^w=\frac{1}{r_{aw} ^\prime+r_{ss}}$，
-地面蒸发相对地表温度的变化率，即式~\eqref{Eg/Tg_2} 修改为：
+$c_g^w=\frac{1}{r_{aw}^\prime}$修改为$c_g^w=\frac{1}{r_{aw} ^\prime+r_{ss}}$，
+地面蒸发相对地表温度的变化率，即公式~\eqref{Eg/Tg_2} 修改为：
 \begin{equation}
 \frac{\partial E_{g}}{\partial T_{g}}=
       \frac{\rho_{atm}}{r_{a w}^{\prime} + r_{s s}} \frac{c_{a}^{w}+c_{v}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{d q_{g}}{d T_{g}}
 \end{equation}
 
-当使用土壤阻抗方案4时，在无植被覆盖下水汽通量\(E_{g}\)，即式~\eqref{Eg}修改为：
+当使用土壤阻抗方案4时，在无植被覆盖下水汽通量\(E_{g}\)，即公式~\eqref{Eg} 修改为：
 \begin{equation}\label{Eg_modify}
 E_{g}=-\rho_{atm}\beta_{soil} \frac{q_{atm}-q_{g}}{r_{a w}}
 \end{equation}
-地面蒸发相对地面温度的变化率即式~\eqref{Eg/Tg_1} 修改为：
+地面蒸发相对地面温度的变化率即公式~\eqref{Eg/Tg_1} 修改为：
 \begin{equation}
      \frac{\partial E_{g}}{\partial T_{g}}= \frac{\rho_{atm} \beta_{soil}}{r_{a w} } \frac{d q_{g}}{d T_{g}}
 \end{equation}
-在有植被覆盖下地面与植被冠层周围空气间水汽通量\(E_{g}\)，即式~\eqref{eq:Eg}修改为:
+在有植被覆盖下地面与植被冠层周围空气间水汽通量\(E_{g}\)，即公式~\eqref{eq:Eg} 修改为:
 \begin{equation}
 E_{g}=-\rho_{atm} \beta_{soil} \frac{q_{s}-q_{g}}{r_{a w}^{\prime}}
 \end{equation}
 $c_g^w=\frac{1}{r_{aw}^\prime}$修改为$c_g^w=\frac{\beta_{soil}}{r_{aw}^\prime}$，
-地面蒸发相对地面温度的变化率，即式~\eqref{Eg/Tg_2}修改为：
+地面蒸发相对地面温度的变化率，即公式~\eqref{Eg/Tg_2} 修改为：
 \begin{equation}
 \frac{\partial E_{g}}{\partial T_{g}}=
       \frac{\rho_{atm} \beta_{soil}}{r_{a w}^{\prime}} \frac{c_{a}^{w}+c_{v}^{w}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{d q_{g}}{d T_{g}}

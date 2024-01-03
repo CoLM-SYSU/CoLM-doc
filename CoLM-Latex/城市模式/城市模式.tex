@@ -10,26 +10,26 @@ CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等�
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.9\textwidth]{Figures/城市模式/CoLM城市模式概念图.png}
-\caption{CoLM城市模式概念图。}
+\caption{CoLM城市模式概念图}
 \label{fig:CoLM城市模式概念图}
 \end{figure}
 }
 
 \section{CoLM城市模式结构与功能}
 不同于传统的城市街谷假设模型，CoLM采用由单栋建筑物组成的建筑群落来表征城市，如图~\ref{fig:CoLM城市模式结构和功能示意图} 所示。
-建筑物随机分布，包括建筑物位置及朝向。城市几何参数包括建筑物覆盖度$f_b$(即屋顶覆盖面积占比$f_{roof}$)，地面(透水、不透水面)覆盖度$f_g$($f_{gimp}$，$f_{gper}$)，建筑物高度$H$，建筑物高度与建筑物平均边长比$\rm H/L$(建筑物底面考虑为正方形，边长为记为$\rm L$)，植被冠层中心高度$h_v$，城市树木叶面积指数 LAI 及茎面积指数 SAI，植被(树)覆盖面积比例记为$f_v$。
+建筑物随机分布，包括建筑物位置及朝向。城市几何参数包括建筑物覆盖度$f_b$(即屋顶覆盖面积占比$f_{roof}$)，地面(透水、不透水面)覆盖度$f_g$ ($f_{gimp}$，$f_{gper}$)，建筑物高度$H$，建筑物高度与建筑物平均边长比$\rm H/L$ (建筑物底面考虑为正方形，边长为记为$\rm L$)，植被冠层中心高度$h_v$，城市树木叶面积指数 LAI 及茎面积指数 SAI，植被(树)覆盖面积比例记为$f_v$。
 其中$f_b+f_g=1$，$f_{gimp}+f_{gper}=1$。城市水体覆盖单独表征，其过程考虑为等效湖泊进行计算。
 
 {
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/城市模式/CoLM城市模式结构和功能示意图.png}
-\caption{CoLM城市模式结构和功能示意图。}
+\caption{CoLM城市模式结构和功能示意图}
 \label{fig:CoLM城市模式结构和功能示意图}
 \end{figure}
 }
 
-现有的城市模式往往不对平均单栋建筑物进行表征，而是采用街谷宽度比$\rm H/W$描述城市结构主要特征($\rm W$表示楼与楼之间平均距离。在已知$f_b$和$\rm H/W$参数，而未知$\rm L$时，$\rm L$可以简单计算为：
+现有的城市模式往往不对平均单栋建筑物进行表征，而是采用街谷宽度比$\rm H/W$描述城市结构主要特征($\rm W$表示楼与楼之间平均距离)。在已知$f_b$和$\rm H/W$参数，而未知$\rm L$时，$\rm L$可以简单计算为：
 \begin{equation}
 \frac{\rm H}{\rm L}=\frac{\rm H}{\rm W} \cdot \frac{1-\sqrt{f_{b}}}{\sqrt{f_{b}}}, \text { 即 } {\rm L=W} \frac{\sqrt{f_{b}}}{1-\sqrt{f_{b}}}
 \end{equation}
@@ -43,7 +43,7 @@ $S$表示阴影，$\rm H/W$在推导过程中表示为$\rm HW$，$\rm H/L$表示
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.7\textwidth]{Figures/城市模式/CoLM城市模式建筑植被结构示意图.png}
-\caption{CoLM城市模式建筑及植被几何结构示意图。}
+\caption{CoLM城市模式建筑及植被几何结构示意图}
 \label{fig:CoLM城市模式几何结构示意图}
 \end{figure}
 }
@@ -164,7 +164,7 @@ $E_{gimp}\alpha_{gimp}$,$E_{gper}\alpha_{gper}$)，
 \begin{equation}\label{alpha_u2}
 \alpha_{u}=\alpha_{{roof }} f_{roof}+\alpha_{u} f_{g}
 \end{equation}
-对于城市水体(湖泊)考虑同屋顶，最终城市区域地表反照率为面积加权(类似公式~\ref{alpha_u2})
+对于城市水体(湖泊)考虑同屋顶，最终城市区域地表反照率为面积加权(类似公式~\eqref{alpha_u2})
 
 \textit{b.漫射入射太阳辐射}
 
@@ -460,7 +460,7 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式无植被阻抗交换网络.png}
-\caption{CoLM城市模式无植被覆盖时湍流交换阻抗示意图。}
+\caption{CoLM城市模式无植被覆盖时湍流交换阻抗网络示意图}
 \label{fig:无植被覆盖时城市湍流交换阻抗示意图}
 \end{figure}
 }
@@ -470,7 +470,7 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 同多层植被湍流交换计算一样，对上图所示的屋顶和墙面等效交换高度建立感热和潜热通量守恒方程，迭代求解其高度处的空气温度、湿度以及相似性理论交换长度(即空气不稳定程度)。
 
 %感热通量
-湍流交换过程在迭代计算时，需要求解城市内部第一、第二交换层的温度(比湿)$T_1$($q_1$)与$T_2$($q_2$)，以计算不同城市表面的湍流通量交换，在不考虑城市植被时，只存在地面(透水面$gper$与不透水面$gimp$)、阳面墙($wsun$)、阴面墙($wsha$)以及屋顶($roof$)的交换过程，其中地面、墙体均在第一层交换，屋顶则在第二层交换，如图~\ref{fig:无植被覆盖时城市湍流交换阻抗示意图}所示，在多层湍流交换方案中，层与层之间的通量交换保持平衡，通过建立不同层的通量交换方程即可求解$T_1$($q_1$)与$T_2$($q_2$)，进而计算得到不同表面的感热/潜热通量。
+湍流交换过程在迭代计算时，需要求解城市内部第一、第二交换层的温度(比湿) $T_1$($q_1$)与$T_2$($q_2$)，以计算不同城市表面的湍流通量交换，在不考虑城市植被时，只存在地面(透水面$gper$与不透水面$gimp$)、阳面墙($wsun$)、阴面墙($wsha$)以及屋顶($roof$)的交换过程，其中地面、墙体均在第一层交换，屋顶则在第二层交换，如图~\ref{fig:无植被覆盖时城市湍流交换阻抗示意图}所示，在多层湍流交换方案中，层与层之间的通量交换保持平衡，通过建立不同层的通量交换方程即可求解$T_1$($q_1$)与$T_2$($q_2$)，进而计算得到不同表面的感热/潜热通量。
 
 对于感热而言，在不考虑城市植被时，其不同层的感热通量$H$可表达为：
 \begin{equation}\label{2lays_noveg_H_layer1}
@@ -500,7 +500,7 @@ r_{b}=\frac{\rho_{a} c_{p}}{11.8+4.2 u_{e f f}}
 \begin{equation}\label{urban_noveg_Hroof}
     H_{roof} = \frac{\rho _a C_p \left( T_{roof} - T_{2} \right) \cdot f_{roof}}{r_{roof}}
 \end{equation}
-$T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面与不透水面温度加权得到的平均温度，$r$为空气动力学阻抗，\allowbreak $f_{roof}$,\allowbreak  $f_{wsun}$,\allowbreak  $f_{wsha}$分表代表屋顶、阳面墙以及阴面墙覆盖比例，$f_{g}$则为除去建筑覆盖外的路面占比(包含透水面$f_{gper}$以及不透水面$f_{gimp}$)，将以上表达式代回式 \ref{2lays_noveg_H_layer1}--\ref{2lays_noveg_H}，可得：
+$T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面与不透水面温度加权得到的平均温度，$r$为空气动力学阻抗，\allowbreak $f_{roof}$,\allowbreak  $f_{wsun}$,\allowbreak  $f_{wsha}$分表代表屋顶、阳面墙以及阴面墙覆盖比例，$f_{g}$则为除去建筑覆盖外的路面占比(包含透水面$f_{gper}$以及不透水面$f_{gimp}$)，将以上表达式代回公式~\eqref{2lays_noveg_H_layer1}--\eqref{2lays_noveg_H}，可得：
 \begin{equation}
     \begin{split}
         & \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} = \\
@@ -545,9 +545,9 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面
 \begin{equation}
     c_{H} = \frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}}
 \end{equation}
-将$T_{1}$代回式~\ref{result_noveg_T_layer2}，即可求得$T_{2}$。
+将$T_{1}$代回公式~\eqref{result_noveg_T_layer2}，即可求得$T_{2}$。
 
-将求解得到的$T_{1}$与$T_{2}$分别代回公式~\ref{urban_noveg_Hg}--\ref{urban_noveg_Hroof}，即可得到城市每个表面的感热通量，其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，需要提供各表面感热对各自温度的变化率，各表面相应值分别计算为：
+将求解得到的$T_{1}$与$T_{2}$分别代回公式~\eqref{urban_noveg_Hg}--\eqref{urban_noveg_Hroof}，即可得到城市每个表面的感热通量，其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，需要提供各表面感热对各自温度的变化率，各表面相应值分别计算为：
 \begin{equation}
 \frac{\partial H_{g}}{\partial T_{g}} = \frac{\rho _a C_p}{r_{d1}} \left(1-\frac{f_g}{c_{H} r_{d1} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
 \end{equation}
@@ -585,7 +585,7 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面
 \begin{equation}\label{urban_noveg_Eroof}
     \lambda E_{roof} = \frac{\rho _a \left( q_{roof}-q_{2}\right) \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}}
 \end{equation}
-对于城市内的透水面，因为其本质是土壤，因此在计算其潜热通量时，考虑土壤阻抗($r_{ss}$)，因此透水面阻抗为第一层空气动力学阻抗与土壤阻抗之和($r_{d1}$+$r_{ss}$)，$f_{wet}$表示各表面干湿的比例，$q$为不同表面的比湿，将以上表达式代回公式~\ref{2lays_noveg_L_layer1} -- \ref{2lays_noveg_L}，可知：
+对于城市内的透水面，因为其本质是土壤，因此在计算其潜热通量时，考虑土壤阻抗($r_{ss}$)，因此透水面阻抗为第一层空气动力学阻抗与土壤阻抗之和($r_{d1}$+$r_{ss}$)，$f_{wet}$表示各表面干湿的比例，$q$为不同表面的比湿，将以上表达式代回公式~\eqref{2lays_noveg_L_layer1}--\eqref{2lays_noveg_L}，可知：
 \begin{equation}
     \frac{\rho _a \left( q_{1}-q_{2}\right)}{r_{d2}} =
     \frac{\rho _a \left( q_{gper}-q_{1}\right) \cdot f_{g} \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{\rho _a \left( q_{gimp}-q_{1} \right) \cdot f_{wet,gimp} \cdot f_{g} \cdot f_{gimp}}{r_{d1}}
@@ -620,9 +620,9 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面
 \begin{equation}
     c_{\lambda} = \frac{1}{r_{d2}}+\frac{f_g \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{f_{wet,gimp} \cdot f_g \cdot f_{gimp}}{r_{d1}}
 \end{equation}
-同理，将$q_{1}$代入公式\eqref{equ_2lays_noveg_Q_lay2}即可求得$q_{2}$。
+同理，将$q_{1}$代入公式~\eqref{equ_2lays_noveg_Q_lay2} 即可求得$q_{2}$。
 
-将求解得到的$q_{1}$与$q_{2}$分别代回公式~\ref{urban_noveg_Eg}--\ref{urban_noveg_Eroof}，即可得到城市每个表面的潜热通量，其后计算城市各表面温度并基于该温度变化对潜热通量进行更新时，同样需要提供各表面潜热对各自温度的变化率，计算为：
+将求解得到的$q_{1}$与$q_{2}$分别代回公式~\eqref{urban_noveg_Eg}--\eqref{urban_noveg_Eroof}，即可得到城市每个表面的潜热通量，其后计算城市各表面温度并基于该温度变化对潜热通量进行更新时，同样需要提供各表面潜热对各自温度的变化率，计算为：
 \begin{equation}
 \frac{\partial \lambda E_{gper}}{\partial T_{gper}} = \frac{\rho _a}{r_{d1}+r_{ss}} \frac{dq_{gper}}{dT_{gper}} \left(1-\frac{f_{g}f_{gper}}{c_{\lambda} \left(r_{d1}+rss\right) \left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}\right)
 \end{equation}
@@ -640,7 +640,7 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式包含植被湍流交换阻抗网络.png}
-\caption{CoLM城市模式有植被覆盖时湍流交换阻抗示意图。}
+\caption{CoLM城市模式有植被覆盖时湍流交换阻抗网络示意图}
 \label{fig:有植被覆盖时城市湍流交换阻抗示意图}
 \end{figure}
 }
@@ -665,7 +665,7 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面
 \begin{equation}\label{2lays_veg_H}
     H = H_{2} + H_{roof} = \frac{\rho _a C_p \left( T_{2} - T_a \right)}{r_{ah}}
 \end{equation}
-除植被感热通量$H_v$以及植被覆盖比例$f_v$外，上述公式其它各项含义与章节~\ref{无植被覆盖时湍流交换过程}相同，将各表面的感热通量计算公式代回公式 ~\ref{2lays_veg_H_layer1}--\ref{2lays_veg_H}，可得：
+除植被感热通量$H_v$以及植被覆盖比例$f_v$外，上述公式其它各项含义与章节~\ref{无植被覆盖时湍流交换过程} 相同，将各表面的感热通量计算公式代回公式~\eqref{2lays_veg_H_layer1}--\eqref{2lays_veg_H}，可得：
 \begin{equation}
     \begin{split}
         & \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} = \\
@@ -712,7 +712,7 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面
 \begin{equation}
     c_{H} = \frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}} + \frac{f_v}{r_{v}}
 \end{equation}
-将$T_{1}$代回公式~\ref{result_veg_T_layer2}，即可求得$T_{2}$。
+将$T_{1}$代回公式~\eqref{result_veg_T_layer2}，即可求得$T_{2}$。
 
 将求解得到的$T_{1}$与$T_{2}$分别代回各表面的通量表达式，即可得到城市每个表面的感热通量，其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，需要提供各表面感热对各自温度的变化率，各表面分别计算为：
 \begin{equation}
@@ -751,7 +751,7 @@ $r_v$为植被与空气之间水汽交换总阻抗，是叶片边界层阻抗以
 \begin{equation}\label{2lays_veg_L}
     \lambda E = \lambda E_{2} + \lambda E_{roof}
 \end{equation}
-其中，$\lambda E_{v}$、$f_v$分别为植被的潜热通量以及覆盖比例，上述公式其余各项含义同章节~\ref{无植被覆盖时湍流交换过程}，将各表面通量的表达式代回公式~\ref{2lays_veg_L_layer1} -- \ref{2lays_veg_L}，可知：
+其中，$\lambda E_{v}$、$f_v$分别为植被的潜热通量以及覆盖比例，上述公式其余各项含义同章节~\ref{无植被覆盖时湍流交换过程}，将各表面通量的表达式代回公式~\eqref{2lays_veg_L_layer1}--\eqref{2lays_veg_L}，可知：
 \begin{equation}
    \begin{split}
     & \frac{\rho _a \left( q_{1}-q_{2}\right)}{r_{d2}} = \\
@@ -788,7 +788,7 @@ $r_v$为植被与空气之间水汽交换总阻抗，是叶片边界层阻抗以
 \begin{equation}
     c_{\lambda} = \frac{1}{r_{d2}}+\frac{f_g \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{f_{wet,gimp} \cdot f_g \cdot f_{gimp}}{r_{d1}} + \frac{f_v}{r_{v}}
 \end{equation}
-同理，将$q_{1}$代入公式~\ref{equ_2lays_Q_lay2}即可求得$q_{2}$。
+同理，将$q_{1}$代入公式~\eqref{equ_2lays_Q_lay2} 即可求得$q_{2}$。
 
 其后计算城市各表面温度并基于该温度变化对潜热通量进行更新时，同样需要提供各表面潜热对各自温度的变化率，计算为：
 \begin{equation}
@@ -856,7 +856,7 @@ $r_v$为植被与空气之间水汽交换总阻抗，是叶片边界层阻抗以
 
 对城市水文过程考虑主要分为三类：1) 透水面；2) 屋顶和不透水面；3) 城市水体(湖泊)。
 
-对于透水面的处理同土壤水过程，计算产流和土壤水传输。对于城市水体，采用湖泊方案进行模拟。对于屋顶和不透水面，考虑积雪和积水过程。积雪过程与自然土壤积雪过程一致。积水过程考虑表层为不透水面，液态水的最大承载量不超过预先设定的值($\text{max ponding}=1$ \unit{kg.m^{-2}})，超过的部分当成产流处理。积水区覆盖占比采用类似叶片$f_{wet}$计算方案(公式~\ref{eq:fwet})。
+对于透水面的处理同土壤水过程，计算产流和土壤水传输。对于城市水体，采用湖泊方案进行模拟。对于屋顶和不透水面，考虑积雪和积水过程。积雪过程与自然土壤积雪过程一致。积水过程考虑表层为不透水面，液态水的最大承载量不超过预先设定的值($\text{max ponding}=1$ \unit{kg.m^{-2}})，超过的部分当成产流处理。积水区覆盖占比采用类似叶片$f_{wet}$计算方案(公式~\eqref{eq:fwet})。
 
 由于目前城市水文过程较为简单，主要调用CoLM陆面过程原有方案，相应过程在土壤(积雪)水分垂直运动过程(第~\ref{积雪和土壤中水分的垂直运动} 章)和湖泊模式(第~\ref{ch:湖泊模式} 章)部分均有描述，在此不再赘述。
 
@@ -873,7 +873,7 @@ $r_v$为植被与空气之间水汽交换总阻抗，是叶片边界层阻抗以
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式建筑能耗示意图.png}
-\caption{CoLM城市模式建筑能耗模型示意图。图中所示由窗户透射、电器及室内储热带来的热交换依赖于建筑属性，在已知相关参数的前提下可以加入到能耗模型平衡方程中进行计算}
+\caption[CoLM城市模式建筑能耗模型示意图]{CoLM城市模式建筑能耗模型示意图。图中所示由窗户透射、电器及室内储热带来的热交换依赖于建筑属性，在已知相关参数的前提下可以加入到能耗模型平衡方程中进行计算}
 \label{fig:建筑能耗模型示意图}
 \end{figure}
 }
@@ -927,14 +927,14 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
 \begin{equation}
 \mathbf{Ax}=\mathbf{B}
 \end{equation}
-公式~\ref{eq:建筑能耗平衡方程矩阵}中$T_{roof,in}^\prime$、$T_{wsun,in}^\prime$、$T_{wsha,in}^\prime$、$T_{room}^\prime$为需求解(预报)变量，其他变量均为已知量。
+公式~\eqref{eq:建筑能耗平衡方程矩阵} 中$T_{roof,in}^\prime$、$T_{wsun,in}^\prime$、$T_{wsha,in}^\prime$、$T_{room}^\prime$为需求解(预报)变量，其他变量均为已知量。
 $T_{roof,in}$、$T_{wsun,in}$、$T_{wsha,in}$、$T_{room}$分别为上一时刻相应温度，$T_{af}$为建筑室外空气温度。
-$h_{cv,roof}$、$h_{cv,wsun}$、$h_{cv,wsha}$分别为室内屋顶表面空气、阳面、阴面墙表面空气与室内空气温度热交换系数，参考CLM5.0 \citep{oleson2020parameterization}，$h_{cv,roof}=4.04$，$h_{cv,wsun}=h_{cv,wsha}=3.076$。$ACH$为室内外空气热交换系数，设置为0.3。
+$h_{cv,roof}$、$h_{cv,wsun}$、$h_{cv,wsha}$分别为室内屋顶表面空气、阳面、阴面墙表面空气与室内空气温度热交换系数，参考CLM5.0~\citep{oleson2020parameterization}，$h_{cv,roof}=4.04$，$h_{cv,wsun}=h_{cv,wsha}=3.076$。$ACH$为室内外空气热交换系数，设置为0.3。
 $T_{roof}$、$T_{wsun,n}$、$T_{wsha,n}$为最里层(用$n$表示)
 屋顶、阴面墙、阳面墙的温度，为$h_{tk,roof}$、$h_{wsun,tk}$、$h_{wsha,tk}$为其与各自室内表面空气温度热交换系数，通过墙壁导热率和厚度计算得到。
 以上方程组可通过矩阵求逆的方式进行求解，计算得到$T_{roof,in}^\prime$、$T_{wsun,in}^\prime$、$T_{wsha,in}^\prime$、$T_{room}^\prime$。
 
-当$T_{room,min}\le T_{room}^\prime \le T_{room,max} $ ($T_{room,min}$和$T_{room,max}$为预设屋内最低/最高温度，从外部数据读取)时，室内空调不开启，仅考虑室内外热交换通量$F_{ach}$，计算为：
+当$T_{room,min}\leqslant T_{room}^\prime \leqslant T_{room,max} $ ($T_{room,min}$和$T_{room,max}$为预设屋内最低/最高温度，从外部数据读取)时，室内空调不开启，仅考虑室内外热交换通量$F_{ach}$，计算为：
 \begin{equation}
 F_{a c h}=\frac{ACH}{3600} H \rho_{a} C_{p}\left(T_{{room }}^{\prime}-T_{a f}\right)
 \end{equation}
@@ -992,11 +992,11 @@ F_{ach} & = 0.5h_{cv,roof}\left(T_{roof,in}-T_{room}\right) + 0.5h_{cv,roof}\lef
 \end{mymdframed}
 
 % 人体代谢热($Q_M$, \unit{W/m^{2}})根据 \citet{allen2011} 的方法，\colorbox{yellow}{按照能源清单法及 Top-Down 方法}，利用人口密度数据，将不同时刻的人体热排放映射到每个城市格点上，具体计算如下：
-人体代谢热($Q_M$, \unit{W/m^{2}})根据 \citet{allen2011} 的方法，根据城市网格内的人口密度数据，以及每天不同时刻的人体热排放计算得到，具体计算如下：
+人体代谢热($Q_M$, \unit{W.m^{-2}})根据 \citet{allen2011} 的方法，根据城市网格内的人口密度数据，以及每天不同时刻的人体热排放计算得到，具体计算如下：
 \begin{equation}
 Q_{M}=P \cdot H_{M} \cdot 10^{-6}
 \end{equation}
-其中$P$为格点内人口密度(\unit{pop/km^{2}})，目前使用的是 LandScan 数据(表~\ref{tab:人口密度数据})，分辨率为1km，$H_M$为不同时刻人体排放的热量。人体排放的热量采用简单假设：
+其中$P$为格点内人口密度(\unit{pop.km^{-2}})，目前使用的是 LandScan 数据(表~\ref{tab:人口密度数据})，分辨率为1 km，$H_M$为不同时刻人体排放的热量。人体排放的热量采用简单假设：
 人在活动时每小时排放的热量为175 W (工作)，非活动时排放量为75 W (休息)，以及一个中间值125 W~\citep{sailor2004top}。
 除此之外，没有考虑人口在不同格点间的移动。
 % Please add the following required packages to your document preamble:
@@ -1008,19 +1008,19 @@ Q_{M}=P \cdot H_{M} \cdot 10^{-6}
     \begin{tabular}{@{}lll@{}}
     \toprule
     数据名称                            & 分辨率         & 来源                                                                                                     \\ \midrule
-    LandScan & 1km  & \begin{tabular}[c]{@{}l@{}}https://landscan.ornl.gov/\end{tabular} \\ \bottomrule
+    LandScan & 1km  & \begin{tabular}[c]{@{}l@{}}\url{https://landscan.ornl.gov/}\end{tabular} \\ \bottomrule
     \end{tabular}
 \end{table}
 
 \subsection{交通热}
 % 交通热排放($Q_v$, \unit{W/m^{2}})同样根据利用能源清单法进行计算，采用Top-Down的方法，利用人口密度以及各个国家的汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
-交通热排放($Q_v$, \unit{W/m^{2}})则根据城市网格内的汽车数量以及行驶路程得到，首先根据城市网格内的人口密度以及各个国家每千人汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
+交通热排放($Q_v$, \unit{W.m^{-2}})则根据城市网格内的汽车数量以及行驶路程得到，首先根据城市网格内的人口密度以及各个国家每千人汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
 其数据来源如表~\ref{tab:交通热数据及来源}，$Q_v$计算如下：
 \begin{equation}
 Q_{v}=\frac{\left(V_{c} E_{c}+V_{M} E_{M}+V_{F R} E_{FR}\right)  \cdot P \cdot H_{traf} \cdot D}{3600 \cdot 10^{6}}
 \end{equation}
-其中$V_c$、$V_M$、$V_{FR}$分别为每千人拥有的汽车、摩托车、货车(巴士)的数量，$H_{traf}$为工作日/休息日某一时间段交通流量，以上数据采用 \citet{allen2011}；$E_c$、$E_M$、$E_{FR}$则为三种机动车的排放系数，目前使用 \citet{sailor2004top} 的系数设置(3975J/m)；
-$P$为格点内人口密度 (pop/km$^2$)，由LandScan数据得到；$D$为行驶的距离，目前模型设置为20km。
+其中$V_c$、$V_M$、$V_{FR}$分别为每千人拥有的汽车、摩托车、货车(巴士)的数量，$H_{traf}$为工作日/休息日某一时间段交通流量，以上数据采用 \citet{allen2011}；$E_c$、$E_M$、$E_{FR}$则为三种机动车的排放系数，目前使用 \citet{sailor2004top} 的系数设置(\qty{3975}{J.m^{-1}})；
+$P$为格点内人口密度 (\unit{pop.km^{-2}})，由LandScan数据得到；$D$为行驶的距离，目前模型设置为20 km。
 
 \begin{table}[htbp]
     \centering
@@ -1042,12 +1042,12 @@ $P$为格点内人口密度 (pop/km$^2$)，由LandScan数据得到；$D$为行�
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/城市模式/CoLM城市模式人为热阻抗交换网络.png}
-\caption{考虑人为热时城市内部湍流交换过程}
+\caption{考虑人为热时城市湍流交换阻抗网络示意图}
 \label{fig:考虑人为热时城市内部湍流交换过程}
 \end{figure}
 }
 
-考虑人为热时，城市内部湍流过程示意图~\ref{fig:考虑人为热时城市内部湍流交换过程} 所示，与章节~\ref{城市湍流过程}相同，在建筑群落中，不同的城市组成部分在不同层次进行交换。以两层交换阻抗网络为例，与第一层($layer1$，城市等效交换高度$z_0+d$)直接交换的有地面(透水面与不透水面)、墙面(阳面墙与阴面墙)、植被、交通热、代谢热以及部分在墙面排放的人为热，屋顶与屋顶释放的人为热则与第二层($layer2$，即屋顶)直接交换，层与层交换保持通量平衡。因此，对于感热而言，其不同层次的感热通量$H$可表达为：
+考虑人为热时，城市内部湍流过程示意图~\ref{fig:考虑人为热时城市内部湍流交换过程} 所示，与章节~\ref{城市湍流过程} 相同，在建筑群落中，不同的城市组成部分在不同层次进行交换。以两层交换阻抗网络为例，与第一层($layer1$，城市等效交换高度$z_0+d$)直接交换的有地面(透水面与不透水面)、墙面(阳面墙与阴面墙)、植被、交通热、代谢热以及部分在墙面排放的人为热，屋顶与屋顶释放的人为热则与第二层($layer2$，即屋顶)直接交换，层与层交换保持通量平衡。因此，对于感热而言，其不同层次的感热通量$H$可表达为：
 \begin{equation}\label{2lays_H_layer1}
     H_{1} = H_{g}
 \end{equation}
@@ -1079,7 +1079,7 @@ $P$为格点内人口密度 (pop/km$^2$)，由LandScan数据得到；$D$为行�
 \begin{equation}\label{urban_Hroof}
     H_{roof} = \frac{\rho _a C_p \left( T_{roof} - T_{2} \right) \cdot f_{roof}}{r_{roof}}
 \end{equation}
-$T_1$和$T_2$分别表示第一层和第二层空气温度。由于代谢热与交通热($H_{meta}$ 、$H_{vehc}$)都在地面释放，因此我们将其纳入地面感热$H_{g}$。其中$T_{g}$为透水面与不透水面温度加权得到的平均温度，$r$为空气动力学阻抗，\allowbreak $f_{roof}$,\allowbreak  $f_{wsun}$,\allowbreak  $f_{wsha}$,\allowbreak  $f_v$分表代表屋顶、阳面墙、阴面墙以及植被的覆盖比例，$f_{g}$则为除去建筑覆盖外的路面占比(包含透水面$f_{gper}$以及不透水面$f_{gimp}$)，将以上表达式代回式 ~\ref{2lays_H_layer1}--\ref{2lays_H}，可得：
+$T_1$和$T_2$分别表示第一层和第二层空气温度。由于代谢热与交通热($H_{meta}$ 、$H_{vehc}$)都在地面释放，因此我们将其纳入地面感热$H_{g}$。其中$T_{g}$为透水面与不透水面温度加权得到的平均温度，$r$为空气动力学阻抗，\allowbreak $f_{roof}$、\allowbreak $f_{wsun}$、\allowbreak $f_{wsha}$、\allowbreak $f_v$分别代表屋顶、阳面墙、阴面墙以及植被的覆盖比例，$f_{g}$则为除去建筑覆盖外的路面占比(包含透水面$f_{gper}$以及不透水面$f_{gimp}$)，将以上表达式代回公式~\eqref{2lays_H_layer1}--\eqref{2lays_H}，可得：
 \begin{equation}
     \begin{split}
         & \frac{\rho _a C_p \left( T_{1} - T_{2} \right)}{r_{d2}} = \\
@@ -1135,9 +1135,9 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度。由于代谢热与�
 \begin{equation}
     c_{H} = \frac{1}{r_{d2}} + \frac{f_{g}}{r_{d1}} + \frac{f_{wsun}}{r_{wsun}} + \frac{f_{wsha}}{r_{wsha}} + \frac{f_v}{r_{v}}
 \end{equation}
-将$T_{1}$代回式~\ref{result_T_layer2}，即可求得$T_{2}$。
+将$T_{1}$代回公式~\eqref{result_T_layer2}，即可求得$T_{2}$。
 
-将求解得到的$T_{1}$与$T_{2}$分别代回~\ref{urban_Hg}--\ref{urban_Hroof}，即可得到城市每个表面的感热通量，其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，需要提供各表面感热对各自温度的变化率，各表面分别计算为：
+将求解得到的$T_{1}$与$T_{2}$分别代回公式~\eqref{urban_Hg}--\eqref{urban_Hroof}，即可得到城市每个表面的感热通量，其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，需要提供各表面感热对各自温度的变化率，各表面分别计算为：
 \begin{equation}
 \frac{\partial H_{g}}{\partial T_{g}} = \frac{\rho _a C_p}{r_{d1}} \left(1-\frac{f_g}{c_{H} r_{d1} \left(1-\frac{b_H}{c_{H} r_{d2}}\right)}\right)
 \end{equation}
@@ -1182,7 +1182,7 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度。由于代谢热与�
 \begin{equation}\label{urban_Eroof}
     \lambda E_{roof} = \frac{\rho _a \left( q_{roof}-q_{2}\right) \cdot f_{wet,roof} \cdot f_{roof}}{r_{roof}}
 \end{equation}
-由于城市中的地面可以分为透水面和不透水面，对于透水面，因为其本质是土壤，因此在计算其潜热通量时，考虑土壤阻抗($r_{ss}$)，$f_{wet}$表示各部分干湿的比例，$q$为不同表面的比湿，$r$为空气动力学阻抗，其中$r_v$是叶片边界层阻抗以及气孔阻抗之和，将以上表达式代回~\ref{2lays_L_layer1} -- \ref{2lays_L}，可知：
+由于城市中的地面可以分为透水面和不透水面，对于透水面，因为其本质是土壤，因此在计算其潜热通量时，考虑土壤阻抗($r_{ss}$)，$f_{wet}$表示各部分干湿的比例，$q$为不同表面的比湿，$r$为空气动力学阻抗，其中$r_v$是叶片边界层阻抗以及气孔阻抗之和，将以上表达式代回公式~\eqref{2lays_L_layer1}--\eqref{2lays_L}，可知：
 \begin{equation}
    \begin{split}
     & \frac{\rho _a \left( q_{1}-q_{2}\right)}{r_{d2}} = \\
@@ -1219,9 +1219,9 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度。由于代谢热与�
 \begin{equation}
     c_{\lambda} = \frac{1}{r_{d2}}+\frac{f_g \cdot f_{gper}}{r_{d1}+r_{ss}} + \frac{f_{wet,gimp} \cdot f_g \cdot f_{gimp}}{r_{d1}} + \frac{f_v}{r_{v}}
 \end{equation}
-同理，将$q_{1}$代入式~\ref{equ_2lays_Q_lay2}即可求得$q_{2}$。
+同理，将$q_{1}$代入公式~\eqref{equ_2lays_Q_lay2} 即可求得$q_{2}$。
 
-将求解得到的$q_{1}$与$q_{2}$分别代回~\ref{urban_Eg}--\ref{urban_Eroof}，即可得到城市每个表面的潜热通量，其后计算城市各表面温度并基于该温度变化对潜热通量进行更新时，同样需要提供各表面潜热对各自温度的变化率，计算为：
+将求解得到的$q_{1}$与$q_{2}$分别代回公式~\eqref{urban_Eg}--\eqref{urban_Eroof}，即可得到城市每个表面的潜热通量，其后计算城市各表面温度并基于该温度变化对潜热通量进行更新时，同样需要提供各表面潜热对各自温度的变化率，计算为：
 \begin{equation}
 \frac{\partial \lambda E_{gper}}{\partial T_{gper}} = \frac{\rho _a}{r_{d1}+rss} \frac{dq_{gper}}{dT_{gper}} \left(1-\frac{f_{g}f_{gper}}{c_{\lambda} \left(r_{d1}+r_{ss}\right) \left(1-\frac{b_{\lambda}}{c_{\lambda} r_{d2}}\right)}\right)
 \end{equation}

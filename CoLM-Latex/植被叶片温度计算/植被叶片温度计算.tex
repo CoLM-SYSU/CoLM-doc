@@ -17,7 +17,7 @@ $L_v$表示叶片吸收的净长波辐射。$T_v$可通过对方程 (\ref{FT_V})
 其中$\Delta T_v=T_v^{\left(n+1\right)}-T_v^{\left(n\right)}$，$n$代表迭代次数。
 此外，因为植被湍流通量与叶片温度相互耦合，故在温度迭代求解过程中，湍流通量也随之更新。因此，本章节与前面植被湍流计算章节有部分重复，可对照参考(章节~\ref{一维植被湍流交换模型})。
 
-在能量平衡方程中，$S_v$不依赖于温度的变化，其表达式在章节~\ref{短波吸收辐射通量}中已经给出。
+在能量平衡方程中，$S_v$不依赖于温度的变化，其表达式在章节~\ref{短波吸收辐射通量} 中已经给出。
 $L_v$可计算如下(假设植被叶片部分发射率为1)：
 \begin{equation}
 L_{v}=\left(1-\tau_{v}\right)\left(L ^\downarrow+\varepsilon_{g} \sigma T_{g}^{4}-2 \sigma T_{v}^{4}\right) + \left( 1- \varepsilon_{g} \right )\left(1-\varepsilon_{v} \right)\varepsilon_{v} L^\downarrow + \left( 1- \varepsilon_{g} \right ) \varepsilon_{v}^2 \sigma T_{v}^4
@@ -36,7 +36,11 @@ L_{v}=\left(1-\tau_{v}\right)\left(L ^\downarrow+\varepsilon_{g} \sigma T_{g}^{4
 
 对于水汽通量$E_{v}$，虽然其表达式也已在章节~\ref{一维植被湍流交换模型} 给出，但这里为了表达上的便利，我们引入对于植被表面蒸散发是否发生的判别因子$\delta$如下：
 \begin{equation}
-\delta=\left\{\begin{array}{cc}1 & \text { 当 }\ q_{s a t}^{T_{v}}>q_{s} \text { 即叶片蒸散发可以发生时 } \\ 0 & \text { 否则 }\end{array}\right.
+\delta=
+\begin{cases}
+ 1 & \text { 当 }\ q_{s a t}^{T_{v}}>q_{s} \text { 即叶片蒸散发可以发生时 } \\ 
+ 0 & \text { 否则 }
+ \end{cases}
 \end{equation}
 于是$c_v^w$可重新表达为如下形式：
 \begin{equation}
@@ -60,14 +64,14 @@ E_{va} = -\frac{\rho_{atm}}{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}} \frac{\left[1-\delta\
 \end{equation}
 
 由于蒸发与蒸腾速率均受到一定限制，所以$E_{v}$将分别针对蒸发与蒸腾速率进行调整：\\
-当$ E_{vt} \geq E_{vt,max}$ 即叶片最大蒸腾率(\unit{kg.m^{-2}.s^{-1}})时，
+当$ E_{vt} \geqslant E_{vt,max}$ 即叶片最大蒸腾率(\unit{kg.m^{-2}.s^{-1}})时，
 \begin{equation}
 \begin{aligned}
 E_{vt} &=  E_{vt, \max } \\[1ex] 
 \frac{\partial E_{vt}}{\partial T_{v}} &= 0
 \end{aligned}
 \end{equation}
-当$E_{va} \geq \frac{W_{can}}{\Delta t}$即达到叶片最大可蒸发通量(\unit{kg.m^{-2}.s^{-1}})时，
+当$E_{va} \geqslant \frac{W_{can}}{\Delta t}$即达到叶片最大可蒸发通量(\unit{kg.m^{-2}.s^{-1}})时，
 \begin{equation}
   \begin{aligned}
    E_{va} &= \frac{W_{can}}{\Delta t} \\[1ex] 
@@ -92,7 +96,7 @@ E_{vt} &=  E_{vt, \max } \\[1ex]
     \item 给出$U_c$的初始猜测如下：\\
     \begin{equation*}
     U_c= \begin{cases}
-      0,  & \theta_{v,atm}-\theta_{v,s}\geq0 \text{ 即稳定条件下；} \\
+      0,  & \theta_{v,atm}-\theta_{v,s}\geqslant0 \text{ 即稳定条件下；} \\
       0.5, & \theta_{v,atm}-\theta_{v,s}<0 \text{ 即不稳定条件下；}
      \end{cases}
     \end{equation*}
@@ -121,8 +125,8 @@ E_{vt} &=  E_{vt, \max } \\[1ex]
     $L$取固定值$L=\frac{z_{atm,m}-d}{-0.01}$，以避免在稳定与不稳定条件之间来回变化。\\
     q. 判断迭代停止条件：若迭代过程中满足下列全部条件或迭代次数已超过40次，则迭代停止
     \begin{equation}
-        \begin{array}{l}\max\left( \sqrt{\left[F^{(n+1)}-F^{(n)}\right]^{\ast\ast2}}, \sqrt{\left[F^{(n)}-F^{(n-1)}\right]^{\ast\ast2}} \right) \leq 0.1 \\[1.5ex] 
-        \max\left( \sqrt{\left(\Delta T_{v}^{(n)}\right)^{2}}, \sqrt{\left(\Delta T_{v}^{(n-1)}\right)^{2}} \right) \leq 0.01\end{array}
+        \begin{array}{l}\max\left( \sqrt{\left[F^{(n+1)}-F^{(n)}\right]^{\ast\ast2}}, \sqrt{\left[F^{(n)}-F^{(n-1)}\right]^{\ast\ast2}} \right) \leqslant 0.1 \\[3.0 ex] 
+        \max\left( \sqrt{\left(\Delta T_{v}^{(n)}\right)^{2}}, \sqrt{\left(\Delta T_{v}^{(n-1)}\right)^{2}} \right) \leqslant 0.01\end{array}
     \end{equation}
     其中$\left[\bullet\right]^{\ast\ast2}$表示各个相同能量项相邻时间步变化量(相减后)的平方和
     \item 由最终叶片温度更新植被表面与植被冠层空气之间的潜热通量，其中蒸发量不得超过植被截水量$W_{can}$，蒸腾率不得超过最大蒸腾率$ E_{vt,max}$，若超过则蒸发(腾)率强制取为最大蒸发(腾)率，由此产生的能量差最后将加到感热通量中
