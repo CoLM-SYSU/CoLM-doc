@@ -1,0 +1,130 @@
+\chapter{引言}
+
+陆地是天气/气候/地球系统的重要组成部分，其物理、化学、生物过程深刻影响着陆地与大气、陆地与海洋之间的能量和物质的交换。陆—气、陆—海界面是人类活动的主要场所，随着人类社会的发展，人类活动导致的地球陆面状况变化，深刻影响了陆—气、陆—海之间物质与能量交换、区域气候和生态环境的变化。这些变化已对自然和人类产生了巨大的影响。准确描述陆面物理、化学、生物过程，准确计算陆面状态以及陆—气、陆—海界面的物质和能量交换通量，对天气/气候数值预报预测业务，以及充分理解全球变化所带来的水安全、粮食安全、生态环境恶化等问题的形成机制，制定相应的对策，具有重要的科学和社会意义。
+
+陆面过程是指发生在陆地表层的所有物理、化学、生物过程，及其与大气、海洋的相互作用过程。陆面过程模式是指定量描述这些过程以及研究人类活动与环境相互作用的数学物理模式，并可通过计算机实现仿真，是数值天气/气候/地球系统模式的不可或缺的重要组成部分，是陆面过程机理以及人类活动与全球变化关系研究的重要手段，也是全球气象-水文-生态的精细化预报的核心技术。
+
+本报告目的是详细描述通用陆面模式(CoLM 版本2024)的陆面物理、化学、水文、生态和人类活动等过程的数学建模。本报告与CoLM 2024用户指南一起为用户提供了CoLM的全面详尽的科学描述，和简单易用的操作指南。
+
+
+\section{模式历史 (Model History and Overview)}
+
+\subsection{通用陆面模式由来 (Inception of CoLM)}
+从20世纪60年代的简单水桶(bucket-type)陆面过程模式到21世纪初的土壤-植被-大气相互作用过程模式，在期间40年里已经发展出数十个陆面过程模式来计算这些通量。国际陆面过程模式比较计划(PILPS)表明，即使使用相同的大气强迫数据和相似的陆面参数，不同的陆面模式仍然给出显著不同的地表通量和土壤湿度，部分原因是由于参与模式中个别过程的公式和编码架构的差异~\citep{Henderson-Sellers_95}。另一方面，大多数陆面模式共享许多通用组件，这表明需要开发一个具有模块化结构的可通用的陆面模式，以促进对新问题的探索，减少对过去工作的重复，并共享不同群体新的研究成果。
+
+如果一个陆面模式可以由大多数陆面模式中使用的组件构建，并且以科学群体(Land Modeling Community)可以接受的方式构建，那么对陆面建模感兴趣但缺乏必要资源或专业知识的个人团体可以专注于新的方面，而不必过度重复过去的努力。此外，通过一个公用平台，本着“开放源代码”代码开发的精神，所有用户可以共享由各自提供的改进和精细化。
+
+在1996年2月在美国国家大气研究中心气候系统模式(NCAR CSM)陆面工作组(LMWG)的研讨会上，Robert E. Dickinson提出：让一个更为广泛的科学家共同体为NCAR CSM提供一个陆面模式框架，并提出开发的软件的初始构想。他认为一个真正的通用陆面模式的目标不太可能在现有的机构中实现，但提供一个原型将是有用的，这个原型可以证明至少有一些群体是被激励的，并且有能力联合起来产生一个共享的模式。
+
+戴永久通过数年的努力完全独立研发了中国科学院大气物理研究所陆面过程模式(IAP LSM，1994版，IAP94)，融会贯通国际主流陆面过程模式(BATS、SiB2、SNTHERM等)和代码，具有杰出的建模能力和编程技术。IAP94基于多孔介质流体动力学和热力学原理，提出了陆面过程模式的统一框架，包括基本方程组、本构方程及定解条件，成功解决了陆面水分相态变化、冠层湍流、计算稳定性等模式研制中的难点问题，并在PILPS模式比较中体现了良好的性能，得到同行们的充分认可。
+
+戴永久适逢其时于1997年8月加盟Robert E. Dickinson团队，推进项目的实施。1997年11月Robert E. Dickinson为主席的CSM LMWG确定戴永久作为项目首席(Lead Scientist)，启动研制通用陆面模式原型(proto-type)模式，并建议模式命名“通用陆面模式(The Common Land Model, CLM)”及简写(CLM)。
+
+最初的原型模式编程规范和建模侧重于评估三个陆面模式的最佳特征。它们是：用于Community气候模式(CCM3)和CCSM初始版本的NCAR LSM~\citep{bonan1996land}，中国科学院大气物理研究所陆面模式(IAP94)~\citep{Dai-Zeng_97_IAP94}，以及与CCM2一起使用的生物圈-大气交换方案(BATS)~\citep{dickinson1993biosphere}。在1998年2月LMWG会议上，戴永久汇报了审查这些代码的内容及编程规范的情况。这次会议正式确定：研制的原型模式不仅被视为NCAR CCSM陆面部分的下一代模式，而且被视为需要对其当前陆面模式进行广泛修订的其他美国小组使用的下一代候选模式。
+
+为此，成立了一个专门的科学指导委员会，审查戴永久提出的设计规范，并促进进一步的发展。指导委员会成员的选择是为了在模式研制中提供科学指导和专业知识，他们来自美国大学 (Robert Dickinson、曾旭斌、Jay Famiglietti、Jon Foley)和美国政府实验室(Paul Dirmeyer、Paul Houser) 的科学家。委员会由CSM LMWG主席Robert Dickinson(亚利桑那大学)和Gordon Bonan (NCAR)担任，最初的成员是: Robert Dickinson、戴永久、曾旭斌(亚利桑那大学团队)，Paul Dirmeyer(海洋-陆地-大气研究中心)，Jay Famiglietti(德克萨斯大学奥斯汀分校)，Jon Foley(威斯康星大学)和Paul Houser (GSFC)。Paul Dirmeyer和Paul Houser就如何以更好地满足其机构要求的方式改进规则提供了特别实质性的指导。曾旭斌负责群体间的协调和监督项目实施。
+
+通过一年多的努力完成了原型模式研制。原型模式不仅集成了国际陆面研究的优秀成果，并在诸多方面做出重大改进和新的发展，特别，在水分相态变化、次网格参数化、复杂问题分解、计算稳定性、模式整体协调性等关键问题做出重大创新。1999年3月由Mike Bosilovich、Paul Dirmeyer和Paul Houser对CLM原型模式进行了检查。此后，开始了一个广泛的代码测试阶段。Keith Oleson, 戴永久, Adam Schlosser和Paul Houser在1999年6月的CCSM Workshop LMWG会议上介绍了离线测试的初步结果。
+
+不同研究团队开展对原型模式全面评估测试，时间持续一年有余。评估团队有：戴永久、Robert Dickinson、曾旭斌和杨宗良组成的亚利桑那大学团队，Gordon Bonan和Keith Oleson的NCAR团队，Paul Dirmeyer和Adam Schlosser的COLA (Center for Ocean-Land-Atmosphere Studies)团队，Paul Houser和Mike Bosilovich的GSFC (Goddard Space Flight Center, NASA)团队，Scott Denning和Ian Baker的科罗拉多州立大学团队。1999年11月在COLA的CLM研讨会上每个团队汇报了独立的测试结果，充分展示了CLM原型模式优秀的性能。用于验证的站点数据包括所有PILPS站点(Cabauw、Valdai、Red-Arkansas河流域)~\citep{Henderson-Sellers_1993_PILPS}和其他站点数据(FIFE~\citep{Sellers88FIFE}、BOREAS~\citep{Sellers95BOREAS}、HAPEX-MOBILHY~\citep{Andre1986hapex}、ABRACOS~\citep{Gash96ABRACOS}、Sonoran Desert~\citep{Unland1996surface}，以及全球土壤湿度项目(GSWP)数据~\citep{Dirmeyer1999global})。
+
+在2000年6月召开的CCSM Workshop LMWG会议上，戴永久正式汇报了通用陆面模式与CCM3的初步耦合结果，表明CLM可以成功地与气候模式耦合。与NCAR LSM和观测结果的比较表明，径流的季节性、夏季偏冷的显著减少和雪深有了重大改善。但是，注意到与径流和反照率有关的一些缺陷，随后予以解决。杨宗良和Ian Baker汇报了CLM在模拟雪和土壤温度方面的改进。
+戴永久具体实施和组织完成了CLM的研发、CSM的耦合、全面的性能评估、完整的技术报告和用户指南~\citep{Dai2001CoLM}。CLM由戴永久通过2003年BAMS封面论文向公众发布~\citep{dai2003common}。CLM与CCM的耦合评估由曾旭斌总结发表~\citep{zeng2002coupling}。戴永久参与了NCAR Community Atmosphere Model (CAM 3.0)技术报告编写~\citep{Collins2004CAM}。
+
+在此基础上，NCAR团队改土地覆盖/土地利用的biome分类体系(BATS分类)为植被功能(PFT)分类体系，新增了全球陆面基础数据集，河道径流和生物地球化学的模式，以及代码架构。为了与CCSM中Community相匹配，名称改The Common Land Model为The Community Land Model，简写仍然为CLM。Community-CLM技术报告于2004年通过NCAR Tech Note~\citep{Oleson2004CLM}正式发布，提供免费自由下载的模式系统。Community-CLM与CCM耦合评估由Gordon Bonan总结发表~\citep{Bonan2002CLM}。
+
+戴永久于2002年6月加盟北京师范大学，2003年6月全职回到北京，希望能在Common-CLM的基础，发展我们自主可控的陆面模拟研究平台，得到了Robert Dickinson的鼓励和全面的建议，并建议中国版CLM继承The Common Land Model这名称，为了区别NCAR主导的Community–CLM，改Common-CLM的简写为CoLM。
+
+
+\subsection{通用陆面模式 2004 版本 (CoLM 2004)}
+在CoLM原型版本基础上，在四个方面做了重大改进：
+
+\begin{enumerate}
+    \item[1)] 陆面属性数据集
+
+    全球 \ang{;;30}$\times$\ang{;;30} 分辨率的格点数据集，包括：
+    \begin{enumerate}
+        \item[a)] 全球高程数据集 (\url{http://webgis.wr.usgs.gov/globalgis/gtopo30/})；
+        \item[b)] USGS土地覆盖/土地利用数据，24个类型，数据集来源于1992年4月至1993年3月获得的1公里AVHRR数据 (\url{http://edc2.usgs.gov/glcc/})；
+        \item[c)] 土壤质地由FAO~\citep{GlobalSoilData2000}和STATSGO~\citep{Miller1998conterminous}合并数据，土壤剖面(0--30 cm)和(30--100 cm)两层，16类土壤质地，土壤水力参数(孔隙度、饱和水势、持结曲线斜率、饱和导水率)从查找表~\citep{cosby1984statistical}获取。
+    \end{enumerate}
+    
+    \item[2)] 植被冠层双大叶模式~\citep{dai2004two}
+    
+    双大叶模式成功解决了植被阴叶与阳叶的光能吸收、光合-气孔导度、二氧化碳和水汽通量、叶面温度等本构方程的构建及数值适定算法等难题，为深入研究植被光合-蒸腾作用及其相关的生态与环境过程提供了关键理论与技术。
+    
+    \item[3)] 平板海洋模式
+
+    为天气/气候模式应用提供一个选择，配置了简单海洋-海冰模式(平板海洋模式，Slab Ocean Model)，即允许在一个简化的一维海洋-海冰模式之上运行完整的大气模式。基于输入的海温、海冰范围和厚度数据，应用CoLM常通量层Monin-Obukhov相似理论理论计算海-气动量、热量和水汽通量，基于海洋表面反照率计算向上太阳辐射通量，基于SST计算向上长波辐射。海冰的温度用厚度和热性能固定的“冰”层来表示，隐式求解热扩散方程预报温度。平板海洋模式仅适用于海洋动力学作用最小的情况下的海-气相互作用过程问题。CoLM-平板海洋模式的基础模型为NCAR CESM 平板海洋模式 (\url{https://www.cesm.ucar.edu/models/simple/slab-ocean-model})。
+    
+    \item[4)] 模式程序结构
+
+    对模式程序做了全面改写和结构调整，并将代码规整到四个子目录：
+    \begin{enumerate}
+        \item[a)] \texttt{/mksrfdata/}：基础数据(\ang{;;30}$\times$\ang{;;30}分辨率)读入，及升尺度和属性参数转化函数(算法)；
+        \item[b)] \texttt{/mkinidata/}：初始状态变量读入及尺度转换；
+        \item[c)] \texttt{/main/}：主程序；
+        \item[d)] \texttt{/run/}：脚本(script)文件实施编译和运算。
+    \end{enumerate}
+    另外，构建了并行计算版本。
+\end{enumerate}
+
+CoLM2004模式源程序、基础数据集、科学技术报告和用户指南发布网站： \url{http://globalchange.bnu.edu.cn/research/models}。
+
+
+\subsection{通用陆面模式 2014 版本 (CoLM 2014)}
+\begin{enumerate}
+    \item[1)] 陆面属性数据集
+    \begin{enumerate}
+    \item[a)] 土地覆盖/土地利用数据。用美国国家雪/冰资料中心(Natinal Snow and Ice Data Center：\url{http://www.glims.org/RGI/}; \url{http://glims.colorado.edu/glacierdata/})专业中心数据产品替换USGS永久性积雪和冰盖(permanent snow and ice)数据。用(\url{http://www.wwfus.org/science/data.cfm})永久性湖泊(permanent lakes)和永久性湿地(permanent wetlands)专业部门制作的数据替换USGS永久性湖泊和永久性湿地数据。用全球城市面积数据(\url{http://sage.wisc.edu/urbanenvironment.html})专业部门制作的数据替换USGS城市(urban and built-up)数据。
+    \item[b)] 中国和全球土壤属性数据集。起始于2005年，全面收集和整理了土壤剖面物理与化学属性数据、土壤分类图，并作精细质量控制，建立了逾3万个土壤剖面的土壤属性数据库。建立了与模式相匹配、参数最全、分辨率最高的中国和全球土壤属性数据集~\citep{shangguan2013china,shangguan2014global}，中国和全球土壤水力学和热力学参数集。建立了多土壤属性转换函数集，模式土壤水力和热力参数取土壤属性转换函数集的计算中位值~\citep{dai2013development}。
+    \item[c)] 全球植被叶面积指数数据。全球植被LAI是陆面和气候模拟非常重要的变量。NASA发布的LAI数据存在时空不连续性和不一致性问题，极大限制了其高分辨率资料的应用。发展了相互协调的滤波算法和订正方法，解决了原数据存在的问题，建立了可直接为模式所用的、高分辨率和长序列的全球LAI数据集~\citep{yuan2011reprocessing}。
+    \end{enumerate}
+    \item[2)] 湖泊模式
+
+    在CLM 4.5~\citep{oleson2013technical}湖泊模式~\citep{subin2012improved}的基础上，我们在降水感热能量传递、湖水冻融、湖冰积雪、湍流通量、辐射传输和温度计算等方程作了实质性改进~\citep{戴永久2018通用陆面模式}。
+    
+    \item[3)] 河道径流模式(CaMa-Flood Version 3.6.2)
+
+    耦合了由日本东京大学Dai Yamazaki研制的大尺度分布式汇流模型  (Catchment-based Macro-scale Floodplain, CaMa-Flood)~\citep{yamazaki2011physically}。CaMa-Flood对河道径流和洪泛过程有精细的描述，特别重要的是，研制了非常精细的全球高分辨率数据集。
+
+    \item[4)] 模式程序结构
+
+    在模式程序及结构作了全面的改进，更为好用、易用。
+\end{enumerate}
+
+模式源程序、基础数据集、科学技术报告和用户指南发布网站： \url{http://globalchange.bnu.edu.cn/research/models}。
+
+
+\section[通用陆面模式 2024 版本(CoLM 2024)]{通用陆面模式 2024 版本(CoLM 2024) (Overview of CoLM 2024)}
+当今用于数值天气/气候/地球系统模式的陆面过程模式研究需特别强调向多时空尺度、系统集成的方向发展，全球性与区域性、宏观与微观、生态系统过程等的结合，多源观测和数据同化相结合的方向发展；特别强调学科研究与国家需求、经济和社会可持续发展以及政策决策紧密结合，使陆面过程模式研究不断向深度和广度发展。一个有效的陆面模拟系统能够为我们识别气候变化与人类活动对环境变化的影响、探索水文气象灾害成因并且进行预报与预警、优化水资源配置、保护粮食安全和生态环境提供科学支撑。
+
+我们旨在研发我国具备国际先进地位的新一代陆面过程模式。主要研究目标包括：建立包含人类活动和生态系统过程的高分辨率(100米级)全球陆面过程模式；建成全球分辨率为亚公里级且与模式相匹配的陆面基础数据集和验证资料数据集；开发适用于模式不同分辨率应用的尺度转换方法，实现与中国科学院地球系统模式CAS-ESM、中国气象局数值天气预报系统模式GRAPES、天气研究与预报模式气候版(CWRF)、国家气候中心气候系统模式BCC-CSM等的多尺度耦合应用。最为重要的目标是：创建涉及更广泛科学群体的科学研究范式，更直接地让非科学用户参与模式开发，促进知识协同生产。
+
+以通用陆面模式CoLM 2014为基础，针对地表能量、水文、生物地球化学循环和人为扰动等过程对其改进和完善，研发新一代高分辨率全球陆面过程模式。主要研究内容包括：研制包含人类活动和生态系统过程的高分辨率全球陆面过程模式；基于理论研究在精细尺度下创新或改进陆面模式；研制与全球陆面过程模式相匹配的高分辨率数据集；发展陆面过程模式和基础数据的尺度转换方法，提高陆面过程模式的时空分辨率和模拟准确性；实现陆面过程模式与天气/气候/地球系统模式的耦合应用。
+
+CoLM 2024主要新内容(New Features of CoLM 2024):
+\begin{enumerate}
+    \item[1)] 网格结构、PFT和PC次网格
+    \item[2)] 基础数据集
+    \item[3)] 辐射(三维冠层辐射、SNICAR …)
+    \item[4)] 湍流通量
+    \item[5)] 冠层降水截留和植被水力学
+    \item[6)] 植被冠层温度
+    \item[7)] 水文过程(CaMa-Flood new version；可变饱和土壤水运动、地下水、动力学模式、河网径流、流域单元网格的侧向水分运动 …)
+    \item[8)] 生物地球化学过程
+    \item[9)] 城市
+    \item[10)] 作物 
+    \item[11)] 水库
+    \item[12)] 土地利用土地覆盖变化 
+    \item[13)] 尺度转换
+    \item[14)] 模式程序结构
+\end{enumerate}
+
+
+\section{致谢 (Acknowledgments)}
+作者感谢CoLM工作组外部成员自2004年以来对CoLM的发展做出的重大贡献。他们是：
+
+曾庆存、Robert E. Dickinson、陈海山、梁信忠、曾旭斌、周黎明、牛国跃, …
+
+纪多颖、张倩、朱司光、张香香、…
