@@ -260,7 +260,7 @@ FUNCTION {bbl.and}
 FUNCTION {bbl.etal}
 {language empty$
     { "et~al." }
-    { "等" }
+    { "\ignorespaces~等" }
   if$
 }
 
