@@ -220,7 +220,7 @@ K_{i+\frac{1}{2}} & = {f}_{imped,i+\frac{1}{2}} \cdot K_{i+\frac{1}{2}} \\
     \end{aligned}
 \end{equation}
 
-\subsection{饱和含水层}
+\subsection{饱和带和非饱和带的水分交换} \label{sec:exchange_sat_unsat}
 模式中使用两个变量$w_a$和$z_{wt}$来描述饱和含水层的状态，分别代表总水量和地下水位。饱和含水层中的水分可与土壤层中的水分在垂直方向进行交换，也可在水平方向进行流动。其中水平方向的流动被称为地下径流，相关内容见第六部分水文过程。
 
 土壤层与饱和含水层的交换通量定义为土壤层底部的水流通量，
@@ -233,7 +233,7 @@ K_{i+\frac{1}{2}} & = {f}_{imped,i+\frac{1}{2}} \cdot K_{i+\frac{1}{2}} \\
 w_{a}=w_{a}+q_{recharge} \cdot \Delta t
 \end{equation}
 
-给水度$S_y$(specific yield)反映了含水层水量变化时地下水位的变化。假设地下水位之上的土壤为均质土壤，且土壤水处于平衡态，则其土壤水势可表达为深度的函数，
+给水度$S_y$~(specific yield)反映了含水层水量变化时地下水位的变化。假设地下水位之上的土壤为均质土壤，且土壤水处于平衡态，则其土壤水势可表达为深度的函数，
 \begin{equation}
     \psi \left(z\right) = \psi_s - \left(z_{wt} - z\right)
 \end{equation}
@@ -261,7 +261,7 @@ w_{sat} = \theta_s\left(z_{max}-z_{wt}\right)
 
 若地下水位位于最下层土壤之下，公式（\ref{eqn:s_y}）中的参数$\theta_s$、$\psi_s$ 和 $B$取最下层土壤的值，则水位的变化为
 \begin{equation}
-z_{w t}=z_{w t}-\frac{q_{recharge} \cdot \Delta t}{s_{y}}
+z_{w t}=z_{w t}-\frac{q_{recharge} \cdot \Delta t}{S_{y}}
 \end{equation}
 
 若地下水位位于分层土壤之内，则需要逐层计算水位的变化。当$q_{recharge}>0$时，记地下水位所在层为$j$，
@@ -270,7 +270,7 @@ z_{w t}=z_{w t}-\frac{q_{recharge} \cdot \Delta t}{s_{y}}
 \end{equation}
 在第$j$层可容纳水量的限制下，实际可补给到第$j$层的水量为（$z_{j-\frac{1}{2}}$为第$j$层的上边界）
 \begin{equation}
-q_{recharge, i}=\min \left(q_{recharge}, \frac{S_{y,j} \cdot \left(z_{w t}-z_{i-\frac{1}{2}}\right)}{\Delta t} \right)  
+q_{recharge, j}=\min \left(q_{recharge}, \frac{S_{y,j} \cdot \left(z_{w t}-z_{j-\frac{1}{2}}\right)}{\Delta t} \right)  
 \end{equation}
 地下水位在第$j$层内的变化为
 \begin{equation}
@@ -279,6 +279,34 @@ z_{w t}=z_{w t}-\frac{q_{recharge,j} \cdot \Delta t}{S_{y,j}}
 若$q_{recharge,j}<q_{recharge}$，则此时地下水位上升至第$j-1$层，补给水未用尽，可继续对第$j-1$层进行补给，直至补给水用尽或者到达土壤表面。
 
 当$q_{recharge}<0$时，水分从饱和含水层向上层土壤进行补给，$w_a$减少，$z_{wt}$增加，除方向相反外，计算过程与从上层土壤向饱和含水层的补给类似，这里不再赘述。
+
+\subsection{由地下产流引起的地下水和土壤水变化}
+
+地下产流主要指由地形引起的地下水的侧向流动。当不考虑基于物理过程的侧向流时，模式中通过~\ref{section:rsub_par}节中的参数化方案来计算地下产流的量，这部分水分需从地下水和土壤水中扣除。
+
+假设地下产流的量为$r_{\mathrm{subsurface}}$.
+
+地下水位位于分层土壤之内时，需要逐层计算水位的变化。记起始时地下水位$z_{wt}$所在层为$j$，则实际可从第$j$层中扣除的水量为（$z_{j+\frac{1}{2}}$为第$j$层的下边界）
+\begin{equation}
+r_{\mathrm{subsurface},j} = \min \left(r_{\mathrm{subsurface}}, \frac{S_{y,j} \cdot \left(z_{j+\frac{1}{2}} - z_{w t}\right)}{\Delta t} \right)  
+\end{equation}
+其中$S_{y,j}$为第$j$层内的给水度，由~\eqref{eqn:s_y}计算。地下水位在第$j$层内的变化为
+\begin{equation}
+z_{w t}=z_{w t}+\frac{r_{\mathrm{subsurface},j} \cdot \Delta t}{S_{y,j}}
+\end{equation}
+土壤水的变化为
+\begin{equation}
+    w_{\mathrm{liq},j} =  w_{\mathrm{liq},j} - r_{\mathrm{subsurface},j} \cdot \Delta t
+\end{equation}
+若$r_{\mathrm{subsurface},j}<r_{\mathrm{subsurface}}$，则此时地下水位下降到第$j+1$层，$r_{\mathrm{subsurface}}$更新为$r_{\mathrm{subsurface}}-r_{\mathrm{subsurface},j}$，继续从第$j+1$层进行扣除，直至$r_{\mathrm{subsurface}}=0$或地下水位降到了最下层土壤之下.
+
+若地下水位降到了最下层土壤之下，公式~\eqref{eqn:s_y}中的参数$\theta_s$、$\psi_s$ 和 $B$取最下层土壤的值，则含水层总水量和水位的变化为
+\begin{equation}
+\begin{aligned}
+    w_{a} & = w_{a} - r_{\mathrm{subsurface}} \cdot \Delta t, \\
+    z_{wt} & = z_{w t}+\frac{r_{\mathrm{subsurface}} \cdot \Delta t}{S_{y}}.
+\end{aligned}
+\end{equation}
 
 \section{可变饱和流数值算法}
 
@@ -308,10 +336,10 @@ z_{w t}=z_{w t}-\frac{q_{recharge,j} \cdot \Delta t}{S_{y,j}}
 
 \subsection{土壤水预报方程}
 在每个土壤层内，可使用三个预报变量来描述土壤中液态水的分布情况。
-土壤体积含水量为固定的预报变量($\theta_i$)。为了追踪土壤中饱和水层的变化(包括地下水、滞水层和入渗情况下由地表向下发展的饱和水层)，
+土壤体积含水量为第一个预报变量($\theta_i$)。为了追踪土壤中饱和水层的变化(包括地下水、滞水层和入渗情况下由地表向下发展的饱和水层)，
 每层土壤中引入了另外两个潜在的预报变量($w_{f,i}$和$w_{t,i}$)，
 分别代表土壤层内上部饱和区域的厚度，和土壤层内下部饱和区域的厚度(图~\ref{fig:可变饱和流数值算法预报区域空间结构示意图})，
-当某层土壤部分饱和时，这两个变量被激活。
+当某层土壤部分饱和时，这两个变量可被激活。
 {
 \begin{figure}[htbp]
 \centering
@@ -322,32 +350,34 @@ z_{w t}=z_{w t}-\frac{q_{recharge,j} \cdot \Delta t}{S_{y,j}}
 \end{figure}
 }
 
-预报变量$\theta_i$的预报方程为
+对预报变量$\theta_i$，离散后的预报方程为
 \begin{equation}\label{si_in1}
 \left(\Delta z_{i}-w_{f, i}^{n+1}-w_{t, i}^{n+1}\right) \cdot\left(\theta_{i}^{n+1}-\theta_{i}^{n}\right)=\Delta t \cdot\left(q_{ {uin,i }}^{n+1}-q_{uout,i}^{n+1}\right)
 \end{equation}
 其中，$\Delta z_i$ 为第$ i $层土壤的厚度，$\Delta t$ 为时间步长，$q_{uin,i}^{n+1}$为非饱和区域上边界处的水流通量，$q_{uout,i}^{n+1}$为非饱和区域下边界处的水流通量。
 
 
-预报变量$w_{f,i}$表示土壤层上部饱和区域的厚度，其预报方程为
+预报变量$w_{f,i}$表示土壤层上部饱和区域的厚度，其离散后的预报方程为
 \begin{equation}\label{si_in2}
 \left(\theta_{s, i}-\theta_{i}^{n}\right) \cdot\left(w_{f, i}^{n+1}-w_{f, i}^{n}\right)=\Delta t \cdot\left(q_{i-1/2}^{n+1}-q_{w f, i}^{n+1}\right)
 \end{equation}
 其中，$\theta_{s,i}$ 为第$ i$ 层土壤的饱和体积含水量，$ q_{{i-1/2}}^{n+1}$为第$i$层土壤上边界处的水流通量，$q_{wf,i}^{n+1}$为饱和区域下边界处（湿润锋面）的水流通量。
 
 
-预报变量$w_{t,i}$表示土壤层下部饱和区域的厚度，其预报方程为
+预报变量$w_{t,i}$表示土壤层下部饱和区域的厚度，其离散后的预报方程为
 \begin{equation}\label{si_in3}
 \left(\theta_{s, i}-\theta_{i}^{n}\right) \cdot\left(w_{t, i}^{n+1}-w_{t, i}^{n}\right)=\Delta t \cdot\left(q_{w t, i}^{n+1}-q_{i+1 / 2}^{n+1}\right)
 \end{equation}
 其中，$q_{wt,i}^{n+1}$  为饱和区域上边界处的水流通量，$q_{i+1/2}^{n+1}$为第$i$层土壤下边界处的水流通量。
 
-% 在未饱和的土壤层，模式使用预报方程(\ref{si_in1})预报体积含水量的变化；
-% 若未饱和的土壤层内上部有饱和区域，模式联合预报方程(\ref{si_in1})和(\ref{si_in2})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化；
-% 若未饱和的土壤层内下部有饱和区域，模式联合预报方程(\ref{si_in1})和(\ref{si_in3})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化；
-% 若未饱和的土壤层内上下部分均有饱和区域，模式联合预报方程(\ref{si_in1})--(\ref{si_in3})来同时预报饱和区域的边界变化和非饱和区域内土壤积水含水量的变化。
-
-% 在地下部分，所有未饱和土壤层内的上述预报方程联合在一起组成一个方程组，来进行统一求解。
+当三个变量同时被激活时，满足$q_{ {uin,i }}^{n+1}=q_{w f, i}^{n+1},~ q_{ {uout,i }}^{n+1}=q_{wt, i}^{n+1}$，将~\eqref{si_in1}\eqref{si_in2}\eqref{si_in3}相加可得，
+\begin{equation}\label{si_in4}
+\begin{aligned}
+m_{\mathrm{total}}^n & \triangleq \theta_{s, i}\left(w_{f, i}^n+w_{t, i}^{n}\right)+\theta_{i}^{n}\left(\Delta z - w_{f, i}^{n} - w_{t, i}^{n}\right) \\
+    m_{\mathrm{total}}^{n+1} - m_{\mathrm{total}}^n & =\Delta t \cdot\left(q_{i-1/2}^{n+1}-q_{i+1 / 2}^{n+1}\right)
+\end{aligned}
+\end{equation}
+式~\eqref{si_in4}表示了第$i$层内的水量守恒。
 
 \subsection{地表积水的变化}
 为了预报由入渗所产生的地表水深的变化，地表积水深度($h_{pond}$)也是算法中的预报变量，其预报方程为
@@ -355,7 +385,7 @@ z_{w t}=z_{w t}-\frac{q_{recharge,j} \cdot \Delta t}{S_{y,j}}
 h_{ {pond }}^{n+1}-h_{ {pond }}^{n}=\Delta t \cdot\left(q_{ {surf }}^{n+1}-q_{ {infl }}^{n+1}\right)
 \end{equation}
 其中，$q_{surf}^{n+1} $ 为从地表水上部进入的水流通量，
-其可以是降水、蒸发、或者地表水与积雪的液态水交换；$q_{infl}^{n+1}$为从地表进入土壤的水流通量。
+其可以是降水、蒸发、地表水与积雪的液态水交换或者它们的组合；$q_{infl}^{n+1}$为从地表进入土壤的水流通量。
 
 
 当地表有积水，或者由于进入地表的水流通量大于入渗到土壤中的通量而形成积水时，积水深度的预报方程(\ref{hpond})也加入到土壤水的方程组中，进行统一求解。
@@ -364,21 +394,20 @@ h_{ {pond }}^{n+1}-h_{ {pond }}^{n}=\Delta t \cdot\left(q_{ {surf }}^{n+1}-q_{ {
 \subsection{地下水的变化}
 当地下水位在土壤水计算区域内部时，其位置由$w_{t,i}$进行预报。
 
-当地下水位处于土壤水计算区域之下时，使用预报变量$W_a$来表示计算区域之下蓄水层的蓄水状态。$W_a$定义为
+当地下水位处于土壤水计算区域之下时，使用预报变量$w_a$来表示计算区域之下蓄水层的蓄水状态。$w_a$定义为
 \begin{equation}
-W_{a}=-\int_{z_{b t m}}^{Z_{w t}}\left(\theta_{s}-\theta\right) d z
+w_{a}=-\int_{z_{btm}}^{z_{wt}}\left(\theta_{s}-\theta\right) d z
 \end{equation}
-$W_a$的绝对值为土壤水计算区域之下空气的体积百分比，负号的含义是计算区域之下液态水相对于饱和状态是亏缺的，$W_a$的最大值为0（表示土壤水饱和）。
+$w_a$的绝对值表示土壤水计算区域之下的空气的总量（单位为：单位面积上的体积），负号表示计算区域之下液态水相对于饱和状态是亏缺的，$w_a$的最大值为0（表示土壤水饱和）。
 
-
-$W_a$的预报方程为
+在垂直方向上，描述$w_a$变化的预报方程为
 \begin{equation}\label{wa_n1_n}
-W_{a}^{n+1}-W_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
+w_{a}^{n+1}-w_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
 \end{equation}
-当地下水位处于土壤水计算区域之下时，$W_a$的预报方程(\ref{wa_n1_n})也加入到土壤水的方程组中，进行统一求解。
+当地下水位处于土壤水计算区域之下时，$w_a$的预报方程(\ref{wa_n1_n})也加入到土壤水的方程组中，进行统一求解。
 
 \subsection{水流通量的计算}
-预报方程(\ref{si_in1})--(\ref{wa_n1_n})中，右端项中均包含了水流通量的计算，其计算分为以下几种情形，
+预报方程~\eqref{si_in1}\eqref{si_in2}\eqref{si_in3}\eqref{hpond}\eqref{wa_n1_n}中，右端项中均包含了水流通量，其计算分为以下几种情形，
 \begin{enumerate}
     \item 饱和区域内部的水流通量，使用公式
     \begin{equation}\label{q_sat1}
@@ -389,17 +418,18 @@ W_{a}^{n+1}-W_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
         $K_{s,i}$为第$i$层的饱和土壤导水率，$h_l$为饱和区域下边界处的土壤水势。
         当饱和区域上边界为地表时，$h_u$取为地表积水深度$h_{pond}$；
         当饱和区域上边界在土壤内部时，$h_u$为饱和区域上边界处的土壤水势。
-        公式(\ref{q_sat1})右端第一个分式计算了饱和区域的等效导水率，第二个分式计算了总水势的差商。
+        公式(\ref{q_sat1})右端第一个分式计算了饱和区域的等效导水率（带权重$\Delta z_i$的调和平均），第二个分式计算了总水势的差商。公式~\eqref{si_in2}中的$q_{i-1/2}$，公式~\eqref{si_in3}中的$q_{i+1/2}$使用公式~\eqref{q_sat1}进行计算。
 
-    \item 两个异质不饱和土壤层之间的水流通量，使用公式
+    \item 相邻异质不饱和土壤层之间的水流通量，使用公式
     \begin{equation}\label{qht1}
         q_{h t}=q_{h m}\left(z_{i}-z_{u}, h_{u}, h_{i}\right)=q_{h m}\left(z_{l}-z_{i}, h_{i}, h_{l}\right)
         \end{equation}
         其中，$q_{ht}$为两层土壤间的水流通量，$z_u$为上层土壤的中心点的位置，$z_l$为下层土壤的中心点的位置，
-        $z_i$为异质土壤的交界面的位置，$h_u$为$z_u$处的土壤水势，$h_l$为$z_l$处的土壤水势，$h_i$为$z_i$处的土壤水势。
-        $q_{hm}$为计算均质土壤内水流通量的函数，它依赖于土壤层的厚度和上下边界处的土壤水势，
-        (\ref{qht1})的含义为土壤层界面处的水流通量等于界面上方均质土壤内的水流通量，也等于界面下方均质土壤内的水流通量。
-        土壤交界面处的土壤水势$h_i$为未知量，通过(\ref{qht1})的隐式方程进行求解后，再代入到(\ref{qht1})中计算$q_{ht}$. 函数$q_{hm}$为
+        $z_i$为异质土壤的交界面的位置，$h_u$为$z_u$处的土壤水势，$h_l$为$z_l$处的土壤水势，$h_i$为$z_i$处的土壤水势，$q_{hm}$为计算均质土壤内水流通量的函数，它依赖于土壤层的厚度和上下边界处的土壤水势。
+        
+        公式~\eqref{qht1}为的含义为土壤层界面处的水流通量等于界面上方均质土壤内的水流通量，也等于界面下方均质土壤内的水流通量，为相邻土壤层之间的衔接条件。在(\ref{qht1})第二个等号两边，仅土壤交界面处的土壤水势$h_i$为未知量，因此，可据其求解出$h_i$的值。将求解出的$h_i$的值代入到(\ref{qht1})中任一函数$q_{hm}$中，可计算得到$q_{ht}$的值。
+        
+        函数$q_{hm}$为
         \begin{equation}
         q_{h m}\left(\Delta z, h_{u}, h_{l}\right)=-k_{h m} \cdot\left(\frac{h_{l}-h_{u}}{\Delta z}-1\right)
         \end{equation}
@@ -417,16 +447,18 @@ W_{a}^{n+1}-W_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
         k_{h m}=\left(k_{u}\right)^{r_{0}} \cdot\left(k\left(h_{l}-\Delta z\right)\right)^{1-r_{0}}
         \end{equation}
         其中，土壤水力导度$k$为土壤水势$h$的函数，上述三个公式中，$k_u=k(h_u )$，$k_l=k(h_l )$；
-        $r_0$是依赖于土壤水力模型和土壤水力参数的参数，对Campbell模型，
+        $r_0$是依赖于土壤水力模型和土壤水力参数的参数，对Campbell模型~\eqref{eq:Ks_CB}，
         \begin{equation}
         r_{0}=\frac{1}{3 \lambda+2}
         \end{equation}
-        对van Genuchten--Mualem模型，
+        对van Genuchten--Mualem模型~\eqref{eq:Ks_VG}，
         \begin{equation}
         r_{0}=\frac{1}{L(n-1)+2 n}
         \end{equation}
-        预报方程(\ref{si_in1})--(\ref{si_in3})为隐式时间积分格式，上述水流通量的计算公式可在理论上保证在均质土壤中，
-        预报方程(\ref{si_in1})--(\ref{si_in3})的解为本质无振荡的，也可在土壤具有分层异质性时，提高计算的稳定性和精度。
+        
+        当采用隐式时间积分格式时，对均质土壤，上述水流通量的计算公式可保证Richards方程的解为本质无振荡的。
+
+        在公式~\eqref{si_in1}中，若非饱和区相邻的上层也为非饱和区，则$q_{uin,i}$的计算采用公式~\eqref{qht1}，若非饱和区相邻的下层也为非饱和区，则$q_{uout,i}$的计算采用公式~\eqref{qht1}.
 
     \item 饱和区位于非饱和区上方时两者之间的水流通量，即湿润锋面处的水流通量，公式为
     \begin{equation}
@@ -442,19 +474,20 @@ W_{a}^{n+1}-W_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
     其中，$z_u$为上方非饱和土壤层中心点的位置，$z_i$为饱和区和非饱和区之间界面的位置，
     $h_s$为饱和土壤水势，$h_u$为非饱和土壤层中心点处的土壤水势。
 
-    \item 地表入渗通量$q_{infl}$的计算分两种情况。第一种情况，地表有积水或者因到达地表的水流速度较大有形成积水的趋势时，自地表向下形成湿润锋面，则$q_{infl}$等于最上层饱和区的水流速度；第二种情况，地表无积水且入渗速度大于到达地表的水流速度时，$q_{infl}$等于到达地表的水流速度（可为负值，表示蒸发等情况）。
+    \item 地表入渗通量$q_{infl}$的计算分两种情况。第一种情况，地表有积水或者因到达地表的水流速度较大而有形成积水的趋势时，自地表向下形成湿润锋面，则$q_{infl}$等于最上层饱和区的水流速度；第二种情况，地表无积水且入渗速度大于到达地表的水流速度时，$q_{infl}$等于到达地表的水流速度（可为负值，表示蒸发等情况）。
     
 \end{enumerate}
 
 
 \subsection{预报方程的求解}
-预报方程(\ref{si_in1})--(\ref{hpond})和(\ref{wa_n1_n})的左边均代表水量的变化，右边均代表土壤层边界上的水流通量，若在某时刻，
-活动预报变量的个数为$A$，则可将第$\alpha$个变量对应的方程表达为
+方程(\ref{si_in4})代表了单层土壤内的水量守恒，\eqref{hpond}\eqref{wa_n1_n}分别代表了地表和地下含水层的水量守恒。令包含地表和地下含水层在内，总的计算层数为$A$. 在其中第$\alpha$层内可将~\eqref{si_in4}\eqref{hpond}\eqref{wa_n1_n}简写为
 \begin{equation}\label{m_alpha_x}
 \delta m_{\alpha}(\vec{x})=\Delta t \cdot \delta q_{\alpha}(\vec{x})
 \end{equation}
-其中$\vec{x}$⃗代表活动预报变量组成的向量，由(\ref{m_alpha_x})可得带约束的非线性最小二乘问题
-\begin{equation}
+其中$\vec{x}$代表所有活动变量组成的向量。
+
+由(\ref{m_alpha_x})得带约束的非线性最小二乘问题
+\begin{equation}\label{richards_nls}
 \begin{aligned}
 \min _{\vec{x}} f_{2}(\vec{x})=& \min _{\vec{x}} \sum_{\alpha=1}^{A}\left(\delta m_{\alpha}(\vec{x})-\Delta t \cdot \delta q_{\alpha}(\vec{x})\right)^{2} \\ 
 & \theta_{r, i}<\theta_{i} \leqslant \theta_{s, i}, & \forall \theta_{i} \in \vec{x} \\ 
@@ -463,11 +496,59 @@ W_{a}^{n+1}-W_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
 & h_{ {pond }} \geqslant 0,                               & \text{ if } h_{ {pond }} \in \vec{x} 
 \end{aligned}
 \end{equation}
-此问题采用Gauss--Newton迭代算法进行求解。
+
+模式中采用Gauss--Newton迭代算法对问题(\ref{richards_nls})进行求解。为减少自由度，在每一个迭代步中，对土壤层使用了变量转换的方法，将问题变为在每层土壤内有且只有一个活动变量。活动变量的选择方法为，
+\begin{itemize}
+    \item 当土壤层的底部有饱和区时，若$\delta m_{\alpha}>\Delta t \cdot \delta q_{\alpha}$且底部饱和区的入流小于出流，或者$\delta m_{\alpha}<\Delta t \cdot \delta q_{\alpha}$且底部饱和区的入流大于出流，则$w_t$为活动变量，否则进行下一条选择；
+    \item 若上一条中未选择$w_t$为活动变量且土壤层顶部有饱和区时，若$\delta m_{\alpha}>\Delta t \cdot \delta q_{\alpha}$且顶部饱和区的入流小于出流，或者$\delta m_{\alpha}<\Delta t \cdot \delta q_{\alpha}$且顶部饱和区的入流大于出流，则$w_f$为活动变量，否则进行下一条选择；
+    \item 若上一条中未选择$w_f$为活动变量，则$\theta$为活动变量。
+\end{itemize}
+
+变量转换方法使得问题(\ref{richards_nls})在每一个迭代步都形成了具有$A$个未知量的由$A$个方程组成的线性方程组，且系数矩阵为稀疏矩阵，模式中基于Givens变换对线性方程组进行求解。
+
+\subsection{由地下产流引起的地下水和土壤水变化} \label{sec:change_of_zwt_vsf}
+
+地下产流主要指由地形引起的地下水的侧向流动。当不考虑基于物理过程的侧向流时，模式中通过~\ref{section:rsub_par}节中的参数化方案来计算地下产流的量，这部分水分需从地下水和土壤水中扣除。
+
+假设地下产流的量为$r_{\mathrm{subsurface}}$. 模式中采用“预估-调整”的方式逐层减少土壤水，降低地下水位。图~\ref{fig:地下水变化}显示了在第$i$层内对地下水位和土壤水的计算方法。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figures/植被冠层和土壤水分/地下水变化.pdf}
+\caption{地下水减少时地下水位及土壤水变化的计算方案示意图}
+\label{fig:地下水变化}
+\end{figure}
+}
+
+在“预估”步，根据目前的地下水位及需减少的水量，预估降低后的地下水位，其满足
+\begin{equation} \label{formula:prediction_zwt}
+\begin{aligned}
+\theta_{\mathrm{pre}} & = \Theta_i\left(\psi_{\mathrm{s},i} - 0.5\left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right)\right) \\
+    - \Delta W & = \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \times  \left(\theta_{\mathrm{s},i} - \theta_{\mathrm{pre}}\right)
+\end{aligned}
+\end{equation}
+其中，$z_{\mathrm{wt}}^{\mathrm{old}}$为目前的地下水位，$z_{\mathrm{wt}}^{\mathrm{new}}$为预估的地下水位，$\theta_{\mathrm{s},i}$为饱和含水量，$\psi_{\mathrm{s},i}$为饱和时的土壤水势，$\Theta_i$表示第$i$层土壤内由土壤水势到土壤含水量的映射。式~\eqref{formula:prediction_zwt}为$z_{\mathrm{wt}}^{\mathrm{new}}$的隐函数，可用迭代方法求解。
+
+若$z_{\mathrm{wt}}^{\mathrm{new}}$低于第$i$层土壤的下边界$z_{i+1/2}$，则先计算$z_{\mathrm{wt}}^{\mathrm{old}}$至$z_{i+1/2}$区域内的土壤水势和含水量为
+\begin{equation} \label{formula:adjust_zwt1}
+\begin{aligned}
+\psi_i^{\prime} & = \psi_{\mathrm{s},i} - \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{i+\frac{1}{2}}\right) -0.5\left( z_{i+\frac{1}{2}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \\
+\theta_i^{\prime} & = \Theta_i\left(\psi_i^{\prime}\right) 
+\end{aligned}
+\end{equation}
+然后将地下水位$z_{\mathrm{wt}}^{\mathrm{new}}$“调整”至$z_{i+1/2}$. 此种情况下，土壤水的减少量小于$- \Delta W$，需继续减少第$i+1$层的土壤水量。
+
+若$z_{\mathrm{wt}}^{\mathrm{new}}$不低于第$i$层土壤的下边界$z_{i+1/2}$，则只需更新$z_{\mathrm{wt}}^{\mathrm{old}}$至$z_{\mathrm{wt}}^{\mathrm{new}}$区域内的的土壤含水量为$\theta_i^{\prime} = \theta_{\mathrm{pre}}$.
+
+
+若次网格单元上的地下水量是增加的（$\Delta W > 0$）,则从地下水位所在土壤层开始，向上逐层补充土壤水，抬升地下水位。方法如下：1）剩余补充量的初始值为$\Delta W$；2）对第$i$层进行补充时，若剩余的补充量超过了第$i$层的空气体积$A_i$，则将土壤水补充至饱和，剩余的补充量减少$A_i$，继续对第$i-1$层土壤水进行补充，地下水位抬升至第$i-1$层土壤的下边界；对第$i$层进行补充时，若剩余的补充量小于第$i$层的空气体积$A_i$，则将剩余的补充量全部补充到第$i$层的非饱和区，增加土壤的体积含水量，地下水位不变；3）若整个土壤层全部达到饱和后补充量还有剩余，则将剩余的水分补充至地表积水。
+
+
 
 \section{蒸腾引起的土壤水含量变化}
 
-这里对土壤水方程中的源汇项$Q$的主要来源，即根系吸水作用(蒸腾)过程做一简单介绍。植物吸水作用由有效根比例$f_{root,i}$和叶面蒸腾$E_{tr}$的乘积来表示\citep{dai2003common}。有效根比例为：
+这里对土壤水方程中的源汇项$S$的主要来源，即根系吸水作用(蒸腾)过程做一简单介绍。植物吸水作用由有效根比例$f_{root,i}$和叶面蒸腾$E_{tr}$的乘积来表示\citep{dai2003common}。有效根比例为：
 \begin{equation}
 {f}_{ {root }, {i}}=\frac{{f}_{{root}, {i}} {W}_{{LT}}[{i}]}{W_{t}}
 \end{equation}

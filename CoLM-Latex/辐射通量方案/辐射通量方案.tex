@@ -175,7 +175,7 @@ f_{sno} = \frac{z_{sno}}{0.25 + z_{sno}}
 
 \section{植被反照率---二流近似模型}\label{植被反照率二流近似模型}
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.7\columnwidth]{Figures/辐射过程及辐射通量计算/二流近似模型示意图.png}
 \caption{二流近似植被辐射传输模型示意图}
@@ -563,7 +563,7 @@ s_{2}^{\prime}}{h-K^{\prime}}\right]+h_{6}\left[\frac{1 / s_{1} / s_{2}^{\prime}
 利用单棵树冠模型来建立单层植被模型，考虑了植被阴影的影响、植被树冠之间的散射吸收及低入射角度(太阳高度角)对反照率的影响。通过考虑层与层之间阴影相互重叠；
 并利用单层植被模型的结果对三层植被辐射传输进行计算，来构建三层植被模型。
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{Figures/辐射过程及辐射通量计算/三维植被辐射传输模型基本框架.png}
 \caption{三维植被辐射传输模型计算基本框架示意图}
@@ -577,7 +577,7 @@ s_{2}^{\prime}}{h-K^{\prime}}\right]+h_{6}\left[\frac{1 / s_{1} / s_{2}^{\prime}
 叶片在其中均一分布，且叶倾角为球形分布(即$G$函数为1/2，$G$函数为单位体积叶面在某方向上的平均投影面积)。
 首先考虑太阳辐射垂直入射，计算单棵球形植被的直射透射率$T_{d,s}\left(\tau\right)$：
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.6\columnwidth]{Figures/辐射过程及辐射通量计算/单棵树冠示意图.png}
 \caption{单棵树冠示意图}
@@ -671,7 +671,7 @@ A_{c}=4 \pi V \Phi_{a}\left(\tau_{0}\right)\left[1-T_{d, s}\left(\tau_{0}\right)
 其中$\omega$为叶片单次散射反照率。
 
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{Figures/辐射过程及辐射通量计算/散射吸收计算示意图.png}
 \caption{植被树冠之间散射吸收计算示意图}
@@ -680,7 +680,7 @@ A_{c}=4 \pi V \Phi_{a}\left(\tau_{0}\right)\left[1-T_{d, s}\left(\tau_{0}\right)
 }
 
 当太阳在较低的角度(高度角)入射时，植被树冠阴影重叠概率增大，树冠的光照面主要集中在顶部，此时的植被冠层类似于一维的情形，相对于球形植被计算结果，$albedo$会有所增加。
-我们利用 \citet{dickinson1983land} 年对一维植被单次散射的分析结果，计算对$albedo$的增量为：
+我们利用 \citet{dickinson1983land} 对一维植被单次散射的分析结果，计算对$albedo$的增量为：
 \begin{equation}
 \alpha_{L}=(N-1) \alpha_{s}\left(\mu=1, \tau_{0}\right) f_{c}\left(\frac{1}{s}-\frac{1}{s_{0}}\right)
 \end{equation}
@@ -714,7 +714,7 @@ A=1-\alpha-T_{i}-T_{d}
 \end{enumerate}
 
  {
-    \begin{figure}[]
+    \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\columnwidth]{Figures/辐射过程及辐射通量计算/椭球体树冠.png}
     \caption{(a) 树冠形状从正球体扩展到椭球体；(b) 考虑叶倾角分布}
@@ -838,7 +838,7 @@ p_{sun}=I_{n} / S_{n}
 \end{equation}
 上式表明每层植被并不是100\%的被太阳直射照射，该参数将会用于修正植被光照叶面积指数（图~\ref{fig:三层植被辐射传输计算示意图}）。
 {
-\begin{figure}[]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.7\columnwidth]{Figures/辐射过程及辐射通量计算/三层植被辐射传输计算示意图.png}
 \caption{三层植被辐射传输计算示意图}
