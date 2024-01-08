@@ -33,38 +33,38 @@
 
 在此基础上，NCAR团队改土地覆盖/土地利用的biome分类体系(BATS分类)为植被功能(PFT)分类体系，新增了全球陆面基础数据集，河道径流和生物地球化学的模式，以及代码架构。为了与CCSM中Community相匹配，名称改The Common Land Model为The Community Land Model，简写仍然为CLM。Community-CLM技术报告于2004年通过NCAR Tech Note~\citep{Oleson2004CLM}正式发布，提供免费自由下载的模式系统。Community-CLM与CCM耦合评估由Gordon Bonan总结发表~\citep{Bonan2002CLM}。
 
-戴永久于2002年6月加盟北京师范大学，2003年6月全职回到北京，希望能在Common-CLM的基础，发展我们自主可控的陆面模拟研究平台，得到了Robert Dickinson的鼓励和全面的建议，并建议中国版CLM继承The Common Land Model这名称，为了区别NCAR主导的Community–CLM，改Common-CLM的简写为CoLM。
+戴永久于2002年6月加盟北京师范大学，2003年6月全职回到北京，希望能在Common-CLM的基础上，发展我们自主可控的陆面模拟研究平台，得到了Robert Dickinson的鼓励和全面的建议，并建议中国版CLM继承The Common Land Model这一名称，为了区别NCAR主导的Community–CLM，改Common-CLM的简写为CoLM。
 
 
 \subsection{通用陆面模式 2004 版本 (CoLM 2004)}
 在CoLM原型版本基础上，在四个方面做了重大改进：
 
-\begin{enumerate}
-    \item[1)] 陆面属性数据集
+\begin{enumerate}[label={\arabic*)}]
+    \item 陆面属性数据集
 
     全球 \ang{;;30}$\times$\ang{;;30} 分辨率的格点数据集，包括：
-    \begin{enumerate}
-        \item[a)] 全球高程数据集 (\url{http://webgis.wr.usgs.gov/globalgis/gtopo30/})；
-        \item[b)] USGS土地覆盖/土地利用数据，24个类型，数据集来源于1992年4月至1993年3月获得的1公里AVHRR数据 (\url{http://edc2.usgs.gov/glcc/})；
-        \item[c)] 土壤质地由FAO~\citep{GlobalSoilData2000}和STATSGO~\citep{Miller1998conterminous}合并数据，土壤剖面(0--30 cm)和(30--100 cm)两层，16类土壤质地，土壤水力参数(孔隙度、饱和水势、持结曲线斜率、饱和导水率)从查找表~\citep{cosby1984statistical}获取。
+    \begin{enumerate}[label={\alph*)}]
+        \item 全球高程数据集 (\url{http://webgis.wr.usgs.gov/globalgis/gtopo30/})；
+        \item USGS土地覆盖/土地利用数据，24个类型，数据集来源于1992年4月至1993年3月获得的1公里AVHRR数据 (\url{http://edc2.usgs.gov/glcc/})；
+        \item 土壤质地由FAO~\citep{GlobalSoilData2000}和STATSGO~\citep{Miller1998conterminous}合并数据，土壤剖面(0--30 cm)和(30--100 cm)两层，16类土壤质地，土壤水力参数(孔隙度、饱和水势、持结曲线斜率、饱和导水率)从查找表~\citep{cosby1984statistical}获取。
     \end{enumerate}
     
-    \item[2)] 植被冠层双大叶模式~\citep{dai2004two}
+    \item 植被冠层双大叶模式~\citep{dai2004two}
     
     双大叶模式成功解决了植被阴叶与阳叶的光能吸收、光合-气孔导度、二氧化碳和水汽通量、叶面温度等本构方程的构建及数值适定算法等难题，为深入研究植被光合-蒸腾作用及其相关的生态与环境过程提供了关键理论与技术。
     
-    \item[3)] 平板海洋模式
+    \item 平板海洋模式
 
     为天气/气候模式应用提供一个选择，配置了简单海洋-海冰模式(平板海洋模式，Slab Ocean Model)，即允许在一个简化的一维海洋-海冰模式之上运行完整的大气模式。基于输入的海温、海冰范围和厚度数据，应用CoLM常通量层Monin-Obukhov相似理论理论计算海-气动量、热量和水汽通量，基于海洋表面反照率计算向上太阳辐射通量，基于SST计算向上长波辐射。海冰的温度用厚度和热性能固定的“冰”层来表示，隐式求解热扩散方程预报温度。平板海洋模式仅适用于海洋动力学作用最小的情况下的海-气相互作用过程问题。CoLM-平板海洋模式的基础模型为NCAR CESM 平板海洋模式 (\url{https://www.cesm.ucar.edu/models/simple/slab-ocean-model})。
     
-    \item[4)] 模式程序结构
+    \item 模式程序结构
 
     对模式程序做了全面改写和结构调整，并将代码规整到四个子目录：
-    \begin{enumerate}
-        \item[a)] \texttt{/mksrfdata/}：基础数据(\ang{;;30}$\times$\ang{;;30}分辨率)读入，及升尺度和属性参数转化函数(算法)；
-        \item[b)] \texttt{/mkinidata/}：初始状态变量读入及尺度转换；
-        \item[c)] \texttt{/main/}：主程序；
-        \item[d)] \texttt{/run/}：脚本(script)文件实施编译和运算。
+    \begin{enumerate}[label={\alph*)}]
+        \item \texttt{/mksrfdata/}：基础数据(\ang{;;30}$\times$\ang{;;30}分辨率)读入，及升尺度和属性参数转化函数(算法)；
+        \item \texttt{/mkinidata/}：初始状态变量读入及尺度转换；
+        \item \texttt{/main/}：主程序；
+        \item \texttt{/run/}：脚本(script)文件实施编译和运算。
     \end{enumerate}
     另外，构建了并行计算版本。
 \end{enumerate}
@@ -73,22 +73,22 @@ CoLM2004模式源程序、基础数据集、科学技术报告和用户指南发
 
 
 \subsection{通用陆面模式 2014 版本 (CoLM 2014)}
-\begin{enumerate}
-    \item[1)] 陆面属性数据集
-    \begin{enumerate}
-    \item[a)] 土地覆盖/土地利用数据。用美国国家雪/冰资料中心(Natinal Snow and Ice Data Center：\url{http://www.glims.org/RGI/}; \url{http://glims.colorado.edu/glacierdata/})专业中心数据产品替换USGS永久性积雪和冰盖(permanent snow and ice)数据。用(\url{http://www.wwfus.org/science/data.cfm})永久性湖泊(permanent lakes)和永久性湿地(permanent wetlands)专业部门制作的数据替换USGS永久性湖泊和永久性湿地数据。用全球城市面积数据(\url{http://sage.wisc.edu/urbanenvironment.html})专业部门制作的数据替换USGS城市(urban and built-up)数据。
-    \item[b)] 中国和全球土壤属性数据集。起始于2005年，全面收集和整理了土壤剖面物理与化学属性数据、土壤分类图，并作精细质量控制，建立了逾3万个土壤剖面的土壤属性数据库。建立了与模式相匹配、参数最全、分辨率最高的中国和全球土壤属性数据集~\citep{shangguan2013china,shangguan2014global}，中国和全球土壤水力学和热力学参数集。建立了多土壤属性转换函数集，模式土壤水力和热力参数取土壤属性转换函数集的计算中位值~\citep{dai2013development}。
-    \item[c)] 全球植被叶面积指数数据。全球植被LAI是陆面和气候模拟非常重要的变量。NASA发布的LAI数据存在时空不连续性和不一致性问题，极大限制了其高分辨率资料的应用。发展了相互协调的滤波算法和订正方法，解决了原数据存在的问题，建立了可直接为模式所用的、高分辨率和长序列的全球LAI数据集~\citep{yuan2011reprocessing}。
+\begin{enumerate}[label={\arabic*)}]
+    \item 陆面属性数据集
+    \begin{enumerate}[label={\alph*)}]
+    \item 土地覆盖/土地利用数据。用美国国家雪/冰资料中心(Natinal Snow and Ice Data Center：\url{http://www.glims.org/RGI/}; \url{http://glims.colorado.edu/glacierdata/})专业中心数据产品替换USGS永久性积雪和冰盖(permanent snow and ice)数据。用(\url{http://www.wwfus.org/science/data.cfm})永久性湖泊(permanent lakes)和永久性湿地(permanent wetlands)专业部门制作的数据替换USGS永久性湖泊和永久性湿地数据。用全球城市面积数据(\url{http://sage.wisc.edu/urbanenvironment.html})专业部门制作的数据替换USGS城市(urban and built-up)数据。
+    \item 中国和全球土壤属性数据集。起始于2005年，全面收集和整理了土壤剖面物理与化学属性数据、土壤分类图，并作精细质量控制，建立了逾3万个土壤剖面的土壤属性数据库。建立了与模式相匹配、参数最全、分辨率最高的中国和全球土壤属性数据集~\citep{shangguan2013china,shangguan2014global}，中国和全球土壤水力学和热力学参数集。建立了多土壤属性转换函数集，模式土壤水力和热力参数取土壤属性转换函数集的计算中位值~\citep{dai2013development}。
+    \item 全球植被叶面积指数数据。全球植被LAI是陆面和气候模拟非常重要的变量。NASA发布的LAI数据存在时空不连续性和不一致性问题，极大限制了其高分辨率资料的应用。发展了相互协调的滤波算法和订正方法，解决了原数据存在的问题，建立了可直接为模式所用的、高分辨率和长序列的全球LAI数据集~\citep{yuan2011reprocessing}。
     \end{enumerate}
-    \item[2)] 湖泊模式
+    \item 湖泊模式
 
     在CLM 4.5~\citep{oleson2013technical}湖泊模式~\citep{subin2012improved}的基础上，我们在降水感热能量传递、湖水冻融、湖冰积雪、湍流通量、辐射传输和温度计算等方程作了实质性改进~\citep{戴永久2018通用陆面模式}。
     
-    \item[3)] 河道径流模式(CaMa-Flood Version 3.6.2)
+    \item 河道径流模式(CaMa-Flood Version 3.6.2)
 
     耦合了由日本东京大学Dai Yamazaki研制的大尺度分布式汇流模型  (Catchment-based Macro-scale Floodplain, CaMa-Flood)~\citep{yamazaki2011physically}。CaMa-Flood对河道径流和洪泛过程有精细的描述，特别重要的是，研制了非常精细的全球高分辨率数据集。
 
-    \item[4)] 模式程序结构
+    \item 模式程序结构
 
     在模式程序及结构作了全面的改进，更为好用、易用。
 \end{enumerate}
@@ -104,21 +104,51 @@ CoLM2004模式源程序、基础数据集、科学技术报告和用户指南发
 以通用陆面模式CoLM 2014为基础，针对地表能量、水文、生物地球化学循环和人为扰动等过程对其改进和完善，研发新一代高分辨率全球陆面过程模式。主要研究内容包括：研制包含人类活动和生态系统过程的高分辨率全球陆面过程模式；基于理论研究在精细尺度下创新或改进陆面模式；研制与全球陆面过程模式相匹配的高分辨率数据集；发展陆面过程模式和基础数据的尺度转换方法，提高陆面过程模式的时空分辨率和模拟准确性；实现陆面过程模式与天气/气候/地球系统模式的耦合应用。
 
 CoLM 2024主要新内容(New Features of CoLM 2024):
-\begin{enumerate}
-    \item[1)] 网格结构、PFT和PC次网格
-    \item[2)] 基础数据集
-    \item[3)] 辐射(三维冠层辐射、SNICAR …)
-    \item[4)] 湍流通量
-    \item[5)] 冠层降水截留和植被水力学
-    \item[6)] 植被冠层温度
-    \item[7)] 水文过程(CaMa-Flood new version；可变饱和土壤水运动、地下水、动力学模式、河网径流、流域单元网格的侧向水分运动 …)
-    \item[8)] 生物地球化学过程
-    \item[9)] 城市
-    \item[10)] 作物 
-    \item[11)] 水库
-    \item[12)] 土地利用土地覆盖变化 
-    \item[13)] 尺度转换
-    \item[14)] 模式程序结构
+\begin{enumerate}[label={\arabic*)}]
+    \item 网格结构、PFT和PC次网格
+
+    除经纬度网格外，CoLM2024版引入了两种新的网格结构：非结构网格和流域单元网格。非结构网格可以基于多个水平陆面分布特征，自动识别不同区域所需的网格分辨率，生成包括三角形网格和六边形网格在内的无规则拓扑关系网格结构。流域单元网格重点考虑了地形对陆面过程的影响，建立了流域单元-高度带单元的多级网格结构。
+    
+    \item 基础数据集
+    \item 辐射(三维冠层辐射、SNICAR …)
+    \item 湍流通量
+    \item 冠层降水截留和植被水力学
+
+    冠层截流过程和植被水力过程是生态水文过程中决定陆气水交换的关键元素，CoLM2024版本引入了多冠层截留方案，并增加了以达西定律为基础的植被水力过程。新引入的冠层截留参数化方案考虑了不同的物理过程，为探明多因子共同作用下冠层截留的演化规律、驱动机制和发展趋势提供了有效手段，有助于提升冠层阻拦降水分配的精度，改变水分在大气、土壤和径流之间的比例。植被水力过程描述了大气-植被-土壤连通体的物理根本，机理地刻画了植被水分胁迫随植物水势的变化关系，替代了过去土壤水势决定植物水分胁迫的经验关系，改进了陆气水分交换对环境变化的响应模拟。
+
+    \item 植被冠层温度
+    
+    \item 水文过程(CaMa-Flood new version；可变饱和土壤水运动、地下水、动力学模式、河网径流、流域单元网格的侧向水分运动 …)
+
+    CoLM2024版对水文过程的模拟方案进行了全面的更新。在垂直方向，发展了新的可变饱和流土壤水运动算法，它可将地表积水、非饱和带及饱和带中的水分运动和交换进行统一求解，具有更高的数值精度和更好的算法稳定性。在水平方向，考虑了地形对水分重分配的作用，对三种网格结构分别更新或引入了侧向流模拟方案：1）对经纬度网格，更新CaMa-Flood至最新版本，并完成了CaMa-Flood的模块化，实现了CaMa-Flood与CoLM的双向耦合；2）对流域单元网格，发展了基于浅水波方程的坡面流和河道径流计算方法，建立了多尺度的地下水侧向流计算方案；3）对非结构网格，同时支持CaMa-Flood的汇流方案以及对流域单元网格中所发展的坡面流和河道径流计算方法。对水文过程的更新使得CoLM2024版可用于多种尺度的陆面过程的模拟，尤其是与人类活动密切相关的公里尺度。
+    
+    \item 生物地球化学过程
+
+    生物地球化学过程是CoLM模型为了拓展其在气候变化生态学领域的应用而引入的关键增量。它刻画气候变化研究的最关键问题之一，即陆地生态系统碳隔离的气候变化响应。它包括植被自养呼吸，植被碳分配，植被物候，植被死亡，植被氮吸收，植被氮重利用，植被死亡，土壤植被氮竞争，土壤碳氮垂直混合过程，土壤无机氮过程和土壤有机碳氮分解等过程。同时CoLM生物地球化学模块引入了基于矩阵运算的半解析加速预热方案，可以提高生物地球化学循环过程预热效率700\%。
+
+    \item 城市
+    \item 作物 
+
+    研制全球格点作物模式GPAM1，在CoLM里实现了对水稻、小麦、玉米、大豆等粮食作物生长发育关键过程和产量的模拟，以及作物对环境气候变化和农田管理的响应及生物、物理、化学动态反馈模拟。
+    
+    \item 水库
+
+    水库建设和管理是人类最重要的用水活动之一。CoLM2024版本以Cama-Flood为基础研制了水库模块，估算了与高精度河网数据相匹配的水库特征数据，引入了多种水库调度规则参数化方案，采用了包含水库影响的河道汇流参数化方案。水库模块的加入有效提升了模式对人类活动影响下河道径流和洪水风险的模拟精度。
+    
+    \item 土地利用土地覆盖变化 
+    \item 火灾
+
+    使用Li全球火灾参数化方案代替GlobFIRM方案，模拟火发生、火蔓延、及火影响过程。Li的基本方程和框架可以解决GlobFIRM模拟的全球燃烧面积不足观测一半的大问题，并实现火灾季节变化模拟；实现了人类活动影响火灾的模拟；实现了基于卫星和场观测资料对关键参数的率定；实现了火灾引起的痕量气体和气溶胶排放模拟。
+
+    \item 臭氧生态胁迫
+
+    基于收集整理的4210组实验数建立的臭氧生态胁迫新参数化方案，能成功再现观测到的各种植被类型的光合和气孔导度对臭氧污染的线性和非线性响应，并间接地使全球模式再现植物应对臭氧胁迫的适应性变化和植物品种转化模拟，各方面性能远优于已有方案。
+    
+    \item 尺度转换
+
+    大气强迫降尺度是CoLM模型为实现高分辨率精细模拟的新增模块。它通过高分辨率高程数据（及衍生的地形因子）对输入大气强迫数据在次网格上进行修正，从而在较低计算代价下刻画大气强迫的精细特征。CoLM2024版本降尺度模块主要分为三个部分：1）基于地形差对气温、湿度、气压、长波辐射调整方案；2）基于地形因子的风速与短波调整参数化方案、3）基于自动化机器学习（AutoML）的降水调整方案，并通过MPI实现了机器学习模型与CoLM的耦合。降尺度模块的引入有效提升了模式的高分辨率模拟精度。
+    
+    \item 模式程序结构
 \end{enumerate}
 
 

@@ -322,40 +322,40 @@ $\alpha_p$为第$p$个patch在整个单元占据的面积比。
 $$\sum^P_{p=1} \alpha_p q^{\mathrm{I}}_{i,p} =0$$
 即$q^{\mathrm{I}}_{i,p}$表达了高度带单元内部的地下水交换。
 
-\subsection{地下水位和土壤水的变化}
-
 地下水位和土壤水的变化最终在次网格单元上计算。模式中假设，由流域单元之间的地下水侧向流引起的地下水量的变化在流域单元内部是均匀的，由高度带单元之间的地下水侧向流引起的地下水量的变化在高度带单元内部也是均匀的。因此，在次网格单元上，地下水的总变化量为三个等级的单元上的变化量之和（图~\ref{fig:地下水侧向流}）。
 
-若次网格单元上地下水量是减少的（$\Delta W < 0$），模式中采用“预估-调整”的方式逐层减少土壤水，降低地下水位。图~\ref{fig:地下水变化}显示了在第$i$层内对地下水位和土壤水的计算方法。
+由地下侧向流引起的土壤水和地下水的变化计算方案同~\ref{sec:change_of_zwt_vsf}节。
 
-{
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{Figures/侧向流/地下水变化.pdf}
-\caption{地下水减少时地下水位及土壤水变化的计算方案示意图}
-\label{fig:地下水变化}
-\end{figure}
-}
+% 若次网格单元上地下水量是减少的（$\Delta W < 0$），模式中采用“预估-调整”的方式逐层减少土壤水，降低地下水位。图~\ref{fig:地下水变化}显示了在第$i$层内对地下水位和土壤水的计算方法。
 
-在“预估”步，根据目前的地下水位及需减少的水量，预估降低后的地下水位，其满足
-\begin{equation} \label{formula:prediction_zwt}
-\begin{aligned}
-\theta_{\mathrm{pre}} & = \Theta_i\left(\psi_{\mathrm{s},i} - 0.5\left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right)\right) \\
-    - \Delta W & = \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \times  \left(\theta_{\mathrm{s},i} - \theta_{\mathrm{pre}}\right)
-\end{aligned}
-\end{equation}
-其中，$z_{\mathrm{wt}}^{\mathrm{old}}$为目前的地下水位，$z_{\mathrm{wt}}^{\mathrm{new}}$为预估的地下水位，$\theta_{\mathrm{s},i}$为饱和含水量，$\psi_{\mathrm{s},i}$为饱和时的土壤水势，$\Theta_i$表示第$i$层土壤内由土壤水势到土壤含水量的映射。式~\eqref{formula:prediction_zwt}为$z_{\mathrm{wt}}^{\mathrm{new}}$的隐函数，可用迭代方法求解。
+% {
+% \begin{figure}[htbp]
+% \centering
+% \includegraphics[width=\textwidth]{Figures/侧向流/地下水变化.pdf}
+% \caption{地下水减少时地下水位及土壤水变化的计算方案示意图}
+% \label{fig:地下水变化}
+% \end{figure}
+% }
 
-若$z_{\mathrm{wt}}^{\mathrm{new}}$低于第$i$层土壤的下边界$z_{i+1/2}$，则先计算$z_{\mathrm{wt}}^{\mathrm{old}}$至$z_{i+1/2}$区域内的土壤水势和含水量为
-\begin{equation} \label{formula:adjust_zwt1}
-\begin{aligned}
-\psi_i^{\prime} & = \psi_{\mathrm{s},i} - \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{i+\frac{1}{2}}\right) -0.5\left( z_{i+\frac{1}{2}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \\
-\theta_i^{\prime} & = \Theta_i\left(\psi_i^{\prime}\right) 
-\end{aligned}
-\end{equation}
-然后将地下水位$z_{\mathrm{wt}}^{\mathrm{new}}$“调整”至$z_{i+1/2}$. 此种情况下，土壤水的减少量小于$- \Delta W$，需继续减少第$i+1$层的土壤水量。
+% 在“预估”步，根据目前的地下水位及需减少的水量，预估降低后的地下水位，其满足
+% \begin{equation} \label{formula:prediction_zwt}
+% \begin{aligned}
+% \theta_{\mathrm{pre}} & = \Theta_i\left(\psi_{\mathrm{s},i} - 0.5\left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right)\right) \\
+%     - \Delta W & = \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \times  \left(\theta_{\mathrm{s},i} - \theta_{\mathrm{pre}}\right)
+% \end{aligned}
+% \end{equation}
+% 其中，$z_{\mathrm{wt}}^{\mathrm{old}}$为目前的地下水位，$z_{\mathrm{wt}}^{\mathrm{new}}$为预估的地下水位，$\theta_{\mathrm{s},i}$为饱和含水量，$\psi_{\mathrm{s},i}$为饱和时的土壤水势，$\Theta_i$表示第$i$层土壤内由土壤水势到土壤含水量的映射。式~\eqref{formula:prediction_zwt}为$z_{\mathrm{wt}}^{\mathrm{new}}$的隐函数，可用迭代方法求解。
 
-若$z_{\mathrm{wt}}^{\mathrm{new}}$不低于第$i$层土壤的下边界$z_{i+1/2}$，则只需更新$z_{\mathrm{wt}}^{\mathrm{old}}$至$z_{\mathrm{wt}}^{\mathrm{new}}$区域内的的土壤含水量为$\theta_i^{\prime} = \theta_{\mathrm{pre}}$.
+% 若$z_{\mathrm{wt}}^{\mathrm{new}}$低于第$i$层土壤的下边界$z_{i+1/2}$，则先计算$z_{\mathrm{wt}}^{\mathrm{old}}$至$z_{i+1/2}$区域内的土壤水势和含水量为
+% \begin{equation} \label{formula:adjust_zwt1}
+% \begin{aligned}
+% \psi_i^{\prime} & = \psi_{\mathrm{s},i} - \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{i+\frac{1}{2}}\right) -0.5\left( z_{i+\frac{1}{2}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \\
+% \theta_i^{\prime} & = \Theta_i\left(\psi_i^{\prime}\right) 
+% \end{aligned}
+% \end{equation}
+% 然后将地下水位$z_{\mathrm{wt}}^{\mathrm{new}}$“调整”至$z_{i+1/2}$. 此种情况下，土壤水的减少量小于$- \Delta W$，需继续减少第$i+1$层的土壤水量。
+
+% 若$z_{\mathrm{wt}}^{\mathrm{new}}$不低于第$i$层土壤的下边界$z_{i+1/2}$，则只需更新$z_{\mathrm{wt}}^{\mathrm{old}}$至$z_{\mathrm{wt}}^{\mathrm{new}}$区域内的的土壤含水量为$\theta_i^{\prime} = \theta_{\mathrm{pre}}$.
 
 
-若次网格单元上的地下水量是增加的（$\Delta W > 0$）,则从地下水位所在土壤层开始，向上逐层补充土壤水，抬升地下水位。方法如下：1）剩余补充量的初始值为$\Delta W$；2）对第$i$层进行补充时，若剩余的补充量超过了第$i$层的空气体积$A_i$，则将土壤水补充至饱和，剩余的补充量减少$A_i$，继续对第$i-1$层土壤水进行补充，地下水位抬升至第$i-1$层土壤的下边界；对第$i$层进行补充时，若剩余的补充量小于第$i$层的空气体积$A_i$，则将剩余的补充量全部补充到第$i$层的非饱和区，增加土壤的体积含水量，地下水位不变；3）若整个土壤层全部达到饱和后补充量还有剩余，则将剩余的水分补充至地表积水。
+% 若次网格单元上的地下水量是增加的（$\Delta W > 0$）,则从地下水位所在土壤层开始，向上逐层补充土壤水，抬升地下水位。方法如下：1）剩余补充量的初始值为$\Delta W$；2）对第$i$层进行补充时，若剩余的补充量超过了第$i$层的空气体积$A_i$，则将土壤水补充至饱和，剩余的补充量减少$A_i$，继续对第$i-1$层土壤水进行补充，地下水位抬升至第$i-1$层土壤的下边界；对第$i$层进行补充时，若剩余的补充量小于第$i$层的空气体积$A_i$，则将剩余的补充量全部补充到第$i$层的非饱和区，增加土壤的体积含水量，地下水位不变；3）若整个土壤层全部达到饱和后补充量还有剩余，则将剩余的水分补充至地表积水。

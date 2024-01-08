@@ -67,7 +67,7 @@
 对于有植被覆盖部分的湿地，需先计算植被叶片温度（同章节8），其后计算雪盖土壤层。
 
 假设湿地无水平物质能量交换，则垂直方向上的一维能量平衡方程如下：
-\begin{equation}\label{eq:GlacierThermalCons}
+\begin{equation}\label{eq:GlacierThermalCons1}
     c \frac{\partial T}{\partial t}=-\frac{\partial F}{\partial z},  \quad F=-\lambda \frac{\partial T}{\partial z}
 \end{equation}
 其中$c$表示雪盖或湿地冰的体积热容（\unit{J.m^{-3}.K^{-1}}），$T$表示雪盖土壤冰温度（K），$t$表示时间（s），$z$表示雪盖高度或土壤深度，$F$表示垂直方向的热通量（向上为正方向，\unit{W.m^{-2}}），$\lambda$表示热导率（\unit{W.m^{-1}.K^{-1}}）。
@@ -81,8 +81,8 @@
     c_1 = \frac{w_{ice,1}+W_{sno}}{\Delta z_1}C_{pi} + \frac{w_{liq,1}}{\Delta z_1}C_{pl}
 \end{equation}
 
-对方程~\eqref{eq:GlacierThermalCons}进行离散（见章节??），则第$i$层雪盖土壤层的能量平衡方程可表达为：
-\begin{equation}\label{eq:GlacierThermal}
+对方程~\eqref{eq:GlacierThermalCons1}进行离散（见章节??），则第$i$层雪盖土壤层的能量平衡方程可表达为：
+\begin{equation}\label{eq:GlacierThermal1}
     \frac{c_i \Delta z_i}{\Delta t} \left(T^{n+1}_i - T^n_i\right) = F_i - F_{i-1}
 \end{equation}
 其中$\Delta t$表示积分时间步长，$n$表示时间步数，$F_i$表示第$i+1$层传导到第$i$层的热通量，其离散形式为：
@@ -101,7 +101,7 @@ $\lambda\left[z_{h,i}\right]$表示第$i+1$层和第$i$层交界面处的热导�
     \lambda\left[z_{h,0}\right]=\frac{2\lambda_0\lambda_1}{\lambda_0+\lambda_1} \geqslant 0.5\lambda_1
 \end{equation}
 
-对方程~\eqref{eq:GlacierThermal}采用Crank-Nicholson半隐式格式求解，得到以下形式：
+对方程~\eqref{eq:GlacierThermal1}采用Crank-Nicholson半隐式格式求解，得到以下形式：
 \begin{equation}
     \frac{c_i\Delta z_i}{\Delta t}\left(T^{n+1}_i - T^n_i\right)=\alpha \left(F^n_i - F^n_{i-1}\right) + \left(1-\alpha \right) \left(F^{n+1}_i - F^{n+1}_{i-1}\right)
 \end{equation}
@@ -144,7 +144,7 @@ $\lambda\left[z_{h,i}\right]$表示第$i+1$层和第$i$层交界面处的热导�
 \end{equation}
 
 大气进入地表的热通量$h_s$和其偏导可计算为：
-\begin{equation}\label{eq:GlacierSrfEnergyBalance}
+\begin{equation}\label{eq:GlacierSrfEnergyBalance1}
     h_s = S_g + L_g - H_g - \lambda E_g + H_{prcg}
 \end{equation}
 \begin{equation}
@@ -155,7 +155,7 @@ $\lambda\left[z_{h,i}\right]$表示第$i+1$层和第$i$层交界面处的热导�
     H_{prcg} = C_{pl}p_l\left(T_p-T_g\right) + C_{pi}p_i\left(T_p-T_g\right)
 \end{equation}
 其中$p_l$和$p_i$分别表示到达地面的液态降水和固态降水（\unit{mm.H_2O.s^{-1}}），$T_p$表示降水温度（K）。
-式~\eqref{eq:GlacierSrfEnergyBalance}中$\lambda$表示潜热通量系数，用于将水汽通量转换为潜热通量
+式~\eqref{eq:GlacierSrfEnergyBalance1}中$\lambda$表示潜热通量系数，用于将水汽通量转换为潜热通量
 \begin{equation}
     \lambda = \begin{cases}
         \lambda_s &\text{当}\ w_{liq,snl+1}=0\text{ 且}\ w_{ice,snl+1}>0\text{ 时}\\
@@ -164,7 +164,7 @@ $\lambda\left[z_{h,i}\right]$表示第$i+1$层和第$i$层交界面处的热导�
 \end{equation}
 $\lambda_s$和$\lambda_v$分别为固态水升华潜热系数和液态水蒸发潜热系数（表A.1）。
 
-对于式~\eqref{eq:GlacierSrfEnergyBalance}中的净长波辐射$L_g$，其可计算为
+对于式~\eqref{eq:GlacierSrfEnergyBalance1}中的净长波辐射$L_g$，其可计算为
 \begin{equation}
     L_g = \varepsilon_g L_{bg}\downarrow - L_g\uparrow
 \end{equation}

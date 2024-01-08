@@ -111,10 +111,10 @@ $K_{d}$代表散射光的消光系数。
 第三，光合作用速率还受到卡尔文循环中蔗糖和淀粉的合成速率限制($A_{p,sun}$和$A_{p,sha}$)，在阳叶和阴叶冠层尺度上，用冠层25 \textcelsius 最大羧化速率 ($V_{c \max25}$) 进行参数化，并且描述其受叶温和水分胁迫因子的调控：\\
 C3植物：\\
 \begin{equation}\label{A_e_a_sun}
-A_{p,sun}=\frac{V_{c \max 25}}{2} \cdot \frac{1.8^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{2}\left(T_{{leaf }}-T_{{low }}\right)}} \cdot \beta_{sun} \cdot L_{sun,v}
+A_{p,sun}=\frac{V_{c \max 25}}{2} \cdot \frac{1.8^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{2}\left(T_{{low }}-T_{{leaf }}\right)}} \cdot \beta_{sun} \cdot L_{sun,v}
 \end{equation}
 \begin{equation}\label{A_e_a_sha}
-A_{p,sha}=\frac{V_{c \max 25}}{2} \cdot \frac{1.8^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{2}\left(T_{{leaf }}-T_{{low }}\right)}} \cdot \beta_{sha} \cdot L_{sha,v}
+A_{p,sha}=\frac{V_{c \max 25}}{2} \cdot \frac{1.8^{\frac{T_{{leaf }}-T_{o p}}{10}}}{1+e^{s_{2}\left(T_{{low }}-T_{{leaf }}\right)}} \cdot \beta_{sha} \cdot L_{sha,v}
 \end{equation}
 C4植物：\\
 \begin{equation}\label{A_e_b_sun}
