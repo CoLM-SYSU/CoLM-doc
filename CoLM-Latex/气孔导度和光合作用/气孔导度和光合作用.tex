@@ -242,8 +242,18 @@ f_{2}\left(c_{i,sha}\right)=&\,c_{i,sha}-c_{s,sha}\left(A_{n,sha}\left(c_{i,sha}
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.8\textwidth]{Figures/气孔导度和光合作用/光合气孔耦合模型数值解法示意图.png}
-\caption[光合气孔耦合模型数值解法示意图]{光合气孔耦合模型数值解法示意图，割线法对前两次迭代结果进行线性拟合，拟合结果和$x=0$的交点即为下一轮迭代的胞间$\rm CO_2$浓度的取值，拟合方程$y=ax+b$,其中$a=\frac{c_{i,n-1}-c_{i,n-2}}{f\left(c_{i,n-1}-c_{i,n-2}\right)}$，$b=c_{i,n-2}-a\cdot f\left(c_{i,n-2}\right)$}
+\includegraphics[width=0.6\textwidth]{Figures/气孔导度和光合作用/光合气孔耦合模型数值解法示意图.png}
+\caption[光合气孔耦合模型数值解法示意图]{光合气孔耦合模型数值解法示意图，割线法对前两次迭代结果进行线性拟合，拟合结果和$x=0$的交点即为下一轮迭代的胞间$\rm CO_2$浓度的取值，拟合方程$y=ax+b$；二次方程拟合法对前三次迭代结果进行二次曲线拟合，拟合结果和$x=0$的交点即为下一轮迭代的胞间$\rm CO_2$浓度的取值，拟合方程$y=ax^2+bx+c$。
+
+其中割线法的拟合方程系数为：
+
+$\begin{cases}a=\frac{c_{i,n-1}-c_{i,n-2}}{f\left(c_{i,n-1}-c_{i,n-2}\right)}\\b=c_{i,n-2}-a\cdot f\left(c_{i,n-2}\right)\end{cases}$
+
+二次方程拟合法的拟合方程系数为：
+
+$\begin{cases}a=\frac{\left(c_{i,n-2}-c_{i,n-3}\right)-\left(f\left(c_{i,n-2}\right)-f\left(c_{i,n-3}\right)\right)b}{f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)}\\
+b=\frac{\left(c_{i,n-2}-c_{i,n-3}\right)\left(f^2\left(c_{i,n-1}\right)-f^2\left(c_{i,n-2}\right)\right)-\left(c_{i,n-1}-c_{i,n-2}\right)\left(f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)\right)}{\left(f\left(c_{i,n-2}\right)-f\left(c_{i,n-3}\right)\right)\left(f^2\left(c_{i,n-1}\right)-f^2\left(c_{i,n-2}\right)\right)-\left(f\left(c_{i,n-1}\right)-f\left(c_{i,n-2}\right)\right)\left(f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)\right)}\\
+c=c_{i,n-2}-af^2\left(c_{i,n-2}\right)-bf\left(c_{i,n-2}\right)\end{cases}$}
 \label{fig:光合气孔耦合模型数值解法示意图}
 \end{figure}
 }

@@ -56,8 +56,7 @@ USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global 
 \subsection{MODIS IGBP地表覆盖数据}\label{IGBP地表覆盖数据}
 IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging Spectroradiometer 
 （MODIS）MCD12Q1 Version 6（The Terra and Aqua combined MODIS Land Cover Type data product）
-的数据（\url{https://lpdaac.usgs.gov/products/mcd12q1v006/}），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生 
- \citep{Friedl2019}。数据为全球 \ang{;;15}（约500 m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表~\ref{tab:IGBP覆盖类型} 所示。
+的数据（\url{https://lpdaac.usgs.gov/products/mcd12q1v006/}），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生~\citep{Friedl2019}。数据为全球 \ang{;;15}（约500 m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表~\ref{tab:IGBP覆盖类型} 所示。
 
 \begin{table}[htbp]
 \centering
@@ -136,7 +135,7 @@ ESA CCI地表覆盖产品是由欧洲宇航局(ESA)的气候变化计划(CCI)提
 \end{table}
 
 \subsection{GLC FCS30地表覆盖数据}\label{GLC FCS30地表覆盖数据}
-USGS、MODIS、ESA CCI地表覆盖产品空间分辨率主要为公里级或者次公里级，近年来，地表覆盖产品分辨率已经达到了30m。GLC FSC30地表覆盖产品是由\cite{zhang2023glc_fcs30d}提供的全球地表覆盖数据，该数据空间分辨率为30m，在GEE平台通过结合多时相Landsat图像和局部自适应随机森林模型开发生成，采用了气候变化倡议土地覆盖数据集(CCI LC)分类系统，包含16个一级土地覆盖类型以及35个细分土地覆盖类型，对土地覆盖的描述更加全面。此外，GLC FCS30为提高湿地以及城市两种地表覆盖的准确性，对上述两类地表覆盖进行了单独处理，湿地和城市均采用了独立的数据。GLC FCS30产品覆盖1985-2022年，其中1985-2000年数据为每五年更新一次，2000-2022则逐年更新。由于目前模式基础植被分类采用IGBP方案，因此需要对GLC FCS30进行重分类处理，从而使每种地表覆盖都分配对应的IGBP分类编号，两种分类的对应关系如表~\ref{tab:GLC FCS30与IGBP分类对应关系} 所示。
+USGS、MODIS、ESA CCI地表覆盖产品空间分辨率主要为公里级或者次公里级，近年来，地表覆盖产品分辨率已经达到了30m。GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地表覆盖数据，该数据空间分辨率为30m，在GEE平台通过结合多时相Landsat图像和局部自适应随机森林模型开发生成，采用了气候变化倡议土地覆盖数据集(CCI LC)分类系统，包含16个一级土地覆盖类型以及35个细分土地覆盖类型，对土地覆盖的描述更加全面。此外，GLC FCS30为提高湿地以及城市两种地表覆盖的准确性，对上述两类地表覆盖进行了单独处理，湿地和城市均采用了独立的数据。GLC FCS30产品覆盖1985-2022年，其中1985-2000年数据为每五年更新一次，2000-2022则逐年更新。由于目前模式基础植被分类采用IGBP方案，因此需要对GLC FCS30进行重分类处理，从而使每种地表覆盖都分配对应的IGBP分类编号，两种分类的对应关系如表~\ref{tab:GLC FCS30与IGBP分类对应关系} 所示。
 %
 % \begin{table}[]
 % \fontsize{9.5}{9.5}\selectfont

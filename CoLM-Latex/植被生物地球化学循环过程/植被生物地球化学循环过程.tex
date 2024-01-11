@@ -209,46 +209,15 @@ CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，�
 \renewcommand{\theenumi}{\alph{enumi}}
 \item 发芽展叶期\\
 CoLM物候过程模块假设落叶植被功能型存在发芽展叶期，即叶面积指数伴随着叶碳库在10多天的发芽展叶期内逐渐增加。发芽初期，非结构存储库将其一半的碳存储转给碳传输库，
-在随后10多天时间里，碳传输库逐渐将碳转移给组织库，以模拟叶碳含量在此期间逐渐升高的发芽现象。模拟上通过控制从传输库$CS_{i_{xfer}}$
-到组织库$CS_i$的碳转移通量$CF_{i\_xfer\rightarrow i}$来实现
-($i$ 等于$leaf$，$froot$，$livestem$，$deadstem$，$livecroot$ 和
-$deadcroot$ 分别代表叶、细根、活茎、死茎、活粗根和死粗根)：
+在随后10多天时间里，碳传输库逐渐将碳转移给组织库，以模拟叶碳含量在此期间逐渐升高的发芽现象。模拟上通过控制从传输库$CS_{i\_{xfer}}$
+到组织库$CS_i$的碳转移通量$CF_{i\_{xfer}\rightarrow i}$来实现
+($i$ 分别代表叶、细根、活茎、死茎、活粗根和死粗根，$i\_{xfer}$代表对应器官的传输库)：
 \begin{equation}
-  CF_{leaf\_xfer\rightarrow leaf} = r_{{xfer}\_{on}}\cdot CS_{leaf\_{xfer}}\ 
+  CF_{i\_{xfer}\rightarrow i} = r_{{xfer}\_{on}}\cdot CS_{i\_{xfer}}\ 
 \end{equation}
+在碳转移的同时，也伴随着氮转移通量($NF_{i\_{xfer}\rightarrow i}$)，控制从氮传输库 $NS_{i\_{xfer}}$ 到氮组织库 $NS_{i}$ ($i$ 同样代表叶、细根、活茎、死茎、活粗根和死粗根等营养器官，$i\_{xfer}$代表对应器官的传输库)的转移：
 \begin{equation}
-  CF_{froot\_{xfer}\rightarrow froot} = r_{{xfer}\_{on}}\cdot CS_{froot\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  CF_{livestem\_{xfer}\rightarrow leaf} = r_{{xfer}\_{on}}\cdot CS_{livestem\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  CF_{deadstem\_{xfer}\rightarrow froot} = r_{{xfer}\_{on}}\cdot CS_{deadstem\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{xfer}\rightarrow leaf} = r_{{xfer}\_{on}}\cdot CS_{livecroot\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{xfer}\rightarrow froot} = r_{{xfer}\_{on}}\cdot CS_{deadcroot\_{xfer}}\ 
-\end{equation}
-在碳转移的同时，也伴随着氮转移通量($NF_{i\_{xfer}\rightarrow i}$)，控制从氮传输库 $NS_{i\_{xfer}}$ 到氮组织库 $NS_{i}$ 的转移：
-\begin{equation}
-  NF_{leaf\_{xfer}\rightarrow leaf} = r_{{xfer}\_{on}}\cdot NS_{leaf\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  NF_{froot\_{xfer}\rightarrow froot} = r_{{xfer}\_{on}}\cdot NS_{froot\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  NF_{livestem\_{xfer}\rightarrow leaf} = r_{{xfer}\_{on}}\cdot NS_{livestem\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  NF_{deadstem\_{xfer}\rightarrow froot} = r_{{xfer}\_{on}}\cdot NS_{deadstem\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  NF_{livecroot\_{xfer}\rightarrow leaf} = r_{{xfer}\_{on}}\cdot NS_{livecroot\_{xfer}}\ 
-\end{equation}
-\begin{equation}
-  NF_{deadcroot\_{xfer}\rightarrow froot} = r_{{xfer}\_{on}}\cdot NS_{deadcroot\_{xfer}}\ 
+  NF_{i\_{xfer}\rightarrow i} = r_{{xfer}\_{on}}\cdot NS_{i\_{xfer}}\ 
 \end{equation}
 其中，$r_{{xfer}\_{on}}$ 是控制传输库碳转移到组织库速率的变量 ($\mathrm{s^{-1}}$)，是随时间变化的变量。
 \begin{equation}
@@ -264,38 +233,38 @@ $\frac{2}{t_{onset}}$随着时间的推移转移速率，
 \item 落叶期 \\
 CoLM物候模块同样假设落叶植被功能型存在落叶期，在落叶期内，叶碳库和细根碳库在为期10多天时间里逐渐降为0：
 \begin{equation}
-CF_{ {leaf,litter }}^{n}=\begin{cases}
-CF_{ {leaf,litter }}^{n-1}+r_{xfer\_{off}}\left(CS_{ {leaf }}-CF_{ {leaf }}^{n-1} t_{ {offset }}\right) & \text{ 当 }\ t_{ {offset }} \neq \Delta t \\ 
-\frac{CS_{ {leaf }}}{\Delta t}+CF_{ {alloc,leaf }} &  \text{ 当 }\ t_{offset}=\Delta t
+CF_{ {leaf\rightarrow litter }}^{n}=\begin{cases}
+CF_{ {leaf\rightarrow litter }}^{n-1}+r_{xfer\_{off}}\left(CS_{ {leaf }}-CF_{ {leaf \rightarrow litter}}^{n-1} t_{ {offset }}\right) \\ & \text{ 当 }\ t_{ {offset }} \neq \Delta t \\ 
+\frac{CS_{ {leaf }}}{\Delta t}+CF_{ {alloc\rightarrow leaf }} \\ &  \text{ 当 }\ t_{offset}=\Delta t
 \end{cases}
 \end{equation}
 \begin{equation}
-CF_{ {froot },  { litter }}^{n}=\begin{cases}
-CF_{ {froot }, litter}^{n-1}+r_{xfer\_off}\left(CS_{ {froot }}-CF_{ {froot }}^{n-1} t_{offset}\right) &  \text{ 当 }\ t_{offset} \neq \Delta t \\ 
-\frac{CS_{ {froot }}}{\Delta t}+CF_{ {alloc,froot }} &  \text{ 当 }\ t_{offset}=\Delta t
+CF_{ {froot }\rightarrow{ litter }}^{n}=\begin{cases}
+CF_{ {froot }\rightarrow litter}^{n-1}+r_{xfer\_off}\left(CS_{ {froot }}-CF_{ {froot \rightarrow litter }}^{n-1} t_{offset}\right) &  \text{ 当 }\ t_{offset} \neq \Delta t \\ 
+\frac{CS_{ {froot }}}{\Delta t}+CF_{ {alloc\rightarrow froot }} &  \text{ 当 }\ t_{offset}=\Delta t
 \end{cases}
 \end{equation}
 \begin{equation}
 r_{xfer\_off}=\frac{2 \Delta t}{t_{offset}^{2}}
 \end{equation}
-其中 $CF_{leaf,litter}^{n-1}$ 和 $CF_{leaf,litter}^n$ 分别代表上一个模拟时间步长和这一个时间步长的叶碳凋落通量。
-$CF_{froot,litter}^{n-1}$ 和 $CF_{froot,litter}^n$ 分别代表上一个模拟时间步长和这一个时间步长的细根碳凋落通量。
+其中 $CF_{leaf\rightarrow litter}^{n-1}$ 和 $CF_{leaf\rightarrow litter}^n\rightarrow $ 分别代表上一个模拟时间步长和这一个时间步长的叶碳凋落通量。
+$CF_{froot\rightarrow litter}^{n-1}$ 和 $CF_{froot\rightarrow litter}^n$ 分别代表上一个模拟时间步长和这一个时间步长的细根碳凋落通量。
 $t_{offset}$ 以倒计时的形式记录落叶期还剩多少秒。$CS_{leaf}$和$CS_{froot}$代表组织库的叶碳和细根碳含量，将随着落叶期的推进逐渐下降。
 另外，落叶期的凋落速率参数($r_{{xfer}\_{off}}$)将随时间逐渐增加。$t_{offset}=\Delta t$ 时为落叶期最后一个时间步长，
 所有叶和细根组织库内的所有碳氮都将凋落。
 
-叶氮和细根氮库在落叶期的凋落通量($NF_{leaf,litter}$ 和 $NF_{froot,litter}$)
+叶氮和细根氮库在落叶期的凋落通量($NF_{leaf\rightarrow litter}$ 和 $NF_{froot\rightarrow litter}$)
 还与叶和根的碳氮比 ($CN_{leaf}$ 和 $CN_{froot}$) 息息相关。同时，
-离开叶库的氮将有一部分被存进氮重利用库 ($NF_{leaf,retrans}$)，
+离开叶库的氮将有一部分被存进氮重利用库 ($NF_{leaf\rightarrow retrans}$)，
 以备下一次生长再使用，其中 $CN_{leaf,litter}$ 是叶片凋落物的碳氮比，作为预设参数被读入模型：
 \begin{equation}
-NF_{leaf,litter} = \frac{CF_{leaf,litter}}{CN_{leaf,litter}}
+NF_{leaf\rightarrow litter} = \frac{CF_{leaf\rightarrow litter}}{CN_{leaf,litter}}
 \end{equation}
 \begin{equation}
-NF_{froot,litter} = \frac{CF_{froot,litter}}{CN_{froot}}
+NF_{froot\rightarrow litter} = \frac{CF_{froot\rightarrow litter}}{CN_{froot}}
 \end{equation}
 \begin{equation}
-NF_{leaf,retrans} = \frac{CF_{leaf,litter}}{CN_{leaf}}-NF_{leaf,litter}
+NF_{leaf\rightarrow retrans} = \frac{CF_{leaf\rightarrow litter}}{CN_{leaf}}-NF_{leaf\rightarrow litter}
 \end{equation}
 
 落叶植被功能型的发芽展叶期和落叶期一般成对出现，其触发条件和温度、
@@ -313,34 +282,34 @@ NF_{leaf,retrans} = \frac{CF_{leaf,litter}}{CN_{leaf}}-NF_{leaf,litter}
 CoLM物候模块中，在活茎的周转过程中，活茎细胞或活粗根最终死亡后变成死茎库或死粗根库的组成部分，
 因此，活茎或活粗根碳每年固定比例($r_{lwt}$)进入死茎库或死粗根库：
 \begin{equation}
-CF_{ {livestem,deadstem }} = CS_{ {livestem }} r_{lwt}
+CF_{ {livestem\rightarrow deadstem }} = CS_{ {livestem }} r_{lwt}
 \end{equation}
 \begin{equation}
-CF_{ {livecroot,deadcroot }} = CS_{ {livecroot }} r_{lwt}
+CF_{ {livecroot\rightarrow deadcroot }} = CS_{ {livecroot }} r_{lwt}
 \end{equation}
-其中，$CF_{livestem,deadstem}$ 是活茎死亡变成死茎的碳通量，
-$CF_{livecroot,deadcroot}$ 是活粗根死亡变成死粗根的碳通量。活茎和活粗根的周转时间是0.7年：
+其中，$CF_{livestem\rightarrow deadstem}$ 是活茎死亡变成死茎的碳通量，
+$CF_{livecroot\rightarrow deadcroot}$ 是活粗根死亡变成死粗根的碳通量。活茎和活粗根的周转时间是0.7年：
 \begin{equation}
   \tau_{lwt} = \frac{0.7}{365 \cdot 86400}
 \end{equation}
   对应的氮通量为：
 \begin{equation}
-NF_{livestem,deadstem} = CS_{livestem} r_{lwt} / CN_{dw}
+NF_{livestem\rightarrow deadstem} = CS_{livestem} r_{lwt} / CN_{dw}
 \end{equation}
 \begin{equation}
-NF_{livecroot,deadcroot} = CS_{livecroot} r_{lwt} / CN_{dw}
+NF_{livecroot\rightarrow deadcroot} = CS_{livecroot} r_{lwt} / CN_{dw}
 \end{equation}
-其中，$NF_{livestem,deadstem}$ 是活茎死亡变成死茎的氮，
-$NF_{livecroot,deadcroot}$ 是活粗根死亡变成死粗根的氮，$CN_{dw}$ 是死茎和死粗根的碳氮比。
+其中，$NF_{livestem\rightarrow deadstem}$ 是活茎死亡变成死茎的氮，
+$NF_{livecroot\rightarrow deadcroot}$ 是活粗根死亡变成死粗根的氮，$CN_{dw}$ 是死茎和死粗根的碳氮比。
 
 由于活茎和活粗根的碳氮比低于死茎和死粗根的碳氮比，所以从活茎或活粗根到死茎或死粗根的氮将会有一部分结余，存入植被再利用氮库：
 \begin{equation}
-NF_{{livestem,retrans}}=\left(\frac{CF_{{livestem,deadstem}}}{CN_{lw}}\right)-NF_{{livestem,deadstem}}
+NF_{{livestem\rightarrow retrans}}=\left(\frac{CF_{{livestem\rightarrow deadstem}}}{CN_{lw}}\right)-NF_{{livestem\rightarrow deadstem}}
 \end{equation}
 \begin{equation}
-NF_{{livecroot,retrans}}=\left(\frac{CF_{{livecroot,deadcroot}}}{CN_{lw}}\right)-NF_{{livecroot,deadcroot}}
+NF_{{livecroot\rightarrow retrans}}=\left(\frac{CF_{{livecroot\rightarrow deadcroot}}}{CN_{lw}}\right)-NF_{{livecroot\rightarrow deadcroot}}
 \end{equation}
-其中，$NF_{livestem,retrans}$ 是活茎死亡时回收再利用的氮，$NF_{livecroot,retrans}$ 是活粗根死亡时回收再利用的氮。
+其中，$NF_{livestem\rightarrow retrans}$ 是活茎死亡时回收再利用的氮，$NF_{livecroot\rightarrow retrans}$ 是活粗根死亡时回收再利用的氮。
 
 \end{enumerate}
 
@@ -353,22 +322,22 @@ NF_{{livecroot,retrans}}=\left(\frac{CF_{{livecroot,deadcroot}}}{CN_{lw}}\right)
 \tau_{bglf}=\frac{1}{\tau_{leaf} \cdot 365 \cdot 86400}
 \end{equation}
 因此，叶面积指数的季节变化将主要由光合作用净碳收入的季节变化引起。
-叶和细根的碳凋落通量($CF_{leaf,litter}$，$CF_{froot,litter}$)为：
+叶和细根的碳凋落通量($CF_{leaf\rightarrow litter}$，$CF_{froot\rightarrow litter}$)为：
 \begin{equation}
-CF_{leaf,litter}=r_{bglf} CS_{leaf}
+CF_{leaf\rightarrow litter}=r_{bglf} CS_{leaf}
 \end{equation}
 \begin{equation}
-CF_{froot,litter}=r_{bglf} CS_{froot}
+CF_{froot\rightarrow litter}=r_{bglf} CS_{froot}
 \end{equation}
-相应的叶氮凋落通量($NF_{leaf,litter}$)、细根氮凋落通量($NF_{froot,litter}$)和再利用氮通量($NF_{leaf,retrans}$)为：
+相应的叶氮凋落通量($NF_{leaf\rightarrow litter}$)、细根氮凋落通量($NF_{froot\rightarrow litter}$)和再利用氮通量($NF_{leaf\rightarrow retrans}$)为：
 \begin{equation}
-N F_{leaf,litter}=CS_{leaf,litter} / CN_{leaf_{litter}}
-\end{equation}
-\begin{equation}
-N F_{froot,litter}=CS_{froot,litter} / CN_{froot}
+N F_{leaf\rightarrow litter}=CF_{leaf\rightarrow litter} / CN_{leaf,{litter}}
 \end{equation}
 \begin{equation}
-N F_{leaf,retrans}=\left(\frac{CF_{leaf,litter }}{CN_{leaf}}\right)-N F_{leaf,litter}
+N F_{froot\rightarrow litter}=CF_{froot\rightarrow litter} / CN_{froot}
+\end{equation}
+\begin{equation}
+N F_{leaf\rightarrow retrans}=\frac{CF_{leaf\rightarrow litter }}{CN_{leaf}}-N F_{leaf\rightarrow litter}
 \end{equation}
 
 
@@ -393,57 +362,14 @@ GDD _{sum\_{crit}}=\exp \left(4.8+0.13 \cdot T_{2 m, ann\_{avg}}\right)
 t_{onset}=86400 \cdot n_{days\_on}
 \end{equation}
 其中$n_{days\_on}=30$，代表发芽展叶期倒计时30天。
-同时，发芽展叶期开始的第一个时间步长 $\Delta t$ 内，50\% 的存储库中的碳进入传输库：
+同时，发芽展叶期开始的第一个时间步长 $\Delta t$ 内，各营养器官50\% 的存储库($CS_{i\_{stor}}$)中的碳进入传输库($CS_{i\_{xfer}}$)，$i$ 分别代表叶、细根、活茎、死茎、活粗根，死粗根和生长呼吸存储库：
 \begin{equation}
-  CF_{leaf\_{stor},leaf\_{xfer}} = 0.5 CS_{leaf\_{stor}}/\Delta t
+  CF_{i\_{stor}\rightarrow i\_{xfer}} = 0.5 CS_{i\_{stor}}/\Delta t
 \end{equation}
+同时相应的氮传输同样存在存储库的初期转移：
 \begin{equation}
-  CF_{froot\_{stor},froot\_{xfer}} = 0.5  CS_{froot\_{stor}}/\Delta t
+NF_{i\_{stor}\rightarrow i\_{xfer}} = 0.5  NS_{i\_{stor}}/\Delta t
 \end{equation}
-\begin{equation}
-  CF_{livestem\_{stor},livestem\_{xfer}} = 0.5  CS_{livestem\_{stor}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{deadstem\_{stor},deadstem\_{xfer}} = 0.5  CS_{deadstem\_{stor}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{stor},livecroot\_{xfer}} = 0.5  CS_{livecroot\_{stor}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{stor},deadcroot\_{xfer}} = 0.5 CS_{deadcroot\_{stor}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{gresp\_{stor},gresp\_{xfer}} = 0.5  CS_{gresp\_{stor}}/\Delta t
-\end{equation}
-同时相应的氮传输：
-\begin{equation}
-NF_{leaf\_{stor},leaf\_{xfer}} = 0.5  NS_{leaf\_{stor}}/\Delta t
-\end{equation}
-%
-\begin{equation}
-  NF_{froot\_{stor},froot\_{xfer}} = 0.5  NS_{froot\_{stor}}/\Delta t
-\end{equation}
-%
-\begin{equation}
-  NF_{livestem\_{stor},livestem\_{xfer}} = 0.5  NS_{livestem\_{stor}}/\Delta t
-\end{equation}
-%
-\begin{equation}
-  NF_{deadstem\_{stor},deadstem\_{xfer}} = 0.5 NS_{deadstem\_{stor}}/\Delta t
-\end{equation}
-%
-\begin{equation}
-  NF_{livecroot\_{stor},livecroot\_{xfer}} = 0.5  NS_{livecroot\_{stor}}/\Delta t
-\end{equation}
-%
-\begin{equation}
-  NF_{deadcroot\_{stor},deadcroot\_{xfer}} = 0.5 NS_{deadcroot\_{stor}}/\Delta t
-\end{equation}
-%
-\begin{equation}
-  NF_{gresp\_{stor},gresp\_{xfer}} = 0.5 NS_{gresp\_{stor}}/\Delta t
-\end{equation}
-
 
 如果到夏天，日照长度缩短时还未开始发芽展叶期，
 $GDD_{sum}^n$ 重设为0直至冬天。当发芽展叶期开始后，30天倒计时开始，直至 $t_{onset}=0$，发芽展叶期结束：
@@ -521,355 +447,95 @@ L G S=\begin{cases}
 $n_{days\_{active}}$ 是植被只从上次发芽开始的天数。
 
 
-每个时间步长，都有储存库的碳进入传输库：
+发芽展叶期的每个时间步长，各个器官都有储存库的碳进入传输库，其传输速率为$CF_{i\_{stor}\rightarrow i\_{xfer}}$，其中，$i$代表叶，细根，活茎，死茎，活粗根和死粗根：
 \begin{equation}
-CF_{leaf\_{stor},leaf\_{xfer}}=CS_{leaf\_{stor} } \tau_{bgtr}
+CF_{i\_{stor}\rightarrow i\_{xfer}}=CS_{i\_{stor} } \tau_{bgtr}
 \end{equation}
+同时传输库碳全部进入组织库，其速率为$CF_{i\_{xfer} \rightarrow i\_{disp}}$：
 \begin{equation}
-CF_{ {froot }\_{stor},{ froot }\_{xfer }}=CS_{{froot }\_{stor}} \tau_{bgtr}
+  CF_{i\_{xfer}\rightarrow i\_{disp}}=CS_{i\_{xfer}}/\Delta t
 \end{equation}
+对应的氮同样有从存储库到转移库的过程，其速率为$NF_{i\_{stor}\rightarrow i\_{xfer}}$：
 \begin{equation}
- CF_{livestem\_{stor},livestem\_{xfer}}=CS_{livestem\_{stor}}\tau_{bgtr}
+  NF_{i\_{stor}\rightarrow i\_{xfer}}=NS_{i\_{stor}}\tau_{bgtr}
 \end{equation}
+传输库氮再全部进入组织库，其速率为：$NF_{i\_{xfer} \rightarrow i\_{disp}}$
 \begin{equation}
- CF_{deadstem\_{stor},deadstem\_{xfer}}=CS_{deadstem\_{stor}}\tau_{bgtr}
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{stor},livecroot\_{xfer}}=CS_{livecroot\_{stor}}\tau_{bgtr}
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{stor},deadcroot\_{xfer}}=CS_{deadcroot\_{stor}}\tau_{bgtr}
-\end{equation}
-传输库碳全部进入组织库：
-\begin{equation}
-  CF_{leaf\_{xfer},leaf}=CS_{leaf\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{froot\_{xfer},froot}=CS_{froot\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{livestem\_{xfer},livestem}=CS_{livestem\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{deadstem\_{xfer},deadstem}=CS_{deadstem\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{xfer},livecroot}=CS_{livecroot\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{xfer},deadcroot}=CS_{deadcroot\_{xfer}}/\Delta t
-\end{equation}
-对应的氮凋落物：
-\begin{equation}
-  NF_{leaf\_{stor},leaf\_{xfer}}=NS_{leaf\_{stor}}\tau_{bgtr}
-\end{equation}
-\begin{equation}
-  NF_{froot\_{stor},froot\_{xfer}}=NS_{froot\_{stor}}\tau_{bgtr}
-\end{equation}
-\begin{equation}
-  NF_{livestem\_{stor},livestem\_{xfer}}=NS_{livestem\_{stor}}\tau_{bgtr}
-\end{equation}
-\begin{equation}
-  NF_{deadstem\_{stor},deadstem\_{xfer}}=NS_{deadstem\_{stor}}\tau_{bgtr}
-\end{equation}
-\begin{equation}
-  NF_{livecroot\_{stor},livecroot\_{xfer}}=NS_{livecroot\_{stor}}\tau_{bgtr}
-\end{equation}
-\begin{equation}
-  NF_{deadcroot\_{stor},deadcroot\_{xfer}}=NS_{deadcroot\_{stor}}\tau_{bgtr}
-\end{equation}
-传输库氮全部进入组织库：
-\begin{equation}
-  NF_{leaf\_{xfer},leaf}=NS_{leaf\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  NF_{froot\_{xfer},froot}=NS_{froot\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  NF_{livestem\_{xfer},livestem}=NS_{livestem\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  NF_{deadstem\_{xfer},deadstem}=NS_{deadstem\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  NF_{livecroot\_{xfer},livecroot}=NS_{livecroot\_{xfer}}/\Delta t
-\end{equation}
-\begin{equation}
-  NF_{deadcroot\_{xfer},deadcroot}=NS_{deadcroot\_{xfer}}/\Delta t
+  NF_{i\_{xfer}\rightarrow i\_{disp}}=NS_{i\_{xfer}}/\Delta t
 \end{equation}
 
 
 \subsection{物候凋落物}\label{物候凋落物}
-物候的凋落物包括叶和细根，其中叶凋落物将进入代谢凋落物、
-纤维素凋落物和木质部凋落物，细根凋落物同样进入代谢凋落物、纤维素凋落物和木质部凋落物：
+物候的凋落物主要来源于叶和细根，其中叶凋落物将进入代谢凋落物、
+纤维素凋落物和木质素凋落物，细根凋落物同样进入代谢凋落物、纤维素凋落物和木质部凋落物，其速率为$CF_{veg\rightarrow lit,pat}$，其中，veg是凋落物来源，即叶和细根，lit代表三个凋落物库，代谢凋落物，纤维素凋落物和木质素凋落物：
 \begin{equation}
-  CF_{leaf,lit1}=\sum_{p}^{npft}{CF_{leaf,litter}f_{lab\_{leaf},p}{wcol_p}}
+  CF_{veg \rightarrow lit,pat}=\sum_{p}^{npft}{CF_{veg \rightarrow litter}f_{lit\_{veg},p}{wcol_p}}
 \end{equation}
-\begin{equation}
-  CF_{leaf,lit2}=\sum_{p}^{npft}{CF_{leaf,litter}f_{cel\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{leaf,lit3}=\sum_{p}^{npft}{CF_{leaf,litter}f_{lig\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{froot,lit1}=\sum_{p}^{npft}{CF_{froot,litter}f_{lab\_{froot},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{froot,lit2}=\sum_{p}^{npft}{CF_{froot,litter}f_{cel\_{froot},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{froot,lit3}=\sum_{p}^{npft}{CF_{froot,litter}f_{lig\_{froot},p}{wcol_p}}
-\end{equation}
-其中$f_{lab\_{leaf},p}$, $f_{cel\_{leaf},p}$ 和 $f_{lig\_{leaf},p}$ 是叶片凋落物中，
-活性凋落物，纤维素和木质素凋落物占得比例，$f_{lab\_{leaf},p}$, $f_{cel\_{leaf},p}$
-和 $f_{lig\_{leaf},p}$ 是细根凋落物中，活性凋落物，
-纤维素和木质素凋落物占的比例，${wcol_p}$ 代表每个 patch 的面积比。
+其中$f_{lit\_{veg},p}$是叶片和细根凋落物中，代谢凋落物，纤维素和木质素凋落物所占得比例，${wcol_p}$ 代表每个植被功能型的面积比。
 
-对应的氮通量可表达为：
+对应的氮掉落速率$NF_{veg\rightarrow lit,pat}$在patch上的平均值：
 \begin{equation}
-  NF_{leaf,lit1}=\sum_{p}^{npft}{NF_{leaf,litter}f_{lab\_{leaf},p}{wcol_p}}
+  NF_{veg\rightarrow lit,pat}=\sum_{p}^{npft}{NF_{veg \rightarrow litter}f_{lit\_{veg},p}{wcol_p}}
 \end{equation}
-\begin{equation}
-  NF_{leaf,lit2}=\sum_{p}^{npft}{NF_{leaf,litter}f_{cel\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{leaf,lit3}=\sum_{p}^{npft}{NF_{leaf,litter}f_{lig\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{froot,lit1}=\sum_{p}^{npft}{NF_{froot,litter}f_{lab\_{froot},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{froot,lit2}=\sum_{p}^{npft}{NF_{froot,litter}f_{cel\_{froot},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{froot,lit3}=\sum_{p}^{npft}{NF_{froot,litter}f_{lig\_{froot},p}{wcol_p}}
-\end{equation}
-
+${wcol_p}$ 代表每个植被功能型pft的面积比
 
 \subsection{植被的自然死亡}\label{植被的自然死亡}
 植被的整体自然死亡率被假设为2\%每年。
-所有的叶、细根、活茎、死茎、或粗根和死粗根的组织库、存储库和传输库受死亡率的控制，
-其凋落物碳氮通量为： 
+所有的叶、细根、活茎、死茎、或粗根和死粗根的组织库、存储库和传输库的凋落速率受死亡率的控制，
+其凋落物碳氮通量为$CF_{veg\_{mort}}$和$NF_{veg\_{mort}}$, veg是凋落物来源，即叶，细根，活茎，死茎，活粗根和死粗根： 
+
+\begin{equation}
+  CF_{veg\_{mort}}=CS_{veg}\cdot \frac{0.2\%}{365\cdot 86400}
+\end{equation}
+
+\begin{equation}
+  NF_{veg\_{mort}}=NS_{veg}\cdot \frac{0.2\%}{365\cdot 86400}
+\end{equation}
+
+存储库的碳氮凋落通量有同样关系：
+\begin{equation}
+  CF_{veg\_{{stor}\_{mort}}}=CS_{veg\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
+\end{equation}
+\begin{equation}
+  NF_{veg\_{{stor}\_{mort}}}=NS_{veg\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
+\end{equation}
+\begin{equation}
+  CF_{veg\_{{xfer}\_{mort}}}=CS_{veg\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
+\end{equation}
+\begin{equation}
+  NF_{veg\_{{xfer}\_{mort}}}=NS_{veg\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
+\end{equation}
+
+死亡的植被的叶和细根的碳氮通量将进入不同凋落物库，其速率为$CF_{leaf\_{mort},lit}$，$NF_{leaf\_{mort},lit}$，$CF_{froot\_{mort},lit}$和$NF_{froot\_{mort},lit}$，其中lit是不同的凋落物库，包括代谢凋落物，纤维素凋落物和木质素凋落物：
+\begin{equation}
+CF_{leaf\_{mort},lit}=\sum_{p=0}^{npft}{CF_{leaf\_{mort}}f_{lit\_{leaf},p}{wcol_p}}
+\end{equation}
+\begin{equation}
+CF_{froot\_mort,lit}=\sum_{p=0}^{npft}{CF_{froot\_mort}f_{lit\_{leaf},p}{wcol_p}}
+\end{equation}
+\begin{equation}
+NF_{leaf\_{mort},lit}=\sum_{p=0}^{npft}{NF_{leaf\_{mort}}f_{lit\_{leaf},p}{wcol_p}}
+\end{equation}
+\begin{equation}
+  NF_{froot\_mort,lit}=\sum_{p=0}^{npft}{NF_{froot\_mort}f_{lit\_{leaf},p}{wcol_p}}
+\end{equation}
+其中$f_{lab\_{leaf},p}$, $f_{cel\_{leaf},p}$ 和 $f_{lig\_{leaf},p}$ 是叶片凋落物进入
+代谢凋落物，纤维素和木质素凋落物分别的占得比例，${wcol_p}$ 代表每个植被功能型pft的面积比。
 
 
+活茎、死茎、活粗根和死粗根在树木死亡后进入木质部残体库的碳氮通量$CF_{veg\_{mort},cwd,pat}$和$NF_{veg\_{mort},cwd,pat}$，veg代表活茎、死茎、活粗根和死粗根：
 \begin{equation}
-  CF_{leaf\_{mort}}=CS_{leaf}\cdot \frac{0.2\%}{365\cdot 86400}
+  CF_{veg\_{mort},cwd,pat}=\sum_{p=0}^{npft}{CF_{veg\_{mort}}{wcol_p}}
 \end{equation}
 \begin{equation}
-  CF_{froot\_mort}=CS_{froot}\cdot \frac{0.2\%}{365\cdot 86400}
+  NF_{veg\_{mort},cwd,pat}=\sum_{p=0}^{npft}{NF_{veg\_{mort}}{wcol_p}}
 \end{equation}
+此外，所有的含有非结构储存库和传输库在植被死亡后都进入代谢凋落物库中，进入代谢凋落物库的碳凋落速率$CF_{veg\_{{stor}\_{mort}},lit,pat}$和$CF_{veg\_{{stor}\_{mort}},lit,pat}$为所有所有植被功能型的总和：
 \begin{equation}
-  CF_{livestem\_mort}=CS_{livestem}\cdot \frac{0.2\%}{365\cdot 86400}
+  CF_{veg\_{{stor}\_{mort,met,pat}}}=\sum_{p=0}^{npft}{CF_{veg\_{{stor}\_{mort}}}{wcol_p}}
 \end{equation}
 \begin{equation}
-  CF_{deadstem\_mort}=CS_{deadstem}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_mort}=CS_{livecroot}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_mort}=CS_{deadcroot}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{leaf\_{mort}}=NS_{leaf}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{froot\_mort}=NS_{froot}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{livestem\_mort}=NS_{livestem}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{deadstem\_mort}=NS_{deadstem}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{livecroot\_mort}=NS_{livecroot}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{deadcroot\_mort}=NS_{deadcroot}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-存储库的凋落：
-\begin{equation}
-  CF_{leaf\_{{stor}\_{mort}}}=CS_{leaf\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{froot\_{{stor}\_{mort}}}=CS_{froot\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-CF_{livestem\_{{stor}\_{mort}}}=CS_{livestem\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{deadstem\_{{stor}\_{mort}}}=CS_{deadstem\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{{stor}\_{mort}}}=CS_{livecroot\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{{stor}\_{mort}}}=CS_{deadcroot\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{leaf\_{{stor}\_{mort}}}=NS_{leaf\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{froot\_{{stor}\_{mort}}}=NS_{froot\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{livestem\_{{stor}\_{mort}}}=NS_{livestem\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{deadstem\_{{stor}\_{mort}}}=NS_{deadstem\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{livecroot\_{{stor}\_{mort}}}=NS_{livecroot\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{deadcroot\_{{stor}\_{mort}}}=NS_{deadcroot\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{leaf\_{{xfer}\_{mort}}}=CS_{leaf\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{froot\_{{xfer}\_{mort}}}=CS_{froot\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{livestem\_{{xfer}\_{mort}}}=CS_{livestem\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{deadstem\_{{xfer}\_{mort}}}=CS_{deadstem\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{{xfer}\_{mort}}}=CS_{livecroot\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{{xfer}\_{mort}}}=CS_{deadcroot\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{leaf\_{{xfer}\_{mort}}}=NS_{leaf\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{froot\_{{xfer}\_{mort}}}=NS_{froot\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{livestem\_{{xfer}\_{mort}}}=NS_{livestem\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{deadstem\_{{xfer}\_{mort}}}=NS_{deadstem\_{xfer}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{livecroot\_{{stor}\_{mort}}}=NS_{livecroot\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-\begin{equation}
-  NF_{deadcroot\_{{stor}\_{mort}}}=NS_{deadcroot\_{stor}}\cdot \frac{0.2\%}{365\cdot 86400}
-\end{equation}
-死亡的植被碳氮通量将进入凋落物库：
-\begin{equation}
-CF_{leaf\_{mort},lit1}=\sum_{p=0}^{npft}{CF_{leaf\_{mort}}f_{lab\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-CF_{leaf\_{mort},lit2}=\sum_{p=0}^{npft}{CF_{leaf\_{mort}}f_{cel\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-CF_{leaf\_{mort},lit3}=\sum_{p=0}^{npft}{CF_{leaf\_{mort}}f_{lig\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-CF_{froot\_mort,lit1}=\sum_{p=0}^{npft}{CF_{froot\_mort}f_{lab\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-CF_{froot\_mort,lit2}=\sum_{p=0}^{npft}{CF_{froot\_mort}f_{cel\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-CF_{froot\_mort,lit3}=\sum_{p=0}^{npft}{CF_{froot\_mort}f_{lig\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-NF_{leaf\_{mort},lit1}=\sum_{p=0}^{npft}{NF_{leaf\_{mort}}f_{lab\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{leaf\_{mort},lit2}=\sum_{p=0}^{npft}{NF_{leaf\_{mort}}f_{cel\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{leaf\_{mort},lit3}=\sum_{p=0}^{npft}{NF_{leaf\_{mort}}f_{lig\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{froot\_mort,lit1}=\sum_{p=0}^{npft}{NF_{froot\_mort}f_{lab\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{froot\_mort,lit2}=\sum_{p=0}^{npft}{NF_{froot\_mort}f_{cel\_{leaf},p}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{froot\_mort,lit3}=\sum_{p=0}^{npft}{NF_{froot\_mort}f_{lig\_{leaf},p}{wcol_p}}
-\end{equation}
-其中$f_{lab\_{leaf},p}$, $f_{cel\_{leaf},p}$ 和 $f_{lig\_{leaf},p}$ 是叶片凋落物中，
-活性凋落物，纤维素和木质素凋落物占得比例，$f_{lab\_{leaf},p}$, $f_{cel\_{leaf},p}$ 和 $f_{lig\_leaf,p}$
-是细根凋落物中，活性凋落物，纤维素和木质素凋落物占的比例，${wcol_p}$ 代表每个 patch 的面积比。
-
-
-活茎、死茎、活粗根和死粗根在树木死亡后进入木质部残体库：
-\begin{equation}
-  CF_{livestem\_{mort},cwd}=\sum_{p=0}^{npft}{CF_{livestem\_{mort}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{deadstem\_{mort},cwd}=\sum_{p=0}^{npft}{CF_{deadstem\_{mort}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{mort},cwd}=\sum_{p=0}^{npft}{CF_{livecroot\_{mort}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{mort},cwd}=\sum_{p=0}^{npft}{CF_{deadcroot\_{mort}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{livestem\_{mort},cwd}=\sum_{p=0}^{npft}{NF_{livestem\_{mort}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{deadstem\_{mort},cwd}=\sum_{p=0}^{npft}{NF_{deadstem\_{mort}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{livecroot\_{mort},cwd}=\sum_{p=0}^{npft}{NF_{livecroot\_{mort}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  NF_{deadcroot\_{mort},cwd}=\sum_{p=0}^{npft}{NF_{deadcroot\_{mort}}{wcol_p}}
-\end{equation}
-此外，所有的含有非结构碳氮的储存库和传输库在植被死亡后都进入代谢凋落物库中：
-\begin{equation}
-  CF_{leaf\_{{stor}\_{mort}},lit1}=\sum_{p=0}^{npft}{CF_{leaf\_{{stor}\_{mort}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{froot\_{{stor}\_{mort}},lit1}=\sum_{p=0}^{npft}{CF_{froot\_{{stor}\_{mort}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{livestem\_{{stor}\_{mort}},lit1}=\sum_{p=0}^{npft}{CF_{livestem\_{{stor}\_{mort}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{deadstem\_{{stor}\_{mort}},lit1}=\sum_{p=0}^{npft}{CF_{deadstem\_{{stor}\_{mort}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{{stor}\_{mort}},lit1}=\sum_{p=0}^{npft}{CF_{livecroot\_{{stor}\_{mort}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{{stor}\_{mort}},lit1}=\sum_{p=0}^{npft}{CF_{deadcroot\_{{stor}\_{mort}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{gresp\_{{stor}\_{mort}},lit1}=\sum_{p=0}^{npft}{CF_{gresp\_{{stor\_{mort}}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{leaf\_{xfer\_{mort,lit1}}}=\sum_{p=0}^{npft}{CF_{leaf\_{{xfer\_{mort}}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{froot\_{xfer\_{mort,lit1}}}=\sum_{p=0}^{npft}{CF_{froot\_{{xfer\_{mort}}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{livestem\_{xfer\_{mort,lit1}}}=\sum_{p=0}^{npft}{CF_{livestem\_{{xfer\_{mort}}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{deadstem\_{xfer\_{mort,lit1}}}=\sum_{p=0}^{npft}{CF_{deadstem\_{xfer\_{mort}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{livecroot\_{xfer\_{mort,lit1}}}=\sum_{p=0}^{npft}{CF_{livecroot\_{{xfer\_{mort}}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{deadcroot\_{xfer\_{mort,lit1}}}=\sum_{p=0}^{npft}{CF_{deadcroot\_{{xfer\_{mort}}}}{wcol_p}}
-\end{equation}
-\begin{equation}
-  CF_{gresp\_{xfer\_{mort,lit1}}}=\sum_{p=0}^{npft}{CF_{gresp\_{{xfer}\_{mort}}}{wcol_p}}
+  CF_{veg\_{xfer\_{mort,met,pat}}}=\sum_{p=0}^{npft}{CF_{veg\_{{xfer\_{mort}}}}{wcol_p}}
 \end{equation}
 对应的氮通量中，植被死亡后，再利用氮库进入代谢凋落物库：
 \begin{equation}

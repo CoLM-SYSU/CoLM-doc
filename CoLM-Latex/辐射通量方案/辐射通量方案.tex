@@ -110,6 +110,364 @@ r_{3} &= 0.3
 其中等式右边$\alpha_{g}$表示土壤、冰川或水体地表覆盖时的反照率，等式左边$\alpha_{g}$表示考虑积雪覆盖订正后的地表反照率。对直射光/漫射光，可见光/近红外波段均按上式计算。
 
 \subsection{SNICAR积雪反照率方案}\label{SNICAR积雪反照率}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_SnowSnicar.F90}。
+\end{mymdframed}
+
+CoLM另一种积雪反照率及其对太阳辐射吸收的模拟，采用雪、冰和气溶胶辐射SNICAR (the Snow, Ice, and Aerosol Radiative) 模型 \citep{flanner2021SNICARADv3CommunityTool}。该模型利用大气沉积气溶胶（黑炭、矿物粉尘、有机碳）、雪的有效粒径、太阳天顶角（\(\mu_{0}\)）以及雪层所覆盖下垫面的反照率，采用\citet{toon1989RapidCalculationRadiative}的二流辐射传输方案来计算积雪反照率和垂直吸收廓线(图~\ref{fig:SNICAR模型流程图})。
+
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\columnwidth]{Figures/辐射过程及辐射通量计算/SNICAR模型计算流程图.png}
+\caption{SNICAR积雪反照率计算流程图\citep{he2020SnowAlbedoRadiative}}
+\label{fig:SNICAR模型流程图}
+\end{figure}
+}
+
+二流近似方案（two-stream
+solution）需要使用到每个雪层和光谱波段的以下光学属性：光学厚度($\tau$),
+单次散射反照率($\omega$),
+以及散射不对称性因子($g$)。SNICAR中，体散射光学属性是每种成分$k$的加权函数，针对每个雪层和光谱波段进行计算。
+
+\begin{equation}
+\tau = \sum_{1}^{k}\tau_{k}
+\end{equation}
+%
+\begin{equation}
+\omega = \frac{\sum_{1}^{k}\omega_{k}\tau_{k}}{\sum_{1}^{k}\tau_{k}}
+\end{equation}
+%
+\begin{equation}
+g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
+\end{equation}
+
+对于每种成分（冰粒、两种黑碳、两种有机碳、四种沙尘），$\tau$、$g$和质量消光截面$\psi$（\unit{m^2.kg^{-1}}）使用米氏散射近似进行计算。每种成分的光学厚度取决于各自的质量消光截面和各层质量，从而可以得到：
+\begin{equation}
+\tau_{k} = \psi_{k}\omega_{k}
+\end{equation}
+
+\subsubsection{积雪的光学属性}
+冰粒在五个波段的光学属性为离线获得，并存储在相应的检索表中。米氏散射属性先在较高的光谱分辨率下计算，再根据入射太阳通量\(I^{\downarrow}(\lambda)\)对五个波段进行加权。波长区间在$\lambda_{1}-\lambda_{2}$的质量消光截面（\(\overline{\psi}\)）表达式为:
+
+\begin{equation}
+\overline{\psi} = \frac{\int_{\lambda_{2}}^{\lambda_{1}}{\psi(\lambda)I^{\downarrow}(\lambda)d\lambda\ }}{\int_{\lambda_{2}}^{\lambda_{1}}{I^{\downarrow}(\lambda)d\lambda\ }}
+\end{equation}
+
+对于半无限厚的雪盖，宽波段的单次散射反照率（\(\overline{\omega}\)）由漫射反照率加权得到:
+\begin{equation}
+\overline{\omega} = \frac{\int_{\lambda_{2}}^{\lambda_{1}}{\omega(\lambda){I^{\downarrow}(\lambda)\alpha}_{sno}(\lambda)d\lambda\ }}{\int_{\lambda_{2}}^{\lambda_{1}}{I^{\downarrow}(\lambda)\alpha_{sno}(\lambda)d\lambda\ }}
+\end{equation}
+
+积雪反照率十分依赖于冰粒的单次散射反照率，包含额外的反照率权重可以提高五个波段反照率方案的准确性\citep{flanner2007PresentdayClimateForcing}。
+
+积雪在五种波段的单次散射反照率、质量消光截面以及不对称参数由下表给出，它们均基于米氏散射近似理论计算得到。不同大气沉积气溶胶的单次散射反照率、质量消光截面以及不对称参数取决于波段。而对于冰粒，其光学属性取决于入射辐射类型（直射或漫射辐射）、波段以及有效粒径，其中有效粒径考虑积雪的老化过程计算得到（见章节~\ref{积雪老化}）。
+
+\begin{table}[htbp]
+\centering
+\caption{雪中杂质和冰粒的单次散射反照率$\omega$}
+\label{tab:积雪单次散射反照率}
+\begin{tabular}{llllll}
+\toprule
+种类 & 波段一 & 波段二 & 波段三 & 波段四 & 波段五 \\ \midrule
+亲水黑碳 & 0.516 & 0.516 & 0.516 & 0.516 & 0.516 \\
+疏水黑碳 & 0.288 & 0.288 & 0.288 & 0.288 & 0.288 \\
+亲水有机碳 & 0.997 & 0.997 & 0.997 & 0.997 & 0.997 \\
+疏水有机碳 & 0.963 & 0.963 & 0.963 & 0.963 & 0.963 \\
+沙尘一 & 0.979 & 0.979 & 0.979 & 0.979 & 0.979 \\
+沙尘二 & 0.944 & 0.944 & 0.944 & 0.944 & 0.944 \\
+沙尘三 & 0.904 & 0.904 & 0.904 & 0.904 & 0.904 \\
+沙尘四 & 0.850 & 0.850 & 0.850 & 0.850 & 0.850 \\
+冰（$r_{e}=30 \mu\rm{m}$） & 0.9999 & 0.9999 & 0.9999 & 0.9999 &
+0.9999 \\
+冰（$r_{e}=1500 \mu\rm{m}$） & 0.9998 & 0.9998 & 0.9998 & 0.9998 &
+0.9998 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{雪中杂质和冰粒的质量消光系数$\tau$}
+\label{tab:积雪消光系数}
+\begin{tabular}{llllll}
+\toprule
+种类 & 波段一 & 波段二 & 波段三 & 波段四 & 波段五 \\ \midrule
+亲水黑碳 & 25369 & 25369 & 25369 & 25369 & 25369 \\
+疏水黑碳 & 11398 & 11398 & 11398 & 11398 & 11398 \\
+亲水有机碳 & 37774 & 37774 & 37774 & 37774 & 37774 \\
+疏水有机碳 & 3289 & 3289 & 3289 & 3289 & 3289 \\
+沙尘一 & 2687 & 2687 & 2687 & 2687 & 2687 \\
+沙尘二 & 841 & 841 & 841 & 841 & 841 \\
+沙尘三 & 388 & 388 & 388 & 388 & 388 \\
+沙尘四 & 197 & 197 & 197 & 197 & 197 \\
+冰（$r_{e}=30 \mu\rm{m}$） & 55.7 & 55.7 & 55.7 & 55.7 & 55.7 \\
+冰（$r_{e}=1500 \mu\rm{m}$） & 1.09 & 1.09 & 1.09 & 1.09 & 1.09 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{雪中杂质和冰粒的不对称参数$g$}
+\label{tab:积雪不对称参数}
+\begin{tabular}{llllll}
+\toprule
+种类 & 波段一 & 波段二 & 波段三 & 波段四 & 波段五 \\ \midrule
+亲水黑碳 & 0.52 & 0.52 & 0.52 & 0.52 & 0.52 \\
+疏水黑碳 & 0.35 & 0.35 & 0.35 & 0.35 & 0.35 \\
+亲水有机碳 & 0.77 & 0.77 & 0.77 & 0.77 & 0.77 \\
+疏水有机碳 & 0.62 & 0.62 & 0.62 & 0.62 & 0.62 \\
+沙尘一 & 0.69 & 0.69 & 0.69 & 0.69 & 0.69 \\
+沙尘二 & 0.70 & 0.70 & 0.70 & 0.70 & 0.70 \\
+沙尘三 & 0.79 & 0.79 & 0.79 & 0.79 & 0.79 \\
+沙尘四 & 0.83 & 0.83 & 0.83 & 0.83 & 0.83 \\
+冰（$r_{e}=30 \mu\rm{m}$） & 0.88 & 0.88 & 0.88 & 0.88 & 0.88 \\
+冰（$r_{e}=1500 \mu\rm{m}$） & 0.89 & 0.89 & 0.89 & 0.89 & 0.89\\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{积雪老化过程}\label{积雪老化}
+
+雪的老化表现为冰粒有效粒径（$r_e$）的变化。先前的研究表明，使用由更复杂形状组成的冰介质表面积与体积比（或比表面积）的球体会在模拟半球通量中产生相对较小误差（例如\citet{grenfell1999RepresentationNonsphericalIce}）。有效半径是球形粒子集合的表面积加权平均半径，与比表面积（SSA）直接相关，表达式为$r_e=3/(\rho_{ice}\text{SSA})$，其中$\rho_{ice}$是冰的密度。$r_e$是一个简单实用的度量指标，将积雪微观物理状态与干雪辐射特性联系起来。
+
+雪变湿的过程也会导致反照率快速变化。液态水的存在会导致周围的冰粒迅速变得粗糙(例如\citet{brun1989InvestigationWetSnowMetamorphism})，液态水往往会重新冻结成较大的冰块，使大片积雪变暗。小液滴的存在本身不会地使积雪显著变暗，因为冰和水的折射率在整个太阳光谱中非常接近。然而，积水会大大减少每单位质量的折射事件的发生，从而使积雪变暗。目前还没有考虑到这种影响。
+
+每个时间步长发生的有效晶粒度的净变化在每个雪层中可以概括为干雪变质作用（$dr_{e,dry}$）、液态水导致的变质作用（$dr_{e,wet}$）、液体水的再冻结和新降雪的加入引起的变化。每个雪层的质量被划分为上一个时间步长遗留下来的雪（$f_{old}$）、新降雪（$f_{new}$）和重新冻结的液态水（$f_{rfz}$），使得雪的$r_e$在每个时间步长${t}$更新为：
+\begin{equation}
+r_{e}(t) = \lbrack r_{e}(t - 1) + {dr}_{e,dry} + {dr}_{e,wet}\rbrack f_{old} + r_{e,0}f_{new} + r_{e,rfz}f_{rfz}
+\end{equation}
+
+新降雪（$r_{e,0}$）的有效粒径仅基于其与温度的简单线性关系。低于$-30$摄氏度时，有效粒径的最小值被强制取为54.5 \unit{\mu{m}}（对应60 \unit{m^{2}.kg^{-1}}）；大于0摄氏度时，有效粒径的最大值被强制取为204.5 \unit{\mu{m}}。有效粒径在$-30$和0摄氏度之间为线性变化。重新冻结的液态水（$r_{e,rfz}$）的有效粒径设置为1000 \unit{\mu{m}}。
+
+干雪的老化基于\citet{flanner2006LinkingSnowpackMicrophysics}描述的微观物理模型。该模型模拟了不同尺寸和颗粒间距的冰晶集合之间的扩散水蒸汽通量。根据雪温度、温度梯度、密度和初始颗粒大小分布的任何组合，预测比表面积和有效半径。高温、较大的温度梯度以及较小的雪密度最有利于加速雪的老化，而在低温下，无论温度梯度和密度如何，雪的老化都会缓慢进行。由于该模型目前计算成本太高，无法纳入气候模型，我们将参数曲线拟合为大范围雪况下的输出模型，并将这些参数应用于模型中。参数方程的函数形式为：
+\begin{equation}
+\frac{{dr}_{e,dry}}{dt} = \left( \frac{{dr}_{e}}{dt} \right)_{0}\left( \frac{\eta}{r_{e} - r_{e,0} + \eta} \right)^{1/\kappa}
+\end{equation}
+
+参数$\left( \frac{{dr}_{e}}{dt} \right)_{0}$，$\eta$和$\kappa$以交互方式从具有与积雪温度、温度梯度和密度相对应的查找表中检索。该查找表所涵盖的温度范围为223--273 K、温度梯度范围为0至300 \unit{K.m^{-1}}，密度范围为50至400 \unit{kg.m^{-3}}。使用中间层温度在每个雪层n的中点来计算温度梯度（$T_n$）和雪层厚度（$dz_n$）：
+%
+\begin{equation}
+\left( \frac{dT}{dz} \right)_{n} = \frac{1}{{dz}_{n}}abs\left\lbrack \frac{T_{n - 1}{dz}_{n} + T_{n}{dz}_{n - 1}}{{dz}_{n} + {dz}_{n - 1}} + \frac{T_{n + 1}{dz}_{n} + T_{n}{dz}_{n + 1}}{{dz}_{n} + {dz}_{n + 1}} \right\rbrack
+\end{equation}
+%
+对于底部雪层（n=0），$T_{n-1}$为表层土壤的温度；对于表层雪，假设$T_{n+1}=T_n$。
+
+液态水对加强的变质作用的贡献基于\citet{brun1989InvestigationWetSnowMetamorphism}中的参数方程，其测量了不同液态水含量下的粒径增长率，这种关系取决于液态水质量分数$f_{liq}$：
+%
+\begin{equation}
+\frac{{dr}_{e}}{dt} = \frac{10^{18}C_{1}f_{liq}^{3}}{4\pi r_{e}^{2}}
+\end{equation}
+%
+其中$C_{1}$为$4.22×10^{-13}$，$f_{liq}=w_{liq}/(w_{liq}+w_{ice})$。
+
+在雪质量大于零但尚未定义雪层的情况下，$r_e$设置为$r_{e,0}$，当雪层被合并或分割时，$r_e$根据其他状态变量的计算，计算为两层的质量加权平均值。计算得到的$r_e$的范围限制在30-1500 \unit{\mu{m}}之间。
+
+\subsubsection{SNICAR模型二流近似求解}
+
+对于多层积雪辐射传输二流近似求解，SNICAR模型提供了两种可供选择的方案：SNICAR\_RT \citep{dang2019IntercomparisonImprovementTwostream}与SNICAR\_AD\_RT方案\citep{flanner2021SNICARADv3CommunityTool}。
+
+1、SNICAR\_RT
+
+SNICAR\_RT在二流近似中使用了三对角矩阵方案（tri-diagonal
+solution, \citet{toon1989RapidCalculationRadiative}），在每层界面计算向上和向下的辐射通量，从中可以推导出净辐射吸收、每层吸收和表面反照率，三对角矩阵方案包含了二流近似方案的中间项。SNICAR\_RT对可见光波段使用的是Eddington近似\citep{wiscombe1980ModelSpectralAlbedo}，对近红外波段使用Hemispheric mean \citep{toon1989RapidCalculationRadiative}，这样选择是因为Eddington近似方案适用于高强度散射的介质。
+
+二流近似从水平均一介质辐射传输的一般方程所导出：
+%
+\begin{equation}
+\mu\frac{\partial {I}}{\partial\tau}(\tau,\mu,\phi){= I(\tau,}\mu,\Phi) - \frac{\omega}{{4}{\pi}}\int_{{0}}^{{2}\pi}{\int_{- 1}^{1}{P\left( \mu,\mu^{'},\Phi,\Phi^{'} \right)}}I\left( \tau,\mu^{'},\Phi^{'} \right){d}\mu^{'}d\Phi^{'}{- S}\left( \tau,\mu,\Phi \right)
+\end{equation}
+%
+其中\(\Phi\)是方位角，\(\mu\)是天顶角的余弦，\(\omega\)是单次散射反照率。等式右侧的三项分别为：光学厚度为\(\tau\)时的强度、多次散射引起的内源项和外部源函数$S$。对于太阳波长的纯外部光源，$S$为：
+%
+\begin{equation}
+S = \frac{\omega}{4}F_{s}P\left( \mu,{- \mu}_{0},\Phi,\Phi_{0} \right)\exp\left( -\frac{\mathbf{\tau}}{\mu_{0}} \right)
+\end{equation}
+
+\citet{meador1980TwostreamApproximationsRadiative}指出，二流近似的表示式可以写成以下形式：
+\begin{equation}
+\frac{dF_{n}^{+}(\tau)}{d\tau_{n}} = \gamma_{1n}F_{n}^{+} - \gamma_{2n}F_{n}^{-} - S_{n}^{+}
+\end{equation}
+\begin{equation}
+\frac{dF_{n}^{-}(\tau)}{d\tau_{n}} = \gamma_{2n}F_{n}^{+} - \gamma_{1n}F_{n}^{-} + S_{n}^{+}
+\end{equation}
+其中，\(\gamma_{1}\)和\(\gamma_{2}\)是取决于二流近似方程的特定形式的系数。我们通过用$n$（层数）标记通量来得到多层的解决方案。
+
+对于直射入射太阳辐射：
+\begin{equation}
+S^{+} = \gamma_{3}\pi F_{s}\omega_{0}\exp\left( - \left( \tau_{c} + \tau \right)/\mu_{0} \right)
+\end{equation}
+\begin{equation}
+S^{-} = \gamma_{4}\pi F_{s}\omega_{0}\exp\left( - \left( \tau_{c} + \tau \right)/\mu_{0} \right)
+\end{equation}
+\begin{equation}
+\frac{dF^{\uparrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{2}F^{\downarrow}(\tau) - \gamma_{3}\widetilde{\omega}F_{\odot}exp( - \frac{\tau}{\mu_{0}})
+\end{equation}
+\begin{equation}
+\frac{dF^{\downarrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{1}F^{\downarrow}(\tau) + (1 - \gamma_{3})\widetilde{\omega}F_{\odot}exp( - \frac{\tau}{\mu_{0}})
+\end{equation}
+
+\begin{table}[htbp]
+\centering
+\caption{SNICAR中包含的二流近似系数取值}
+\label{tab:SNICAR二流近似系数}
+\begin{tabular}{llll}
+\toprule
+方法 & $\gamma_{1}$ & $\gamma_{2}$ & $\gamma_{3}$ \\ \midrule
+Eddington &
+\(\frac{\mathbf{1}}{\mathbf{4}}\left\lbrack \mathbf{7 - (4 + 3}g^{*})\omega^{*} \right\rbrack\)
+&
+\(- \frac{\mathbf{1}}{\mathbf{4}}\left\lbrack \mathbf{1 - (4 - 3}g^{*})\omega^{*} \right\rbrack\)
+& \(\frac{\mathbf{1}}{\mathbf{4}}\mathbf{(2 - 3}g^{*}\mu_{0})\) \\
+Hemispheric mean & \(\mathbf{2 - (1 +}g^{*})\omega^{*}\) &
+\(\mathbf{(1 -}g^{*})\omega^{*}\) &
+\(\frac{\mathbf{1}}{\mathbf{2}}\left\lbrack \mathbf{1 -}\sqrt{\mathbf{3}}g^{*}\mu_{0} \right\rbrack\) \\
+Quadrature &
+\(\frac{\sqrt{\mathbf{3}}}{\mathbf{2}}\left\lbrack \mathbf{2 - (1 +}g^{*})\omega^{*} \right\rbrack\)
+& \(\frac{\sqrt{\mathbf{3}}}{\mathbf{2}}\mathbf{(1 -}g^{*})\omega^{*}\)
+&
+\(\frac{\mathbf{1}}{\mathbf{2}}\left\lbrack \mathbf{1 -}\sqrt{\mathbf{3}}g^{*}\mu_{0} \right\rbrack\) \\ \bottomrule
+\end{tabular}
+\end{table}
+
+其中\(\pi F_{s}\)是入射太阳通量，\(\mu_{0}\)是太阳辐射的入射方向，以上两式可以得到二流近似的通解。求解系数的关键步骤是计算相函数。然而，简单的近似方法，比如Eddington近似，通常难以处理高度非对称的相函数（例如冰晶相函数）。一种常见的解决方案是通过使用δ函数来近似相函数的强前向散射峰，并对相函数进行二流展开，从而得到广泛使用的"$\delta$函数调整"方法\citep{joseph1976DeltaEddingtonApproximationRadiative}。$\delta$函数调整能够提高在相函数高度非对称情况下的不同二流近似的准确性，表达式如下：
+\begin{equation}
+\tau^{*} = (1 - \omega g^{2})\tau
+\end{equation}
+\begin{equation}
+\omega^{*} = \frac{(1 - g^{2})\omega}{1 - g^{2}\omega}
+\end{equation}
+\begin{equation}
+g^{*} = \frac{g}{1 + g}
+\end{equation}
+
+\citet{meador1980TwostreamApproximationsRadiative}的研究指出，在第$n$层、光学厚度为\(\tau\)时，向上和向下的辐射通量可以表示为：
+\begin{equation}
+F_{n}^{+} = k_{1n}\exp\left( \Lambda_{n}\mathbf{\tau} \right) + \Gamma_{n}k_{2n}\exp\left( {- \Lambda}_{n}\mathbf{\tau} \right) + C_{n}^{+}(\mathbf{\tau)}
+\end{equation}
+\begin{equation}
+F_{n}^{-} = \Gamma_{n}k_{1n}\exp\left( \Lambda_{n}\mathbf{\tau} \right) + k_{2n}\exp\left( {- \Lambda}_{n}\mathbf{\tau} \right) + C_{n}^{-}(\mathbf{\tau)}
+\end{equation}
+%
+\(\Lambda_{n}\)、\(\Gamma_{n}\)和\(C_{n}\)分别为由二流方法、入射太阳通量和太阳高度角确定的已知系数，\(k_{1n}\)和\(k_{2n}\)为由边界条件确定的未知系数。
+\begin{equation}
+\Lambda = \sqrt{\gamma_{1} - \gamma_{2}}
+\end{equation}
+\begin{equation}
+\Gamma = \frac{\gamma_{2}}{\gamma_{1} + \Lambda} = \frac{\gamma_{1} - \Lambda}{\gamma_{2}}
+\end{equation}
+
+对于太阳直射辐射，我们有：
+\begin{equation}
+C^{+}(\mathbf{\tau}) = \frac{\omega F_{0}\left\lbrack \left( \gamma_{1} - 1/\mu_{0} \right)/\gamma_{3} + \gamma_{2}\gamma_{4} \right\rbrack e^{- \left( \mathbf{\tau}_{c} + \mathbf{\tau} \right)/\mu_{0}}}{\Lambda^{2} - 1/\mu_{0}^{2}}
+\end{equation}
+\begin{equation}
+C^{-}(\mathbf{\tau}) = \frac{\omega F_{0}\left\lbrack \left( \gamma_{1} + 1/\mu_{0} \right)/\gamma_{4} + \gamma_{2}\gamma_{3} \right\rbrack e^{- \left( \mathbf{\tau}_{c} + \mathbf{\tau} \right)/\mu_{0}}}{\Lambda^{2} - 1/\mu_{0}^{2}}
+\end{equation}
+
+当没有直射入射辐射时，\(C^{+}(\mathbf{\tau})\)和\(C^{-}(\mathbf{\tau})\)为零。
+
+2、SNICAR\_AD\_RT
+
+SNICAR\_AD\_RT使用了Delta-Eddington
+Adding-Doubling方案。在$\delta$函数调整后，再应用二流近似（Eddington），将得到的$\tau^*$，$\omega^*$和$g^*$计算得到如下的各个中间量：
+\begin{equation}
+\Gamma = \sqrt{3(1 - \omega^{*})(1 - \omega^{*}g^{*})}
+\end{equation}
+\begin{equation}
+u = \frac{3}{2}\left( \frac{1 - \omega^{*}g^{*}}{\Gamma} \right)
+\end{equation}
+\begin{equation}
+N = {(u + 1)}^{2}e^{\Gamma\tau^{*}} - {(u - 1)}^{2}e^{- \Gamma\tau^{*}}
+\end{equation}
+\begin{equation}
+\eta = \frac{3}{4}\omega^{*}\mu_{0}\left( \frac{1 + g^{*}(1 - \omega^{*})}{1 - \Gamma^{2}\mu_{0}^{2}} \right)
+\end{equation}
+\begin{equation}
+\Upsilon = \frac{1}{2}\omega^{*}\left( \frac{1 + {3g}^{*}(1 - \omega^{*})\mu_{0}^{2}}{1 - \Gamma^{2}\mu_{0}^{2}} \right)
+\end{equation}
+
+每层对直接辐射的反射率（$R$）和透射率（$T$）分别可以表示为：
+\begin{equation}
+R\left( \mu_{0} \right) = \frac{1}{N}(\eta + \Upsilon)\left( u^{2} - 1 \right)\left( e^{\Gamma\tau^{*}} - e^{- \Gamma\tau^{*}} \right) + (\eta - \Upsilon)\left\lbrack \frac{4u}{N}e^{\frac{- \tau^{*}}{\mu_{0}}} - 1 \right\rbrack
+\end{equation}
+\begin{equation}
+T\left( \mu_{0} \right) = (\eta + \Upsilon)\frac{4u}{N} + \left\lbrack \frac{1}{N}(\eta - \Upsilon)\left( u^{2} - 1 \right)\left( e^{\Gamma\tau^{*}} - e^{- \Gamma\tau^{*}} \right) - \eta - \Upsilon + 1 \right\rbrack e^{\frac{- \tau^{*}}{\mu_{0}}}
+\end{equation}
+
+每层对漫射入射辐射情况下的反射率（$R$）和透射率（$T$）由8个高斯角积分得到：
+\begin{equation}
+\overline{R}\left( \mu_{0} \right) = 2\int_{0}^{+ 1}{\mu R(\mu)d\mu}
+\end{equation}
+\begin{equation}
+\overline{T}\left( \mu_{0} \right) = 2\int_{0}^{+ 1}{\mu T(\mu)d\mu}
+\end{equation}
+
+对于漫射辐射的反射和透射率（\(\overline{R}\)和\(\overline{T}\)）是根据\citet{wiscombe1980ModelSpectralAlbedo}的假设，即在各向同性入射情况下，通过对直接辐射的反射率进行积分计算得到的。
+
+在考虑层与层多次散射时，假设一旦辐射被散射，它就是漫射和各向同性的。对于位于上层的任意层1（具有辐射特性\(R_{1}\left( \mu_{0} \right)\)、\(T_{1}\left( \mu_{0} \right)\)、\({\overline{R}}_{1}\)、\({\overline{T}}_{1}\)），其下方是层2（具有辐射特性\(R_{2}\left( \mu_{0} \right)\)、\(T_{2}\left( \mu_{0} \right)\)、\({\overline{R}}_{2}\)、\({\overline{T}}_{2}\)），从上方入射的直射和漫射辐射的反射率、透射率计算为\citep{briegleb2007delta}：
+\begin{equation}
+R_{12}\left( \mu_{0} \right) = R_{1}\left( \mu_{0} \right) + \frac{\left\lbrack \left( T_{1}\left( \mu_{0} \right) - e^{- \tau^{*}/\mu_{0}} \right){\overline{R}}_{2} + e^{- \tau^{*}/\mu_{0}}R_{2}\left( \mu_{0} \right) \right\rbrack{\overline{T}}_{1}}{1 - {\overline{R}}_{1}{\overline{R}}_{2}}
+\end{equation}
+\begin{equation}
+T_{12}\left( \mu_{0} \right) = {e^{- \tau^{*}/\mu_{0}}T}_{2}\left( \mu_{0} \right) + \frac{\left\lbrack \left( T_{1}\left( \mu_{0} \right) - e^{- \tau^{*}/\mu_{0}} \right) + e^{- \tau^{*}/\mu_{0}}R_{2}\left( \mu_{0} \right){\overline{R}}_{1} \right\rbrack{\overline{T}}_{2}}{1 - {\overline{R}}_{1}{\overline{R}}_{2}}
+\end{equation}
+\begin{equation}
+{\overline{R}}_{12} = {\overline{R}}_{1} + \frac{{\overline{T}}_{1}{\overline{R}}_{2}{\overline{T}}_{1}}{1 - {\overline{R}}_{1}{\overline{R}}_{2}}
+\end{equation}
+\begin{equation}
+{\overline{T}}_{12} = \frac{{\overline{T}}_{1}{\overline{T}}_{2}}{1 - {\overline{R}}_{1}{\overline{R}}_{2}}
+\end{equation}
+
+从下方照射时的透射率是相同的，而反射率假定为从上方漫射照射时的向上反射率\({\overline{R}}_{12}\)，但下标的层序号相反。累积的雪层界面光学属性，对于向下传播和向上传播的辐射，是通过循环求解的，从雪层的顶部向下积分，然后从底部向上积分。在从顶部向下计算辐射传输时，如果所在波段总透射率（在顶部归一化为1.0）小于0.001，则终止\(R\left( x_{0} \right)\)、\(T\left( x_{0} \right)\)、\(R\)、\(T\)的计算。对于每个界面，都有以下变量：
+
+``$\tau^{*}$''为雪层顶部到某一雪层交界面经调整的光学厚度。
+
+``$R_{up}\left( \mu_{0} \right)$''为某一雪层交界面以下所有雪层对来自上方的向下直接辐射的反射率。
+
+``$\overline{R}_{up}$''为某一雪层交界面以下所有雪层对来自上方的向下漫射辐射的反射率。
+
+``$\overline{R}_{dn}$''为某一雪层交界面以上的所有雪层对来自下方的向上漫射辐射的反射率。
+
+``$T_{dn}\left( \mu_{0} \right)$''为直射辐射从雪层顶部到某一雪层交界面的总透射率。
+
+``$\overline{T}_{dn}$''为漫射辐射从雪层顶部到某一雪层交界面的总透射率。
+
+基于以上变量，每个雪层交界面上的向下（\(F_{dir}^{\downarrow}\)）和向上（\(F_{dir}^{\uparrow}\)）辐射通量标准化为雪层顶部的单位直接入射通量，分别表示为：
+\begin{equation}
+F_{dir}^{\downarrow} = e^{- \tau^{*}/\mu_{0}} + \frac{\left( T_{dn}\left( \mu_{0} \right) - e^{- \tau^{*}/\mu_{0}} \right) + e^{- \tau^{*}/\mu_{0}}R_{up}\left( \mu_{0} \right){\overline{R}}_{dn}}{1 - {\overline{R}}_{dn}{\overline{R}}_{up}}
+\end{equation}
+\begin{equation}
+F_{dir}^{\uparrow} = \frac{e^{- \tau^{*}/\mu_{0}}R_{up}\left( \mu_{0} \right) + \left( T_{dn}\left( \mu_{0} \right) - e^{- \tau^{*}/\mu_{0}} \right) + {\overline{R}}_{up}}{1 - {\overline{R}}_{dn}{\overline{R}}_{up}}
+\end{equation}
+
+每个雪层交界面上的向下（\(F_{dif}^{\downarrow}\)）和向上（\(F_{dif}^{\uparrow}\)）通量标准化为模型顶部的单位漫射入射通量，分别表示为：
+\begin{equation}
+F_{dif}^{\downarrow} = \frac{{\overline{T}}_{dn}}{1 - {\overline{R}}_{dn}{\overline{R}}_{up}}
+\end{equation}
+\begin{equation}
+F_{dif}^{\uparrow} = \frac{{\overline{T}}_{dn}{\overline{R}}_{up}}{1 - {\overline{R}}_{dn}{\overline{R}}_{up}}
+\end{equation}
+
+最后，反照率\(\alpha\)由顶层界面的通量得到：
+\begin{equation}
+\alpha = \frac{F_{dir}^{\uparrow}(top) + F_{dif}^{\uparrow}(top)}{F_{dir}^{\downarrow}(top) + F_{dif}^{\downarrow}(top)}
+\end{equation}
+
+太阳辐射通量根据五个光谱波段来计算，如下表所示。由于雪的反照率在整个太阳光谱中变化较大，因此采用四个波段来更准确地表示雪在近红外（NIR，0.7-5.0$\mu{m}$）波段的特性，而对于可见光谱只采用一个波段。根据表中列出的权重划分向下NIR辐射通量，这些权重通过中纬度冬季典型大气的离线光谱辐射传输计算得到\citet{briegleb2007delta}。
+
+\begin{table}[htbp]
+\centering
+\caption{分波段太阳辐射权重系数}
+\label{tab:太阳辐射权重系数}
+\begin{tabular}{lll}
+\toprule
+光谱波段 & 直接太阳辐射权重 & 漫射太阳辐射权重 \\ \midrule
+波段1：0.3-0.7$\mu{m}$（可见光） & （1.0） & （1.0） \\
+波段2：0.7-1.0$\mu{m}$（近红外） & 0.494 & 0.586 \\
+波段3：1.0-1.2$\mu{m}$（近红外） & 0.181 & 0.202 \\
+波段4：1.2-1.5$\mu{m}$（近红外） & 0.121 & 0.109 \\
+波段5：1.5-5.0$\mu{m}$（近红外） & 0.204 & 0.103 \\ \bottomrule
+\end{tabular}
+\end{table}
 
 \section{海洋反照率}\label{海洋反照率}
 \begin{mymdframed}{代码}
