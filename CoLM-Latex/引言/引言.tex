@@ -22,20 +22,18 @@
 
 最初的原型模式编程规范和建模侧重于评估三个陆面模式的最佳特征。它们是：用于Community气候模式(CCM3)和CCSM初始版本的NCAR LSM~\citep{bonan1996land}，中国科学院大气物理研究所陆面模式(IAP94)~\citep{Dai-Zeng_97_IAP94}，以及与CCM2一起使用的生物圈-大气交换方案(BATS)~\citep{dickinson1993biosphere}。在1998年2月LMWG会议上，戴永久汇报了审查这些代码的内容及编程规范的情况。这次会议正式确定：研制的原型模式不仅被视为NCAR CCSM陆面部分的下一代模式，而且被视为需要对其当前陆面模式进行广泛修订的其他美国小组使用的下一代候选模式。
 
-为此，成立了一个专门的科学指导委员会，审查戴永久提出的设计规范，并促进进一步的发展。指导委员会成员的选择是为了在模式研制中提供科学指导和专业知识，他们来自美国大学 (Robert Dickinson、曾旭斌、Jay Famiglietti、Jon Foley)和美国政府实验室(Paul Dirmeyer、Paul Houser) 的科学家。委员会由CSM LMWG主席Robert Dickinson(亚利桑那大学)和Gordon Bonan (NCAR)担任，最初的成员是: Robert Dickinson、戴永久、曾旭斌(亚利桑那大学团队)，Paul Dirmeyer(海洋-陆地-大气研究中心)，Jay Famiglietti(德克萨斯大学奥斯汀分校)，Jon Foley(威斯康星大学)和Paul Houser (GSFC)。Paul Dirmeyer和Paul Houser就如何以更好地满足其机构要求的方式改进规则提供了特别实质性的指导。曾旭斌负责群体间的协调和监督项目实施。
+为此，成立了一个专门的科学指导委员会，审查戴永久提出的设计规范，并促进进一步的发展。指导委员会成员的选择是为了在模式研制中提供科学指导和专业知识，他们来自美国大学 (Robert Dickinson、曾旭斌、Jay Famiglietti、Jon Foley)和美国政府实验室(Paul Dirmeyer、Paul Houser) 的科学家。委员会由CSM LMWG主席Robert Dickinson(亚利桑那大学)和Gordon Bonan (NCAR)担任，最初的成员是: Robert Dickinson、戴永久、曾旭斌(亚利桑那大学团队)，Paul Dirmeyer(海洋-陆地-大气研究中心)，Jay Famiglietti(德克萨斯大学奥斯汀分校)，Jon Foley(威斯康星大学)和Paul Houser (GSFC, Goddard Space Flight Center, NASA)。Paul Dirmeyer和Paul Houser就如何以更好地满足其机构要求的方式改进规则提供了特别实质性的指导。曾旭斌负责群体间的协调和监督项目实施。
 
 通过一年多的努力完成了原型模式研制。原型模式不仅集成了国际陆面研究的优秀成果，并在诸多方面做出重大改进和新的发展，特别，在水分相态变化、次网格参数化、复杂问题分解、计算稳定性、模式整体协调性等关键问题做出重大创新。1999年3月由Mike Bosilovich、Paul Dirmeyer和Paul Houser对CLM原型模式进行了检查。此后，开始了一个广泛的代码测试阶段。Keith Oleson, 戴永久, Adam Schlosser和Paul Houser在1999年6月的CCSM Workshop LMWG会议上介绍了离线测试的初步结果。
 
-不同研究团队开展对原型模式全面评估测试，时间持续一年有余。评估团队有：戴永久、Robert Dickinson、曾旭斌和杨宗良组成的亚利桑那大学团队，Gordon Bonan和Keith Oleson的NCAR团队，Paul Dirmeyer和Adam Schlosser的COLA (Center for Ocean-Land-Atmosphere Studies)团队，Paul Houser和Mike Bosilovich的GSFC (Goddard Space Flight Center, NASA)团队，Scott Denning和Ian Baker的科罗拉多州立大学团队。1999年11月在COLA的CLM研讨会上每个团队汇报了独立的测试结果，充分展示了CLM原型模式优秀的性能。用于验证的站点数据包括所有PILPS站点(Cabauw、Valdai、Red-Arkansas河流域)~\citep{Henderson-Sellers_1993_PILPS}和其他站点数据(FIFE~\citep{Sellers88FIFE}、BOREAS~\citep{Sellers95BOREAS}、HAPEX-MOBILHY~\citep{Andre1986hapex}、ABRACOS~\citep{Gash96ABRACOS}、Sonoran Desert~\citep{Unland1996surface}，以及全球土壤湿度项目(GSWP)数据~\citep{Dirmeyer1999global})。
+不同研究团队开展对原型模式全面评估测试，时间持续一年有余。评估团队有：戴永久、Robert Dickinson、曾旭斌和杨宗良组成的亚利桑那大学团队，Gordon Bonan和Keith Oleson的NCAR团队，Paul Dirmeyer和Adam Schlosser的COLA (Center for Ocean-Land-Atmosphere Studies)团队，Paul Houser和Mike Bosilovich的GSFC团队，Scott Denning和Ian Baker的科罗拉多州立大学团队。1999年11月在COLA的CLM研讨会上每个团队汇报了独立的测试结果，充分展示了CLM原型模式优秀的性能。用于验证的站点数据包括所有PILPS站点(Cabauw、Valdai、Red-Arkansas河流域)~\citep{Henderson-Sellers_1993_PILPS}和其他站点数据(FIFE~\citep{Sellers88FIFE}、BOREAS~\citep{Sellers95BOREAS}、HAPEX-MOBILHY~\citep{Andre1986hapex}、ABRACOS~\citep{Gash96ABRACOS}、Sonoran Desert~\citep{Unland1996surface}，以及全球土壤湿度项目(GSWP)数据~\citep{Dirmeyer1999global})。
 
 在2000年6月召开的CCSM Workshop LMWG会议上，戴永久正式汇报了通用陆面模式与CCM3的初步耦合结果，表明CLM可以成功地与气候模式耦合。与NCAR LSM和观测结果的比较表明，径流的季节性、夏季偏冷的显著减少和雪深有了重大改善。但是，注意到与径流和反照率有关的一些缺陷，随后予以解决。杨宗良和Ian Baker汇报了CLM在模拟雪和土壤温度方面的改进。
 戴永久具体实施和组织完成了CLM的研发、CSM的耦合、全面的性能评估、完整的技术报告和用户指南~\citep{Dai2001CoLM}。CLM由戴永久通过2003年BAMS封面论文向公众发布~\citep{dai2003common}。CLM与CCM的耦合评估由曾旭斌总结发表~\citep{zeng2002coupling}。戴永久参与了NCAR Community Atmosphere Model (CAM 3.0)技术报告编写~\citep{Collins2004CAM}。
 
 在此基础上，NCAR团队改土地覆盖/土地利用的biome分类体系(BATS分类)为植被功能(PFT)分类体系，新增了全球陆面基础数据集，河道径流和生物地球化学的模式，以及代码架构。为了与CCSM中Community相匹配，名称改The Common Land Model为The Community Land Model，简写仍然为CLM。Community-CLM技术报告于2004年通过NCAR Tech Note~\citep{Oleson2004CLM}正式发布，提供免费自由下载的模式系统。Community-CLM与CCM耦合评估由Gordon Bonan总结发表~\citep{Bonan2002CLM}。
 
-
 戴永久于2002年6月加盟北京师范大学，2003年6月全职回到北京，希望能在Common-CLM的基础上，发展我们自主可控的陆面模拟研究平台，得到了Robert Dickinson的鼓励和全面的建议，并建议中国版CLM继承The Common Land Model这一名称，为了区别NCAR主导的Community–CLM，改Common-CLM的简写为CoLM。
-
 
 
 \subsection{通用陆面模式 2004 版本 (CoLM 2004)}
@@ -75,7 +73,6 @@ CoLM2004模式源程序、基础数据集、科学技术报告和用户指南发
 
 
 \subsection{通用陆面模式 2014 版本 (CoLM 2014)}
-
 \begin{enumerate}[label={\arabic*)}]
     \item 陆面属性数据集
     \begin{enumerate}[label={\alph*)}]
@@ -96,10 +93,10 @@ CoLM2004模式源程序、基础数据集、科学技术报告和用户指南发
     在模式程序及结构作了全面的改进，更为好用、易用。
 \end{enumerate}
 
-模式源程序、基础数据集、科学技术报告和用户指南发布网站： \url{http://globalchange.bnu.edu.cn/research/models}。
+CoLM2014模式源程序、基础数据集、科学技术报告和用户指南发布网站： \url{http://globalchange.bnu.edu.cn/research/models}。
 
 
-\section[通用陆面模式 2024 版本(CoLM 2024)]{通用陆面模式 2024 版本(CoLM 2024) (Overview of CoLM 2024)}
+\section[通用陆面模式 2024 版本({{CoLM}} 2024)]{通用陆面模式 2024 版本(CoLM 2024) (Overview of CoLM 2024)}
 当今用于数值天气/气候/地球系统模式的陆面过程模式研究需特别强调向多时空尺度、系统集成的方向发展，全球性与区域性、宏观与微观、生态系统过程等的结合，多源观测和数据同化相结合的方向发展；特别强调学科研究与国家需求、经济和社会可持续发展以及政策决策紧密结合，使陆面过程模式研究不断向深度和广度发展。一个有效的陆面模拟系统能够为我们识别气候变化与人类活动对环境变化的影响、探索水文气象灾害成因并且进行预报与预警、优化水资源配置、保护粮食安全和生态环境提供科学支撑。
 
 我们旨在研发我国具备国际先进地位的新一代陆面过程模式。主要研究目标包括：建立包含人类活动和生态系统过程的高分辨率(100米级)全球陆面过程模式；建成全球分辨率为亚公里级且与模式相匹配的陆面基础数据集和验证资料数据集；开发适用于模式不同分辨率应用的尺度转换方法，实现与中国科学院地球系统模式CAS-ESM、中国气象局数值天气预报系统模式GRAPES、天气研究与预报模式气候版(CWRF)、国家气候中心气候系统模式BCC-CSM等的多尺度耦合应用。最为重要的目标是：创建涉及更广泛科学群体的科学研究范式，更直接地让非科学用户参与模式开发，促进知识协同生产。
@@ -107,13 +104,22 @@ CoLM2004模式源程序、基础数据集、科学技术报告和用户指南发
 以通用陆面模式CoLM 2014为基础，针对地表能量、水文、生物地球化学循环和人为扰动等过程对其改进和完善，研发新一代高分辨率全球陆面过程模式。主要研究内容包括：研制包含人类活动和生态系统过程的高分辨率全球陆面过程模式；基于理论研究在精细尺度下创新或改进陆面模式；研制与全球陆面过程模式相匹配的高分辨率数据集；发展陆面过程模式和基础数据的尺度转换方法，提高陆面过程模式的时空分辨率和模拟准确性；实现陆面过程模式与天气/气候/地球系统模式的耦合应用。
 
 CoLM 2024主要新内容(New Features of CoLM 2024):
-
 \begin{enumerate}[label={\arabic*)}]
     \item 网格结构、PFT和PC次网格
 
     除经纬度网格外，CoLM2024版引入了两种新的网格结构：非结构网格和流域单元网格。非结构网格可以基于多个水平陆面分布特征，自动识别不同区域所需的网格分辨率，生成包括三角形网格和六边形网格在内的无规则拓扑关系网格结构。流域单元网格重点考虑了地形对陆面过程的影响，建立了流域单元-高度带单元的多级网格结构。
     
     \item 基础数据集
+    \begin{enumerate}[label={\alph*)}]
+        \item 土地覆盖/土地利用数据。利用其他特定类型地表覆盖数据对 USGS 地表覆盖进行更新，包括全球1公里水体和湿地数据(Global Lakes and Wetlands Database: Lakes and Wetlands Grid (Level 3))~\citep{lehner2004development}、全球1公里冰川数据~\citep{RGIConsortium2017}、全球1公里城市覆盖数据 (MODIS)~\citep{schneider2009new} 和全球1公里高程数据(USGS)。此外，还添加了ESA CCI 地表覆盖产品(\url{http://maps.elie.ucl.ac.be})和GLC FCS30 地表覆盖数据~\citep{zhang2023glc_fcs30d}。
+        \item 土壤数据。
+        \item 植被结构及属性数据。
+        \item 水文数据。
+        \item 城市数据。
+        \item 作物数据。
+        \item 生物地球化学数据。
+    \end{enumerate}
+    
     \item 辐射(三维冠层辐射、SNICAR …)
     \item 湍流通量
     \item 冠层降水截留和植被水力学
@@ -142,7 +148,7 @@ CoLM 2024主要新内容(New Features of CoLM 2024):
     \item 土地利用土地覆盖变化 
     \item 火灾
 
-    使用Li全球火灾参数化方案代替GlobFIRM方案，模拟火发生、火蔓延、及火影响过程。Li的基本方程和框架可以解决GlobFIRM模拟的全球燃烧面积不足观测一半的大问题，并实现火灾季节变化模拟；实现了人类活动影响火灾的模拟；实现了基于卫星和场观测资料对关键参数的率定；实现了火灾引起的痕量气体和气溶胶排放模拟。
+    使用Li全球火灾参数化方案~\citep{LiF2012,LiF2013,LiF2017,LiF2019}代替GlobFIRM方案，模拟火发生、火蔓延、及火影响过程。Li的基本方程和框架可以解决GlobFIRM模拟的全球燃烧面积不足观测一半的大问题，并实现火灾季节变化模拟；实现了人类活动影响火灾的模拟；实现了基于卫星和场观测资料对关键参数的率定；实现了火灾引起的痕量气体和气溶胶排放模拟。
 
     \item 臭氧生态胁迫
 
@@ -154,6 +160,8 @@ CoLM 2024主要新内容(New Features of CoLM 2024):
     
     \item 模式程序结构
 \end{enumerate}
+
+CoLM2024 模式源程序发布于 \url{https://github.com/CoLM-SYSU/CoLM202X}，技术文档发布于 \url{https://github.com/CoLM-SYSU/CoLM-doc}。
 
 
 \section{致谢 (Acknowledgments)}

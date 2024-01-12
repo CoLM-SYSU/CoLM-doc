@@ -4,8 +4,7 @@
 
 通用陆面模式（CoLM，Common Land Model）首先对陆地表面进行剖分，将模拟区域按一定规则划分成单元（Element），模拟分辨率决定了单元平均面积的大小。CoLM中包含三种单元划分规则：1）经纬度网格(图~\ref{fig:经纬度网格})；2）非结构网格（三角形/六边形）(图~\ref{fig:六边形单元网格},~\ref{fig:三角形单元网格})；3）流域单元（Catchment）(图~\ref{fig:流域单元网格})。除默认的三种网格外，CoLM实际可使用任意形状单元的网格。
 
-
- {
+{
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/模式构架/网格-格点.jpg}
@@ -13,7 +12,7 @@
 \label{fig:经纬度网格}
 \end{figure}
 }
- {
+{
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/模式构架/网格-六边形.jpg}
@@ -480,7 +479,7 @@ f_{dif} = f_{dif} + \left( 1 - f_{dif} \right)f_{cloud}
 太阳辐射可见光波段占比计算为：
 %
 \begin{equation}
-f_{vis} = \frac{500. - {464f}_{could}}{\left( 580. - {499f}_{could} \right) + \left( 580. - {464f}_{could} \right)}
+f_{vis} = \frac{500 - {464f}_{cloud}}{\left( 580 - {499f}_{cloud} \right) + \left( 580 - {464f}_{cloud} \right)}
 \end{equation}
 %
 最终分波段的直射/漫射入射太阳辐射计算为：
