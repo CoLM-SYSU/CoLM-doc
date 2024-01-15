@@ -50,6 +50,7 @@
 \usepackage{setspace}
 \usepackage{doi}
 \setstretch{1.5}
+\usepackage{bookmark}
 
 \begin{document}
 %\include{uhead.sty}
@@ -69,7 +70,7 @@
  \upshape
  \large%\\[0.5in]
 % \vskip 0.5in
-2023 年 12 月%
+2024 年 01 月%
 }
 
 %\normallinespacing
@@ -141,11 +142,17 @@
 %\addcontentsline{toc}{chapter}{附录}
 \include{附录/附录}
 
+\bookmarksetup{startatroot}
+\addtocontents{toc}{\bigskip}
+
 \clearpage
 \renewcommand{\bibname}{参考文献}
 %\addcontentsline{toc}{chapter}{参考文献}
 \bibliographystyle{agufull08-mod}
 \bibliography{References/References}
 
+\clearpage
+\input{致谢/致谢}
+\addcontentsline{toc}{chapter}{致谢}
 
 \end{document}
