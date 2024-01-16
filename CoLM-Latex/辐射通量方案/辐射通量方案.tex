@@ -161,7 +161,7 @@ g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
 
 积雪反照率十分依赖于冰粒的单次散射反照率，包含额外的反照率权重可以提高五个波段反照率方案的准确性\citep{flanner2007PresentdayClimateForcing}。
 
-积雪在五种波段的单次散射反照率、质量消光截面以及不对称参数由下表给出，它们均基于米氏散射近似理论计算得到。不同大气沉积气溶胶的单次散射反照率、质量消光截面以及不对称参数取决于波段。而对于冰粒，其光学属性取决于入射辐射类型（直射或漫射辐射）、波段以及有效粒径，其中有效粒径考虑积雪的老化过程计算得到（见章节~\ref{积雪老化}）。
+积雪在五种波段的单次散射反照率、质量消光截面以及不对称参数由表~\ref{tab:积雪单次散射反照率} 给出，它们均基于米氏散射近似理论计算得到。不同大气沉积气溶胶的单次散射反照率、质量消光截面以及不对称参数取决于波段。而对于冰粒，其光学属性取决于入射辐射类型（直射或漫射辐射）、波段以及有效粒径，其中有效粒径考虑积雪的老化过程计算得到（见章节~\ref{积雪老化}）。
 
 \begin{table}[htbp]
 \centering
@@ -178,9 +178,9 @@ g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
 沙尘二 & 0.944 & 0.944 & 0.944 & 0.944 & 0.944 \\
 沙尘三 & 0.904 & 0.904 & 0.904 & 0.904 & 0.904 \\
 沙尘四 & 0.850 & 0.850 & 0.850 & 0.850 & 0.850 \\
-冰（$r_{e}=30 \mu\rm{m}$） & 0.9999 & 0.9999 & 0.9999 & 0.9999 &
+冰（$r_{e}=30$ $\mu\rm{m}$） & 0.9999 & 0.9999 & 0.9999 & 0.9999 &
 0.9999 \\
-冰（$r_{e}=1500 \mu\rm{m}$） & 0.9998 & 0.9998 & 0.9998 & 0.9998 &
+冰（$r_{e}=1500$ $\mu\rm{m}$） & 0.9998 & 0.9998 & 0.9998 & 0.9998 &
 0.9998 \\ \bottomrule
 \end{tabular}
 \end{table}
@@ -200,8 +200,8 @@ g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
 沙尘二 & 841 & 841 & 841 & 841 & 841 \\
 沙尘三 & 388 & 388 & 388 & 388 & 388 \\
 沙尘四 & 197 & 197 & 197 & 197 & 197 \\
-冰（$r_{e}=30 \mu\rm{m}$） & 55.7 & 55.7 & 55.7 & 55.7 & 55.7 \\
-冰（$r_{e}=1500 \mu\rm{m}$） & 1.09 & 1.09 & 1.09 & 1.09 & 1.09 \\ \bottomrule
+冰（$r_{e}=30$ $\mu\rm{m}$） & 55.7 & 55.7 & 55.7 & 55.7 & 55.7 \\
+冰（$r_{e}=1500$ $\mu\rm{m}$） & 1.09 & 1.09 & 1.09 & 1.09 & 1.09 \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -220,16 +220,16 @@ g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
 沙尘二 & 0.70 & 0.70 & 0.70 & 0.70 & 0.70 \\
 沙尘三 & 0.79 & 0.79 & 0.79 & 0.79 & 0.79 \\
 沙尘四 & 0.83 & 0.83 & 0.83 & 0.83 & 0.83 \\
-冰（$r_{e}=30 \mu\rm{m}$） & 0.88 & 0.88 & 0.88 & 0.88 & 0.88 \\
-冰（$r_{e}=1500 \mu\rm{m}$） & 0.89 & 0.89 & 0.89 & 0.89 & 0.89\\ \bottomrule
+冰（$r_{e}=30$ $\mu\rm{m}$） & 0.88 & 0.88 & 0.88 & 0.88 & 0.88 \\
+冰（$r_{e}=1500$ $\mu\rm{m}$） & 0.89 & 0.89 & 0.89 & 0.89 & 0.89\\ \bottomrule
 \end{tabular}
 \end{table}
 
 \subsubsection{积雪老化过程}\label{积雪老化}
 
-雪的老化表现为冰粒有效粒径（$r_e$）的变化。先前的研究表明，使用由更复杂形状组成的冰介质表面积与体积比（或比表面积）的球体会在模拟半球通量中产生相对较小误差（例如\citet{grenfell1999RepresentationNonsphericalIce}）。有效半径是球形粒子集合的表面积加权平均半径，与比表面积（SSA）直接相关，表达式为$r_e=3/(\rho_{ice}\text{SSA})$，其中$\rho_{ice}$是冰的密度。$r_e$是一个简单实用的度量指标，将积雪微观物理状态与干雪辐射特性联系起来。
+雪的老化表现为冰粒有效粒径（$r_e$）的变化。已有研究表明，使用由更复杂形状组成的冰介质表面积与体积比（或比表面积）的球体会在模拟半球通量中产生相对较小误差（例如~\citet{grenfell1999RepresentationNonsphericalIce}）。有效半径是球形粒子集合的表面积加权平均半径，与比表面积（SSA）直接相关，表达式为$r_e=3/(\rho_{ice}\text{SSA})$，其中$\rho_{ice}$是冰的密度。$r_e$是一个简单实用的度量指标，将积雪微观物理状态与干雪辐射特性联系起来。
 
-雪变湿的过程也会导致反照率快速变化。液态水的存在会导致周围的冰粒迅速变得粗糙(例如\citet{brun1989InvestigationWetSnowMetamorphism})，液态水往往会重新冻结成较大的冰块，使大片积雪变暗。小液滴的存在本身不会地使积雪显著变暗，因为冰和水的折射率在整个太阳光谱中非常接近。然而，积水会大大减少每单位质量的折射事件的发生，从而使积雪变暗。目前还没有考虑到这种影响。
+雪变湿的过程也会导致反照率快速变化。液态水的存在会导致周围的冰粒迅速变得粗糙(例如~\citet{brun1989InvestigationWetSnowMetamorphism})，液态水往往会重新冻结成较大的冰块，使积雪变暗。小液滴的存在本身不会地使积雪显著变暗，因为冰和水的折射率在整个太阳光谱中非常接近。然而，积水会大大减少每单位质量的折射事件的发生，从而使积雪变暗。目前还没有考虑到这种影响。
 
 每个时间步长发生的有效晶粒度的净变化在每个雪层中可以概括为干雪变质作用（$dr_{e,dry}$）、液态水导致的变质作用（$dr_{e,wet}$）、液体水的再冻结和新降雪的加入引起的变化。每个雪层的质量被划分为上一个时间步长遗留下来的雪（$f_{old}$）、新降雪（$f_{new}$）和重新冻结的液态水（$f_{rfz}$），使得雪的$r_e$在每个时间步长${t}$更新为：
 \begin{equation}
@@ -238,7 +238,7 @@ r_{e}(t) = \lbrack r_{e}(t - 1) + {dr}_{e,dry} + {dr}_{e,wet}\rbrack f_{old} + r
 
 新降雪（$r_{e,0}$）的有效粒径仅基于其与温度的简单线性关系。低于$-30$摄氏度时，有效粒径的最小值被强制取为54.5 \unit{\mu{m}}（对应60 \unit{m^{2}.kg^{-1}}）；大于0摄氏度时，有效粒径的最大值被强制取为204.5 \unit{\mu{m}}。有效粒径在$-30$和0摄氏度之间为线性变化。重新冻结的液态水（$r_{e,rfz}$）的有效粒径设置为1000 \unit{\mu{m}}。
 
-干雪的老化基于\citet{flanner2006LinkingSnowpackMicrophysics}描述的微观物理模型。该模型模拟了不同尺寸和颗粒间距的冰晶集合之间的扩散水蒸汽通量。根据雪温度、温度梯度、密度和初始颗粒大小分布的任何组合，预测比表面积和有效半径。高温、较大的温度梯度以及较小的雪密度最有利于加速雪的老化，而在低温下，无论温度梯度和密度如何，雪的老化都会缓慢进行。由于该模型目前计算成本太高，无法纳入气候模型，我们将参数曲线拟合为大范围雪况下的输出模型，并将这些参数应用于模型中。参数方程的函数形式为：
+干雪的老化基于~\citet{flanner2006LinkingSnowpackMicrophysics}描述的微观物理模型。该模型模拟了不同尺寸和颗粒间距的冰晶集合之间的扩散水蒸汽通量。根据雪温度、温度梯度、密度和初始颗粒大小分布的任何组合，预测比表面积和有效半径。高温、较大的温度梯度以及较小的雪密度最有利于加速雪的老化，而在低温下，无论温度梯度和密度如何，雪的老化都会缓慢进行。由于该模型目前计算成本太高，无法纳入气候模型，我们将参数曲线拟合为大范围雪况下的输出模型，并将这些参数应用于模型中。参数方程的函数形式为：
 \begin{equation}
 \frac{{dr}_{e,dry}}{dt} = \left( \frac{{dr}_{e}}{dt} \right)_{0}\left( \frac{\eta}{r_{e} - r_{e,0} + \eta} \right)^{1/\kappa}
 \end{equation}
@@ -249,9 +249,9 @@ r_{e}(t) = \lbrack r_{e}(t - 1) + {dr}_{e,dry} + {dr}_{e,wet}\rbrack f_{old} + r
 \left( \frac{dT}{dz} \right)_{n} = \frac{1}{{dz}_{n}}abs\left\lbrack \frac{T_{n - 1}{dz}_{n} + T_{n}{dz}_{n - 1}}{{dz}_{n} + {dz}_{n - 1}} + \frac{T_{n + 1}{dz}_{n} + T_{n}{dz}_{n + 1}}{{dz}_{n} + {dz}_{n + 1}} \right\rbrack
 \end{equation}
 %
-对于底部雪层（n=0），$T_{n-1}$为表层土壤的温度；对于表层雪，假设$T_{n+1}=T_n$。
+对于底部雪层（$n=0$），$T_{n+1}$为表层土壤的温度；对于表层雪，假设$T_{n-1}=T_n$。
 
-液态水对加强的变质作用的贡献基于\citet{brun1989InvestigationWetSnowMetamorphism}中的参数方程，其测量了不同液态水含量下的粒径增长率，这种关系取决于液态水质量分数$f_{liq}$：
+液态水对加强的变质作用的贡献基于~\citet{brun1989InvestigationWetSnowMetamorphism}中的参数方程，其测量了不同液态水含量下的粒径增长率，这种关系取决于液态水质量分数$f_{liq}$：
 %
 \begin{equation}
 \frac{{dr}_{e}}{dt} = \frac{10^{18}C_{1}f_{liq}^{3}}{4\pi r_{e}^{2}}
@@ -259,7 +259,7 @@ r_{e}(t) = \lbrack r_{e}(t - 1) + {dr}_{e,dry} + {dr}_{e,wet}\rbrack f_{old} + r
 %
 其中$C_{1}$为$4.22×10^{-13}$，$f_{liq}=w_{liq}/(w_{liq}+w_{ice})$。
 
-在雪质量大于零但尚未定义雪层的情况下，$r_e$设置为$r_{e,0}$，当雪层被合并或分割时，$r_e$根据其他状态变量的计算，计算为两层的质量加权平均值。计算得到的$r_e$的范围限制在30-1500 \unit{\mu{m}}之间。
+在雪质量大于零但尚未定义雪层的情况下，$r_e$设置为$r_{e,0}$，当雪层被合并或分割时，$r_e$根据其他状态变量的计算，计算为两层的质量加权平均值。计算得到的$r_e$的范围限制在30--1500 \unit{\mu{m}}之间。
 
 \subsubsection{SNICAR模型二流近似求解}
 
@@ -291,20 +291,6 @@ S = \frac{\omega}{4}F_{s}P\left( \mu,{- \mu}_{0},\Phi,\Phi_{0} \right)\exp\left(
 \end{equation}
 其中，\(\gamma_{1}\)和\(\gamma_{2}\)是取决于二流近似方程的特定形式的系数。我们通过用$n$（层数）标记通量来得到多层的解决方案。
 
-对于直射入射太阳辐射：
-\begin{equation}
-S^{+} = \gamma_{3}\pi F_{s}\omega_{0}\exp\left( - \left( \tau_{c} + \tau \right)/\mu_{0} \right)
-\end{equation}
-\begin{equation}
-S^{-} = \gamma_{4}\pi F_{s}\omega_{0}\exp\left( - \left( \tau_{c} + \tau \right)/\mu_{0} \right)
-\end{equation}
-\begin{equation}
-\frac{dF^{\uparrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{2}F^{\downarrow}(\tau) - \gamma_{3}\widetilde{\omega}F_{\odot}exp( - \frac{\tau}{\mu_{0}})
-\end{equation}
-\begin{equation}
-\frac{dF^{\downarrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{1}F^{\downarrow}(\tau) + (1 - \gamma_{3})\widetilde{\omega}F_{\odot}exp( - \frac{\tau}{\mu_{0}})
-\end{equation}
-
 \begin{table}[htbp]
 \centering
 \caption{SNICAR中包含的二流近似系数取值}
@@ -328,12 +314,25 @@ Quadrature &
 \end{tabular}
 \end{table}
 
-其中\(\pi F_{s}\)是入射太阳通量，\(\mu_{0}\)是太阳辐射的入射方向，以上两式可以得到二流近似的通解。求解系数的关键步骤是计算相函数。然而，简单的近似方法，比如Eddington近似，通常难以处理高度非对称的相函数（例如冰晶相函数）。一种常见的解决方案是通过使用δ函数来近似相函数的强前向散射峰，并对相函数进行二流展开，从而得到广泛使用的"$\delta$函数调整"方法\citep{joseph1976DeltaEddingtonApproximationRadiative}。$\delta$函数调整能够提高在相函数高度非对称情况下的不同二流近似的准确性，表达式如下：
+对于直射入射太阳辐射：
+\begin{equation}
+S^{+} = \gamma_{3}\pi F_{s}\omega_{0}\exp\left( - \left( \tau_{c} + \tau \right)/\mu_{0} \right)
+\end{equation}
+\begin{equation}
+S^{-} = \gamma_{4}\pi F_{s}\omega_{0}\exp\left( - \left( \tau_{c} + \tau \right)/\mu_{0} \right)
+\end{equation}
+\begin{equation}
+\frac{dF^{\uparrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{2}F^{\downarrow}(\tau) - \gamma_{3}\widetilde{\omega}F_{\odot}exp( - \frac{\tau}{\mu_{0}})
+\end{equation}
+\begin{equation}
+\frac{dF^{\downarrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{1}F^{\downarrow}(\tau) + (1 - \gamma_{3})\widetilde{\omega}F_{\odot}exp( - \frac{\tau}{\mu_{0}})
+\end{equation}
+其中\(\pi F_{s}\)是入射太阳通量，\(\mu_{0}\)是太阳辐射的入射方向，以上两式可以得到二流近似的通解。求解系数的关键步骤是计算相函数。然而，简单的近似方法，比如Eddington近似，通常难以处理高度非对称的相函数（例如冰晶相函数）。一种常见的解决方案是通过使用$\delta$函数来近似相函数的强前向散射峰，并对相函数进行二流展开，从而得到广泛使用的``$\delta$函数调整"方法\citep{joseph1976DeltaEddingtonApproximationRadiative}。$\delta$函数调整能够提高在相函数高度非对称情况下的不同二流近似的准确性，表达式如下：
 \begin{equation}
 \tau^{*} = (1 - \omega g^{2})\tau
 \end{equation}
 \begin{equation}
-\omega^{*} = \frac{(1 - g^{2})\omega}{1 - g^{2}\omega}
+\omega^{*} = \frac{(1 - g^{2})\omega}{1 - \omega g^{2}}
 \end{equation}
 \begin{equation}
 g^{*} = \frac{g}{1 + g}
@@ -393,15 +392,16 @@ R\left( \mu_{0} \right) = \frac{1}{N}(\eta + \Upsilon)\left( u^{2} - 1 \right)\l
 T\left( \mu_{0} \right) = (\eta + \Upsilon)\frac{4u}{N} + \left\lbrack \frac{1}{N}(\eta - \Upsilon)\left( u^{2} - 1 \right)\left( e^{\Gamma\tau^{*}} - e^{- \Gamma\tau^{*}} \right) - \eta - \Upsilon + 1 \right\rbrack e^{\frac{- \tau^{*}}{\mu_{0}}}
 \end{equation}
 
-每层对漫射入射辐射情况下的反射率（$R$）和透射率（$T$）由8个高斯角积分得到：
+对于漫射辐射的反射和透射率（\(\overline{R}\)和\(\overline{T}\)）是根据\citet{wiscombe1980ModelSpectralAlbedo}的假设，即在各向同性入射情况下，通过对直接辐射的反射率进行积分计算得到的。
+%
 \begin{equation}
 \overline{R}\left( \mu_{0} \right) = 2\int_{0}^{+ 1}{\mu R(\mu)d\mu}
 \end{equation}
 \begin{equation}
 \overline{T}\left( \mu_{0} \right) = 2\int_{0}^{+ 1}{\mu T(\mu)d\mu}
 \end{equation}
-
-对于漫射辐射的反射和透射率（\(\overline{R}\)和\(\overline{T}\)）是根据\citet{wiscombe1980ModelSpectralAlbedo}的假设，即在各向同性入射情况下，通过对直接辐射的反射率进行积分计算得到的。
+%
+对于反射率（$R$）和透射率（$T$）的数值求解是由8个高斯角积分得到。
 
 在考虑层与层多次散射时，假设一旦辐射被散射，它就是漫射和各向同性的。对于位于上层的任意层1（具有辐射特性\(R_{1}\left( \mu_{0} \right)\)、\(T_{1}\left( \mu_{0} \right)\)、\({\overline{R}}_{1}\)、\({\overline{T}}_{1}\)），其下方是层2（具有辐射特性\(R_{2}\left( \mu_{0} \right)\)、\(T_{2}\left( \mu_{0} \right)\)、\({\overline{R}}_{2}\)、\({\overline{T}}_{2}\)），从上方入射的直射和漫射辐射的反射率、透射率计算为\citep{briegleb2007delta}：
 \begin{equation}
@@ -452,7 +452,7 @@ F_{dif}^{\uparrow} = \frac{{\overline{T}}_{dn}{\overline{R}}_{up}}{1 - {\overlin
 \alpha = \frac{F_{dir}^{\uparrow}(top) + F_{dif}^{\uparrow}(top)}{F_{dir}^{\downarrow}(top) + F_{dif}^{\downarrow}(top)}
 \end{equation}
 
-太阳辐射通量根据五个光谱波段来计算，如下表所示。由于雪的反照率在整个太阳光谱中变化较大，因此采用四个波段来更准确地表示雪在近红外（NIR，0.7-5.0$\mu{m}$）波段的特性，而对于可见光谱只采用一个波段。根据表中列出的权重划分向下NIR辐射通量，这些权重通过中纬度冬季典型大气的离线光谱辐射传输计算得到\citet{briegleb2007delta}。
+太阳辐射通量根据五个光谱波段来计算，如下表所示。由于雪的反照率在整个太阳光谱中变化较大，因此采用四个波段来更准确地表示雪在近红外（NIR，0.7--5.0 $\mu \rm{m}$）波段的特性，而对于可见光谱只采用一个波段。根据表中列出的权重划分向下NIR辐射通量，这些权重通过中纬度冬季典型大气的离线光谱辐射传输计算得到\citep{briegleb2007delta}。
 
 \begin{table}[htbp]
 \centering
@@ -461,11 +461,11 @@ F_{dif}^{\uparrow} = \frac{{\overline{T}}_{dn}{\overline{R}}_{up}}{1 - {\overlin
 \begin{tabular}{lll}
 \toprule
 光谱波段 & 直接太阳辐射权重 & 漫射太阳辐射权重 \\ \midrule
-波段1：0.3-0.7$\mu{m}$（可见光） & （1.0） & （1.0） \\
-波段2：0.7-1.0$\mu{m}$（近红外） & 0.494 & 0.586 \\
-波段3：1.0-1.2$\mu{m}$（近红外） & 0.181 & 0.202 \\
-波段4：1.2-1.5$\mu{m}$（近红外） & 0.121 & 0.109 \\
-波段5：1.5-5.0$\mu{m}$（近红外） & 0.204 & 0.103 \\ \bottomrule
+波段1：0.3-0.7 $\mu \rm{m}$（可见光） & 1.0 & 1.0 \\
+波段2：0.7-1.0 $\mu \rm{m}$（近红外） & 0.494 & 0.586 \\
+波段3：1.0-1.2 $\mu \rm{m}$（近红外） & 0.181 & 0.202 \\
+波段4：1.2-1.5 $\mu \rm{m}$（近红外） & 0.121 & 0.109 \\
+波段5：1.5-5.0 $\mu \rm{m}$（近红外） & 0.204 & 0.103 \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -1553,4 +1553,36 @@ L_{v}=\varepsilon_{v}\left(L ^\downarrow-2 \sigma T_{v}^{4}+\varepsilon_{g} \sig
 L_{g}=\left(\tau_{v} L ^\downarrow  + \varepsilon_{v} \sigma T_{v}^{4} \right) \varepsilon_{g} - \varepsilon_{g} \sigma T_{g}^{4}
 \end{equation}
 以上计算是针对一维植被情景，对于三维植被净长波辐射计算见章节~\ref{三维植被长波辐射传输}。
+
+\section{太阳天顶角}\label{太阳天顶角}
+\begin{mymdframed}{代码}
+本章节对应代码为\texttt{MOD\_OrbCoszen.F90}。
+\end{mymdframed}
+
+太阳天顶角的余弦$\mu$的表达式为
+\begin{equation}
+\mu= \sin(\phi)\sin(\delta)−\cos(\phi)\cos(\delta)\cos(h)
+\end{equation}
+%
+其中$h$为太阳时角，$\delta$是黄赤交角，$\phi$是纬度（北半球为正；单位均为弧度），太阳时角$h$的表达式为：
+\begin{equation}
+h=2\pi d+\theta
+\end{equation}
+$d$是儒略日 (Julian Day)，$\theta$是经度（格林威治子午线以东为正）。计算$\delta$需要的轨道参数有地球的倾斜角$\varepsilon$、地球的离心率$e$、近日点相对于春分点的经度$\widetilde{\omega}$。黄赤交角$\delta$计算式为：
+\begin{equation}
+\delta= \sin^{−1}[\sin(\epsilon) \sin(\lambda)]
+\end{equation}
+%
+$\varepsilon$为地球倾斜角，设置为\num{0.409214646}，单位弧度。$\lambda$为地球实际的经度（单位弧度），其计算从春分开始逆时针计算（$\lambda$在春分点为0），其表达式为：
+\begin{equation}
+\lambda = \lambda_{m0} + \left( 2e - \frac{1}{4}e^{3} \right)\sin\left( \lambda_{m} - \widetilde{\omega} \right) + \frac{5}{4}e^{2}\sin(2\left( \lambda_{m} - \widetilde{\omega} \right) ) + \frac{13}{12}e^{3}\sin(3\left( \lambda_{m} - \widetilde{\omega} \right))
+\end{equation}
+%
+$\lambda_{m0}$是春分时的平均经度，设置为\num{-3.2625366e-2}。$e$设置为\num{1.672393084e-2}。$\widetilde{\omega}$设置为\num{4.92251015}。平均经度$\lambda_{m}$计算为：
+%
+\begin{equation}
+\lambda_{m} = \lambda_{m0} + \frac{2\pi\left( d - d_{ve} \right)}{365}
+\end{equation}
+%
+其中\(d_{ve} = 80.5\)是春分时儒略日（3月21日中午）。
 %\end{辐射过程及辐射通量计算}
