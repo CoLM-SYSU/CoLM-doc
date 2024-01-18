@@ -10,7 +10,6 @@ CoLM植被水力模式中的植物水分传输得益于土壤、根、茎、叶�
 
 
 \section{植物水势动态}\label{植物水势动态}
-植物水势的动态模拟是CoLM植被水力模式的关键。CoLM植被水力模式的水势模拟包括地上和地下植被水力过程两部分。
 地上部分包括在阳叶、阴叶、茎和地表根四个节点间的水势 ($\Psi_{sun}$，$\Psi_{sha}$，$\Psi_{stem}$，$\Psi_{root,0}$)
 %
  模拟；地下部分包括地表根以及$n$层地下根 $n+1$个节点的水势 ($\Psi_{root,i}$，$i=0,1,2,\ldots,n$) 模拟。地上、地下两部分通过地表根水势
@@ -19,7 +18,7 @@ CoLM植被水力模式中的植物水分传输得益于土壤、根、茎、叶�
 {
 \begin{figure}[htb]
 \centering
-\includegraphics{Figures/植被水力模式/CoLM植被水力模型示意图.png}
+\includegraphics[width=0.6\textwidth]{Figures/植被水力模式/CoLM植被水力模型示意图.png}
 \caption{CoLM植被水力模型示意图}
 \label{fig:CoLM植被水力模型示意图}
 \end{figure}
@@ -192,7 +191,7 @@ c_{v,wet}=\frac{f_{wet}\left(\text{LAI}+\text{SAI}\right)g_b}{cf}
 {
     \begin{figure}[htbp]
     \centering
-    \includegraphics{Figures/植被水力模式/光合气孔模式和植被水力模式的耦合示意图.png}
+    \includegraphics[width=0.9\textwidth]{Figures/植被水力模式/光合气孔模式和植被水力模式的耦合示意图.png}
     \caption{光合气孔模式和植被水力模式的耦合示意图}
     \label{fig:光合气孔模式和植被水力模式的耦合示意图}
     \end{figure}
@@ -219,12 +218,12 @@ c_{v,wet}=\frac{f_{wet}\left(\text{LAI}+\text{SAI}\right)g_b}{cf}
     \item 更新植物水势和叶片蒸腾，判断叶片温度是否收敛，若收敛，植被水力模式求解完成，若不收敛，回到第 (1) 步。
 \end{enumerate}
 
-气孔导度详细迭代
+气孔导度详细迭代如图~\ref{fig:植被水力模式的数值模拟流程图} 所示:
 
 {
     \begin{figure}[htbp]
     \centering
-    \includegraphics{Figures/植被水力模式/植被水力模式的数值模拟流程图.png}
+    \includegraphics[width=0.9\textwidth]{Figures/植被水力模式/植被水力模式的数值模拟流程图.png}
     \caption{植被水力模式的数值模拟流程图}
     \label{fig:植被水力模式的数值模拟流程图}
     \end{figure}

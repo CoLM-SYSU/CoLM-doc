@@ -293,7 +293,7 @@ LCT方案所依赖的地表覆盖类型数据可以直接由USGS (章节~\ref{US
 
 CoLM默认将土壤分为10层，每一层土壤的中心深度$z_i$~(m)定义为：
 \begin{equation}
-z_{i} = f_{s}\left[ \exp{\left\lbrack 0.5(i - 0.5) \right\rbrack - 1} \right]
+z_{i} = f_{s}\left\{ \exp{\left\lbrack 0.5(i - 0.5) \right\rbrack} - 1 \right\}
 \end{equation}
 其中尺度因子$f_s=0.025$. 因为土壤水热梯度在接近土壤与大气的交界面时往往较大，采用指数定义可以保证土壤接近表面时得到更细的分层。每一层土壤的厚度$\Delta z_i$~(m)计算为：
 \begin{equation}
@@ -364,7 +364,7 @@ CoLM主程序计算流程主要包括模式数据的读取，时间步循环，�
 
 \textbf{时间步循环}主要包括次网格循环(涉及的过程在\texttt{CoLMDRIVER.F90}和\texttt{CoLMMAIN.F90\allowbreak /Urban\allowbreak \_CoLMMAIN.F90}进行调用)以及可选模块(侧向流、河道径流、数据同化和土地利用土地覆盖变化等模块，在\texttt{CoLM.F90}进行调用)的运行(图~\ref{fig:CoLM计算框图} \textbf{时间步循环}所示)。
 
-\textbf{次网格循环}沿用了原CoLM运行方式，对5种非海洋patch进行循环计算，即植被(含裸土)、城市、湿地、冰川和水体。如果打开海洋模块，则在循环中加入对海洋热力过程的模拟(图~\ref{fig:CoLM计算框图} \textbf{次网格循环}所示)。图中\textbf{次网格循环}所列过程为其简要列表，具体物理过程将从\nameref{part:flux}、\nameref{part:temp}、\nameref{part:SPC}、\nameref{part:hydro}、\nameref{part:BGC}、\nameref{part:human}六大部分各相关章节进行阐述。
+\textbf{次网格循环}沿用了原CoLM运行方式，对5种非海洋patch进行循环计算，即植被(含裸土)、城市、湿地、冰川和水体。如果打开海洋模块，则在循环中加入对海洋热力过程的模拟(图~\ref{fig:CoLM计算框图} \textbf{次网格循环}所示)。图中\textbf{次网格循环}所列过程为其简要列表，具体物理过程将从\nameref{part:flux}、\nameref{part:temp}、\nameref{part:SPC}、\nameref{part:hydro}、\nameref{part:BGC}、\nameref{part:human}、\nameref{part:scaling}七大部分各相关章节进行阐述。
 
 \section{陆气耦合}\label{陆气耦合}
 \subsection{陆面模式与大气模式的数据交换}

@@ -150,12 +150,12 @@ R_{d,sha}=\tau_{{base }} \cdot V_{cmax 25} \cdot \frac{2.0^{\frac{T_{leaf}-T_{op
 
 
 \section{气体扩散方程和气孔导度模型}\label{气体扩散方程和气孔导度模型}
-气孔是植被和大气相互作用的最重要通道，陆地生态系统碳水耦合很大程度取决于气孔的行为。CoLM在的光合同化速率和蒸腾速率计算中，考虑植被气孔的行为，结合气体扩散方程，刻画了碳水通量与浓度梯度之间的重要关系~\eqref{A_n2_sun} -~\eqref{ea_ei_sha}。CoLM将CO$_2$和水汽的气体扩散问题类比于电路问题进行建模，利用叶绿体细胞间、叶表和冠层大气的$\rm CO_2$浓度和水汽浓度梯度，来刻画环境对植被碳水通量的驱动力，如图~\ref{fig:叶片气孔光合作用导度模型示意图}。因此，在阳叶和阴叶冠层尺度上，分别存在关于$\rm CO_2$和水汽的气体扩散方程:
+气孔是植被和大气相互作用的最重要通道，陆地生态系统碳水耦合很大程度取决于气孔的行为。CoLM在的光合同化速率和蒸腾速率计算中，考虑植被气孔的行为，结合气体扩散方程，刻画了碳水通量与浓度梯度之间的重要关系~\eqref{A_n2_sun}--\eqref{ea_ei_sha}。CoLM将CO$_2$和水汽的气体扩散问题类比于电路问题进行建模，利用叶绿体细胞间、叶表和冠层大气的$\rm CO_2$浓度和水汽浓度梯度，来刻画环境对植被碳水通量的驱动力，如图~\ref{fig:叶片气孔光合作用导度模型示意图}。因此，在阳叶和阴叶冠层尺度上，分别存在关于$\rm CO_2$和水汽的气体扩散方程:
 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/气孔导度和光合作用/叶片气孔光合作用导度模型示意图.png}
+\includegraphics[width=0.8\textwidth]{Figures/气孔导度和光合作用/叶片气孔光合作用导度模型示意图.png}
 \caption{叶片气孔光合作用导度模型示意图}
 \label{fig:叶片气孔光合作用导度模型示意图}
 \end{figure}
@@ -359,7 +359,7 @@ c_{i,sha,2}=
 \end{align}
 
 二次方程拟合法的第三次迭代胞间$\rm CO2$浓度取值由割线法，按方程~\eqref{cisunn} 和~\eqref{cishan}计算得到：
-
+%
 \begin{equation}\label{cisun3}
 c_{i,sun,qd,3}=c_{i,sun,1}-f_{1}\left(c_{i,sun,1}\right)\frac{c_{i,sun,1}-c_{i,sun,2}}{ f_{1}\left(c_{i,sun,1}\right)-f_{1}\left(c_{i,sun,2}\right)} 
 \end{equation}
