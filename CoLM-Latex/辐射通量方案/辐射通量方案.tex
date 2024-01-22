@@ -243,21 +243,21 @@ r_{e}(t) = \lbrack r_{e}(t - 1) + {dr}_{e,dry} + {dr}_{e,wet}\rbrack f_{old} + r
 \frac{{dr}_{e,dry}}{dt} = \left( \frac{{dr}_{e}}{dt} \right)_{0}\left( \frac{\eta}{r_{e} - r_{e,0} + \eta} \right)^{1/\kappa}
 \end{equation}
 
-参数$\left( \frac{{dr}_{e}}{dt} \right)_{0}$，$\eta$和$\kappa$以交互方式从具有与积雪温度、温度梯度和密度相对应的查找表中检索。该查找表所涵盖的温度范围为223--273 K、温度梯度范围为0至300 \unit{K.m^{-1}}，密度范围为50至400 \unit{kg.m^{-3}}。使用中间层温度在每个雪层n的中点来计算温度梯度（$T_n$）和雪层厚度（$dz_n$）：
+参数$\left( \frac{{dr}_{e}}{dt} \right)_{0}$，$\eta$和$\kappa$以交互方式从具有与积雪温度、温度梯度和密度相对应的查找表中检索。该查找表所涵盖的温度范围为223--273 K、温度梯度范围为0--300 \unit{K.m^{-1}}，密度范围为50--400 \unit{kg.m^{-3}}。温度梯度$\left( \frac{dT}{dz} \right)_{n}$由雪层温度（$T_n$）雪层厚度（$dz_n$）和雪覆盖度（$f_{sno}$）计算得到：
 %
 \begin{equation}
-\left( \frac{dT}{dz} \right)_{n} = \frac{1}{{dz}_{n}}abs\left\lbrack \frac{T_{n - 1}{dz}_{n} + T_{n}{dz}_{n - 1}}{{dz}_{n} + {dz}_{n - 1}} + \frac{T_{n + 1}{dz}_{n} + T_{n}{dz}_{n + 1}}{{dz}_{n} + {dz}_{n + 1}} \right\rbrack
+\left( \frac{dT}{dz} \right)_{n} = \frac{1}{f_{sno}\cdot {dz}_{n}}\left| \frac{T_{n - 1}{dz}_{n} + T_{n}{dz}_{n - 1}}{{dz}_{n} + {dz}_{n - 1}} - \frac{T_{n + 1}{dz}_{n} + T_{n}{dz}_{n + 1}}{{dz}_{n} + {dz}_{n + 1}} \right|
 \end{equation}
 %
 对于底部雪层（$n=0$），$T_{n+1}$为表层土壤的温度；对于表层雪，假设$T_{n-1}=T_n$。
 
-液态水对加强的变质作用的贡献基于~\citet{brun1989InvestigationWetSnowMetamorphism}中的参数方程，其测量了不同液态水含量下的粒径增长率，这种关系取决于液态水质量分数$f_{liq}$：
+液态水对加强的变质作用的贡献基于~\citet{brun1989InvestigationWetSnowMetamorphism}中的参数方程，不同液态水含量下的粒径增长率$\frac{{dr}_{e}}{dt}$取决于液态水质量分数$f_{liq}$：
 %
 \begin{equation}
 \frac{{dr}_{e}}{dt} = \frac{10^{18}C_{1}f_{liq}^{3}}{4\pi r_{e}^{2}}
 \end{equation}
 %
-其中$C_{1}$为$4.22×10^{-13}$，$f_{liq}=w_{liq}/(w_{liq}+w_{ice})$。
+其中$C_{1}$为$4.22×10^{-13}$，$f_{liq}=w_{liq}/(w_{liq}+w_{ice})$，$w_{liq}$和$w_{ice}$分别表示雪层中液态水和固态水的含量（\unit {kg.m^{-2}}）。 
 
 在雪质量大于零但尚未定义雪层的情况下，$r_e$设置为$r_{e,0}$，当雪层被合并或分割时，$r_e$根据其他状态变量的计算，计算为两层的质量加权平均值。计算得到的$r_e$的范围限制在30--1500 \unit{\mu{m}}之间。
 
@@ -322,10 +322,10 @@ S^{+} = \gamma_{3}\pi F_{s}\omega_{0}\exp\left( - \left( \tau_{c} + \tau \right)
 S^{-} = \gamma_{4}\pi F_{s}\omega_{0}\exp\left( - \left( \tau_{c} + \tau \right)/\mu_{0} \right)
 \end{equation}
 \begin{equation}
-\frac{dF^{\uparrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{2}F^{\downarrow}(\tau) - \gamma_{3}\widetilde{\omega}F_{\odot}exp( - \frac{\tau}{\mu_{0}})
+\frac{dF^{\uparrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{2}F^{\downarrow}(\tau) - \gamma_{3}\widetilde{\omega}F_{\odot}\exp( - \frac{\tau}{\mu_{0}})
 \end{equation}
 \begin{equation}
-\frac{dF^{\downarrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{1}F^{\downarrow}(\tau) + (1 - \gamma_{3})\widetilde{\omega}F_{\odot}exp( - \frac{\tau}{\mu_{0}})
+\frac{dF^{\downarrow}(\tau)}{d\tau} = \gamma_{1}F^{\uparrow}(\tau) - \gamma_{1}F^{\downarrow}(\tau) + (1 - \gamma_{3})\widetilde{\omega}F_{\odot}\exp( - \frac{\tau}{\mu_{0}})
 \end{equation}
 其中\(\pi F_{s}\)是入射太阳通量，\(\mu_{0}\)是太阳辐射的入射方向，以上两式可以得到二流近似的通解。求解系数的关键步骤是计算相函数。然而，简单的近似方法，比如Eddington近似，通常难以处理高度非对称的相函数（例如冰晶相函数）。一种常见的解决方案是通过使用$\delta$函数来近似相函数的强前向散射峰，并对相函数进行二流展开，从而得到广泛使用的``$\delta$函数调整"方法\citep{joseph1976DeltaEddingtonApproximationRadiative}。$\delta$函数调整能够提高在相函数高度非对称情况下的不同二流近似的准确性，表达式如下：
 \begin{equation}
@@ -392,7 +392,7 @@ R\left( \mu_{0} \right) = \frac{1}{N}(\eta + \Upsilon)\left( u^{2} - 1 \right)\l
 T\left( \mu_{0} \right) = (\eta + \Upsilon)\frac{4u}{N} + \left\lbrack \frac{1}{N}(\eta - \Upsilon)\left( u^{2} - 1 \right)\left( e^{\Gamma\tau^{*}} - e^{- \Gamma\tau^{*}} \right) - \eta - \Upsilon + 1 \right\rbrack e^{\frac{- \tau^{*}}{\mu_{0}}}
 \end{equation}
 
-对于漫射辐射的反射和透射率（\(\overline{R}\)和\(\overline{T}\)）是根据\citet{wiscombe1980ModelSpectralAlbedo}的假设，即在各向同性入射情况下，通过对直接辐射的反射率进行积分计算得到的。
+对于漫射辐射的反射和透射率（\(\overline{R}\)和\(\overline{T}\)）是根据~\citet{wiscombe1980ModelSpectralAlbedo}的假设，即在各向同性入射情况下，通过对直接辐射的反射率进行积分计算得到的。
 %
 \begin{equation}
 \overline{R}\left( \mu_{0} \right) = 2\int_{0}^{+ 1}{\mu R(\mu)d\mu}
@@ -484,7 +484,7 @@ F_{dif}^{\uparrow} = \frac{{\overline{T}}_{dn}{\overline{R}}_{up}}{1 - {\overlin
 \alpha_{sno,nir,dir} = \min\left( 0.98,\alpha_{sno,nir,dif} + 0.5\frac{1 - \alpha_{sno,nir,dif}}{\frac{3}{1 + 4\mu} - 1} \right)
 \end{equation}
 %
-其中\(\alpha_{sno,vis,dif} = \alpha_{newsno,vis} = 0.95\)，\(\alpha_{sno,nir,dif} = \alpha_{newsno,nir} = 0.7\)。当\(\mu \geq 0.5\)时，相应值计算为：
+其中\(\alpha_{sno,vis,dif} = \alpha_{newsno,vis} = 0.95\)，\(\alpha_{sno,nir,dif} = \alpha_{newsno,nir} = 0.7\)。当\(\mu \geqslant 0.5\)时，相应值计算为：
 %
 \begin{equation}
 \alpha_{sno,vis,dir} = \alpha_{newsno,vis}

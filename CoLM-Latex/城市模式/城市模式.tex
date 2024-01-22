@@ -4,8 +4,8 @@ CoLM城市模式不同于传统城市冠层街谷 (canyon) 假设，而是以三
 在辐射传输和湍流交换计算过程中，添加对植被的模拟。
 CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等数据应用。
 另外，城市模式加入了水体和较完整的人为热过程，包括建筑能耗、交通热、新陈代谢热的模拟。
-模式整理概念图如图~\ref{fig:CoLM城市模式概念图}所示。
-
+模式整理概念图如图~\ref{fig:CoLM城市模式概念图} 所示。
+\newline
 {
 \begin{figure}[htbp]
 \centering
@@ -182,7 +182,7 @@ $F_{sw}f_{wsun}$、$F_{sw}f_{wsha}$、$F_{sg}f_{gimp}$、$F_{sg}f_{gper}$，即�
 \end{mymdframed}
 
 城市中考虑植被后的短波辐射传输过程是在无植被辐射传输的基础上，考虑植被在内的各组分之间的可视因子，从而计算辐射平衡时的传输矩阵，采用类似的方法求解墙面、地面和植被的辐射吸收。
-相比章节~\ref{无植被覆盖时短波辐射传输}增加的部分为考虑植被在内的可视因子和阴影面积计算。
+相比章节~\ref{无植被覆盖时短波辐射传输} 增加的部分为考虑植被在内的可视因子和阴影面积计算。
 
 在植被树冠中心高度$h_v$处，墙面的阴影比例可根据公式(\ref{S_w})计算，利用$\frac{{\rm H}-h_v}{\rm L}$代替$\rm HL$，记为$S_w^\prime$，即
 \begin{equation}
@@ -216,7 +216,7 @@ S_{w}=S_{w}-S_{v w}
 \begin{equation}
 F_{vs}\cdot 2f_g = \left( 1-S_w ^{*\prime} \right ) \cdot f_g
 \end{equation}
-其中$S_w ^{*\prime}$为漫射辐射时，植被“阴影区”占比。可以得到：
+其中$S_w ^{*\prime}$为漫射辐射时，建筑在植被中心高度$h_v$的“阴影”占比。可以得到：
 \begin{equation}\label{eq:f_vs}
 F_{vs} = 0.5 \left( 1-S_w ^{*\prime} \right )
 \end{equation}
