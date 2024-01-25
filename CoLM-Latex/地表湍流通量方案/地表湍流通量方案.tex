@@ -262,7 +262,7 @@ u_{10 m}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\
 \end{mymdframed}
 
 不稳定边界层的大涡对地表湍流交换具有重要影响，随着研究和认识的不断深入，本团队近年来在考虑大涡影响的基本理论方面有了新进展。\citet{liu2019further,liu2022surface}
-通过引入边界层高度$z_i$，发展了考虑大涡影响的地表湍流通量方案(图~\ref{fig:LZD2022方案概念图})，提出了包含大涡影响的动量通量-梯度关系通用函数形式：
+通过引入边界层高度$z_i$，发展了考虑大涡影响的地表湍流通量方案(图~\ref{fig:LZD2022方案概念图})，该方案需通过设置\texttt{DEF\_USE\_CBL\_HEIGHT} = .true.激活使用。包含大涡影响的动量通量-梯度关系通用函数形式为：
 \begin{equation}
   \begin{aligned}
      \phi_{m}(\zeta) &= B_{m} (-\zeta)^{-1/2} \\[1ex]
@@ -336,7 +336,7 @@ $V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geqslant 0.1$。稳定条件下
 \begin{equation}
 wt=\frac{0.1 z_{{sno}}}{z_{0mv}+0.1 z_{{sno}}}
 \end{equation}
-其中$z_{sno}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{sig}=\left(1-wt\right)f_{veg}$，无植被覆盖比例为$\left(1-f_{sig}\right)$。CoLM202X版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-wt\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是非积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
+其中$z_{sno}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{sig}=\left(1-wt\right)f_{veg}$，无植被覆盖比例为$\left(1-f_{sig}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-wt\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是非积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
 
 
 % Please add the following required packages to your document preamble:
@@ -500,7 +500,7 @@ f_{sun}=\frac{1-\exp (-K \cdot \text {LAI})}{K \cdot \text {LAI}}
 \begin{array}{c} \text {LAI}_{sun}= \text {LAI} \cdot f_{sun} \\ \text {LAI}_{sha}=\text {LAI} \cdot \left(1-f_{sun}\right)\end{array}
 \end{equation}
 
-CoLM2014对阴阳叶分别计算温度和湍流通量。CoLM202X版本为了减少阴阳叶温度同时进行迭代的不收敛问题，并考虑与植物群落PC次网格下多种植被温度同时迭代的兼容性，植被的湍流通量与叶片温度简化为单叶模型计算，但其他过程，如辐射传输、气孔阻抗计算、植被水力等过程均为双大叶模型。湍流通量计算主要过程描述如下：
+CoLM2014对阴阳叶分别计算温度和湍流通量。CoLM2024版本为了减少阴阳叶温度同时进行迭代的不收敛问题，并考虑与植物群落PC次网格下多种植被温度同时迭代的兼容性，植被的湍流通量与叶片温度简化为单叶模型计算，但其他过程，如辐射传输、气孔阻抗计算、植被水力等过程均为双大叶模型。湍流通量计算主要过程描述如下：
 
 当地表有植被覆盖时，假设植被树冠水平空间分布均匀且为单层结构(即一维植被结构)，则植被冠层周围空气与大气之间的感热通量$H$须等于其两项来源之和：
 \begin{equation}\label{HV_balance}
@@ -709,7 +709,7 @@ r_{d}=\int_{z_{0 \mathrm{hg}}}^{d+z_{0}} \frac{1}{K(z)} d z
 
 \citet{raupach1992drag,raupach1994simplified}的植被粗糙度计算方案假设中性条件，也就是忽略了稳定度的影响，
 而诸多研究表明稳定度对粗糙度具有不可忽略的影响。以~\citet{raupach1992drag,raupach1994simplified}方案为基础，
-我们发展了一个考虑稳定度影响的植被粗糙度计算方案~\citep{liu2023roughnesslength}，详述如下。
+我们发展了一个考虑稳定度影响的植被粗糙度计算方案，详述如下。
 
 考虑具有以下一般形式的湍流扩散系数：
 \begin{equation}\label{eddydiffusivity}
@@ -752,7 +752,7 @@ z_{0} = (h-d)\exp (-\kappa \gamma + \Psi_{h})
 =& \ln \left(\frac{z-d}{z_{0}}\right) + \Psi_{h} + \left[\int_{h}^{z_{w}} \frac{\phi}{z_{w}-d} \,dz - \ln \left(\frac{z_{w}-d}{h-d}\right) \right]
 + \int_{z_{w}}^{z} \frac{\phi - 1}{z-d} \,dz
 \end{align}
-根据Garratt [1992]：
+根据\citet{Garratt1992TheAB}：
 \begin{equation}
 \int_{z_{w}}^{z} \frac{\phi - 1}{z-d} \,dz = -\psi_u \left(\frac{z-d}{L} \right) + \psi_u \left(\frac{z_{w}-d}{L} \right)
 \end{equation}

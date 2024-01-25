@@ -3,7 +3,7 @@
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.8\textwidth]{Figures/雪盖土壤热力过程/模式中积雪雪层示意图.png}
+\includegraphics[width=0.7\textwidth]{Figures/雪盖土壤热力过程/模式中积雪雪层示意图.png}
 \caption{模式中雪层示意图(以三层为例)}
 \label{fig:模式中积雪雪层示意图}
 \end{figure}
@@ -91,6 +91,9 @@ $S_r=0.033$称为束缚水饱和度（由于毛细管的滞留作用，渗透结
 对于每个时间步长，依次从雪盖顶层到底层计算式~\eqref{eq:SnowWater}。到达土壤层的液态水即为$q_{liq,0}$，被用于地表径流和土壤层的下渗计算当中。
 
 \section{雪盖的黑碳、有机碳和矿物粉尘}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}。
+\end{mymdframed}
 由于大气的气溶胶沉降，积雪中会存在一定的颗粒物，影响雪盖的辐射传输。雪中颗粒物含量仅以质量守恒作为简单约束，这部分的计算均被定义在SNICAR模型中。对于每个雪层，该模型包括了以下八种颗粒物的含量，亲水性黑碳、疏水性黑碳、亲水性有机碳、疏水性有机碳和四种矿物粉尘（颗粒半径分别为0.1-1.0，1.0-2.5，2.5-5.0，5.0-10.0 \unit{\mu m}）。每种颗粒物都具有不同的光学属性和融水清除率。
 
 黑碳和有机碳的沉降率被分为以下四类
@@ -300,6 +303,9 @@ $L_f$为固态水融化潜热，$C_{liq}$和$C_{ice}$分别为液态水和固态
 
 
 \section{雪层的再分层}\label{雪层的再分层}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_SnowLayersCombineDivide.F90}。
+\end{mymdframed}
 当某一雪层的厚度$\Delta z_i$大于规定的最大值$\Delta z_{max}$时，该雪层将被再分。最大厚度$\Delta z_{max}$和雪盖的层数有关。例如，如果雪盖只被分为一层，那么顶层（也就是该层）的最大厚度将为0.03 \unit{m}；如果雪盖被分为多层，那么顶层的最大厚度则为0.02 \unit{m}。不同情况雪层的最大厚度如图~\ref{fig:不同情况下雪层的最大厚度}所示。
 
 {
@@ -318,7 +324,7 @@ $L_f$为固态水融化潜热，$C_{liq}$和$C_{ice}$分别为液态水和固态
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.6\columnwidth]{Figures/雪盖土壤热力过程/以三层为例雪层再分层的方法.png}
+\includegraphics[width=0.8\columnwidth]{Figures/雪盖土壤热力过程/以三层为例雪层再分层的方法.png}
 \caption{以三层为例，雪层再分层的方法示意图}
 \label{fig:以三层为例雪层再分层的方法}
 \end{figure}

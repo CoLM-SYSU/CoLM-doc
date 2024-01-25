@@ -21,6 +21,11 @@ $\frac{\partial}{\partial z}\left(D\left(z\right)\frac{\partial C_i}{\partial z}
 
 
 \section{土壤凋落物分解}\label{土壤凋落物分解}
+
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_Soil\_BiogeochemDecompCascadeBGC.F90}。
+\end{mymdframed}
+
 土壤凋落物碳氮分解在每一层分别进行，分解速率受每一层不同的环境因子控制：
 \begin{equation}
 k_{i}(z)=k_{i,base} \cdot \xi_{tsoil}(z) \cdot \xi_{water}(z) \cdot \xi_{depth}(z)
@@ -29,6 +34,11 @@ k_{i}(z)=k_{i,base} \cdot \xi_{tsoil}(z) \cdot \xi_{water}(z) \cdot \xi_{depth}(
 
 
 \section{环境限制因子}\label{环境限制因子}
+
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_Soil\_BiogeochemDecompCascadeBGC.F90}。
+\end{mymdframed}
+
 CoLM生物地球化学模块，控制土壤分解的环境因子包括土壤温度因子，土壤水分因子和深度因子。其中土壤温度因子运用$Q_{10}$关系：
 \begin{equation}
 \xi_{t s o i l}(z)=Q_{10}^{\frac{T_{{soil }}(z)-273.15}{10}}
@@ -61,6 +71,10 @@ $\Psi_{min}$是最小土壤水势，$\Psi_{max}$是最大土壤水势。当土�
 
 
 \subsection{土壤分解的氮限制}\label{土壤分解的氮限制}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\\ \texttt{MOD\_BGC\_Soil\_BiogeochemPotential.F90}\\
+\texttt{MOD\_BGC\_Soil\_BiogeochemDecomp.F90}。
+\end{mymdframed}
 土壤分解速率同样会受到土壤中无机氮含量的限制，但量化氮限制对土壤分解速率的影响，需要先计算无氮限制条件下的潜在土壤分解，其中土壤/凋落物库$i$ (第$z$层) 的潜在土壤分解为：
 \begin{equation}
 C F_{pot, i}(z)=C_{i}(z) k_{i}(z)
@@ -90,6 +104,9 @@ NF_{pot\_{min, i \rightarrow j}}&=\frac{C_{i}(z) k_{i}(z) \cdot T_{ij}}{C N_{i}}
 
 
 \section{植被土壤的氮竞争}\label{植被土壤的氮竞争}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_Soil\_BiogeochemCompetition.F90}。
+\end{mymdframed}
 实际上，土壤分解可以利用的无机氮往往比土壤中存在的无机氮还要小，因为土壤微生物利用无机氮还需要和植被进行竞争。
 
 植被氮需求 ($NF_{plant\_{demand\_{soil}}}$) 在公式 \eqref{NF_plant_demand_soil} 中已经被完整计算，若植被氮需求和土壤微生物固氮需求 ($NF_{immob,demand}$) 小于总土壤无机氮含量(${NS}_{sminn}$)：
@@ -150,6 +167,9 @@ NF_{immob,vr}(z)=NF_{immob,demand,vr}(z)\ \cdot\ f_{immob\_{demand},vr}(z)
 
 
 \section{土壤凋落物的垂直传输}\label{土壤凋落物的垂直传输}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_Soil\_BiogeochemLittVertTransp.F90}。
+\end{mymdframed}
 土壤凋落物的碳氮循环的垂直结构在章节~\ref{垂直分层结构} 已经被大致介绍。地上凋落物和地下凋落物组成了地下碳循环的输入，存在显著的垂直变化。
 此外，土壤碳氮分解存在深度因子的影响，也是影响土壤碳氮模拟垂直分布的重要因子。除此之外，碳氮的垂直混合也是影响土壤碳氮浓度垂直剖面曲线的关键。
 CoLM考虑土壤碳氮传输仅存在扩散作用下，和求解土壤湿度的垂直分布解法类似。

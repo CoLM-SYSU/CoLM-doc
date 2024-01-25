@@ -4,6 +4,9 @@
 %\addcontentsline{toc}{chapter}{陆地表面的水分循环}
 
 \subsection{地表产流}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}。
+\end{mymdframed}
 
 地表径流的参数化方案\citep{niu2005simple}考虑了地形、地下水位、降水和入渗速度等因素。
 
@@ -11,11 +14,11 @@
 \begin{equation}
 f_{\mathrm{sat}}=f_{\mathrm{wt}} \times \mathrm{e}^{-0.5 \times f_{\mathrm{decay}} \times z_{\mathrm{wt}}}
 \end{equation}
-其中，$f_{\mathrm{wt}}$为网格内地下水位较高的区域的面积百分比（模式中取固定值0.38），$f_{\mathrm{decay}}$为径流的衰减因子（模式中取固定值0.5），$z_{\mathrm{wt}}$为地下水位的位置。
+其中，$f_{\mathrm{wt}}$为最大饱和面积（模式中取固定值0.38，为全球平均），$f_{\mathrm{decay}}$为径流的衰减因子（模式中取固定值0.5），$z_{\mathrm{wt}}$为地下水位 (m)。
 
 最大入渗能力的计算考虑了最上面三层土壤的物理状态和属性，
 \begin{equation}
-q_{\mathrm{in}, \max }= \min _{i=1,2,3} 10^{-6.0 \times f_{\mathrm{ice}, i} \times K_{\mathrm{sat}, i}}
+q_{\mathrm{in}, \max }= \min _{i=1,2,3} 10^{-6.0 \times f_{\mathrm{ice}, i}} \times K_{\mathrm{sat}, i}
 \end{equation}
 其中，$f_{\mathrm{ice},i}$表示第$i$层中冰占土壤孔隙的体积百分比，$K_{\mathrm{sat},i}$表示第$i$层的饱和导水率。
 
@@ -49,7 +52,9 @@ f_{\mathrm{impd,ice}} & = 1 - \frac{\exp \left[-3 \times\left(1-f_{\mathrm{ice,s
 
 \section{径流模型CaMa-Flood}
 %\addcontentsline{toc}{chapter}{陆地表面的水分循环}
-
+\begin{mymdframed}{代码}
+本节对应的代码文件夹为\texttt{CaMa/src},\\具体关联文件为\texttt{CaMa/src/MOD\_CaMa\_colmCaMa.F90}。
+\end{mymdframed}
 汇流计算是通过耦合 Dai Yamazaki 等人于2011年提出的大尺度分布式汇流模型 CaMa-Flood (Catchment-based Macro-scale Floodplain) 实现的\citep{yamazaki2011physically}。
 CaMa-Flood将全球河流网络分割为称为流域单元 (unit catchment) 的水文单元，在各单元集水区内利用河道 (river channel) 和漫滩 (floodplain) 的次网格 (subgrid) 
 地形参数以及陆面模式生成的产流量 (total runoff)，对总蓄水量 (total storage) 以及总流量 (total discharge) 进行预测，
