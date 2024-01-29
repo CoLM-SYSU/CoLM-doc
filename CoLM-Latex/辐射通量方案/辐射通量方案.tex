@@ -114,7 +114,16 @@ r_{3} &= 0.3
 本节对应的代码文件为\texttt{MOD\_SnowSnicar.F90}。
 \end{mymdframed}
 
-CoLM另一种积雪反照率及其对太阳辐射吸收的模拟，采用雪、冰和气溶胶辐射SNICAR (the Snow, Ice, and Aerosol Radiative) 模型 \citep{flanner2021SNICARADv3CommunityTool}。该模型利用大气沉积气溶胶（黑炭、矿物粉尘、有机碳）、雪的有效粒径、太阳天顶角（\(\mu_{0}\)）以及雪层所覆盖下垫面的反照率，采用\citet{toon1989RapidCalculationRadiative}的二流辐射传输方案来计算积雪反照率和垂直吸收廓线(图~\ref{fig:SNICAR模型流程图})。
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\columnwidth]{Figures/辐射过程及辐射通量计算/SNICAR积雪分层及雪花形状.jpg}
+\caption[SNICAR积雪分层及雪花形状]{SNICAR积雪分层及雪花形状。图片基于\citet{he2017ImpactSnowGrain}和\citet{whicker2022SNICARADv4PhysicallyBased}修改}
+\label{fig:SNICAR积雪分层及雪花形状}
+\end{figure}
+}
+
+CoLM另一种积雪反照率及其对太阳辐射吸收的模拟，采用雪、冰和气溶胶辐射SNICAR (the Snow, Ice, and Aerosol Radiative) 模型 \citep{flanner2021SNICARADv3CommunityTool}。该模型采用多层积雪结构(图~\ref{fig:SNICAR积雪分层及雪花形状})，细致考虑每层光学属性，利用大气沉积气溶胶（黑炭、矿物粉尘、有机碳）、雪的有效粒径、太阳天顶角（\(\mu_{0}\)）以及雪层所覆盖下垫面的反照率，采用\citet{toon1989RapidCalculationRadiative}的二流辐射传输方案来计算积雪反照率和垂直吸收廓线(图~\ref{fig:SNICAR模型流程图})。
 
 {
 \begin{figure}[htbp]
@@ -162,6 +171,8 @@ g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
 积雪反照率十分依赖于冰粒的单次散射反照率，包含额外的反照率权重可以提高五个波段反照率方案的准确性\citep{flanner2007PresentdayClimateForcing}。
 
 积雪在五种波段的单次散射反照率、质量消光截面以及不对称参数由表~\ref{tab:积雪单次散射反照率} 给出，它们均基于米氏散射近似理论计算得到。不同大气沉积气溶胶的单次散射反照率、质量消光截面以及不对称参数取决于波段。而对于冰粒，其光学属性取决于入射辐射类型（直射或漫射辐射）、波段以及有效粒径，其中有效粒径考虑积雪的老化过程计算得到（见章节~\ref{积雪老化}）。
+
+积雪中的成分包括冰粒和沉积在雪中的吸光物质，它们直接决定了积雪的光学属性。SNICAR模型考虑了不同的雪花形状，分别为球形、椭球形、科赫雪花、六边形雪花\citep{he2017ImpactSnowGrain}，再根据不同波段，从而确定了不对称因子(图~\ref{fig:SNICAR积雪分层及雪花形状})。
 
 \begin{table}[htbp]
 \centering
@@ -532,6 +543,10 @@ f_{sno} = \frac{z_{sno}}{0.25 + z_{sno}}
 \end{equation}
 
 \section{植被反照率---二流近似模型}\label{植被反照率二流近似模型}
+\begin{mymdframed}{代码}
+对应代码为\texttt{MOD\_Albedo.F90}文件中\texttt{twostream()}函数。
+\end{mymdframed}
+
 {
 \begin{figure}[htbp]
 \centering
@@ -815,6 +830,9 @@ a_{2}=h_{9}\left[\frac{1-s_{2} s_{1}}{K+h}\right]+h_{10}\left[\frac{1-s_{2} / s_
 %同样，以上公式适用于可见光和近红外波段，以及直射和漫射入射辐射情况。
 
 \section{改进的二流近似植被辐射传输模型}\label{sec:改进的二流近似植被辐射传输模型}
+\begin{mymdframed}{代码}
+对应代码为\texttt{MOD\_Albedo.F90}文件中\texttt{twostream\_mod()}函数。
+\end{mymdframed}
 根据 \citet{yuan2017reexamination} 对目前二流近似植被辐射传输参数化方案的对比分析，对章节~\ref{植被反照率二流近似模型} 方案进行改进，主要包括两个方面：
 \begin{enumerate}
     \item 入射漫射辐射计算；

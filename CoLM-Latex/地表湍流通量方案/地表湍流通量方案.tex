@@ -105,9 +105,9 @@ U_{c}= \begin{cases}
 因$L$是依赖于$u_\ast$、$\theta_\ast$、$q_\ast$的函数，
 故方程\eqref{Va}--\eqref{q_atm-qs}可视为如下形式的方程组：
 \begin{equation}\label{FGH}
-\left\{\begin{array}{l}F\left(u_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\right)=0 \\
-      G\left(\theta_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\right)=0 \\ 
-      H\left(q_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\right)=0\end{array}\right.
+\left\{\begin{array}{l}F\big(u_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\big)=0 \\
+      G\big(\theta_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\big)=0 \\ 
+      H\big(q_{*}, L\left(u_{*}, \theta_{*}, q_{*}\right)\big)=0\end{array}\right.
 \end{equation}
 若给$U_c$与$L$一个初始猜测，结合大气强迫场提供的$u_{atm}$、$v_{atm}$、$\theta_{atm}$、$q_{atm}$及对应的参考高度$z_{atm,x}\, (x=m,h,w)$，
 地表参数$d$和$z_{0x}$的估计，以及地表$z_{0x}+d$高度$\theta_s$、$q_s$，则$u_\ast$、$\theta_\ast$、$q_\ast$可通过方程组
@@ -274,7 +274,7 @@ u_{10 m}=\frac{u_{*}}{\kappa}\left[\ln \left(\frac{10+z_{0 m}}{z_{0 m}}\right)-\
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[scale=0.7]{Figures/地表湍流交换过程/LZD2022方案概念图.png}
+\includegraphics[scale=0.7]{Figures/地表湍流交换过程/LZD2022方案概念图.jpg}
 \caption{考虑大涡影响的地表通量方案示意图}
 \label{fig:LZD2022方案概念图}
 \end{figure}
@@ -629,7 +629,7 @@ r_{b}=\frac{1}{c_{l}}\left(u_{*} / d_{{leaf }}\right)^{-0.5}
 $\frac{dq_{sat}^{T_g}}{dT_g}$的计算见附录章节~\ref{饱和水汽压(比湿)及其随温度的变化}，阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$对于温度的变化率无法解析给出，故暂时忽略。
 
 
-\section{三维植被湍流交换模型}
+\section{三维植被湍流交换模型}\label{三维植被湍流}
 \begin{mymdframed}{代码}
 本节对应的代码文件为\texttt{MOD\_LeafTemperaturePC.F90}。
 \end{mymdframed}
@@ -642,7 +642,7 @@ CoLM2014假设$d$和$z_0$与植被高度成固定比例，即$d=\frac{2}{3}h$，
 这对于稀疏植被可能并不成立~\citep{zeng2007consistent}。在本版本，$d$的计算采用~\citet{choudhury1988}的方案，
 是通过拟合~\citet{shaw1982aerodynamic}二阶闭合理论结果得到：
 \begin{equation}\label{dOh}
-\frac{d}{h}=1.1 \ln \left[1+\left(c_{d} \cdot (\text {LAI} + \text {SAI})\right)^{0.25}\right]
+\frac{d}{h}=1.1 \ln \left (1+\left[c_{d} \cdot (\text {LAI} + \text {SAI})\right]^{0.25} \right)
 \end{equation}
 其中$c_d=0.2$，表示单位面积叶片平均拖曳系数。粗糙度计算采用~\citet{raupach1992drag,raupach1994simplified}方案：
 \begin{equation}\label{zOh}
@@ -694,7 +694,7 @@ $\zeta$的计算同上。方程 (\ref{uz}) 和 (\ref{Kz}) 中的 min 函数表�
 
 $r_b$是对植被冠层内风速廓线的积分：
 \begin{equation}
-r_{b}^{-1}=c_{l} \frac{\int_{0}^{h}(u(z))^{0.5} d z}{d_{leaf}^{0.5} h}
+r_{b}^{-1}=c_{l} \frac{\int_{0}^{h}[u(z)]^{0.5} d z}{d_{leaf}^{0.5} h}
 \end{equation}
 上式表示单位叶面积的阻抗，其中$c_l=0.01$ \unit{m.s^{-0.5}}，$d_{leaf}$为叶片的平均尺寸，设置为0.04米。$r_d$计算为：
 \begin{equation}\label{r_d1}
@@ -827,10 +827,10 @@ $z_0$的计算同公式 (\ref{zOh})。从上式可以看出，$d$值是100\%植�
 
 对于植被冠层内的风速廓线$u$和湍流交换系数$K$，同样采用$f_c$加权方式。$u$和$K$分别计算为：
 \begin{equation}
-u(z)=f_{c} \cdot \min \left(u_{\exp }(z), u_{comb}(z)\right)+\left(1-f_{c}\right) \cdot u_{comb}
+u(z)=f_{c} \cdot \min \big(u_{\exp }(z), u_{comb}(z)\big)+\left(1-f_{c}\right) \cdot u_{comb}
 \end{equation}
 \begin{equation}
-\frac{1}{K(z)}=f_{c} \cdot \frac{1}{\min \left(K_{\exp}(z), K_{comb}(z)\right)}+\left(1-f_{c}\right) \cdot \frac{1}{K_{comb}}
+\frac{1}{K(z)}=f_{c} \cdot \frac{1}{\min \big(K_{\exp}(z), K_{comb}(z)\big)}+\left(1-f_{c}\right) \cdot \frac{1}{K_{comb}}
 \end{equation}
 $u_{comb}$和$K_{comb}$同公式 (\ref{ucomb}) 和 (\ref{kcomb})。
 
@@ -948,7 +948,7 @@ DSL = \begin{cases}
 \begin{equation}
 \theta_{init,2} = K_{sl}\theta_{sat,1}\
 \end{equation}
-\(\theta_{1}\)代表第一层土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{sat,1}\)为第一层土壤的饱和体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{ice,1}\)为第一层土壤冰的体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{air}\)代表风干后即\(\psi_{air} = - 10^{7}\) mm时的土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(K_{sl}\)为人为设定的参数，在CoLM中，按照~\citet{sl2014}文章中的测试，\(K_{sl}\)=0.8。
+\(\theta_{1}\)代表第一层土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{sat,1}\)为第一层土壤的饱和体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{ice,1}\)为第一层土壤冰的体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{air}\)代表风干后即\(\psi_{air} = - 10^{7}\) mm时的土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(K_{sl}\)为人为设定的参数，在CoLM中，按照~\citet{sl2014}文章中的测试，$K_{sl}=0.8$。
 
 水汽分子在土壤中的扩散系数\(D_{g}\)则是通过计算水汽分子在空气中的扩散系数\(\ D_{0}\)和水汽穿过土壤基质的路径\(\tau\)得到的，计算如下：
 \begin{equation}

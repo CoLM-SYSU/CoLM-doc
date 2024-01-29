@@ -6,7 +6,7 @@
 高程数据来自MERIT DEM数据集 \citep{yamazaki2017high}。该数据集是通过从已有的遥感DEM (SRTM3 v2.1和AW3D-30m v1) 中去除多种误差 (包括绝对偏差、条纹噪声、散斑噪声和树高偏差等) 而开发的，它的分辨率为3秒 (赤道处约90米) ，覆盖了90N-60S之间的陆地区域。高程数据用于判断海洋，即将高程低于0米的地方设置为海洋格点。
 
 \section{地表覆盖数据}\label{地表覆盖数据}
-地表覆盖数据主要用于次网格构建。
+地表覆盖数据主要用于次网格构建以及地表属性赋值。
 \subsection{USGS地表覆盖数据}\label{USGS地表覆盖数据}
 USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global Land Cover Characterization (GLCC) database Version 2.0 
 (\url{https://www.usgs.gov/centers/eros/science/usgs-eros-archive-land-cover-products-global-land-cover-characterization-glcc})。
@@ -273,7 +273,7 @@ LC ID & GLC FCS30分类 & 对应IGBP分类 & IGBP编号 \\
 \section{土壤数据}\label{土壤数据}
 \subsection{土壤基础属性}\label{土壤基础属性}
 土壤基础属性数据采用Global Soil Dataset for Earth System Modeling（GSDE，\url{http://globalchange.bnu.edu.cn/research/soilw}）~\citep{shangguan2014global}
-和SoilGrids（\url{https://www.soilgrids.org/}）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0--0.045, 0.045--0.091, 0.091--0.166, 0.166--0.289, 0.289--0.493, 0.493--0.829, 0.829--1.383, 1.383--2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0--0.05，0.05--0.15，0.15--0.3，0.3--0.6，0.6--1，1--2 m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。土壤基础属性数据主要用于计算土壤水力热力参数。
+和SoilGrids（\url{https://www.soilgrids.org/}）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0--0.045, 0.045--0.091, 0.091--0.166, 0.166--0.289, 0.289--0.493, 0.493--0.829, 0.829--1.383, 1.383--2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0--0.05，0.05--0.15，0.15--0.3，0.3--0.6，0.6--1，1--2 m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。土壤基础属性数据主要用于计算土壤水力热力参数。两套数据集在模拟结果验证中具有相近的表现~\citep{李文耀2020土壤}。
 
 \subsection{基岩深度}\label{基岩深度}
 
@@ -291,6 +291,15 @@ LC ID & GLC FCS30分类 & 对应IGBP分类 & IGBP编号 \\
 全球 \ang{;;30} (1公里) 分辨率，经纬度网格，单时次数据。
 
 \subsection{PFT/PC数据及其制作所依赖数据}\label{PFTPC数据及其依赖数据}
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{Figures/基础数据/次网格聚合方案.png}
+\caption[CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图]{CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图。具体聚合过程见章节~\ref{sec:次网格聚合}}
+\label{fig:次网格聚合方案}
+\end{figure}
+}
+
 PFT/PC植被属性相关数据主要包括：1）网格所包含PFT种类；2）网格内各PFT占比；3）网格内各PFT LAI/SAI值；4）网格内各PFT高度。
 
 模式如采用PFT或PC植被次网格方式运行，则不能像LCT方案一样直接进行地表覆盖类型聚合(图~\ref{fig:次网格聚合方案} LCT方案所示)，
@@ -325,15 +334,6 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 15                     & C3作物                      \\ \bottomrule
 \end{tabular}
 \end{table}
-
-{
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.9\textwidth]{Figures/基础数据/次网格聚合方案.png}
-\caption[CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图]{CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图。具体聚合过程见章节~\ref{sec:次网格聚合}}
-\label{fig:次网格聚合方案}
-\end{figure}
-}
 
 由于PFT和PC方案都需要对细网格地表覆盖数据进行PFT分解，而地表覆盖原数据并不包含PFT植被结构属性信息，需要借助辅助数据进行计算，其数据来源如表~\ref{tab:网格划分辅助数据} 所列。
 

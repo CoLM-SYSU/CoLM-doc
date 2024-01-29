@@ -66,7 +66,7 @@ CoLM中可选两个数值方案进行Richards方程的求解：1. 2014版CoLM中
 \section{2014版Richards方程求解方案}
 
 {
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/植被冠层和土壤水分/土壤水离散.pdf}
 \caption{离散Richards方程中各项的定义}
@@ -109,10 +109,10 @@ q_{i+\frac{1}{2}}^{n+1} \approx &-\left(K_{i+\frac{1}{2}}^{n}+\frac{\partial K_{
     & \times \left[\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}+\frac{\partial \psi_{i+1}}{\partial \theta_{i+1}} \Delta \theta_{i+1}-\psi_{i}^{n}-\frac{\partial \psi_{i}}
     {\partial \theta_{i}} \Delta \theta_{i}\right)-1\right] \\ 
     \approx & -K_{i+\frac{1}{2}}^{n}\left[\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right] \\
-    &-\left[-K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i+\frac{1}{2}}} \frac{\partial \psi_{i}}{\partial \theta_{i}}+\frac{\partial K_{i+\frac{1}{2}}}{\partial 
-     \theta_{i}}\left(\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right] \Delta \theta_{i} \\ 
-    &-\left[K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i+\frac{1}{2}}} \frac{\partial \psi_{i+1}}{\partial \theta_{i+1}}+\frac{\partial K_{i+\frac{1}{2}}}{\partial
-      \theta_{i+1}}\left(\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)\right] \Delta \theta_{i+1} 
+    &-\left\{-K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i+\frac{1}{2}}} \frac{\partial \psi_{i}}{\partial \theta_{i}}+\frac{\partial K_{i+\frac{1}{2}}}{\partial 
+     \theta_{i}}\left[\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right]\right\} \Delta \theta_{i} \\ 
+    &-\left\{K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i+\frac{1}{2}}} \frac{\partial \psi_{i+1}}{\partial \theta_{i+1}}+\frac{\partial K_{i+\frac{1}{2}}}{\partial
+      \theta_{i+1}}\left[\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right]\right\} \Delta \theta_{i+1} 
 \end{split}
 \end{equation}
 其中第一个约等号是对各项做一阶近似，第二个约等号是舍弃二阶项。对$q_{i-\frac{1}{2}}^{n+1}$也可做同样的近似。从而，完全离散后的Richards方程可表达为，
@@ -124,18 +124,18 @@ a_i \Delta \theta_{i-1}+b_i \Delta \theta_{i}+c_i \Delta \theta_{i+1}=r_i
 \begin{aligned}
  a_i &= - K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-\frac{1}{2}}}
      \frac{\partial \psi_{i-1}}{\partial \theta_{i-1}}+\frac{\partial K_{i-\frac{1}{2}}}
-     {\partial \theta_{i-1}}\left(\frac{1}{\Delta z_{i-\frac{1}{2}}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right) \\
+     {\partial \theta_{i-1}}\left[\frac{1}{\Delta z_{i-\frac{1}{2}}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right] \\
 b_i &= \frac{\Delta z_{i}}{\Delta t}+K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i+\frac{1}{2}}} 
       \frac{\partial \psi_{i}}{\partial \theta_{i}}-\frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i}}
-      \left(\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right) \\
+      \left[\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right] \\
 &\mathrel{\phantom{=}}+K_{i-\frac{1}{2}}^{n} \frac{1}{\Delta z_{i-\frac{1}{2}}} \frac{\partial \psi_{i}}{\partial 
-       \theta_{i}}+\frac{\partial K_{i-\frac{1}{2}}}{\partial \theta_{i}}\left(\frac{1}{\Delta z_{i-\frac{1}{2}}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right) \\ 
+       \theta_{i}}+\frac{\partial K_{i-\frac{1}{2}}}{\partial \theta_{i}}\left[\frac{1}{\Delta z_{i-\frac{1}{2}}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right] \\ 
 c_i &= - K_{i+\frac{1}{2}}^{n} \frac{1}{\Delta z_{i+\frac{1}{2}}} 
-       \frac{\partial \psi_{i+1}}{\partial \theta_{i+1}} - \frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}}\left(\frac{1}
-       {\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right) \\ 
+       \frac{\partial \psi_{i+1}}{\partial \theta_{i+1}} - \frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}}\left[\frac{1}
+       {\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right] \\ 
 r_i &= K_{i+\frac{1}{2}}^{n}
-       \left(\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right)-K_{i-\frac{1}{2}}^{n}
-       \left(\frac{1}{\Delta z_{i-\frac{1}{2}}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right)-S_{i}
+       \left[\frac{1}{\Delta z_{i+\frac{1}{2}}}\left(\psi_{i+1}^{n}-\psi_{i}^{n}\right)-1\right] - K_{i-\frac{1}{2}}^{n}
+       \left[\frac{1}{\Delta z_{i-\frac{1}{2}}}\left(\psi_{i}^{n}-\psi_{i-1}^{n}\right)-1\right]-S_{i}
 \end{aligned}
 \end{equation}
 
@@ -144,13 +144,13 @@ r_i &= K_{i+\frac{1}{2}}^{n}
 \begin{aligned}
 a_1 &= 0 \\
 b_1 &= \frac{\Delta z_1}{\Delta t}+K_{1+\frac{1}{2}}^{n} 
-    \frac{1}{\Delta z_{1+\frac{1}{2}}} \frac{\partial \psi_{1}}{\partial \theta_{1}}-\frac{\partial K_{1+\frac{1}{2}}}{\partial \theta_{1}}\left(\frac{1}{\Delta z_{1+\frac{1}{2}}}
-    \left(\psi_{2}^{n}-\psi_{1}^{n}\right)-1\right) \\
+    \frac{1}{\Delta z_{1+\frac{1}{2}}} \frac{\partial \psi_{1}}{\partial \theta_{1}}-\frac{\partial K_{1+\frac{1}{2}}}{\partial \theta_{1}}\left[\frac{1}{\Delta z_{1+\frac{1}{2}}}
+    \left(\psi_{2}^{n}-\psi_{1}^{n}\right)-1\right] \\
 c_1 &= -K_{1+\frac{1}{2}}^{n} \frac{1}{\Delta z_{1+\frac{1}{2}}} 
-    \frac{\partial \psi_{2}}{\partial \theta_{2}}-\frac{\partial K_{1+\frac{1}{2}}}{\partial \theta_{2}}\left(\frac{1}{\Delta z_{1+\frac{1}{2}}}
-    \left(\psi_{2}^{n}-\psi_{1}^{n}\right)-1\right) \\ 
+    \frac{\partial \psi_{2}}{\partial \theta_{2}}-\frac{\partial K_{1+\frac{1}{2}}}{\partial \theta_{2}}\left[\frac{1}{\Delta z_{1+\frac{1}{2}}}
+    \left(\psi_{2}^{n}-\psi_{1}^{n}\right)-1\right] \\ 
 r_1 &= Q_{infl}+K_{1+\frac{1}{2}}^{n}
-    \left(\frac{1}{\Delta z_{1+\frac{1}{2}}}\left(\psi_{2}^{n}-\psi_{1}^{n}\right)-1\right)-S_{1}
+    \left[\frac{1}{\Delta z_{1+\frac{1}{2}}}\left(\psi_{2}^{n}-\psi_{1}^{n}\right)-1\right]-S_{1}
 \end{aligned}
 \end{equation}
 
@@ -159,12 +159,12 @@ r_1 &= Q_{infl}+K_{1+\frac{1}{2}}^{n}
 \begin{aligned}
 a_I &= - K_{I-\frac{1}{2}}^{n} \frac{1}{\Delta z_{I-\frac{1}{2}}}
      \frac{\partial \psi_{I-1}}{\partial \theta_{I-1}}+\frac{\partial K_{I-\frac{1}{2}}}
-     {\partial \theta_{I-1}}\left(\frac{1}{\Delta z_{I-\frac{1}{2}}}\left(\psi_{I}^{n}-\psi_{I-1}^{n}\right)-1\right) \\
+     {\partial \theta_{I-1}}\left[\frac{1}{\Delta z_{I-\frac{1}{2}}}\left(\psi_{I}^{n}-\psi_{I-1}^{n}\right)-1\right] \\
 b_I &= \frac{\Delta z_{I}}{\Delta t}+\frac{\partial K_{I}}
     {\partial \theta_{I}}+K_{I-\frac{1}{2}}^{n} \frac{1}{\Delta z_{I-\frac{1}{2}}} \frac{\partial \psi_{I}}{\partial \theta_{I}}+
-    \frac{\partial K_{I-\frac{1}{2}}}{\partial \theta_{I}}\left(\frac{1}{\Delta z_{I-\frac{1}{2}}}\left(\psi_{I}^{n}-\psi_{I-1}^{n}\right)-1\right) \\
+    \frac{\partial K_{I-\frac{1}{2}}}{\partial \theta_{I}}\left[\frac{1}{\Delta z_{I-\frac{1}{2}}}\left(\psi_{I}^{n}-\psi_{I-1}^{n}\right)-1\right] \\
 c_I &= 0 \\
-r_I &= -K_{I}^{n}-K_{I-\frac{1}{2}}^{n}\left(\frac{1}{\Delta z_{I-\frac{1}{2}}}\left(\psi_{I}^{n}-\psi_{I-1}^{n}\right)-1\right)-S_{I}
+r_I &= -K_{I}^{n}-K_{I-\frac{1}{2}}^{n}\left[\frac{1}{\Delta z_{I-\frac{1}{2}}}\left(\psi_{I}^{n}-\psi_{I-1}^{n}\right)-1\right]-S_{I}
 \end{aligned}
 \end{equation}
 
@@ -444,7 +444,7 @@ w_{a}^{n+1}-w_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
         \end{equation}
         对毛细上升情形($h_u<h_l-\Delta z$)，
         \begin{equation}
-        k_{h m}=\left(k_{u}\right)^{r_{0}} \cdot\left(k\left(h_{l}-\Delta z\right)\right)^{1-r_{0}}
+        k_{h m}=\left(k_{u}\right)^{r_{0}} \cdot\left[k\left(h_{l}-\Delta z\right)\right]^{1-r_{0}}
         \end{equation}
         其中，土壤水力导度$k$为土壤水势$h$的函数，上述三个公式中，$k_u=k(h_u )$，$k_l=k(h_l )$；
         $r_0$是依赖于土壤水力模型和土壤水力参数的参数，对Campbell模型~\eqref{eq:Ks_CB}，
@@ -489,7 +489,7 @@ w_{a}^{n+1}-w_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
 由(\ref{m_alpha_x})得带约束的非线性最小二乘问题
 \begin{equation}\label{richards_nls}
 \begin{aligned}
-\min _{\vec{x}} f_{2}(\vec{x})=& \min _{\vec{x}} \sum_{\alpha=1}^{A}\left(\delta m_{\alpha}(\vec{x})-\Delta t \cdot \delta q_{\alpha}(\vec{x})\right)^{2} \\ 
+\min _{\vec{x}} f_{2}(\vec{x})=& \min _{\vec{x}} \sum_{\alpha=1}^{A}\left[\delta m_{\alpha}(\vec{x})-\Delta t \cdot \delta q_{\alpha}(\vec{x})\right]^{2} \\ 
 & \theta_{r, i}<\theta_{i} \leqslant \theta_{s, i}, & \forall \theta_{i} \in \vec{x} \\ 
 & 0 \leqslant w_{f, i} \leqslant \Delta z_{i},               & \forall w_{f, i} \in \vec{x} \\ 
 & 0 \leqslant w_{t, i} \leqslant \Delta z_{i},               & \forall w_{t, i} \in \vec{x} \\ 
@@ -524,7 +524,7 @@ w_{a}^{n+1}-w_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
 在“预估”步，根据目前的地下水位及需减少的水量，预估降低后的地下水位，其满足
 \begin{equation} \label{formula:prediction_zwt}
 \begin{aligned}
-\theta_{\mathrm{pre}} & = \Theta_i\left(\psi_{\mathrm{s},i} - 0.5\left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right)\right) \\
+\theta_{\mathrm{pre}} & = \Theta_i\left[\psi_{\mathrm{s},i} - 0.5\left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right)\right] \\
     - \Delta W & = \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \times  \left(\theta_{\mathrm{s},i} - \theta_{\mathrm{pre}}\right)
 \end{aligned}
 \end{equation}
@@ -552,7 +552,7 @@ w_{a}^{n+1}-w_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
 \begin{equation}
 {f}_{ {root }, {i}}=\frac{{f}_{{root}, {i}} {W}_{{LT}}[{i}]}{W_{t}}
 \end{equation}
-其中$Wt = \sum_{i=1}^{n}{f_{root,i\ }W_{LT}\left[i\right]}$；$f_{root,i}$表示模式中第$i$层土壤中的根系比例；$W_{LT}[i]$表示第$i$层土壤中的水分胁迫状况：
+其中$W_{t} = \sum_{i=1}^{n}{f_{root,i\ }W_{LT}\left[i\right]}$；$f_{root,i}$表示模式中第$i$层土壤中的根系比例；$W_{LT}[i]$表示第$i$层土壤中的水分胁迫状况：
 \begin{equation}
 {W}_{{LT}}[{i}]=\frac{\psi_{\max }-\psi_{i}}{\psi_{\max }-\psi_{sat}}
 \end{equation}
@@ -573,7 +573,7 @@ w_{a}^{n+1}-w_{a}^{n}=\Delta t \cdot q_{b t m}^{n+1}
 \end{equation}
 
 \section{土壤水力参数的计算}\label{sec_hydropar}
-土壤水力参数主要涉及CoLM中模拟土壤水分垂直运动使用的~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系（方程\eqref{eq:SW_CB}、\eqref{eq:Ks_CB}、\eqref{eq:SW_VG}和\eqref{eq:Ks_VG}）中包含的参数，主要有$\theta_s$（饱和体积含水量）、$\psi_s$（饱和基质势）、$K_s$（饱和导水率）、$B=\frac{1}{\lambda}$（孔隙大小分布指数）、$\theta_r$（残余土壤含水量）、$\alpha$（形状参数）、$n$（形状参数）、$L$（孔隙导度参数）。针对上述参数，CoLM采用基于土壤基础数据集GSDE和SoilGrids开发的全球水平方向1 km分辨率、垂直方向分为8层的土壤水热特征参数数据以模拟土壤水热传输过程。数据垂直方向8层的深度分别对应CoLM模式土壤垂直分层中的第2-9层，第1层数据同样也应用于第1层模式，第8层数据同样也应用于第10层模式。土壤水热特征参数数据的制作方法简述如下。
+土壤水力参数主要涉及CoLM中模拟土壤水分垂直运动使用的~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系（方程\eqref{eq:SW_CB}、\eqref{eq:Ks_CB}、\eqref{eq:SW_VG}和\eqref{eq:Ks_VG}）中包含的参数，主要有$\theta_s$（饱和体积含水量）、$\psi_s$（饱和基质势）、$K_s$（饱和导水率）、$B=\frac{1}{\lambda}$（孔隙大小分布指数）、$\theta_r$（残余土壤含水量）、$\alpha$（形状参数）、$n$（形状参数）、$L$（孔隙导度参数）。针对上述参数，CoLM采用基于土壤基础数据集GSDE和SoilGrids开发的全球水平方向1 km分辨率、垂直方向分为8层的土壤水热特征参数数据以模拟土壤水热传输过程。数据垂直方向8层的深度分别对应CoLM模式土壤垂直分层中的第2-9层，第1层数据同样也应用于第1层模式，第8层数据同样也应用于第10层模式。两套数据集在全球模拟验证中具有相近的表现~\citep{李文耀2020土壤}。土壤水热特征参数数据的制作方法简述如下。
 
 针对饱和土壤含水量$\theta_s$，假设其与土壤孔隙度相同，则可采用如下公式计算：
 \begin{equation}

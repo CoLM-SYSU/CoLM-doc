@@ -1,5 +1,9 @@
 \chapter{城市模式}\label{城市模式}
 %\addcontentsline{toc}{chapter}{城市模式}
+\begin{mymdframed}{代码}
+本章对应代码源文件位于\texttt{main/URBAN/}目录下。
+\end{mymdframed}
+
 CoLM城市模式不同于传统城市冠层街谷 (canyon) 假设，而是以三维城市建筑群落为基本假设，在此基础上计算三维城市建筑群落短波、长波辐射传输及湍流交换过程。
 在辐射传输和湍流交换计算过程中，添加对植被的模拟。
 CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等数据应用。
@@ -241,7 +245,7 @@ F_{wv}=\frac{f_g \cdot \left( F_{sv}+F_{gv} \right )} {4 {\rm HL}f_b} F_{vw}
 \end{equation}
 将上式$F_{wv}$计算的结果限制为：
 \begin{equation}
-F_{wv} = \min (0.8, \max (f_v, F_{wv}))
+F_{wv} = \min \big(0.8, \max (f_v, F_{wv})\big)
 \end{equation}
 假设墙面通过植被到达墙面、天空和地面的可视因子与墙面到达相应各面的可视因子成正比，即：
 \begin{equation}
@@ -449,7 +453,7 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}^{\prime}+L_{wsha}^{\uparrow} F_{ws}^{\pr
 
 \subsection{无植被覆盖时湍流交换过程}\label{无植被覆盖时湍流交换过程}
 \begin{mymdframed}{代码}
-本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}。
+本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}中\texttt{UrbanOnlyFlux()}函数。
 \end{mymdframed}
 
 建筑物的零平面位移高度采用~\citet{macdonald1998improved}方案：
@@ -653,6 +657,10 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面
 \end{equation}
 
 \subsection{有植被覆盖时湍流交换过程}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}中\texttt{UrbanVegFlux()}函数。
+\end{mymdframed}
+
 {
 \begin{figure}[htbp]
 \centering
@@ -1030,6 +1038,10 @@ Q_{M}=P \cdot H_{M} \cdot 10^{-6}
 \end{table}
 
 \subsection{交通热}
+\begin{mymdframed}{代码}
+本节及下节对应的代码文件为\texttt{MOD\_Urban\_LUCY.F90}。
+\end{mymdframed}
+
 % 交通热排放($Q_v$, \unit{W/m^{2}})同样根据利用能源清单法进行计算，采用Top-Down的方法，利用人口密度以及各个国家的汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
 交通热排放($Q_v$, \unit{W.m^{-2}})则根据城市网格内的汽车数量以及行驶路程得到，首先根据城市网格内的人口密度以及各个国家每千人汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
 其数据来源如表~\ref{tab:交通热数据及来源}，$Q_v$计算如下：

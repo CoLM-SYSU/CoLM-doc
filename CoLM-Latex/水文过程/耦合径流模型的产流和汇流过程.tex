@@ -32,6 +32,10 @@ q_{\mathrm{infl}}={G}_{\mathrm{water}}-r_{\mathrm{surface}}
 \end{equation}
 
 \subsection{地下产流} \label{section:rsub_par}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}。
+\end{mymdframed}
+
 地下产流的大小与地形和地下水位有关\citep{niu2005simple}，
 \begin{equation}
 r_{\mathrm{subsurface}} = r_{\mathrm{sub,max}} \exp \left(-f_{\mathrm{drai}} \times z_{\mathrm{wt}}\right)
@@ -91,7 +95,7 @@ CaMa-Flood 假设不存在漫滩 (洪泛) 事件，上述参数则通过如下�
 \begin{aligned}
 S_r &=S-S_f \\ 
 D_r &=\frac{S_r}{W L} \\
-S_f &=\int_{0}^{A_f}(D_f-D(A)) d_A \\
+S_f &=\int_{0}^{A_f}[D_f-D(A)] d_A \\
 D_f &=D_r-B \\ 
 A_f &=D^{-1}(D_f)
 \end{aligned}

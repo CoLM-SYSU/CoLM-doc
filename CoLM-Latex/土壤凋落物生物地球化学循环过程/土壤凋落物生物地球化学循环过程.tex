@@ -1,5 +1,8 @@
 \chapter{土壤凋落物生物地球化学循环过程}\label{土壤凋落物生物地球化学循环过程}
 %\addcontentsline{toc}{chapter}{土壤凋落物生物地球化学循环过程}
+\begin{mymdframed}{代码}
+本章对应代码源文件位于\texttt{main/BGC/}目录下。
+\end{mymdframed}
 
 %\begin{土壤凋落物生物地球化学循环过程}
 植被物候和自然死亡凋落的植被碳进入土壤凋落物库后进行进一步碳氮循环。在土壤中凋落物碳氮元素经过土壤分解，
@@ -9,7 +12,7 @@ CoLM的土壤和凋落物存在垂直分层结构，碳氮动态变化根据平�
 \begin{equation}
 \begin{aligned}
 \frac{\partial C_{i}(z)}{\partial t}=R_{i}(z) &+\sum_{i \neq j}\left(1-r f_{j}\right) T_{j i} k_{j}(z) C_{j}(z)-k_{i}(z) C_{i}(z) \\
-&+\frac{\partial}{\partial z}\left(D(z) \frac{\partial C_{i}}{\partial z}\right)+\frac{\partial}{\partial z}\left(A(z) C_{i}(z)\right)
+&+\frac{\partial}{\partial z}\left(D(z) \frac{\partial C_{i}}{\partial z}\right)+\frac{\partial}{\partial z}\left[A(z) C_{i}(z)\right]
 \end{aligned}
 \end{equation}
 其中，$C_i\left(z\right)$是第$z$层的土壤碳密度(\unit{g.C.m^{-3}}); $R_i (z)$ 是第 $z$ 层土壤的凋落物碳输入，

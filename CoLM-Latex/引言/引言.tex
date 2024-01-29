@@ -77,7 +77,7 @@ CoLM2004模式源程序、基础数据集、科学技术报告和用户指南发
     \item 陆面属性数据集
     \begin{enumerate}[label={\alph*)}]
     \item 土地覆盖/土地利用数据。用美国国家雪/冰资料中心(Natinal Snow and Ice Data Center：\url{http://www.glims.org/RGI/}; \url{http://glims.colorado.edu/glacierdata/})专业中心数据产品替换USGS永久性积雪和冰盖(permanent snow and ice)数据。用(\url{http://www.wwfus.org/science/data.cfm})永久性湖泊(permanent lakes)和永久性湿地(permanent wetlands)专业部门制作的数据替换USGS永久性湖泊和永久性湿地数据。用全球城市面积数据(\url{http://sage.wisc.edu/urbanenvironment.html})专业部门制作的数据替换USGS城市(urban and built-up)数据。
-    \item 中国和全球土壤属性数据集。起始于2005年，全面收集和整理了土壤剖面物理与化学属性数据、土壤分类图，并作精细质量控制，建立了逾3万个土壤剖面的土壤属性数据库。建立了与模式相匹配、参数最全、分辨率最高的中国和全球土壤属性数据集~\citep{shangguan2013china,shangguan2014global}，中国和全球土壤水力学和热力学参数集。建立了多土壤属性转换函数集，模式土壤水力和热力参数取土壤属性转换函数集的计算中位值~\citep{dai2013development}。
+    \item 中国和全球土壤属性数据集。起始于2005年，全面收集和整理了土壤剖面物理与化学属性数据、土壤分类图，并作精细质量控制，建立了逾3万个土壤剖面的土壤属性数据库。建立了与模式相匹配、参数最全、分辨率最高的中国和全球土壤属性数据集~\citep{shangguan2013china,shangguan2014global}，中国和全球土壤水力学和热力学参数集~\citep{dai2013development}。建立了多土壤属性转换函数集，模式土壤水力和热力参数取土壤属性转换函数集的计算中位值~\citep{dai2013development}。
     \item 全球植被叶面积指数数据。全球植被LAI是陆面和气候模拟非常重要的变量。NASA发布的LAI数据存在时空不连续性和不一致性问题，极大限制了其高分辨率资料的应用。发展了相互协调的滤波算法和订正方法，解决了原数据存在的问题，建立了可直接为模式所用的、高分辨率和长序列的全球LAI数据集~\citep{yuan2011reprocessing}。
     \end{enumerate}
     \item 湖泊模式
@@ -114,7 +114,7 @@ CoLM 2024主要新内容(New Features of CoLM 2024):
     \item 基础数据集
     \begin{enumerate}[label={\alph*)}]
         \item 土地覆盖/土地利用数据。利用其他特定类型地表覆盖数据对 USGS 地表覆盖进行更新，包括全球1公里水体和湿地数据(Global Lakes and Wetlands Database: Lakes and Wetlands Grid (Level 3))~\citep{lehner2004development}、全球1公里冰川数据~\citep{RGIConsortium2017}、全球1公里城市覆盖数据 (MODIS)~\citep{schneider2009new} 和全球1公里高程数据(USGS)。此外，还添加了ESA CCI 地表覆盖产品(\url{http://maps.elie.ucl.ac.be})和GLC FCS30 地表覆盖数据~\citep{zhang2023glc_fcs30d}。
-        \item 土壤数据。CoLM2024仍沿用CoLM2014使用的全球1公里分辨率的土壤属性数据集~\citep{shangguan2014global}。但在土壤参数的制作方法上做了较大更新：一方面，关于土壤导热率，CoLM2024集成了8种较为常用的计算方案，并同时考虑了土壤有机质和砾石对土壤导热率的影响。默认情况下，CoLM2024采用全球范围内经评估总体上性能最好的计算方案~\citep{dai2019evaluation, balland2005}。用户亦可基于特定模拟对象评估并选用其中的任意方案，使得其最适用于自身的模拟需求。另一方面，关于土壤水力参数，CoLM2024可生成~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系中的全部参数。在参数计算过程中，CoLM2024收集了超过30种较为常用或新近开发的土壤转换函数模型，通过拟合所有土壤转换函数对应的土壤水力特征曲线关系找到最优土壤水力特征曲线，从而获取土壤水力特征曲线参数。经验证，通过此方法生成的参数相较CoLM2014使用的中位值法获取的参数对于土壤水分具有更高的模拟精度~\citep{dai2019parameters}。
+        \item 土壤数据。CoLM2024仍沿用CoLM2014使用的全球1公里分辨率的土壤属性数据集~\citep{shangguan2014global}。该数据集被证明相对于原有的FAO土壤数据集能更好地模拟陆面水热状况，并且与SoilGrids的表现相当~\citep{李文耀2020土壤}。但在土壤参数的制作方法上做了较大更新：一方面，关于土壤导热率，CoLM2024集成了8种较为常用的计算方案，并同时考虑了土壤有机质和砾石对土壤导热率的影响。默认情况下，CoLM2024采用全球范围内经评估总体上性能最好的计算方案~\citep{dai2019evaluation, balland2005}。用户亦可基于特定模拟对象评估并选用其中的任意方案，使得其最适用于自身的模拟需求。另一方面，关于土壤水力参数，CoLM2024可生成~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系中的全部参数。在参数计算过程中，CoLM2024收集了超过30种较为常用或新近开发的土壤转换函数模型，通过拟合所有土壤转换函数对应的土壤水力特征曲线关系找到最优土壤水力特征曲线，从而获取土壤水力特征曲线参数。经验证，通过此方法生成的参数相较CoLM2014使用的中位值法获取的参数对于土壤水分具有更高的模拟精度~\citep{dai2019parameters}。
         \item 植被结构及属性数据。新研制了基于MODIS和ESA-CCI的多套高分辨率($10-10^2$ m)、精细化的长时间序列植被结构及属性数据，支持不同植被次网格结构模拟，同时也适用于长时间土地利用土地覆盖变化模拟。其中植被属性中核心变量LAI采用团队研发的数据产品\citep{yuan2011reprocessing,lin2023ReprocessedMODISVersion}，可提供多情景LAI变化模拟。
         \item 水文数据。CoLM2024中CaMa-Flood模块所使用的基础河网数据已经更新至基于Merit-Hydro所开发的高精度河网数据集，目前支持在01min（弧分）、03min、05min、06min、15min、30min和60min等七种分辨率下运行CaMa-Flood模块。提供了全球主要大型水库的位置数据（与不同分辨率河网数据相匹配）、特征流量和特征库容数据等数据，以支持运行水库模块的运行。
         \item 城市数据。城市模式所需基础数据主要包含城市覆盖、城市类型、建筑形态、辐射与热力属性、生态数据以及人类活动相关数据。CoLM城市模式基础数据选取遵循高精度、高分辨率、多时次原则，通过以集成目前已有的高分辨率数据以及自主研制部分高分辨率数据来作为模式输入。
