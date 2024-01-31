@@ -1,15 +1,16 @@
 \chapter{湿地模式}
 
-
 \section{湿地模式结构}
-湿地模式的结构与雪盖土壤层相同，即在CoLM中，湿地分为上部的雪盖层和下部的土壤层，具体分层规则见章节~\ref{土壤和积雪的垂直分层}。湿地模式的物理方案均遵从雪盖土壤层的计算方案来设定。
+湿地模式的结构与雪盖土壤层相同，即在CoLM中，湿地由上部的雪层和下部的土壤层组成，具体分层方式见章节~\ref{土壤和积雪的垂直分层}，湿地的物理方案遵从雪盖土壤层的计算方案来设定。
 
 \section{湿地表面湍流通量计算方案}
-湿地表面湍流通量的计算方案类似雪盖土壤地表的湍流通量计算方案(见章节~\ref{ch:地表湍流通量})，这里再对计算流程做一个简单说明。
+湿地表面湍流通量的计算方案除地表空气比湿计算过程不同，其余过程与雪盖土壤地表的湍流通量计算方案(见章节~\ref{ch:地表湍流通量})一致。
 
-湿地表面可以分为被积雪覆盖和未被积雪覆盖两部分，因此在计算湍流通量前，需先计算地表的积雪覆盖比例$f_{sno}$，根据Swenson and Lawrence[2012]，$f_{sno}$的计算包含以下两个过程：
+湿地表面可分为被积雪覆盖与未被积雪覆盖两部分。因此在计算湍流通量前，需先计算地表的积雪覆盖比例（$f_{sno}$）及被积雪掩埋的植被占总植被的比例（$wt$）。
 
-1.在积分开始时，若发生降雪，则下一时间步数的$f_{sno}$更新为
+首先根据~\citet{swenson2012new}提供的方法，计算被积雪覆盖的地表面积比例（$f_{sno}$），其计算包含以下两个过程：
+
+1.在积分开始时，若发生固态降水，则下一时间步数的$f_{sno}$更新为
 \begin{equation}
     f^{n+1}_{sno}=1-\left[1-\tanh{\left(0.1 p_i \Delta t\right)}\right]\left(1-f^n_{sno}\right) \leqslant 1.0
 \end{equation}
@@ -21,10 +22,16 @@
 \end{equation}
 其中$z_{sno}$为雪盖高度（mm），$W_{sno}$为雪水当量（mm），$z_{0m,ice}$表示未被积雪覆盖时湿地的地表粗糙度。\\
 
+当积雪掩埋植被时，被积雪掩埋的植被占总植被的比例（$wt$）可通过植被粗糙度（$z_{0mv}$）计算
+\begin{equation}
+    w_t=\frac{0.1 z_{sno}}{z_{0mv}+0.1 z_{sno}}
+\end{equation}
+其中$z_{sno}$表示积雪厚度（m）。CoLM2014及以前版本计算斑块中的有效植被比例$f_{sig} =
+ (1 −wt)f_{veg}$，无植被覆盖比例为 $(1−f_{sig})$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即SAI=TSAI(1 − $wt$)，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是非积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。\\
 
-\textbf {(1)当湿地表面被积雪覆盖或湿地表面无植被覆盖时}\\
+\textbf {(1)当湿地表面无植被覆盖或植被积雪掩埋时}\\
 
-当湿地表面被积雪覆盖或湿地表面无植被覆盖时，采用无植被覆盖地表湍流通量的计算方案，因此湍流通量只存在于地表和大气之间，动量通量$\tau$、感热通量$H$和水汽通量$E$分别表达为：
+当湿地表面无植被覆盖或植被积雪掩埋时，采用无植被覆盖地表湍流通量的计算方案，因此湍流通量只存在于地表和大气之间，动量通量$\tau$、感热通量$H$和水汽通量$E$分别表达为：
 \begin{align}
     \tau_x &= -\rho_{atm} \frac{u_{atm}}{r_{am}} \\
     \tau_y &= -\rho_{atm} \frac{v_{atm}}{r_{am}} \\
@@ -61,9 +68,9 @@
     \item 计算\qty{2}{m}气温$T_{2m}$和比湿$q_{2m}$。
 \end{enumerate}
 
-\textbf {(2)当湿地表面有植被覆盖时}\\
+\textbf {(2)当湿地表面被植被覆盖时}\\
 
-当湿地表面有植被覆盖时，采用一维植被湍流交换模型，因此湍流通量只存在于地表和大气之间，陆地与大气总湍流输运通量为植被冠层周围空气与大气之间的湍流输送，其动量通量$\tau$、感热通量$H$和水汽通量$E$表达为：
+当湿地表面被植被覆盖，且未被积雪掩埋时，采用一维植被湍流交换模型，陆地与大气总湍流输运通量为植被冠层周围空气与大气之间的湍流输送，其动量通量$\tau$、感热通量$H$和水汽通量$E$表达为：
 \begin{equation}
 \tau_{x}=-\rho_{atm} \frac{u_{atm}}{r_{a m}}
 \end{equation}
@@ -76,7 +83,7 @@ H=-\rho_{atm} C_{p a} \frac{\theta_{atm}-T_{s}}{r_{a h}}
 \begin{equation}
 E=-\rho_{atm} \frac{q_{atm}-q_{s}}{r_{a w}}
 \end{equation}
-由于此时湍流通量与叶片温度耦合紧密，故阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$与植被冠层周围($d+z_{0mx}$)空气温度$T_s$和比湿$q_s$将随叶片温度一起采用牛顿迭代法进行求解(见章节~\ref{植被叶片温度计算})。其感热与水汽通量求解较为复杂，且与一维植被湍流交换模型计算过程相同，故此处不多赘述，有兴趣可查看章节~\ref{一维植被湍流交换模型}。
+由于此时湍流通量与叶片温度耦合紧密，故阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$与植被冠层周围($d+z_{0mx}$)空气温度$T_s$和比湿$q_s$将随叶片温度一起采用牛顿迭代法进行求解(见章节~\ref{植被叶片温度计算})。其感热与水汽通量求解与一维植被湍流交换模型计算过程完全相同，具体计算过程请读者参见章节~\ref{一维植被湍流交换模型}。
 
 \section{湿地温度计算方案}
 湿地垂直层温度的计算方案同样类似于有植被覆盖的雪盖土壤层的垂直层温度计算方案。
@@ -85,12 +92,12 @@ E=-\rho_{atm} \frac{q_{atm}-q_{s}}{r_{a w}}
 
 \textbf {(1)植被叶片温度计算}\\
 
-假设植被冠层的比热容为0，则叶片能量平衡方程为：
-\begin{equation}\label{FT_V1}
-F\left(T_{v}\right):=S_{v}+L_{v}\left(T_{v}\right)-H_{p v}\left(T_{v}\right)-\lambda_{v} E_{p v}\left(T_{v}\right)+H_{p r c v}\left(T_{v}\right)=0
+假设植被冠层的比热容很小，可忽略不计，则叶片能量平衡方程为：
+\begin{equation}\label{FT_V2}
+F\left(T_{v}\right):=S_{v}+L_{v}\left(T_{v}\right)-H_{v}\left(T_{v}\right)-\lambda E_{v}\left(T_{v}\right)+H_{p r c v}\left(T_{v}\right)=0
 \end{equation}
-其中$S_v$表示叶片吸收的净太阳辐射(见章节 \ref{短波吸收辐射通量})，
-$L_v$表示叶片吸收的净长波辐射。$T_v$可通过对方程 (\ref{FT_V1}) 实施牛顿迭代法进行求解，迭代公式为：
+其中$S_v$表示叶片吸收的净太阳辐射(见章节~\ref{短波吸收辐射通量})，
+$L_v$表示叶片吸收的净长波辐射。$T_v$可通过对方程 (\ref{FT_V2}) 实施牛顿迭代法进行求解，迭代公式为：
 \begin{equation}
 \Delta T_{v}=-\frac{F\left(T_{v}^{(n)}\right)}{F^{\prime}\left(T_{v}^{(n)}\right)}
 \end{equation}
@@ -103,24 +110,24 @@ $L_v$表示叶片吸收的净长波辐射。$T_v$可通过对方程 (\ref{FT_V1}
     \item 给出$U_c$的初始猜测如下：\\
     \begin{equation*}
     U_c= \begin{cases}
-      0,  & \theta_{v,atm}-\theta_{v,s}\geq0 \text{ 即稳定条件下；} \\
+      0,  & \theta_{v,atm}-\theta_{v,s}\geqslant0 \text{ 即稳定条件下；} \\
       0.5, & \theta_{v,atm}-\theta_{v,s}<0 \text{ 即不稳定条件下；}
      \end{cases}
     \end{equation*}
     \item 通过$R_{ib}$给出$L$的初始猜测；
     \item 迭代以下过程以求得$T_v$以及植被湍流通量：\\
-    a. 通过风速、温度、比湿的微分方程积分结果求得$u_\ast$、$\theta_\ast$、$q_\ast$ \\
+    a. 通过风速、温度、比湿的微分方程(M-O相似性理论)积分结果求得$u_\ast$、$\theta_\ast$、$q_\ast$ \\
     b. 计算植被冠层空气与大气之间的阻抗系数$r_{am}$、$r_{ah}$、$r_{aw}$ \\
-    c. 计算叶面边界层阻抗$r_b$ \\
+    c. 计算叶片边界层阻抗$r_b$ \\
     d. 计算植被冠层空气与地表之间的阻抗系数$r_{ah}^\prime$、$r_{aw}^\prime$ \\
-    e. 计算气孔阻抗$r_s$ \\
-    f. 分别计算叶片吸收的长波辐射、感热通量、潜热通量和雨水感热$L_v$、$H_{pv}$、$\lambda_vE_{pv}$、$H_{prcv}$ \\
-    g. 若前后两次迭代过程中潜热通量的符号发生变化($\lambda_vE_{pv}^{\left(n\right)}\times\lambda_vE_{pv}^{\left(n+1\right)}<0$)，
+    e. 计算阳叶、阴叶气孔阻抗$r_{s,sun}$和$r_{s,sha}$ \\
+    f. 分别计算叶片吸收的长波辐射、感热通量、潜热通量和雨水感热$L_v$、$H_{v}$、$\lambda E_{v}$、$H_{prcv}$ \\
+    g. 若前后两次迭代过程中潜热通量的符号发生变化($\lambda E_{v}^{\left(n\right)}\times\lambda E_{v}^{\left(n+1\right)}<0$)，
     则在该次迭代计算温度时，潜热通量的量级限制为原量级的10\%，由此产生的能量差最后将加到感热通量中 \\
     h. 计算温度变化$\Delta T_v$，并由此更新$T_v^{\left(n+1\right)}=\Delta T_v^{\left(n\right)}+T_v^{\left(n\right)}$。在每次迭代过程中，对于温度的变化作出如下两个限制：
     (1)温度的变化不得超过1 K，若超过，则强制其变化只有1K；
-    (2)若本次迭代温度变化的方向与上一次变化的方向相反，则本次温度的变化将取为两次变化的平均值(若$\Delta T_v^{\left(n-1\right)} \cdot \Delta T_v^{\left(n\right)}<0$，则$\Delta T_v^{\left(n\right)}=\left(\Delta T_v^{\left(n-1\right)}+\Delta T_v^{\left(n\right)}\right)/2$)。\\
-    由温度调整所带来的能量平衡误差最后将加到感热通量中；\\
+    (2)若本次迭代温度变化的方向与上一次变化的方向相反，则本次温度的变化将取为两次变化的平均值(若$\Delta T_v^{\left(n-1\right)} \cdot \Delta T_v^{\left(n\right)}<0$，则$\Delta T_v^{\left(n\right)}=\left(\Delta T_v^{\left(n-1\right)}+\Delta T_v^{\left(n\right)}\right)/2$)\\
+    由温度调整所带来的能量平衡误差最后将加到感热通量中\\
     i. 更新饱和比湿$q_{sat}^{T_v}$及其对$T_v$的变化率 \\
     j. 更新植被冠层空气温度和比湿$T_s$, $q_s$ \\ 
     k. 更新特征位温$\theta_\ast$和特征比湿$q_\ast$ \\
@@ -129,60 +136,69 @@ $L_v$表示叶片吸收的净长波辐射。$T_v$可通过对方程 (\ref{FT_V1}
     n. 计算新一步$L$，并计算$\zeta$，根据稳定性条件限制$\zeta$的取值范围 \\
     o. 根据限制条件后的$\zeta$重新计算$L=\frac{z_{atm,m}-d}{\zeta}$ \\
     p. 判断$L$与上一步迭代相比是否改变符号，若改变符号累计超过4次，则视为中性条件，
-    $L$取固定值$L=\frac{z_{atm,m}-d}{\left(-0.01\right)}$，以避免在稳定与不稳定条件之间来回变化。\\
-    q. 判断迭代停止条件：若迭代过程中满足下列全部条件或迭代次数已超过40次，则迭代停止：
+    $L$取固定值$L=\frac{z_{atm,m}-d}{-0.01}$，以避免在稳定与不稳定条件之间来回变化。\\
+    q. 判断迭代停止条件：若迭代过程中满足下列全部条件或迭代次数已超过40次，则迭代停止
     \begin{equation}
-        \begin{array}{c}\max\left( \sqrt{\left[F^{(n+1)}+G^{(n+1)}-F^{(n)}-G^{(n)}\right]^{\ast\ast2}}, \sqrt{\left[F^{(n)}+G^{(n)}-F^{(n-1)}-G^{(n-1)}\right]^{\ast\ast2}} \right) \\ \leq 0.1 \\ 
-        \max\left( \sqrt{\left(\Delta T_{v}^{(n)}\right)^{2}}, \sqrt{\left(\Delta T_{v}^{(n-1)}\right)^{2}} \right) \leq 0.01\end{array}
+        \begin{array}{l}\max\left( \sqrt{\left[F^{(n+1)}-F^{(n)}\right]^{\ast\ast2}}, \sqrt{\left[F^{(n)}-F^{(n-1)}\right]^{\ast\ast2}} \right) \leqslant 0.1 \\[3.0 ex] 
+        \max\left( \sqrt{\left(\Delta T_{v}^{(n)}\right)^{2}}, \sqrt{\left(\Delta T_{v}^{(n-1)}\right)^{2}} \right) \leqslant 0.01\end{array}
     \end{equation}
-    其中$\left[\bullet\right]^{\ast\ast2}$表示各个相同能量项合并后的平方和；
-    \item 由最终叶片温度更新植被表面与植被冠层空气之间的潜热通量，其中蒸发率不得超过最大蒸发率$W_{can} \Delta t$，蒸腾率不得超过最大蒸腾率$f_{sig} E_{pvt,max}$，
-    若超过则蒸发(腾)率强制取为最大蒸发(腾)率，由此产生的能量差最后将加到感热通量中。
-    \item 由最终叶片温度更新植被表面与植被冠层空气之间的感热通量以及上述因为潜热与温度的调整导致的能量误差之和。
-    \item 由最终叶片温度更新植被冠层的雨水感热。
+    其中$\left[\bullet\right]^{\ast\ast2}$表示各个相同能量项相邻时间步变化量(相减后)的平方和
+    \item 由最终叶片温度更新植被表面与植被冠层空气之间的潜热通量，其中蒸发量不得超过植被截水量$W_{can}$，蒸腾率不得超过最大蒸腾率$ E_{vt,max}$，若超过则蒸发(腾)率强制取为最大蒸发(腾)率，由此产生的能量差最后将加到感热通量中
+    \item 由最终叶片温度更新植被表面与植被冠层空气之间的感热通量以及上述因为潜热与温度的调整导致的能量误差之和
+    \item 由最终叶片温度更新植被冠层的雨水感热
     \item 计算总动量通量为
     \begin{equation}
-    \begin{array}{c}\tau_{x}=\tau_{b,x}-f_{sig} \rho_{atm} \frac{u_{atm}}{r_{a m}} \\ 
-        \tau_{y}=\tau_{b,y}-f_{sig} \rho_{atm} \frac{v_{atm}}{r_{am}}\end{array}
+    \begin{aligned}
+    \tau_{x} &=- \rho_{atm} \frac{u_{atm}}{r_{a m}} \\[1ex] 
+    \tau_{y} & =- \rho_{atm} \frac{v_{atm}}{r_{am}}
+    \end{aligned}
     \end{equation}
-    \item 计算有植被覆盖下的地表感热通量$H_{pg}$和潜热通量$\lambda_{vE_{pg}}$及其对地表温度的变化率，
-    并给出地表总感热通量$H_g$和潜热通量$\lambda_{vE_g}$：
+    \item 计算有植被覆盖下的地面感热通量$H_{g}$和潜热通量$\lambda E_{g}$及其对地面温度的变化率，
+    并给出地表总感热通量$H_g$和潜热通量$\lambda E_g$随地面温度变化率
+    \item 计算植被覆盖下地表吸收的下行长波辐射$L_{v}^\downarrow$和返回大气的上行长波辐射$L_v ^\uparrow$：
     \begin{equation}
-      \begin{aligned} 
-        H_{g} &=H_{b}+H_{p g} \\ 
-        \lambda_{vE_{g}} &=\lambda_{vE_{b}}+\lambda_{vE_{pg}} 
-      \end{aligned}
+        L_{v} ^\downarrow =  \tau_{v} L ^\downarrow+\varepsilon_{v}\sigma \left (T_{v}^{(n - 1)}\right)^3\left( T_{v}^{(n - 1)} + 4\Delta T_{v}^{(n - 1)} \right)\\
     \end{equation}
-    \item 计算植被覆盖下地表吸收的下行长波辐射$L_{pg}\downarrow$和返回大气的上行长波辐射$L_p\uparrow$：
     \begin{equation}
-      \begin{aligned}
-        L_{pg} \downarrow &= f_{sig} \mu_{th} L \downarrow+f_{sig} \left(1-\mu_{t h}\right) \sigma T_{v}^{4} \\
-        L_{p} \uparrow &= f_{sig} \mu_{t h} \varepsilon_{g} \sigma T_{g}^{4}+f_{sig} \left(1-\mu_{t h}\right) \sigma T_{v}^{4}
-      \end{aligned}
+    \begin{aligned}
+        L_{v}^ \uparrow &=  \tau_{v} \varepsilon_{g} \sigma T_{g}^{4}+ \varepsilon_{v}\sigma \left ( T_{v}^{(n - 1)}\right )^3\left( T_{v}^{(n - 1)} + 4\Delta T_{v}^{(n - 1)} \right) \\[1ex]
+&\mathrel{\phantom{=}} + \left ( 1- \varepsilon_{g} \right)\mu_{v}^2 L ^\downarrow + \left ( 1- \varepsilon_{g} \right) \mu_{v} \varepsilon_{v} \sigma \left (T_{v}^{(n - 1)}\right) ^4 \\[1ex]
+&\mathrel{\phantom{=}} + 4 \left ( 1- \varepsilon_{g} \right) \mu_{v} \varepsilon_{v} \sigma \left (T_{v}^{(n - 1)}\right)^3 \Delta T_{v}^{(n - 1)}
+    \end{aligned}
     \end{equation}
-    \item 计算2 m温度与比湿$T_{2m}$、$q_{2m}$。
+    \item 计算地表2 m温度与比湿$T_{2m}$、$q_{2m}$。
 \end{enumerate}
-
 
 \textbf {(2)雪盖土壤热力过程}\\
 
 假设湿地无水平物质能量交换，则垂直方向上的一维能量平衡方程如下：
-\begin{equation}\label{eq:WetlandThermalCons}
+\begin{equation}\label{eq:WetlandThermalCons1}
     c \frac{\partial T}{\partial t}=-\frac{\partial F}{\partial z},  \quad F=-\lambda \frac{\partial T}{\partial z}
 \end{equation}
-其中$c$表示雪盖或湿地土壤的体积热容（\unit{J.m^{-3}.K^{-1}}），$T$表示雪盖土壤温度（K），$t$表示时间（s），$z$表示雪盖高度或土壤深度，$F$表示垂直方向的热通量（向上为正方向，\unit{W.m^{-2}}），$\lambda$表示热导率（\unit{W.m^{-1}.K^{-1}}）。
+其中$c$表示雪盖或湿地土壤的体积热容（\unit{J.m^{-3}.K^{-1}}），$T$表示雪盖土壤温度（K），$t$表示时间（s），$z$表示雪盖高度或土壤深度，$F$表示垂直方向的热传导通量（向上为正方向，\unit{W.m^{-2}}），$\lambda$表示热传导率（\unit{W.m^{-1}.K^{-1}}）。
 
-对于体积热容，其由每层液态水和固态水的体积热容根据各自体积百分比加权得到，即
+对于体积热容，雪盖体积热容量由液态水和固态水的热容量基于体积百分比加权平均求得
 \begin{equation}
-    c_i = \frac{w_{ice,i}}{\Delta z_i}C_{pi} + \frac{w_{liq,i}}{\Delta z_i}C_{pl}
+c_{i}=\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{pl}
 \end{equation}
-其中，$w_{ice,i}$和$w_{liq,i}$分别表示第$i$层固态水含量和液态水含量（\unit{kg.m^{-2}}），$C_{pl}$和$c_{pi}$分别表示固态水和液态水的体积热容量（见表A.1）。特别地，若此时无雪盖分层但雪水当量$W_{sno}>0$，则将这部分热容量考虑为固态水的热容量加到土壤顶层中，土壤顶层（即编号$i=1$）热容量重新计算为：
-\begin{equation}
-    c_1 = \frac{w_{ice,1}+W_{sno}}{\Delta z_1}C_{pi} + \frac{w_{liq,1}}{\Delta z_1}C_{pl}
-\end{equation}
+其中，$w_{ice,i}$和$w_{liq,i}$分别表示第$i$层固态水含量和液态水含量（\unit{kg.m^{-2}}），$C_{pi}$和$C_{pl}$分别表示固态水和液态水的体积热容量（见~\ref{tab:物理常数})。
 
-对方程~\eqref{eq:WetlandThermalCons}进行离散（见章节~\ref{温度求解的数值格式}），则第$i$层雪盖土壤层的能量平衡方程可表达为：
-\begin{equation}\label{eq:WetlandThermal}
+土壤相比雪盖多了固体土壤部分，体积热容量由每层固体土壤、液态水和固态水的体积热容根据各自体积百分比加权得到，即
+\begin{equation}
+c_{i}=c_{s, i}\left(1-\theta_{s, i}\right)+\frac{w_{ice, i}}{\Delta z_{i}} C_{pi}+\frac{w_{liq, i}}{\Delta z_{i}} C_{p l}
+\end{equation}
+其中，$c_{s,i}$表示第 i 层的固体土壤体积热容量，由地表参数数据集提供。特别地，若此时无雪盖分层但雪水当量$W_{sno}>0$，则将这部分热容量考虑为固态水的热容量加到土壤顶层中，土壤顶层（即编号$i=1$）热容量重新计算为：
+\begin{equation}
+c_{1}=c_{s,1}\left(1-\theta_{s, 1}\right)+\frac{w_{ice, 1}}{\Delta z_{1}} C_{pi}+\frac{w_{liq,1}}{\Delta z_{1}} C_{pl}+\frac{W_{sno}}{\Delta z_{1}} C_{pi}
+\end{equation}
+固体土壤热容量则由土壤含量的各项体积百分比加权平均得到。其中有机质土壤和砾石的体积热容量分别取值为$2.51 \times 10^{6}$ \unit{J.m^{−3}.K^{−1}} 和 $2.35 \times 10^{6}$ \unit{J.m^{−3}.K^{−1}}，矿物质土壤的体积热容量（\unit{J.m^{−3}.K^{−1}}）由如下方案给出：
+\begin{equation}
+c_{minerals}=\frac{2.128\times\%sand+2.385\times\%clay}{\%sand+\%clay}\times10^6
+\end{equation}
+其中$\%sand$和$\%clay$表示沙土和黏土的质量百分比。
+
+对方程~\eqref{eq:WetlandThermalCons1}进行离散（见章节~\ref{温度求解的数值格式}），则第$i$层雪盖土壤层的能量平衡方程可表达为：
+\begin{equation}\label{eq:WetlandThermal1}
     \frac{c_i \Delta z_i}{\Delta t} \left(T^{n+1}_i - T^n_i\right) = F_i - F_{i-1}
 \end{equation}
 其中$\Delta t$表示积分时间步长，$n$表示时间步数，$F_i$表示第$i+1$层传导到第$i$层的热通量，其离散形式为：
@@ -201,7 +217,7 @@ $\lambda\left[z_{h,i}\right]$表示第$i+1$层和第$i$层交界面处的热导�
     \lambda\left[z_{h,0}\right]=\frac{2\lambda_0\lambda_1}{\lambda_0+\lambda_1} \geqslant 0.5\lambda_1
 \end{equation}
 
-对方程~\eqref{eq:WetlandThermal}采用Crank-Nicholson半隐式格式求解，得到以下形式：
+对方程~\eqref{eq:WetlandThermal1}采用Crank-Nicholson半隐式格式求解，得到以下形式：
 \begin{equation}
     \frac{c_i\Delta z_i}{\Delta t}\left(T^{n+1}_i - T^n_i\right)=\alpha \left(F^n_i - F^n_{i-1}\right) + \left(1-\alpha \right) \left(F^{n+1}_i - F^{n+1}_{i-1}\right)
 \end{equation}
@@ -244,7 +260,7 @@ $\lambda\left[z_{h,i}\right]$表示第$i+1$层和第$i$层交界面处的热导�
 \end{equation}
 
 大气进入地表的热通量$h_s$和其偏导可计算为：
-\begin{equation}\label{eq:WetlandSrfEnergyBalance}
+\begin{equation}\label{eq:WetlandSrfEnergyBalance1}
     h_s = S_g + L_g - H_g - \lambda E_g + H_{prcg}
 \end{equation}
 \begin{equation}
@@ -255,7 +271,7 @@ $\lambda\left[z_{h,i}\right]$表示第$i+1$层和第$i$层交界面处的热导�
     H_{prcg} = C_{pl}p_l\left(T_p-T_g\right) + C_{pi}p_i\left(T_p-T_g\right)
 \end{equation}
 其中$p_l$和$p_i$分别表示到达地面的液态降水和固态降水（\unit{mm.H_2O.s^{-1}}），$T_p$表示降水温度（K）。
-式~\eqref{eq:WetlandSrfEnergyBalance}中$\lambda$表示潜热通量系数，用于将水汽通量转换为潜热通量
+式~\eqref{eq:WetlandSrfEnergyBalance1}中$\lambda$表示潜热通量系数，用于将水汽通量转换为潜热通量
 \begin{equation}
     \lambda = \begin{cases}
         \lambda_s &\text{当}\ w_{liq,snl+1}=0\text{ 且}\ w_{ice,snl+1}>0\text{ 时}\\
@@ -264,7 +280,7 @@ $\lambda\left[z_{h,i}\right]$表示第$i+1$层和第$i$层交界面处的热导�
 \end{equation}
 $\lambda_s$和$\lambda_v$分别为固态水升华潜热系数和液态水蒸发潜热系数（表A.1）。
 
-对于式~\eqref{eq:WetlandSrfEnergyBalance}中的净长波辐射$L_g$，其可计算为
+对于式~\eqref{eq:WetlandSrfEnergyBalance1}中的净长波辐射$L_g$，其可计算为
 \begin{equation}
     L_g = \varepsilon_g L_{bg}\downarrow - L_g\uparrow
 \end{equation}
@@ -296,55 +312,62 @@ r_{i} &= T_{i}^{n}-\alpha \frac{\Delta t \lambda\left[z_{h, i-1}\right]}{c_{i} \
 \section{湿地的水文过程计算方案}
 湿地的水文过程计算方案同样类似于雪盖土壤层，区别在于湿地的土壤水默认为饱和状态。故水文过程主要发生在土壤层之上的雪盖层和土壤层顶层。
 
-对于雪盖的水文过程，其计算方案与章节~\ref{积雪和土壤中水分的垂直运动}完全一致。而在土壤层的水文过程中，同样认为土壤中含有饱和土壤水，采用2014版CoLM中的方案和用可变饱和流数值算法求解Richards方程时有少许不同。以下对计算流程做一个简要说明。\\
+对于雪盖的水文过程，其计算方案除雪层的建立外与章节~\ref{积雪和土壤中水分的垂直运动}基本一致。而在土壤层的水文过程中，同样认为土壤中含有饱和土壤水，采用CoLM2014中的方案和用可变饱和流数值算法求解Richards方程时有少许不同。
+
+特别地，若湿地地表产生降雪，且地表温度大于冻结温度，此时模式不计算降雪过程，如果开启可变饱和流方案，则此时降雪累计到湿地水量中
+\begin{equation}
+W_{wet}^{n+1}=W_{wet}^{n}+W_{sno}
+\end{equation}
+其中$W_{sno}$为雪水当量，$W_{wet}$表示湿地中的水量。\\
 
 \textbf {(1)雪盖水文过程}\\
 
 \begin{enumerate}
-    \item 根据雪盖的液态水质量守恒方程
+    \item 当固态降水$p_i$发生且湿地地表温度小于冻结温度时，雪盖高度开始累计。若雪盖高度$z_{sno}$ 大于0.01m且此时尚无雪盖分层，则将在模拟开始时创建一个新的雪层（章节~\ref{sec:雪层的建立}）；
+    \item 雪盖建立后，根据雪盖的液态水质量守恒方程
     \begin{equation}
             \frac{\partial w_{liq,i}}{\partial t}=\left(q_{liq,i-1}-q_{liq,i}\right)+\frac{{\left(\Delta w_{liq,i}\right)}_p}{\Delta t}
     \end{equation}
-    计算每一层的液态水通量，并更新下一积分步长的液态水含量，由雪盖底层流出的液态水通量则用于地表径流的计算当中；
-    \item 考虑积雪的压实过程，更新每一层雪盖的厚度；
-    \item 当某个雪层发生消融至不足规定的最小厚度，或积累至规定的最大厚度时，对雪层进行合并或再分层。
+    计算每一层的液态水通量，并更新下一积分步长的液态水含量，由雪盖底层流出的液态水通量则用于地表径流的计算当中（章节~\ref{雪盖的水量平衡}）；
+    \item 考虑积雪的压实过程，更新每一层雪盖的厚度（章节~\ref{雪的压实}）；
+    \item 当某个雪层发生消融至不足规定的最小厚度，或积累至规定的最大厚度时，对雪层进行合并（章节~\ref{雪层的合并}）或再分层（章节~\ref{雪层的再分层}）。
 \end{enumerate}
 
 \textbf {(2)土壤水文过程-2014版Richards方程求解方案}\\
 
-采用2014版CoLM中的方案对Richards方程求解时，其土壤层均视为饱和含水层，无水分垂直运动，模式网格均视为地表水饱和区域，无液态水入渗，地表水全部化作径流流走
+采用2014版CoLM中的方案对Richards方程求解时，模式网格均视为地表水饱和区域，其土壤层均视为饱和含水层（$\theta_{i}=\theta_{s}$），无水分垂直运动，无液态水入渗（$Q_{infl}=0$），无地下水补给（$q_{charge}=0$），地表水全部化作径流流走（$r_{surface}=G_{water}$），地下水总水量设为阈值（$w_a=4800$），地下水水位与地表齐平（$z_{wt}=0$）
 \begin{equation}
 \begin{aligned}
     &\theta_{i} &&= &\theta_{s}& \\
-    &\theta_{charge} &&=&0 &\\
+    &q_{charge} &&=&0 &\\
     &w_a &&=&4800& \\
     &z_{wt} &&=&0& \\
     &Q_{infl} &&=&0& \\
     &r_{surface} &&=&G_{water}& \\
 \end{aligned}
 \end{equation}
-其中$\theta_{i}$为土壤体积含水量，$\theta_{s}$为饱和土壤体积含水量，$\theta_{charge}$土壤层底部水流通量，$W_{a}$为含水层总水量，$Z_{wt}$为地下水位深度，$Q_{infl}$为入渗到土壤中的水分，$r_{surface}$为地表径流，$G_{water}$为表面水分输入。\\
+其中$\theta_{i}$为土壤体积含水量，$\theta_{s}$为饱和土壤体积含水量，$q_{charge}$土壤层底部水流通量，$w_{a}$为含水层总水量，$z_{wt}$为地下水位深度，$Q_{infl}$为入渗到土壤中的水分，$r_{surface}$为地表径流，$G_{water}$为表面水分输入。\\
 
 \textbf {(3)土壤水文过程-可变饱和流数值算法}\\
 
 采用可变饱和流数值算法对Richards方程求解时，为表示湿地整体的水资源变化，湿地水量$W_{wet}$也是算法中的预报变量，用于表示湿地中的表面水量，在湿地过程计算之前，对湿地水量进行更新：
 
+存在雪层时为，凝结通量、冻结通量和升华通量在雪层顶层计算
+\begin{equation}
+W_{wet}^{n+1}-W_{wet}^{n}=W_{srf}+w_{a}+\left(G_{water}-E_{tr}\right)*{\Delta t}
+\end{equation}
+
 不存在雪层时为
 \begin{equation}
-W_{wet}^{n+1}-W_{wet}^{n}=W_{srf}+W_{a}+\left(G_{water}-E_{tr}\right)*{\Delta t}
+W_{wet}^{n+1}-W_{wet}^{n}=W_{srf}+w_{a}+\left(G_{water}-E_{tr}+q_{sdew}+q_{fros}-q_{subl}\right)*{\Delta t}
 \end{equation}
+其中$W_{wet}$表示湿地中的水量，$W_{srf}$为表面水深度，$w_{a}$为含水层总水量，$G_{water}$为表面水分输入，$E_{tr}$为实际蒸腾通量，$q_{sdew}$为凝结通量，$q_{fros}$为冻结通量，$q_{subl}$为升华通量，${\Delta t}$为积分时间步长。
 
-存在雪层时为
+可变饱和流方案中$w_a$与2014版方案中$w_a$同样作为表示地下水总量的状态变量，但含义不同。此处$w_a$更多作为土壤水亏缺值存在。只有当地下水位处于土壤水计算区域之下时，才会使用预报变量$w_a$来表示计算区域之下蓄水层的蓄水状态。而湿地中默认地下水位处于土壤水计算区域之下。$w_a$定义为
 \begin{equation}
-W_{wet}^{n+1}-W_{wet}^{n}=W_{srf}+W_{a}+\left(G_{water}-E_{tr}+q_{sdew}+q_{fros}-q_{subl}\right)*{\Delta t}
+w_{a}=-\int_{z_{b t m}}^{z_{w t}}\left(\theta_{s}-\theta_{i}\right) d z
 \end{equation}
-其中$W_{wet}$表示湿地中的表面水量，$W_{srf}$为表面水深度，$W_{a}$为含水层总水量，$G_{water}$为表面水分输入，$E_{tr}$为实际蒸腾通量，$q_{sdew}$为露水凝结通量，$q_{fros}$为露水冻结通量，$q_{subl}$为积雪升华通量，${\Delta t}$为积分时间步长。
-
-此处的$W_a$和$w_a$同样为含水层总水量，但这里$W_a$可视为土壤水亏缺值。只有当地下水位处于土壤水计算区域之下时，才会使用预报变量$W_a$来表示计算区域之下蓄水层的蓄水状态。而湿地中默认地下水位处于土壤水计算区域之下。$W_a$定义为
-\begin{equation}
-W_{a}=-\int_{z_{b t m}}^{Z_{w t}}\left(\theta_{s}-\theta\right) d z
-\end{equation}
-$W_a$的绝对值为土壤水计算区域之下空气的体积百分比，负号的含义是计算区域之下液态水相对于饱和状态是亏缺的，$W_a$的最大值为0（表示土壤水饱和）。
+$w_a$的绝对值为土壤水计算区域之下空气的体积百分比，负号的含义是计算区域之下液态水相对于饱和状态是亏缺的，$w_a$的最大值为0（表示土壤水饱和）。
 
 随后对每层土壤层含水量进行计算，
 \begin{equation}
@@ -353,36 +376,38 @@ $W_a$的绝对值为土壤水计算区域之下空气的体积百分比，负号
         \theta_{s}     &\qquad \quad \qquad \quad \;\text{当}\ \theta_{i}^{n} > \theta_{s} \ \text{时} \\
     \end{cases}
 \end{equation}
-其中$\theta_{i}^{n}$为第$i$层土壤体积含水量，$\theta_{s}$为饱和土壤体积含水量。
+其中$\theta_{i}$为第$i$层土壤体积含水量，$\theta_{s}$为饱和土壤体积含水量。
 
 湿地蓄水状态按湿地水量（$W_{wet}$）和湿地水量阈值（$W_{wetmax}$）的比较分三种情况给定状态变量：
 
-（1）若此时湿地地表水饱和（$W_{wetmax} \leq W_{wet}$），则使用表面水量（$W_{srf}$）储存湿地含水量超出阈值部分（$W_{wet}-W_{wetmax}$），湿地水量（$W_{wet}$）则等于饱和值，此时土壤水饱和（$W_{a}=0$）
+\begin{enumerate}
+    \item 若此时湿地地表水饱和（$W_{wetmax} \leq W_{wet}$），则使用表面水量（$W_{srf}$）储存湿地含水量超出阈值部分（$W_{wet}-W_{wetmax}$），湿地水量（$W_{wet}$）则等于饱和值，此时土壤水饱和（$w_{a}=0$）
 % \begin{equation}
 % \begin{aligned}
 % W_{srf}&=W_{wet}-W_{wetmax} \\
 % W_{wet}&=W_{wetmax} \\
-% W_{a}&=0 \\
+% w_{a}&=0 \\
 % \end{aligned}
 % \end{equation}
 
-（2）若湿地地表水未饱和（$0 \leq W_{wet} < W_{wetmax}$）,则表面水量（$W_{srf}$）为0，土壤水饱和（$W_{a}=0$）
+    \item 若湿地地表水未饱和（$0 \leq W_{wet} < W_{wetmax}$）,则表面水量（$W_{srf}$）为0，土壤水饱和（$w_{a}=0$）
 % \begin{equation}
 % \begin{aligned}
 % W_{srf}&=0 \\
 % W_{wet}&=W_{wet} \\
-% W_{a}&=0 \\
+% w_{a}&=0 \\
 % \end{aligned}
 % \end{equation}
 
-（3）若计算中湿地地表缺水（$W_{wet} < 0$）,则湿地土壤水未饱和（$W_{a}=W_{wet}$）
+    \item 若计算中湿地地表缺水（$W_{wet} < 0$）,则湿地土壤水未饱和（$w_{a}=W_{wet}$）
 % \begin{equation}
 % \begin{aligned}
 % W_{srf}&=0 \\
 % W_{wet}&=0 \\
-% W_{a}&=W_{wet} \\
+% w_{a}&=W_{wet} \\
 % \end{aligned}
 % \end{equation}
+\end{enumerate}
 
 径流计算则通过设置侧向流模块计算。若开启侧向流模块(\texttt{\#define LATERAL\_FLOW})，则径流计算方案见章节~\ref{ch:侧向流模拟}。
 
@@ -394,4 +419,3 @@ $W_a$的绝对值为土壤水计算区域之下空气的体积百分比，负号
 \end{aligned}
 \end{equation}
 其中$r_{srf}$为总的地表径流，$h_{pond}$为地表积水深度。
-

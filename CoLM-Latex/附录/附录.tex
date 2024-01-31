@@ -262,7 +262,7 @@ USGS地表覆盖类型     & 粗糙度与植被高度比值 & 零平面位移与
 %\begin{sidewaystable}[]
     \centering
     \caption[USGS植被光合作用参数]{USGS植被光合作用参数。$V_{cmax}$表示植被冠层顶部 25~\textcelsius 时光合最大羧化速率(\unit{mol.m^{-2}.s^{-1}})，$\alpha$为量子转化效率(0.05 \unit{mol.CO_2.mol^{-1}.photon})，$m$为气孔导度经验拟合经验参数(无量纲)，$b$为最小气孔导度(\unit{mol.CO_2.m^{-2}.s^{-1}}) ，
-    $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数(\unit{K^{-1}})，$s_2$是低温抑制系数(\unit{K^{-1}})，$s_3$是叶呼吸高温抑制系数(\unit{K^{-1}})，$T_{dm}$是叶呼吸高温抑制温度参数(K)}
+    $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数(\unit{K^{-1}})，$s_2$是低温抑制系数(\unit{K^{-1}})，$s_3$是叶呼吸高温抑制系数(\unit{K^{-1}})，$T_{dm}$是叶呼吸高温抑制温度参数(K)，$T_{high}$和$T_{low}$分别为羧化速率的高温和低温响应参数，$K_n$表示叶片氮含量垂直分布指数衰减因子(注：CoLM默认为0.5，代码中更新为0.11)}
     \label{tab:USGS植被光合作用参数1}
     \begin{tabular}{@{}lccccccccccccccccccc@{}}
     \toprule
@@ -529,7 +529,7 @@ IGBP地表覆盖类型    & \text{粗糙度与植被高度比值} & \text{零平
         $\alpha$为量子转化效率(0.05 \unit{mol.CO_2.mol^{-1}.photon})，$m$为气孔导度经验拟合经验参数(无量纲)，
         $b$为最小气孔导度(\unit{mol.CO_2.m^{-2}.s^{-1}}) ，
         $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数(\unit{K^{-1}})，$s_2$是低温抑制系数(\unit{K^{-1}})，
-        $s_3$是叶呼吸高温抑制系数(\unit{K^{-1}})，$T_{dm}$是叶呼吸高温抑制温度参数(K)}
+        $s_3$是叶呼吸高温抑制系数(\unit{K^{-1}})，$T_{dm}$是叶呼吸高温抑制温度参数(K)，$T_{high}$和$T_{low}$分别为羧化速率的高温和低温响应参数，$K_n$表示叶片氮含量垂直分布指数衰减因子(注：CoLM默认为0.5，代码中更新为0.11)}
         \label{tab:IGBP植被光合作用参数1}
         \begin{tabular}{@{}lccccccccccccccccccc@{}}
         \toprule
@@ -778,7 +778,7 @@ IGBP地表覆盖类型     & $a$ & $b$ \\ \midrule
         $\alpha$为量子转化效率(0.05 \unit{mol.CO_2.mol^{-1}.photon})，$m$为气孔导度经验拟合经验参数(无量纲)，
         $b$为最小气孔导度(\unit{mol.CO_2.m^{-2}.s^{-1}}) ，
         $r_{base}$为叶基础呼吸速率系数(无量纲)，$s_1$是高温抑制系数(\unit{K^{-1}})，$s_2$是低温抑制系数(\unit{K^{-1}})，
-        $s_3$是叶呼吸高温抑制系数(\unit{K^{-1}})，$T_{dm}$是叶呼吸高温抑制温度参数(K)}
+        $s_3$是叶呼吸高温抑制系数(\unit{K^{-1}})，$T_{dm}$是叶呼吸高温抑制温度参数(K)，$T_{high}$和$T_{low}$分别为羧化速率的高温和低温响应参数，$K_n$表示叶片氮含量垂直分布指数衰减因子(注：CoLM默认为0.5，代码中更新为0.11)}
         \label{tab:PFT植被光合作用参数1}
         \begin{tabular}{@{}lccccccccccccccccccc@{}}
         \toprule
@@ -1066,7 +1066,7 @@ CPL7通过ESMF Clock特性作为主时钟进行时钟管理，而CoLM内部则�
 每一次CoLM的运行既可以包含一个积分步也可运行多个积分步。在与CWRF模型耦合时，耦合频率和积分步长均设置为10分钟，即耦合器控制每10分钟调用一次CoLM，每次运行一个积分步。耦合框架也支持间隔更长的耦合频率，使得每次调用CoLM时完成多个积分步。使用CPL7耦合CoLM的时间循环流程见图~\ref{fig:CoLM的时间循环流程}。
 
 {
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centering
 \includegraphics{Figures/附录/使用CPL7耦合CoLM的时间循环流程图.png}
 \caption{使用CPL7耦合CoLM的时间循环流程图}

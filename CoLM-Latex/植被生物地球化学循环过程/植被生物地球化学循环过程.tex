@@ -1,5 +1,8 @@
 \chapter{植被生物地球化学循环过程}\label{植被生物地球化学循环过程}
 %\addcontentsline{toc}{chapter}{植被生物地球化学循环过程}
+\begin{mymdframed}{代码}
+本章对应代码源文件位于\texttt{main/BGC/}目录下。
+\end{mymdframed}
 
 %\begin{植被生物地球化学循环过程}
 CoLM植被生物地球化学循环模块存在复杂的碳氮循环网络，植物生理和物候等过程是量化不同碳氮库相互转换和传输的关键。
@@ -9,6 +12,7 @@ CoLM植被生物地球化学循环模块存在复杂的碳氮循环网络，植�
 植被碳氮库的周转由物候过程和植被自然死亡过程共同控制。
 经过物候过程和植被自然死亡过程，植被凋落物进入土壤进一步进行地下生物地球化学循环。
 \section{植被自养呼吸}\label{植被自养呼吸}
+
 CoLM的自养呼吸$CF_{ar,total}$计算包括维持呼吸$CF_{mr,total}$和生长呼吸$CF_{gr,total}$，
 模型对他们分别进行模拟 \citep{lavigne1997growth,sprugel1995respiration}。
 自养呼吸指植被活体组织维持正常的代谢活动所消耗的碳，生长呼吸指植被生长所消耗的碳。
@@ -16,6 +20,9 @@ CoLM的自养呼吸$CF_{ar,total}$计算包括维持呼吸$CF_{mr,total}$和生�
 CF_{ar,total}=CF_{mr, total}+CF_{gr,total}
 \end{equation}
 \subsection{维持呼吸}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_CNMResp.F90}。
+\end{mymdframed}
 叶片的维持呼吸($R_d$)由光合作用模块中公式\eqref{R_d1_sun}和\eqref{R_d1_sha}计算。
 除此之外，活茎、活粗根和细根同样存在维持呼吸。
 维持呼吸和植被器官单位面积的氮含量成正比，同时受到温度的调控：
@@ -37,6 +44,9 @@ $R_{q10}$是维持呼吸的温度敏感性参数，$T_{2m}$是2m高度气温， 
 CF_{mr,total}=R_{d}+CF_{livestem}+CF_{livecroot}+CF_{froot}
 \end{equation}
 \subsection{生长呼吸}\label{生长呼吸}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_CNGResp.F90}。
+\end{mymdframed}
 生长呼吸$CF_{gr,total}$由植被单位面积的净生长速率乘以系数0.11得到：
 \begin{equation}
 CF_{gr,total}=NPP \cdot 0.11
@@ -47,6 +57,9 @@ CF_{gr,total}=NPP \cdot 0.11
 
 
 \section{植被碳氮分配}\label{植被碳氮分配}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_NutrientCompetition.F90}。
+\end{mymdframed}
 \subsection{维持呼吸的碳消耗}
 CoLM碳分配首先满足维持呼吸($CF_{mr,total}$)的需求，其次碳分配需要填补由于夜间或冬天光合作用少于维持呼吸所造成的碳存储亏缺，
 最后剩余碳分配才能用于植被各营养器官库的生长。所以由光合作用支持的维持呼吸碳供给($CF_{GPP,mr}$)可以表达为：
@@ -200,6 +213,9 @@ $f_{cur}$是碳分配到组织库或存储库的指示系数，取值0或1，当
 
 
 \section{植被物候过程的耦合预报方案}\label{植被物候过程的耦合预报方案}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_CNPhenology.F90}。
+\end{mymdframed}
 CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，模拟叶面积指数的季节变化特征。
 
 

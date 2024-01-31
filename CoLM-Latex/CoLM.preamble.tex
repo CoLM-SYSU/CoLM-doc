@@ -26,11 +26,24 @@
 \usepackage{fancyhdr}
 \fancypagestyle{fancy}{%
   \fancyhf{}
-  \fancyhead[RO]{\textnormal{\kaishu\nouppercase\rightmark}}
+  \fancyhead[RO]{\textnormal{\kaishu\nouppercase\rightorleftmark}}
   \fancyhead[LE]{\textnormal{\kaishu\nouppercase\leftmark}}
-  \fancyhead[RE,LO]{--\ \thepage\ --}
+%  \fancyhead[RE,LO]{--\ \thepage\ --}
+%  \fancyhead[CO]{\textnormal{\kaishu\nouppercase\rightmark}}
+%  \fancyhead[CE]{\textnormal{\kaishu\nouppercase\leftmark}}
+  \fancyfoot[C]{--\ \thepage\ --}
   \renewcommand{\headrulewidth}{0.4pt}
 }
+
+\makeatletter
+\newcommand{\rightorleftmark}{%
+  \begingroup\protected@edef\x{\rightmark}%
+  \ifx\x\@empty
+    \endgroup\leftmark
+  \else
+    \endgroup\rightmark
+  \fi}
+\makeatother
 
 %Making the pagestyle of part and chapter page fancier
 \fancypagestyle{plain}{%

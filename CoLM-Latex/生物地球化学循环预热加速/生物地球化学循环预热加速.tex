@@ -1,6 +1,8 @@
 \chapter{生物地球化学循环预热加速}\label{生物地球化学循环预热加速}
 %\addcontentsline{toc}{chapter}{生物地球化学循环预热加速}
-
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_BGC\_CNSASU.F90}。
+\end{mymdframed}
 %\begin{生物地球化学循环预热加速}
 生物地球化学循环预热是陆地生态系统碳氮循环模拟必不可少的初始化过程，是众多模式比较计划都采用的标准初始化流程。
 生物地球化学循环预热通过重复使用同样的气候强迫场和大气二氧化碳浓度数据，使陆地生态系统碳氮储量达到平衡。
@@ -92,9 +94,10 @@ $A_{phc}$和$A_{phn}$分别是碳氮传输系数矩阵，代表不同植被碳�
       a_{19,1} & 0 & 0 & a_{19,4} & 0 & 0 & a_{19,7} & 0 & 0 & a_{19,10} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1
     \end{array}\right)
     \end{equation}
-  \end{landscape}
+\end{landscape}
 %}
-
+\begin{landscape}
+    \enlargethispage{55pt}
     \begin{equation}
       A_{gmc}=\left(\begin{array}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
         -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
@@ -116,8 +119,11 @@ $A_{phc}$和$A_{phn}$分别是碳氮传输系数矩阵，代表不同植被碳�
         0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & 0 \\ 
         0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  & -1
       \end{array}\right)
-      \end{equation}
-      
+    \end{equation}
+\end{landscape}
+
+\begin{landscape}
+    \enlargethispage{55pt}
       \begin{equation}
         A_{gmn}=\left(\begin{array}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
           -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -139,6 +145,7 @@ $A_{phc}$和$A_{phn}$分别是碳氮传输系数矩阵，代表不同植被碳�
            0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 &0 \\
            0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1\end{array}\right)
         \end{equation}
+\end{landscape}
 其中，矩阵的非对角元素 $a_{(i,j)}$, 代表从$j$到$i$的碳氮传输在$j$库总周转掉的碳氮中的比例。
 
 
@@ -155,10 +162,10 @@ N_{veg, s s}=\left(A_{phn}(t) K_{phn}+A_{gmn}(t) K_{gmn}\right)^{-1} B I_{Nin}
 \section{土壤凋落物生物地球化学循环预热加速}
 CoLM土壤凋落物的碳氮循环可以表示为7个碳库和7个氮库的碳氮平衡方程组~\citep{lu2020full}，其中每个库在土壤垂直方向分为10层，可以写成矩阵形式：
 \begin{equation}
-\frac{d C_{\text {soil }}}{dt}=I_{C \text { soil }}+\left(A_{h c} \xi(t) K_{h}+V(t)\right) C_{\text {soil }}(t)
+\frac{d C_{\text {soil }}}{dt}=I_{C \text { soil }}+\left[A_{h c} \xi(t) K_{h}+V(t)\right] C_{\text {soil }}(t)
 \end{equation}
 \begin{equation}
-\frac{d N_{\text {soil }}}{dt}=I_{N s o i l}+\left(A_{h n} \xi(t) K_{h}+V(t)\right) N_{\text {soil }}(t)
+\frac{d N_{\text {soil }}}{dt}=I_{N s o i l}+\left[A_{h n} \xi(t) K_{h}+V(t)\right] N_{\text {soil }}(t)
 \end{equation}
 $C_{soil}$和$N_{soil}$是CoLM土壤凋落物有机碳氮库的状态变量(\unit{g.C.m^{-3}} 和 \unit{g.N.m^{-3}}), 是向量。
 $I_{Csoil}$和$I_{Nsoil}$同样是长度为70的向量，代表进入土壤碳氮库中不同分层的凋落物输入。
@@ -208,10 +215,10 @@ V(t)=\left(\begin{array}{ccccccc}v & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & v & 0 & 0 & 0 
 所以可以解得植被碳氮的平衡状态($C_{(soil,ss)}$, $N_{(soil,ss)}$)是：
 %
 \begin{equation}
-C_{soil, s s}=\left(A_{h c} \xi(t) K_{h}+V(t)\right)^{-1} I_{C s o i l}
+C_{soil, s s}=\left[A_{h c} \xi(t) K_{h}+V(t)\right]^{-1} I_{C s o i l}
 \end{equation}
 \begin{equation}
-N_{soil, s s}=\left(A_{h n} \xi(t) K_{h}+V(t)\right)^{-1} I_{N s o i l}
+N_{soil, s s}=\left[A_{h n} \xi(t) K_{h}+V(t)\right]^{-1} I_{N s o i l}
 \end{equation}
 同样的，由于生物地球化学循环运用循环的气象强迫场数据，
 所以土壤碳氮的平衡状态也需要累加计算一个气象循环的平均值。 

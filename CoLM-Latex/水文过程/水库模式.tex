@@ -1,6 +1,8 @@
 \chapter{水库模式}\label{水库模式}
 %\addcontentsline{toc}{chapter}{陆地表面的水分循环}
-
+\begin{mymdframed}{代码}
+本章对应的代码文件为\texttt{CaMa/src/cmf\_ctrl\_damout\_mod.F90}。
+\end{mymdframed}
 本模块在CaMa-Flood中实施水库运行方案，通过识别坝体所在的集水区单元，根据水库运行规则计算水库流出量，构建考虑大坝影响的河道汇流参数化方案，以刻画水库对陆面水文循环过程的影响。
 
 \section{水库调度规则参数化方案}
@@ -141,19 +143,19 @@ LIS表示LISFLOOD所采用的基于目标库容的分段调度方案(\url{https:
 \end{table}
 
 \subsection{H22方案}
-H22表示~\citet{hanasaki2022development}提出的调度方案，根据水库入流量和实时库容大小，调节出库流量以削减汛期峰值流量，控制出库流量不超过防洪流量，且根据汛期发展时段调整出流系数，计算公式如下:
+H22表示~\citet{hanazaki2022development}提出的调度方案，根据水库入流量和实时库容大小，调节出库流量以削减汛期峰值流量，控制出库流量不超过防洪流量，且根据汛期发展时段调整出流系数，计算公式如下:
 \begin{equation}
     V_{e} < V < V_{t}, \quad Q_{out} = \max(Q_{f},\, Q_{\text{in}})\
 \end{equation}
 \begin{equation}
     V_{f}<V<V_{e},\ Q_{out} = \begin{cases}
-    Q_{f}+k \times \frac{V-V_{c}}{V_{e}-V_{c}} \times \left((Q_{in}-Q_{f})\right), & \quad Q_{in} > Q_{f}\\
+    Q_{f}+k \times \frac{V-V_{c}}{V_{e}-V_{c}} \times \left[(Q_{in}-Q_{f})\right], & \quad Q_{in} > Q_{f}\\
     0.5Q_{n}+k \times \left(\frac{V-V_{c}}{V_{e}-V_{c}}\right)^2 \times (Q_{f}-Q_{n}), & \quad Q_{in} < Q_{f}
 \end{cases}   
 \end{equation}
 \begin{equation}
     V_{c}<V<V_{f},\ Q_{out} = \begin{cases}
-    0.5Q_{n}+k \times \frac{V-V_{c}}{V_{f}-V_{c}} \times \left((Q_{f}-Q_{n})\right), & \quad Q_{in} > Q_{f} \\
+    0.5Q_{n}+k \times \frac{V-V_{c}}{V_{f}-V_{c}} \times \left[(Q_{f}-Q_{n})\right], & \quad Q_{in} > Q_{f} \\
     0.5Q_{n}+k \times \left(\frac{V-V_{c}}{V_{e}-V_{c}}\right)^2 \times (Q_{f}-Q_{n}), & \quad Q_{in} < Q_{f}
 \end{cases}   
 \end{equation}

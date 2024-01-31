@@ -3,9 +3,10 @@
 
 
 \section{高程数据}
-高程数据来自MERIT DEM数据集 \citep{yamazaki2017high}。该数据集是通过从已有的遥感DEM (SRTM3 v2.1和AW3D-30m v1) 中去除多种误差 (绝对偏差、条纹噪声、散斑噪声和树高偏差) 而开发的，它的分辨率为3秒 (赤道处约90米) ，覆盖了90N-60S之间的陆地区域。
+高程数据来自MERIT DEM数据集 \citep{yamazaki2017high}。该数据集是通过从已有的遥感DEM (SRTM3 v2.1和AW3D-30m v1) 中去除多种误差 (包括绝对偏差、条纹噪声、散斑噪声和树高偏差等) 而开发的，它的分辨率为3秒 (赤道处约90米) ，覆盖了90N-60S之间的陆地区域。高程数据用于判断海洋，即将高程低于0米的地方设置为海洋格点。
 
 \section{地表覆盖数据}\label{地表覆盖数据}
+地表覆盖数据主要用于次网格构建以及地表属性赋值。
 \subsection{USGS地表覆盖数据}\label{USGS地表覆盖数据}
 USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global Land Cover Characterization (GLCC) database Version 2.0 
 (\url{https://www.usgs.gov/centers/eros/science/usgs-eros-archive-land-cover-products-global-land-cover-characterization-glcc})。
@@ -50,7 +51,7 @@ USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global 
 由于USGS地表覆盖数据为单时次且年代稍远(主要数据源自AVHRR 1992-1993年间)，因此辅以其他特定类型地表覆盖数据对USGS地表覆盖进行更新。
 包括全球1公里水体和湿地数据(Global Lakes and Wetlands Database: Lakes and Wetlands Grid (Level 3))~\citep{lehner2004development}、
 全球1公里冰川数据~\citep{RGIConsortium2017}、全球1公里城市覆盖数据 (MODIS)~\citep{schneider2009new} 和全球1公里高程数据(USGS)。
-替换方式是将以上辅助数据中水体、冰川和城市网格直接对USGS地表数据进行替换。USGS高程数据用于判断海洋，即将高程低于0米的地方设置为海洋格点。
+替换方式是将以上辅助数据中水体、冰川和城市网格直接对USGS地表数据进行替换。
 如采用USGS地表覆盖类型进行模拟 (LCT方案)，其不同类型相关参数请参考附录~\ref{USGS地表覆盖类型相关参数}。
 
 \subsection{MODIS IGBP地表覆盖数据}\label{IGBP地表覆盖数据}
@@ -272,11 +273,11 @@ LC ID & GLC FCS30分类 & 对应IGBP分类 & IGBP编号 \\
 \section{土壤数据}\label{土壤数据}
 \subsection{土壤基础属性}\label{土壤基础属性}
 土壤基础属性数据采用Global Soil Dataset for Earth System Modeling（GSDE，\url{http://globalchange.bnu.edu.cn/research/soilw}）~\citep{shangguan2014global}
-和SoilGrids（\url{https://www.soilgrids.org/}）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0--0.045, 0.045--0.091, 0.091--0.166, 0.166--0.289, 0.289--0.493, 0.493--0.829, 0.829--1.383, 1.383--2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0--0.05，0.05--0.15，0.15--0.3，0.3--0.6，0.6--1，1--2 m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。
+和SoilGrids（\url{https://www.soilgrids.org/}）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0--0.045, 0.045--0.091, 0.091--0.166, 0.166--0.289, 0.289--0.493, 0.493--0.829, 0.829--1.383, 1.383--2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0--0.05，0.05--0.15，0.15--0.3，0.3--0.6，0.6--1，1--2 m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。土壤基础属性数据主要用于计算土壤水力热力参数。两套数据集在模拟结果验证中具有相近的表现~\citep{李文耀2020土壤}。
 
 \subsection{基岩深度}\label{基岩深度}
 
-基岩深度数据来自Global Depth to Bedrock Dataset for Earth System Modeling (GDBDESM，\url{http://globalchange.bnu.edu.cn/research/dtb.jsp}, \citet{shangguan2017mapping})。该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。
+基岩深度数据来自Global Depth to Bedrock Dataset for Earth System Modeling (GDBDESM，\url{http://globalchange.bnu.edu.cn/research/dtb.jsp}, \citet{shangguan2017mapping})。该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。基岩深度数据可以用于确认模式的土壤分层数目。
 
 
 \section{植被结构及属性数据}\label{植被结构及属性数据}
@@ -290,6 +291,15 @@ LC ID & GLC FCS30分类 & 对应IGBP分类 & IGBP编号 \\
 全球 \ang{;;30} (1公里) 分辨率，经纬度网格，单时次数据。
 
 \subsection{PFT/PC数据及其制作所依赖数据}\label{PFTPC数据及其依赖数据}
+{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{Figures/基础数据/次网格聚合方案.png}
+\caption[CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图]{CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图。具体聚合过程见章节~\ref{sec:次网格聚合}}
+\label{fig:次网格聚合方案}
+\end{figure}
+}
+
 PFT/PC植被属性相关数据主要包括：1）网格所包含PFT种类；2）网格内各PFT占比；3）网格内各PFT LAI/SAI值；4）网格内各PFT高度。
 
 模式如采用PFT或PC植被次网格方式运行，则不能像LCT方案一样直接进行地表覆盖类型聚合(图~\ref{fig:次网格聚合方案} LCT方案所示)，
@@ -324,15 +334,6 @@ PFT和PC方案采用同样的植被功能型分类，如表~\ref{tab:PFT分类} 
 15                     & C3作物                      \\ \bottomrule
 \end{tabular}
 \end{table}
-
-{
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.9\textwidth]{Figures/基础数据/次网格聚合方案.png}
-\caption[CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图]{CoLM三种植被次网格聚合方案 (LCT、PC和PFT) 示意图。具体聚合过程见章节~\ref{sec:次网格聚合}}
-\label{fig:次网格聚合方案}
-\end{figure}
-}
 
 由于PFT和PC方案都需要对细网格地表覆盖数据进行PFT分解，而地表覆盖原数据并不包含PFT植被结构属性信息，需要借助辅助数据进行计算，其数据来源如表~\ref{tab:网格划分辅助数据} 所列。
 
@@ -446,7 +447,7 @@ CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米�
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=1.0\textwidth]{Figures/陆地表面的水分循环/CaMa-Flood流域单元分布图.png}
-\caption[CaMa-Flood流域单元分布图]{CaMa-Flood所使用的流域单元分布图。每个流域单元的出口用白色圆点标记。红色线条连接不同流域单元，箭头指向下游流域单元。蓝色代表真实河道（源自于90米MERIT-Hydro数据）}
+\caption[CaMa-Flood流域单元分布图]{CaMa-Flood所使用的流域单元分布图。每个流域单元的出口用白色圆点标记。棕红色线条连接不同流域单元，箭头指向下游流域单元。蓝色代表真实河道（源自于90米MERIT-Hydro数据）}
 \label{fig:流域单元分布图}
 \end{figure}
 }
@@ -568,7 +569,7 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/基础数据/GranD-v1.1所包含水库的位置和主要用途.png}
+\includegraphics[width=\textwidth]{Figures/基础数据/GranD-v1.1所包含水库的位置和主要用途.pdf}
 \caption{GranD-v1.1所包含水库的位置和主要用途}
 \label{fig:GranD-v1.1所包含水库的位置和主要用途}
 \end{figure}
@@ -585,13 +586,13 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 
 
 \subsection{湖泊}
-HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多边形数据\citep{messager2016nc}。原HydroLAKE数据为矢量数据，在CoLM中，将其转化为了与MERIT Hydro相同的3弧秒分辨率的格点数据进行使用。
+湖泊数据主要用于湖泊模式。HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多边形数据\citep{messager2016nc}。原HydroLAKE数据为矢量数据，在CoLM中，将其转化为了与MERIT Hydro相同的3弧秒分辨率的格点数据进行使用。
 
 湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球\ang{;;30} (约1公里)分辨率，经纬度网格，单时次数据。
 
 
 \section{城市数据}\label{城市数据}
-城市模式所需基础数据主要包含城市覆盖、城市类型、建筑形态、辐射与热力属性、生态数据以及人类活动相关数据。由于城市内部强异质性且近年来城市化迅速发展，为体现更为精细化的城市内部空间属性特征和其时空变化，城市模式基础数据在选取时主要遵循高分辨率、多时次的原则，通过以下两方面完成城市基础城市数据制作：
+城市数据用于城市模式，所需基础数据主要包含城市覆盖、城市类型、建筑形态、辐射与热力属性、生态数据以及人类活动相关数据。由于城市内部强异质性且近年来城市化迅速发展，为体现更为精细化的城市内部空间属性特征和其时空变化，城市模式基础数据在选取时主要遵循高分辨率、多时次的原则，通过以下两方面完成城市基础城市数据制作：
 
 \begin{enumerate}
 \item 集成目前已有的高分辨率数据。搜集目前已经发布的高分辨率数据，通过一定处理使其适用于城市模式；
@@ -631,9 +632,9 @@ HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多�
     \multirow{4}*{城市生态数据} & 城市树LAI & 500m & 2000--2020 & / \\
                               & 城市树高 & 10m & 单时次 & \citet{lang2023high}  \\
                               & 城市树覆盖度 & 30m & 2000,2005,2010,2015 & \citet{townshend2016gfcc} \\
-                              & 城市水体覆盖度 & 30m & 2000,2010,2020 & \citet{陈军2017} \\
+                              & 城市水体覆盖度 & 30m & 2000,2010,2020 & \citet{chen2015global} \\
     \hline
-    \multirow{2}*{城市人类活动数据} & LandScan人口密度 & 1km & 2000--2020 & \citet{dobson2000landscan} \\
+    \multirow{2}*{城市人类活动数据} & LandScan人口密度 & 1km & 2000--2020 & \citet{brightLandScanGlobal20002001} \\
                                  & LUCY国家分类 & 5km & / & \citet{allen2011} \\
     \bottomrule
     \end{tabular}
@@ -738,7 +739,7 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 \subsubsection{城市水体覆盖度}\label{城市水体覆盖度}
 城市水体覆盖度数据由GlobeLand30得到，2014年GlobeLand30发布2000和2010版，自然资源部于2017年启动对该数据的更新,目前，GlobeLand30 2020版已发布 (\url{http://www.globallandcover.com/})。
 除极地地区外，GlobeLand30采用了UTM投影，因此需要进行投影转换，其数据覆盖如图~\ref{fig:GlobeLand30数据覆盖示意图} 所示(除2020年外，其他年份不包含极地地区数据)。
-该数据时空分辨率高，且水体精度最高，达到了92.09\%~\citep{陈军2017}，因此投影转换后计算得到的水体覆盖度作为城市模式的原始数据。
+该数据时空分辨率高，且水体精度较高~\citep{chen2015global}，因此投影转换后计算得到的水体覆盖度作为城市模式的原始数据。
 
 {
 \begin{figure}[htbp]
@@ -754,7 +755,7 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 \subsection{城市人类活动数据}\label{城市人类活动数据}
 
 \subsubsection{人口密度数据}\label{人口密度数据}
-人口密度数据目前使用由美国能源部橡树岭国家实验室(ORNL)发布的LandScan数据~\citep{dobson2000landscan}，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是常用的全球人口动态统计分析数据集之一，该数据空间分辨率为1km，时间覆盖2000--2022年。
+人口密度数据目前使用由美国能源部橡树岭国家实验室(ORNL)发布的LandScan数据~\citep{brightLandScanGlobal20002001}，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是常用的全球人口动态统计分析数据集之一，该数据空间分辨率为1km，时间覆盖2000--2022年。
 
 \subsubsection{LUCY国家分类}\label{LUCY国家分类}
 LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国家的汽车拥有量以及不同时刻的交通流量，用于交通热模拟，该数据分辨率为5km，单时次数据。
@@ -777,31 +778,27 @@ LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国�
 \section{生物地球化学数据}
 
 \subsection{氮沉降数据}\label{氮沉降数据}
-氮沉降是陆地生态系统的重要氮输入之一。近几十年来，人类活动造成大气氮沉降增加对生态系统生物地球化学循环产生了重要影响。由于区域地表氮沉降数据尚无法利用卫星直接观测得到，目前生物地球化学循环模式更多地利用大气模式或地球系统模式模拟得出。CoLM生物地球化学循环模块的氮沉降输入是$\mathrm{NO_y}$和$\mathrm{NH_x}$的总和，数据来源于CESM-WACCM的CMIP6历史时期和未来SSP情景模拟的集合平均。氮沉降历史时期数据包含1849年到2013年的时空变化，氮沉降未来时期数据包含1849--2101年的时空变化，未来情景包括SSP126，SSP245，SSP370和SSP585四种情景的预测模拟结果。数据的空间分辨率为0.9375\textdegree\ $\times$ 1.25\textdegree，数据在月尺度上刻画大气氮沉降的季节和年际变化。
+氮沉降是陆地生态系统的重要氮输入之一。近几十年来，人类活动造成大气氮沉降增加对生态系统生物地球化学循环产生了重要影响。由于区域地表氮沉降数据尚无法利用卫星直接观测得到，目前生物地球化学循环模式更多地利用大气模式或地球系统模式模拟得出。CoLM生物地球化学循环模块的氮沉降输入是$\mathrm{NO_y}$和$\mathrm{NH_x}$的总和，数据来源于CESM-WACCM的CMIP6历史时期和未来SSP情景模拟的集合平均。氮沉降历史时期数据包含1849年到2013年的时空变化，氮沉降未来时期数据包含1849--2101年的时空变化，未来情景包括SSP126，SSP245，SSP370和SSP585四种情景的预测模拟结果。数据的空间分辨率为0.9375\textdegree$\times$1.25\textdegree，数据在月尺度上刻画大气氮沉降的季节和年际变化。
 
 
 \subsection{土壤含氧量数据}\label{土壤含氧量数据}
-
+土壤含氧量数据包括非淹没区域的土壤氧气浓度数据和土壤呼吸氧气消耗数据，用于硝化和反硝化反应的速率计算。其数据来源于2005--2017年CLM5的历史时期全球模拟，是全球分辨率2.5\textdegree$\times$1.875\textdegree 和土壤垂直10层分层的气候态数据，其时间分辨率为月尺度。
 
 
 \subsection{闪电频率数据}\label{闪电频率数据}
-闪电频率数据提供了3小时气候态的全球数据(单位：$flashes km^{-2} hr^{-1}$)，空间分辨率是1.875x1.915度，是对1995-2011年NASA LIS/OTD 2小时2.5度格点产品(版本v2.2)进行线性插值而得到(http://ghrc.msfc.nasa.gov)。 
+闪电频率数据用于火灾发生频率的预测。闪电频率数据提供了3小时气候态的全球数据(单位：\unit{flashes. km^{-2} hr^{-1}})，空间分辨率是1.875\textdegree$\times$1.915\textdegree，是对1995-2011年NASA LIS/OTD 2小时2.5\textdegree{}格点产品(版本v2.2)进行线性插值而得到(\url{http://ghrc.msfc.nasa.gov})。 
 
 
 \subsection{国民生产总值数据}\label{国民生产总值数据}
-国民生产总值数据来源于IPCC-SRES的基准年份GDP数据\citep{van2007downscaling}，根据国家层面的世界银行世界发展指数计算得出\citep{WolrdBank2004,UNSTAT2005}。
+国民生产总值数据同样用于火灾模型中对火灾发生频率的预测。国民生产总值数据来源于IPCC-SRES的基准年份GDP数据~\citep{van2007downscaling}，根据国家层面的世界银行世界发展指数计算得出~\citep{WorldBank2004,UNSTAT2005}。
 
 
 \subsection{泥炭地比例数据}\label{泥炭地比例数据}
-
+泥炭地面积比例数据用于火灾模型中泥炭地火灾过火面积的计算。泥炭地面积比例数据的分辨率是全球0.5\textdegree，来源于三个矢量数据集：1.印度尼西亚和马来西亚婆罗洲泥炭地数据集~\citep{olson2001terrestrial}；2.加拿大泥炭地数据集~\citep{tarnocai2000peatlands}；3.北方区域(加拿大以外 45\textdegree N 以北区域)泥炭地数据集，来源于全球湖泊湿地数据库(GLWD)~\citep{lehner2004development}。
 
 
 \subsection{火灾峰值月份数据}\label{火灾峰值月份数据}
-
-
-
-\subsection{地表臭氧浓度数据}\label{地表臭氧浓度数据}
-
+火灾峰值月份数据同样用于火灾模型，其空间分辨率是0.5\textdegree，来源于全球火灾排放数据库，版本3 (GFED3)，由CASA模型、MODIS和TRMM等卫星遥感数据产品综合计算得出~\citep{van2010global}。
 
 
 %\end{地表输入数据}

@@ -1,11 +1,15 @@
 \chapter{城市模式}\label{城市模式}
 %\addcontentsline{toc}{chapter}{城市模式}
+\begin{mymdframed}{代码}
+本章对应代码源文件位于\texttt{main/URBAN/}目录下。
+\end{mymdframed}
+
 CoLM城市模式不同于传统城市冠层街谷 (canyon) 假设，而是以三维城市建筑群落为基本假设，在此基础上计算三维城市建筑群落短波、长波辐射传输及湍流交换过程。
 在辐射传输和湍流交换计算过程中，添加对植被的模拟。
 CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等数据应用。
 另外，城市模式加入了水体和较完整的人为热过程，包括建筑能耗、交通热、新陈代谢热的模拟。
-模式整理概念图如图~\ref{fig:CoLM城市模式概念图}所示。
-
+模式整理概念图如图~\ref{fig:CoLM城市模式概念图} 所示。
+\newline
 {
 \begin{figure}[htbp]
 \centering
@@ -84,7 +88,7 @@ F_{sw}=1-\exp \left(-\frac{4}{\pi} \cdot \frac{f_{b}}{f_{g}} {\rm HL} \cdot \tan
 根据可视因子对称性，地面到达墙面和天空的可视因子$F_{gw}=F_{sw}$，$F_{gs}=F_{sg}$。
 墙面到天空和地面的可视因子($F_{ws}$, $F_{wg}$)根据互易原理，满足如下关系：
 \begin{equation}
-F_{ws} \cdot 4 {\rm HL} f_{b}=F_{s w} f_{g}
+F_{ws} \cdot 4 {\rm HL} f_{b}=F_{s w} \cdot f_{g}
 \end{equation}
 \begin{equation}
 F_{wg} \cdot 4 {\rm HL} f_{b}=F_{s w} f_{g}
@@ -96,7 +100,10 @@ F_{ws}=0.75 F_{s w} \frac{f_{g}}{f_{b}} \frac{1}{2 {\rm HL}}
 \begin{equation}
 F_{wg}=0.25 F_{s w} \frac{f_{g}}{f_{b}} \frac{1}{2 {\rm HL}}
 \end{equation}
-再根据能量守恒，墙面到墙面的可视因子$F_{ww}=1-F_{ws}-F_{wg}$。
+再根据能量守恒，墙面到墙面的可视因子$F_{ww}$计算为：
+\begin{equation}
+F_{ww}=1-F_{ws}-F_{wg}
+\end{equation}
 
 \textit{a. 直射入射太阳辐射}
 
@@ -179,7 +186,7 @@ $F_{sw}f_{wsun}$、$F_{sw}f_{wsha}$、$F_{sg}f_{gimp}$、$F_{sg}f_{gper}$，即�
 \end{mymdframed}
 
 城市中考虑植被后的短波辐射传输过程是在无植被辐射传输的基础上，考虑植被在内的各组分之间的可视因子，从而计算辐射平衡时的传输矩阵，采用类似的方法求解墙面、地面和植被的辐射吸收。
-相比章节~\ref{无植被覆盖时短波辐射传输}增加的部分为考虑植被在内的可视因子和阴影面积计算。
+相比章节~\ref{无植被覆盖时短波辐射传输} 增加的部分为考虑植被在内的可视因子和阴影面积计算。
 
 在植被树冠中心高度$h_v$处，墙面的阴影比例可根据公式(\ref{S_w})计算，利用$\frac{{\rm H}-h_v}{\rm L}$代替$\rm HL$，记为$S_w^\prime$，即
 \begin{equation}
@@ -209,22 +216,36 @@ S_{w}=S_{w}-S_{v w}
 \begin{equation}\label{F_sv_svw_svg}
 \begin{aligned}F_{s v} &=S_{v}^{*} \\ F_{s v w} &=S_{v w}^{*} \\ F_{s v g} &=F_{s v}-F_{s v w}\end{aligned}
 \end{equation}
-同理，地面到达植被($F_{gv}$)、地面通过植被到天空($F_{gvs}$)，以及地面通过植被到达天空的可视因子($F_{gvs}$)可类似公式(\ref{F_sv_svw_svg})计算。
-
-根据可视因子计算互易性原理，植被到天空、地面和墙面的可视因子计算为：
+假设植被到达天空的可视因子($F_{vs}$)满足互易原理：
 \begin{equation}
-F_{vs}=F_{sv} \frac{f_g}{4 f_v}
+F_{vs}\cdot 2f_g = \left( 1-S_w ^{*\prime} \right ) \cdot f_g
 \end{equation}
-\begin{equation}
-F_{vg}=F_{gv} \frac{f_g}{4 f_v}
+其中$S_w ^{*\prime}$为漫射辐射时，建筑在植被中心高度$h_v$的“阴影”占比。可以得到：
+\begin{equation}\label{eq:f_vs}
+F_{vs} = 0.5 \left( 1-S_w ^{*\prime} \right )
 \end{equation}
-从而：
+同理，地面到达植被($F_{gv}$)、地面通过植被到天空($F_{gvs}$)，以及地面通过植被到达天空的可视因子($F_{gvs}$)可类似公式(\ref{F_sv_svw_svg})计算，植被到达地面的可视因子($F_{vg}$)可类似公式(\ref{eq:f_vs})计算。再根据能量守恒，植被到达墙面的可视因子($F_{vw}$)计算为：
+%根据可视因子计算互易性原理，植被到天空、地面和墙面的可视因子计算为：
+%\begin{equation}
+%F_{vs}=F_{sv} \frac{f_g}{4 f_v}
+%\end{equation}
+%\begin{equation}
+%F_{vg}=F_{gv} \frac{f_g}{4 f_v}
+%\end{equation}
 \begin{equation}
 F_{v w}=1-F_{v s}-F_{v g}
 \end{equation}
-同理，根据互易性原理，$F_{wv}$计算为：
+假设$F_{wv}$满足如下互异性表达式：
 \begin{equation}
-F_{w v}=F_{v w} \frac{f_{v}}{f_{b} \cdot {\rm HL}}
+F_{vw}\cdot 2f_g \cdot 0.5\left( F_{sv}+F_{gv} \right ) = F_{wv} \cdot 4 {\rm HL} f_b 
+\end{equation}
+从而得到：
+\begin{equation}
+F_{wv}=\frac{f_g \cdot \left( F_{sv}+F_{gv} \right )} {4 {\rm HL}f_b} F_{vw}
+\end{equation}
+将上式$F_{wv}$计算的结果限制为：
+\begin{equation}
+F_{wv} = \min \big(0.8, \max (f_v, F_{wv})\big)
 \end{equation}
 假设墙面通过植被到达墙面、天空和地面的可视因子与墙面到达相应各面的可视因子成正比，即：
 \begin{equation}
@@ -432,7 +453,7 @@ L^{\uparrow}=L_{wsun}^{\uparrow} F_{ws}^{\prime}+L_{wsha}^{\uparrow} F_{ws}^{\pr
 
 \subsection{无植被覆盖时湍流交换过程}\label{无植被覆盖时湍流交换过程}
 \begin{mymdframed}{代码}
-本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}。
+本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}中\texttt{UrbanOnlyFlux()}函数。
 \end{mymdframed}
 
 建筑物的零平面位移高度采用~\citet{macdonald1998improved}方案：
@@ -636,6 +657,10 @@ $T_1$和$T_2$分别表示第一层和第二层空气温度，$T_{g}$为透水面
 \end{equation}
 
 \subsection{有植被覆盖时湍流交换过程}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}中\texttt{UrbanVegFlux()}函数。
+\end{mymdframed}
+
 {
 \begin{figure}[htbp]
 \centering
@@ -1013,6 +1038,10 @@ Q_{M}=P \cdot H_{M} \cdot 10^{-6}
 \end{table}
 
 \subsection{交通热}
+\begin{mymdframed}{代码}
+本节及下节对应的代码文件为\texttt{MOD\_Urban\_LUCY.F90}。
+\end{mymdframed}
+
 % 交通热排放($Q_v$, \unit{W/m^{2}})同样根据利用能源清单法进行计算，采用Top-Down的方法，利用人口密度以及各个国家的汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
 交通热排放($Q_v$, \unit{W.m^{-2}})则根据城市网格内的汽车数量以及行驶路程得到，首先根据城市网格内的人口密度以及各个国家每千人汽车拥有量计算出格点内的汽车数量，然后根据汽车行驶排放的热量以及交通流量的日分布计算出不同时刻的交通热排放。
 其数据来源如表~\ref{tab:交通热数据及来源}，$Q_v$计算如下：

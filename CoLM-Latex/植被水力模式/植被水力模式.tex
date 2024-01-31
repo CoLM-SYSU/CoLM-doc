@@ -1,5 +1,8 @@
 \chapter{植被水力模式}
 %\addcontentsline{toc}{chapter}{植被水力模式}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_PlantHydraulic.F90}。
+\end{mymdframed}
 
 %\begin{植被水力模式}
 CoLM植被水力模式根据土壤-植物-大气连通体的概念计算陆气水分交换的蒸腾分量。
@@ -10,7 +13,6 @@ CoLM植被水力模式中的植物水分传输得益于土壤、根、茎、叶�
 
 
 \section{植物水势动态}\label{植物水势动态}
-植物水势的动态模拟是CoLM植被水力模式的关键。CoLM植被水力模式的水势模拟包括地上和地下植被水力过程两部分。
 地上部分包括在阳叶、阴叶、茎和地表根四个节点间的水势 ($\Psi_{sun}$，$\Psi_{sha}$，$\Psi_{stem}$，$\Psi_{root,0}$)
 %
  模拟；地下部分包括地表根以及$n$层地下根 $n+1$个节点的水势 ($\Psi_{root,i}$，$i=0,1,2,\ldots,n$) 模拟。地上、地下两部分通过地表根水势
@@ -19,7 +21,7 @@ CoLM植被水力模式中的植物水分传输得益于土壤、根、茎、叶�
 {
 \begin{figure}[htb]
 \centering
-\includegraphics{Figures/植被水力模式/CoLM植被水力模型示意图.png}
+\includegraphics[width=0.6\textwidth]{Figures/植被水力模式/CoLM植被水力模型示意图.png}
 \caption{CoLM植被水力模型示意图}
 \label{fig:CoLM植被水力模型示意图}
 \end{figure}
@@ -90,14 +92,14 @@ $n$个不同土壤深度的根系水力节点的水势动态变化 (如图~\ref{
 
 根据Darcy定律，根轴向水力传导方程为：
 \begin{equation}\label{k_axi}
-k_{ax,i}\left(\Psi_{r,i}-\Psi_{r,i+1}\right)=q_{ax,i}
+k_{ax,i}\left(\Psi_{root,i}-\Psi_{root,i+1}\right)=q_{ax,i}
 \end{equation}
 其中$k_{ax,i}$代表第$i+1$层到第i层根节点间的根轴向水力导度，$q_{ax,i}$代表相应的轴向水传输速率，
-$\Psi_{r,i}$代表第$i$层根节点的水势。$i$取值1到$n-1$，$n$代表土壤总层数。
+$\Psi_{root,i}$代表第$i$层根节点的水势。$i$取值1到$n-1$，$n$代表土壤总层数。
 
 根径向水力传导方程为：
 \begin{equation}\label{k_radi}
-k_{rad,i}\left(\Psi_{soil,i}-\Psi_{r,i}\right)=q_{rad,i}
+k_{rad,i}\left(\Psi_{soil,i}-\Psi_{root,i}\right)=q_{rad,i}
 \end{equation}
 其中$k_{rad,i}$代表第$i$层土壤节点到根节点间的径向水力导度，
 $q_{rad,i}$代表相应的径向水分传输速率，$\Psi_{soil,i}$代表第$i$层土壤节点的水势，$i$取值1到$n$。
@@ -115,8 +117,8 @@ q_{a x, i}+q_{r a d, i}=q_{a x, i-1}
 \begin{equation}\label{q_ax1}
 q_{ax,1}+q_{rad, 1}=q_{root,0}
 \end{equation}
-将方程~\eqref{k_axi} 和~\eqref{k_radi} 代入~\eqref{q_axi} 和~\eqref{q_ax1}，则得到关于$ \Psi_{r,i}$的$n$个线性方程组。
-这$n$个线性方程组描述了在植物地下水力网络中，根水势的动态变化。CoLM地下植被水力过程的输入包括土壤水势垂直分布 ($\Psi_{soil,i}$)和根总吸水速率 ($q_{root,0}$)，输出包括根水势垂直分布($\Psi_{r,i}$)和根吸水速率的垂直分布 ($q_{rad,i}$)。因此，地下植被水力过程可以概括地表达为土壤水势和总吸水速率的函数，如方程~\eqref{Psi_root_0}。
+将方程~\eqref{k_axi} 和~\eqref{k_radi} 代入~\eqref{q_axi} 和~\eqref{q_ax1}，则得到关于$ \Psi_{root,i}$的$n$个线性方程组。
+这$n$个线性方程组描述了在植物地下水力网络中，根水势的动态变化。CoLM地下植被水力过程的输入包括土壤水势垂直分布 ($\Psi_{soil,i}$)和根总吸水速率 ($q_{root,0}$)，输出包括根水势垂直分布($\Psi_{root,i}$)和根吸水速率的垂直分布 ($q_{rad,i}$)。因此，地下植被水力过程可以概括地表达为土壤水势和总吸水速率的函数，如方程~\eqref{Psi_root_0}。
 
 
 \section{气孔导度的水分胁迫}\label{气孔导度的水分胁迫}
@@ -149,7 +151,7 @@ g_{s,max}^{sha}=FvCB\left(\beta_{sha}=1\right)
 \end{equation}
 
 
-相应地，最大蒸腾速率($E_{sun,max}$和$E_{sha,max}$)可由最大气孔导度结合地表冠层湍流参数化方案~\eqref{Ev} 在阳叶和阴叶上分别计算得出 (如图~\ref{fig:光合气孔模式和植被水力模式的耦合示意图})：
+相应地，最大蒸腾速率($E_{sun,max}$和$E_{sha,max}$)可由最大气孔导度结合地表冠层湍流参数化方案~\eqref{Ev} 在阳叶和阴叶上分别计算得出：
 
 \begin{equation}\label{E_sunmax}
 E_{sun,max}=\rho_{atm} c_{vsun,max}^{w} \cdot \frac{c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}-
@@ -162,7 +164,7 @@ E_{sha,max}=\rho_{atm} c_{vsha,max}^{w} \cdot \frac{c_{a}^{w} q_{atm}+c_{g}^{w} 
 \end{equation}
 
 
-$cf$为导度的单位转换系数(\unit{umol.m^{-3}})，将\unit{umol.m^{-2}.s^{-1}}转换为\unit{m.s^{-1}}。$c_{vsun,max}^{w}$和$c_{vsha,max}^{w}$是阳叶和阴叶的最大冠层导度，即无植被水分胁迫条件下的冠层导度，可表达为最大气孔导度的函数，如公式~\eqref{cvsun_gsmax} 和~\eqref{cvsha_gsmax}：
+$c_{vsun,max}^{w}$和$c_{vsha,max}^{w}$是阳叶和阴叶的最大冠层导度，即无植被水分胁迫条件下的冠层导度，可表达为最大气孔导度的函数，如公式~\eqref{cvsun_gsmax} 和~\eqref{cvsha_gsmax}：
 \begin{equation}\label{cvsun_gsmax}
     c_{vsun,max}^{w}=\left(1-f_{wet}\right)\frac{f_{sun}\text{LAI}}{cf\left(\frac{1}{g_b}+\frac{1}{g_{s,max}^{sun}}\right)}
 \end{equation}
@@ -170,6 +172,7 @@ $cf$为导度的单位转换系数(\unit{umol.m^{-3}})，将\unit{umol.m^{-2}.s^
 \begin{equation}\label{cvsha_gsmax}
     c_{vsha,max}^{w}=\left(1-f_{wet}\right)\frac{f_{sha}\text{LAI}}{cf\left(\frac{1}{g_b}+\frac{1}{g_{s,max}^{sha}}\right)}
 \end{equation}
+$cf$为导度的单位转换系数(\unit{umol.m^{-3}})，将\unit{umol.m^{-2}.s^{-1}}转换为\unit{m.s^{-1}}。
 
 结合叶水势对蒸腾的影响~\eqref{Esun_psi} 和~\eqref{Esha_psi}，可计算得到的实际蒸腾速率$E_{sun}$和$E_{sha}$，从地表冠层湍流参数化方案反推，可得到干阳叶和干阴叶的冠层导度 ($c_{vsun}^{w}$和$c_{vsha}^{w}$)。如公式~\eqref{cv_Esun} 和~\eqref{cv_Esha}：
 \begin{equation}\label{cv_Esun}c_{vsun}^{w}=\frac{E_{sun}\left(c_a^w+c_g^w+c_{v,wet}^{w}\right)}{\left(\left(c_a^w+c_g^w\right)q_{sat}-c_a^w q_m - c_g^w q_g\right)\rho-E_{sun}-E_{sha}}
@@ -183,20 +186,17 @@ c_{vsha}^{w}=\frac{E_{sha}\left(c_a^w+c_g^w+c_{v,wet}^{w}\right)}{\left(\left(c_
 \begin{equation}\label{cwet}
 c_{v,wet}=\frac{f_{wet}\left(\text{LAI}+\text{SAI}\right)g_b}{cf}
 \end{equation}
-从干阳叶和干阴叶的冠层导度和气体扩散方程可进一步算出叶片气孔导度：\textcolor{red}{待补充}
-%\begin{equation}\label{gssun_cvsun}
-%
-%\end{equation}
+从干阳叶和干阴叶的冠层导度和气体扩散方程可进一步算出叶片气孔导度：
 
-耦合植被水力模式、光合气孔模式和地表冠层湍流参数化方案，再利用公式~\eqref{beta_sun} 和~\eqref{beta_sha} 可以完整地求解植被水力模式下的植物水分胁迫 (如图~\ref{fig:光合气孔模式和植被水力模式的耦合示意图})。
-{
-    \begin{figure}[htbp]
-    \centering
-    \includegraphics{Figures/植被水力模式/光合气孔模式和植被水力模式的耦合示意图.png}
-    \caption{光合气孔模式和植被水力模式的耦合示意图}
-    \label{fig:光合气孔模式和植被水力模式的耦合示意图}
-    \end{figure}
-}
+\begin{equation}\label{gssun_cvsun}
+g_{s}^{sun} = \frac{1}{\frac{(1-f_{wet})f_{sun}\text{LAI}}{c_{vsun}^{w}\cdot cf}-\frac{1}{g_b}}
+\end{equation}
+\begin{equation}\label{gssun_cvsha}
+g_{s}^{sha} = \frac{1}{\frac{(1-f_{wet})f_{sha}\text{LAI}}{c_{vsha}^{w}\cdot cf}-\frac{1}{g_b}}
+\end{equation}
+
+
+耦合植被水力模式、光合气孔模式和地表冠层湍流参数化方案，再利用公式~\eqref{beta_sun}，~\eqref{beta_sha}，~\eqref{gs_sunmax}和~\eqref{gs_shamax}可以完整地求解植被水力模式下的植物水分胁迫。
 
 
 \section{数值计算方案}\label{数值计算方案}
@@ -208,25 +208,14 @@ c_{v,wet}=\frac{f_{wet}\left(\text{LAI}+\text{SAI}\right)g_b}{cf}
 ($q_{sun-stem}$，$q_{sha-stem}$，$q_{stem-root}$，$q_{root,0}$，$E_{sun}$，$E_{sun,max}$和$E_{sun,max}$) ，4个气孔导度变量
  ($g_{s,sun}$，$g_{s,sun}$，$g_{s,sun,max}$，$g_{s,sun,max}$)，2个水分胁迫变量 ($\beta_{sun}$，$\beta_{sha}$) 在内的共18个未知量。
 
-然而，由于以上18个方程中存在隐形方程，我们求解该问题时，引入三重嵌套数值求解办法。其主要步骤如下（图~\ref{fig:植被水力模式的数值模拟流程图}）：
+然而，由于以上18个方程中存在隐形方程，我们求解该问题时，引入三重嵌套数值求解办法。其主要步骤如下：
 \begin{enumerate}
     \item 利用冠层模型，计算叶片温度 ($T_{l,sun}$，$T_{l,sha}$)；
-    \item 利用光合气孔模式，计算最大气孔导度 ($g_{s,sun,max}$和$g_{s,sun,max}$)；
-    \item 根据最大气孔导度，计算叶片最大蒸腾速率 ($E_{sun,max}$和$E_{sun,max}$)；
-    \item 将叶片最大蒸腾速率输入植被水力模式，计算水分胁迫 ($\beta_{sun}$，$\beta_{sha}$)；
-    \item 更新光合气孔模式的水分胁迫，迭代计算，判断胞间二氧化碳浓度是否收敛，若收敛，进入第 (6) 步；若不收敛，重复此步骤；
-    \item 更新气孔导度，判断阴叶、阳叶水分胁迫是否收敛，若收敛，进入第 (7) 步，若不收敛，回到第 (2) 步；
+    \item 利用光合气孔模式，计算最大气孔导度 ($g_{s,sun,max}$，$g_{s,sun,max}$)；
+    \item 根据最大气孔导度，计算叶片最大蒸腾速率 ($E_{sun,max}$，$E_{sun,max}$)；
+    \item 将叶片最大蒸腾速率输入植被水力模式，计算植被各节点水势--叶水势($\Psi_{sunleaf}$)，茎水势($\Psi_{xylem}$)和根水势($\Psi_{root,i}$)等，实际气孔导度($g_{s}^{sun}$，$g_{s}^{sha}$)和水分胁迫($\beta_{sun}$，$\beta_{sha}$)；
+    \item 更新光合气孔模式的水分胁迫，迭代计算光合气孔耦合模型，判断胞间二氧化碳浓度是否收敛，若收敛，进入第 (6) 步；若不收敛，重复此步骤；
     \item 更新植物水势和叶片蒸腾，判断叶片温度是否收敛，若收敛，植被水力模式求解完成，若不收敛，回到第 (1) 步。
 \end{enumerate}
 
-气孔导度详细迭代
-
-{
-    \begin{figure}[htbp]
-    \centering
-    \includegraphics{Figures/植被水力模式/植被水力模式的数值模拟流程图.png}
-    \caption{植被水力模式的数值模拟流程图}
-    \label{fig:植被水力模式的数值模拟流程图}
-    \end{figure}
-}
 

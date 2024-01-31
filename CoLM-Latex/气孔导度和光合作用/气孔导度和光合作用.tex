@@ -1,5 +1,8 @@
 \chapter{光合作用和气孔导度}
 %\addcontentsline{toc}{chapter}{光合作用和气孔导度}
+\begin{mymdframed}{代码}
+本节对应的代码文件为\texttt{MOD\_AssimStomataConductance.F90}。
+\end{mymdframed}
 
 %\begin{光合作用和气孔导度}
 
@@ -150,12 +153,12 @@ R_{d,sha}=\tau_{{base }} \cdot V_{cmax 25} \cdot \frac{2.0^{\frac{T_{leaf}-T_{op
 
 
 \section{气体扩散方程和气孔导度模型}\label{气体扩散方程和气孔导度模型}
-气孔是植被和大气相互作用的最重要通道，陆地生态系统碳水耦合很大程度取决于气孔的行为。CoLM在的光合同化速率和蒸腾速率计算中，考虑植被气孔的行为，结合气体扩散方程，刻画了碳水通量与浓度梯度之间的重要关系~\eqref{A_n2_sun} -~\eqref{ea_ei_sha}。CoLM将CO$_2$和水汽的气体扩散问题类比于电路问题进行建模，利用叶绿体细胞间、叶表和冠层大气的$\rm CO_2$浓度和水汽浓度梯度，来刻画环境对植被碳水通量的驱动力，如图~\ref{fig:叶片气孔光合作用导度模型示意图}。因此，在阳叶和阴叶冠层尺度上，分别存在关于$\rm CO_2$和水汽的气体扩散方程:
+气孔是植被和大气相互作用的最重要通道，陆地生态系统碳水耦合很大程度取决于气孔的行为。CoLM在的光合同化速率和蒸腾速率计算中，考虑植被气孔的行为，结合气体扩散方程，刻画了碳水通量与浓度梯度之间的重要关系~\eqref{A_n2_sun}--\eqref{ea_ei_sha}。CoLM将CO$_2$和水汽的气体扩散问题类比于电路问题进行建模，利用叶绿体细胞间、叶表和冠层大气的$\rm CO_2$浓度和水汽浓度梯度，来刻画环境对植被碳水通量的驱动力，如图~\ref{fig:叶片气孔光合作用导度模型示意图}。因此，在阳叶和阴叶冠层尺度上，分别存在关于$\rm CO_2$和水汽的气体扩散方程:
 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics{Figures/气孔导度和光合作用/叶片气孔光合作用导度模型示意图.png}
+\includegraphics[width=0.8\textwidth]{Figures/气孔导度和光合作用/叶片气孔光合作用导度模型示意图.png}
 \caption{叶片气孔光合作用导度模型示意图}
 \label{fig:叶片气孔光合作用导度模型示意图}
 \end{figure}
@@ -231,18 +234,18 @@ c_{i,sha}=c_{s,sha}-\frac{1.6 A_{n,sha} p_{s}}{G_{s,sha}}
 %, \eqref{ei_cssha}, \eqref{ci_1sun}和
 \eqref{ci_1sha}。其中，胞间$\mathrm{CO_2}$浓度是连接气孔导度模型和光合作用模型的关键，胞间$\mathrm{CO_2}$浓度既是Farquhar光合作用模型的输入，即方程~\eqref{An1sun}和~\eqref{An1sha}的自变量，又是气体扩散方程的输入，即方程~\eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ci_1sun} 和~\eqref{ci_1sha} 的自变量。同时，胞间$\mathrm{CO_2}$浓度($c_{s,sun}$)和叶表$\mathrm{CO_2}$浓度$c_{s,sha}$)之间的浓度梯度也是刻画光合同化速率($A_{n,sun}$和$A_{n,sha}$)和气孔导度关系的重要变量。因此原方程组可简化为两个零点方程$f_1(c_{i,sun})=0$和$f_2(c_{i,sha})=0$。方程组的求解问题可等价为对目标函数$f_1(c_{i,sun})$和$f_2(c_{i,sha})$的零点搜索问题，具体目标函数可化为：
 \begin{align}\label{f1_cisun}
-f_{1}\left(c_{i,sun}\right)=&\,c_{i,sun}-c_{s,sun}\left(A_{n,sun}\left(c_{i,sun}\right)\right) \nonumber \\[1ex] 
-+& \, \frac{1.6A_{n,sun}\left(c_{i,sun}\right)p_s}{G_{s,sun}\left(A_{n,sun}\left(c_{i,sun}\right),c_{s,sun}\left(A_{n,sun}\left(c_{i,sun}\right)\right)\right)}
+f_{1}\left(c_{i,sun}\right)=&\,c_{i,sun}-c_{s,sun}\big(A_{n,sun}\left(c_{i,sun}\right)\big) \nonumber \\[1ex] 
++& \, \frac{1.6A_{n,sun}\left(c_{i,sun}\right)p_s}{G_{s,sun}\Big(A_{n,sun}\left(c_{i,sun}\right),c_{s,sun}\big(A_{n,sun}\left(c_{i,sun}\right)\big)\Big)}
 \end{align}
 \begin{align}\label{f1_cisha}
-f_{2}\left(c_{i,sha}\right)=&\,c_{i,sha}-c_{s,sha}\left(A_{n,sha}\left(c_{i,sha}\right)\right) \nonumber \\[1ex] 
-+& \, \frac{1.6A_{n,sha}\left(c_{i,sha}\right)p_s}{G_{s,sha}\left(A_{n,sha}\left(c_{i,sha}\right),c_{s,sha}\left(A_{n,sha}\left(c_{i,sha}\right)\right)\right)}
+f_{2}\left(c_{i,sha}\right)=&\,c_{i,sha}-c_{s,sha}\big(A_{n,sha}\left(c_{i,sha}\right)\big) \nonumber \\[1ex] 
++& \, \frac{1.6A_{n,sha}\left(c_{i,sha}\right)p_s}{G_{s,sha}\Big(A_{n,sha}\left(c_{i,sha}\right),c_{s,sha}\big(A_{n,sha}\left(c_{i,sha}\right)\big)\Big)}
 \end{align}
 
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.6\textwidth]{Figures/气孔导度和光合作用/光合气孔耦合模型数值解法示意图.png}
+\includegraphics[width=0.56\textwidth]{Figures/气孔导度和光合作用/光合气孔耦合模型数值解法示意图.png}
 \caption[光合气孔耦合模型数值解法示意图]{光合气孔耦合模型数值解法示意图，割线法对前两次迭代结果进行线性拟合，拟合结果和$x=0$的交点即为下一轮迭代的胞间$\rm CO_2$浓度的取值，拟合方程$y=ax+b$；二次方程拟合法对前三次迭代结果进行二次曲线拟合，拟合结果和$x=0$的交点即为下一轮迭代的胞间$\rm CO_2$浓度的取值，拟合方程$y=ax^2+bx+c$。
 
 其中割线法的拟合方程系数为：
@@ -251,8 +254,8 @@ $\begin{cases}a=\frac{c_{i,n-1}-c_{i,n-2}}{f\left(c_{i,n-1}-c_{i,n-2}\right)}\\b
 
 二次方程拟合法的拟合方程系数为：
 
-$\begin{cases}a=\frac{\left(c_{i,n-2}-c_{i,n-3}\right)-\left(f\left(c_{i,n-2}\right)-f\left(c_{i,n-3}\right)\right)b}{f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)}\\
-b=\frac{\left(c_{i,n-2}-c_{i,n-3}\right)\left(f^2\left(c_{i,n-1}\right)-f^2\left(c_{i,n-2}\right)\right)-\left(c_{i,n-1}-c_{i,n-2}\right)\left(f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)\right)}{\left(f\left(c_{i,n-2}\right)-f\left(c_{i,n-3}\right)\right)\left(f^2\left(c_{i,n-1}\right)-f^2\left(c_{i,n-2}\right)\right)-\left(f\left(c_{i,n-1}\right)-f\left(c_{i,n-2}\right)\right)\left(f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)\right)}\\
+$\begin{cases}a=\frac{\left(c_{i,n-2}-c_{i,n-3}\right)-\left[f\left(c_{i,n-2}\right)-f\left(c_{i,n-3}\right)\right]b}{f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)}\\
+b=\frac{\left(c_{i,n-2}-c_{i,n-3}\right)\left[f^2\left(c_{i,n-1}\right)-f^2\left(c_{i,n-2}\right)\right]-\left(c_{i,n-1}-c_{i,n-2}\right)\left[f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)\right]}{\left[f\left(c_{i,n-2}\right)-f\left(c_{i,n-3}\right)\right]\left[f^2\left(c_{i,n-1}\right)-f^2\left(c_{i,n-2}\right)\right]-\left[f\left(c_{i,n-1}\right)-f\left(c_{i,n-2}\right)\right]\left[f^2\left(c_{i,n-2}\right)-f^2\left(c_{i,n-3}\right)\right]}\\
 c=c_{i,n-2}-af^2\left(c_{i,n-2}\right)-bf\left(c_{i,n-2}\right)\end{cases}$}
 \label{fig:光合气孔耦合模型数值解法示意图}
 \end{figure}
@@ -281,13 +284,13 @@ c_{i,sha,qd,n} =c_{i,sha,qd,l} \\
 b_{sun} = \frac{\Delta c_{i,sun}\left(k,l\right)\Delta f^2_1\left(l,m\right)-\Delta c_{i,sun}(l,m) \Delta f^2_1\left(k,l\right)}{\Delta f^2_1\left(l,m\right) \Delta f_1 \left(k,l\right)-\Delta f^2_1\left(k,l\right)\Delta f_1 \left(l,m\right)}
 \end{equation}
 \begin{equation}\label{iterasun}
-a_{sun} = \frac{\left(c_{i,sun,dq,k}-c_{i,sun,dq,l}\right)-\left(f_1(c_{i,sun,dq,k})-f_1(c_{i,sun,dq,l})\right)\cdot b_{sun}}{f^2_1(c_{i,sun,dq,k})-f^2_1(c_{i,sun,dq,l})}
+a_{sun} = \frac{\left(c_{i,sun,dq,k}-c_{i,sun,dq,l}\right)-\left[f_1(c_{i,sun,dq,k})-f_1(c_{i,sun,dq,l})\right]\cdot b_{sun}}{f^2_1(c_{i,sun,dq,k})-f^2_1(c_{i,sun,dq,l})}
 \end{equation}
 \begin{equation}\label{iterbsha}
 b_{sha} = \frac{\Delta c_{i,sha}\left(k,l\right)\Delta f^2_2\left(l,m\right)-\Delta c_{i,sha}(l,m) \Delta f^2_2\left(k,l\right)}{\Delta f^2_2\left(l,m\right) \Delta f_2 \left(k,l\right)-\Delta f^2_2\left(k,l\right)\Delta f_2 \left(l,m\right)}
 \end{equation}
 \begin{equation}\label{iterasha}
-a_{sha} = \frac{\left(c_{i,sha,dq,k}-c_{i,sha,dq,l}\right)-\left(f_1(c_{i,sha,dq,k})-f_1(c_{i,sha,dq,l})\right)\cdot b_{sha}}{f^2_1(c_{i,sha,dq,k})-f^2_1(c_{i,sha,dq,l})}
+a_{sha} = \frac{\left(c_{i,sha,dq,k}-c_{i,sha,dq,l}\right)-\left[f_1(c_{i,sha,dq,k})-f_1(c_{i,sha,dq,l})\right]\cdot b_{sha}}{f^2_1(c_{i,sha,dq,k})-f^2_1(c_{i,sha,dq,l})}
 \end{equation}
 $\Delta$ 用于表示之前第$p$次和第$q$次迭代结果之间的差值：
 \begin{equation}
@@ -359,7 +362,7 @@ c_{i,sha,2}=
 \end{align}
 
 二次方程拟合法的第三次迭代胞间$\rm CO2$浓度取值由割线法，按方程~\eqref{cisunn} 和~\eqref{cishan}计算得到：
-
+%
 \begin{equation}\label{cisun3}
 c_{i,sun,qd,3}=c_{i,sun,1}-f_{1}\left(c_{i,sun,1}\right)\frac{c_{i,sun,1}-c_{i,sun,2}}{ f_{1}\left(c_{i,sun,1}\right)-f_{1}\left(c_{i,sun,2}\right)} 
 \end{equation}

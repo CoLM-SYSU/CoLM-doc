@@ -155,7 +155,7 @@ $\omega_{c}$为地形的曲率，计算为：
 
 漫射辐射占总辐射的比例（$k$）由基于大气透明度（$k_{t}$）的回归方程得出~\citep{ruizarias2010}:
 \begin{equation}
-k=a_{0}+a_{1} \times \exp \left(- \exp \left( a_{2}+a_{3} \times k_{t} \right) \right)
+k=a_{0}+a_{1} \times \exp \big(- \exp \left( a_{2}+a_{3} \times k_{t} \right) \big)
 \end{equation}
 其中，回归系数来自于对欧洲与美国21个逐小时站点数据的拟合，$a_{0}$、$a_{1}$、$a_{2}$、$a_{3}$分别为$0.952$，$-1.041$，$2.3$，$-4.702$。大气透明度定义为到达地面的入射短波辐射（$I_{G}$）与大气层顶入射短波辐射（$I_{0}$）的比值。大气层顶的入射短波辐射（$I_{0}$）定义为：
 \begin{equation}
@@ -163,7 +163,7 @@ I_{0}=S \times \cos{\left(\theta_{z}\right)} \times R^{2}
 \end{equation}
 其中，太阳常数$S=1370$ \unit{W.m^{2}}，$\theta_{z}$为太阳天顶角。$R$为日地距离，可由年积日（day of year，$DOY$）计算得~\citep{eva1998}:
 \begin{equation}
-R=1-0.01672 \times \cos{\left( 0.9856 \times \left(DOY-4 \right)\right)}
+R=1-0.01672 \times \cos{\big( 0.9856 \times \left(DOY-4 \right)\big)}
 \end{equation}
 由所得漫射比例（$k$），可将入射短波辐射（$S\downarrow$）分解为漫射辐射（$S_{d}\downarrow$）与直射辐射（$S_{b}\downarrow$）（图~\ref{fig:短波直射调整图}(A)）。
 
