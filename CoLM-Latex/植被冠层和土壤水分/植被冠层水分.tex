@@ -100,7 +100,7 @@ $x_{sc}$的相位首先由冠层温度决定。如果冠层温度大于冰点温
 {
 \begin{figure}[htbp]
 \centering
-\includegraphics[scale=0.6]{Figures/植被冠层和土壤水分/CoLM冠层截留示意图.pdf}
+\includegraphics[width=0.8\textwidth]{Figures/植被冠层和土壤水分/CoLM冠层截留示意图.jpg}
 \caption[(a) CoLM中使用的降水面积-总量分布图；(b) CoLM中植被冠层截留降水的动力学过程]{(a) CoLM中使用的降水面积-总量分布图(修改自SiB2)。其中变量$x$为网格面积的比例,变量$I_{\left(x\right)}$为相对降水量。值得注意的是,大尺度降水$I_l\left(x\right)$在网格区几乎是不变的,而对流降水$I_c\left(x\right)$是非均匀分布的；(b) CoLM中植被冠层截留降水的动力学过程。降雨截留前已储存在冠层中的水量$M_{cs}-M_{cw}$被假设是均匀分布在网格区域上的。$M_{cs}-M_{cw}$的以上的水量积分即为冠层截获的总水量。$xs$是网格区域拦截降雨的比例加上先前存在的树冠蓄水($M_{cs}-M_{cw}$)所超过了树冠最大储水量($S_c$)的水量。所有大于$S_c$的水量假设形成树干径流,而低于$S_c$的水量则被保存在冠层之中}
 \label{fig:CoLM冠层截留示意图}
 \end{figure}
@@ -146,11 +146,11 @@ f_{{wet}}=\left(\frac{L_{dew, p}}{s_{c}}\right)^{2 / 3} \leqslant 1.0
 \begin{equation}
 E_{ci} / \rho_{w}=\min \left(\frac{\left(q_{s}-q_{sat}^{T_{c}}\right)}{r_{b} /\left(LSAI \times f_{wet}\right)}, \frac{L_{dew}}{\Delta t}\right)
 \end{equation}
-这里$r_b$是平均边界层阻力,由冠层顶部的风速和特征叶片尺寸确定；$q_{sat}^{T_c}$ (\unit{kg kg^{-1}})是冠层温度下的饱和比湿度；$q_s$为表层参考高度处的比湿度，$\Delta t$为时间步长。
+这里$r_b$是平均边界层阻力,由冠层顶部的风速和特征叶片尺寸确定；$q_{sat}^{T_c}$ (\unit{kg.kg^{-1}})是冠层温度下的饱和比湿度；$q_s$为表层参考高度处的比湿度，$\Delta t$为时间步长。
 
 
 \section{CLM4.5方案}
-CLM4.5的冠层截留方案~\citet{oleson2013technical}~和CoLM2014的方案非常类似。主要的区别在于公式~\eqref{eq:消光系数} 中的$K_p$的计算。
+CLM4.5的冠层截留方案~\citep{oleson2013technical}~和CoLM2014的方案非常类似。主要的区别在于公式~\eqref{eq:消光系数} 中的$K_p$的计算。
 $K_p$在CLM4.5冠层截留方案中取固定值0.5，即：
 %
 \begin{equation}

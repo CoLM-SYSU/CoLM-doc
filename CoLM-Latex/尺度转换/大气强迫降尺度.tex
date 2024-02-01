@@ -347,7 +347,7 @@ $p$、$\hat{p}$分别为模式网格和次网格上的降水。
 
 
 \section{CoLM和机器学习模型的耦合}\label{CoLM和机器学习模型在线耦合}
-CoLM与机器学习模型的在线耦合，本质是解决Fortran与Python的异构问题。在当前CoLM中实现的方案流程如下（图~\ref{fig:colmml耦合图}）：
+CoLM与机器学习模型的在线耦合，本质是解决Fortran与Python的异构问题。在当前CoLM中实现的方案流程如下：
 \begin{enumerate}
     \item 在总MPI空间中，将CoLM和Python进程分别染色成两个子空间。此时CoLM内部的spmd并行启动直接用子空间传参，并不另外额外进行MPI$\_$init，这与CoLM与CAS-ESM或CWRF的耦合是一致的。此外在Python中不设计内部分组等细分，仅需染色区分CoLM组即可。
     \item 以耦合降水降尺度模型为例，操作如下：
@@ -366,11 +366,3 @@ CoLM与机器学习模型的在线耦合，本质是解决Fortran与Python的异
     c. 做好验证工作，当前框架初建尚未在足够多的场景中进行测试，因此在实装中需要先用单点测试结果正确性，同时强烈建议先在Python中重写原来需要替换的算法，原装算法验证结果无误之后再实现新算法的应用。
 \end{enumerate}
 
-{
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.8\textwidth]{Figures/尺度转换/colmml耦合图.jpg}
-\caption{CoLM与机器学习在线耦合示意图}
-\label{fig:colmml耦合图}
-\end{figure}
-}
