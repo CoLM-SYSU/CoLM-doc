@@ -312,7 +312,7 @@ V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{L\zeta_{m2}}{z_{0 m}}-\psi_{mu}\left(
 \begin{equation}\label{Va_U_LZD2}
 V_{a}=\frac{u_{*}}{\kappa}\left\{\ln \frac{z_{atm, m}-d}{z_{0 m}}-\psi_{mu}\left(\zeta_{atm}\right)+\psi_{mu}\left(\frac{z_{0 m}}{L}\right)\right\}
 \end{equation}
-其中$\psi_{mu}$的定义同方程(\ref{Psim})，这里同样限制$V_a\geq0.1$以避免风速过小问题，参考高度风速亦引入对流速度$U_c$ (公式(\ref{VaIni}))，其代表大涡在水平方向的影响，即
+其中$\psi_{mu}$的定义同方程(\ref{Psim})，这里同样限制$V_a\geqslant0.1$以避免风速过小问题，参考高度风速亦引入对流速度$U_c$ (公式(\ref{VaIni}))，其代表大涡在水平方向的影响，即
 $V_{a}=\sqrt{u_{atm}^{2}+v_{atm}^{2}+U_{c}^{2}} \geqslant 0.1$。稳定条件下的风速积分形式则同方程~\eqref{Va_S} 和~\eqref{Va_VS}。
 
 后面的迭代求解过程参见~\ref{基本理论} 节内容，所得空气动力学阻抗系数$r_{am}$、$r_{ah}$和$r_{aw}$，以及诊断量2 m温度和湿度、10 m风速等的形式都和~\ref{基本理论} 节完全一致。
@@ -406,7 +406,7 @@ q_{g}=\left(1-f_{{sno }}\right) q_{{soil }}+f_{{sno }} q_{{sno }}
 其中积雪表面的比湿$q_{sno}$为温度在$T_{snl+1}$时的饱和比湿$q_{sno}=q_{sat}^{T_{snl+1}}$
 (计算方案见附录~\ref{饱和水汽压(比湿)及其随温度的变化})，土壤表面的比湿$q_{soil}$视为正比于温度在$T_1$时的饱和比湿：$q_{soil}=\alpha_{soil}q_{sat}^{T_1}$，
 比例系数$\alpha_{soil}$为表层土壤水势$\psi_1$(mm)的函数\citep{philip1957theory}：$\alpha_{soil}=\exp \left(\frac{\psi_1g}{{10}^3R_{wv}T_1}\right)$，
-其中$R_{wv}$表示水汽气体常数(\unit{J.kg^{-1}.K^{-1}})。表层土壤水势$\psi_1$的计算公式为$\psi_1=\psi_{sat,1}s_1^{-B_1}\geq-1\times{10}^8$，
+其中$R_{wv}$表示水汽气体常数(\unit{J.kg^{-1}.K^{-1}})。表层土壤水势$\psi_1$的计算公式为$\psi_1=\psi_{sat,1}s_1^{-B_1}\geqslant-1\times{10}^8$，
 $\psi_{sat,1}$表示表层饱和土壤水势(mm)，$B_1$表示表层土壤\citep{clapp1978empirical}参数(均由地表参数数据集提供)。$s_1$表示表层土壤对于饱和状态时的相对湿度：
 \begin{equation}
 s_{1}= \begin{cases}
