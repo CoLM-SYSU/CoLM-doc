@@ -10,7 +10,7 @@
 F\left(T_{v}\right):=S_{v}+L_{v}\left(T_{v}\right)-H_{v}\left(T_{v}\right)-\lambda E_{v}\left(T_{v}\right)+H_{p r c v}\left(T_{v}\right)=0
 \end{equation}
 其中$S_v$表示叶片吸收的净太阳辐射(见章节~\ref{短波吸收辐射通量})，
-$L_v$表示叶片吸收的净长波辐射。$T_v$可通过对方程 (\ref{FT_V}) 实施牛顿迭代法进行求解，迭代公式为：
+$L_v$表示叶片吸收的净长波辐射，$H_v$表示植被感热，$\lambda E_v$表示植被潜热，$H_{prev}$表示植被雨水感热。$T_v$可通过对方程 (\ref{FT_V}) 实施牛顿迭代法进行求解，迭代公式为：
 \begin{equation}
 \Delta T_{v}=-\frac{F\left(T_{v}^{(n)}\right)}{F^{\prime}\left(T_{v}^{(n)}\right)}
 \end{equation}
@@ -46,7 +46,7 @@ L_{v}=\left(1-\tau_{v}\right)\left(L ^\downarrow+\varepsilon_{g} \sigma T_{g}^{4
 \begin{equation}
 c_{v}^{w}=\frac{1}{r_{v}}=\frac{\left[1-\delta\left(1-f_{wet}\right)\right](\text{LAI+SAI})}{r_{b}}+\left( 1 - f_{wet} \right)\delta\left( \frac{\rm LAI_{sun}}{r_{b} + r_{s,\rm sun}} + \frac{\rm LAI_{sha}}{r_{b} + r_{s,\rm sha}} \right)
 \end{equation}
-对于叶片的蒸腾通量计算为：
+其中$f_{wet}$表示植被冠层湿润面积占比。对于叶片的蒸腾通量计算为：
 \begin{equation}
 E_{vt} = -\frac{\rho_{atm}\left(1-f_{w e t}\right)\delta }{c_{a}^{w}+c_{g}^{w}+c_{v}^{w}}\left( \frac{\rm LAI_{sun}}{r_{b} + r_{s,\rm sun}} + \frac{\rm LAI_{sha}}{r_{b} + r_{s,\rm sha}} \right) \left[c_{a}^{w} q_{atm}+c_{g}^{w} q_{g}-\left(c_{a}^{w}+c_{g}^{w}\right) q_{s a t}^{T_{v}}\right] 
 \end{equation}
@@ -93,7 +93,7 @@ E_{vt} &=  E_{vt, \max } \\[1ex]
 基于以上表达式以及$T_v$的迭代公式，下面给出$T_v$以及植被湍流通量的求解流程：
 \begin{enumerate}
     \item 给出植被冠层空气温度和比湿的初始猜测：$T_s=\frac{T_g+\theta_{atm}}{2}$，$q_s=\frac{q_g+q_{atm}}{2}$；
-    \item 给出$U_c$的初始猜测如下：\\
+    \item 给出对流速度$U_c$的初始猜测如下：\\
     \begin{equation*}
     U_c= \begin{cases}
       0,  & \theta_{v,atm}-\theta_{v,s}\geqslant0 \text{ 即稳定条件下；} \\
