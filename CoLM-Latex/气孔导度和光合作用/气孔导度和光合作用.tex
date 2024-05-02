@@ -86,7 +86,7 @@ A_{j,sha}=\begin{cases}\frac{J_{x,sha}\cdot\left(c_{i,sha}-\Gamma\right)}{4c_{i,
 $J_{x,sun}$和$J_{x,sha}$是阳叶和阴叶冠层尺度的电子传输速率，是有效光合辐射($PAR_{sun}$和$PAR_{sha}$)的函数，并受叶片温度 ($T_{leaf}$)和水分胁迫因子($\beta_{sun}$和$\beta_{sha}$)的调节：
 \begin{equation}
 \begin{aligned}
-J_{x,sun}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot PAR_{sun}\right) \\
+J_{x,sun}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot PAR_{sun}\right), \\
   J_{x25} \cdot \exp\left(\frac{37000\left(T_{{leaf }}-T_{o p}\right)\left[1+\exp\left(\frac{710 \cdot T_{o p}-220000}
  {R \cdot T_{o p}}\right)\right]R \cdot T_{{leaf}}}{T_{o p} \cdot T_{{leaf }} \cdot R 
  \cdot \left(710 \cdot T_{{leaf }}-220000\right)}\right)\cdot \beta_{sun} \cdot L_{j,sun}  \end{array} \right)  
@@ -94,7 +94,7 @@ J_{x,sun}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot PAR_{
 \end{equation}
 \begin{equation}
 \begin{aligned}
-J_{x,sha}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot PAR_{sha}\right) \\
+J_{x,sha}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot PAR_{sha}\right), \\
   J_{x25} \cdot \exp\left(\frac{37000\left(T_{{leaf }}-T_{o p}\right)\left[1+\exp\left(\frac{710 \cdot T_{o p}-220000}
  {R \cdot T_{o p}}\right)\right]R \cdot T_{{leaf}}}{T_{o p} \cdot T_{{leaf }} \cdot R 
  \cdot \left(710 \cdot T_{{leaf }}-220000\right)}\right)\cdot \beta_{sha} \cdot L_{j,sha}  \end{array} \right)  
