@@ -170,7 +170,7 @@ g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
 
 积雪反照率十分依赖于冰粒的单次散射反照率，包含额外的反照率权重可以提高五个波段反照率方案的准确性\citep{flanner2007PresentdayClimateForcing}。
 
-积雪在五种波段的单次散射反照率、质量消光截面以及不对称参数由表~\ref{tab:积雪单次散射反照率} 给出，它们均基于米氏散射近似理论计算得到。不同大气沉积气溶胶的单次散射反照率、质量消光截面以及不对称参数取决于波段。而对于冰粒，其光学属性取决于入射辐射类型（直射或漫射辐射）、波段以及有效粒径，其中有效粒径考虑积雪的老化过程计算得到（见章节~\ref{积雪老化}）。
+积雪在五种波段的单次散射反照率、质量消光截面以及不对称参数由表~\ref{tab:积雪单次散射反照率} 给出，它们均基于米氏散射近似理论计算得到。不同大气沉积气溶胶的单次散射反照率、质量消光截面以及不对称参数取决于波段。而对于冰粒，其光学属性取决于入射辐射类型（直射或漫射辐射）、波段以及有效粒径，其中有效粒径来自对雪龄的计算（见章节~\ref{雪龄计算}）。
 
 积雪中的成分包括冰粒和沉积在雪中的吸光物质，它们直接决定了积雪的光学属性。SNICAR模型考虑了不同的雪花形状，分别为球形、椭球形、科赫雪花、六边形雪花\citep{he2017ImpactSnowGrain}，再根据不同波段，从而确定了不对称因子(图~\ref{fig:SNICAR积雪分层及雪花形状})。
 
@@ -236,9 +236,9 @@ g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
 \end{tabular}
 \end{table}
 
-\subsubsection{积雪老化过程}\label{积雪老化}
+\subsubsection{雪龄计算}\label{雪龄计算}
 
-雪的老化表现为冰粒有效粒径（$r_e$）的变化。已有研究表明，使用由更复杂形状组成的冰介质表面积与体积比（或比表面积）的球体会在模拟半球通量中产生相对较小误差（例如~\citet{grenfell1999RepresentationNonsphericalIce}）。有效半径是球形粒子集合的表面积加权平均半径，与比表面积（SSA）直接相关，表达式为$r_e=3/(\rho_{ice}\text{SSA})$，其中$\rho_{ice}$是冰的密度。$r_e$是一个简单实用的度量指标，将积雪微观物理状态与干雪辐射特性联系起来。
+雪龄的增加（即积雪老化）表现为冰粒有效粒径（$r_e$）的变化。已有研究表明，使用由更复杂形状组成的冰介质表面积与体积比（或比表面积）的球体会在模拟半球通量中产生相对较小误差（例如~\citet{grenfell1999RepresentationNonsphericalIce}）。有效半径是球形粒子集合的表面积加权平均半径，与比表面积（SSA）直接相关，表达式为$r_e=3/(\rho_{ice}\text{SSA})$，其中$\rho_{ice}$是冰的密度。$r_e$是一个简单实用的度量指标，将积雪微观物理状态与干雪辐射特性联系起来。
 
 雪变湿的过程也会导致反照率快速变化。液态水的存在会导致周围的冰粒迅速变得粗糙(例如~\citet{brun1989InvestigationWetSnowMetamorphism})，液态水往往会重新冻结成较大的冰块，使积雪变暗。小液滴的存在本身不会地使积雪显著变暗，因为冰和水的折射率在整个太阳光谱中非常接近。然而，积水会大大减少每单位质量的折射事件的发生，从而使积雪变暗。目前还没有考虑到这种影响。
 
@@ -600,7 +600,7 @@ G(\mu)=\phi_{1}+\phi_{2} \mu
 整个植被的单次散射反照率，计算为：
 \begin{equation}
 \begin{aligned} 
-a_{s} &=\frac{\omega}{2} \int_{0}^{1} \frac{\mu G\left(\mu^{\prime}\right)}{\mu G\left(\mu^{\prime}\right)+\mu^{\prime} 
+a_{s} &=\frac{\omega}{2} \int_{0}^{1} \frac{\mu^{\prime} G\left(\mu \right)}{\mu G\left(\mu^{\prime}\right)+\mu^{\prime} 
 G(\mu)} d \mu^{\prime} \\[1ex]
 &=\frac{\omega}{2} \frac{G(\mu)}{G(\mu)+\mu \phi_{2}}\left[1-\frac{\mu \phi_{1}}{G(\mu)+\mu \phi_{2}} 
 \ln \left(\frac{G(\mu)+\mu \phi_{1}+\mu \phi_{2}}{\mu \phi_{1}}\right)\right] 
@@ -617,11 +617,11 @@ I^{\uparrow} =\alpha_{g, dif} I^{\downarrow}+\alpha_{g, dir} \exp \left(-K L_{AI
 \end{cases}
 \end{equation}
 方程的解为：
-\begin{equation}
+\begin{equation}\label{eq:2s_dir_up}
 I^{\uparrow}=h_{1} e^{-K x / \sigma}+h_{2} e^{-h x}+h_{3} e^{h x}
 \end{equation}
 %
-\begin{equation}
+\begin{equation}\label{eq:2s_dir_dw}
 I^{\downarrow}=h_{4} e^{-K x / \sigma}+h_{5} e^{-h x}+h_{6} e^{h x}
 \end{equation}
 因此可以得到在冠层顶部的漫射辐射通量(即反照率)为：
@@ -641,11 +641,11 @@ I^{\uparrow}=\alpha_{g, dif} I^{\downarrow}, &\text {当 }\, x=L_{A I} \text { �
 \end{cases}
 \end{equation}
 方程的解为：
-\begin{equation}
+\begin{equation}\label{eq:2s_dif_up}
 I^{\uparrow}=h_{7} e^{-h x}+h_{8} e^{h x}
 \end{equation}
 %
-\begin{equation}
+\begin{equation}\label{eq:2s_dif_dw}
 I^{\downarrow}=h_{9} e^{-h x}+h_{10} e^{h x}
 \end{equation}
 因此可以得到在冠层顶部向上的漫射辐射通量(即反照率)为：
@@ -786,7 +786,19 @@ s_{v, dir}=1-\alpha_{veg, dir}-\left(1-\alpha_{g, dif}\right) \tau_{veg, dir}-\l
 \begin{equation}
 s_{v, dif}=1-\alpha_{veg, dif}-\left(1-\alpha_{g, dif}\right) \tau_{veg, dif}
 \end{equation}
-\citet{dai2004two} 将植被分为阴叶和阳叶来计算其各自辐射通量吸收，对于直射入射光，阳叶、阴叶吸收辐射通量分别如下：
+
+\citet{dai2004two} 将植被分为阴叶和阳叶来计算其各自辐射通量吸收。叶面积在某一冠层深度($x$)处，阳叶所占比例可计算为$e^{-Kx}$(即直射光的透射率)，阴叶面积占比为$1-e^{-Kx}$。从冠层顶部($x=0$)到冠层底部($x=L_{AI}$)进行积分，便可以得到总的阳、阴叶面积。其中总的阳叶面积计算为：
+\begin{equation}
+LAI_{sun}=\int_{0}^{L_{\mathrm{AI}}} e^{-Kx} d x=\frac{1}{K}\left(1-e^{-K \cdot L_{\mathrm{AI}}}\right) 
+\end{equation}
+总的阳叶面积占比计算为：
+\begin{equation}
+f_{sun} = \frac {LAI_{sun}} {L_{\mathrm{AI}}} = \frac {1-e^{-K 
+ \cdot L_{\mathrm{AI}}}} {K \cdot L_{\mathrm{AI}} } 
+\end{equation}
+$L_{\rm{AI}}$在后续章节中也写成$LAI$。总的阴叶比例可计算为$1-f_{sun}$。
+
+同理，对于直射入射光，阳叶、阴叶吸收辐射通量也可以对垂直剖面辐射吸收(公式(\ref{eq:2s_dir_up})和(\ref{eq:2s_dir_dw}))进行积分，分别如下：
 \begin{equation}
 s_{sun, dir}=(1-\omega)\left[1-s_{2}+\frac{1}{\bar{\mu}}\left(a_{1}+a_{2}\right)\right]
 \end{equation}
@@ -833,6 +845,7 @@ a_{2}=h_{9}\left[\frac{1-s_{2} s_{1}}{K+h}\right]+h_{10}\left[\frac{1-s_{2} / s_
 \begin{mymdframed}{代码}
 对应代码为\texttt{MOD\_Albedo.F90}文件中\texttt{twostream\_mod()}函数。
 \end{mymdframed}
+
 根据 \citet{yuan2017reexamination} 对目前二流近似植被辐射传输参数化方案的对比分析，对章节~\ref{植被反照率二流近似模型} 方案进行改进，主要包括两个方面：
 \begin{enumerate}
     \item 入射漫射辐射计算；
@@ -1155,12 +1168,12 @@ y^{\prime}=\frac{R}{c} y, \text { and } x^{\prime}=x
 
 \subsection{三层植被模型}
 三层植被模型的假设在单株植物模型和单层植被模型的基础上，认为层与层之间的树冠垂直投影不重叠，
-每层植被树冠半径$(R$)和树冠中心高度($h$)相同(图~\ref{fig:三层植被结构示意图})。
+每层植被不同PFT树冠半径$(R$)、树冠中心高度($h$)相同(图~\ref{fig:三层植被结构示意图})。
 若某层植被含有多种PFT，则该层的$f_c$为所含PFT各自$f_c$的累加，
 植被参数的层属性(包括$LAI$、$R$、$h$及叶片光学属性)为所含PFT的$f_c$加权平均。
 
 层与层之间的阴影重叠对直射辐射的吸收影响很大，特别是对于较高吸收率的可见光波段。
-对于阴影的重叠，3D模型假设高层树冠的“自身阴影”(在低层植被的阴影与其自身垂直投影的重叠区域)
+对于阴影的重叠，3D模型假设高层树冠的“自身阴影”(在低层植被高度的阴影与其自身垂直投影的重叠区域)
 不与低层树冠的阴影重叠(如图~\ref{fig:三层植被结构示意图}所示的$S_{12}$、$S_{13}$和$S_{23}$)。除此之外，层与层之间的阴影可以随机重叠。%
 {
 \begin{figure}[htbp]
