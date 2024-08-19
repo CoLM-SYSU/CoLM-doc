@@ -6,38 +6,38 @@
 \end{mymdframed}
 
 本模块通过地形调整和机器学习降尺度算法将模式网格（Element）上的大气强迫场降尺度到次网格（Patch）上。
-针对的大气状态变量为大气温度（$T_{atm}$），近地面气压（$P_{atm}$），大气比湿（$q_{atm}$），大气风速（$u_{atm}$），近地面下行长波辐射（$L↓$），近地面下行短波辐射（$S↓$）和降水（$p$），并相应调整了位温（$\theta_{atm}$）和大气密度（$\rho_{atm}$）。
+针对的大气状态变量为大气温度（$T_{a}$），近地面气压（$P_{a}$），大气比湿（$q_{a}$），大气风速（$u_{a}$），近地面下行长波辐射（$L↓$），近地面下行短波辐射（$S↓$）和降水（$p$），并相应调整了位温（$\theta_{a}$）和大气密度（$\rho_{a}$）。
 
 \section{大气温度降尺度}
 大气温度由地形偏差和温度递减率（${\Gamma}_{t}$）调整：
 \begin{equation}\label{T_atm}
-\hat{T_{atm}}=T_{atm}-{\Gamma}_{t} \left(\hat{z}-z\right)
+\hat{T_{a}}=T_{a}-{\Gamma}_{t} \left(\hat{z}-z\right)
 \end{equation}
 其中，
 ${\Gamma}_{t}=0.006$（每上升1000 m下降6度）。
 $z$, $\hat{z}$分别为模式网格和次网格上的海拔高度,
-$T_{atm}$, $\hat{T_{atm}}$分别为模式网格和次网格上的温度。
+$T_{a}$, $\hat{T_{a}}$分别为模式网格和次网格上的温度。
 
 \section{近地面气压降尺度}
 近地面气压由地形偏差和大气温度调整~\citep{Cosgrove2003}。
 
 基于流体静力方程和理想气体假设，可推导：
 \begin{equation}
-\partial z=-\frac{RT_{atm}}{g}\frac{\partial P_{atm}}{P_{atm}}
+\partial z=-\frac{RT_{a}}{g}\frac{\partial P_{a}}{P_{a}}
 \end{equation}
 其中，$z$为高度，$R$为干空气常数，$g$为重力加速度。
 
 如采用均温假设，可推导：
 \begin{equation}
-\hat{P_{atm}}=P_{atm} \exp{\left(-\frac{\hat{z}-z}{\bar{z}}\right)}
+\hat{P_{a}}=P_{a} \exp{\left(-\frac{\hat{z}-z}{\bar{z}}\right)}
 \end{equation}
 其中，
-$\bar{z}$为地形调整前后平均温度对应的标高，计算方式为$\bar{z}=\frac{R}{g} \frac{\hat{T_{atm}}+T_{atm}}{2}$,  
-$P_{atm}$, $\hat{P_{atm}}$分别为模式网格和次网格上的气压。
+$\bar{z}$为地形调整前后平均温度对应的标高，计算方式为$\bar{z}=\frac{R}{g} \frac{\hat{T_{a}}+T_{a}}{2}$,  
+$P_{a}$, $\hat{P_{a}}$分别为模式网格和次网格上的气压。
 
 如采用温度线性递减假设（即${\Gamma}_{t}=0.006$），可推导：
 \begin{equation}
-\hat{P_{atm}}=P_{atm} \frac{\hat{T_{atm}}}{T_{atm}}^\frac{g}{R\Gamma_{t}}
+\hat{P_{a}}=P_{a} \frac{\hat{T_{a}}}{T_{a}}^\frac{g}{R\Gamma_{t}}
 \end{equation}
 
 \section{位温降尺度}
@@ -45,47 +45,47 @@ $P_{atm}$, $\hat{P_{atm}}$分别为模式网格和次网格上的气压。
 
 位温定义为：
 \begin{equation}\label{eq:位温定义}
-\theta_{atm}=T_{atm} \left(\frac{P_0}{P_{atm}}\right)^\frac{R}{C_{p}}
+\theta_{a}=T_{a} \left(\frac{P_0}{P_{a}}\right)^\frac{R}{C_{p}}
 \end{equation}
 
 近地面气压为：
 \begin{equation}\label{eq:近地面气压}
-{P_{atm}}=P_{0} e^{-\frac{z_{atm}}{\bar{H}}}
+{P_{a}}=P_{0} e^{-\frac{z_{a}}{\bar{H}}}
 \end{equation}
 %
 代入~\eqref{eq:位温定义}，可得：
 \begin{equation}\label{eq:theta_atm}
-\theta_{atm}=T_{atm} e^{\frac{z_{atm}}{\bar{H}} \frac{R}{C_{p}}}
+\theta_{a}=T_{a} e^{\frac{z_{a}}{\bar{H}} \frac{R}{C_{p}}}
 \end{equation}
 
 根据~\eqref{eq:theta_atm}，位温可由大气温度偏差调整为：
 \begin{equation}
-\hat{\theta_{atm}}=\theta_{atm}+\left(\hat{T_{atm}}-T_{atm}\right) e^{\frac{z_{atm}}{\bar{H}} \frac{R}{C_{p}}}
+\hat{\theta_{a}}=\theta_{a}+\left(\hat{T_{a}}-T_{a}\right) e^{\frac{z_{a}}{\bar{H}} \frac{R}{C_{p}}}
 \end{equation}
 其中，
 $P_{0}$为标准大气压，
 $\frac{R}{C_{p}}$为干绝热指数，约为0.286，
-$z_{atm}$为参考高度。
-$\theta_{atm}$, $\hat{\theta_{atm}}$分别为模式网格和次网格上的位温。
+$z_{a}$为参考高度。
+$\theta_{a}$, $\hat{\theta_{a}}$分别为模式网格和次网格上的位温。
 
 \section{比湿降尺度}
 大气比湿由估计的饱和比湿比例来调整：
 \begin{equation}
-\hat{q_{atm}}=q_{atm} \frac{\hat{q_{sat}^T}}{q_{sat}^T} 
+\hat{q_{a}}=q_{a} \frac{\hat{q_{sat}^T}}{q_{sat}^T} 
 \end{equation}
 其中，模式网格和次网格上的饱和比湿通过降尺度前后的大气温度计算（附录~\ref{饱和水汽压(比湿)及其随温度的变化}）。注意该方案的假设为降尺度前后满足相对湿度守恒。
 
 \section{大气密度降尺度}
 调整大气温度，近地面气压和大气比湿后，更新次网格上的大气密度：
 \begin{equation}
-\rho_{atm}=\frac{P_{atm}-(1-\phi)A}{R T_{atm}}
+\rho_{a}=\frac{P_{a}-(1-\phi)A}{R T_{a}}
 \end{equation}
-其中，$\phi$为水蒸气与干空气的分子量比值，为0.62197。$A=\frac{q_{atm} P_{atm}}{\phi +(1-\phi)q_{atm}}$。
+其中，$\phi$为水蒸气与干空气的分子量比值，为0.62197。$A=\frac{q_{a} P_{a}}{\phi +(1-\phi)q_{a}}$。
 
 \section{大气风速降尺度}\label{大气风速降尺度}
 大气风速由地形因子调整~\citep{liston2006Meteorological}，计算为：
 \begin{equation}
-\hat{u_{a t m}}=\left(1+\zeta_{s}\omega_{s}+\zeta_{c}\omega_{c}\right)u_{atm}
+\hat{u_{a}}=\left(1+\zeta_{s}\omega_{s}+\zeta_{c}\omega_{c}\right)u_{a}
 \end{equation}
 其中，$\omega_{s}$为沿风向上地形的坡度，计算为：
 \begin{equation}
@@ -120,19 +120,19 @@ $\omega_{c}$为地形的曲率，计算为：
 
 晴朗天空发射率由水汽压和大气温度计算获得~\citep{konzelmann1994parameterization}：
 \begin{equation}\label{eq:varepsilon_c}
-\varepsilon_{c}=0.23+0.43 \left(\frac{e^{T}}{T_{atm}}\right)^\frac{1}{5.7}
+\varepsilon_{c}=0.23+0.43 \left(\frac{e^{T}}{T_{a}}\right)^\frac{1}{5.7}
 \end{equation}
-其中，$e^{T}$为水汽压，由饱和水汽压和比湿计算而得$e^{T}= \frac{q_{atm} e_{sat}^{T}}{100}$，饱和水汽压由大气温度计算获得（附录~\ref{饱和水汽压(比湿)及其随温度的变化}）。将模式网格和次网格的大气温度代入公式~\eqref{eq:varepsilon_c}，得到对应网格的晴空发射率$\varepsilon_c$和$\hat{\varepsilon_{c}}$。
+其中，$e^{T}$为水汽压，由饱和水汽压和比湿计算而得$e^{T}= \frac{q_{a} e_{sat}^{T}}{100}$，饱和水汽压由大气温度计算获得（附录~\ref{饱和水汽压(比湿)及其随温度的变化}）。将模式网格和次网格的大气温度代入公式~\eqref{eq:varepsilon_c}，得到对应网格的晴空发射率$\varepsilon_c$和$\hat{\varepsilon_{c}}$。
 
 全空发射率由斯蒂芬-玻尔兹曼公式计算而得： 
 \begin{equation}
-\varepsilon_{a}=\frac{L↓}{\sigma T_{atm}^4}
+\varepsilon_{a}=\frac{L↓}{\sigma T_{a}^4}
 \end{equation}
 其中，$\sigma$为斯蒂芬-玻尔兹曼常数。则多云天空发射率为$\varepsilon_{cl}=\varepsilon_{a}-\varepsilon_{c}$。
 
 近地面入射长波辐射调整为：
 \begin{equation}
-\hat{L}↓=\left(\varepsilon_{cl}+\varepsilon_{c}\right) \sigma \hat{T_{atm}}^4
+\hat{L}↓=\left(\varepsilon_{cl}+\varepsilon_{c}\right) \sigma \hat{T_{a}}^4
 \end{equation}
 
 第二种方案~\citep{Tricht2016}假设近地面入射长波辐射与海拔高度呈现线性反比的关系。计算方案为：
@@ -144,7 +144,7 @@ $\omega_{c}$为地形的曲率，计算为：
 
 对于其他覆盖类型：
 \begin{equation}
-\hat{L}↓=L↓-\frac{4 L↓}{\bar{T_{atm}}} \Gamma_{t} \left(\hat{z}-z\right)      
+\hat{L}↓=L↓-\frac{4 L↓}{\bar{T_{a}}} \Gamma_{t} \left(\hat{z}-z\right)      
 \end{equation}
 其中，$\Gamma_{l}=0.032$，$L↓$, $\hat{L↓}$分别为模式网格和次网格上的入射长波辐射。
 
@@ -171,13 +171,13 @@ R=1-0.01672 \times \cos{\big( 0.9856 \times \left(DOY-4 \right)\big)}
 
 消光系数（$k_{e}$）由大气透明度（$k_{t}$）~\citep{gupta2016}计算获得：
 \begin{equation}
-k_{e}=\frac{\ln{\left(k_{t}\right)}}{P_{a t m}}
+k_{e}=\frac{\ln{\left(k_{t}\right)}}{P_{a}}
 \end{equation}
 基于Beer-Lambert定律，降尺度后，直射辐射随光程变化的调整因子计算为：
 \begin{equation}
-\hat{\psi}=\exp{\left[ -k_{e} \times \left(\hat{P_{a t m}}-P_{a t m} \right) \right]} 
+\hat{\psi}=\exp{\left[ -k_{e} \times \left(\hat{P_{a}}-P_{a} \right) \right]} 
 \end{equation}
-其中，$\hat{P_{a t m}}$为降尺度后的近地面气压。
+其中，$\hat{P_{a}}$为降尺度后的近地面气压。
 
 局地照明角（$\theta_{i}$）指直射辐射与地形平面法线的夹角，计算为：
 \begin{equation}
@@ -290,7 +290,7 @@ $p$、$\hat{p}$分别为模式网格和次网格上的降水。
     \item 选定模型的预报因子$\Omega$（见表~\ref{tab:降水降尺度模型的输入特征}）。
     \item 基于粗分辨率数据拟合$p_{m}=G_{c}\left(\Omega\right)$关系。$G_{c}$为随机森林分类模型。
     \item 基于粗分辨率数据拟合$p[p_{m}=1]=G_{r}\left(\Omega[p_{m}=1]\right)$关系。$G_{r}$为随机森林回归模型。
-    \item 基于上述地形降尺度方案对$u_{atm}$、$d_{atm}$、$T_{atm}$、$q_{atm}$、$P_{atm}$、$L\downarrow$和$S\downarrow$降尺度，得到的细分辨率特征。则降尺度后的降水$\hat{p}=G_{c}\left(\hat{\Omega}\right) \cdot G_{r}\left(\hat{\Omega}\right)$。
+    \item 基于上述地形降尺度方案对$u_{a}$、$d_{a}$、$T_{a}$、$q_{a}$、$P_{a}$、$L\downarrow$和$S\downarrow$降尺度，得到的细分辨率特征。则降尺度后的降水$\hat{p}=G_{c}\left(\hat{\Omega}\right) \cdot G_{r}\left(\hat{\Omega}\right)$。
 \end{enumerate}
 
 随机森林模型~\citep{rf2001}是基于随机决策树的集成学习算法。参数基于optuna库来优化，其参数优化范围见~\ref{tab:随机森林模型参数优化范围}。注意，随机森林模型的选择是基于ERA5大气强迫场降尺度的前期实验，发现其优于其他主流机器学习模型。
@@ -305,11 +305,11 @@ $p$、$\hat{p}$分别为模式网格和次网格上的降水。
     \begin{tabular}{ccc}
     \toprule
     特征变量               & 变量名           & 单位           \\  \midrule
-    位于参考高度的风速 & $u_{atm}$     & \unit{m.s^{-1}}   \\
-    位于参考高度的露点温度 & $d_{atm}$ & \unit{K} \\
-    位于参考高度的大气温度 & $T_{atm}$     & \unit{K}            \\
-    位于参考高度的大气比湿 & $q_{atm}$     & \unit{kg.kg^{-1}} \\
-    近地面气压                & $P_{atm}$     & Pa           \\
+    位于参考高度的风速 & $u_{a}$     & \unit{m.s^{-1}}   \\
+    位于参考高度的露点温度 & $d_{a}$ & \unit{K} \\
+    位于参考高度的大气温度 & $T_{a}$     & \unit{K}            \\
+    位于参考高度的大气比湿 & $q_{a}$     & \unit{kg.kg^{-1}} \\
+    近地面气压                & $P_{a}$     & Pa           \\
     近地面下行长波辐射            & $L\downarrow$ & \unit{W.m^{-2}}   \\
     近地面下行短波辐射            & $S\downarrow$ & \unit{W.m^{-2}}   \\
     海拔高度 & $z$ & \unit{m} \\
