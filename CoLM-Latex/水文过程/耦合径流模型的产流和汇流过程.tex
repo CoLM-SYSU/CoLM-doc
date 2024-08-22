@@ -152,24 +152,15 @@ CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选
   本节对应的代码文件夹为\texttt{CaMa/src},\\具体关联文件为\texttt{CaMa/src/MOD\_CaMa\_colmCaMa.F90}。
 \end{mymdframed}
 
-汇流计算是通过耦合 Dai Yamazaki 等人于2011年提出的大尺度分布式汇流模型 CaMa-Flood (Catchment-based Macro-scale Floodplain) 实现的\citep{yamazaki2011physically}。
-CaMa-Flood将全球河流网络分割为称为流域单元 (unit catchment) 的水文单元，在各单元集水区内利用河道 (river channel) 和漫滩 (floodplain) 的次网格 (subgrid)
-地形参数以及陆面模式生成的产流量 (total runoff)，对总蓄水量 (total storage) 以及总流量 (total discharge) 进行预测，
-并进一步实现对河道及漫滩流量 (river discharge and flood discharge)，漫滩面积 (flood area) 以及平均漫滩水深 (flood depth)
-等日常所需的诊断量的高速计算。总蓄水量和总流量的时间演变通过求解局部惯性方程 \citep{bates2010} 得出。
-CaMa-Flood同时考虑了上游单元的入流、下游单元的流出和每个流域单元的径流强迫输入，是目前高速求解河道水动力方程-圣维南方程最为高速有效的方法之一。
-关于CaMa-Flood模型的详细描述可以从相关文献获取~\citep{yamazaki2011physically,yamazaki2013improving,yamazaki2014development,yamazaki2014regional}。
+汇流计算是通过耦合 Dai Yamazaki 等人于2011年提出的大尺度分布式汇流模型 CaMa-Flood (Catchment-based Macro-scale Floodplain) 实现的\citep{yamazaki2011physically}。CaMa-Flood将全球河流网络分割为称为流域单元 (unit catchment) 的水文单元，在各单元集水区内利用河道 (river channel) 和漫滩 (floodplain) 的次网格 (subgrid) 地形参数以及陆面模式生成的产流量 (total runoff)，对总蓄水量 (total storage) 以及总流量 (total discharge) 进行预测。
+该模型进一步实现对河道及漫滩流量 (river discharge and flood discharge)，漫滩面积 (flood area) 以及平均漫滩水深 (flood depth) 等日常所需的诊断量的高速计算。总蓄水量和总流量的时间演变通过求解局部惯性方程 \citep{bates2010} 得出。CaMa-Flood同时考虑了上游单元的入流、下游单元的流出和每个流域单元的径流强迫输入，是目前高速求解河道水动力方程-圣维南方程最为高速有效的方法之一。
 
 
-CaMa-Flood 模型的主要优势之一在于除了能够精确描述河道径流以外，还能够模拟包括漫滩水位和漫滩面积变化等洪泛过程。
-因此，对模拟结果的验证不仅仅局限于传统测量河流流量，还可以直接将模拟结果与卫星高度计对水面高程的观测以及微波成像仪对洪泛面积的估算进行比较；
-能够有效加强全球河流模型各个输出的校准/验证~\citep{yamazaki2012analysis,yamazaki2012adjustment}。
-CaMa-Flood 模型的另一个优势在于它具有极高的模拟计算效率。通过引入次网格地形参数，复杂的漫滩淹没物理过程被合理地简化。
-与此同时，通过实现局部惯性方程和自适应时间步长等物理方案~\citep{bates2010}，
-河流流量和蓄水量的预测计算成本得到压缩,有利于进行集成/长期实验等计算要求高的实验或者与陆面模式之间的动态耦合。
-以下对 CaMa-Flood 内部各个模块进行详细的介绍。目前耦合版本陆面过程模式分系统已经包含 CaMa-Flood v4.12版本。
+CaMa-Flood 模型的主要优势之一在于除了能够精确描述河道径流以外，还能够模拟包括漫滩水位和漫滩面积变化等洪泛过程。因此，对模拟结果的验证不仅仅局限于传统测量河流流量，还可以直接将模拟结果与卫星高度计对水面高程的观测以及微波成像仪对洪泛面积的估算进行比较；这种多元验证方法能够有效加强全球河流模型各个输出的校准/验证\citep{yamazaki2012adjustment,yamazaki2012analysis}。
+CaMa-Flood 模型的另一个优势在于它具有极高的模拟计算效率。通过引入次网格地形参数，复杂的漫滩淹没物理过程被合理地简化。与此同时，通过实现局部惯性方程和自适应时间步长等物理方案\citep{bates2010}，河流流量和蓄水量的预测计算成本得到压缩，有利于进行集成/长期实验等计算要求高的实验或者与陆面模式之间的动态耦合。
 
 
+关于CaMa-Flood模型的详细描述可以从相关文献获取\citep{yamazaki2011physically,yamazaki2013improving,yamazaki2014regional,yamazaki2014development}。目前耦合版本陆面过程模式分系统已经包含 CaMa-Flood v4.21 版本，并保持同步更新。
 
 \subsection{诊断洪泛状态}\label{诊断洪泛状态}
 在 CaMa-Flood 中指定网格的漫滩 (洪泛) 状态是通过计算该网格的蓄水总量得出的。如图~\ref{fig:CaMa-Flood流域单位示意图}
@@ -244,7 +235,7 @@ CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量
   S_{i}^{t+\Delta t}=S_{i}^{t}+\sum_{k}^{Upstream} Q_{k}^{t} \Delta t-Q_{i}^{t} \Delta t+A c_{i} R_{i}^{t} \Delta t
 \end{equation}
 式中$S_{i}^{t}$和$S_{i}^{t+\Delta t}$分别代表单元$i$在时间$t$到时间$t+\Delta t$蓄水量的变化，$Q_i^t$代表在时间$t$该单元河流径流出流量 (河道内+漫滩)，
-$Q_k^t$代表在时间 $t$ 该单元从上游网格接收的河流径流流入流量 (河道内+漫滩)，$Ac_i$ 是单元$i$的面积，$R_i^t$ 代表流域单元 $i$ 的产流量。
+$Q_k^t$代表在时间 $t$ 该单元从上游(upstream)网格($k$)接收的河流径流流入流量 (河道内+漫滩)，$Ac_i$ 是单元$i$的面积，$R_i^t$ 代表流域单元 $i$ 的产流量。
 
 
 \subsection{自适应时间步长的估算}

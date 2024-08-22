@@ -14,7 +14,7 @@
 \end{equation}
 (分量形式：$\tau_{\mathrm{x}}=\rho_{\mathrm{a}} \overline{u^{\prime} w^{\prime}}, \quad \tau_{\mathrm{y}}=\rho_{\mathrm{a}} \overline{v^{\prime} w^{\prime}}$)
 \begin{equation}
-  H=C_{\mathrm{a a}} \rho_{\mathrm{a}} \overline{\theta^{\prime} w^{\prime}}=-C_{\mathrm{a}} \rho_{\mathrm{a}} \theta_{\mathrm{*}} u_{*}
+  H=C_{\mathrm{a}} \rho_{\mathrm{a}} \overline{\theta^{\prime} w^{\prime}}=-C_{\mathrm{a}} \rho_{\mathrm{a}} \theta_{\mathrm{*}} u_{*}
 \end{equation}
 \begin{equation}
   E=\rho_{\mathrm{a}} \overline{q^{\prime} w^{\prime}}=-\rho_{\mathrm{a}} q_{*} u_{*}
@@ -926,7 +926,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 但积分区间对应到每层植被的等效交换高度(图~\ref{fig:三层植被湍流交换示意图} 中$T_{1}$、$T_{2}$、$T_{3}$位置所示)。
 该交换高度计算为该层植被100\%覆盖时的$d+z_0$值。在每一层等效交换高度，建立通量(感热$H$和潜热$\lambda E$)平衡方程，即该点与上层通量交换量等于下层交换量加上该层植被的通量交换量。联立每层在等效高度建立的方程，迭代求解每种植被叶片温度。
 
-通过以上介绍可以看出，三维植被湍流交换与一维植被湍流交换最大的不同在于其计算的对象由原来单一植被扩展到多种植被(PFT)，并区分高度，因此阻抗网络发生较大变化，从而多种植被在同一物理环境下同时求解。在计算时，同一维植被一样，需要用到植被短波辐射吸收量和长波辐射吸收量，此时利用章节~\ref{三维植被辐射传输模型} 和 \ref{三维植被长波辐射传输} 对三维植被辐射传输计算结果，每种植被均采用双大叶模型模拟计算。整个植被冠层与大气的湍流交换同样采用相似性理论进行求解，其求解过程如图~\ref{fig:三维植被湍流交换模型计算流程图} 所示。
+通过以上介绍可以看出，三维植被湍流交换与一维植被湍流交换最大的不同在于其计算的对象由原来单一植被扩展到多种植被(PFT)，并根据高度进行分层计算，因此阻抗网络发生较大变化，从而多种植被在同一物理环境下同时求解。在计算时，同一维植被一样，需要用到植被短波辐射吸收量和长波辐射吸收量，此时利用章节~\ref{三维植被辐射传输模型} 和 \ref{三维植被长波辐射传输} 对三维植被辐射传输计算结果。对于光合作用，每种植被均采用双大叶模型模拟计算。整个植被冠层与大气的湍流交换同样采用相似性理论进行求解，其求解过程如图~\ref{fig:三维植被湍流交换模型计算流程图} 所示。
 {
   \begin{figure}[htbp]
     \centering
@@ -939,7 +939,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 
 \subsubsection{两层植被}
 
-当有两层植被覆盖时（较高层记为第2层，低层记为第1层），对与感热通量平衡方程为：
+当有两层植被覆盖时（较高层记为第2层，低层记为第1层），对于感热通量平衡方程为：
 \begin{equation}
   H = H_{1} + \sum_{i \in \mbox{\tiny {第2层}}}^{}H_{\mathrm{v}i}
 \end{equation}
@@ -1421,12 +1421,12 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
         2                                                                                       & \(r_{\mathrm{ss}} = \frac{DSL}{D_{\mathrm{g}}}\)                                                                                                    & 菲克定律                               & \citet{sz2009}, SZ09                       \\
         3                                                                                       & \(\frac{1}{r_{\mathrm{ss}}} = \frac{1}{r_{\mathrm{g\ }}} + \frac{1}{r_{\mathrm{w\ }}}\)                                                             & 菲克定律, 达西定律                     & \citet{tang2013}, TR13                     \\
         4                                                                                       & \(\beta_{\mathrm{soil}} = \left\{ \begin{array}{r} \frac{1}{4}{\lbrack 1 - \cos(\frac{\theta_{\mathrm{1}}}{\theta_{\mathrm{fc,1}}}\pi)\rbrack}^{2} \\ 1 \end{array} \right.\ \begin{matrix}  & \theta_{\mathrm{1}} < \theta_{\mathrm{fc}} \\  & \theta_{\mathrm{1}} \geqslant \theta_{\mathrm{fc}}\text{ or }q_{\mathrm{\text{a }}} > q_{\mathrm{soil}} \end{matrix}\) & 经验拟合 & \citet{lp1992}\textsuperscript{a}, LP92 \\
-        5                                                                                       & \(r_{\mathrm{ss}} = \exp\left( 8.206 - 6.0\frac{\theta_{\mathrm{1}}}{\theta_{\mathrm{s,1}}} \right)\)
+        5                                                                                       & \(r_{\mathrm{ss}} = \exp\left( 8.206 - 6.0\frac{\theta_{\mathrm{1}}}{\theta_{\mathrm{sat,1}}} \right)\)
                                                                                                 & 经验拟合                                                                                                                                            & \citet{s1992}\textsuperscript{b}, S92 \\ \bottomrule
       \end{tabular}
       \footnotesize                                                                            \\
       \textsuperscript{a} $\beta_{\mathrm{soil}}$为限制土壤蒸发的因子，范围为{[}0-1{]}，无单位 \\
-      \textsuperscript{b} Sellers原方案为$r_{\mathrm{ss}} = \exp\left( 8.206 - 4.255\frac{\theta_{\mathrm{1}}}{\theta_{\mathrm{s,1}}} \right)\ $，然而~\citet{sz2009}指出该方案在土壤水饱和时，$r_{\mathrm{ss}}$计算值不合理，为了降低土壤较为湿润的$r_{\mathrm{ss}}$，Noah-MP v5对其进行修正为$r_{\mathrm{ss}} = \exp\left( 8.206 - 6.0 \frac{{\theta}_{\mathrm{1}}}{\theta_{\mathrm{s,1}}} \right)$
+      \textsuperscript{b} Sellers原方案为$r_{\mathrm{ss}} = \exp\left( 8.206 - 4.255\frac{\theta_{\mathrm{1}}}{\theta_{\mathrm{sat,1}}} \right)\ $，然而~\citet{sz2009}指出该方案在土壤水饱和时，$r_{\mathrm{ss}}$计算值不合理，为了降低土壤较为湿润的$r_{\mathrm{ss}}$，Noah-MP v5对其进行修正为$r_{\mathrm{ss}} = \exp\left( 8.206 - 6.0 \frac{{\theta}_{\mathrm{1}}}{\theta_{\mathrm{sat,1}}} \right)$
     \end{table}
   \end{landscape}
 }
@@ -1442,18 +1442,18 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
     在SL14方案中，\(r_{\mathrm{ss}}\)是通过参数化土壤干燥层厚度\(DSL\)和水汽分子在土壤中的扩散系数\(D_{\mathrm{g}}\)得到的。其中，\(DSL\)的计算由下式给出
     \begin{equation}
       DSL = \begin{cases}
-        \Delta z_{1} \times \frac{\theta_{\mathrm{init,1\ \ }} - \theta_{1}}{\theta_{\mathrm{init,2\ \ }} - \theta_{\mathrm{a}}} & \theta_{1} < K_{\mathrm{sl}}\theta_{\mathrm{s,1}} \\
-        0   & \theta_{1} \geqslant K_{\mathrm{sl}}\theta_{\mathrm{s,1}}
+        \Delta z_{1} \times \frac{\theta_{\mathrm{init,1\ \ }} - \theta_{1}}{\theta_{\mathrm{init,2\ \ }} - \theta_{\mathrm{a}}} & \theta_{1} < K_{\mathrm{sl}}\theta_{\mathrm{sat,1}} \\
+        0   & \theta_{1} \geqslant K_{\mathrm{sl}}\theta_{\mathrm{sat,1}}
       \end{cases}
     \end{equation}
     其中，$\Delta z_{1}$ 代表第一层的土壤厚度 (\unit{m})，\(\theta_{\mathrm{init,1}}\)和\(\theta_{\mathrm{init,2}}\)代表干燥层启动时的土壤体积含水量 (\unit{m^{3}.m^{-3}})，计算为：
     \begin{equation}
-      \theta_{\mathrm{init,1}} = K_{\mathrm{sl}}\left(\theta_{\mathrm{s,1}} - \theta_{\mathrm{ice,1}} \right)
+      \theta_{\mathrm{init,1}} = K_{\mathrm{sl}}\left(\theta_{\mathrm{sat,1}} - \theta_{\mathrm{ice,1}} \right)
     \end{equation}
     \begin{equation}
-      \theta_{\mathrm{init,2}} = K_{\mathrm{sl}}\theta_{\mathrm{s,1}}\
+      \theta_{\mathrm{init,2}} = K_{\mathrm{sl}}\theta_{\mathrm{sat,1}}\
     \end{equation}
-    \(\theta_{1}\)代表第一层土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{s,1}}\)为第一层土壤的饱和体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{ice,1}}\)为第一层土壤冰的体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{a}}\)代表风干后即\(\psi_{\mathrm{a}} = - 10^{7}\) mm时的土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(K_{\mathrm{sl}}\)为人为设定的参数，在CoLM中，按照~\citet{sl2014}文章中的测试，$K_{\mathrm{sl}}=0.8$。
+    \(\theta_{1}\)代表第一层土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{sat,1}}\)为第一层土壤的饱和体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{ice,1}}\)为第一层土壤冰的体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{a}}\)代表风干后即\(\psi_{\mathrm{a}} = - 10^{7}\) mm时的土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(K_{\mathrm{sl}}\)为人为设定的参数，在CoLM中，按照~\citet{sl2014}文章中的测试，$K_{\mathrm{sl}}=0.8$。
 
     水汽分子在土壤中的扩散系数\(D_{\mathrm{g}}\)则是通过计算水汽分子在空气中的扩散系数\(\ D_{0}\)和水汽穿过土壤基质的路径\(\tau\)得到的，计算如下：
     \begin{equation}
@@ -1474,7 +1474,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 
     SZ09方案与SL14方案同样都是基于土壤干燥层中水汽扩散的菲克定律得到。只是两者对于\(DSL\)的计算方式不同，SZ09方案中\(DSL\)的计算如下所示：
     \begin{equation}
-      DSL = \Delta z_{1} \times \frac{{\mathrm e}^{\left( 1 - \frac{\theta_{1}}{\theta_{\mathrm{s,1}}} \right)^{w_{\mathrm{sz}}}} - 1}{e - 1}\
+      DSL = \Delta z_{1} \times \frac{{\mathrm e}^{\left( 1 - \frac{\theta_{1}}{\theta_{\mathrm{sat,1}}} \right)^{w_{\mathrm{sz}}}} - 1}{e - 1}\
     \end{equation}
     其中，\(w_{\mathrm{sz}}\)为人为设定的参数，在CoLM中，按照~\citet{sz2009}中的测试，\(w_{\mathrm{sz}}\)设置为5。\(D_{\mathrm{g}}\)、\(\tau\)和\(D_{0\ }\)的计算与SL14方案相同。
 
@@ -1510,10 +1510,10 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
       m = 1-\frac{1}{n}
     \end{equation}
     \begin{equation}
-      \frac{\partial\varphi_{1}}{\partial\theta_{1}} = - \frac{m - 1}{\alpha m\left( \theta_{\mathrm{s,1}} - \theta_{\mathrm{r,1}} \right)}S_{1}^{- \frac{1}{m}}\left( 1 - S_{1}^{\frac{1}{m}} \right)^{- m}\
+      \frac{\partial\varphi_{1}}{\partial\theta_{1}} = - \frac{m - 1}{\alpha m\left( \theta_{\mathrm{sat,1}} - \theta_{\mathrm{r,1}} \right)}S_{1}^{- \frac{1}{m}}\left( 1 - S_{1}^{\frac{1}{m}} \right)^{- m}\
     \end{equation}
     \begin{equation}
-      \varepsilon_{1} = \theta_{\mathrm{s,1}} - \ \theta_{\mathrm{a}}\
+      \varepsilon_{1} = \theta_{\mathrm{sat,1}} - \ \theta_{\mathrm{a}}\
     \end{equation}
     \begin{equation}
       Bunsen = \ \frac{\rho_{\mathrm{liq}}}{\rho_{\mathrm{vap}}} = \frac{\rho_{\mathrm{liq}}}{\rho_{\mathrm{a}} \times q_{\mathrm{soil}}}\
@@ -1553,17 +1553,17 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
       模式选项 & 表达式 & 参考文献 \\
       \midrule
       1 &
-      \(\varepsilon_{1}^{2} \times {(\frac{\varepsilon_{1}}{\theta_{\mathrm{s,1}}})}^{3/B_{1}}\)
+      \(\varepsilon_{1}^{2} \times {(\frac{\varepsilon_{1}}{\theta_{\mathrm{sat,1}}})}^{3/B_{1}}\)
       & \citet{BBC1999} BBC \\
-      2 & \(0.66 \times \varepsilon_{1}{\times (\frac{\varepsilon_{1}}{\theta_{\mathrm{s,1}}})}\)
+      2 & \(0.66 \times \varepsilon_{1}{\times (\frac{\varepsilon_{1}}{\theta_{\mathrm{sat,1}}})}\)
       & \citet{moldrup2000} P\_WLR \\
-      3 & \(\varepsilon_{1}^{3/2} \times (\frac{\varepsilon_{1}}{\theta_{\mathrm{s,1}}})\)
+      3 & \(\varepsilon_{1}^{3/2} \times (\frac{\varepsilon_{1}}{\theta_{\mathrm{sat,1}}})\)
       & \citet{moldrup2000} MA\_WLR \\
-      4 & \(\varepsilon_{1}^{4/3} \times (\frac{\varepsilon_{1}}{\theta_{\mathrm{s,1}}})\)
+      4 & \(\varepsilon_{1}^{4/3} \times (\frac{\varepsilon_{1}}{\theta_{\mathrm{sat,1}}})\)
       & \citet{moldrup2000} MI\_WLR \\
-      5 & \(\varepsilon_{1}^{4/3} \times {(\frac{\varepsilon_{1}}{\theta_{\mathrm{s,1}}})}^{2}\)
+      5 & \(\varepsilon_{1}^{4/3} \times {(\frac{\varepsilon_{1}}{\theta_{\mathrm{sat,1}}})}^{2}\)
       & \citet{millington_permeability_1961} MQ \\
-      6 & \({\theta_{\mathrm{s,1}}}^{2} \times {(\frac{\varepsilon_{1}}{\theta_{\mathrm{s,1}}})}^{2 + \frac{\log\varepsilon_{100}^{\frac{1}{4}}}{\log\frac{\varepsilon_{100}}{\theta_{\mathrm{s,1}}}}}\) & \citet{POE2005} POE \\ \bottomrule
+      6 & \({\theta_{\mathrm{sat,1}}}^{2} \times {(\frac{\varepsilon_{1}}{\theta_{\mathrm{sat,1}}})}^{2 + \frac{\log\varepsilon_{100}^{\frac{1}{4}}}{\log\frac{\varepsilon_{100}}{\theta_{\mathrm{sat,1}}}}}\) & \citet{POE2005} POE \\ \bottomrule
     \end{tabular}
   \end{table}
 }

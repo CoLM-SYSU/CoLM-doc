@@ -23,43 +23,43 @@ A_{\mathrm{n,sha}}=\min \left(A_{\mathrm{c,sha}}, A_{\mathrm{j,sha}}, A_{\mathrm
 其中，下标${\mathrm {sun}}$和${\mathrm {sha}}$分别代表在阳叶和阴叶冠层尺度上的光合同化速率和呼吸速率。
 
 
-RuBP羧化酶限制主要指当羧化酶活性较低时，光合作用羧化速率受限，也称为Rubisco限制。由于Rubisco同时催化RuBP的羧化反应和氧化反应，羧化反应需要CO$_2$而氧化反应需要O$_2$，羧化反应和氧化反应同时进行。因此，C3植物的胞间CO$_2$分压$c_{\mathrm {i}}$和O$_2$分压$o_{\mathrm {i}}$的比例极大影响了Rubisco作为羧化酶的效率。基于这个原因，C3植物的Rubisco限制下的光合同化速率($A_{\mathrm {c}}$)可表达为Michaelis-Menten关于$c_{\mathrm {i}}$和$o_{\mathrm {i}}$的函数。此外，C4植物Rubisco限制下的光合羧化速率不再受胞间CO$_2$分压和O$_2$分压的影响，这是由于C4植物的光合作用途径的最初步骤是磷酸烯醇丙酮酸(PEP)的羧化，PEP羧化酶的活性很高,所以转运到维管束鞘细胞中的CO$_2$的浓度很高,大约是空气中的十倍。C4植物的卡尔文循环在在维管束鞘细胞进行，CO$_2$分压和O$_2$分压的变化对羧化速率的影响较小，因此，Rubisco限制下的光合同化速率在阳叶和阴叶冠层尺度($A_{\mathrm{c,sun}}$和$A_{\mathrm{c,sha}}$)下可表示为胞间CO$_2$分压($c_{\mathrm{i,sun}}$和$c_{\mathrm{i,sha}}$)，大气分压($o_{\mathrm{i}}$)和最大羧化速率的函数($V_{\mathrm{c \max,sun}}$和$V_{\mathrm{c \max,sha}}$)：
+RuBP羧化酶限制主要指当羧化酶活性较低时，光合作用羧化速率受限，也称为Rubisco限制。由于Rubisco同时催化RuBP的羧化反应和氧化反应，羧化反应需要CO$_2$而氧化反应需要O$_2$，羧化反应和氧化反应同时进行。因此，C3植物的胞间CO$_2$分压$c_{\mathrm {i}}$和O$_2$分压$o_{\mathrm {i}}$的比例极大影响了Rubisco作为羧化酶的效率。基于这个原因，C3植物的Rubisco限制下的光合同化速率($A_{\mathrm {c}}$)可表达为Michaelis-Menten关于$c_{\mathrm {i}}$和$o_{\mathrm {i}}$的函数。此外，C4植物Rubisco限制下的光合羧化速率不再受胞间CO$_2$分压和O$_2$分压的影响，这是由于C4植物的光合作用途径的最初步骤是磷酸烯醇丙酮酸(PEP)的羧化，PEP羧化酶的活性很高,所以转运到维管束鞘细胞中的CO$_2$的浓度很高,大约是空气中的十倍。C4植物的卡尔文循环在在维管束鞘细胞进行，CO$_2$分压和O$_2$分压的变化对羧化速率的影响较小，因此，Rubisco限制下的光合同化速率在阳叶和阴叶冠层尺度($A_{\mathrm{c,sun}}$和$A_{\mathrm{c,sha}}$)下可表示为胞间CO$_2$分压($c_{\mathrm{i,sun}}$和$c_{\mathrm{i,sha}}$)，大气分压($o_{\mathrm{i}}$)和最大羧化速率的函数($V_{\mathrm{cmax,sun}}$和$V_{\mathrm{cmax,sha}}$)：
 \begin{equation}\label{A_C1sun}
 A_{\mathrm{c,sun}}=\begin{cases}
-\frac{V_{\mathrm{c \max,sun}}\left(c_{\mathrm{i,sun}}-\Gamma_{\mathrm{sun}}\right)}{c_{\mathrm{i,sun}}+K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)}
+\frac{V_{\mathrm{cmax,sun}}\left(c_{\mathrm{i,sun}}-\Gamma_{\mathrm{sun}}\right)}{c_{\mathrm{i,sun}}+K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)}
      & \text{for C3 plants} \\
-V_{\mathrm{c \max,sun }} & \text{for C4 plants}
+V_{\mathrm{cmax,sun }} & \text{for C4 plants}
 \end{cases}
 \end{equation}
 \begin{equation}\label{A_C1sha}
 A_{\mathrm{c,sha}}=\begin{cases}
-\frac{V_{\mathrm{c \max,sha}}\left(c_{\mathrm{i,sha}}-\Gamma_{\mathrm{sha}}\right)}{c_{\mathrm{i,sha}}+K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)}
+\frac{V_{\mathrm{cmax,sha}}\left(c_{\mathrm{i,sha}}-\Gamma_{\mathrm{sha}}\right)}{c_{\mathrm{i,sha}}+K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)}
      & \text{for C3 plants} \\
-V_{\mathrm{c \max,sha }} & \text{for C4 plants}
+V_{\mathrm{cmax,sha }} & \text{for C4 plants}
 \end{cases}
 \end{equation}
 
-其中，下标${\mathrm {sun}}$和${\mathrm {sha}}$分别代表在阳叶和阴叶冠层尺度上的相应变量，$\Gamma$是CO$_2$补偿点，单位为：Pa，$K_{\mathrm {c}}$和$K_{\mathrm {o}}$分别是对于CO$_2$和O$_2$的Michaelis--Menten常数(Pa)，$V_{\mathrm{c \max,sun}}$和$V_{\mathrm{c \max,sha}}$代表阳叶和阴叶冠层尺度的最大羧化速率，它是根据叶面积指数从叶片尺度上升到冠层尺度的光合参数。
+其中，下标${\mathrm {sun}}$和${\mathrm {sha}}$分别代表在阳叶和阴叶冠层尺度上的相应变量，$\Gamma$是CO$_2$补偿点，单位为：Pa，$K_{\mathrm {c}}$和$K_{\mathrm {o}}$分别是对于CO$_2$和O$_2$的Michaelis--Menten常数(Pa)，$V_{\mathrm{cmax,sun}}$和$V_{\mathrm{cmax,sha}}$代表阳叶和阴叶冠层尺度的最大羧化速率，它是根据叶面积指数从叶片尺度上升到冠层尺度的光合参数。
 
 C3植物：
 \begin{equation}\label{V_cmaxsun_a}
-V_{\mathrm{c \max,sun }}=\frac{V_{\mathrm{c \max 25}} \cdot 2.1^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{1+{\mathrm e}^{s_{\mathrm{1}}\left(T_{\mathrm{{leaf }}}-T_{\mathrm{{high }}}\right)}} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
+V_{\mathrm{cmax,sun }}=\frac{V_{\mathrm{cmax 25}} \cdot 2.1^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{1+{\mathrm e}^{s_{\mathrm{1}}\left(T_{\mathrm{{leaf }}}-T_{\mathrm{{high }}}\right)}} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
 \end{equation}
 \begin{equation}\label{V_cmaxsha_a}
-V_{\mathrm{c \max,sha }}=\frac{V_{\mathrm{c \max 25}} \cdot 2.1^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{1+{\mathrm e}^{s_{\mathrm{1}}\left(T_{\mathrm{{leaf }}}-T_{\mathrm{{high }}}\right)}} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{v,sha}}
+V_{\mathrm{cmax,sha }}=\frac{V_{\mathrm{cmax 25}} \cdot 2.1^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{1+{\mathrm e}^{s_{\mathrm{1}}\left(T_{\mathrm{{leaf }}}-T_{\mathrm{{high }}}\right)}} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{v,sha}}
 \end{equation}
 
 C4植物：
 \begin{equation}\label{V_cmaxsun_b}
-V_{\mathrm{c \max,sun }}= \frac{V_{\mathrm{c \max 25}} \cdot 2.1^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{\left(1+{\mathrm e}^{s_{\mathrm{2}}\left(T_{\mathrm{{low }}}
+V_{\mathrm{cmax,sun }}= \frac{V_{\mathrm{cmax 25}} \cdot 2.1^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{\left(1+{\mathrm e}^{s_{\mathrm{2}}\left(T_{\mathrm{{low }}}
  - T_{\mathrm{{leaf }}}\right)}\right)\left(1+{\mathrm e}^{s_{\mathrm{1}}\left(T_{\mathrm{{leaf }}}-T_{\mathrm{h i g h}}\right)}\right)} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
 \end{equation}
 \begin{equation}\label{V_cmaxsha_b}
-V_{\mathrm{c \max,sha }}= \frac{V_{\mathrm{c \max 25}} \cdot 2.1^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{\left(1+{\mathrm e}^{s_{\mathrm{2}}\left(T_{\mathrm{{low }}}
+V_{\mathrm{cmax,sha }}= \frac{V_{\mathrm{cmax 25}} \cdot 2.1^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{\left(1+{\mathrm e}^{s_{\mathrm{2}}\left(T_{\mathrm{{low }}}
  - T_{\mathrm{{leaf }}}\right)}\right)\left(1+{\mathrm e}^{s_{\mathrm{1}}\left(T_{\mathrm{{leaf }}}-T_{\mathrm{h i g h}}\right)}\right)} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{v,sha}}
 \end{equation}
-不同植被的羧化能力存在差异，我们用25 \textcelsius 下的最大羧化速率 $V_{\mathrm{c \max 25}}$ 来刻画植被的光合羧化能力，单位: \unit{mol.m^{-2}.s^{-1}}；Rubisco羧化酶的活性随温度显著变化，CoLM光合作用模块针对C3和C4植物制定了两套温度响应函数。$T_{\mathrm{op}}$是参考温度298 K；$s_1$和$s_2$分别为高温和低温的温度敏感性参数；$T_{\mathrm{low}}$和$T_{\mathrm{high}}$分别为羧化速率的低温和高温响应参数，
-取值根据植被类型而变化，范围分别为: 278$\sim$288 K，303$\sim$313 K；$T_{\mathrm{leaf}}$是叶片温度，通过对叶片能量平衡方程进行牛顿迭代方法而求解得到，详见章节~\ref{植被叶片温度计算}，$\beta_{\mathrm{sun}}$和$\beta_{\mathrm{sha}}$是阳叶和阴叶的水分胁迫因子，水分胁迫因子的取值范围0$\sim$1，详见章节~\ref{气孔导度的水分胁迫}。当植被水力模式开启时，需要最大气孔导度作为植被水力模式输入，在水分胁迫因子为1的条件下，光合气孔耦合模型可得到最大气孔导度。另外，$L$代表叶片到冠层的尺度转换系数，下标sun和sha分别代表阳叶和阴叶，$v$代表参数$V_{\mathrm{c \max}}$的转换系数，它们均是叶面积指数的函数：
+不同植被的羧化能力存在差异，我们用25 \textcelsius 下的最大羧化速率 $V_{\mathrm{cmax 25}}$ 来刻画植被的光合羧化能力，单位: \unit{mol.m^{-2}.s^{-1}}；Rubisco羧化酶的活性随温度显著变化，CoLM光合作用模块针对C3和C4植物制定了两套温度响应函数。$T_{\mathrm{op}}$是参考温度298 K；$s_1$和$s_2$分别为高温和低温的温度敏感性参数；$T_{\mathrm{low}}$和$T_{\mathrm{high}}$分别为羧化速率的低温和高温响应参数，
+取值根据植被类型而变化，范围分别为: 278$\sim$288 K，303$\sim$313 K；$T_{\mathrm{leaf}}$是叶片温度，通过对叶片能量平衡方程进行牛顿迭代方法而求解得到，详见章节~\ref{植被叶片温度计算}，$\beta_{\mathrm{sun}}$和$\beta_{\mathrm{sha}}$是阳叶和阴叶的水分胁迫因子，水分胁迫因子的取值范围0$\sim$1，详见章节~\ref{气孔导度的水分胁迫}。当植被水力模式开启时，需要最大气孔导度作为植被水力模式输入，在水分胁迫因子为1的条件下，光合气孔耦合模型可得到最大气孔导度。另外，$L$代表叶片到冠层的尺度转换系数，下标sun和sha分别代表阳叶和阴叶，$v$代表参数$V_{\mathrm{cmax}}$的转换系数，它们均是叶面积指数的函数：
 %
 \begin{equation}\label{L_vsun}
 L_{\mathrm{v,sun}}=\frac{1-{\mathrm e}^{-\left(0.11+K_{\mathrm{b}}\right) \cdot {\rm LAI}}}{0.11+K_{\mathrm{b}}}
@@ -69,7 +69,7 @@ L_{\mathrm{v,sha}}=\frac{1-{\mathrm e}^{-0.11\cdot {\rm LAI}}}{0.11} - L_{\mathr
 \end{equation}
 $K_{\mathrm{b}}$代表直射光的消光系数。
 
-当光照不足时，RuBP再生速率下降，成为制约光合作用开尔文循环的最主要因素。因此，RuBP再生速率限制下的羧化速率在阳叶和阴叶冠层尺度下 ($A_{\mathrm{j,sun}}$和$A_{\mathrm{j,sha}}$) 可表达为阳叶和阴叶的有效光合辐射 ($PAR_{\mathrm{sun}}$和$PAR_{\mathrm{sha}}$) 的函数：
+当光照不足时，RuBP再生速率下降，成为制约光合作用开尔文循环的最主要因素。因此，RuBP再生速率限制下的羧化速率在阳叶和阴叶冠层尺度下 ($A_{\mathrm{j,sun}}$和$A_{\mathrm{j,sha}}$) 可表达为阳叶和阴叶的有效光合辐射 (${\rm PAR}_{\mathrm{sun}}$和${\rm PAR}_{\mathrm{sha}}$) 的函数：
 \begin{equation}\label{A_J1sun}
 A_{\mathrm{j,sun}}=\begin{cases}\frac{J_{\mathrm{x,sun}}\cdot\left(c_{\mathrm{i,sun}}-\Gamma\right)}{c_{\mathrm{i,sun}}+2\Gamma}
      & \text{for C3 plants} \\
@@ -83,23 +83,23 @@ J_{\mathrm{x,sha}} & \text{for C4 plants}
 \end{cases}
 \end{equation}
 
-$J_{\mathrm{x,sun}}$和$J_{\mathrm{x,sha}}$是阳叶和阴叶冠层尺度的电子传输速率，是有效光合辐射($PAR_{\mathrm{sun}}$和$PAR_{\mathrm{sha}}$)的函数，并受叶片温度 ($T_{\mathrm{leaf}}$)和水分胁迫因子($\beta_{\mathrm{sun}}$和$\beta_{\mathrm{sha}}$)的调节：
+$J_{\mathrm{x,sun}}$和$J_{\mathrm{x,sha}}$是阳叶和阴叶冠层尺度的电子传输速率，是有效光合辐射(${\rm PAR}_{\mathrm{sun}}$和${\rm PAR}_{\mathrm{sha}}$)的函数，并受叶片温度 ($T_{\mathrm{leaf}}$)和水分胁迫因子($\beta_{\mathrm{sun}}$和$\beta_{\mathrm{sha}}$)的调节：
 \begin{equation}
 \begin{aligned}
-J_{\mathrm{x,sun}}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot PAR_{\mathrm{sun}}\right), \\
-  J_{\mathrm{x25}} \cdot \exp\left(\frac{37000\left(T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}\right)}{T_{\mathrm{o p}} \cdot T_{\mathrm{{leaf }}} \cdot R } \right ) \cdot\frac{1+\exp\left(\frac{710 \cdot T_{\mathrm{o p}}-220000} {R \cdot T_{\mathrm{o p}}}\right)}  {1+\exp\left(\frac{710 \cdot T_{\mathrm{leaf}}-220000} {R \cdot T_{\mathrm{{leaf}}}}\right)} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{j,sun}}  \end{array} \right)
+J_{\mathrm{x,sun}}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot {\rm PAR}_{\mathrm{sun}}\right), \\
+  J_{\mathrm{x25}} \cdot \exp\left(\frac{37000\left(T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}\right)}{T_{\mathrm{o p}} \cdot T_{\mathrm{{leaf }}} \cdot {\rm R} } \right ) \cdot\frac{1+\exp\left(\frac{710 \cdot T_{\mathrm{o p}}-220000} {{\rm R} \cdot T_{\mathrm{o p}}}\right)}  {1+\exp\left(\frac{710 \cdot T_{\mathrm{leaf}}-220000} {{\rm R} \cdot T_{\mathrm{{leaf}}}}\right)} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{j,sun}}  \end{array} \right)
 \end{aligned}
 \end{equation}
 \begin{equation}
 \begin{aligned}
-J_{\mathrm{x,sha}}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot PAR_{\mathrm{sha}}\right), \\
-  J_{\mathrm{x25}} \cdot \exp\left(\frac{37000\left(T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}\right)}{T_{\mathrm{o p}} \cdot T_{\mathrm{{leaf }}} \cdot R } \right ) \cdot\frac{1+\exp\left(\frac{710 \cdot T_{\mathrm{o p}}-220000} {R \cdot T_{\mathrm{o p}}}\right)}  {1+\exp\left(\frac{710 \cdot T_{\mathrm{leaf}}-220000} {R \cdot T_{\mathrm{{leaf}}}}\right)} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{j,sha}}  \end{array} \right)
+J_{\mathrm{x,sha}}=\min \left(\begin{array}{c} \alpha\left(4.6 \times 10^{-6} \cdot {\rm PAR}_{\mathrm{sha}}\right), \\
+  J_{\mathrm{x25}} \cdot \exp\left(\frac{37000\left(T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}\right)}{T_{\mathrm{o p}} \cdot T_{\mathrm{{leaf }}} \cdot {\rm R} } \right ) \cdot\frac{1+\exp\left(\frac{710 \cdot T_{\mathrm{o p}}-220000} {{\rm R} \cdot T_{\mathrm{o p}}}\right)}  {1+\exp\left(\frac{710 \cdot T_{\mathrm{leaf}}-220000} {{\rm R} \cdot T_{\mathrm{{leaf}}}}\right)} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{j,sha}}  \end{array} \right)
 \end{aligned}
 \end{equation}
 其中$\alpha$是量子效率 (C3植被设置为0.08，C4植被为0.05，单位为\unit{mol.CO_2.mol^{-1}.photon})；${\mathrm {PAR}}$是有效光合辐射，单位: \unit{W.m^{-2}}，详细计算见章节~\ref{短波吸收辐射通量}；
 \num{4.6e-6} 代表单位从 \unit{W.m^{-2}} 转换到 \unit{mol.photon.m^{-2}} 的转换系数；
-$J_{\mathrm{x25}}$是25 \textcelsius 下的最大电子传输速率，单位: \unit{mol.m^{-2}.s^{-1}}，$J_{\mathrm{x25}}=1.97 \cdot V_{\mathrm{c \max 25}}$；
-$R$是通用气体常数，$R=$ \qty{8.3145}{mol.m^{-2}.s^{-1}}。$L_{\mathrm{j,sun}}$和$L_{\mathrm{j,sha}}$代表电子传输速率的尺度转换系数(叶片到冠层)：
+$J_{\mathrm{x25}}$是25 \textcelsius 下的最大电子传输速率，单位: \unit{mol.m^{-2}.s^{-1}}，$J_{\mathrm{x25}}=1.97 \cdot V_{\mathrm{cmax 25}}$；
+R是通用气体常数，${\rm R}=$ \qty{8.3145}{mol.m^{-2}.s^{-1}}。$L_{\mathrm{j,sun}}$和$L_{\mathrm{j,sha}}$代表电子传输速率的尺度转换系数(叶片到冠层)：
 %
 \begin{equation}\label{L_jsun}
 L_{\mathrm{j,sun}}=\frac{1-{\mathrm e}^{-\left(K_{\mathrm{d}}+K_{\mathrm{b}}\right) \cdot {\rm LAI}}}{K_{\mathrm{d}}+K_{\mathrm{b}}}
@@ -109,29 +109,29 @@ L_{\mathrm{j,sha}}=\frac{1-{\mathrm e}^{-K_{\mathrm{d}}\cdot {\rm LAI}}}{K_{\mat
 \end{equation}
 $K_{\mathrm{d}}$代表散射光的消光系数。
 
-第三，光合作用速率还受到卡尔文循环中蔗糖和淀粉的合成速率限制($A_{\mathrm{p,sun}}$和$A_{\mathrm{p,sha}}$)，在阳叶和阴叶冠层尺度上，用冠层25 \textcelsius 最大羧化速率 ($V_{\mathrm{c \max25}}$) 进行参数化，并且描述其受叶温和水分胁迫因子的调控：
+第三，光合作用速率还受到卡尔文循环中蔗糖和淀粉的合成速率限制($A_{\mathrm{p,sun}}$和$A_{\mathrm{p,sha}}$)，在阳叶和阴叶冠层尺度上，用冠层25 \textcelsius 最大羧化速率 ($V_{\mathrm{cmax25}}$) 进行参数化，并且描述其受叶温和水分胁迫因子的调控：
 
 C3植物：
 \begin{equation}\label{A_e_a_sun}
-A_{\mathrm{p,sun}}=\frac{V_{\mathrm{c \max 25}}}{2} \cdot \frac{1.8^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{1+{\mathrm e}^{s_{\mathrm{2}}\left(T_{\mathrm{{low }}}-T_{\mathrm{{leaf }}}\right)}} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
+A_{\mathrm{p,sun}}=\frac{V_{\mathrm{cmax 25}}}{2} \cdot \frac{1.8^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{1+{\mathrm e}^{s_{\mathrm{2}}\left(T_{\mathrm{{low }}}-T_{\mathrm{{leaf }}}\right)}} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
 \end{equation}
 \begin{equation}\label{A_e_a_sha}
-A_{\mathrm{p,sha}}=\frac{V_{\mathrm{c \max 25}}}{2} \cdot \frac{1.8^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{1+{\mathrm e}^{s_{\mathrm{2}}\left(T_{\mathrm{{low }}}-T_{\mathrm{{leaf }}}\right)}} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{v,sha}}
+A_{\mathrm{p,sha}}=\frac{V_{\mathrm{cmax 25}}}{2} \cdot \frac{1.8^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{o p}}}{10}}}{1+{\mathrm e}^{s_{\mathrm{2}}\left(T_{\mathrm{{low }}}-T_{\mathrm{{leaf }}}\right)}} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{v,sha}}
 \end{equation}
 
 C4植物：
 \begin{equation}\label{A_e_b_sun}
-A_{\mathrm{p,sun}}=a_{\mathrm{p}} \cdot V_{\mathrm{c \max 25}} \cdot 1.8^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{op}}}{10}} \cdot c_{\mathrm{i,sun}}/p_{\mathrm{s}} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
+A_{\mathrm{p,sun}}=a_{\mathrm{p}} \cdot V_{\mathrm{cmax 25}} \cdot 1.8^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{op}}}{10}} \cdot c_{\mathrm{i,sun}}/p_{\mathrm{s}} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
 \end{equation}
 \begin{equation}\label{A_e_b_sha}
-A_{\mathrm{p,sha}}=a_{\mathrm{p}} \cdot V_{\mathrm{c \max 25}} \cdot 1.8^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{op}}}{10}} \cdot c_{\mathrm{i,sha}}/p_{\mathrm{s}} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{v,sha}}
+A_{\mathrm{p,sha}}=a_{\mathrm{p}} \cdot V_{\mathrm{cmax 25}} \cdot 1.8^{\frac{T_{\mathrm{{leaf }}}-T_{\mathrm{op}}}{10}} \cdot c_{\mathrm{i,sha}}/p_{\mathrm{s}} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{v,sha}}
 \end{equation}
-$a_{\mathrm{p}}$是产物合成速率的无量纲经验系数，取值$2\times10^4$，$a_{\mathrm{p}}/p_{\mathrm{s}}\approx 0.2$ Pa$^{-1}$。三方面限制下的光合同化速率共用同一套温度响应常数 ($T_{\mathrm{op}}$，$T_{\mathrm{low}}$和$T_{\mathrm{high}}$)以及温度敏感性参数($s_1$和$s_2$)
+$a_{\mathrm{p}}$是产物合成速率的无量纲经验系数，取值$2\times10^4$，$a_{\mathrm{p}}/p_{\mathrm{s}}\approx 0.2$ Pa$^{-1}$。三方面限制下的光合同化速率共用同一套温度响应常数 ($T_{\mathrm{op}}$，$T_{\mathrm{low}}$和$T_{\mathrm{high}}$)以及温度敏感性参数($s_1$和$s_2$)。
 
 
-阳叶和阴叶冠层尺度的呼吸速率($R_{\mathrm{d,sun}}$和$R_{\mathrm{d,sha}}$)对温度的响应曲线可表示为$V_{\mathrm{c \max25}}$的函数：
+阳叶和阴叶冠层尺度的呼吸速率($R_{\mathrm{d,sun}}$和$R_{\mathrm{d,sha}}$)对温度的响应曲线可表示为$V_{\mathrm{cmax25}}$的函数：
 \begin{equation}\label{R_d1_sun}
-R_{\mathrm{d,sun}}=r_{\mathrm{{base }}} \cdot V_{\mathrm{cmax 25}} \cdot \frac{2.0^{\frac{T_{\mathrm{leaf}}-T_{\mathrm{op}}}{10}}}{1+{\mathrm e}^{1.3 \cdot\left(T_{\mathrm{leaf}}-T_{\mathrm{d m}}\right)}} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
+R_{\mathrm{d,sun}}=\tau_{\mathrm{{base }}} \cdot V_{\mathrm{cmax 25}} \cdot \frac{2.0^{\frac{T_{\mathrm{leaf}}-T_{\mathrm{op}}}{10}}}{1+{\mathrm e}^{1.3 \cdot\left(T_{\mathrm{leaf}}-T_{\mathrm{d m}}\right)}} \cdot \beta_{\mathrm{sun}} \cdot L_{\mathrm{v,sun}}
 \end{equation}
 \begin{equation}\label{R_d1_sha}
 R_{\mathrm{d,sha}}=\tau_{\mathrm{{base }}} \cdot V_{\mathrm{cmax 25}} \cdot \frac{2.0^{\frac{T_{\mathrm{leaf}}-T_{\mathrm{op}}}{10}}}{1+{\mathrm e}^{1.3 \cdot\left(T_{\mathrm{leaf}}-T_{\mathrm{d m}}\right)}} \cdot \beta_{\mathrm{sha}} \cdot L_{\mathrm{v,sha}}
@@ -140,9 +140,10 @@ R_{\mathrm{d,sha}}=\tau_{\mathrm{{base }}} \cdot V_{\mathrm{cmax 25}} \cdot \fra
 
 在方程\eqref{An1sun}和\eqref{An1sha}求解最小值的计算中，我们将三值最小问题的求解拆分为两个二值最小问题的求解：
 \begin{equation}\label{min_Ac_Aj_Ae}
-\min \left(A_{\mathrm{c}}, A_{\mathrm{j}}, A_{\mathrm{p}}\right)=\min \left(\min \left(A_{\mathrm{c}}, A_{\mathrm{j}}\right), A_{\mathrm{p}}\right)
+\min \left(A_{\mathrm{c}}, A_{\mathrm{j}}, A_{\mathrm{p}}\right)
+= \min \left[\min \left(A_{\mathrm{c}}, A_{\mathrm{j}}\right), A_{\mathrm{p}}\right]
 \end{equation}
-引入形状参数$\theta$，构造一元二次方程，将求解最小值问题转换成求一元二次方程较小根的问题，以此避免模拟中不同光合限制之间过渡转换时的光合同化速率突变 \citep{collatz1991,collatz1992}：
+引入形状参数$\theta$，构造一元二次方程，将求解最小值问题转换成求一元二次方程较小根的问题，以此避免模拟中不同光合限制之间过渡转换时的光合同化速率突变~\citep{collatz1991,collatz1992}：
 \begin{equation}\label{theta_cj}
 \theta_{\mathrm{c j}} \cdot A_{\mathrm{i1}}^{2}-\left(A_{\mathrm{c}}+A_{\mathrm{j}}\right) A_{\mathrm{i1}}+A_{\mathrm{c}} A_{\mathrm{j}}=0
 \end{equation}
@@ -157,8 +158,8 @@ R_{\mathrm{d,sha}}=\tau_{\mathrm{{base }}} \cdot V_{\mathrm{cmax 25}} \cdot \fra
 
 \subsection{气体扩散方程}
 
-CoLM将CO$_2$和水汽的气体扩散问题类比于电路问题进行建模，利用叶绿体细胞间、叶表和冠层大气的$\rm CO_2$浓度和水汽浓度梯度，来刻画环境对植被碳水通量的驱动力~\eqref{A_n2_sun}--~\eqref{ea_ei_sha}，如图~\ref{fig:叶片气孔光合作用导度模型示意图}。在阳叶和阴叶冠层尺度上，分别存在关于$\rm CO_2$和水汽的气体扩散方程:
-
+CoLM将CO$_2$和水汽的气体扩散问题类比于电路问题进行建模，利用叶绿体细胞间、叶表和冠层大气的$\rm CO_2$浓度和水汽浓度梯度，来刻画环境对植被碳水通量的驱动力~\eqref{A_n2_sun}--~\eqref{ea_ei_sha}，如图~\ref{fig:叶片气孔光合作用导度模型示意图} 所示。
+%
 {
 \begin{figure}[htbp]
 \centering
@@ -168,6 +169,7 @@ CoLM将CO$_2$和水汽的气体扩散问题类比于电路问题进行建模，�
 \end{figure}
 }
 
+在阳叶和阴叶冠层尺度上，分别存在关于$\rm CO_2$和水汽的气体扩散方程:
 \begin{equation}\label{A_n2_sun}
 A_{\mathrm{n,sun}}=\left(\frac{c_{\mathrm{a}}-c_{\mathrm{i,sun}}}{p_{\mathrm{s}}}\right) /\left(\frac{1.37}{G_{\mathrm{b}}} +\frac{1.6}{G_{\mathrm{s,sun}}}\right)=\left(\frac{c_{\mathrm{s,sun}}-c_{\mathrm{i,sun}}}{p_{\mathrm{s}}}\right) /\left(\frac{1.6}{G_{\mathrm{s,sun}}}\right)
 \end{equation}
@@ -214,23 +216,23 @@ F\left(G_{\mathrm{s}},c_{\mathrm{i}}\right)=1.6p_{\mathrm{s}}A_{\mathrm{n}}\left
     \frac{\mathrm{d}c_{\mathrm{i}}}{\mathrm{d}G_{\mathrm{s}}}=\frac{c_{\mathrm{a}}-c_{\mathrm{i}}}{1.6p_{\mathrm{s}}\frac{\mathrm{d}A_{\mathrm{n}}}{\mathrm{d}c_{\mathrm{i}}}+G_{\mathrm{s}}}=\frac{c_{\mathrm{a}}-c_{\mathrm{i}}}{1.6p_{\mathrm{s}}\frac{\mathrm{d}A_{\mathrm{n}}}{\mathrm{d}c_{\mathrm{i}}}+1.6p_{\mathrm{s}}\frac{A_{\mathrm{n}}}{c_{\mathrm{a}}-c_{\mathrm{i}}}}
 \end{equation}
 
-把~\eqref{dcidgs}代入~\eqref{dAdgs1}得到:
+把~\eqref{dcidgs} 代入~\eqref{dAdgs1} 得到:
 \begin{equation}\label{dAdgs2}
     \frac{\mathrm{d}A_{\mathrm{n}}}{\mathrm{d}G_{\mathrm{s}}}=\frac{\left(c_{\mathrm{a}}-c_{\mathrm{i}}\right)^2}{1.6p_{\mathrm{s}}\left(c_{\mathrm{a}}-c_{\mathrm{i}}+\frac{A_{\mathrm{n}}}{\frac{\mathrm{d}A_{\mathrm{n}}}{\mathrm{d}c_{\mathrm{i}}}}\right)}
 \end{equation}
 
-把~\eqref{dAdgs2}和~\eqref{dEdgs}代入~\eqref{lambda_sun}和~\eqref{lambda_sha}，得到边际水分利用成本的计算公式：
+把~\eqref{dAdgs2} 和~\eqref{dEdgs} 代入~\eqref{lambda_sun} 和~\eqref{lambda_sha}，得到边际水分利用成本的计算公式：
 \begin{equation}\label{lambda}
 \lambda=\frac{1.6\left(e_{\mathrm{i}}-e_{\mathrm{a}}\right)\left(c_{\mathrm{a}}-c_{\mathrm{i}}+\frac{A_{\mathrm{n}}}{\frac{\mathrm{d}A_{\mathrm{n}}}{\mathrm{d}c_{\mathrm{i}}}}\right)}{\left(c_{\mathrm{a}}-c_{\mathrm{i}}\right)^2}
 \end{equation}
 
-假设光合同化速率受只受Rubisco酶和RuBP再生速率的限制，且忽略叶呼吸速率$R_{\mathrm{d}}$即$A_{\mathrm{n}}=\mathrm{min}\left(A_{\mathrm{c}},A_{\mathrm{j}}\right)$, 公式~\eqref{lambda}中关于光合同化速率这一项 $\frac{A_{\mathrm{n}}}{\frac{\mathrm{d}A_{\mathrm{n}}}{\mathrm{d}c_{\mathrm{i}}}}$可以通过求~\eqref{A_C1sun}, ~\eqref{A_C1sha}, ~\eqref{A_J1sun}和~\eqref{A_J1sha}关于$c_{\mathrm{i}}$的导数得到：
-
+假设光合同化速率受只受Rubisco酶和RuBP再生速率的限制，且忽略叶呼吸速率$R_{\mathrm{d}}$即$A_{\mathrm{n}}=\mathrm{min}\left(A_{\mathrm{c}},A_{\mathrm{j}}\right)$, 公式~\eqref{lambda} 中关于光合同化速率这一项 $\frac{A_{\mathrm{n}}}{\frac{\mathrm{d}A_{\mathrm{n}}}{\mathrm{d}c_{\mathrm{i}}}}$可以通过求~\eqref{A_C1sun}、\eqref{A_C1sha}、\eqref{A_J1sun} 和~\eqref{A_J1sha} 关于$c_{\mathrm{i}}$的导数得到：
+%
 \begin{equation}\label{AdAdci}
     \frac{A_{\mathrm{n}}}{\frac{\mathrm{d}A_{\mathrm{n}}}{\mathrm{d}c_{\mathrm{i}}}}=\min\left\{\frac{\left[c_{\mathrm{i}}+K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)\right]\left(c_{\mathrm{i}}-\Gamma^*\right)}{\Gamma^*+K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)},\frac{\left(c_{\mathrm{i}}+2\Gamma^*\right)\left(c_{\mathrm{i}}-\Gamma^*\right)}{3\Gamma^*}\right\}
 \end{equation}
 
-将~\eqref{AdAdci}代入边际水分利用成本计算公式~\eqref{lambda}进一步展开:
+将~\eqref{AdAdci} 代入边际水分利用成本计算公式~\eqref{lambda} 进一步展开:
 \begin{equation}\label{cieqn}
 \begin{cases}
     \left(c_{\mathrm{a}}-c_{\mathrm{i}}\right)^2-\frac{1.6\left(e_{\mathrm{i}}-e_{\mathrm{a}}\right)}{\lambda}\left(\frac{\left(c_{\mathrm{i}}+K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)\right)\left(c_i-\Gamma^*\right)}{\Gamma^*+K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)}+c_{\mathrm{a}}-c_{\mathrm{i}}\right)=0 & \text{Rubisco限制}  \\
@@ -270,8 +272,7 @@ Ball-Berry模型构建气孔导度和光合同化速率、叶表水汽压、叶�
 \frac{1}{r_{\mathrm{s,sha}}}=G_{\mathrm{s,sha}}=m \frac{A_{\mathrm{n,sha}}}{c_{\mathrm{s,sha}}} \frac{e_{\mathrm{s,sha}}}{e_{\mathrm{i}}} p_{\mathrm{s}}+b\beta_{\mathrm{sha}}
 \end{equation}
 $r_{\mathrm{s,sun}}$和$r_{\mathrm{s,sha}}$代表阳叶和阴叶冠层尺度的气孔阻抗，单位: \unit{s.m^{-1}}，是气孔导度$G_{\mathrm{s,sun}}$和$G_{\mathrm{s,sha}}$的倒数；$m$是无量纲经验参数；$b$是最小气孔导度，
-单位: \unit{mol.CO_2.m^{-2}.s^{-1}}，$m$和$b$是观测拟合的经验系数；$e_{\mathrm {i}}$是饱和水蒸气压，
-是气温的函数，单位: Pa；$p_{\mathrm {s}}$是大气压强，单位: Pa，$\beta_{\mathrm{sun}}$和$\beta_{\mathrm{sha}}$是阳叶和阴叶的水分胁迫因子，取值范围0$\sim$1。相比Ball-Berry模型不考虑水分胁迫的影响，观测研究发现，截距相比斜率来说和土壤水势的统计关系更加密切~\citep{Misson2004,Medlyn2011}，因此，CoLM气孔导度模型在截距部分引入水分胁迫因子。
+单位: \unit{mol.CO_2.m^{-2}.s^{-1}}，$m$和$b$是观测拟合的经验系数；$e_{\mathrm {i}}$是饱和水蒸气压，是气温的函数，单位: Pa；$p_{\mathrm {s}}$是大气压强，单位: Pa，$\beta_{\mathrm{sun}}$和$\beta_{\mathrm{sha}}$是阳叶和阴叶的水分胁迫因子，取值范围0$\sim$1。相比Ball-Berry模型不考虑水分胁迫的影响，观测研究发现，截距相比斜率来说和土壤水势的统计关系更加密切~\citep{Misson2004,Medlyn2011}，因此，CoLM气孔导度模型在截距部分引入水分胁迫因子。
 
 
 因为气孔控制植被大气气体交换的同时受植被自身的光合能力和土壤水分亏缺的影响，需要联立光合作用模块方程、气体扩散方程，气孔导度模型和土壤水分胁迫方案，在阳叶和阴叶上分别求解冠层尺度气孔导度。
@@ -367,7 +368,7 @@ c_{\mathrm{i,sun,qd},n} =c_{\mathrm{i,sun,qd},l} \\
 c_{\mathrm{i,sha,qd},n} =c_{\mathrm{i,sha,qd},l} \\
   -a_{\mathrm{\mathrm{sha}}}\cdot f^2_{2}(c_{\mathrm{i,sha,qd},l}) - b_{\mathrm{\mathrm{sha}}}\cdot f_{2}(c_{\mathrm{i,sha,qd},l})
 \end{equation}
-
+%
 其中$a_{\mathrm{sun}}$，$a_{\mathrm{sha}}$，$b_{\mathrm{sun}}$和$b_{\mathrm{sha}}$分别由前两次和前三次迭代结果递推而得：
 \begin{equation}\label{iterbsun}
 b_{\mathrm{sun}} = \frac{\Delta c_{\mathrm{i,sun}}\left(k,l\right)\Delta f^2_1\left(l,m\right)-\Delta c_{\mathrm{i,sun}}(l,m) \Delta f^2_1\left(k,l\right)}{\Delta f^2_1\left(l,m\right) \Delta f_1 \left(k,l\right)-\Delta f^2_1\left(k,l\right)\Delta f_1 \left(l,m\right)}

@@ -129,12 +129,12 @@ $\Delta t$代表模型时间步长，$CF_{\mathrm{GPP,xs}}$是光合作用对植
   \end{cases}
 \end{equation}
 $CN_{\mathrm{lf}}$，$CN_{\mathrm{fr}}$，$CN_{\mathrm{lw}}$ 和 $CN_{\mathrm{dw}}$ 分别代表叶、细根、活木和死木的碳氮比。
-根据植被潜在可分配碳($CF_{\mathrm{pot\_{alloc}}}$)，可以算出潜在植被氮需求($NF_{\mathrm{pot\_{pd}}}$)，pd是plant demand的缩写：
+根据植被潜在可分配碳($CF_{\mathrm{pot\_{alloc}}}$)，可以算出植被潜在可分配于生长的氮($NF_{\mathrm{pot\_{alloc}}}$)：
 \begin{equation}
-  N F_{\mathrm{ {pot\_{pd}}}}=CF_{\mathrm{ {pot\_{alloc }}}} \cdot \frac{N_{\mathrm{ {allom }}}}{C_{\mathrm{ {allom }}}}
+  N F_{\mathrm{ {pot\_{alloc}}}}=CF_{\mathrm{ {pot\_{alloc }}}} \cdot \frac{N_{\mathrm{ {allom }}}}{C_{\mathrm{ {allom }}}}
 \end{equation}
 然而，实际碳生长速率($CF_{\mathrm{actual\_{alloc}}}$)需要根据实际的氮供给速率($NF_{\mathrm{actual\_{alloc}}}$)来计算。
-实际氮供给($NF_{\mathrm{actual\_{alloc}}}$)来源于植被氮重利用($NF_{\mathrm{rt\_{alloc}}}$)和土壤无机氮摄取($NF_{\mathrm{sminn\_{alloc}}}$)两部分：
+实际氮供给($NF_{\mathrm{actual\_{alloc}}}$)来源于植被氮重利用($NF_{\mathrm{rt\_{alloc}}}$)和实际植被无机氮摄取($NF_{\mathrm{sminn\_{alloc}}}$)两部分，后面两节将分别介绍植被氮重利用和实际无机氮的计算，以及实际植被氮摄取的计算：
 \begin{equation}\label{NF_actual_alloc}
   NF_{\mathrm{actual\_{alloc}}}=NF_{\mathrm{rt\_{alloc}}}+NF_{\mathrm{sminn\_{alloc}}}
 \end{equation}
@@ -143,26 +143,24 @@ $CN_{\mathrm{lf}}$，$CN_{\mathrm{fr}}$，$CN_{\mathrm{lw}}$ 和 $CN_{\mathrm{dw
 \subsection{植被氮重利用}\label{植被氮重利用}
 植被营养器官在凋落前通常会回收部分氮用于新组织的生长，
 被称为植被氮的重利用 \citep{magill1997biogeochemical,oikawa2005dynamics,son1991aboveground}。
-植被氮重利用的计算依赖于植被氮重利用库($NS_{\mathrm{rt}}$)和潜在植被氮需求($NF_{\mathrm{pot\_{pd}}}$)。
-其中，可用于生长的重利用氮($NF_{\mathrm{avail\_{rt}}}$)与植被潜在氮需求($NF_{\mathrm{pot\_{pd}}}$)成正比：
+被氮重利用($NF_{\mathrm{avail\_rt}}$)的计算依赖于植被去年氮重利用库的峰值($NS_{\mathrm{rt\_{annmax}}}$)，GPP和上一年的年均GPP：
 \begin{equation}
-  NF_{\mathrm{avail\_rt}}=\min{\left(\frac{NF_{\mathrm{rt\_ann}}\ \cdot \frac{NF_{\mathrm{pot\_{pd}}}}{NF_{\mathrm{pd\_{ann}}}}}{{\Delta t}}, \frac{NS_{\mathrm{rt}}}{{\Delta t}}\right)}
+  NF_{\mathrm{avail\_rt}}=\min{\left(\frac{NF_{\mathrm{rt\_{annmax}}}}{2\Delta t} \frac{GPP}{GPP_{\mathrm{ann}}}, \frac{NS_{\mathrm{rt}}}{{\Delta t}}\right)}
 \end{equation}
-其中，$NF_{\mathrm{rt\_ann}}$是去年植被重利用氮总量 (\unit{g.N.m^{-2}.year^{-1}})，$NF_{\mathrm{pd\_{ann}}}$ 是去年植被氮需求总量 (\unit{g.N.m^{-2}.year^{-1}})，${\Delta t}$ 是模型的时间步长。
-实际来源于重利用氮库的氮通量 ($NF_{\mathrm{rt\_alloc}}$) 是可利用氮 ($NF_{\mathrm{avail\_rt}}$) 和氮需求 ($NF_{\mathrm{pot\_{pd}}}$) 的最小值：
+其中，${\Delta t}$ 是模型的时间步长.植被每个时刻氮重利用量不会超过现存的植被重利用氮库($NS_{\mathrm{rt}}$)，并且，不会超过植被潜在氮需求 ($NF_{\mathrm{pot\_{pd}}}$)，pd是plant demand的缩写：
 \begin{equation}\label{NF_rt_alloc}
   NF_{\mathrm{rt\_alloc}}=\min{\left(NF_{\mathrm{avail\_{rt}}}, NF_{\mathrm{pot\_{pd}}}\right)}
 \end{equation}
 
 
 \subsection{土壤无机氮摄取}\label{土壤无机氮摄取}
-由于植被氮的重利用，植被对土壤的无机氮的实际需求 ($NF_{\mathrm{act_{pd}}}$) 降低为：
+由于植被氮的重利用，植被对土壤的无机氮的潜在需求 ($NF_{\mathrm{pot\_{pd}}}$) 需从总需求$NF_{\mathrm{pot\_{alloc}}}$中减去植被氮的重利用部分($NF_{\mathrm{rt\_{alloc}}}$)：
 \begin{equation}\label{NF_plant_demand_soil}
-  NF_{\mathrm{act\_{pd}}} = NF_{\mathrm{pot\_{pd}}} - NF_{\mathrm{rt\_alloc}}
+  NF_{\mathrm{pot\_{pd}}} = NF_{\mathrm{pot\_{alloc}}} - NF_{\mathrm{rt\_alloc}}
 \end{equation}
 由于不同植被功能型对于有限的土壤无机氮的竞争，以及土壤微生物和植被之间的竞争，植被从土壤中的无机氮摄取将进一步缩减：
 \begin{equation}\label{NF_sminn_alloc}
-  NF_{\mathrm{sminn\_alloc}} = NF_{\mathrm{actual\_{pd}}}\cdot f_{\mathrm{pd}}
+  NF_{\mathrm{sminn\_alloc}} = NF_{\mathrm{pot\_{pd}}}\cdot f_{\mathrm{pd}}
 \end{equation}
 其中，$f_{\mathrm{pd}}$ 是植被氮摄取的限制因子，其范围在0到1之间。其具体计算将在章节~\ref{植被土壤的氮竞争} 植被土壤的氮竞争中介绍。
 
@@ -209,7 +207,7 @@ $f_{\mathrm{cur}}$是碳分配到组织库或存储库的指示系数，取值0�
 \begin{equation}
   \sum_{i}{NF_{\mathrm{alloc\rightarrow org,t}}}+\sum_{i}{NF_{\mathrm{alloc\rightarrow org,s}}}=CF_{\mathrm{actual\_alloc}}\cdot \frac{N_{\mathrm{allom}}}{C_{\mathrm{allom}}}=NF_{\mathrm{actual\_alloc}}
 \end{equation}
-其中 $NF_{\mathrm{alloc},i}$ 代表每个植被库的新生长氮库或氮分配，$NF_{\mathrm{alloc}}$是植被总的氮生长，是植被各器官组织库和存储库新生长氮库的总和。$C_{\mathrm{allom}}$和$N_{\mathrm{allom}}$分别是单位叶片碳氮生长对应的植被总碳氮生长，见公式~\eqref{C_allom} 和~\eqref{N_allom}。
+其中 $NF_{\mathrm{alloc\gets org},i}$ 代表每个植被库的新生长氮库，$NF_{\mathrm{alloc\_alloc}}$是植被总的氮生长，是植被各器官组织库和存储库新生长氮库的总和。$C_{\mathrm{allom}}$和$N_{\mathrm{allom}}$分别是单位叶片碳氮生长对应的植被总碳氮生长，见公式~\eqref{C_allom} 和~\eqref{N_allom}。
 
 
 \section{植被物候过程的耦合预报方案}\label{植被物候过程的耦合预报方案}

@@ -17,7 +17,7 @@
     \toprule
     选项 & 注释(*代表的是默认方案) & 参考文献                                   \\ \midrule
     I    & 湿球温度方案            & \citet{Wang-etal_19WetBulb}                \\
-    II*  & CLM5方案                & Ben Andre et al., 2020, CLM5 Documentation \\
+    II*  & CLM5方案                &  CLM5 技术文档 \\
     III  & PSY方案                 & \citet{harder2013estimating}               \\
     IV   & 单阈值方案              & \citet{us1956snow}                         \\ \bottomrule
   \end{tabular}
@@ -50,87 +50,72 @@ $T_{\mathrm{wb}}$ 可通过如下过程进行迭代求解：
   \end{cases}
 \end{equation}
 %
-其中$T_{\mathrm{frz}}$ = 273.16 K.
+其中凝结温度$T_{\mathrm{frz}}$ 设定为 273.16 K.
 
 
 \subsection{CLM5方案}
-CLM5方案假定大气环境温度为雨水温度，其区别于其他方法的地方在于方案会判断下垫面类型是否为冰川，并对冰川下垫面类型做单独考虑，实施方案具体如下：
-
-当地表水体为冰面时（land water type = 3, land ice）:
+CLM5方案假定大气环境温度为雨水温度，其区别于其他方法的地方在于方案会判断下垫面类型是否为冰川，并对冰川下垫面类型做单独考虑。当地表水体为冰面时（land water type = 3, land ice）:
 \begin{equation}
-  Allsnow_{\mathrm{tc}} = T_{\mathrm{frz}} - 2,\quad Allrain_{\mathrm{tc}} = T_{\mathrm{frz}}
+  T_{\mathrm{asn}} = T_{\mathrm{frz}} - 2,\quad T_{\mathrm{arn}} = T_{\mathrm{frz}}
 \end{equation}
-
+其中~$T_{\mathrm{asn}}$~和~$T_{\mathrm{arn}}$~分别为雪和雨占比为100\%的阈值温度。
 其他下垫面情况:
 \begin{equation}
-  Allsnow_{\mathrm{tc}} = T_{\mathrm{frz}},\quad Allrain_{\mathrm{tc}} = T_{\mathrm{frz}} +2
+  T_{\mathrm{asn}} = T_{\mathrm{frz}},\quad T_{\mathrm{arn}} = T_{\mathrm{frz}} +2
 \end{equation}
-
-于是基于$Allsnow_{\mathrm{tc}}$和$Allrain_{\mathrm{tc}}$，液态降水占比为：
+于是基于~$T_{\mathrm{asn}}$~和~$T_{\mathrm{arn}}$~，液态降水占比为：
 \begin{equation*}
   f_{\mathrm{pl}}= \begin{cases}
-    1, & \text{当 }\ Allrain_{\mathrm{tc}}\leqslant forc_{\mathrm {t}} \text{ 时}\\
-    (forc_{\mathrm {t}} - Allsnow_{\mathrm{tc}})/2, & \text{当 }\ Allsnow_{\mathrm{tc}}\leqslant forc_{\mathrm {t}} < Allrain_{\mathrm{tc}} \text{ 时} \\
-    0, & \text{当 }\ forc_{\mathrm {t}} < Allsnow_{\mathrm{tc}} \text{ 时}
+    1, & \text{当 }\ T_{\mathrm{arn}}\leqslant T_{\mathrm {air}} \text{ 时}\\
+    (T_{\mathrm {air}} - T_{\mathrm{asn}})/2, & \text{当 }\  T_{\mathrm{asn}}\leqslant T_{\mathrm {air}} < T_{\mathrm{arn}} \text{ 时} \\
+    0, & \text{当 }\ T_{\mathrm {air}} < T_{\mathrm{asn}} \text{ 时}
   \end{cases}
 \end{equation*}
 
 
 \subsection{PSY方案}
-PSY (Psychrometric Energy Balance Method)方案假设:
+PSY (Psychrometric Energy Balance Method) 方案基于以下假设:
 \begin{enumerate}
-  \item 在无限接近水凝物（液态水或冰晶）的表面有一理想气团，其温度与水凝物一致，且满足Tetents饱和水汽压经验公式；
-  \item 理想气团与环境大气之间满足质量守恒以及能量守恒且两者都满足理想气体方程；
-  \item 水凝物的凝结（凝华）潜热以及空气导热率与环境温度(\textcelsius)满足一定函数关系。
+\item 在水凝物（液态水或冰晶）表面无限接近处存在一个理想气团，其温度与水凝物相同，且满足Tetens饱和水汽压经验公式；
+\item 该理想气团与周围环境大气之间遵循质量守恒和能量守恒原理，且两者均符合理想气体状态方程；
+\item 水凝物的凝结（或凝华）潜热以及空气导热率与环境温度（\textcelsius）之间存在特定的函数关系。
 \end{enumerate}
-
-综上，方案基于假设，计算出水凝物表面空气温度以代表水凝物温度(\textcelsius)，具体如下：
+基于上述假设，该方案通过计算水凝物表面空气温度来表征水凝物温度（\textcelsius）。具体计算过程如下：
 \begin{equation}
-  L\frac{{\mathrm d} m}{{\mathrm d} t}=4\pi C\lambda_{\mathrm {t}}(T_{\mathrm {i}} - T)
+L\frac{\mathrm{d}m}{\mathrm{d}t} = 4\pi C\lambda_{\mathrm{t}}(T_{\mathrm{i}} - T)
 \end{equation}
-%
 \begin{equation}
-  \frac{{\mathrm d} m}{{\mathrm d} t}=4\pi CD_{\mathrm {v}}(\rho - \rho_{\mathrm {i}})
+\frac{\mathrm{d}m}{\mathrm{d}t} = 4\pi CD_{\mathrm{v}}(\rho - \rho_{\mathrm{i}})
 \end{equation}
-
-简化后：
+简化后得到：
 \begin{equation}
-  \label{eq:水凝物表面空气温度定义}
-  T_{\mathrm {i}} = T + \frac{D_{\mathrm {v}}}{\lambda_{\mathrm{t}}}L(\rho - \rho_{\mathrm {i}})
+\label{eq:水凝物表面空气温度定义}
+T_{\mathrm{i}} = T + \frac{D_{\mathrm{v}}}{\lambda_{\mathrm{t}}}L(\rho - \rho_{\mathrm{i}})
 \end{equation}
-%
-其中$L$为凝结或凝华潜热，$C$为水凝物形状因子，$\lambda_{\mathrm {t}}$为空气导热率因子，$T_{\mathrm {i}}$为水凝物表面空气温度，$T$为环境温度，$D_{\mathrm {v}}$为水汽扩散系数，$\rho$为环境空气密度，$\rho_{\mathrm {i}}$为水凝物表面空气密度，以上方程可通过牛顿迭代求解，得出水凝物表面空气温度，相较于方程\eqref{eq:湿球温度定义}对湿球温度的等焓假设，方程\eqref{eq:水凝物表面空气温度定义}计算水凝物温度时并未做出类似假设，两者的物理基础不同，计算方程不能相互转化。
+其中：$L$为凝结或凝华潜热，$C$为水凝物形状因子，$\lambda_{\mathrm{t}}$为空气导热率因子，$T_{\mathrm{i}}$为水凝物表面空气温度，$T$为环境温度，$D_{\mathrm{v}}$为水汽扩散系数，$\rho$为环境空气密度，$\rho_{\mathrm{i}}$为水凝物表面空气密度。
+上述方程可通过牛顿迭代法求解，从而得出水凝物表面空气温度。与方程\eqref{eq:湿球温度定义}对湿球温度的等焓假设不同，方程\eqref{eq:水凝物表面空气温度定义}在计算水凝物温度时并未做出类似假设。这两种方法的物理基础存在差异，因此其计算方程不能相互转化。
 
-本方案计算液态降水占比如下：
-\begin{equation*}
-  f_{\mathrm{pl}}= \begin{cases}
-    1, & \text{当 }\ 5\leqslant T_{\mathrm {i}} \text{ 时}\\
-    \frac{1}{1 + 2.50286\times 0.125006^{T_{\mathrm{i}}}}, & \text{当 }\ -5\leqslant T_{\mathrm {i}} < 5 \text{ 时} \\
+
+由上可得，本方案计算液态降水占比如下：
+\begin{equation}
+  f{\mathrm{pl}}= \begin{cases}
+    1, & \text{当 }\ 5\leqslant T{\mathrm {i}} \text{ 时}\\
+    \frac{1}{1 + 2.50286\times 0.125006^{T{\mathrm{i}}}}, & \text{当 }\ -5\leqslant T{\mathrm {i}} < 5 \text{ 时} \\
     0, & \text{当 }\ T_{\mathrm {i}} < -5 \text{ 时}
   \end{cases}
-\end{equation*}
-%
-上式的Sigmoid函数拟合有别于湿球温度方案。
-
-PSY方案的拟合数据来源于降水量：
-\begin{equation}
-  f_{\mathrm{pl}} = \frac{Rainfall(mm)}{Rainfall(mm) + Snowfall(mm)}
 \end{equation}
-%
-而湿球温度方案的拟合数据源于降水事件数：
-\begin{equation}
-  f_{\mathrm{pl}} = \frac{Rain_{\mathrm{event}}}{Rain_{\mathrm{event}} + Snow_{\mathrm{event}}}
-\end{equation}
+值得注意的是，上述Sigmoid函数拟合方法与湿球温度方案有所不同。
+PSY方案的拟合数据来源于降水量（液态水/总降水量），而湿球温度方案的拟合数据则基于降水事件概率（降雨事件/总降水事件）。这种数据来源的差异可能导致两种方法在实际应用中产生不同的结果。
 
 
 \subsection{单阈值方案}
 单阈值方案就是设定一个关键温度以界定液态降水的占比，假设认为液态降水占比随温度升高逐渐线性增加，在2 \textcelsius 时占40\%，当环境温度高于2 \textcelsius 后全转变为液态降水，过程具体如下：
-\begin{equation*}
+\begin{equation}
   f_{\mathrm{pl}}= \begin{cases}
-    1, & \text{当 }\ T_{\mathrm{frz}}+2\leqslant forc_{\mathrm {t}} \text{ 时}\\
-    \max(0,-54.632 + 0.2\times forc_{\mathrm {t}}), & \text{当 }\ forc_{\mathrm {t}} < T_{\mathrm{frz}} + 2 \text{ 时} \\
+    1, & \text{当 }\ T_{\mathrm{frz}}+2\leqslant T_{\mathrm {air}} \text{ 时}\\
+    \max(0,-54.632 + 0.2\times T_{\mathrm {air}}), & \text{当 }\ T_{\mathrm {air}} < T_{\mathrm{frz}} + 2 \text{ 时} \\
   \end{cases}
-\end{equation*}
+\end{equation}
 
 
 \section{降水强度}

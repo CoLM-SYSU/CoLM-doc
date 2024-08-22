@@ -9,13 +9,13 @@
 \section{土壤反照率}\label{sec:土壤反照率}
 土壤反照率采用陆面模式BATS方案 \citep{dickinson1986biosphere,dickinson1993biosphere}，利用土壤颜色和土壤表层含水量计算得到，公式如下：
 \begin{equation}\label{eq:soil_albedo1}
-  \alpha_{\mathrm{soi,vis,dir}}=\alpha_{\mathrm{soi,vis,dif}}=\min\left(\alpha_{\mathrm{sat, vis}}+\max\left(0,0.11-0.40 \theta_{\mathrm{l}}\right), \alpha_{\mathrm{dry, vis}}\right)
+  \alpha_{\mathrm{soi,vis,dir}}=\alpha_{\mathrm{soi,vis,dif}}=\min\left(\alpha_{\mathrm{sat, vis}}+\max\left(0,0.11-0.40 \theta_1\right), \alpha_{\mathrm{dry, vis}}\right)
 \end{equation}
 %
 \begin{equation}
-  \alpha_{\mathrm{soi,nir,dir}}=\alpha_{\mathrm{soi,nir,dif}}=\min\left(\alpha_{\mathrm{sat, nir}}+\max\left(0,0.11-0.40 \theta_{\mathrm{l}}\right), \alpha_{\mathrm{dry, nir}}\right)
+  \alpha_{\mathrm{soi,nir,dir}}=\alpha_{\mathrm{soi,nir,dif}}=\min\left(\alpha_{\mathrm{sat, nir}}+\max\left(0,0.11-0.40 \theta_1\right), \alpha_{\mathrm{dry, nir}}\right)
 \end{equation}
-其中$\alpha$表示反照率，下标$\rm soi$表示土壤，$\rm vis$和$\rm nir$分别表示可见光（<0.7µm）和近红外波段（>0.7µm），$\rm dir$($\rm dif$)表示直射光(漫射光)，$\alpha_{\mathrm{sat}}$和$\alpha_{\mathrm{dry}}$是根据土壤颜色分类，通过查找表得到的饱和($\rm sat$)和干($\rm dry$)土壤的反照率数值，$\theta_{\mathrm{l}}$为表层(即第一层)土壤体积含水量。以上土壤反照率的计算适用于植被(土壤)、湿地次网格，当城市模式未打开时，同样用于城市地区。目前土壤颜色数据采用CLM 4.5，全球20种颜色分类数据，包括干土和湿土的可见光波段和近红外波段。漫射光与直射光相应波段反射率查找表数值一致。该查找表是\citet{lawrence2007representing}通过二流近似植被辐射传输模型与卫星遥感观测反照率拟合得到。
+其中$\alpha$表示反照率，下标$\rm soi$表示土壤，$\rm vis$和$\rm nir$分别表示可见光（<0.7µm）和近红外波段（>0.7µm），$\rm dir$($\rm dif$)表示直射光(漫射光)，$\alpha_{\mathrm{sat}}$和$\alpha_{\mathrm{dry}}$是根据土壤颜色分类，通过查找表得到的饱和($\rm sat$)和干($\rm dry$)土壤的反照率数值，$\theta_1$为表层(即第一层)土壤体积含水量。以上土壤反照率的计算适用于植被(土壤)、湿地次网格，当城市模式未打开时，同样用于城市地区。目前土壤颜色数据采用CLM 4.5，全球20种颜色分类数据，包括干土和湿土的可见光波段和近红外波段。漫射光与直射光相应波段反射率查找表数值一致。该查找表是\citet{lawrence2007representing}通过二流近似植被辐射传输模型与卫星遥感观测反照率数据拟合得到。
 
 
 \section{永久性冰川反照率}\label{sec:永久性冰川反照率}
@@ -29,7 +29,7 @@
 \end{equation}
 
 \section{内陆水体反照率}
-对于液态水和直射入射辐射，反照率为太阳天顶角余弦值$\mu$的函数，计算为$\frac{0.05}{\mu+0.15}$；漫射入射辐射时，设置为常数0.1，可见光与近红外波段一致，即：
+对于液态水在直射入射辐射情况下，反照率为太阳天顶角余弦值$\mu$的函数，计算为$\frac{0.05}{\mu+0.15}$；漫射入射辐射时，设置为常数0.1，可见光与近红外波段一致，即：
 %
 \begin{equation}
   \alpha_{\mathrm{wat,vis,dir}}=\alpha_{\mathrm{wat,nir,dir}}= \frac {0.05}{\mu+0.15}
@@ -84,7 +84,7 @@ $\tau_{\mathrm{sno}}$表示无量纲雪龄，是一预报变量，它随时间�
 \begin{equation}
   \Delta \tau_{\mathrm{sno}}=1 \times 10^{-6}\left(r_{1}+r_{2}+r_{3}\right) \Delta t
 \end{equation}
-其中$\Delta t$是积分时间步长(s)，
+其中$\Delta t$是积分时间步长(单位：s)，
 \begin{align}
   r_{1} &= \exp \left[5000\left(\frac{1}{273.16}-\frac{1}{T_{\mathrm{g}}}\right)\right] \\
 %\end{equation}
@@ -94,7 +94,7 @@ $\tau_{\mathrm{sno}}$表示无量纲雪龄，是一预报变量，它随时间�
 %\begin{equation}
   r_{3} &= 0.3
 \end{align}
-上式中，$r_1$表示雪盖中水汽的扩散后凝华导致的雪晶颗粒增长对反照率的影响，$r_2$表示融雪对反照率的影响，$r_3$表示灰尘或杂质的影响[注: BATS在南极$r_3$设置为0.01]。
+上式中，$r_1$表示雪盖中水汽的扩散后凝华导致的雪晶颗粒增长对反照率的影响，$r_2$表示融雪对反照率的影响，$r_3$表示灰尘或杂质的影响（注: BATS在南极$r_3$设置为0.01）。
 为了考虑新的降雪影响，在$\tau_{\mathrm{sno}}$的计算中还包含计算时间步长内的降雪量，表示为：
 \begin{equation}
   \tau_{\mathrm{sno}}^{(N+1)}=\left(\tau_{\mathrm{sno}}^{(N)}+\Delta \tau_{\mathrm{sno}}\right)\left(1-100 \Delta p_{\mathrm{sno}}\right)
@@ -521,9 +521,9 @@ Adding-Doubling方案。在$\delta$函数调整后，再应用二流近似（Edd
 \begin{equation}
   \alpha_{\mathrm{sea,nir,dif}} = \alpha_{\mathrm{ice,nir}}\left( 1 - f_{\mathrm{sno}} \right) + \alpha_{\mathrm{sno,nir,dif}}f_{\mathrm{sno}}
 \end{equation}
-其中\(\alpha_{\mathrm{ice,vis}} = 0.7\)，\(\alpha_{\mathrm{ice,nir}} = 0.5\)。
+在以上表达式中，\(\alpha_{\mathrm{ice,vis}} = 0.7\)，\(\alpha_{\mathrm{ice,nir}} = 0.5\)。
 
-对于无冰雪覆盖海洋，假设反照率与波段和海表面风速等其他物理量无关，采用太阳高度角计算直射入射反照率，漫射反射率则设为常数，公式表达为：
+对于无冰雪覆盖海洋，假设反照率与波段、海表面风速等其他物理量无关，采用太阳高度角计算直射入射反照率，漫射反射率则设为常数，公式表达为：
 \begin{equation}
   \alpha_{\mathrm{sea,vis,dir}}=\alpha_{\mathrm{sea,nir,dir}} = \frac{0.026}{\mu^{1.7}+0.065}+0.15(\mu-0.1)(\mu-0.5)(\mu-1)
 \end{equation}
@@ -1162,6 +1162,8 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
   \end{figure}
 }
 
+\subsubsection{自身阴影面积计算}
+
 \citet{li1992GeometricopticalBidirectionalReflectance}给出了一种计算直射光产生的阴影与观察角度（观察阴影）之间重叠区域的求解表达式。自身阴影便是当观察角度垂直向下时的情况。此时，垂直投影等同于观察阴影。自身阴影$S_{ij}$简单计算为：
 %
 \begin{equation}
@@ -1174,6 +1176,8 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
 \end{equation}
 %
 方程中的\(R\)是树冠的半径，\(h\)是从冠中心点到投影高度的距离。
+
+\subsubsection{三层植被辐射传输方程构建及求解}
 
 用$I_{\mathrm{\left[from\right]\rightarrow\left[to\right]}}$表示层与层之间的直射辐射直射透射量，$S_{[n]}$表示第$n$层植被的阴影面积，$T_{\mathrm{d},[n]}$为第$n$层植被的直射辐射直射透射率，可以计算从天空(${\mathrm {sky}}$)，不穿过植被，到达每层植被及地面的初始直射辐射为(为了与三维植被辐射传输模型引文~\citep{yuan20143d} 吻合，这里保留了植被分层计数从上到下1--3的方式，但之后三维植被长波辐射传输、三维植被湍流交换过程等采用从上至下3--1的编号，与代码一致)：
 \begin{equation}
@@ -1266,7 +1270,11 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
     \left[G^{*}\right] &=I_{\downarrow, 3}^{*}\left(1-r_{\mathrm{g}}\right)
   \end{aligned}
 \end{equation}
-所有的PFT (包括裸土)共享同样的反照率、同样的地面吸收率。对每一种PFT，考虑其单独存在时，利用单层植被模型计算其吸收，
+所有的PFT (包括裸土)共享同样的反照率、同样的地面吸收率。
+
+\subsubsection{每种PFT辐射吸收计算}
+
+对每一种PFT，考虑其单独存在时，利用单层植被模型计算其吸收，
 并将其作为权重，把每层的植被辐射吸收分配到其所包含的PFT中去(包括上面计算的直射辐射直射吸收)，表示为：
 %
 \begin{equation}
@@ -1351,7 +1359,10 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
 $f_{\mathrm {c}}\rightarrow0$，$S\rightarrow2$，同上述单棵树冠情况一样；
 当植被比较致密时，$f_{\mathrm {c}}\rightarrow1$，$S\rightarrow1$，同一维情形。
 对从地面发射的长波辐射，其情况同向下大气长波辐射一样，在稀疏情况下，植被能截获更多的长波辐射。
-下面我们对一层植被(植被覆盖度为$f_{\mathrm {c}}$)进行整个长波辐射传输过程推导。植被冠层向下的长波辐射计算为：
+
+\subsubsection{单层植被长波辐射传输}
+
+对于单层植被(植被覆盖度为$f_{\mathrm {c}}$)，植被冠层向下的长波辐射计算为：
 \begin{equation}
   \begin{aligned}
     L_{\mathrm{v}} ^\downarrow &=S\left(1-\varepsilon_{\mathrm{v}}\right) L ^\downarrow+(1-S) L ^\downarrow+f_{\mathrm{c}} \varepsilon_{\mathrm{v}} \sigma T_{\mathrm{v}}^{4} \\
@@ -1389,6 +1400,8 @@ $f_{\mathrm {c}}\rightarrow0$，$S\rightarrow2$，同上述单棵树冠情况一
 \end{equation}
 以上计算还需要考虑植被温度变化所带来的长波辐射量的改变，具体到$L_{\mathrm {v}}^\downarrow$增加$4f_{\mathrm {c}}\varepsilon_{\mathrm {v}}\sigma T_{\mathrm {v}}^3\Delta T_{\mathrm {v}}$，${L_{\mathrm{g}}}$增加$\varepsilon_{\mathrm{g}} \Sigma 4 f_{\mathrm{c}} \varepsilon_{\mathrm{v}} \sigma T_{\mathrm{v}}^{3} \Delta T_{\mathrm{v}}$，$L_{\mathrm {v}} ^\uparrow$增加$4 f_{\mathrm{c}} \varepsilon_{\mathrm{v}} \sigma T_{\mathrm{v}}^{3} \Delta T_{\mathrm{v}}+(1-\varepsilon_{\mathrm{g}}) 4 f_{\mathrm{c}}
 \varepsilon_{\mathrm{v}}(1-\varepsilon_{\mathrm{v}}) \sigma T_{\mathrm{v}}^{3} \Delta T_{\mathrm{v}}$。
+
+\subsubsection{三层植被长波辐射传输}
 
 将以上逻辑应用到之前描述的三层植被中，如图~\ref{fig:三层植被长波辐射传输示意图} 所示。
 从计算示意图来看，稍显复杂，因为需要计算每两层之间的辐射传输量，其与短波辐射类似，具有一定规律。
@@ -1511,7 +1524,7 @@ $L_{n\downarrow}$计算为：
 $L_{\ast\rightarrow n}$即为到达每一层的辐射，即为$L[n]$。注意上式是整个归一化面积上的计算结果，
 或者说是在整个土壤patch上的计算，单位面积上的吸收还需要除以各自的覆盖度$f_{{\mathrm c}i}$。
 
-在湍流迭代求解植被温度时，我们还需要用到$L_{{\mathrm v}i}$对自身温度的偏导数。PFT吸收的长波辐射来自自身发射的部分可计算如下: \\
+在湍流迭代求解植被温度时，还需要用到$L_{{\mathrm v}i}$对自身温度的偏导数。PFT吸收的长波辐射来自自身发射的部分可计算如下: \\
 %
 对于第1层植被：
 \begin{equation}\label{eq:dlv1}

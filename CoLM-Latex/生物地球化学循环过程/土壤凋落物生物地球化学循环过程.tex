@@ -100,11 +100,15 @@ $C N_{j}$代表第$j$个库的碳氮比，
   NF_{\mathrm{{pot}\_{min,i \rightarrow {j}}}}(z)=-\frac{C_{\mathrm{{i}}}(z) k_{\mathrm{{i}}}(z) T_{\mathrm{i, j}}\left(1-r f_{\mathrm{i}}-\frac{C N_{\mathrm{{j }}}}{C N_{\mathrm{i}}}\right)}{C N_{\mathrm{{j }}}}
 \end{equation}
 
-其中$\mathrm {i \rightarrow j}$包括10个传输路径，把所有传输公式~\eqref{NF_pot_minmet}所有正项求和，得到总矿化作用生成的无机氮：
+其中$\mathrm {i \rightarrow j}$包括10个传输路径，把所有传输公式~\eqref{NF_pot_minmet}所有正项求和，得到总固化作用在每层土壤中对无机氮的潜在需求$NF_{\mathrm{pot\_id,vr}}(z)$，其中下标id代表immobalization demand，vr代表vertical resolved：
 \begin{equation}\label{NF_immob_demand_vr}
-  NF_{\mathrm{immob,demand}}(z)=-\sum_{k=1}^{10}\min{\left(NF_{\mathrm{pot\_min},Source(k)\rightarrow Dest (k)}, 0\right)}
+  NF_{\mathrm{pot\_id,vr}}(z)=-\sum_{k=1}^{10}\min{\left(NF_{\mathrm{pot\_min},i(k)\rightarrow j(k)}\left(z\right), 0\right)}
 \end{equation}
-当总固化作用需要的无机氮 ($NF_{\mathrm{immob,demand}}$) 大于土壤中可以提供的无机氮时，某个传输量就将减小，土壤分解就将减慢。
+把每层土壤的固化作用所需要的无机氮的潜在需求加在一起得到总的土壤微生物固化作用需要的氮：
+\begin{equation}
+    NF_{\mathrm{pot\_id}}=\sum_{z=1}^{10}{NF_{\mathrm{pot\_id,vr}}(z) \cdot \Delta z}
+\end{equation}
+当总固化作用需要的无机氮 ($NF_{\mathrm{pot\_id}}$) 大于土壤中可以提供的无机氮时，某个传输量就将减小，土壤分解就将减慢。
 
 
 \section{植被土壤的氮竞争}\label{植被土壤的氮竞争}
@@ -113,33 +117,33 @@ $C N_{j}$代表第$j$个库的碳氮比，
 \end{mymdframed}
 实际上，土壤分解可以利用的无机氮往往比土壤中存在的无机氮还要小，因为土壤微生物利用无机氮还需要和植被进行竞争。
 
-植被氮需求 ($NF_{\mathrm{pot_pd}}$) 在公式 \eqref{NF_plant_demand_soil} 中已经被完整计算，若植被氮需求和土壤微生物固氮需求 ($NF_{\mathrm{immob,demand}}$) 小于总土壤无机氮含量(${NS}_{\mathrm{sminn}}$)：
+植被潜在氮需求 ($NF_{\mathrm{pot\_{pd}}}$) 在公式 \eqref{NF_plant_demand_soil} 中已经被完整计算，若植被氮需求和土壤微生物固氮需求 ($NF_{\mathrm{pot\_{id}}}$) 小于总土壤无机氮含量(${NS}_{\mathrm{sminn}}$)：
 \begin{equation}
-  \left(NF_{\mathrm{pot_pd}}+NF_{\mathrm{immob,demand}}\right)\cdot\Delta t<NS_{\mathrm{sminn}}
+  \left(NF_{\mathrm{pot\_{pd}}}+NF_{\mathrm{pot\_id}}\right)\cdot\Delta t<NS_{\mathrm{sminn}}
 \end{equation}
 则土壤无机氮含量充分，不存在氮限制，反之则需要计算氮限制。
 
-CoLM将植被的氮需求($NF_{\mathrm{pot_pd}}$) 按无机氮含量的垂直分布比例分摊给每层土壤：
+CoLM将植被的潜在氮需求($NF_{\mathrm{pot\_{pd}}}$) 按无机氮含量的垂直分布比例分摊给每层土壤：
 \begin{equation}
-  NF_{\mathrm{pot_pd,vr}}(z)=NF_{\mathrm{pot_pd}}\cdot\frac{NS_{\mathrm{sminn,vr}}(z)}{NS_{\mathrm{sminn}}}
+  NF_{\mathrm{pot\_{pd},vr}}(z)=NF_{\mathrm{pot\_{pd}}}\cdot\frac{NS_{\mathrm{sminn,vr}}(z)}{NS_{\mathrm{sminn}}}
 \end{equation}
-结合公式 \eqref{NF_pot_minmet}--\eqref{NF_immob_demand_vr} 计算土壤氮固化作用的需求，可以得出每层土壤无机氮的总需求
+结合公式 \eqref{NF_pot_minmet}--\eqref{NF_immob_demand_vr} 计算土壤氮固化作用的需求，可以得出每层土壤无机氮的总需求($NF_{\mathrm{pot\_ipd,vr}}(z)$)，下标ipd代表nitrogen demand from soil immobalization and plant uptake
 \begin{equation}
-  NF_{\mathrm{total\_{demand\_{soil}},vr}}(z)=NF_{\mathrm{pot_pd,vr}}(z)+NF_{\mathrm{immob,demand,vr}}\left(z\right)
+  NF_{\mathrm{pot\_ipd,vr}}(z)=NF_{\mathrm{pot\_{pd},vr}}(z)+NF_{\mathrm{pot\_id,vr}}\left(z\right)
 \end{equation}
 CoLM在每层土壤中分别考虑无机氮的供需关系及其和每层无机氮含量 ${NS}_{\mathrm{sminn,vr}}(z)$ 的关系，
-我们得到每层土壤分解的氮限制因子 ($f_{\mathrm{immo\_{demand},vr}}$) 和植被氮吸收的限制因子($f_{\mathrm{plant\_{demand},vr}}$)：
+我们得到每层土壤分解的氮限制因子 ($f_{\mathrm{id,vr}}$) 和植被氮吸收的限制因子($f_{\mathrm{pd,vr}}$)：
 \begin{equation}
-  f_{\mathrm{plant\_{demand},vr}}(z)=f_{\mathrm{immob\_{demand},vr}}(z)=\frac{NS_{\mathrm{sminn,vr}}(z)}{NF_{\mathrm{total\_{demand\_{soil}},vr}}(z)\cdot\Delta t}
+  f_{\mathrm{pd,vr}}(z)=f_{\mathrm{id,vr}}(z)=\frac{NS_{\mathrm{sminn,vr}}(z)}{NF_{\mathrm{ipd,vr}}(z)\cdot\Delta t}
 \end{equation}
-平均植被氮吸收的限制因子($f_{\mathrm{plant\_{demand}}}$)：
+平均土壤各层求得植被氮吸收的限制因子($f_{\mathrm{pd}}$)：
 \begin{equation}
-  f_{\mathrm{plant\_{demand}}}=\frac{\sum_{z=1}^{n=10}{f_{\mathrm{plant\_{demand},vr}}(z)\cdot NF_{\mathrm{pot_pd,vr}}(z)}}{NF_{\mathrm{pot_pd}}}
+  f_{\mathrm{pd}}=\frac{\sum_{z=1}^{n=10}{f_{\mathrm{pd,vr}}(z)\cdot NF_{\mathrm{pot\_{pd},vr}}(z)}}{NF_{\mathrm{pot\_{pd}}}}
 \end{equation}
 实际氮吸收 $(NF_{\mathrm{sminn\_{alloc}}}$) 可以由公式 \eqref{NF_sminn_alloc} 求出，至此，章节~\ref{植被碳氮分配} 的所有变量可解。
-实际碳传输，也可根据氮限制因子 ($f_{\mathrm{immob\_{demand},vr}}(z)$) 进一步得出：
+实际碳传输，也可根据氮限制因子 ($f_{\mathrm{id,vr}}(z)$) 进一步得出：
 \begin{equation}
-  CF_{\mathrm{Source \rightarrow { Dest }}}(z)=\left\{\begin{array}{ll}C F_{\mathrm{pot, Source \rightarrow Dest}}(z) \cdot f_{\mathrm{{immob}}\_{\mathrm{demand}, vr}}(z) & NF_{\mathrm{pot\_{min}, Source \rightarrow {Dest}}} <0 \\
+  CF_{\mathrm{Source \rightarrow { Dest }}}(z)=\left\{\begin{array}{ll}C F_{\mathrm{pot, Source \rightarrow Dest}}(z) \cdot f_{\mathrm{id, vr}}(z) & NF_{\mathrm{pot\_{min}, Source \rightarrow {Dest}}} <0 \\
       CF_{\mathrm{pot, Source \rightarrow { Dest }}}(z) & NF_{\mathrm{pot\_{min}, Source \rightarrow {Dest}}} \geqslant 0
   \end{array}\right.
 \end{equation}
@@ -165,7 +169,7 @@ CoLM在每层土壤中分别考虑无机氮的供需关系及其和每层无机�
 
 实际土壤氮固化作用同样受氮限制因子的影响：
 \begin{equation}
-  NF_{\mathrm{immob,vr}}(z)=NF_{\mathrm{immob,demand,vr}}(z)\ \cdot\ f_{\mathrm{immob\_{demand},vr}}(z)
+  NF_{\mathrm{immob,vr}}(z)=NF_{\mathrm{pot\_id,vr}}(z)\ \cdot\ f_{\mathrm{id,vr}}(z)
 \end{equation}
 但因为氮矿化作用为土壤提供无机氮，实际的土壤氮矿化作用仍然运用公式~\eqref{NF_immob_demand_vr}。
 

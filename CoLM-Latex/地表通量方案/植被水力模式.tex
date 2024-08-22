@@ -143,7 +143,7 @@ $q_{\mathrm{rad},i}$代表相应的根吸水速率，$\Psi_{\mathrm{soil},i}$代
 \begin{equation}\label{beta_i}
   \beta_{i}=\frac{\Psi_{\mathrm{\min }}-\Psi i}{\Psi_{\mathrm{\min }}-\Psi_{\mathrm{s a t}}}
 \end{equation}
-${\mathrm {froot}}_i$是第i层土壤中根的比例，$\beta_i$是第$i$层土壤的水分胁迫因子贡献；它由每层土壤的实际水势 (${\Psi}_i$)，植被到达萎蔫点时的土壤水势 (${\Psi}_{\mathrm{min}}=-1.5\times 10^5 {\rm mm}$)和饱和水势 (${\Psi}_{\mathrm{sat}}$)计算得出。
+${\mathrm {froot}}_i$是第$i$层土壤中根的比例，$\beta_i$是第$i$层土壤的水分胁迫因子贡献；它由每层土壤的实际水势 (${\Psi}_i$)，植被到达萎蔫点时的土壤水势 (${\Psi}_{\mathrm{min}}=-1.5\times 10^5$ \unit{mm})和饱和水势 (${\Psi}_{\mathrm{sat}}$)计算得出。
 
 当植被水力模式开启时(植被水力方案PHS)，植物叶水势($\Psi_{\mathrm{sunleaf}}$和$\Psi_{\mathrm{shaleaf}}$)的降低直接造成植物水分胁迫，从而导致气孔关闭以保持植物茎的导水能力。
 气孔这一行为符合植物生理学理论，水分胁迫因子按阴叶和阳叶区分，由气孔导度($\beta_{\mathrm{sun}}$，$\beta_{\mathrm{sha}}$)的衰减比例来定义：
@@ -173,8 +173,8 @@ $g_{\mathrm{s}}^{\mathrm {sun}}$和$g_{\mathrm{s}}^{\mathrm {sha}}$分别为阳�
   E_{\mathrm{sha,max}}=\rho_{\mathrm{a}} c_{\mathrm{vw,sha,max}} \cdot \frac{c_{\mathrm{aw}} q_{\mathrm{a}}+c_{\mathrm{gw}} q_{\mathrm{g}}-
   \left(c_{\mathrm{aw}}+c_{\mathrm{gw}}\right) q_{\mathrm{s a t}}^{T_{\mathrm{v}}}}{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw,sun,max}}+c_{\mathrm{vw,sha,max}}}
 \end{equation}
-
-
+%
+%
 $c_{\mathrm{vw,sun,max}}$和$c_{\mathrm{vw,sha,max}}$是阳叶和阴叶的最大冠层导度，即无植被水分胁迫条件下的冠层导度，可表达为最大气孔导度的函数，如公式~\eqref{cvsun_gsmax} 和~\eqref{cvsha_gsmax}：
 \begin{equation}\label{cvsun_gsmax}
   c_{\mathrm{vw,sun,max}}=\left(1-f_{\mathrm{wet}}\right)\frac{f_{\mathrm{sun}}\text{LAI}}{cf\left(\frac{1}{g_{\mathrm {b}}}+\frac{1}{g_{\mathrm{s,max}}^{\mathrm {sun}}}\right)}
@@ -183,7 +183,7 @@ $c_{\mathrm{vw,sun,max}}$和$c_{\mathrm{vw,sha,max}}$是阳叶和阴叶的最大
 \begin{equation}\label{cvsha_gsmax}
   c_{\mathrm{vw,sha,max}}=\left(1-f_{\mathrm{wet}}\right)\frac{f_{\mathrm{sha}}\text{LAI}}{cf\left(\frac{1}{g_{\mathrm {b}}}+\frac{1}{g_{\mathrm{s,max}}^{\mathrm {sha}}}\right)}
 \end{equation}
-$cf$为导度的单位转换系数(\unit{umol.m^{-3}})，将\unit{umol.m^{-2}.s^{-1}}转换为\unit{m.s^{-1}}。
+$cf$为导度的单位转换系数(\unit{\mu mol.m^{-3}})，将 \unit{\mu mol.m^{-2}.s^{-1}}转换为\unit{m.s^{-1}}。
 
 结合叶水势对蒸腾的影响~\eqref{Esun_psi} 和~\eqref{Esha_psi}，可计算得到的实际蒸腾速率$E_{\mathrm{sun}}$和$E_{\mathrm{sha}}$，从地表冠层湍流参数化方案反推，可得到干阳叶和干阴叶的冠层导度 ($c_{\mathrm{vw,sun}}$和$c_{\mathrm{vw,sha}}$)。如公式~\eqref{cv_Esun} 和~\eqref{cv_Esha}：
 \begin{equation}\label{cv_Esun}c_{\mathrm{vw,sun}}=\frac{E_{\mathrm{sun}}\left(c_{\mathrm {aw}}+c_{\mathrm {gw}}+c_{\mathrm{vw,wet}}\right)}{\left(\left(c_{\mathrm {aw}}+c_{\mathrm {gw}}\right)q_{\mathrm{sat}}-c_{\mathrm {aw}} q_{\mathrm {m}} - c_{\mathrm {gw}} q_{\mathrm {g}}\right)\rho_{\mathrm{a}}-E_{\mathrm{sun}}-E_{\mathrm{sha}}}
@@ -207,12 +207,12 @@ $cf$为导度的单位转换系数(\unit{umol.m^{-3}})，将\unit{umol.m^{-2}.s^
 \end{equation}
 
 
-耦合植被水力模式、光合气孔模式和地表冠层湍流参数化方案，再利用公式~\eqref{beta_sun}，~\eqref{beta_sha}，~\eqref{gs_sunmax}和~\eqref{gs_shamax}可以完整地求解植被水力模式下的植物水分胁迫。
+耦合植被水力模式、光合气孔模式和地表冠层湍流参数化方案，再利用公式~\eqref{beta_sun}、\eqref{beta_sha}、\eqref{gs_sunmax} 和~\eqref{gs_shamax}可以完整地求解植被水力模式下的植物水分胁迫。
 
 
 \section{数值计算方案}\label{数值计算方案}
 求解植物水势、水分胁迫、气孔导度和叶片蒸腾速率，需要耦合植被水力模式、光合气孔模式和地表冠层参数化方案。
-耦合描述植物水势变化的动力方程组(公式~\eqref{q_sunstem}--\eqref{q_stemroot}, \eqref{Esun_psi} 和~\eqref{Esha_psi})，
+耦合描述植物水势变化的动力方程组(公式~\eqref{q_sunstem}--\eqref{q_stemroot}、\eqref{Esun_psi} 和~\eqref{Esha_psi})，
 地表冠层参数化方案 (公式~\eqref{E_sunmax}--\eqref{cvsha_gsmax})，
 光合气孔模式的最大气孔导度计算 (公式~\eqref{gs_sunmax} 和~\eqref{gs_shamax}), 植物水分胁迫计算 (公式~\eqref{beta_sun} 和~\eqref{beta_sha})，共18个方程，
 求解包括4个植物地上水势节点 ($\Psi_{\mathrm{sunleaf}}$, $\Psi_{\mathrm{shaleaf}}$, $\Psi_{\mathrm{stem}}$和$\Psi_{\mathrm{root,0}}$)，8个水分传输速率 

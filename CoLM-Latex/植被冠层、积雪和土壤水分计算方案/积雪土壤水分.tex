@@ -45,21 +45,21 @@ CoLM中地表的水分平衡分为无积雪和有积雪两种情形。
 
 \citet{campbell1974}建立的曲线为，
 \begin{equation}\label{eq:SW_CB}
-  \psi=\psi_{\mathrm{s}}\left(\frac{\theta}{\theta_{\mathrm{sat}}}\right)^{-B}
+  \psi=\psi_{\mathrm{sat}}\left(\frac{\theta}{\theta_{\mathrm{sat}}}\right)^{-B}
 \end{equation}
 \begin{equation}\label{eq:Ks_CB}
-  K=K_{\mathrm{s}}\left(\frac{\theta}{\theta_{\mathrm{s}}}\right)^{2 B+3}
+  K=K_{\mathrm{sat}}\left(\frac{\theta}{\theta_{\mathrm{sat}}}\right)^{2 B+3}
 \end{equation}
-其中$\psi_{\mathrm {s}} $为饱和土水势，$\theta_{\mathrm{s}}$为饱和土壤体积含水量，$K_{\mathrm{s}}$为饱和导水率，$B$为曲线参数。
+其中$\psi_{\mathrm {sat}} $为饱和土水势，$\theta_{\mathrm{sat}}$为饱和土壤体积含水量，$K_{\mathrm{sat}}$为饱和导水率，$B$为曲线参数。
 
 \citet{van1980closed} 建立的曲线为
 \begin{equation}\label{eq:SW_VG}
-  \Theta = \frac{\theta-\theta_{\mathrm {r}} }{\theta_{\mathrm {s}} -\theta_{\mathrm {r}} } = \left[\frac{1}{1+\left(\alpha h\right)^n}\right]^{1-1/n}
+  \Theta = \frac{\theta-\theta_{\mathrm {r}} }{\theta_{\mathrm {sat}} -\theta_{\mathrm {r}} } = \left[\frac{1}{1+\left(\alpha h\right)^n}\right]^{1-1/n}
 \end{equation}
 \begin{equation}\label{eq:Ks_VG}
-  K = K_{\mathrm {s}}  \Theta^L \left[1-\left(1-\Theta^{1/\left(1-1/n\right)}\right)^{1-1/n}\right]^2
+  K = K_{\mathrm {sat}}  \Theta^L \left[1-\left(1-\Theta^{1/\left(1-1/n\right)}\right)^{1-1/n}\right]^2
 \end{equation}
-其中$h$为土壤吸力势，$\theta_{\mathrm {r}} $为残余含水量，$\theta_{\mathrm {s}} $为饱和含水量，$K_{\mathrm{s}}$为饱和导水率，$\alpha$、$L$ 和 $n$为曲线参数。
+其中$h$为土壤吸力势，$\theta_{\mathrm {r}} $为残余含水量，$\theta_{\mathrm {sat}} $为饱和含水量，$K_{\mathrm{sat}}$为饱和导水率，$\alpha$、$L$ 和 $n$为曲线参数。
 
 CoLM中可选两个数值方案进行Richards方程的求解：1. 2014版CoLM中的方案；2. 可变饱和流算法。
 
@@ -174,9 +174,9 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 \begin{equation}
   K_{i+\frac{1}{2}}=
   \begin{cases}
-    K_{\mathrm{s},i}\left(\frac{\theta_{i}}{\theta_{\mathrm{s},i}}\right)^{2 B_i+3}
+    K_{\mathrm{sat},i}\left(\frac{\theta_{i}}{\theta_{\mathrm{sat},i}}\right)^{2 B_i+3}
     & q_{i+\frac{1}{2}} \geqslant 0 \quad \mbox{（水流方向向下）}\\
-    K_{\mathrm{s},i +1}\left(\frac{\theta_{i+1}}{\theta_{\mathrm{s},i +1}}\right)^{2 B_{i+1}+3}
+    K_{\mathrm{sat},i +1}\left(\frac{\theta_{i+1}}{\theta_{\mathrm{sat},i +1}}\right)^{2 B_{i+1}+3}
     & q_{i+\frac{1}{2}} < 0 \quad \mbox{（水流方向向上）}
   \end{cases}
 \end{equation}
@@ -188,21 +188,21 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 \begin{align}
   \frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i}} & =
   \begin{cases}
-    \left(2B_i+3\right) K_{\mathrm{s},i}\left(\frac{\theta_{i}}{\theta_{\mathrm{s},i}}\right)^{2B_i+2}
-    \frac{1}{\theta_{\mathrm{s},i}}, & q_{i+\frac{1}{2}} \geqslant 0 \\
+    \left(2B_i+3\right) K_{\mathrm{sat},i}\left(\frac{\theta_{i}}{\theta_{\mathrm{sat},i}}\right)^{2B_i+2}
+    \frac{1}{\theta_{\mathrm{sat},i}}, & q_{i+\frac{1}{2}} \geqslant 0 \\
     0, & q_{i+\frac{1}{2}} < 0
   \end{cases}
   \\
   \frac{\partial K_{i+\frac{1}{2}}}{\partial \theta_{i+1}} & =
   \begin{cases}
     0, & q_{i+\frac{1}{2}} \geqslant 0 \\
-    (2B_{i+1}+3) K_{\mathrm{s},i +1}\left(\frac{\theta_{i+1}}{\theta_{\mathrm{s},i +1}}\right)^{2B_{i+1}+2} \frac{1}{\theta_{\mathrm{ {s},i +1}}}, & q_{i+\frac{1}{2}} < 0
+    (2B_{i+1}+3) K_{\mathrm{sat},i +1}\left(\frac{\theta_{i+1}}{\theta_{\mathrm{sat},i +1}}\right)^{2B_{i+1}+2} \frac{1}{\theta_{\mathrm{ {sat},i +1}}}, & q_{i+\frac{1}{2}} < 0
   \end{cases}
 \end{align}
 对计算区域的底部（第$I$层），
 \begin{equation}
-  K_{I}=K_{\mathrm{s},I}\left(\frac{\theta_{I}}{\theta_{\mathrm{s},I}}\right)^{2B_I+3}, \quad \frac{\partial K_{I}}
-  {\partial \theta_{I}} = (2B_I+3) K_{\mathrm{s},I}\left(\frac{\theta_{I}}{\theta_{\mathrm{s},I}}\right)^{2B_I+2} \frac{1}{\theta_{\mathrm{s},I}}
+  K_{I}=K_{\mathrm{sat},I}\left(\frac{\theta_{I}}{\theta_{\mathrm{sat},I}}\right)^{2B_I+3}, \quad \frac{\partial K_{I}}
+  {\partial \theta_{I}} = (2B_I+3) K_{\mathrm{sat},I}\left(\frac{\theta_{I}}{\theta_{\mathrm{sat},I}}\right)^{2B_I+2} \frac{1}{\theta_{\mathrm{sat},I}}
 \end{equation}
 
 有冰存在的时候，需考虑冰对导水率的影响，使用如下经验公式，
@@ -235,38 +235,38 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 
 给水度$S_{\mathrm {y}} $~(specific yield)反映了含水层水量变化时地下水位的变化。假设地下水位之上的土壤为均质土壤，且土壤水处于平衡态，则其土壤水势可表达为深度的函数，
 \begin{equation}
-  \psi \left(z\right) = \psi_{\mathrm {s}}  - \left(z_{\mathrm{wt}} - z\right)
+  \psi \left(z\right) = \psi_{\mathrm {sat}}  - \left(z_{\mathrm{wt}} - z\right)
 \end{equation}
 地下水位之上的土壤中所含水分的总量为
 \begin{equation}
-  w_{\mathrm{unsat}} = \int^{z_{\mathrm{wt}}}_0 \theta\left[\psi\left(z\right)\right] \mathrm{d}z = \int^{z_{\mathrm{wt}}}_0 \theta\left[\psi_{\mathrm {s}}  - \left(z_{\mathrm{wt}} - z\right)\right] \mathrm{d}z
+  w_{\mathrm{unsat}} = \int^{z_{\mathrm{wt}}}_0 \theta\left[\psi\left(z\right)\right] \mathrm{d}z = \int^{z_{\mathrm{wt}}}_0 \theta\left[\psi_{\mathrm {sat}}  - \left(z_{\mathrm{wt}} - z\right)\right] \mathrm{d}z
 \end{equation}
 使用~\citet{campbell1974}建立的土壤水力特征曲线时，
 \begin{equation}
-  w_{\mathrm{unsat}} = \int^{z_{\mathrm{wt}}}_0 \theta_{\mathrm {s}} \left[\frac{\psi_{\mathrm {s}}  - \left(z_{\mathrm{wt}} - z\right)}{\psi_{\mathrm {s}} }\right]^{-\frac{1}{B}} \mathrm{d}z
+  w_{\mathrm{unsat}} = \int^{z_{\mathrm{wt}}}_0 \theta_{\mathrm {sat}} \left[\frac{\psi_{\mathrm {sat}}  - \left(z_{\mathrm{wt}} - z\right)}{\psi_{\mathrm {sat}} }\right]^{-\frac{1}{B}} \mathrm{d}z
 \end{equation}
 假设饱和含水层最大到$z_{\mathrm{max}}$，则地下水位之下的水分总量为
 \begin{equation}
-  w_{\mathrm{sat}} = \theta_{\mathrm {s}} \left(z_{\mathrm{max}}-z_{\mathrm{wt}}\right)
+  w_{\mathrm{sat}} = \theta_{\mathrm {sat}} \left(z_{\mathrm{max}}-z_{\mathrm{wt}}\right)
 \end{equation}
 土壤$0$到$z_{\mathrm{max}}$深度的总水量为
 \begin{equation}
-  w_{\mathrm{total}} = w_{\mathrm{unsat}} + w_{\mathrm{sat}} = \int^{z_{\mathrm{wt}}}_0 \theta_{\mathrm {s}} \left[\frac{\psi_{\mathrm {s}}  - \left(z_{\mathrm{wt}} - z\right)}{\psi_{\mathrm {s}} }\right]^{-\frac{1}{B}} \mathrm{d}z + \theta_{\mathrm {s}} \left(z_{\mathrm{max}}-z_{\mathrm{wt}}\right)
+  w_{\mathrm{total}} = w_{\mathrm{unsat}} + w_{\mathrm{sat}} = \int^{z_{\mathrm{wt}}}_0 \theta_{\mathrm {sat}} \left[\frac{\psi_{\mathrm {sat}}  - \left(z_{\mathrm{wt}} - z\right)}{\psi_{\mathrm {sat}} }\right]^{-\frac{1}{B}} \mathrm{d}z + \theta_{\mathrm {sat}} \left(z_{\mathrm{max}}-z_{\mathrm{wt}}\right)
 \end{equation}
 对$z_{\mathrm{wt}}$求导数可得给水度$S_{\mathrm {y}} $，
 \begin{equation}
-  {S}_{\mathrm{{y}}} = -\frac{w_{\mathrm{total}}}{z_{\mathrm{wt}}} = \theta_{\mathrm{s}}\left[1-\left(1-\frac{z_{\mathrm{w t}}}{\psi_{\mathrm{s}}}\right)^{-\frac{1}{B}}\right] \label{eqn:s_y}
+  {sat}_{\mathrm{{y}}} = -\frac{w_{\mathrm{total}}}{z_{\mathrm{wt}}} = \theta_{\mathrm{sat}}\left[1-\left(1-\frac{z_{\mathrm{w t}}}{\psi_{\mathrm{sat}}}\right)^{-\frac{1}{B}}\right] \label{eqn:s_y}
 \end{equation}
 这里取符号是因为深度的正方向向下，总水量越多，则地下水位越浅。不难发现，$S_{\mathrm {y}} $等于地下水位位于$z_{\mathrm{wt}}$且土壤水处于平衡状态时，土壤表层（$z=0$）的空气体积含量百分比，这是因为在平衡态的假设下，水分的增加会使得含水量曲线整体向上移动，等效于最上层干旱部分被地下水位附近的饱和部分取代。
 
-若地下水位位于最下层土壤之下，公式（\ref{eqn:s_y}）中的参数$\theta_{\mathrm {s}} $、$\psi_{\mathrm {s}} $ 和 $B$取最下层土壤的值，则水位的变化为
+若地下水位位于最下层土壤之下，公式（\ref{eqn:s_y}）中的参数$\theta_{\mathrm {sat}} $、$\psi_{\mathrm {sat}} $ 和 $B$取最下层土壤的值，则水位的变化为
 \begin{equation}
   z_{\mathrm{w t}}=z_{\mathrm{w t}}-\frac{q_{\mathrm{recharge}} \cdot \Delta t}{S_{\mathrm{y}}}
 \end{equation}
 
 若地下水位位于分层土壤之内，则需要逐层计算水位的变化。当$q_{\mathrm{recharge}}>0$时，记地下水位所在层为$j$，
 \begin{equation}
-  {S}_{\mathrm{y},j}=\theta_{\mathrm{s},j}\left[1-\left(1-\frac{z_{\mathrm{wt}}}{\psi_{\mathrm{s},j}}\right)^{-\frac{1}{B_j}}\right]
+  {sat}_{\mathrm{y},j}=\theta_{\mathrm{sat},j}\left[1-\left(1-\frac{z_{\mathrm{wt}}}{\psi_{\mathrm{sat},j}}\right)^{-\frac{1}{B_j}}\right]
 \end{equation}
 在第$j$层可容纳水量的限制下，实际可补给到第$j$层的水量为（$z_{j-\frac{1}{2}}$为第$j$层的上边界）
 \begin{equation}
@@ -299,7 +299,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 \end{equation}
 若$r_{\mathrm{subsurface},j}<r_{\mathrm{subsurface}}$，则此时地下水位下降到第$j+1$层，$r_{\mathrm{subsurface}}$更新为$r_{\mathrm{subsurface}}-r_{\mathrm{subsurface},j}$，继续从第$j+1$层进行扣除，直至$r_{\mathrm{subsurface}}=0$或地下水位降到了最下层土壤之下.
 
-若地下水位降到了最下层土壤之下，公式~\eqref{eqn:s_y}中的参数$\theta_{\mathrm {s}} $、$\psi_{\mathrm {s}} $ 和 $B$取最下层土壤的值，则含水层总水量和水位的变化为
+若地下水位降到了最下层土壤之下，公式~\eqref{eqn:s_y}中的参数$\theta_{\mathrm {sat}} $、$\psi_{\mathrm {sat}} $ 和 $B$取最下层土壤的值，则含水层总水量和水位的变化为
 \begin{equation}
   \begin{aligned}
     w_{\mathrm{a}} & = w_{\mathrm{a}} - r_{\mathrm{subsurface}} \cdot \Delta t, \\
@@ -358,21 +358,21 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 
 预报变量$w_{\mathrm{f},i}$表示土壤层上部饱和区域的厚度，其离散后的预报方程为
 \begin{equation}\label{si_in2}
-  \left(\theta_{\mathrm{s},i}-\theta_{i}^{n}\right) \cdot\left(w_{\mathrm{f},i}^{n+1}-w_{\mathrm{f},i}^{n}\right)=\Delta t \cdot\left(q_{i-1/2}^{n+1}-q_{\mathrm{w f},i}^{n+1}\right)
+  \left(\theta_{\mathrm{sat},i}-\theta_{i}^{n}\right) \cdot\left(w_{\mathrm{f},i}^{n+1}-w_{\mathrm{f},i}^{n}\right)=\Delta t \cdot\left(q_{i-1/2}^{n+1}-q_{\mathrm{w f},i}^{n+1}\right)
 \end{equation}
-其中，$\theta_{\mathrm{s},i}$ 为第$ i$ 层土壤的饱和体积含水量，$ q_{{i-1/2}}^{n+1}$为第$i$层土壤上边界处的水流通量，$q_{\mathrm{wf},i}^{n+1}$为饱和区域下边界处（湿润锋面）的水流通量。
+其中，$\theta_{\mathrm{sat},i}$ 为第$ i$ 层土壤的饱和体积含水量，$ q_{{i-1/2}}^{n+1}$为第$i$层土壤上边界处的水流通量，$q_{\mathrm{wf},i}^{n+1}$为饱和区域下边界处（湿润锋面）的水流通量。
 
 
 预报变量$w_{\mathrm{t},i}$表示土壤层下部饱和区域的厚度，其离散后的预报方程为
 \begin{equation}\label{si_in3}
-  \left(\theta_{\mathrm{s},i}-\theta_{i}^{n}\right) \cdot\left(w_{\mathrm{t},i}^{n+1}-w_{\mathrm{t},i}^{n}\right)=\Delta t \cdot\left(q_{\mathrm{w t},i}^{n+1}-q_{i+1 / 2}^{n+1}\right)
+  \left(\theta_{\mathrm{sat},i}-\theta_{i}^{n}\right) \cdot\left(w_{\mathrm{t},i}^{n+1}-w_{\mathrm{t},i}^{n}\right)=\Delta t \cdot\left(q_{\mathrm{w t},i}^{n+1}-q_{i+1 / 2}^{n+1}\right)
 \end{equation}
 其中，$q_{\mathrm{wt},i}^{n+1}$  为饱和区域上边界处的水流通量，$q_{i+1/2}^{n+1}$为第$i$层土壤下边界处的水流通量。
 
 当三个变量同时被激活时，满足$q_{\mathrm{ {uin,i }}}^{n+1}=q_{\mathrm{w f},i}^{n+1},~ q_{\mathrm{ {uout,i }}}^{n+1}=q_{\mathrm{wt},i}^{n+1}$，将~\eqref{si_in1}\eqref{si_in2}\eqref{si_in3}相加可得，
 \begin{equation}\label{si_in4}
   \begin{aligned}
-    m_{\mathrm{total}}^n & \triangleq \theta_{\mathrm{s},i}\left(w_{\mathrm{f},i}^n+w_{\mathrm{t},i}^{n}\right)+\theta_{i}^{n}\left(\Delta z - w_{\mathrm{f},i}^{n} - w_{\mathrm{t},i}^{n}\right) \\
+    m_{\mathrm{total}}^n & \triangleq \theta_{\mathrm{sat},i}\left(w_{\mathrm{f},i}^n+w_{\mathrm{t},i}^{n}\right)+\theta_{i}^{n}\left(\Delta z - w_{\mathrm{f},i}^{n} - w_{\mathrm{t},i}^{n}\right) \\
     m_{\mathrm{total}}^{n+1} - m_{\mathrm{total}}^n & =\Delta t \cdot\left(q_{i-1/2}^{n+1}-q_{i+1 / 2}^{n+1}\right)
   \end{aligned}
 \end{equation}
@@ -395,7 +395,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 
 当地下水位处于土壤水计算区域之下时，使用预报变量$w_{\mathrm {a}} $来表示计算区域之下蓄水层的蓄水状态。$w_{\mathrm {a}} $定义为
 \begin{equation}
-  w_{\mathrm{a}}=-\int_{\mathrm{z_{\mathrm{btm}}}}^{z_{\mathrm{wt}}}\left(\theta_{\mathrm{s}}-\theta\right){\mathrm { d}} z
+  w_{\mathrm{a}}=-\int_{\mathrm{z_{\mathrm{btm}}}}^{z_{\mathrm{wt}}}\left(\theta_{\mathrm{sat}}-\theta\right){\mathrm { d}} z
 \end{equation}
 $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总量（单位为：单位面积上的体积），负号表示计算区域之下液态水相对于饱和状态是亏缺的，$w_{\mathrm {a}} $的最大值为0（表示土壤水饱和）。
 
@@ -410,11 +410,11 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 \begin{enumerate}
   \item 饱和区域内部的水流通量，使用公式
     \begin{equation}\label{q_sat1}
-      q_{\mathrm{sat}}=-\frac{\sum_{i=i_{1}}^{i_{2}} \Delta z_{i}}{\sum_{i=i_{1}}^{i_{2}} \frac{\Delta z_{i}}{K_{\mathrm{s},i}}}
+      q_{\mathrm{sat}}=-\frac{\sum_{i=i_{1}}^{i_{2}} \Delta z_{i}}{\sum_{i=i_{1}}^{i_{2}} \frac{\Delta z_{i}}{K_{\mathrm{sat},i}}}
       \cdot \frac{h_{\mathrm{l}}-h_{\mathrm{u}}-\sum_{i=i_{1}}^{i_{2}} \Delta z_{i}}{\sum_{i=i_{1}}^{i_{2}} \Delta z_{i}}
     \end{equation}
     其中，$i_1,i_1+1,…,i_2$为从上至下连续的饱和土壤层的层号，$\Delta z_i$为第i层的厚度，
-    $K_{\mathrm{s},i}$为第$i$层的饱和土壤导水率，$h_{\mathrm {l}} $为饱和区域下边界处的土壤水势。
+    $K_{\mathrm{sat},i}$为第$i$层的饱和土壤导水率，$h_{\mathrm {l}} $为饱和区域下边界处的土壤水势。
     当饱和区域上边界为地表时，$h_{\mathrm {u}} $取为地表积水深度$h_{\mathrm{pond}}$；
     当饱和区域上边界在土壤内部时，$h_{\mathrm {u}} $为饱和区域上边界处的土壤水势。
     公式(\ref{q_sat1})右端第一个分式计算了饱和区域的等效导水率（带权重$\Delta z_i$的调和平均），第二个分式计算了总水势的差商。公式~\eqref{si_in2}中的$q_{i-1/2}$，公式~\eqref{si_in3}中的$q_{i+1/2}$使用公式~\eqref{q_sat1}进行计算。
@@ -461,17 +461,17 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 
   \item 饱和区位于非饱和区上方时两者之间的水流通量，即湿润锋面处的水流通量，公式为
     \begin{equation}
-      q_{\mathrm{wf}}=q_{\mathrm{h m}}\left(z_{\mathrm{l}}-z_{\mathrm{i}}, h_{\mathrm{s}}, h_{\mathrm{l}}\right)
+      q_{\mathrm{wf}}=q_{\mathrm{h m}}\left(z_{\mathrm{l}}-z_{\mathrm{i}}, h_{\mathrm{sat}}, h_{\mathrm{l}}\right)
     \end{equation}
     其中，$z_{\mathrm {l}} $为下方非饱和土壤层中心点的位置，$z_i$为饱和区和非饱和区之间界面的位置，
-    $h_{\mathrm {s}} $为饱和土壤水势，$h_{\mathrm {l}} $为非饱和土壤层中心点处的土壤水势。
+    $h_{\mathrm {sat}} $为饱和土壤水势，$h_{\mathrm {l}} $为非饱和土壤层中心点处的土壤水势。
 
   \item 饱和区位于非饱和区上方时两者之间的水流通量，即饱和水位处的水流通量，公式为
     \begin{equation}
-      q_{\mathrm{wt}}=q_{\mathrm{h m}}\left(z_{\mathrm{i}}-z_{\mathrm{u}}, h_{\mathrm{u}}, h_{\mathrm{s}}\right)
+      q_{\mathrm{wt}}=q_{\mathrm{h m}}\left(z_{\mathrm{i}}-z_{\mathrm{u}}, h_{\mathrm{u}}, h_{\mathrm{sat}}\right)
     \end{equation}
     其中，$z_{\mathrm {u}} $为上方非饱和土壤层中心点的位置，$z_i$为饱和区和非饱和区之间界面的位置，
-    $h_{\mathrm {s}} $为饱和土壤水势，$h_{\mathrm {u}} $为非饱和土壤层中心点处的土壤水势。
+    $h_{\mathrm {sat}} $为饱和土壤水势，$h_{\mathrm {u}} $为非饱和土壤层中心点处的土壤水势。
 
   \item 地表入渗通量$q_{\mathrm{infl}}$的计算分两种情况。第一种情况，地表有积水或者因到达地表的水流速度较大而有形成积水的趋势时，自地表向下形成湿润锋面，则$q_{\mathrm{infl}}$等于最上层饱和区的水流速度；第二种情况，地表无积水且入渗速度大于到达地表的水流速度时，$q_{\mathrm{infl}}$等于到达地表的水流速度（可为负值，表示蒸发等情况）。
 
@@ -489,7 +489,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 \begin{equation}\label{richards_nls}
   \begin{aligned}
     \min _{\vec{x}} f_{2}(\vec{x})=& \min _{\vec{x}} \sum_{\alpha=1}^{A}\left[\delta m_{\alpha}(\vec{x})-\Delta t \cdot \delta q_{\alpha}(\vec{x})\right]^{2} \\
-    & \theta_{\mathrm{r},i}<\theta_{\mathrm{i}} \leqslant \theta_{\mathrm{s},i}, & \forall \theta_{i} \in \vec{x} \\
+    & \theta_{\mathrm{r},i}<\theta_{\mathrm{i}} \leqslant \theta_{\mathrm{sat},i}, & \forall \theta_{i} \in \vec{x} \\
     & 0 \leqslant w_{\mathrm{f},i} \leqslant \Delta z_{i},               & \forall w_{\mathrm{f},i} \in \vec{x} \\
     & 0 \leqslant w_{\mathrm{t},i} \leqslant \Delta z_{i},               & \forall w_{\mathrm{t},i} \in \vec{x} \\
     & h_{\mathrm{ {pond }}} \geqslant 0,                               & \text{ if } h_{\mathrm{ {pond }}} \in \vec{x}
@@ -523,16 +523,16 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 在“预估”步，根据目前的地下水位以及需要减少的水量，预估降低后的地下水位，其满足
 \begin{equation} \label{formula:prediction_zwt}
   \begin{aligned}
-    \theta_{\mathrm{pre}} & = \Theta_i\left[\psi_{\mathrm{s},i} - 0.5\left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right)\right] \\
-    - \Delta W & = \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \times  \left(\theta_{\mathrm{s},i} - \theta_{\mathrm{pre}}\right)
+    \theta_{\mathrm{pre}} & = \Theta_i\left[\psi_{\mathrm{sat},i} - 0.5\left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right)\right] \\
+    - \Delta W & = \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \times  \left(\theta_{\mathrm{sat},i} - \theta_{\mathrm{pre}}\right)
   \end{aligned}
 \end{equation}
-其中，$z_{\mathrm{wt}}^{\mathrm{old}}$为目前的地下水位，$z_{\mathrm{wt}}^{\mathrm{new}}$为预估的地下水位，$\theta_{\mathrm{s},i}$为饱和含水量，$\psi_{\mathrm{s},i}$为饱和时的土壤水势，$\Theta_i$表示第$i$层土壤内由土壤水势到土壤含水量的映射。式~\eqref{formula:prediction_zwt}为$z_{\mathrm{wt}}^{\mathrm{new}}$的隐函数，可用迭代方法求解。
+其中，$z_{\mathrm{wt}}^{\mathrm{old}}$为目前的地下水位，$z_{\mathrm{wt}}^{\mathrm{new}}$为预估的地下水位，$\theta_{\mathrm{sat},i}$为饱和含水量，$\psi_{\mathrm{sat},i}$为饱和时的土壤水势，$\Theta_i$表示第$i$层土壤内由土壤水势到土壤含水量的映射。式~\eqref{formula:prediction_zwt}为$z_{\mathrm{wt}}^{\mathrm{new}}$的隐函数，可用迭代方法求解。
 
 若$z_{\mathrm{wt}}^{\mathrm{new}}$低于第$i$层土壤的下边界$z_{i+1/2}$，则先计算$z_{\mathrm{wt}}^{\mathrm{old}}$至$z_{i+1/2}$区域内的土壤水势和含水量为
 \begin{equation} \label{formula:adjust_zwt1}
   \begin{aligned}
-    \psi_i^{\prime} & = \psi_{\mathrm{s},i} - \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{i+\frac{1}{2}}\right) -0.5\left( z_{i+\frac{1}{2}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \\
+    \psi_i^{\prime} & = \psi_{\mathrm{sat},i} - \left(z_{\mathrm{wt}}^{\mathrm{new}} - z_{i+\frac{1}{2}}\right) -0.5\left( z_{i+\frac{1}{2}} - z_{\mathrm{wt}}^{\mathrm{old}}\right) \\
     \theta_i^{\prime} & = \Theta_i\left(\psi_i^{\prime}\right)
   \end{aligned}
 \end{equation}
@@ -559,10 +559,10 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 
 叶面蒸腾表示为：
 \begin{equation}
-  {E}_{\mathrm{{tr}}}=\sigma_{\mathrm{{f}}} {\rm SAI} \delta\left({E}_{\mathrm{{f}}}^{{\rm pot}}\right) {L}_{\mathrm{{d}}} \frac{{r}_{\mathrm{{b}}}}{{r}_{\mathrm{{b}}}-{r}_{\mathrm{{s}}}} {E}_{\mathrm{{f}}}^{{\rm pot}} \leqslant {E}_{\mathrm{{trmax}}}
+  {E}_{\mathrm{{tr}}}=\sigma_{\mathrm{{f}}} {\rm SAI} \delta\left({E}_{\mathrm{{f}}}^{{\rm pot}}\right) {L}_{\mathrm{{d}}} \frac{{r}_{\mathrm{{b}}}}{{r}_{\mathrm{{b}}}-{r}_{\mathrm{{sat}}}} {E}_{\mathrm{{f}}}^{{\rm pot}} \leqslant {E}_{\mathrm{{trmax}}}
 \end{equation}
 其中，$\sigma_{\mathrm {f}} $表示没有被雪覆盖的植物比例，${\rm SAI}$表示叶面积指数和茎面积指数之和，$\delta\left(E_{\mathrm {f}} ^{\rm pot}\right)$为表示蒸发是否发生的参数，
-取值0或1，$L_{\mathrm {d}} $为干燥的植物表面比例，$r_{\mathrm {b}} $为叶片边界层阻抗，$r_{\mathrm {s}} $为叶片气孔阻抗。$E_{\mathrm {f}} ^{\rm pot}$表示植物表面水的单位面积蒸发量：
+取值0或1，$L_{\mathrm {d}} $为干燥的植物表面比例，$r_{\mathrm {b}} $为叶片边界层阻抗，$r_{\mathrm {sat}} $为叶片气孔阻抗。$E_{\mathrm {f}} ^{\rm pot}$表示植物表面水的单位面积蒸发量：
 \begin{equation}
   {E}_{\mathrm{{f}}}^{{\rm pot}}=\rho_{\mathrm{{a}}} {r}_{\mathrm{{b}}}^{-1}\left({q}_{\mathrm{{f}}}^{{\rm sat}}-{q}_{\mathrm{{af}}}\right)
 \end{equation}
@@ -572,20 +572,20 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 \end{equation}
 
 \section{土壤水力参数的计算}\label{sec_hydropar}
-土壤水力参数主要涉及CoLM中模拟土壤水分垂直运动使用的~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系（方程\eqref{eq:SW_CB}、\eqref{eq:Ks_CB}、\eqref{eq:SW_VG}和\eqref{eq:Ks_VG}）中包含的参数，主要有$\theta_{\mathrm {s}} $（饱和体积含水量）、$\psi_{\mathrm {s}} $（饱和基质势）、$K_{\mathrm {s}} $（饱和导水率）、$B=\frac{1}{\lambda}$（孔隙大小分布指数）、$\theta_{\mathrm {r}} $（残余土壤含水量）、$\alpha$（形状参数）、$n$（形状参数）、$L$（孔隙导度参数）。针对上述参数，CoLM采用基于土壤基础数据集GSDE和SoilGrids开发的全球水平方向1 km分辨率、垂直方向分为8层的土壤水热特征参数数据以模拟土壤水热传输过程。数据垂直方向8层的深度分别对应CoLM模式土壤垂直分层中的第2-9层，第1层数据同样也应用于第1层模式，第8层数据同样也应用于第10层模式。两套数据集在全球模拟验证中具有相近的表现~\citep{李文耀2020土壤}。土壤水热特征参数数据的制作方法简述如下。
+土壤水力参数主要涉及CoLM中模拟土壤水分垂直运动使用的~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系（方程\eqref{eq:SW_CB}、\eqref{eq:Ks_CB}、\eqref{eq:SW_VG}和\eqref{eq:Ks_VG}）中包含的参数，主要有$\theta_{\mathrm {sat}} $（饱和体积含水量）、$\psi_{\mathrm {sat}} $（饱和基质势）、$K_{\mathrm {sat}} $（饱和导水率）、$B=\frac{1}{\lambda}$（孔隙大小分布指数）、$\theta_{\mathrm {r}} $（残余土壤含水量）、$\alpha$（形状参数）、$n$（形状参数）、$L$（孔隙导度参数）。针对上述参数，CoLM采用基于土壤基础数据集GSDE和SoilGrids开发的全球水平方向1 km分辨率、垂直方向分为8层的土壤水热特征参数数据以模拟土壤水热传输过程。数据垂直方向8层的深度分别对应CoLM模式土壤垂直分层中的第2-9层，第1层数据同样也应用于第1层模式，第8层数据同样也应用于第10层模式。两套数据集在全球模拟验证中具有相近的表现~\citep{李文耀2020土壤}。土壤水热特征参数数据的制作方法简述如下。
 
-针对饱和土壤含水量$\theta_{\mathrm {s}} $，假设其与土壤孔隙度相同，则可采用如下公式计算：
+针对饱和土壤含水量$\theta_{\mathrm {sat}} $，假设其与土壤孔隙度相同，则可采用如下公式计算：
 \begin{equation}
   \begin{aligned}
-    \theta_{\mathrm {s}}  =& 1-\frac{\rho_{\mathrm {b}} }{\rho_{\mathrm {d}} }\\
+    \theta_{\mathrm {sat}}  =& 1-\frac{\rho_{\mathrm {b}} }{\rho_{\mathrm {d}} }\\
     =& 1-\rho_{\mathrm {b}} \left(\frac{m_{\mathrm{minerals}}}{\rho_{\mathrm{minerals}}}+\frac{m_{\mathrm{om}}}{\rho_{\mathrm{om}}}+\frac{m_{\mathrm{gravels}}}{\rho_{\mathrm{gravels}}}\right)
   \end{aligned}
 \end{equation}
 其中$\rho_{\mathrm {b}} $代表土壤（干）容重(\unit{g.cm^{-3}})，$\rho_{\mathrm {d}} $代表土粒密度(\unit{g.cm^{-3}})。$m_{\mathrm{minerals}}$、$m_{\mathrm{om}}$和$m_{\mathrm{gravels}}$分别表示矿物质土壤、有机质土壤和砾石在固体土壤中的质量分数，$\rho_{\mathrm{minerals}}$、$\rho_{\mathrm{om}}$和$\rho_{\mathrm{gravels}}$分别表示矿物质土壤、有机质土壤和砾石各自的土粒密度，取值为2.71、1.3和2.80。土壤容重$\rho_{\mathrm {b}} $可通过下式计算；$$\rho_{\mathrm {b}} =\left(1-\frac{v_{\mathrm{gravels}}}{1-n_{\mathrm{gravels}}}\right)\rho_{\mathrm{fineearth}}+v_{\mathrm{gravels}}\rho_{\mathrm{gravels}}$$
 其中，$v_{\mathrm{gravels}}$表示固体砾石部分在土壤柱中的体积分数，$n_{\mathrm{gravels}}$表示砾石空隙度（假设为0.24），$\rho_{\mathrm{fineearth}}$表示细质土壤的容重，由土壤基础数据直接获取。
 
-对于其他参数，CoLM模式研发团队针对~\citet{campbell1974}和~\citet{van1980closed}建立的土壤水力特征曲线关系中包含的参数，收集了超过30种较为常用或新近开发的土壤转换函数模型(PTF)（见表~\ref{tab:PTFs}），采用拟合所有PTF对应的土壤水力特征曲线关系的方式获取最优土壤水力特征曲线关系，从而得到最优关系下的土壤水力参数。以~\citet{campbell1974}土壤水力特征曲线关系中参数的计算为例，两个待定参数$\psi_{\mathrm {s}} $和$B$通过求解下列极值问题得到：$$\chi\left(\psi_{\mathrm {s}} ,B\right)=\min\sum_{i=1}^N\left[\theta\left(\psi_{\mathrm {s}} ,B\right)-\theta_i\left(\psi_{\mathrm{si}},B_{i}\right)\right]^2$$
-其中，$\psi_{\mathrm{si}}$和$B_{i}$为每一组PTF对应的参数。通过此方法得到的土壤水力特征曲线关系最为接近PTF集合内每一组PFT得到的土壤水力特征曲线关系，因此其对应的参数$\psi_{\mathrm{s}}$和$B$可视为PFT集合内的最优参数。\citet{van1980closed}土壤水力特征曲线关系中的参数同理可得。\citet{dai2019parameters}通过与NCSS提供的土壤水分特征曲线的观测数据进行比对，发现基于最优拟合参数的~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系对土壤含水量的模拟效果精度较高，且最优拟合参数相较于传统的PTF中位值参数针对土壤水力特征曲线关系对土壤含水量的模拟结果具有一定程度上的改进。
+对于其他参数，CoLM模式研发团队针对~\citet{campbell1974}和~\citet{van1980closed}建立的土壤水力特征曲线关系中包含的参数，收集了超过30种较为常用或新近开发的土壤转换函数模型(PTF)（见表~\ref{tab:PTFs}），采用拟合所有PTF对应的土壤水力特征曲线关系的方式获取最优土壤水力特征曲线关系，从而得到最优关系下的土壤水力参数。以~\citet{campbell1974}土壤水力特征曲线关系中参数的计算为例，两个待定参数$\psi_{\mathrm {sat}} $和$B$通过求解下列极值问题得到：$$\chi\left(\psi_{\mathrm {sat}} ,B\right)=\min\sum_{i=1}^N\left[\theta\left(\psi_{\mathrm {sat}} ,B\right)-\theta_i\left(\psi_{\mathrm{si}},B_{i}\right)\right]^2$$
+其中，$\psi_{\mathrm{si}}$和$B_{i}$为每一组PTF对应的参数。通过此方法得到的土壤水力特征曲线关系最为接近PTF集合内每一组PFT得到的土壤水力特征曲线关系，因此其对应的参数$\psi_{\mathrm{sat}}$和$B$可视为PFT集合内的最优参数。\citet{van1980closed}土壤水力特征曲线关系中的参数同理可得。\citet{dai2019parameters}通过与NCSS提供的土壤水分特征曲线的观测数据进行比对，发现基于最优拟合参数的~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系对土壤含水量的模拟效果精度较高，且最优拟合参数相较于传统的PTF中位值参数针对土壤水力特征曲线关系对土壤含水量的模拟结果具有一定程度上的改进。
 
 饱和土壤导水率的估算仍采用传统的PTF集合中位值法。
 
@@ -598,7 +598,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 %\item 注：
     \item[1] 土壤转换函数的索引次数基于 \url{http://scholar.google.com} 查询，截止于2019年3月20日。
 
-    \item[2] “提供参数种类”一项中，Campbell代表该土壤转换函数提供~\citet{campbell1974}土壤水力特征曲线关系中包含的参数，VG代表该土壤转换函数提供~\citet{van1980closed}土壤水力特征曲线关系中包含的参数，$K_{\mathrm {s}} $代表饱和土壤导水率
+    \item[2] “提供参数种类”一项中，Campbell代表该土壤转换函数提供~\citet{campbell1974}土壤水力特征曲线关系中包含的参数，VG代表该土壤转换函数提供~\citet{van1980closed}土壤水力特征曲线关系中包含的参数，$K_{\mathrm {sat}} $代表饱和土壤导水率
     \end{TableNotes}
 
 
@@ -629,38 +629,38 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
         \insertTableNotes
         \endlastfoot
 
-        Cosby0       & \citet{cosby1984statistical}    & 1343 & Campbell, $K_{\mathrm {s}} $     & + &   &   &   \\ \hline
-        Cosby1       & \citet{cosby1984statistical}    & 1343 & Campbell, $K_{\mathrm {s}} $     &   & + &   &   \\ \hline
-        Cosby2       & \citet{cosby1984statistical}    & 1343 & Campbell, $K_{\mathrm {s}} $     &   & + &   &   \\ \hline
-        Campbell1    & \citet{campbell_Shiozawa_1992}  & 237  & Campbell                         &   & + & + &   \\ \hline
-        Rawls1       & \citet{Rawls_Brakensiek_1989}   & 572  & Campbell, VG, $K_{\mathrm {s}} $ &   & + & + & + \\ \hline
-        Mayr         & \citet{Mayr_Jarvis_1999}        & 114  & Campbell                         &   & + & + & + \\ \hline
-        Williams     & \citet{Williams_Ross_1992}      & 256  & Campbell                         &   & + & + &   \\ \hline
-        Clapp        & \citet{clapp1978empirical}      & 2378 & Campbell, $K_{\mathrm {s}} $     & + &   &   &   \\ \hline
-        Carsel       & \citet{Carsel_Parrish_1988}     & 1801 & VG                               & + &   &   &   \\ \hline
-        Wosten1      & \citet{Wösten_Lilly_1999}       & 911  & VG, $K_{\mathrm {s}} $           &   & + & + & + \\ \hline
-        Wosten2      & \citet{Wösten_Lilly_1999}       & 911  & VG, $K_{\mathrm {s}} $           & + & + &   &   \\ \hline
-        Weynants     & \citet{Weynants_Vereecken_2009} & 96   & VG, $K_{\mathrm {s}} $           &   & + &   & + \\ \hline
-        Rosetta3-H1w & \citet{Zhang_Schaap_2017}       & 1638 & VG                               & + &   &   &   \\ \hline
-        Rosetta3-H3w & \citet{Zhang_Schaap_2017}       & 1638 & VG, $K_{\mathrm {s}} $           &   & + & + &   \\ \hline
-        Gupta        & \citet{Gupta_Larson_1979}       & 860  & VG                               &   & + & + & + \\ \hline
-        Rawls2       & \citet{Rawls_Brakensiek_1982}   & 1740 & VG                               &   & + & + & + \\ \hline
-        Rawls3       & \citet{Rawls_Brakensiek_1983}   & 184  & VG                               &   & + & + & + \\ \hline
-        Tomasella    & \citet{Tomasella_Hodnett_1998}  & 243  & VG                               &   & + & + & + \\ \hline
-        Ahuja        & \citet{Ahuja_1989}              & 231  & $K_{\mathrm {s}} $               &   & + & + & + \\ \hline
-        Suleiman     & \citet{Suleiman_2001}           & 61   & $K_{\mathrm {s}} $               &   & + & + & + \\ \hline
-        Spychalski   & \citet{Spychalski_2007}         & 7    & $K_{\mathrm {s}} $               &   & + & + & + \\ \hline
-        Dane         & \citet{Dane_Puckett_1994}       & 256  & $K_{\mathrm {s}} $               &   & + &   &   \\ \hline
-        Jabro        & \citet{Jabro_1992}              & 183  & $K_{\mathrm {s}} $               &   & + & + &   \\ \hline
-        Brakensiek   & \citet{Brakensiek_1984}         & -    & $K_{\mathrm {s}} $               &   & + & + & + \\ \hline
-        Julia        & \citet{Julia_2004}              & 69   & $K_{\mathrm {s}} $               &   & + &   &   \\ \hline
-        Campbell2    & \citet{Campbell_1985}           & -    & $K_{\mathrm {s}} $               &   & + & + &   \\ \hline
-        Vereecken    & \citet{Vereecken_Maes_1990}     & 771  & $K_{\mathrm {s}} $               &   & + & + & + \\ \hline
-        Merdun1      & \citet{Merdun_2010}             & 12   & $K_{\mathrm {s}} $               &   & + & + & + \\ \hline
-        Merdun2      & \citet{Merdun_2010}             & 12   & $K_{\mathrm {s}} $               &   & + & + & + \\ \hline
-        Aimrun       & \citet{Aimrun_2009}             & 23   & $K_{\mathrm {s}} $               &   & + & + & + \\ \hline
-        Rahmati1     & \citet{Rahmati_2018}            & 5    & $K_{\mathrm {s}} $               & + &   &   &   \\ \hline
-        Rahmati2     & \citet{Rahmati_2018}            & 5    & $K_{\mathrm {s}} $               & + &   &   &   \\
+        Cosby0       & \citet{cosby1984statistical}    & 1343 & Campbell, $K_{\mathrm {sat}} $     & + &   &   &   \\ \hline
+        Cosby1       & \citet{cosby1984statistical}    & 1343 & Campbell, $K_{\mathrm {sat}} $     &   & + &   &   \\ \hline
+        Cosby2       & \citet{cosby1984statistical}    & 1343 & Campbell, $K_{\mathrm {sat}} $     &   & + &   &   \\ \hline
+        Campbell1    & \citet{campbell_Shiozawa_1992}  & 237  & Campbell                           &   & + & + &   \\ \hline
+        Rawls1       & \citet{Rawls_Brakensiek_1989}   & 572  & Campbell, VG, $K_{\mathrm {sat}} $ &   & + & + & + \\ \hline
+        Mayr         & \citet{Mayr_Jarvis_1999}        & 114  & Campbell                           &   & + & + & + \\ \hline
+        Williams     & \citet{Williams_Ross_1992}      & 256  & Campbell                           &   & + & + &   \\ \hline
+        Clapp        & \citet{clapp1978empirical}      & 2378 & Campbell, $K_{\mathrm {sat}} $     & + &   &   &   \\ \hline
+        Carsel       & \citet{Carsel_Parrish_1988}     & 1801 & VG                                 & + &   &   &   \\ \hline
+        Wosten1      & \citet{Wösten_Lilly_1999}       & 911  & VG, $K_{\mathrm {sat}} $           &   & + & + & + \\ \hline
+        Wosten2      & \citet{Wösten_Lilly_1999}       & 911  & VG, $K_{\mathrm {sat}} $           & + & + &   &   \\ \hline
+        Weynants     & \citet{Weynants_Vereecken_2009} & 96   & VG, $K_{\mathrm {sat}} $           &   & + &   & + \\ \hline
+        Rosetta3-H1w & \citet{Zhang_Schaap_2017}       & 1638 & VG                                 & + &   &   &   \\ \hline
+        Rosetta3-H3w & \citet{Zhang_Schaap_2017}       & 1638 & VG, $K_{\mathrm {sat}} $           &   & + & + &   \\ \hline
+        Gupta        & \citet{Gupta_Larson_1979}       & 860  & VG                                 &   & + & + & + \\ \hline
+        Rawls2       & \citet{Rawls_Brakensiek_1982}   & 1740 & VG                                 &   & + & + & + \\ \hline
+        Rawls3       & \citet{Rawls_Brakensiek_1983}   & 184  & VG                                 &   & + & + & + \\ \hline
+        Tomasella    & \citet{Tomasella_Hodnett_1998}  & 243  & VG                                 &   & + & + & + \\ \hline
+        Ahuja        & \citet{Ahuja_1989}              & 231  & $K_{\mathrm {sat}} $               &   & + & + & + \\ \hline
+        Suleiman     & \citet{Suleiman_2001}           & 61   & $K_{\mathrm {sat}} $               &   & + & + & + \\ \hline
+        Spychalski   & \citet{Spychalski_2007}         & 7    & $K_{\mathrm {sat}} $               &   & + & + & + \\ \hline
+        Dane         & \citet{Dane_Puckett_1994}       & 256  & $K_{\mathrm {sat}} $               &   & + &   &   \\ \hline
+        Jabro        & \citet{Jabro_1992}              & 183  & $K_{\mathrm {sat}} $               &   & + & + &   \\ \hline
+        Brakensiek   & \citet{Brakensiek_1984}         & -    & $K_{\mathrm {sat}} $               &   & + & + & + \\ \hline
+        Julia        & \citet{Julia_2004}              & 69   & $K_{\mathrm {sat}} $               &   & + &   &   \\ \hline
+        Campbell2    & \citet{Campbell_1985}           & -    & $K_{\mathrm {sat}} $               &   & + & + &   \\ \hline
+        Vereecken    & \citet{Vereecken_Maes_1990}     & 771  & $K_{\mathrm {sat}} $               &   & + & + & + \\ \hline
+        Merdun1      & \citet{Merdun_2010}             & 12   & $K_{\mathrm {sat}} $               &   & + & + & + \\ \hline
+        Merdun2      & \citet{Merdun_2010}             & 12   & $K_{\mathrm {sat}} $               &   & + & + & + \\ \hline
+        Aimrun       & \citet{Aimrun_2009}             & 23   & $K_{\mathrm {sat}} $               &   & + & + & + \\ \hline
+        Rahmati1     & \citet{Rahmati_2018}            & 5    & $K_{\mathrm {sat}} $               & + &   &   &   \\ \hline
+        Rahmati2     & \citet{Rahmati_2018}            & 5    & $K_{\mathrm {sat}} $               & + &   &   &   \\
 %\hline
       \end{longtable}
     \end{center}

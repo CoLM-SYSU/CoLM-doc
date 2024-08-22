@@ -10,14 +10,14 @@
 
 冠层是降水的首要接触层,它对降水的再分配有着重要的作用。CoLM冠层的水量平衡方程基本与SiB2一致~\citep{sellers1996revised},主要基于以下控制方程:
 \begin{equation}\label{eq:冠层水量控制方程}
-  \frac{\partial M_{\mathrm{cw,s}}}{\partial t} = P-D_{\mathrm{d}}-D_{\mathrm{c}}-E_{\mathrm{va}} / \rho_{\mathrm{liq}}
+  \frac{\partial M_{\mathrm{cw,s}}}{\partial t} = P-D_{\mathrm{d}}-D_{\mathrm{c}}-E_{\mathrm{v}} / \rho_{\mathrm{liq}}
 \end{equation}
 式中$P$为总降水量(\unit{m.s^{-1}}),分为对流降水和大尺度降水类型:
 \begin{equation}\label{eq:降水类型}
   P=P_{\mathrm{c}}+P_{\mathrm{l}}=\left(R_{\mathrm{c}}+S_{\mathrm{c}}\right)+\left(R_{\mathrm{l}}+S_{\mathrm{l}}\right)
 \end{equation}
 其中下标$\rm c$和$\rm ls$代表对流和大尺度降水类型，$R$和$S$分别代表降雨率与降雪率(\unit{m.s^{-1}})。当驱动强迫场中只有总降水可用时，CoLM假设大尺度降水等于$1/3P$，对流降水占$2/3P$。
-$D_{\mathrm {d}} $为降雨穿透速率(\unit{m.s^{-1}})，即从冠层间隙下落的降水速率，$D_{\mathrm {c}} $为冠层排水速度(\unit{m.s^{-1}})，$\frac{\partial M_{\mathrm{cw,s}}}{\partial t}$为冠层蓄水变化率(\unit{m.s^{-1}})，$\rho_{\mathrm {liq}} $是水的密度，$E_{\mathrm{va}}$为蒸发速率。
+$D_{\mathrm {d}} $为降雨穿透速率(\unit{m.s^{-1}})，即从冠层间隙下落的降水速率，$D_{\mathrm {c}} $为冠层排水速度(\unit{m.s^{-1}})，$\frac{\partial M_{\mathrm{cw,s}}}{\partial t}$为冠层蓄水变化率(\unit{m.s^{-1}})，$\rho_{\mathrm {liq}} $是水的密度，$E_{\mathrm{v}}$为蒸发速率。
 
 CoLM支持包括CoLM2014、CLM4.5、CLM5.0、VIC、MATSIRO、JULES 和Noah-MP等多种冠层截留计算参数化方案。具体的区别如表~\ref{tab:不同截留方案比较} 所示。
 %
@@ -49,11 +49,11 @@ CoLM支持包括CoLM2014、CLM4.5、CLM5.0、VIC、MATSIRO、JULES 和Noah-MP等
     模式                 & CoLM2014   & CLM4.5   & CLM5       & Noah-MP    & VIC        & MATSIRO    & JULES      \\ \midrule
     叶倾角               & \checkmark & $\times$ & $\times$   & $\times$   & $\times$   & $\times$   & $\times$   \\
     独立的雨雪过程       & $\times$   & $\times$ & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
-    雪的卸载             & $\times$   & $\times$ & \checkmark & $\times$   & $\times$   & $\times$   & $\times$   \\
+    雪的卸载             & $\times$   & $\times$ & \checkmark & \checkmark   & $\times$   & $\times$   & $\times$   \\
     叶片水的相变         & $\times$   & $\times$ & $\times$   & \checkmark & \checkmark & \checkmark & \checkmark \\
-    可变最大冠层水深     & $\times$   & $\times$ & $\times$   & \checkmark & \checkmark & \checkmark & \checkmark \\
+    可变最大冠层储水深度     & $\times$   & $\times$ & $\times$   & \checkmark & \checkmark & \checkmark & \checkmark \\
     降水的形态和网格分布 & \checkmark & $\times$ & $\times$   & \checkmark & \checkmark & \checkmark & \checkmark \\
-    独立叶温计算         & $\times$   & $\times$ & $\times$   & \checkmark & \checkmark & $\times$   & $\times$   \\
+    截留是否影响叶温计算         & $\times$   & $\times$ & $\times$   & \checkmark & \checkmark & $\times$   & $\times$   \\
     重力排水             & $\times$   & $\times$ & $\times$   & $\times$   & $\times$   & \checkmark & \checkmark \\ \bottomrule
   \end{tabular}
 \end{table}
@@ -91,16 +91,16 @@ $K_{\mathrm {p}} $通过叶角分布的经验参数$\chi_{\mathrm {L}} $的变�
 \begin{equation}
   \begin{aligned}
     L_{\mathrm{dew}} &= L_{\mathrm{dew}}-x_{\mathrm{sc}} \\
-    x_{\mathrm{s c}} &= \max\left(0., L_{\mathrm{dew}}-S_{\mathrm{c}}\right)
+    x_{\mathrm{s c}} &= \max\left(0., L_{\mathrm{dew}}-L_{\mathrm {dew,max}}\right)
   \end{aligned}
 \end{equation}
-其中$x_{\mathrm{sc}}$是超过最大树冠储存量的水(mm)，$S_{\mathrm {c}} =0.1\left({\rm LAI}+{\rm SAI}\right)$代表最大蓄水量(mm)。
+其中$x_{\mathrm{sc}}$是超过最大树冠储存量的水(mm)，$L_{\mathrm {dew,max}} =0.1\left({\rm LAI}+{\rm SAI}\right)$代表最大蓄水量(mm)。
 $x_{\mathrm{sc}}$的相位首先由冠层温度决定。如果冠层温度大于冰点温度，CoLM假定所有过量的水都处于液相，否则处于冰雪相。
 {
   \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/植被冠层和土壤水分/CoLM冠层截留示意图.jpg}
-    \caption[(a) CoLM中使用的降水面积-总量分布图；(b) CoLM中植被冠层截留降水的动力学过程]{(a) CoLM中使用的降水面积-总量分布图(修改自SiB2)。其中变量$x$为网格面积的比例,变量$I_{\left(x\right)}$为相对降水量。值得注意的是,大尺度降水$I_{\mathrm {l}} \left(x\right)$在网格区几乎是不变的,而对流降水$I_{\mathrm {c}} \left(x\right)$是非均匀分布的；(b) CoLM中植被冠层截留降水的动力学过程。降雨截留前已储存在冠层中的水量$M_{\mathrm{cs}}-M_{\mathrm{cw}}$被假设是均匀分布在网格区域上的。$M_{\mathrm{cs}}-M_{\mathrm{cw}}$的以上的水量积分即为冠层截获的总水量。$xs$是网格区域拦截降雨的比例加上先前存在的树冠蓄水($M_{\mathrm{cs}}-M_{\mathrm{cw}}$)所超过了树冠最大储水量($S_{\mathrm {c}} $)的水量。所有大于$S_{\mathrm {c}} $的水量假设形成树干径流,而低于$S_{\mathrm {c}} $的水量则被保存在冠层之中}
+    \caption[(a) CoLM中使用的降水面积-总量分布图；(b) CoLM中植被冠层截留降水的动力学过程]{(a) CoLM中使用的降水面积-总量分布图(修改自SiB2)。其中变量$x$为网格面积的比例,变量$I_{\left(x\right)}$为相对降水量。值得注意的是,大尺度降水$I_{\mathrm {l}} \left(x\right)$在网格区几乎是不变的,而对流降水$I_{\mathrm {c}} \left(x\right)$是非均匀分布的；(b) CoLM中植被冠层截留降水的动力学过程。降雨截留前已储存在冠层中的水量被假设是均匀分布在网格区域上的。$xs$是网格区域拦截降雨的比例加上先前存在的树冠蓄水所超过了$L_{\mathrm {dew,max}}$的水量。所有大于$L_{\mathrm {dew,max}}$的水量假设形成树干径流,而低于$L_{\mathrm {dew,max}}$的水量则被保存在冠层之中}
     \label{fig:CoLM冠层截留示意图}
   \end{figure}
 }
@@ -119,11 +119,11 @@ $x_{\mathrm{sc}}$的相位首先由冠层温度决定。如果冠层温度大于
 \end{equation}
 如图~\ref{fig:CoLM冠层截留示意图}b 所示，因此，有效降水区域的树冠排水($thru_{\mathrm{rain}}$)由下式给出:
 \begin{equation}
-  thru_{\mathrm{rain}}=\int_{0}^{x_{\mathrm{s}}} P I(x){\mathrm { d}} x+L_{\mathrm{dew}} x_{\mathrm{s}}-S_{\mathrm{c}} x_{\mathrm{s}}
+  thru_{\mathrm{rain}}=\int_{0}^{x_{\mathrm{s}}} P I(x){\mathrm { d}} x+L_{\mathrm{dew}} x_{\mathrm{s}}-L_{\mathrm {dew,max}} x_{\mathrm{s}}
 \end{equation}
-其中$x_{\mathrm {s}} $是单位网格中截获降水加上原有冠层蓄水量超过冠层上允许的最大水深($S_{\mathrm {c}} $)的比例:
+其中$x_{\mathrm {s}} $是单位网格中截获降水加上原有冠层蓄水量超过冠层上允许的最大水深($L_{\mathrm {dew,max}}$)的比例:
 \begin{equation}
-  x_{\mathrm{s}}=\frac{-1}{b} \log \left[\frac{s_{\mathrm{c}}-L_{\mathrm{d e w}}}{a_{\mathrm{p}}\left(P-D_{\mathrm{d}}\right)}-\frac{c_{\mathrm{p}}}{a_{\mathrm{p}}}\right]
+  x_{\mathrm{s}}=\frac{-1}{b} \log \left[\frac{L_{\mathrm {dew,max}}-L_{\mathrm{dew}}}{a_{\mathrm{p}}\left(P-D_{\mathrm{d}}\right)}-\frac{c_{\mathrm{p}}}{a_{\mathrm{p}}}\right]
 \end{equation}
 即树冠截取的雨量等于或者超过其饱和极限网格面积的比例。其中$a_{\mathrm {p}} =\frac{a_{\mathrm {l}}P_{\mathrm {l}} +a_{\mathrm {c}}P_{\mathrm {c}} }{P}$，$c_{\mathrm {p}} =\frac{c_{\mathrm {l}}P_{\mathrm {l}} +c_{\mathrm {c}}P_{\mathrm {c}} }{P}$。这里假设只有液态水能够被从冠层落下,我们有
 \begin{equation}
@@ -143,7 +143,7 @@ $x_{\mathrm{sc}}$的相位首先由冠层温度决定。如果冠层温度大于
 \end{equation}
 其中$L_{\mathrm{dew, p}}$是上一步计算得出的可用于树冠蒸发的蓄水量 (m)。因此,树冠蒸发量计算如下:
 \begin{equation}
-  E_{\mathrm{va}} / \rho_{\mathrm{liq}}=\min \left(\frac{\left(q_{\mathrm{s}}-q_{\mathrm{sat}}^{T_{\mathrm{c}}}\right)}{r_{\mathrm{b}} /\left({\rm LSAI} \times f_{\mathrm{wet}}\right)}, \frac{L_{\mathrm{dew}}}{\Delta t}\right)
+  E_{\mathrm{v}} / \rho_{\mathrm{liq}}=\min \left(\frac{\left(q_{\mathrm{s}}-q_{\mathrm{sat}}^{T_{\mathrm{c}}}\right)}{r_{\mathrm{b}} /\left({\rm LSAI} \times f_{\mathrm{wet}}\right)}, \frac{L_{\mathrm{dew}}}{\Delta t}\right)
 \end{equation}
 这里$r_{\mathrm {b}} $是平均边界层阻力,由冠层顶部的风速和特征叶片尺寸确定；$q_{\mathrm{sat}}^{T_{\mathrm {c}} }$ (\unit{kg.kg^{-1}})是冠层温度下的饱和比湿度；$q_{\mathrm {s}} $为表层参考高度处的比湿度，$\Delta t$为时间步长。
 
@@ -157,14 +157,14 @@ $K_{\mathrm {p}} $在CLM4.5冠层截留方案中取固定值0.5，即：
 \end{equation}
 则直接穿透量由下式给出：
 \begin{equation}
-  D_{\mathrm{d}}=\delta_{\mathrm{P}} \cdot P=\delta_{\mathrm{P}} \cdot\left(R_{\mathrm{c}}+S_{\mathrm{c}}+R_{\mathrm{l}}+S_{\mathrm{l s}}\right)
+  D_{\mathrm{d}}=\delta_{\mathrm{P}} \cdot P=\delta_{\mathrm{P}} \cdot\left(R_{\mathrm{c}}+S_{\mathrm{c}}+R_{\mathrm{l}}+S_{\mathrm{l}}\right)
 \end{equation}
 
-为了保持模型构架的一致性，我们和CoLM一样在计算冠层截留之前首先更新树叶上的水深 ($L_{\mathrm{dew}}$) (mm)：
+为了保持模型构架的一致性，我们和CoLM2014方案一样在计算冠层截留之前首先更新树叶上的水深 ($L_{\mathrm{dew}}$) (mm)：
 \begin{equation}
   \begin{aligned}
     L_{\mathrm{dew}} &= L_{\mathrm{dew}}-x_{\mathrm{sc}} \\
-    x_{\mathrm{s c}} &= \max \left(0., L_{\mathrm{dew}}-S_{\mathrm{c}}\right)
+    x_{\mathrm{s c}} &= \max \left(0., L_{\mathrm{dew}}-L_{\mathrm{dew,max}}\right)
   \end{aligned}
 \end{equation}
 请注意在原生CLM4.5方案中没有这一步骤。
@@ -246,7 +246,7 @@ Noah-MP模型冠层截留方案的计算流程与CoLM2014、CLM4.5和CLM5有较�
     \begin{equation}
       \rho_{\mathrm{s}}=67.92+51.25 {\mathrm e}^{\frac{T_{\mathrm{sfc}}-T_{\mathrm{frz}}}{2.59}}
     \end{equation}
-
+其中$T_{\mathrm{sfc}}$为表面温度（K）。
   \item 计算冠层闭郁度$F_{\mathrm{veg}}$:
     \begin{equation}
       F_{\mathrm{veg}} = \max\left[0.05,1.0-{\mathrm e}^{-0.52\left({\rm LAI}+{\rm SAI}\right)}\right]
