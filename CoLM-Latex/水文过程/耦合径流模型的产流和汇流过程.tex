@@ -7,7 +7,7 @@
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}。
 \end{mymdframed}
-
+\subsubsection{基于SIMTOP参数化方案}
 地表径流的参数化方案~\citep{niu2005simple}考虑了地形、地下水位、降水和入渗速度等因素。
 
 模式网格内饱和区域的面积$f_{\mathrm{sat}}$通过以下方案估算，
@@ -30,6 +30,53 @@
 \begin{equation}
   q_{\mathrm{infl}}={G}_{\mathrm{water}}-r_{\mathrm{surface}}
 \end{equation}
+\subsubsection{基于新安江模型的地表产流方案}
+
+\subsubsection{基于Simple-VIC的地表产流方案}
+\cite{Liang2003Anew}提出的这一参数化方案充分考虑了土壤的物理特性，包括土壤质地、饱和程度和水分深度等关键因素。该方案首先计算土壤的最大入渗能力，我们首先假设最大入渗能力取决于最上面6层土壤的物理状态和属性，即：
+\begin{equation}
+w_{{int}} = \sum_{i=1}^{6}\left( {vol}_{i} \times {dz}_{i} \right)
+\end{equation}
+\begin{equation}
+w_{{satint}} = \sum_{i=1}^{6}\left( {eff}_{i} \times {dz}_{i} \right)
+\end{equation}
+其中，$w_{{int}}$ 表示前6层土壤中的液态水体积，$w_{{satint}}$ 表示前6层土壤中的饱和水体积。 ${dz}_{i}$ 表示第 $i$ 层土壤厚度， ${vol}_{i}$ 表示第 $i$ 层土壤中液态水体积百分比，${eff}_{i}$ 表示第 $i$ 层有效孔隙度。由此我们可以计算得出土壤饱和分数：
+\begin{equation}
+{S}_{{Sf}} = 1 - \left( 1 - \frac{w_{{int}}}{w_{{satint}}} \right)^{{I}_{{ef}}}
+\end{equation}
+其中，${I}_{{ef}}$ 为渗透指数因子：
+\begin{equation}
+{I}_{{ef}} = \frac{B_{{VIC}}}{1 + B_{\text{VIC}}}
+\end{equation}
+入渗参数~$B_{{VIC}}$~是用于表示土壤饱和比例的参数，数值介于0-1,其具体取值与Noah-MP保持一致，即由USDA定义的土壤分类计算得来，其主要特性在于随着土壤中的石英含量越高，~$B_{VIC}$~的取值越接近于1。土壤层初始和最大水深计算如下：
+\begin{equation}
+z_{\mathrm{wt,max}}= \left( 1 + B_{{VIC}} \right) \times w_{{satint}}
+\end{equation}
+\begin{equation}
+z_{\mathrm{wt,init}} = z_{\mathrm{wt,max}} \times \left( 1 - \left( 1 - {S}_{{sf}} \right)^{\frac{1}{B_{{VIC}}}} \right)
+\end{equation}
+假设到达地表的净水流通量为$G_{\mathrm{water}}$，则该方案的地表产流$r_{\mathrm{surface}}$考虑三种情况：
+\begin{equation}
+r_{\mathrm{surface}} = 
+\begin{cases}
+G_{\mathrm{water}} & \text{当 } z_{\mathrm{wt,max}} \leq 0 \\
+G_{\mathrm{water}} - w_{{satint}} + w_{{int}} & \text{当 } z_{\mathrm{wt,init}} + G_{\mathrm{water}} > z_{\mathrm{wt,max}} \\
+G_{\mathrm{water}}- w_{{satint}} + w_{{int}} + w_{{satint}} \times {{I}_{{tmp}}}^{1 + B_{{VIC}}} & \text{其他情况}
+\end{cases}
+\end{equation}
+其中：
+\begin{equation}
+{I}_{tmp} = 1 - \frac{\left( z_{\mathrm{wt,init}} + {G}_{\mathrm{water}} \right)}{z_{\mathrm{wt,max}}}
+\end{equation}
+最后，入渗量$q_{\mathrm{infl}}$由净水流通量和地表产流量决定：
+\begin{equation}
+  q_{\mathrm{infl}}={G}_{\mathrm{water}}-r_{\mathrm{surface}}
+\end{equation}
+
+
+
+
+
 
 \subsection{地下产流} \label{section:rsub_par}
 \begin{mymdframed}{代码}

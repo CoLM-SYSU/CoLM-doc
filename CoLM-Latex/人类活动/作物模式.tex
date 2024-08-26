@@ -287,14 +287,14 @@ $t$ 时步的$\mathrm{O_3}$通量累积量:
 氮肥考虑了工业氮肥和粪肥。工业氮肥是输入场。粪肥设为2 \unit{g.N.m^{−2}.yr^{−1}}。施肥时直接将氮肥输入土壤 $\mathrm{NH_4^+}$ 库，从出叶开始，以匀速的方式施肥 20 天。
 
 \subsection{收割和农业残留物处理}
-收割时粒库 $\mathrm{C_{\mathrm{grain}}}$ 进入种子库 $\mathrm{C_{\mathrm{seed}}}$ 和食品库 $\mathrm{C_{\mathrm{food}}}$
+收割时粒库 $C_{\mathrm{grain}}$ 进入种子库 $C_{\mathrm{seed}}$ 和食品库 $C_{\mathrm{food}}$
 \begin{equation}
-  \mathrm{{C}_{\mathrm{seed}}}=\min \left(\mathrm{C_{\mathrm{grain}}}, 3\right)
+  \mathrm{{C}_{\mathrm{seed}}}=\min \left(C_{\mathrm{grain}}, 3\right)
 \end{equation}
 \begin{equation}
-  \mathrm{C_{\mathrm{food}}}=\mathrm{C_{\mathrm{grain}}}-\mathrm{C_{\mathrm{seed}}}
+  C_{\mathrm{food}}=C_{\mathrm{grain}}-C_{\mathrm{seed}}
 \end{equation}
-其中，种子库$\mathrm{C_{\mathrm{seed}}}$在下一个生长季出叶期的第一时步转移到叶库$\mathrm{C_{\mathrm{leaf}}}$。叶和茎的碳库进入地上凋落物库。根的碳库进入地下凋落物库。
+其中，种子库$C_{\mathrm{seed}}$在下一个生长季出叶期的第一时步转移到叶库$C_{\mathrm{leaf}}$。叶和茎的碳库进入地上凋落物库。根的碳库进入地下凋落物库。
 
 \subsection{秸秆焚烧及排放}
 秸秆焚烧燃烧面积百分率${\mathrm {BAF}}$(\unit{s^{-1}}):

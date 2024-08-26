@@ -3,7 +3,7 @@
 
 
 \section{高程数据}
-高程数据来自MERIT DEM数据集 \citep{yamazaki2017high}。该数据集是通过从已有的遥感DEM (SRTM3 v2.1和AW3D-30m v1) 中去除多种误差 (包括绝对偏差、条纹噪声、散斑噪声和树高偏差等) 而开发的，它的分辨率为3秒 (赤道处约90米) ，覆盖了90N-60S之间的陆地区域。高程数据用于判断海洋，即将高程低于0米的地方设置为海洋格点。
+高程数据来自MERIT DEM数据集 \citep{yamazaki2017high}。该数据集是通过从已有的遥感DEM (SRTM3 v2.1和AW3D-30m v1) 中去除多种误差 (包括绝对偏差、条纹噪声、散斑噪声和树高偏差等) 而开发的，它的分辨率为 \ang{;;3} (赤道处约90米) ，覆盖了 \ang{90;;}N--\ang{60;;}S之间的陆地区域。高程数据用于判断海洋，即将高程低于0米的地方设置为海洋格点。
 
 \section{地表覆盖数据}\label{地表覆盖数据}
 地表覆盖数据主要用于次网格构建以及地表属性赋值。
@@ -385,7 +385,7 @@ CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米�
 在目录\texttt{map/glb\_15min}下包含了全球 0.25\textdegree 分辨率的网格-矢量-混合 (grid-vector-hybrid) 河网数据 (图~\ref{fig:流域单元分布图})；具体文件内容如表~\ref{tab:河网图及地形参数文件列表} 和表~\ref{tab:河网图及地形参数文件列表2} 所示。 河网地图的维度信息，包括东西方向网格数目$nx$，南北方向网格数目$ny$，泛滥平原层数 ($nfpl$)，
 网格大小 ($gsize$)和区域边界 (西、东、南、北)，记录在 \texttt{params.txt} 之中。\texttt{nextxy.bin} 文件包含了2个参数 ($nextx$和$nexty$)，
 分别记录了每个网格的下游单元的相对位置，
-其中与海洋接口的河口标记为-9，内陆河流终点标记为-10，海洋 (未定义) 标记为 -9999。
+其中与海洋接口的河口标记为$-9$，内陆河流终点标记为$-10$，海洋 (未定义) 标记为 $-9999$。
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -463,7 +463,7 @@ CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米�
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=1.0\textwidth]{Figures/陆地表面的水分循环/基于流域单元的漫滩高程剖面函数.png}
-\caption{基于流域单元的漫滩高程剖面函数。}
+\caption{基于流域单元的漫滩高程剖面函数}
 \label{fig:基于流域单元的漫滩高程剖面函数}
 \end{figure}
 }
@@ -501,15 +501,15 @@ CaMa-Flood推荐使用通过 \texttt{set\_gwdlr.F90} 子程序生成组合宽度
 \begin{equation}
 F_{i}=\sum_{N} A_{i, j} R_{j}
 \end{equation}
-其中$F_i$为进入流域单元$i$在单位时间 [\unit{m^3.s^{-1}}]的输入水量，$A_{i, j}$ 是陆面模式的经纬度网格单元$j$在属于指定流域单元的面积大小,
+其中$F_i$为进入流域单元$i$在单位时间的输入水量（单位：\unit{m^3.s^{-1}}），$A_{i, j}$ 是陆面模式的经纬度网格单元$j$在属于指定流域单元的面积大小,
  $N$是指属于指定流域单元陆面模式的经纬度网格的数量。该映射信息被存储在 \texttt{test\_***.bin} (\texttt{***} 是网格分辨率
- ，例如 \texttt{test\_1deg.bin})。同时，还需准备一个文本文件 (比如说 \texttt{diminfo\_test-1deg.txt}) 用来指定模拟的维度
+ ，例如 \texttt{test\_1deg.bin})。同时，还需准备一个文本文件 (比如 \texttt{diminfo\_test-1deg.txt}) 用来指定模拟的维度
   (比如说区域，分辨率，流域单元数量，输入经纬度网格数量，输入的映射文件名 \texttt{test\_***.bin})。
 
-在 \texttt{map} 目录中，CaMa-Flood 还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据 (即 \texttt{3sec}，\texttt{15sec}和\texttt{1min})。高分辨率数据被划分为\texttt{\$(TILE).\$(VAR).bin}，每个TILE的区域记录在 \texttt{location.txt} 文件之中；
+在 \texttt{map} 目录中，CaMa-Flood 还准备了一些用于生成映射矩阵和漫滩高程剖面曲线所需的高分辨率数据 (即 \texttt{3sec}，\texttt{15sec}和\texttt{1min})。高分辨率数据被划分为\texttt{\$(TILE).\$(VAR)\allowbreak.bin}，每个TILE的区域记录在 \texttt{location.txt} 文件之中；
 具体提供的参数 \texttt{\$(VAR)} 如表~\ref{tab:河网图及地形参数文件列表2} 所示。其中 \texttt{\$(TILE).flwdir.bin} 和
 \texttt{\$(TILE).downxy.bin} 分别以基于 D8 格式和 downstreamXY 格式描述了河流流向；\texttt{\$(TILE).catmzy.bin} 表示流域单元内的网格 (ix, iy) 
-在高分辨率经纬度网格 (iXX, iYY)上的映射；\texttt{\$(TILE).catmzz.bin} 表示每个网格对应的漫滩层；\texttt{\$(TILE).flddif.bin} 表示每个网格堤坝平均高度 [m]，
+在高分辨率经纬度网格 (iXX, iYY)上的映射；\texttt{\$(TILE).catmzz.bin} 表示每个网格对应的漫滩层；\texttt{\$(TILE).flddif.bin} 表示每个网格堤坝平均高度 （单位：m），
 用于对粗分辨率的漫滩水深进行降尺度；\texttt{\$(TILE).visual.bin} 用于高分辨率流域边界可视化，其中数值上体现为海洋 = 0, 
 陆地 (未调整) = 1, 陆地 (调整并在 CaMa 中使用) = 2, 通常网格 = 3，流域边界 = 5, 河道 = 10, 内陆流域出口 = 20, 与海洋连接的河口 = 25。
 具体文件列表见表~\ref{tab:河网各数据文件1}。
@@ -586,9 +586,9 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 
 
 \subsection{湖泊}
-湖泊数据主要用于湖泊模式。HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多边形数据\citep{messager2016nc}。原HydroLAKE数据为矢量数据，在CoLM中，将其转化为了与MERIT Hydro相同的3弧秒分辨率的格点数据进行使用。
+湖泊数据主要用于湖泊模式。HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多边形数据\citep{messager2016nc}。原HydroLAKE数据为矢量数据，在CoLM中，将其转化为了与MERIT Hydro相同的 \ang{;;3} 分辨率的格点数据进行使用。
 
-湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球\ang{;;30} (约1公里)分辨率，经纬度网格，单时次数据。
+湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球 \ang{;;30} (约1公里)分辨率，经纬度网格，单时次数据。
 
 
 \section{城市数据}\label{城市数据}
