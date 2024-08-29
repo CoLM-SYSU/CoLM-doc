@@ -28,7 +28,7 @@
 雨水温度非常接近于大气湿球温度，故该方案中雨水温度由湿球温度近似，根据湿球温度定义有如下关系：
 \begin{equation}
   \label{eq:湿球温度定义}
-  C_{\mathrm{p a}}\left(T_{\mathrm{w b}}-T\right)=\lambda_{\mathrm{vap}}\left(r-r_{\mathrm{s a t}}^{T_{\mathrm{w b}}}\right)
+  C_{\mathrm{a}}\left(T_{\mathrm{w b}}-T\right)=\lambda_{\mathrm{vap}}\left(r-r_{\mathrm{s a t}}^{T_{\mathrm{w b}}}\right)
 \end{equation}
 其中 $C_{\mathrm{a}}$ 表示干空气的比热容 (\unit{J.kg^{-1}.K^{-1}})，$T_{\mathrm{wb}}$ 表示大气湿球温度 (K)，
 $T$ 表示大气环境温度 (K)，$r$ 表示混合比，$r_{\mathrm{sat}}^{T_{\mathrm{wb}}}$ 表示 $T_{\mathrm{wb}}$ 温度下的饱和混合比，
@@ -82,26 +82,26 @@ PSY (Psychrometric Energy Balance Method) 方案基于以下假设:
 \end{enumerate}
 基于上述假设，该方案通过计算水凝物表面空气温度来表征水凝物温度（\textcelsius）。具体计算过程如下：
 \begin{equation}
-L\frac{\mathrm{d}m}{\mathrm{d}t} = 4\pi C\lambda_{\mathrm{t}}(T_{\mathrm{i}} - T)
+\lambda\frac{\mathrm{d}m}{\mathrm{d}t} = 4\pi Ck_{\mathrm{a}}(T_{\mathrm{ice}} - T)
 \end{equation}
 \begin{equation}
-\frac{\mathrm{d}m}{\mathrm{d}t} = 4\pi CD_{\mathrm{v}}(\rho - \rho_{\mathrm{i}})
+\frac{\mathrm{d}m}{\mathrm{d}t} = 4\pi CD_{\mathrm{v}}(\rho - \rho_{\mathrm{ice}})
 \end{equation}
 简化后得到：
 \begin{equation}
 \label{eq:水凝物表面空气温度定义}
-T_{\mathrm{i}} = T + \frac{D_{\mathrm{v}}}{\lambda_{\mathrm{t}}}L(\rho - \rho_{\mathrm{i}})
+T_{\mathrm{ice}} = T + \frac{D_{\mathrm{v}}}{k_{\mathrm{a}}}\lambda(\rho - \rho_{\mathrm{ice}})
 \end{equation}
-其中：$L$为凝结或凝华潜热，$C$为水凝物形状因子，$\lambda_{\mathrm{t}}$为空气导热率因子，$T_{\mathrm{i}}$为水凝物表面空气温度，$T$为环境温度，$D_{\mathrm{v}}$为水汽扩散系数，$\rho$为环境空气密度，$\rho_{\mathrm{i}}$为水凝物表面空气密度。
+其中：$\lambda$为凝结或凝华潜热，$C$为水凝物形状因子，$k_{\mathrm{a}}$为空气导热率因子，$T_{\mathrm{ice}}$为水凝物表面空气温度，$T$为环境温度，$D_{\mathrm{v}}$为水汽扩散系数，$\rho$为环境空气密度，$\rho_{\mathrm{ice}}$为水凝物表面空气密度。
 上述方程可通过牛顿迭代法求解，从而得出水凝物表面空气温度。与方程\eqref{eq:湿球温度定义}对湿球温度的等焓假设不同，方程\eqref{eq:水凝物表面空气温度定义}在计算水凝物温度时并未做出类似假设。这两种方法的物理基础存在差异，因此其计算方程不能相互转化。
 
 
 由上可得，本方案计算液态降水占比如下：
 \begin{equation}
   f{\mathrm{pl}}= \begin{cases}
-    1, & \text{当 }\ 5\leqslant T{\mathrm {i}} \text{ 时}\\
-    \frac{1}{1 + 2.50286\times 0.125006^{T{\mathrm{i}}}}, & \text{当 }\ -5\leqslant T{\mathrm {i}} < 5 \text{ 时} \\
-    0, & \text{当 }\ T_{\mathrm {i}} < -5 \text{ 时}
+    1, & \text{当 }\ 5\leqslant T{\mathrm {ice}} \text{ 时}\\
+    \frac{1}{1 + 2.50286\times 0.125006^{T{\mathrm{ice}}}}, & \text{当 }\ -5\leqslant T{\mathrm {ice}} < 5 \text{ 时} \\
+    0, & \text{当 }\ T_{\mathrm {ice}} < -5 \text{ 时}
   \end{cases}
 \end{equation}
 值得注意的是，上述Sigmoid函数拟合方法与湿球温度方案有所不同。
@@ -131,21 +131,21 @@ CoLM中使用的雨水温度可由湿球温度近似，计算方案在第~\ref{�
 雪的密度影响到地表的雪深、雪的堆积等一系列物理过程，是一个很重要的参量，在CoLM中采用CLM5的方案计算新雪密度，具体过程如下：
 \begin{equation*}
   Bifall= \begin{cases}
-    50 + 1.7\times 17^{1.5}, & \text{当 }\ 2\leqslant forc_{\mathrm {t}} - T_{\mathrm{frz}} \text{ 时}\\
-    50 + 1.7(forc_{\mathrm {t}} - T_{\mathrm{frz}}+15)^{1.5}, & \text{当 }\ -15\leqslant forc_{\mathrm {t}} - T_{\mathrm{frz}} < 2 \text{ 时} \\
-    -3.8328(forc_{\mathrm {t}} - T_{\mathrm{frz}}) - 0.0333(forc_{\mathrm {t}} - T_{\mathrm{frz}})^2, & \text{当 }\ -57.55\leqslant forc_{\mathrm {t}} - T_{\mathrm{frz}} < -15 \text{ 时} \\
-    110.2898, & \text{当 }\ forc_{\mathrm {t}} - T_{\mathrm{frz}} < -57.55 \text{ 时}\\
+    50 + 1.7\times 17^{1.5}, & \text{当 }\ 2\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} \text{ 时}\\
+    50 + 1.7(T_{\mathrm {a}} - T_{\mathrm{frz}}+15)^{1.5}, & \text{当 }\ -15\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} < 2 \text{ 时} \\
+    -3.8328(T_{\mathrm {a}} - T_{\mathrm{frz}}) - 0.0333(T_{\mathrm {a}} - T_{\mathrm{frz}})^2, & \text{当 }\ -57.55\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} < -15 \text{ 时} \\
+    110.2898, & \text{当 }\ T_{\mathrm {a}} - T_{\mathrm{frz}} < -57.55 \text{ 时}\\
   \end{cases}
 \end{equation*}
 
 当风速达到一定阈值时，雪密度在考虑温度后还需要继续考虑风速：
 \begin{equation}
-  forc_{\mathrm{wind}} = \sqrt{(u^2 + v^2)}
+  V_{\mathrm {a}} = \sqrt{(u^2 + v^2)}
 \end{equation}
 
-当 $forc_{\mathrm{wind}}$ > 0.1 时
+当 $V_{\mathrm {a}}$ > 0.1 时
 \begin{equation}
-  Bifall_{\mathrm{new}} = Bifall_{\mathrm{old}} + 266.81{\left(\frac{1 + \tanh (\frac{forc_{\mathrm{wind}}}{5})}{2}\right)}^{8.8}
+  Bifall_{\mathrm{new}} = Bifall_{\mathrm{old}} + 266.81{\left(\frac{1 + \tanh (\frac{V_{\mathrm {a}}}{5})}{2}\right)}^{8.8}
 \end{equation}
 
 
@@ -156,15 +156,15 @@ CoLM中使用的雨水温度可由湿球温度近似，计算方案在第~\ref{�
 
 当地表有植被覆盖时，植被叶片与雨水的能量交换 (\unit{W.m^{-2}}) 分别计算如下：
 \begin{equation}
-  H_{\mathrm{prcv}}=C_{\mathrm{liq}} q_{\mathrm{pl}}\left(T_{\mathrm{p}}-T_{\mathrm{v}}\right)+C_{\mathrm{ice}} q_{\mathrm{pi}}\left(T_{\mathrm{p}}-T_{\mathrm{v}}\right)
+  H_{\mathrm{prcv}}=C_{\mathrm{liq}} q_{\mathrm{intr,rain}}\left(T_{\mathrm{p}}-T_{\mathrm{v}}\right)+C_{\mathrm{ice}} q_{\mathrm{intr,snow}}\left(T_{\mathrm{p}}-T_{\mathrm{v}}\right)
 \end{equation}
 其中$C_{\mathrm{liq}}$与$C_{\mathrm{ice}}$分别表示液态水与固态水的比热容(\unit{J.kg^{-1}.K^{-1}})，
-$q_{\mathrm{pl}}$与$q_{\mathrm{pi}}$分别表示植被冠层对液态水和固态水的截流率(\unit{mm.H_2O.s^{-1}})(计算见第~\ref{植被冠层截留} 章)。
+$q_{\mathrm{intr,rain}}$与$q_{\mathrm{intr,snow}}$分别表示植被冠层对液态水和固态水的截流率(\unit{mm.H_2O.s^{-1}})(计算见第~\ref{植被冠层截留} 章)。
 
 
 地表与雨水的能量交换 (\unit{W.m^{-2}}) 为：
 \begin{equation}
-  H_{\mathrm{p r c g}}=C_{\mathrm{p l}} p_{\mathrm{l}}\left(T_{\mathrm{p}}-T_{\mathrm{g}}\right)+C_{\mathrm{p i}} p_{\mathrm{i}}\left(T_{\mathrm{p}}-T_{\mathrm{g}}\right)
+  H_{\mathrm{p r c g}}=C_{\mathrm{liq}} p_{\mathrm {rain}}\left(T_{\mathrm{p}}-T_{\mathrm{g}}\right)+C_{\mathrm{ice}} p_{\mathrm {snow}}\left(T_{\mathrm{p}}-T_{\mathrm{g}}\right)
 \end{equation}
-其中$p_{\mathrm {l}}$与$p_{\mathrm {i}}$分别表示落到地面的液态水与固态水降水率(\unit{mm.H_2O.s^{-1}})，
-当有植被覆盖时，$p_{\mathrm {l}}$与$p_{\mathrm {i}}$为直接穿透植被冠层的降水率与沿叶茎流出冠层的降水率之和(计算见第~\ref{植被冠层截留} 章)。
+其中$p_{\mathrm {rain}}$与$p_{\mathrm {snow}}$分别表示落到地面的液态水与固态水降水率(\unit{mm.H_2O.s^{-1}})，
+当有植被覆盖时，$p_{\mathrm {rain}}$与$p_{\mathrm {snow}}$为直接穿透植被冠层的降水率与沿叶茎流出冠层的降水率之和(计算见第~\ref{植被冠层截留} 章)。

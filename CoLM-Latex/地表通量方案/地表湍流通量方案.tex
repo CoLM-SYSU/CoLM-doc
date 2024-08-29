@@ -334,21 +334,21 @@ $V_{\mathrm{a}}=\sqrt{u_{\mathrm{a}}^{2}+v_{\mathrm{a}}^{2}+U_{\mathrm{c}}^{2}} 
 当陆地表面没有植被覆盖(裸土、城市和湿地覆盖时)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算。
 对于任一地表类型斑块，已知植被粗糙度$z_{\mathrm{0mv}}$时，则被积雪掩埋的植被占总植被的比例为
 \begin{equation}
-  {\mathrm {wt}}=\frac{0.1 z_{\mathrm{{sno}}}}{z_{\mathrm{0mv}}+0.1 z_{\mathrm{{sno}}}}
+  {\mathrm {wt}}=\frac{0.1 d_{\mathrm{{sno}}}}{z_{\mathrm{0mv}}+0.1 d_{\mathrm{{sno}}}}
 \end{equation}
-其中$z_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-{\mathrm {wt}}\right)f_{\mathrm{c}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$\rm wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-{\mathrm {wt}}\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
+其中$d_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-{\mathrm {wt}}\right)f_{\mathrm{c}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$\rm wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-{\mathrm {wt}}\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
 
 
 陆地表面可分为被积雪覆盖与未被积雪覆盖两部分。根据 \citet{swenson2012new}提供的方法，
 被积雪覆盖的地表面积比例$f_{\mathrm{sno}}$可分为两步计算：在积分开始时若有降雪发生，则新一步的$f_{\mathrm{sno}}$更新为
 \begin{equation}
-  f_{\mathrm{{sno }}}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{\mathrm{i}} \Delta t\right)\right]\left(1-f_{\mathrm{{sno }}}^{(n)}\right) \leqslant 1.0
+  f_{\mathrm{{sno }}}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{\mathrm{snow}} \Delta t\right)\right]\left(1-f_{\mathrm{{sno }}}^{(n)}\right) \leqslant 1.0
 \end{equation}
-其中$p_{\mathrm {i}}$为降雪率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{\mathrm{sno}}$更新为
+其中$p_{\mathrm {snow}}$为降雪率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{\mathrm{sno}}$更新为
 \begin{equation}
-  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{100 z_{\mathrm{s n o}}^{2}}{2.5 z_{\mathrm{0 m, s o i}} W_{\mathrm{sno}}}\right)}
+  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{100 d_{\mathrm{s n o}}^{2}}{2.5 z_{\mathrm{lnd}} W_{\mathrm{sno}}}\right)}
 \end{equation}
-其中$W_{\mathrm{sno}}$为雪水当量(mm)，$z_{\mathrm{0m,soi}}$ 为未被积雪覆盖时的地表粗糙度。
+其中$W_{\mathrm{sno}}$为雪水当量(mm)，$z_{\mathrm{lnd}}$ 为未被积雪覆盖时的裸土地表粗糙度，取值为0.01 m。
 
 对于无植被覆盖部分的陆地表面，湍流通量只存在于地表与大气之间，此部分动量通量$\tau$、感热通量$H$和水汽通量$E$表达为：
 \begin{equation}\label{tau_x}
@@ -896,7 +896,7 @@ $u_{\mathrm{comb}}$和$K_{\mathrm{comb}}$同公式 (\ref{ucomb}) 和 (\ref{kcomb
 %
 其中叶片蒸腾水汽通量相对叶片温度变化的导数计算为：
 \begin{equation}
-  \frac{\partial E_{\mathrm{vt}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm{sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - w_{\mathrm{vq}i} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
+  \frac{\partial E_{\mathrm{tr}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm{sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - w_{\mathrm{vq}i} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
 \end{equation}
 %
 叶片蒸发水汽通量相对叶片温度变化导数计算为：
@@ -1088,7 +1088,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 %
 其中叶片蒸腾水汽通量相对叶片温度变化的导数计算为：
 \begin{equation}
-  \frac{\partial E_{\mathrm{vt}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm{sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - \frac{w_{\mathrm{vq}i}}{f_{\mathrm{q}}} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
+  \frac{\partial E_{\mathrm{tr}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm{sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - \frac{w_{\mathrm{vq}i}}{f_{\mathrm{q}}} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
 \end{equation}
 %
 叶片蒸发水汽通量相对叶片温度变化导数计算为：
@@ -1103,7 +1103,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 %
 其中叶片蒸腾水汽通量相对叶片温度变化的导数计算为：
 \begin{equation}
-  \frac{\partial E_{\mathrm{vt}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm{sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - \frac{w_{\mathrm{vq}i}}{f_{\mathrm{q}}} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
+  \frac{\partial E_{\mathrm{tr}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm{sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - \frac{w_{\mathrm{vq}i}}{f_{\mathrm{q}}} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
 \end{equation}
 %
 叶片蒸发水汽通量相对叶片温度变化导数计算为：
@@ -1329,7 +1329,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 %
 其中叶片蒸腾水汽通量相对叶片温度变化的导数计算为：
 \begin{equation}
-  \frac{\partial E_{\mathrm{vt}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm {sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - \frac{w_{\mathrm{vq}i}}{f_{\mathrm{q}}} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
+  \frac{\partial E_{\mathrm{tr}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm {sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - \frac{w_{\mathrm{vq}i}}{f_{\mathrm{q}}} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
 \end{equation}
 %
 叶片蒸发水汽通量相对叶片温度变化导数计算为：
@@ -1344,7 +1344,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 %
 其中叶片蒸腾水汽通量相对叶片温度变化的导数计算为：
 \begin{equation}
-  \frac{\partial E_{\mathrm{vt}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm {sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - \frac{w_{\mathrm{aq1}}w_{\mathrm{gq2}}w_{\mathrm{vq}i}}{f_{\mathrm{q}}} - w_{\mathrm{vq}i} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
+  \frac{\partial E_{\mathrm{tr}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm {sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,sha}} \right)\left( 1 - \frac{w_{\mathrm{aq1}}w_{\mathrm{gq2}}w_{\mathrm{vq}i}}{f_{\mathrm{q}}} - w_{\mathrm{vq}i} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
 \end{equation}
 %
 叶片蒸发水汽通量相对叶片温度变化导数计算为：
@@ -1359,7 +1359,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 %
 其中叶片蒸腾水汽通量相对叶片温度变化的导数计算为：
 \begin{equation}
-  \frac{\partial E_{\mathrm{vt}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm {sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm {sha}}} \right)\left( 1 - \frac{w_{\mathrm{gq3}}w_{\mathrm{aq2}}w_{\mathrm{vq}i}}{f_{\mathrm{q}}} - w_{\mathrm{vq}i} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
+  \frac{\partial E_{\mathrm{tr}i}}{\partial T_{\mathrm{v}i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm {sun}}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b}i} + r_{\mathrm{s}i,\mathrm {sha}}} \right)\left( 1 - \frac{w_{\mathrm{gq3}}w_{\mathrm{aq2}}w_{\mathrm{vq}i}}{f_{\mathrm{q}}} - w_{\mathrm{vq}i} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v}i}}}{{\rm d}T_{\mathrm{v}i}}
 \end{equation}
 %
 叶片蒸发水汽通量相对叶片温度变化导数计算为：

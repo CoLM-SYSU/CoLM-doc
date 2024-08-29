@@ -599,6 +599,21 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 \item 自主研制部分高分辨率(主要为城市LAI/SAI)。由于部分数据的缺失，通过多源数据发展适用于城市模式的基础数据；
 \end{enumerate}
 目前城市模式所用基础数据如表~\ref{tab:城市数据分类及来源} 所示。
+
+
+\subsection{城市覆盖}\label{城市覆盖}
+城市地表覆盖数据采用MODIS-IGBP地表覆盖数据(章节~\ref{IGBP地表覆盖数据})中的城市覆盖类型作为判别依据。
+模式利用该数据集区分不同年份网格城市覆盖类型，获得城市在网格中的覆盖度，反应不同年份的城市覆盖变化。
+
+
+\subsection{城市类型}\label{城市类型}
+模式对城市覆盖地区不同城市类型进行细分。城市类型分类数据目前采取两种方案：
+\begin{enumerate}
+    \item 传统的3类城市——高建筑街区 (Tall Building Distinct, TBD)、高密度(High Density, HD) 和中密度 (Medium Density, MD);
+    \item 10类Local Climate Zone (LCZ 1-10)分类，如图~\ref{fig:LCZ分类图示}  所示。
+\end{enumerate}
+
+
 {
 \begin{landscape}
 \begin{table}[htbp]
@@ -641,17 +656,11 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 \end{table}
 \end{landscape}
 }
-\subsection{城市覆盖}\label{城市覆盖}
-城市地表覆盖数据采用MODIS-IGBP地表覆盖数据(章节~\ref{IGBP地表覆盖数据})中的城市覆盖类型作为判别依据。
-模式利用该数据集区分不同年份网格城市覆盖类型，获得城市在网格中的覆盖度，反应不同年份的城市覆盖变化。
 
 
-\subsection{城市类型}\label{城市类型}
-模式对城市覆盖地区不同城市类型进行细分。城市类型分类数据目前采取两种方案：
-\begin{enumerate}
-    \item 传统的3类城市——高建筑街区 (Tall Building Distinct, TBD)、高密度(High Density, HD) 和中密度 (Medium Density, MD);
-    \item 10类Local Climate Zone (LCZ 1-10)分类，如图~\ref{fig:LCZ分类图示}  所示。
-\end{enumerate}
+\subsubsection{传统城市分类}\label{传统城市分类}
+模式对于传统的城市类型分类与NCAR CLM--Urban Model~\citep{oleson2020parameterization} 相同，
+根据 \citet{jackson2010parameterization} 的城市分类数据对全球城市种类进行分类。该数据将城市地表覆盖进一步划分为TBD、HD和MD三种类型，其中，TBD类城市指至少在1平方公里内，建筑高度全部大于或等于10层楼高且透水面比例较小(5$\sim$15\%)；HD类城市建筑高度为3$\sim$10层，透水面比例通常为5$\sim$25\%，这些地区通常为商业、住宅或工业区；MD类城市建筑高度通常为1$\sim$3层，透水面比例约为20$\sim$60\%。原数据由1 km重采样到500 m后，将城市类型赋予对应格点的MODIS城市地表。
 
 {
 \begin{figure}[htbp]
@@ -662,18 +671,17 @@ F_{i}=\sum_{N} A_{i, j} R_{j}
 \end{figure}
 }
 
-\subsubsection{传统城市分类}\label{传统城市分类}
-模式对于传统的城市类型分类与NCAR CLM--Urban Model~\citep{oleson2020parameterization} 相同，
-根据 \citet{jackson2010parameterization} 的城市分类数据对全球城市种类进行分类。该数据将城市地表覆盖进一步划分为TBD、HD和MD三种类型，其中，TBD类城市指至少在1平方公里内，建筑高度全部大于或等于10层楼高且透水面比例较小(5$\sim$15\%)；HD类城市建筑高度为3$\sim$10层，透水面比例通常为5$\sim$25\%，这些地区通常为商业、住宅或工业区；MD类城市建筑高度通常为1$\sim$3层，透水面比例约为20$\sim$60\%。原数据由1km重采样到500m后，将城市类型赋予对应格点的MODIS城市地表。
+
 \subsubsection{LCZ分类}\label{LCZ分类}
-LCZ数据目前使用 \citet{demuzere2022global} 发布的全球LCZ分类数据，该数据空间分辨率为100米，通过向轻量级随机森林模型输入大量标记训练区域和地球观测图像来生成，并对150个选定的功能城市地区采用自助交叉验证和专题基准测试评估了其质量。将原始数据由100m聚合到500m，并把占比最高的LCZ作为500m网格的LCZ类型，进而将LCZ类型赋予对应格点的MODIS城市地表。
+LCZ数据目前使用~\citet{demuzere2022global} 发布的全球LCZ分类数据，该数据空间分辨率为100 m，通过向轻量级随机森林模型输入大量标记训练区域和地球观测图像来生成，并对150个选定的功能城市地区采用自助交叉验证和专题基准测试评估了其质量。将原始数据由100 m聚合到500 m，并把占比最高的LCZ作为500 m网格的LCZ类型，进而将LCZ类型赋予对应格点的MODIS城市地表。
 
 
 \subsection{建筑形态数据}\label{建筑形态数据}
 \subsubsection{建筑高度}\label{建筑高度}
-建筑高度采用\citet{li2022global}发布的数据，该数据利用随机森林模型使用世界各地的参考数据进行训练得到。为了增加代表性，\citet{li2022global}对参考数据进行了人工分类和补充。该数据分辨率为1km，单时次数据。
+建筑高度采用~\citet{li2022global}发布的数据，该数据利用随机森林模型使用世界各地的参考数据进行训练得到。为了增加代表性，\citet{li2022global}对参考数据进行了人工分类和补充。该数据分辨率为1 km，单时次数据。
+
 \subsubsection{建筑比例}\label{建筑比例}
-建筑比例同样采用\citet{li2022global}发布的数据，相比于其他陆面模型使用的根据区域或者LCZ类型查找表赋值的方法，该数据精度较高，能更加真实的还原城市内部建筑的分布以及异质性。
+建筑比例同样采用~\citet{li2022global}发布的数据，相比于其他陆面模型使用的根据区域或者LCZ类型查找表赋值的方法，该数据精度较高，能更加真实的还原城市内部建筑的分布以及异质性。
 
 \subsubsection{透水面占比}\label{透水面占比}
 对于传统城市分类，城市的透水面占比通过33个国家/地区分类以及3种城市类型查找表获得，国家/地区分类由~\citet{oleson2020parameterization}数据得到，其全球分类如图~\ref{fig:地区分类} 所示。
@@ -695,8 +703,8 @@ LCZ同样根据LCZ类型查找表，形态参数设置参考~\citet{stewart2014e
 }
 
 \subsection{建筑辐射及热力数据}\label{建筑辐射及热力数据}
-对于传统城市分类，建筑辐射及热力参数目前根据\citet{oleson2020parameterization}基于\citet{jackson2010parameterization}的建筑数据开发的NCAR城市工具
-(Toolbox for Human-Earth SystemIntegration \& Scaling (THESIS) toolset, \url{http://www.cgd.ucar.edu/iam/projects/thesis/thesis-urbanproperties-tool.html})得到，该工具通过不同地区建筑材料构成为全球33个分区及3类城市生成建筑辐射及热力参数表。
+对于传统城市分类，建筑辐射及热力参数目前根据~\citet{oleson2020parameterization} 基于~\citet{jackson2010parameterization} 的建筑数据开发的NCAR城市工具
+(Toolbox for Human-Earth System Integration \& Scaling (THESIS) toolset, \url{http://www.cgd.ucar.edu/iam/projects/thesis/thesis-urbanproperties-tool.html})得到，该工具通过不同地区建筑材料构成为全球33个分区及3类城市生成建筑辐射及热力参数表。
 LCZ分类建筑辐射参数参考~\citet{stewart2014evaluation}，热力参数则参考WRF设置，如附录表~\ref{tab:lcz局地气候区建筑属性参数} 所示。
 
 \subsubsection{建筑反照率}\label{建筑反照率}
@@ -716,17 +724,17 @@ LCZ分类建筑辐射参数参考~\citet{stewart2014evaluation}，热力参数�
 因此在补充城市内部的植被覆盖数据时，需要尽量选择高分辨率的数据。否则，如果分辨率过低，城市中的植被等信息很可能无法识别。
 
 \subsubsection{城市LAI/SAI数据}\label{城市LAISAI数据}
-由于目前全球LAI数据大部分为光学遥感数据，分辨率为500 m甚至1 km(比如MODIS LAI)，然而在城市中，由于城市中建筑物的遮掩以及混合像元的干扰，这种分辨率下卫星观测的城市LAI存在一定问题，但是作为描述植被的重要参数，LAI数据是不可或缺的。因此为了补充该数据，城市模式中树木的LAI采取插值方法计算得到，即根据格点内其它PFTs(只考虑树，即1-9类PFT)的LAI/SAI生成，具体方法为通过城市树高与PFTs树高比值插值并加权平均计算城市LAI/SAI，方法如下:
+由于目前全球LAI数据大部分为光学遥感数据，分辨率为500 m甚至1 km (比如MODIS LAI)，然而在城市中，由于城市中建筑物的遮掩以及混合像元的干扰，这种分辨率下卫星观测的城市LAI存在一定问题，但是作为描述植被的重要参数，LAI数据是不可或缺的。因此为了补充该数据，城市模式中树木的LAI采取插值方法计算得到，即根据格点内其它PFTs(只考虑树，即1-9类PFT)的LAI/SAI生成，具体方法为通过城市树高与PFTs树高比值插值并加权平均计算城市LAI/SAI，方法如下:
 \begin{equation}
 LAI_{urb}=\sum_{i=1}^{9} LAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \cdot PCT_{PFT_{i}}
 \end{equation}
 \begin{equation}
 SAI_{urb}=\sum_{i=1}^{9} SAI_{PFT_{i}} \cdot \frac{HTOP_{urb}}{HTOP_{PFT_{i}}} \cdot PCT_{PFT_{i}}
 \end{equation}
-其中$LAI_{PFT_{i}}$($SAI_{PFT_{i}}$)为PFT的LAI(SAI)，$HTOP_{urb}$和 $HTOP_{PFT_{i}}$分别为城市树高和PFT树高，$PCT_{PFT_{i}}$为PFT占比。$HTOP_{urb}$分辨率为500 m，PFT占比、LAI/SAI以及PFT树高均为0.5\textdegree{}分辨率，通过插值计算后便得到500m分辨率下LAI/SAI数据。
+其中$LAI_{PFT_{i}}$($SAI_{PFT_{i}}$)为PFT的LAI(SAI)，$HTOP_{urb}$和 $HTOP_{PFT_{i}}$分别为城市树高和PFT树高，$PCT_{PFT_{i}}$为PFT占比。$HTOP_{urb}$分辨率为500 m，PFT占比、LAI/SAI以及PFT树高均为0.5\textdegree{}分辨率，通过插值计算后便得到500 m分辨率下LAI/SAI数据。
 
 \subsubsection{城市树高}\label{城市树高数据}
-CoLM自然植被树高采用~\citet{simard2011mapping}发布的全球树高数据，该数据虽然应用广泛，但是分辨率较低(1 km)，无法满足城市模拟的需求，近年来，关于树高的高分辨率数据发展迅速，\citet{potapov2021mapping}利用GEDI卫星数据反演的树高数据具有较高的空间分辨率(30m,)，但是由于卫星运行轨道限制，该数据目前只发布了$51.6°N$ $\sim$ $51.6°S$范围内的数据。\citet{lang2023high}则开发了一种从Sentinel-2光学图像中检索冠层高度的深度学习模型，该模型可以有效降低卫星观测树高偏低的问题，\citet{lang2023high}利用该模型并结合GEDI 30m树高数据生成了全球10m树高地图。相比于GEDI数据，该数据更全(全球)，同时改善了GEDI偏低的问题，并且分别率更高(10m)，因此将该数据集作为城市树高基础数据。
+CoLM自然植被树高采用~\citet{simard2011mapping}发布的全球树高数据，该数据虽然应用广泛，但是分辨率较低(1 km)，无法满足城市模拟的需求，近年来，关于树高的高分辨率数据发展迅速，\citet{potapov2021mapping}利用GEDI卫星数据反演的树高数据具有较高的空间分辨率(30 m)，但是由于卫星运行轨道限制，该数据目前只发布了 \ang{51.6;;}N $\sim$ \ang{51.6;;}S 范围内的数据。\citet{lang2023high}则开发了一种从Sentinel-2光学图像中检索冠层高度的深度学习模型，该模型可以有效降低卫星观测树高偏低的问题，\citet{lang2023high}利用该模型并结合GEDI 30 m树高数据生成了全球10 m树高地图。相比于GEDI数据，该数据更全(全球)，同时改善了GEDI偏低的问题，并且分别率更高(10 m)，因此将该数据集作为城市树高基础数据。
 
 \subsubsection{城市树覆盖度}
 GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
@@ -755,10 +763,10 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 \subsection{城市人类活动数据}\label{城市人类活动数据}
 
 \subsubsection{人口密度数据}\label{人口密度数据}
-人口密度数据目前使用由美国能源部橡树岭国家实验室(ORNL)发布的LandScan数据~\citep{brightLandScanGlobal20002001}，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是常用的全球人口动态统计分析数据集之一，该数据空间分辨率为1km，时间覆盖2000--2022年。
+人口密度数据目前使用由美国能源部橡树岭国家实验室(ORNL)发布的LandScan数据~\citep{brightLandScanGlobal20002001}，该数据采用地理信息系统与遥感影相结合的创新方法，在1 km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是常用的全球人口动态统计分析数据集之一，该数据空间分辨率为1 km，时间覆盖2000--2022年。
 
 \subsubsection{LUCY国家分类}\label{LUCY国家分类}
-LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国家的汽车拥有量以及不同时刻的交通流量，用于交通热模拟，该数据分辨率为5km，单时次数据。
+LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国家的汽车拥有量以及不同时刻的交通流量，用于交通热模拟，该数据分辨率为5 km，单时次数据。
 
 
 \section{作物数据}
@@ -786,7 +794,7 @@ LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国�
 
 
 \subsection{闪电频率数据}\label{闪电频率数据}
-闪电频率数据用于火灾发生频率的预测。闪电频率数据提供了3小时气候态的全球数据(单位：\unit{flashes. km^{-2} hr^{-1}})，空间分辨率是1.875\textdegree$\times$1.915\textdegree，是对1995-2011年NASA LIS/OTD 2小时2.5\textdegree{}格点产品(版本v2.2)进行线性插值而得到(\url{http://ghrc.msfc.nasa.gov})。 
+闪电频率数据用于火灾发生频率的预测。闪电频率数据提供了3小时气候态的全球数据(单位：\unit{flashes. km^{-2}.hr^{-1}})，空间分辨率是1.875\textdegree$\times$1.915\textdegree，是对1995--2011年NASA LIS/OTD 2小时2.5\textdegree{}格点产品(版本v2.2)进行线性插值而得到(\url{http://ghrc.msfc.nasa.gov})。 
 
 
 \subsection{国民生产总值数据}\label{国民生产总值数据}

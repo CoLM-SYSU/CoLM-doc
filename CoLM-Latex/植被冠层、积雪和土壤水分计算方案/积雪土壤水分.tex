@@ -8,21 +8,21 @@ CoLM中地表的水分平衡分为无积雪和有积雪两种情形。
 
 当无积雪时，
 \begin{equation}
-  \Delta W_{\mathrm{ponding}} = P_{\mathrm{rain}}+S_{\mathrm{melt}}+Q_{\mathrm{dew}}-E-R-Q_{\mathrm{infl}}
+  \Delta W_{\mathrm{ponding}} = p_{\mathrm{g,rain}}+S_{\mathrm{melt}}+q_{\mathrm{sdew}}-q_{\mathrm{seva}}-r_{\mathrm{sur}}-q_{\mathrm{infl}}
 \end{equation}
-其中$\Delta W_{\mathrm{ponding}}$为地表积水的变化，$P_{\mathrm{rain}}$为经过植被截留后到达地面的降水，$S_{\mathrm{melt}}$为积雪融化后的水分，$Q_{\mathrm{dew}}$为凝结的水分，$E$为土壤表面的蒸发，$R$为地表产流，$Q_{\mathrm{infl}}$为入渗到土壤中的水分。
+其中$\Delta W_{\mathrm{ponding}}$为地表积水的变化，$p_{\mathrm{g,rain}}$为经过植被截留后到达地面的降水，$S_{\mathrm{melt}}$为积雪融化后的水分，$q_{\mathrm{sdew}}$为凝结的水分，$q_{\mathrm{seva}}$为土壤表面的蒸发，$r_{\mathrm{sur}}$为地表产流，$q_{\mathrm{infl}}$为入渗到土壤中的水分。
 
 当有积雪时，
 \begin{equation}
-  \Delta W_{\mathrm{ponding}} = S_{\mathrm{melt}}-R-Q_{\mathrm{infl}}
+  \Delta W_{\mathrm{ponding}} = S_{\mathrm{melt}}-r_{\mathrm{sur}}-q_{\mathrm{infl}}
 \end{equation}
-其中$\Delta W_{\mathrm{ponding}}$为地表积水的变化，$S_{\mathrm{melt}}$为由积雪空隙到达地表的液态水，$R$为地表产流，$Q_{\mathrm{infl}}$为入渗到土壤中的水分。
+其中$\Delta W_{\mathrm{ponding}}$为地表积水的变化，$S_{\mathrm{melt}}$为由积雪空隙到达地表的液态水，$r_{\mathrm{sur}}$为地表产流，$q_{\mathrm{infl}}$为入渗到土壤中的水分。
 
 积雪中的液态水平衡为，
 \begin{equation}
-  \Delta W_{\mathrm{snow}} = P_{\mathrm{rain}}+Q_{\mathrm{dew}}-S_{\mathrm{melt}}-E
+  \Delta W_{\mathrm{snow}} = p_{\mathrm{g,rain}}+q_{\mathrm{sdew}}-S_{\mathrm{melt}}-q_{\mathrm{seva}}
 \end{equation}
-其中$\Delta W_{\mathrm{snow}}$为积雪空隙中液态水的变化，$P_{\mathrm{rain}}$为经过植被截留后到达地面的降水，$Q_{\mathrm{dew}}$为凝结的水分，$S_{\mathrm{melt}}$为由积雪空隙到达地表的液态水，$E$为积雪表面的蒸发。
+其中$\Delta W_{\mathrm{snow}}$为积雪空隙中液态水的变化，$p_{\mathrm{g,rain}}$为经过植被截留后到达地面的降水，$q_{\mathrm{sdew}}$为凝结的水分，$S_{\mathrm{melt}}$为由积雪空隙到达地表的液态水，$q_{\mathrm{seva}}$为积雪表面的蒸发。
 
 积雪中的液态水受毛细管力和重力的共同作用而流动，但由于毛细管力比重力小两个以上数量级，在计算的时候可以忽略。
 水流通量一般表达为$K\times{\rm ss}^3$，其中$K$为导水率，${\rm ss}$为液态水在孔隙中的饱和度。由于没有有效的参数化方案来计算导水率$K$，
@@ -139,7 +139,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
   \end{aligned}
 \end{equation}
 
-对最上面的土壤分层(第1层)，使用给定的入渗通量$Q_{\mathrm{infl}}$，则
+对最上面的土壤分层(第1层)，使用给定的入渗通量$q_{\mathrm{infl}}$，则
 \begin{equation}
   \begin{aligned}
     a_1 &= 0 \\
@@ -149,7 +149,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
     c_1 &= -K_{1+\frac{1}{2}}^{n} \frac{1}{\Delta z_{1+\frac{1}{2}}}
     \frac{\partial \psi_{2}}{\partial \theta_{2}}-\frac{\partial K_{1+\frac{1}{2}}}{\partial \theta_{2}}\left[\frac{1}{\Delta z_{1+\frac{1}{2}}}
     \left(\psi_{2}^{n}-\psi_{1}^{n}\right)-1\right] \\
-    r_1 &= Q_{\mathrm{infl}}+K_{1+\frac{1}{2}}^{n}
+    r_1 &= q_{\mathrm{infl}}+K_{1+\frac{1}{2}}^{n}
     \left[\frac{1}{\Delta z_{1+\frac{1}{2}}}\left(\psi_{2}^{n}-\psi_{1}^{n}\right)-1\right]-S_{1}
   \end{aligned}
 \end{equation}
@@ -284,26 +284,26 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 
 地下产流主要指由地形引起的地下水的侧向流动。当不考虑基于物理过程的侧向流时，模式中通过~\ref{section:rsub_par}节中的参数化方案来计算地下产流的量，这部分水分需从地下水和土壤水中扣除。
 
-假设地下产流的量为$r_{\mathrm{subsurface}}$。
+假设地下产流的量为$r_{\mathrm{sub}}$。
 地下水位位于分层土壤之内时，需要逐层计算水位的变化。记起始时地下水位$z_{\mathrm{wt}}$所在层为$j$，则实际可从第$j$层中扣除的水量为（$z_{j+\frac{1}{2}}$为第$j$层的下边界）
 \begin{equation}
-  r_{\mathrm{subsurface}},j = \min \left[r_{\mathrm{subsurface}}, \frac{S_{\mathrm{y},j} \cdot \left(z_{j+\frac{1}{2}} - z_{\mathrm{w t}}\right)}{\Delta t} \right]
+  r_{\mathrm{sub}},j = \min \left[r_{\mathrm{sub}}, \frac{S_{\mathrm{y},j} \cdot \left(z_{j+\frac{1}{2}} - z_{\mathrm{w t}}\right)}{\Delta t} \right]
 \end{equation}
 其中$S_{\mathrm{y},j}$为第$j$层内的给水度，由~\eqref{eqn:s_y}计算。地下水位在第$j$层内的变化为
 \begin{equation}
-  z_{\mathrm{w t}}=z_{\mathrm{w t}}+\frac{r_{\mathrm{subsurface},j} \cdot \Delta t}{S_{\mathrm{y},j}}
+  z_{\mathrm{w t}}=z_{\mathrm{w t}}+\frac{r_{\mathrm{sub},j} \cdot \Delta t}{S_{\mathrm{y},j}}
 \end{equation}
 土壤水的变化为
 \begin{equation}
-  w_{\mathrm{liq},j} =  w_{\mathrm{liq},j} - r_{\mathrm{subsurface},j} \cdot \Delta t
+  w_{\mathrm{liq},j} =  w_{\mathrm{liq},j} - r_{\mathrm{sub},j} \cdot \Delta t
 \end{equation}
-若$r_{\mathrm{subsurface},j}<r_{\mathrm{subsurface}}$，则此时地下水位下降到第$j+1$层，$r_{\mathrm{subsurface}}$更新为$r_{\mathrm{subsurface}}-r_{\mathrm{subsurface},j}$，继续从第$j+1$层进行扣除，直至$r_{\mathrm{subsurface}}=0$或地下水位降到了最下层土壤之下.
+若$r_{\mathrm{sub},j}<r_{\mathrm{sub}}$，则此时地下水位下降到第$j+1$层，$r_{\mathrm{sub}}$更新为$r_{\mathrm{sub}}-r_{\mathrm{sub},j}$，继续从第$j+1$层进行扣除，直至$r_{\mathrm{sub}}=0$或地下水位降到了最下层土壤之下.
 
 若地下水位降到了最下层土壤之下，公式~\eqref{eqn:s_y}中的参数$\theta_{\mathrm {sat}} $、$\psi_{\mathrm {sat}} $ 和 $B$取最下层土壤的值，则含水层总水量和水位的变化为
 \begin{equation}
   \begin{aligned}
-    w_{\mathrm{a}} & = w_{\mathrm{a}} - r_{\mathrm{subsurface}} \cdot \Delta t, \\
-    z_{\mathrm{wt}} & = z_{\mathrm{w t}}+\frac{r_{\mathrm{subsurface}} \cdot \Delta t}{S_{\mathrm{y}}}.
+    w_{\mathrm{a}} & = w_{\mathrm{a}} - r_{\mathrm{sub}} \cdot \Delta t, \\
+    z_{\mathrm{wt}} & = z_{\mathrm{w t}}+\frac{r_{\mathrm{sub}} \cdot \Delta t}{S_{\mathrm{y}}}.
   \end{aligned}
 \end{equation}
 
@@ -509,7 +509,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 
 地下产流主要指由地形引起的地下水的侧向流动。当不考虑基于物理过程的侧向流时，模式中通过~\ref{section:rsub_par}节中的参数化方案来计算地下产流的量，这部分水分需从地下水和土壤水中扣除。
 
-假设地下产流的量为$r_{\mathrm{subsurface}}$。 模式中采用“预估-调整”的方式逐层减少土壤水，降低地下水位。图~\ref{fig:地下水变化}显示了在第$i$层内对地下水位和土壤水的计算方法。
+假设地下产流的量为$r_{\mathrm{sub}}$。 模式中采用“预估-调整”的方式逐层减少土壤水，降低地下水位。图~\ref{fig:地下水变化}显示了在第$i$层内对地下水位和土壤水的计算方法。
 
 {
   \begin{figure}[htbp]
@@ -547,13 +547,13 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 
 \section{蒸腾引起的土壤水含量变化}
 
-这里对土壤水方程中的源汇项$S$的主要来源，即根系吸水作用(蒸腾)过程做一简单介绍。植物吸水作用由有效根比例$f_{\mathrm{root},i}$和叶面蒸腾$E_{\mathrm{tr}}$的乘积来表示\citep{dai2003common}。有效根比例为：
+这里对土壤水方程中的源汇项$S$的主要来源，即根系吸水作用(蒸腾)过程做一简单介绍。植物吸水作用由每层土壤水吸收占比$f_{\mathrm{etr},i}$和叶面蒸腾$E_{\mathrm{tr}}$的乘积来表示\citep{dai2003common}。有效根比例为：
 \begin{equation}
-  {f}_{\mathrm{ {root }}, {i}}=\frac{{f}_{\mathrm{{root}}, {i}} {W}_{\mathrm{{LT}}}[{i}]}{W_{\mathrm{t}}}
+  {f}_{\mathrm{ {etr }}, {i}}=\frac{{f}_{\mathrm{{root}}, {i}} {f}_{\mathrm{w},i}}{f_{\mathrm{w}}}
 \end{equation}
-其中$W_{\mathrm{t}} = \sum_{i=1}^{n}{f_{\mathrm{root,i\ }}W_{\mathrm{LT}}\left[i\right]}$；$f_{\mathrm{root},i}$表示模式中第$i$层土壤中的根系比例；$W_{\mathrm{LT}}[i]$表示第$i$层土壤中的水分胁迫状况：
+其中$f_{\mathrm{w}} = \sum_{i=1}^{n}{f_{\mathrm{root},i}}f_{\mathrm{w},i}$；$f_{\mathrm{root},i}$表示模式中第$i$层土壤中的根系比例；$f_{\mathrm{w},i}$表示第$i$层土壤中的水分胁迫状况：
 \begin{equation}
-  {W}_{\mathrm{{LT}}}[{i}]=\frac{\psi_{\max }-\psi_{i}}{\psi_{\max }-\psi_{\mathrm{sat}}}
+  {f}_{\mathrm{w},i}=\frac{\psi_{\max }-\psi_{i}}{\psi_{\max }-\psi_{\mathrm{sat}}}
 \end{equation}
 其中，$\psi_{\mathrm{max}}$为植物达到萎蔫点时的土壤水势。
 

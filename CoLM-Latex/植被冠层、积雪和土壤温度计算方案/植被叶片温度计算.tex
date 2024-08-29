@@ -51,11 +51,11 @@ $L_{\mathrm v}$可计算如下(假设植被叶片部分发射率为1)：
 \end{equation}
 其中$f_{\mathrm{wet}}$表示植被冠层湿润面积占比。对于叶片的蒸腾通量计算为：
 \begin{equation}
-  E_{\mathrm{vt}} = -\frac{\rho_{\mathrm{a}}\left(1-f_{\mathrm{w e t}}\right)\delta }{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}}\left( \frac{\rm LAI_{\mathrm{sun}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sun}}} + \frac{\rm LAI_{\mathrm{sha}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sha}}} \right) \left[c_{\mathrm{aw}} q_{\mathrm{a}}+c_{\mathrm{gw}} q_{\mathrm{g}}-\left(c_{\mathrm{aw}}+c_{\mathrm{gw}}\right) q_{\mathrm{s a t}}^{T_{\mathrm{v}}}\right]
+  E_{\mathrm{tr}} = -\frac{\rho_{\mathrm{a}}\left(1-f_{\mathrm{w e t}}\right)\delta }{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}}\left( \frac{\rm LAI_{\mathrm{sun}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sun}}} + \frac{\rm LAI_{\mathrm{sha}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sha}}} \right) \left[c_{\mathrm{aw}} q_{\mathrm{a}}+c_{\mathrm{gw}} q_{\mathrm{g}}-\left(c_{\mathrm{aw}}+c_{\mathrm{gw}}\right) q_{\mathrm{s a t}}^{T_{\mathrm{v}}}\right]
 \end{equation}
 其对温度的变化率为：
 \begin{equation}
-  \frac{\partial E_{\mathrm{vt}}}{\partial T_{\mathrm{v}}} = \rho_{\mathrm{a}} \left(1-f_{\mathrm{w e t}}\right) \delta \left( \frac{\rm LAI_{\mathrm{sun}}}{r_{\mathrm{b}} + r_{\mathrm{s, \rm sun}}} + \frac{\rm LAI_{\mathrm{sha}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sha}}} \right)\frac{c_{\mathrm{aw}}+c_{\mathrm{gw}}}{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}} \frac{{\mathrm {d}} q_{\mathrm{s a t}}^{T_{\mathrm{v}}}}{{\mathrm {d}} T_{\mathrm{v}}}
+  \frac{\partial E_{\mathrm{tr}}}{\partial T_{\mathrm{v}}} = \rho_{\mathrm{a}} \left(1-f_{\mathrm{w e t}}\right) \delta \left( \frac{\rm LAI_{\mathrm{sun}}}{r_{\mathrm{b}} + r_{\mathrm{s, \rm sun}}} + \frac{\rm LAI_{\mathrm{sha}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sha}}} \right)\frac{c_{\mathrm{aw}}+c_{\mathrm{gw}}}{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}} \frac{{\mathrm {d}} q_{\mathrm{s a t}}^{T_{\mathrm{v}}}}{{\mathrm {d}} T_{\mathrm{v}}}
 \end{equation}
 对于叶片的蒸发通量计算为：
 \begin{equation}
@@ -67,11 +67,11 @@ $L_{\mathrm v}$可计算如下(假设植被叶片部分发射率为1)：
 \end{equation}
 
 由于蒸发与蒸腾速率均受到一定限制，所以$E_{\mathrm{v}}$将分别针对蒸发与蒸腾速率进行调整：\\
-当$ E_{\mathrm{vt}} \geqslant E_{\mathrm{vt,max}}$ 即叶片最大蒸腾率(\unit{kg.m^{-2}.s^{-1}})时，
+当$ E_{\mathrm{tr}} \geqslant E_{\mathrm{tr,max}}$ 即叶片最大蒸腾率(\unit{kg.m^{-2}.s^{-1}})时，
 \begin{equation}
   \begin{aligned}
-    E_{\mathrm{vt}} &=  E_{\mathrm{vt, \max }} \\[1ex]
-    \frac{\partial E_{\mathrm{vt}}}{\partial T_{\mathrm{v}}} &= 0
+    E_{\mathrm{tr}} &=  E_{\mathrm{tr, \max }} \\[1ex]
+    \frac{\partial E_{\mathrm{tr}}}{\partial T_{\mathrm{v}}} &= 0
   \end{aligned}
 \end{equation}
 当$E_{\mathrm{va}} \geqslant \frac{W_{\mathrm{can}}}{\Delta t}$即达到叶片最大可蒸发通量(\unit{kg.m^{-2}.s^{-1}})时，
@@ -83,15 +83,15 @@ $L_{\mathrm v}$可计算如下(假设植被叶片部分发射率为1)：
 \end{equation}
 于是对于叶片的总水汽通量：
 \begin{equation}
-  E_{\mathrm{v}} = E_{\mathrm{vt}}+E_{\mathrm{va}}
+  E_{\mathrm{v}} = E_{\mathrm{tr}}+E_{\mathrm{va}}
 \end{equation}
 对温度的变化率为：
 \begin{equation}
-  \frac{\partial E_{\mathrm{v}}}{\partial T_{\mathrm{v}}} = \frac{\partial E_{\mathrm{vt}}}{\partial T_{\mathrm{v}}}+\frac{\partial E_{\mathrm{va}}}{\partial T_{\mathrm{v}}}
+  \frac{\partial E_{\mathrm{v}}}{\partial T_{\mathrm{v}}} = \frac{\partial E_{\mathrm{tr}}}{\partial T_{\mathrm{v}}}+\frac{\partial E_{\mathrm{va}}}{\partial T_{\mathrm{v}}}
 \end{equation}
 雨水感热表达式$H_{\mathrm{prcv}}$已在章节~\ref{植被地表的雨水感热} 给出，其对温度的变化率为：
 \begin{equation}
-  \frac{\partial H_{\mathrm{prcv}}}{\partial T_{\mathrm{v}}}=-\left[C_{\mathrm{p l}} q_{\mathrm{p l}}+C_{\mathrm{p i}} q_{\mathrm{p i}}\right]
+  \frac{\partial H_{\mathrm{prcv}}}{\partial T_{\mathrm{v}}}=-\left[C_{\mathrm{liq}} q_{\mathrm{intr,rain}}+C_{\mathrm{ice}} q_{\mathrm{intr,snow}}\right]
 \end{equation}
 基于以上表达式以及$T_{\mathrm v}$的迭代公式，下面给出$T_{\mathrm v}$以及植被湍流通量的求解流程：
 \begin{enumerate}
@@ -132,7 +132,7 @@ $L_{\mathrm v}$可计算如下(假设植被叶片部分发射率为1)：
       \max\left( \sqrt{\left(\Delta T_{\mathrm{v}}^{(n)}\right)^{2}}, \sqrt{\left(\Delta T_{\mathrm{v}}^{(n-1)}\right)^{2}} \right) \leqslant 0.01\end{array}
     \end{equation}
     其中$\left[\bullet\right]^{\ast\ast2}$表示各个相同能量项相邻时间步变化量(相减后)的平方和
-  \item 由最终叶片温度更新植被表面与植被冠层空气之间的潜热通量，其中蒸发量不得超过植被截水量$W_{\mathrm{can}}$，蒸腾率不得超过最大蒸腾率$ E_{\mathrm{vt,max}}$，若超过则蒸发(腾)率强制取为最大蒸发(腾)率，由此产生的能量差最后将加到感热通量中
+  \item 由最终叶片温度更新植被表面与植被冠层空气之间的潜热通量，其中蒸发量不得超过植被截水量$W_{\mathrm{can}}$，蒸腾率不得超过最大蒸腾率$ E_{\mathrm{tr,max}}$，若超过则蒸发(腾)率强制取为最大蒸发(腾)率，由此产生的能量差最后将加到感热通量中
   \item 由最终叶片温度更新植被表面与植被冠层空气之间的感热通量以及上述因为潜热与温度的调整导致的能量误差之和
   \item 由最终叶片温度更新植被冠层的雨水感热
   \item 计算总动量通量为

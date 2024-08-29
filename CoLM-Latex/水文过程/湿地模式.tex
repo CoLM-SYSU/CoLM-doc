@@ -12,21 +12,21 @@
 
 1.在积分开始时，若发生固态降水，则下一时间步数的$f_{\mathrm{sno}}$更新为
 \begin{equation}
-  f^{n+1}_{\mathrm{sno}}=1-\left[1-\tanh{\left(0.1 p_{\mathrm {i}}  \Delta t\right)}\right]\left(1-f^n_{\mathrm{sno}}\right) \leqslant 1.0
+  f^{n+1}_{\mathrm{sno}}=1-\left[1-\tanh{\left(0.1 p_{\mathrm {snow}}  \Delta t\right)}\right]\left(1-f^n_{\mathrm{sno}}\right) \leqslant 1.0
 \end{equation}
-其中$p_{\mathrm {i}} $表示到达湿地表面的固态降水率（\unit{kg.m^{-2}.s^{-1}}），$\Delta t$为积分的时间步长（s）；
+其中$p_{\mathrm {snow}} $表示到达湿地表面的固态降水率（\unit{kg.m^{-2}.s^{-1}}），$\Delta t$为积分的时间步长（s）；
 
 2.在水热过程模拟结束后，考虑积雪融化，$f_{\mathrm{sno}}$更新为
 \begin{equation}
-  f^{n+1}_{\mathrm{sno}}=\tanh \left(\frac{100 z^2_{\mathrm{sno}}}{2.5z_{\mathrm{0m,ice}} W_{\mathrm{sno}}}\right)
+  f^{n+1}_{\mathrm{sno}}=\tanh \left(\frac{100 d^2_{\mathrm{sno}}}{2.5z_{\mathrm{lnd}} W_{\mathrm{sno}}}\right)
 \end{equation}
-其中$z_{\mathrm{sno}}$为雪盖高度（mm），$W_{\mathrm{sno}}$为雪水当量（mm），$z_{\mathrm{0m,ice}}$表示未被积雪覆盖时湿地的地表粗糙度。\\
+其中$d_{\mathrm{sno}}$为雪盖高度（mm），$W_{\mathrm{sno}}$为雪水当量（mm），$z_{\mathrm{lnd}}$表示裸土地表覆盖时粗糙度，取值为0.01 m。\\
 
 当积雪掩埋植被时，被积雪掩埋的植被占总植被的比例（$wt$）可通过植被粗糙度（$z_{\mathrm{0mv}}$）计算
 \begin{equation}
-  w_{\mathrm {t}} =\frac{0.1 z_{\mathrm{sno}}}{z_{\mathrm{0mv}}+0.1 z_{\mathrm{sno}}}
+  w_{\mathrm {t}} =\frac{0.1 d_{\mathrm{sno}}}{z_{\mathrm{0mv}}+0.1 d_{\mathrm{sno}}}
 \end{equation}
-其中$z_{\mathrm{sno}}$表示积雪厚度（m）。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}} =
+其中$d_{\mathrm{sno}}$表示积雪厚度（m）。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}} =
 (1 −wt)f_{\mathrm{veg}}$，无植被覆盖比例为 $(1−f_{\mathrm{sig}})$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即SAI=TSAI(1 − $wt$)，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是非积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。\\
 
 \textbf {(1)当湿地表面无植被覆盖或植被积雪掩埋时}\\
@@ -78,7 +78,7 @@
   \tau_{\mathrm{y}}=-\rho_{\mathrm{a}} \frac{v_{\mathrm{a}}}{r_{\mathrm{a m}}}
 \end{equation}
 \begin{equation}
-  H=-\rho_{\mathrm{a}} C_{\mathrm{p a}} \frac{\theta_{\mathrm{a}}-T_{\mathrm{s}}}{r_{\mathrm{a h}}}
+  H=-\rho_{\mathrm{a}} C_{\mathrm{a}} \frac{\theta_{\mathrm{a}}-T_{\mathrm{s}}}{r_{\mathrm{a h}}}
 \end{equation}
 \begin{equation}
   E=-\rho_{\mathrm{a}} \frac{q_{\mathrm{a}}-q_{\mathrm{s}}}{r_{\mathrm{a w}}}
@@ -185,7 +185,7 @@ $L_{\mathrm {v}} $表示叶片吸收的净长波辐射。$T_{\mathrm {v}} $可�
 
 土壤相比雪盖多了固体土壤部分，体积热容量由每层固体土壤、液态水和固态水的体积热容根据各自体积百分比加权得到，即
 \begin{equation}
-  c_{i}=c_{\mathrm{s},i}\left(1-\theta_{\mathrm {sat},i}\right)+\frac{w_{\mathrm{ice},i}}{\Delta z_{i}} C_{\mathrm{ice}}+\frac{w_{\mathrm{liq},i}}{\Delta z_{i}} C_{\mathrm{p l}}
+  c_{i}=c_{\mathrm{s},i}\left(1-\theta_{\mathrm {sat},i}\right)+\frac{w_{\mathrm{ice},i}}{\Delta z_{i}} C_{\mathrm{ice}}+\frac{w_{\mathrm{liq},i}}{\Delta z_{i}} C_{\mathrm{liq}}
 \end{equation}
 其中，$c_{\mathrm{s},i}$表示第 i 层的固体土壤体积热容量，由地表参数数据集提供。特别地，若此时无雪盖分层但雪水当量$W_{\mathrm{sno}}>0$，则将这部分热容量考虑为固态水的热容量加到土壤顶层中，土壤顶层（即编号$i=1$）热容量重新计算为：
 \begin{equation}
@@ -268,9 +268,9 @@ $\lambda\left[z_{\mathrm{h},i}\right]$表示第$i+1$层和第$i$层交界面处�
 \end{equation}
 其中$S_{\mathrm {g}} $和$L_{\mathrm {g}} $分别表示地表吸收的净太阳辐射和净长波辐射（\unit{W.m^{-2}}），$H_{\mathrm {g}} $和$E_{\mathrm {g}} $分别表示地表向大气输送的感热通量（\unit{W.m^{-2}}）和水汽通量（\unit{kg.m^{-2}}），$H_{\mathrm{prcg}}$表示降水与地表的能量交换
 \begin{equation}
-  H_{\mathrm{prcg}} = C_{\mathrm{liq}}p_{\mathrm {l}} \left(T_{\mathrm {p}} -T_{\mathrm {g}} \right) + C_{\mathrm{ice}}p_{\mathrm {i}} \left(T_{\mathrm {p}} -T_{\mathrm {g}} \right)
+  H_{\mathrm{prcg}} = C_{\mathrm{liq}}p_{\mathrm {rain}} \left(T_{\mathrm {p}} -T_{\mathrm {g}} \right) + C_{\mathrm{ice}}p_{\mathrm {snow}} \left(T_{\mathrm {p}} -T_{\mathrm {g}} \right)
 \end{equation}
-其中$p_{\mathrm {l}} $和$p_{\mathrm {i}} $分别表示到达地面的液态降水和固态降水（\unit{mm.H_2O.s^{-1}}），$T_{\mathrm {p}} $表示降水温度（K）。
+其中$p_{\mathrm {rain}} $和$p_{\mathrm {snow}} $分别表示到达地面的液态降水和固态降水（\unit{mm.H_2O.s^{-1}}），$T_{\mathrm {p}} $表示降水温度（K）。
 式~\eqref{eq:WetlandSrfEnergyBalance1}中$\lambda$表示潜热通量系数，用于将水汽通量转换为潜热通量
 \begin{equation}
   \lambda = \begin{cases}
@@ -282,9 +282,9 @@ $\lambda_{\mathrm {sub}} $和$\lambda_{\mathrm {vap}} $分别为固态水升华�
 
 对于式~\eqref{eq:WetlandSrfEnergyBalance1}中的净长波辐射$L_{\mathrm {g}} $，其可计算为
 \begin{equation}
-  L_{\mathrm {g}}  = \varepsilon_{\mathrm {g}}  L_{\mathrm{bg}}\downarrow - L_{\mathrm {g}} \uparrow
+  L_{\mathrm {g}}  = \varepsilon_{\mathrm {g}}  L ^\downarrow - L_{\mathrm {g}} ^ \uparrow
 \end{equation}
-其中$L_{\mathrm{bg}}\downarrow$表示近地面大气下行长波辐射，$L_{\mathrm {g}} \uparrow=\varepsilon_{\mathrm {g}} \sigma T^4_{\mathrm {g}} $表示湿地表面发出的上行长波辐射，$\varepsilon_{\mathrm {g}} =0.96$表示湿地表面的长波辐射发射率，$\sigma$表示Stefan-Boltzmann常数（表A.1）。
+其中$L ^\downarrow$表示近地面大气下行长波辐射，$L_{\mathrm {g}} ^\uparrow=\varepsilon_{\mathrm {g}} \sigma T^4_{\mathrm {g}} $表示湿地表面发出的上行长波辐射，$\varepsilon_{\mathrm {g}} =0.96$表示湿地表面的长波辐射发射率，$\sigma$表示Stefan-Boltzmann常数（表A.1）。
 
 另外，为改进由于湿地表面温度取为第一层雪盖或土壤的平均温度带来的缺陷，在求解第一层能量平衡方程时，其厚度$\Delta z_i$调整为：
 \begin{equation}
@@ -323,7 +323,7 @@ $\lambda_{\mathrm {sub}} $和$\lambda_{\mathrm {vap}} $分别为固态水升华�
 \textbf {(1)雪盖水文过程}\\
 
 \begin{enumerate}
-  \item 当固态降水$p_{\mathrm {i}} $发生且湿地地表温度小于冻结温度时，雪盖高度开始累计。若雪盖高度$z_{\mathrm{sno}}$ 大于0.01m且此时尚无雪盖分层，则将在模拟开始时创建一个新的雪层（章节~\ref{sec:雪层的建立}）；
+  \item 当固态降水$p_{\mathrm {snow}} $发生且湿地地表温度小于冻结温度时，雪盖高度开始累计。若雪盖高度$d_{\mathrm{sno}}$ 大于0.01m且此时尚无雪盖分层，则将在模拟开始时创建一个新的雪层（章节~\ref{sec:雪层的建立}）；
   \item 雪盖建立后，根据雪盖的液态水质量守恒方程
     \begin{equation}
       \frac{\partial w_{\mathrm{liq},i}}{\partial t}=\left(q_{\mathrm{liq},i-1}-q_{\mathrm{liq},i}\right)+\frac{{\left(\Delta w_{\mathrm{liq},i}\right)}_{\mathrm {p}} }{\Delta t}

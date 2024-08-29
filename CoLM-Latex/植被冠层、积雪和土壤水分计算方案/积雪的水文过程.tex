@@ -16,19 +16,19 @@
 陆地表面可分为被积雪覆盖与未被积雪覆盖两部分。根据 \citet{swenson2012new}提供的方法，
 被积雪覆盖的地表面积比例$f_{\mathrm{sno}}$可分为两步计算：在积分开始时若有固态降水发生，则新一步的$f_{\mathrm{sno}}$更新为
 \begin{equation}
-  f_{\mathrm{{sno }}}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{\mathrm{i}} \Delta t\right)\right]\left(1-f_{\mathrm{{sno }}}^{(n)}\right) \leqslant 1.0
+  f_{\mathrm{{sno }}}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{\mathrm{snow}} \Delta t\right)\right]\left(1-f_{\mathrm{{sno }}}^{(n)}\right) \leqslant 1.0
 \end{equation}
-其中$p_{\mathrm {i}} $为固态降水速率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分时间步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{\mathrm{sno}}$更新为
+其中$p_{\mathrm {snow}} $为固态降水速率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分时间步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{\mathrm{sno}}$更新为
 \begin{equation}
-  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{100 z_{\mathrm{s n o}}^{2}}{2.5 z_{0 m, s o i} W_{\mathrm{sno}}}\right)}
+  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{100 d_{\mathrm{s n o}}^{2}}{2.5 z_{\rm lnd} W_{\mathrm{sno}}}\right)}
 \end{equation}
-其中$W_{\mathrm{sno}}$为雪水当量(mm)，$z_{0m,soi}$ 为未被积雪覆盖时的地表粗糙度。
+其中$W_{\mathrm{sno}}$为雪水当量(mm)，$z_{\rm lnd}$ 裸土覆盖时的地表粗糙度，取值为0.01 m。
 
-当植被被积雪掩埋时，已知植被粗糙度$z_{0mv}$，则被积雪掩埋的植被占总植被的比例计算为
+当植被被积雪掩埋时，已知植被粗糙度$z_{\rm 0mv}$，则被积雪掩埋的植被占总植被的比例计算为
 \begin{equation}
-  wt=\frac{0.1 z_{\mathrm{{sno}}}}{z_{0mv}+0.1 z_{\mathrm{{sno}}}}
+  wt=\frac{0.1 d_{\mathrm{{sno}}}}{z_{\rm 0mv}+0.1 d_{\mathrm{{sno}}}}
 \end{equation}
-其中$z_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-wt\right)f_{\mathrm{veg}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-wt\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
+其中$d_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-wt\right)f_{\mathrm{veg}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-wt\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
 
 
 \section{雪层的建立}\label{sec:雪层的建立}
@@ -37,7 +37,7 @@
 \end{mymdframed}
 
 
-当固态降水$p_{\mathrm{i}}$的发生导致雪盖高度$z_{\mathrm{sno}}$大于0.01 m且此时尚无雪盖分层，则将在模拟开始时创建一个新的雪层，相关物理量设置如下：
+当固态降水$p_{\mathrm{snow}}$的发生导致雪盖高度$z_{\mathrm{sno}}$大于0.01 m且此时尚无雪盖分层，则将在模拟开始时创建一个新的雪层，相关物理量设置如下：
 \begin{equation}
   \begin{aligned}
     & \Delta z_{0} &&= &{z}_{\mathrm{sno}}& \\
@@ -65,10 +65,10 @@
 \end{equation}
 其中$q_{\mathrm{subl}}$和$q_{\mathrm{frost}}$分别表示水的升华和凝华速率(\unit{kg.m^{-2}.s^{-1}}或 \unit{mm.H_2O.s^{-1}})。如果$w_{\mathrm{ice},snl+1}^{n+1}<0$，将固态水含量重置为0，并从液态水中减去固态水增加到0所需的水含量。雪盖顶层的$q_{\mathrm{liq},i-1}$则由以下公式计算
 \begin{equation}
-  q_{\mathrm{liq},i-1}=q_{\mathrm{grnd,liq}}+\left(q_{\mathrm{sdew}}-q_{\mathrm{seva}}\right)
+  q_{\mathrm{liq},i-1}=q_{\mathrm{g,rain}}+\left(q_{\mathrm{sdew}}-q_{\mathrm{seva}}\right)
 \end{equation}
-其中$q_{\mathrm{grnd,liq}}$为到达雪盖的液态降水速率，$q_{\mathrm{seva}}$和$q_{\mathrm{sdew}}$分别表示水的蒸发和凝结速率。基于此，顶层液态水含量更新为
-\begin{equation}w_{\mathrm{liq},snl+1}^{n+1}=w_{\mathrm{liq},snl+1}^n+\left(q_{\mathrm{grnd,liq}}+q_{\mathrm{sdew}}-q_{\mathrm{seva}}\right)\Delta t
+其中$q_{\mathrm{g,rain}}$为到达雪盖的液态降水速率，$q_{\mathrm{seva}}$和$q_{\mathrm{sdew}}$分别表示水的蒸发和凝结速率。基于此，顶层液态水含量更新为
+\begin{equation}w_{\mathrm{liq},snl+1}^{n+1}=w_{\mathrm{liq},snl+1}^n+\left(q_{\mathrm{g,rain}}+q_{\mathrm{sdew}}-q_{\mathrm{seva}}\right)\Delta t
 \end{equation}
 
 当液态水含量超过了雪层的最大持水量时，多余的液态水将下渗到相邻雪层，渗透能力取决于雪层的有效孔隙度（$1-\theta_{\mathrm{ice}}$）。如果两层中任一层有效孔隙度（$1-\theta_{\mathrm{ice},i}$或$1-\theta_{\mathrm{ice},i+1}$）小于不透水体积含水量$\theta_{\mathrm{imp}}=0.05$，则假定两层间液态水通量为0。否则，对于雪层$i=snl+1,\ ...,\ 0$，液态水通量$q_{\mathrm{liq},i}$被计算为

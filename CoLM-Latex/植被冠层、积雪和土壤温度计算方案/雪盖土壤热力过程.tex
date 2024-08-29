@@ -20,11 +20,11 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
 \end{mymdframed}
 
 在离散上述能量平衡方程时，垂直方向上的离散方式可采用第~\ref{土壤和积雪的垂直分层} 节给出的土壤和积雪的垂直分层方案进行。
-需要注意的是，在计算雪盖土壤温度之前，若有降雪发生($p_{\mathrm {i}} >0$)且无雪盖分层($snl=0$)，则此时需通过下式判断第一层雪能否形成：
+需要注意的是，在计算雪盖土壤温度之前，若有降雪发生($p_{\mathrm {snow}} >0$)且无雪盖分层($snl=0$)，则此时需通过下式判断第一层雪能否形成：
 \begin{equation}
   \begin{aligned}
-    z_{\mathrm{sno}} &= z_{\mathrm{sno}}+\frac{p_{\mathrm{i}} \Delta t}{\rho_{\text {sno,new }}} \\[1ex]
-    W_{\mathrm{sno}} &= W_{\mathrm{sno}}+p_{\mathrm{i}} \Delta t
+    z_{\mathrm{sno}} &= z_{\mathrm{sno}}+\frac{p_{\mathrm{snow}} \Delta t}{\rho_{\text {sno,new }}} \\[1ex]
+    W_{\mathrm{sno}} &= W_{\mathrm{sno}}+p_{\mathrm{snow}} \Delta t
   \end{aligned}
 \end{equation}
 其中$\rho_{\mathrm{sno,new}}$表示新降的干雪密度(\unit{kg.m^{-3}})，计算方案为~\citep{anderson1976point}：
@@ -37,10 +37,10 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
 \end{equation}
 若此时$z_{\mathrm{sno}} \geqslant 0.01$ \unit{m}，则按第~\ref{土壤和积雪的垂直分层} 节方案对积雪进行分层，且每一层雪的温度取为$T_{\mathrm {p}} $，液态水含量取为0，固态水含量按雪层厚度权重分配$W_{\mathrm{sno}}$。若之前已有雪层且此时有降雪发生，则第一层雪的相关物理量作如下更新：
 \begin{equation}
-  w_{\mathrm{ice},snl+1}=w_{\mathrm{ice},snl+1}+p_{\mathrm{i}} \Delta t
+  w_{\mathrm{ice},snl+1}=w_{\mathrm{ice},snl+1}+p_{\mathrm{snow}} \Delta t
 \end{equation}
 \begin{equation}
-  \Delta z_{snl+1}=\Delta z_{snl+1}+\frac{p_{\mathrm{i}} \Delta t}{\rho_{\mathrm{sno, new}}}
+  \Delta z_{snl+1}=\Delta z_{snl+1}+\frac{p_{\mathrm{snow}} \Delta t}{\rho_{\mathrm{sno, new}}}
 \end{equation}
 \begin{equation}
   z_{snl+1}=z_{\mathrm{h},snl+1}-0.5 \Delta z_{snl+1}
