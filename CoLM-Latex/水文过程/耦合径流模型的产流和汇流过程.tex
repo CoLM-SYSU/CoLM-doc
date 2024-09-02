@@ -85,7 +85,7 @@ G_{\mathrm{wat}}- w_{{satint}} + w_{{int}} + w_{{satint}} \times {{I}_{{tmp}}}^{
 
 地下产流的大小与地形和地下水位有关\citep{niu2005simple}，
 \begin{equation}
-  r_{\mathrm{sub}} = r_{\mathrm{sub,max}} \exp \left(-f_{\mathrm{drai}} \times z_{\mathrm{wt}}\right)
+  r_{\mathrm{sub}} = r_{\mathrm{sub,max}} \exp \left(-f_{\mathrm{drai}}  z_{\mathrm{wt}}\right)
 \end{equation}
 其中，$r_{\mathrm{sub,max}}$为产流的最大值，取决于地形坡面的大小，
 模式中取全球统一的数值$5.5\times 10^{-3}~\unit{mm~s^{-1}}$；$f_{\mathrm{drai}}=2.5$ \unit{m^{-1}} 为衰减因子。
@@ -93,10 +93,10 @@ G_{\mathrm{wat}}- w_{{satint}} + w_{{int}} + w_{{satint}} \times {{I}_{{tmp}}}^{
 当土壤中含有冰时，需考虑冰对地下径流的阻力作用，
 \begin{equation}
   \begin{aligned}
-    f_{\mathrm{impd,ice}} & = 1 - \frac{\exp \left[-3 \times\left(1-f_{\mathrm{ice,sum}}\right)\right]
+    f_{\mathrm{impd,ice}} & = 1 - \frac{\exp \left[-3 \left(1-f_{\mathrm{ice,sum}}\right)\right]
     -\exp (-3)}{1-\exp (-3)} \\
-    r_{\mathrm{sub}} & = f_{\mathrm{impd,ice}} \times r_{\mathrm{sub,max}}
-    \exp \left(-f_{\mathrm{drai}} \times z_{\mathrm{wt}}\right)
+    r_{\mathrm{sub}} & = f_{\mathrm{impd,ice}}  r_{\mathrm{sub,max}}
+    \exp \left(-f_{\mathrm{drai}}  z_{\mathrm{wt}}\right)
   \end{aligned}
 \end{equation}
 其中，$f_{\mathrm{ice,sum}}$为地下水位所在及以下土壤层内总的冰的体积含量（定义为冰的总体积除以土壤层的总体积）。

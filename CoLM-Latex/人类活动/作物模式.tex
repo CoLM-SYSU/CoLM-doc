@@ -76,13 +76,13 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
   \label{tab:作物物候方案相关参数}
   \begin{tabular}{@{}cccccc@{}}
     \toprule
-           & $T_{\mathrm{base}}$ & $f_{\mathrm{LE}}$ & $f_{\mathrm{GF}}$ & $GDD_{\mathrm{mat}}$  & $GSL_{\mathrm{max}}$ \\ \midrule
-    春小麦 & 0                   & 0.07              & 0.60              & 0.2$GDD_{10yr}$+1458  & 150                  \\
-    冬小麦 & 0                   & 0.03              & 0.67              & 0.38$GDD_{10yr}$+526  & 270                  \\
-    水稻1  & 10                  & 0.12              & 0.68              & 0.30$GDD_{10yr}$+695  & 150                  \\
-    水稻2  & 10                  & 0.35              & 0.75              & 0.27$GDD_{10yr}$+575  & 150                  \\
-    玉米   & 8                   & 0.11              & 0.64              & 0.26$GDD_{10yr}$r+907 & 150                  \\
-    大豆   & 10                  & 0.15              & 0.69              & 0.26$GDD_{10yr}$+802  & 150                  \\ \bottomrule
+           & $T_{\mathrm{base}}$ & $f_{\mathrm{LE}}$ & $f_{\mathrm{GF}}$ & ${\rm GDD}_{\mathrm{mat}}$  & ${\rm GSL}_{\mathrm{max}}$ \\ \midrule
+    春小麦 & 0                   & 0.07              & 0.60              & 0.2${\rm GDD}_{\rm 10yr}$+1458  & 150                  \\
+    冬小麦 & 0                   & 0.03              & 0.67              & 0.38${\rm GDD}_{\rm 10yr}$+526  & 270                  \\
+    水稻1  & 10                  & 0.12              & 0.68              & 0.30${\rm GDD}_{\rm 10yr}$+695  & 150                  \\
+    水稻2  & 10                  & 0.35              & 0.75              & 0.27${\rm GDD}_{\rm 10yr}$+575  & 150                  \\
+    玉米   & 8                   & 0.11              & 0.64              & 0.26${\rm GDD}_{\rm 10yr}$+907 & 150                  \\
+    大豆   & 10                  & 0.15              & 0.69              & 0.26${\rm GDD}_{\rm 10yr}$+802  & 150                  \\ \bottomrule
   \end{tabular}
 \end{table}
 
@@ -101,22 +101,22 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 \subsection{抽芽}
 当热单元指数(Heat Unit Index, ${\mathrm {HUI}}$)：
 \begin{equation}\label{HUI}
-  {\mathrm {HUI}}=\frac{GDD_{\mathrm{base}}}{GDD_{\mathrm{mat}}}
+  {\mathrm {HUI}}=\frac{{\rm GDD}_{\mathrm{base}}}{{\rm GDD}_{\mathrm{mat}}}
 \end{equation}
-达到$f_{\mathrm{LE}}$时，开始抽芽。$GDD_{\mathrm{base}}$是基于陆表气温的积温(\textcelsius\ days):
+达到$f_{\mathrm{LE}}$时，开始抽芽。${\rm GDD}_{\mathrm{base}}$是基于陆表气温的积温(\textcelsius\ days):
 \begin{equation}
-  GDD_{\mathrm{ {base }}}=\sum_{\mathrm{planting}}^{current\ day} \min \left(0, T_{\mathrm{sa}}-T_{\mathrm{base}}\right)
+  {\rm GDD}_{\mathrm{ {base }}}=\sum_{\mathrm{planting}}^{\rm current\ day} \min \left(0, T_{\mathrm{sa}}-T_{\mathrm{base}}\right)
 \end{equation}
-其中，$T_{\mathrm{sa}}$是日地表气温，$T_{\mathrm{base}}$是底温(作物在该温度下停止生长)。
+其中，$T_{\mathrm{sa}}$是日地表气温\todo{需更加明确，与前面相同变量统一符号。}，$T_{\mathrm{base}}$是底温(作物在该温度下停止生长)。
 
 \subsection{灌浆}
 当${\mathrm {HUI}}$达到$f_{\mathrm{GF}}$时，开始灌浆。
 
 \subsection{成熟}
-当${\mathrm {HUI}}$达到1时或生长季达到最长生长季长度$GSL_{\mathrm{max}}$时，作物成熟。其中，$GDD_{\mathrm{mat}}$是$GDD_{\mathrm{base}}$
+当${\mathrm {HUI}}$达到1时或生长季达到最长生长季长度${\rm GSL}_{\mathrm{max}}$时，作物成熟。其中，${\rm GDD}_{\mathrm{mat}}$是${\rm GDD}_{\mathrm{base}}$
 10年滑动平均的一元线性方程(表~\ref{tab:作物物候方案相关参数})。
 \begin{equation}
-  GDD_{\mathrm{mat}}=a GDD_{10yr}+b
+  {\rm GDD}_{\mathrm{mat}}=a {\rm GDD}_{\rm 10yr}+b
 \end{equation}
 
 \subsection{收割}
@@ -139,7 +139,7 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
   \left\{\begin{array}{c}
       a_{\mathrm{grain}}=0 \\
       a_{\mathrm{root}}=a_{\mathrm{root\_i}}-\left(a_{\mathrm{root\_i}}-a_{\mathrm{root\_f}}\right) {\mathrm {HUI}} \\
-      a_{\mathrm{leaf}}=\left(1-a_{\mathrm{root}}\right) a_{\mathrm{leaf\_i}} \frac{{e}^{-{b}}-{e}^{-b \frac{{\mathrm {HUI}}}{f_{\mathrm{GF}}}}}{{e}^{-{b}}-1}   \\
+      a_{\mathrm{leaf}}=\left(1-a_{\mathrm{root}}\right) a_{\mathrm{leaf\_i}} \frac{{\rm e}^{-{b}}-{\rm e}^{-b \frac{{\mathrm {HUI}}}{f_{\mathrm{GF}}}}}{{\rm e}^{-{b}}-1}   \\
       a_{\mathrm{stem}}=1-a_{\mathrm{grain}}-a_{\mathrm{root}}-a_{\mathrm{leaf}}
   \end{array}\right.
 \end{equation}
@@ -172,12 +172,12 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 \end{table}
 
 \subsection{氮循环}
-作物的氮循环和自然植被类似，但碳氮比(CN)不同。CoLM采用的作物不同组织的碳氮比CN如表~\ref{tab:作物碳氮比}所示。其中，碳氮比CNleaf, CNstem, CNroot用于灌浆前，其余碳氮比用于灌浆开始后。
+作物的氮循环和自然植被类似，但碳氮比(CN)不同。CoLM采用的作物不同组织的碳氮比CN如表~\ref{tab:作物碳氮比}所示。其中，碳氮比${\rm CN_{leaf}}$, ${\rm CN_{stem}}$, ${\rm CN_{root}}$用于灌浆前，其余碳氮比用于灌浆开始后。
 
 此外，我们考虑了大豆根瘤中的根瘤菌与大豆共生固氮，大豆共生固氮能力设为自然植物的4倍，假设其余作物类型无生物共生固氮能力。生物共生固定的氮直接到 $\mathrm{NO_3^-}$ 库。
 
 %(1) 碳氮比(CN)\\
-%表~\ref{tab:作物碳氮比} 中，碳氮比$CN_{\mathrm{leaf}}$,$ CN_{\mathrm{stem}}$, %$CN_{\mathrm{root}}$用于灌浆前，其余碳氮比用于灌浆开始后。\\
+%表~\ref{tab:作物碳氮比} 中，碳氮比${\rm CN}_{\mathrm{leaf}}$,$ {\rm CN}_{\mathrm{stem}}$, %${\rm CN}_{\mathrm{root}}$用于灌浆前，其余碳氮比用于灌浆开始后。\\
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[htbp]
@@ -187,13 +187,13 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
   \begin{tabular}{@{}lcccc@{}}
     \toprule
     参数                     & 小麦 & 水稻 & 玉米 & 大豆 \\ \midrule
-    $CN_{\mathrm{leaf}}$     & 20   & 20   & 25   & 20   \\
-    $CN_{\mathrm{stem}}$     & 50   & 50   & 50   & 50   \\
-    $CN_{\mathrm{root}}$     & 42   & 42   & 42   & 42   \\
-    $CN_{\mathrm{leaf\_f}}$  & 65   & 65   & 65   & 65   \\
-    $CN_{\mathrm{stem\_f}}$  & 100  & 100  & 120  & 130  \\
-    $CN_{\mathrm{root\_f}}$  & 40   & 40   & 0    & 0    \\
-    $CN_{\mathrm{grain\_f}}$ & 50   & 50   & 50   & 50   \\ \bottomrule
+    ${\rm CN}_{\mathrm{leaf}}$     & 20   & 20   & 25   & 20   \\
+    ${\rm CN}_{\mathrm{stem}}$     & 50   & 50   & 50   & 50   \\
+    ${\rm CN}_{\mathrm{root}}$     & 42   & 42   & 42   & 42   \\
+    ${\rm CN}_{\mathrm{leaf\_f}}$  & 65   & 65   & 65   & 65   \\
+    ${\rm CN}_{\mathrm{stem\_f}}$  & 100  & 100  & 120  & 130  \\
+    ${\rm CN}_{\mathrm{root\_f}}$  & 40   & 40   & 0    & 0    \\
+    ${\rm CN}_{\mathrm{grain\_f}}$ & 50   & 50   & 50   & 50   \\ \bottomrule
   \end{tabular}
 \end{table}
 
@@ -228,9 +228,9 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
   a=\frac{\ln 2}{\ln \left[\left(T_{\max }-T_{\min }\right) /\left(T_{\mathrm{o p t}}-T_{\min }\right)\right]}
 \end{equation}
 
-春化响应用于调整$GDD_{\mathrm{base}}$和粒分配系数
+春化响应用于调整${\rm GDD}_{\mathrm{base}}$和粒分配系数
 \begin{equation}
-  G D D_{\mathrm{b a s e}}=G D D_{\mathrm{b a s e,  { unadjusted }}} \times V
+  {\rm GDD}_{\mathrm{base}}={\rm GDD}_{\mathrm{b a s e,  { unadjusted }}} \times V
 \end{equation}
 \begin{equation}
   a_{\mathrm{ {grain }}}=a_{\mathrm{ {grain,unadjusted }}} \times V_{\mathrm{f}}
@@ -242,18 +242,18 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 %\section{臭氧污染胁迫}
 考虑臭氧对光合速率和气孔导度的影响因子 $F_{\mathrm{O3\_A}}$ 以及$F_{\mathrm{O3\_{gs}}}$:
 \begin{equation}
-  F_{\mathrm{O3\_{A}}}=-0.0022 POD_{\mathrm{0.5}}+0.868
+  F_{\mathrm{O3\_{A}}}=-0.0022 {\rm POD}_{\mathrm{0.5}}+0.868
 \end{equation}
 \begin{equation}
-  F_{\mathrm{O3\_{gs}}}=-0.00096 POD_{\mathrm{0.5}}+0.856
+  F_{\mathrm{O3\_{gs}}}=-0.00096 {\rm POD}_{\mathrm{0.5}}+0.856
 \end{equation}
-其中，$POD_{0.5}$ (Phytotoxic ozone dose above a threshold of 0.5 \unit{nmol.m^{-2}.s^{-1}}, 单位：\unit{mmol.m^{-2}})是植物吸收的$O_3$通量在抽芽后生长季白天的累积量。第 $t$ 时间步的 $\mathrm{O_3}$ 通量累积量：
+其中，${\rm POD}_{0.5}$ (Phytotoxic ozone dose above a threshold of 0.5 \unit{nmol.m^{-2}.s^{-1}}, 单位：\unit{mmol.m^{-2}})是植物吸收的$\mathrm {O_3}$通量在抽芽后生长季白天的累积量。第 $t$ 时间步的 $\mathrm{O_3}$ 通量累积量：
 \begin{equation}\label{eq:POD05}
-  POD_{0.5,t}=POD_{0.5,t-1}\left(1-D_t\right)+U_{0.5,t} \times 10^{-6}.
+  {\rm POD}_{0.5,t}={\rm POD}_{0.5,t-1}\left(1-D_t\right)+U_{0.5,t} \times 10^{-6}.
 \end{equation}
 在公式\eqref{eq:POD05}中，$D_t$是$t$时步的$\mathrm{O_3}$通量累积量衰减率：
 \begin{equation}
-  D_t = \max\left(0, 1-\frac{LAI_{t-1}}{LAI_t} \right),
+  D_t = \max\left(0, 1-\frac{{\rm LAI}_{t-1}}{{\rm LAI}_t} \right),
 \end{equation}
 $t$ 时步的$\mathrm{O_3}$通量累积量:
 \begin{equation}
@@ -289,7 +289,7 @@ $t$ 时步的$\mathrm{O_3}$通量累积量:
 \subsection{收割和农业残留物处理}
 收割时粒库 $C_{\mathrm{grain}}$ 进入种子库 $C_{\mathrm{seed}}$ 和食品库 $C_{\mathrm{food}}$
 \begin{equation}
-  \mathrm{{C}_{\mathrm{seed}}}=\min \left(C_{\mathrm{grain}}, 3\right)
+  C_{\mathrm{seed}}=\min \left(C_{\mathrm{grain}}, 3\right)
 \end{equation}
 \begin{equation}
   C_{\mathrm{food}}=C_{\mathrm{grain}}-C_{\mathrm{seed}}
@@ -299,7 +299,7 @@ $t$ 时步的$\mathrm{O_3}$通量累积量:
 \subsection{秸秆焚烧及排放}
 秸秆焚烧燃烧面积百分率${\mathrm {BAF}}$(\unit{s^{-1}}):
 \begin{equation}
-  BAF= a_1 f_{\mathrm{se}} f_{\mathrm{crop}}
+  {\rm BAF}= a_1 f_{\mathrm{se}} f_{\mathrm{crop}}
 \end{equation}
 其中，$a_1$ (\unit{s^{-1}})是全球常数；$f_{\mathrm{se}}$ 是社会经济因子的影响：
 \begin{equation}
@@ -310,9 +310,9 @@ $t$ 时步的$\mathrm{O_3}$通量累积量:
   f_{\mathrm {d}}  = 0.04 + 0.96\exp\left[-\pi\left(\frac{D_{\mathrm {p}} }{350}\right)\right]
 \end{equation}
 \begin{equation}
-  f_{\mathrm {e}}  = 0.01 + 0.99\exp\left[-\pi\frac{GDP}{10}\right]
+  f_{\mathrm {e}}  = 0.01 + 0.99\exp\left[-\pi\frac{\rm GDP}{10}\right]
 \end{equation}
-$D_{\mathrm {p}} $ (\unit{person.km^{-2}}) 及 ${\mathrm {GDP}}$ (\unit{k\ 1995\ US\$.capita^{-1}})
+$D_{\mathrm {p}} $ (\unit{person.km^{-2}}) 及 ${\mathrm {\rm GDP}}$ (\unit{k\ 1995\ US\$.capita^{-1}})
 分别是人口密度和生产总值。
 $f_{\mathrm{crop}}$ 用于判断火发生时间（发生时为1，其余时步为0），
 是输入场，定义为观测播前观测的秸秆焚烧峰值时步。
@@ -320,7 +320,7 @@ $f_{\mathrm{crop}}$ 用于判断火发生时间（发生时为1，其余时步�
 
 在得到燃烧面积后，火灾引起的碳排放${\mathrm {CE}}$ (\unit{g.C.m^{-2}.s^{-1}}) 为：
 \begin{equation}
-  CE=BAF \times C_{\mathrm{ab,litter}} \times CC
+  {\rm CE}={\rm BAF} \times C_{\mathrm{ab,litter}} \times CC
 \end{equation}
 $C_{\mathrm{ab,litter}}$是地上凋落物碳库， $CC=0.8$是燃烧完全因子。
 
@@ -391,13 +391,13 @@ $\omega_{\mathrm{wilt}}$ 为萎蔫点土壤水量(mm)：
 \begin{equation}\label{eq:omega-wilt}
   \omega_{\mathrm{wilt}} = \sum_{\mathrm{j=1}}^{N_{\mathrm{irr}}}\theta_{\mathrm{wilt}}\Delta z_j.
 \end{equation}
-方程\eqref{eq:omega-avail}--\eqref{eq:omega-wilt}中，$N_{\mathrm{irr}}$ 为发生灌溉土壤层数，与设定灌溉深度$z_{\mathrm{irrig}}$有关；$\Delta z_j$ 为第$j$层土壤厚度；$\theta_{\mathrm{target}}$、$\theta_{\mathrm{wilt}}$和$\theta_j$ 则分别为土壤各层的灌溉目标湿度、田间萎蔫点以及土壤实际湿度，需要根据其对应的土壤水势$\Phi_{\mathrm{target}}$、 $\Phi_{\mathrm{wilt}}$和$\Phi_j$ 计算。
+方程\eqref{eq:omega-avail}--\eqref{eq:omega-wilt}中，$N_{\mathrm{irr}}$ 为发生灌溉土壤层数，与设定灌溉深度$z_{\mathrm{irrig}}$有关；$\Delta z_j$ 为第$j$层土壤厚度；$\theta_{\mathrm{target}}$、$\theta_{\mathrm{wilt}}$和$\theta_j$ 则分别为土壤各层的灌溉目标湿度、田间萎蔫点以及土壤实际湿度，需要根据其对应的土壤水势$\psi_{\mathrm{target}}$、 $\psi_{\mathrm{wilt}}$和$\psi_j$ 计算。
 
 由于不同灌溉方式的触发灌溉阈值和目标灌溉量存在差异，灌溉触发阈值为：
 \begin{equation}
   \omega_{\mathrm{thresh}} = f_{\mathrm{thresh}}(\omega_{\mathrm{trigger}}-\omega_{\mathrm{wilt}}) + \omega_{\mathrm{wilt}},
 \end{equation}
-其中 $\omega_{\mathrm{trigger}}$ 为触发灌溉的目标水量，根据 $\Phi_{\mathrm{trigger}}$ 计算，$f_{\mathrm{thresh}}$ 为灌溉调优参数，$\omega_{\mathrm{thresh}}$ 为触发灌溉水量阈值。相应的灌溉方案参数见表~\ref{tab:灌溉方案参数}。
+其中 $\omega_{\mathrm{trigger}}$ 为触发灌溉的目标水量，根据 $\psi_{\mathrm{trigger}}$ 计算，$f_{\mathrm{thresh}}$ 为灌溉调优参数，$\omega_{\mathrm{thresh}}$ 为触发灌溉水量阈值。相应的灌溉方案参数见表~\ref{tab:灌溉方案参数}。
 
 \begin{table}[htbp]
   \centering
@@ -409,13 +409,13 @@ $\omega_{\mathrm{wilt}}$ 为萎蔫点土壤水量(mm)：
                                     & drip    & sprankler & flood                 & paddy                 \\ \midrule
       $f_{\mathrm{thresh}}$         & 1       & 1         & 1                     & 1                     \\
       $z_{\mathrm{irrig}}(m)$       & 0.6     & 0.6       & 0.6                   & 0.6                   \\
-      $\Phi_{\mathrm{target}}$(mm)  & -3300   & -3300     & $\Phi_{\mathrm{sat}}$ & $\Phi_{\mathrm{sat}}$ \\
-      $\Phi_{\mathrm{trigger}}$(mm) & -3300   & -3300     & -3300                 & $\Phi_{\mathrm{sat}}$ \\
-      $\Phi_{\mathrm{wilt}}$ (mm)   & -150000 & -150000   & -150000               & -150000               \\ \bottomrule
+      $\psi_{\mathrm{target}}$(mm)  & -3300   & -3300     & $\psi_{\mathrm{sat}}$ & $\psi_{\mathrm{sat}}$ \\
+      $\psi_{\mathrm{trigger}}$(mm) & -3300   & -3300     & -3300                 & $\psi_{\mathrm{sat}}$ \\
+      $\psi_{\mathrm{wilt}}$ (mm)   & -150000 & -150000   & -150000               & -150000               \\ \bottomrule
     \end{tabular}
     \begin{tablenotes}
       \footnotesize
-    \item[注:] $\Phi_{\mathrm{sat}}$ 为饱和水势。
+    \item[注:] $\psi_{\mathrm{sat}}$ 为饱和水势。
     \end{tablenotes}
   \end{threeparttable}
 \end{table}
@@ -432,9 +432,9 @@ $\omega_{\mathrm{wilt}}$ 为萎蔫点土壤水量(mm)：
 \section{结构形态}
 出叶后到收割前,叶面积为：
 \begin{equation}
-  {\rm LAI}=C_{\mathrm{leaf}} \times SLA
+  {\rm LAI}=C_{\mathrm{leaf}} \times {\rm SLA}
 \end{equation}
-SLA为比叶面积 (\unit{m^2.leaf.g^{-1}.C})(表~\ref{tab:结构形态参数})。
+SLA为比叶面积 (\unit{m^2.leaf.g^{-1}.C}) (表~\ref{tab:结构形态参数})。
 
 茎叶面积为：
 \begin{equation}
@@ -442,12 +442,12 @@ SLA为比叶面积 (\unit{m^2.leaf.g^{-1}.C})(表~\ref{tab:结构形态参数})�
   0.2 {\rm LAI}, & \text { for } & \text {others}\end{array}\right.
 \end{equation}
 
-冠层顶高度$z_{\mathrm{top}}$(米)和冠层底高度$z_{\mathrm{bot}}$(米)为：
+冠层顶高度$h_{\mathrm{top}}$(米)和冠层底高度$h_{\mathrm{bot}}$(米)为：
 \begin{equation}
-  z_{\mathrm{top}}=\max \left[0.05, z_{\mathrm{top,max}} \min \left(\frac{{\mathrm {HUI}}}{f_{\mathrm{GF}}}, 1.0\right)\right]
+  h_{\mathrm{top}}=\max \left[0.05, h_{\mathrm{top,max}} \min \left(\frac{{\mathrm {HUI}}}{f_{\mathrm{GF}}}, 1.0\right)\right]
 \end{equation}
 \begin{equation}
-  z_{\mathrm{b o t}}=0.02
+  h_{\mathrm{b o t}}=0.02
 \end{equation}
 
 % Please add the following required packages to your document preamble:
@@ -460,6 +460,6 @@ SLA为比叶面积 (\unit{m^2.leaf.g^{-1}.C})(表~\ref{tab:结构形态参数})�
     \toprule
     参数                   & 春小麦 & 冬小麦 & 水稻   & 玉米   & 大豆   \\ \midrule
     ${\mathrm {SLA}}$      & 0.0453 & 0.0441 & 0.0431 & 0.0409 & 0.0566 \\
-    $z_{\mathrm{top,max}}$ & 0.808  & 0.852  & 0.98   & 2.55   & 0.823  \\ \bottomrule
+    $h_{\mathrm{top,max}}$ & 0.808  & 0.852  & 0.98   & 2.55   & 0.823  \\ \bottomrule
   \end{tabular}
 \end{table}

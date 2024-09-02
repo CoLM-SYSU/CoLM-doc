@@ -106,9 +106,9 @@ $\Delta t$代表模型时间步长，$CF_{\mathrm{GPP,xs}}$是光合作用对植
   \item 新生长活粗根和新生长活茎的比例 $a_2$;
   \item 新生长活茎和新生长叶的比例$a_3$;
   \item 新生长活茎在新生长总茎(活茎+死茎)碳含量的比例$a_4$;
-  \item 生长呼吸在总生长碳的比例 $g_1$，这些分配系数参数取决于其所属植被功能型。其中，新生长活茎和新生长叶的比例$a_3$由前一年的年$NPP_{\mathrm{ann}}$ (\unit{g.C.m^{-2}.year^{-1}})决定：
+  \item 生长呼吸在总生长碳的比例 $g_1$，这些分配系数参数取决于其所属植被功能型。其中，新生长活茎和新生长叶的比例$a_3$由前一年的年$\mathrm{NPP}_{\mathrm{ann}}$ (\unit{g.C.m^{-2}.year^{-1}})决定：
     \begin{equation}
-      a_{3}=\frac{2.7}{1+{\mathrm e}^{-0.004 \cdot\left(NPP_{\mathrm{ann}}-300\right)}}-0.4
+      a_{3}=\frac{2.7}{1+{\mathrm e}^{-0.004 \cdot\left(\text{NPP}_{\mathrm{ann}}-300\right)}}-0.4
     \end{equation}
 \end{enumerate}
 
@@ -145,7 +145,7 @@ $CN_{\mathrm{lf}}$，$CN_{\mathrm{fr}}$，$CN_{\mathrm{lw}}$ 和 $CN_{\mathrm{dw
 被称为植被氮的重利用 \citep{magill1997biogeochemical,oikawa2005dynamics,son1991aboveground}。
 被氮重利用($NF_{\mathrm{avail\_rt}}$)的计算依赖于植被去年氮重利用库的峰值($NS_{\mathrm{rt\_{annmax}}}$)，GPP和上一年的年均GPP：
 \begin{equation}
-  NF_{\mathrm{avail\_rt}}=\min{\left(\frac{NF_{\mathrm{rt\_{annmax}}}}{2\Delta t} \frac{GPP}{GPP_{\mathrm{ann}}}, \frac{NS_{\mathrm{rt}}}{{\Delta t}}\right)}
+  NF_{\mathrm{avail\_rt}}=\min{\left(\frac{NF_{\mathrm{rt\_{annmax}}}}{2\Delta t} \frac{\text{GPP}}{\text{GPP}_{\mathrm{ann}}}, \frac{NS_{\mathrm{rt}}}{{\Delta t}}\right)}
 \end{equation}
 其中，${\Delta t}$ 是模型的时间步长.植被每个时刻氮重利用量不会超过现存的植被重利用氮库($NS_{\mathrm{rt}}$)，并且，不会超过植被潜在氮需求 ($NF_{\mathrm{pot\_{pd}}}$)，pd是plant demand的缩写：
 \begin{equation}\label{NF_rt_alloc}
@@ -214,6 +214,7 @@ $f_{\mathrm{cur}}$是碳分配到组织库或存储库的指示系数，取值0�
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_CNPhenology.F90}。
 \end{mymdframed}
+
 CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，模拟叶面积指数的季节变化特征。
 
 
@@ -341,7 +342,7 @@ CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，�
 叶碳储量存在不随时间变化的固定碳周转速率：
 \begin{equation}
   \tau_{\mathrm{bglf}}=\frac{1}{\tau_{\mathrm{lf}} \cdot 365 \cdot 86400}
-\end{equation}
+\end{equation}\todo{可以对$\tau_{\rm lf}$进行说明，下面$r_*$同。}
 因此，叶面积指数的季节变化将主要由光合作用净碳收入的季节变化引起。
 叶和细根由于物候过程的碳凋落通量($CFP_{\mathrm{lf\rightarrow exit,pft}}$，$CFP_{\mathrm{fr\rightarrow exit,pft}}$)为：
 \begin{equation}
@@ -367,23 +368,23 @@ CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，�
 季节性落叶植被功能型假设植被每年仅存在一次发芽展叶期和落叶期。由于南北半球冬夏反季，
 所以，通过白昼时长的变化判断冬季转变节点，积温(${\mathrm {GDD}}$)的计算在冬季转变节点开始累积\citep{white1997continental}：
 \begin{equation}
-  GDD _{\mathrm{sum}}^{n}=\begin{cases}
-    GDD _{\mathrm{sum}}^{n-1}+T_{\mathrm{s, 3}} \cdot \Delta t \cdot 86400 & T_{\mathrm{s, 3}} \geqslant \text{0 \textcelsius} \\
-    GDD _{\mathrm{sum}}^{n-1} & T_{\mathrm{s, 3}}< \text{0 \textcelsius}
+  {\rm GDD} _{\mathrm{sum}}^{n}=\begin{cases}
+    {\rm GDD} _{\mathrm{sum}}^{n-1}+T_{3} \cdot \Delta t \cdot 86400 & T_{3} \geqslant \text{0 \textcelsius} \\
+    {\rm GDD} _{\mathrm{sum}}^{n-1} & T_{3}< \text{0 \textcelsius}
   \end{cases}
 \end{equation}
-其中$GDD_{\mathrm{sum}}^n$是第$n$天后的积温，积温通过对高于0 \textcelsius 的第三层土壤温度 $T_{\mathrm{s,3}}$ (\textcelsius) 进行累加。
-当$GDD_{\mathrm{sum}}^n>{GDD}_{\mathrm{sum\_{crit}}}$时，季节性落叶树开始发芽展叶期。${GDD}_{\mathrm{sum\_{crit}}}$ 为发芽物候关键参量，
+其中$GDD_{\mathrm{sum}}^n$是第$n$天后的积温，积温通过对高于0 \textcelsius 的第三层土壤温度 $T_{3}$ (\textcelsius) 进行累加。
+当$GDD_{\mathrm{sum}}^n>{\rm GDD}_{\mathrm{sum\_{crit}}}$时，季节性落叶树开始发芽展叶期。${\rm GDD}_{\mathrm{sum\_{crit}}}$ 为发芽物候关键参量，
 与前一年的温度 $T_{2m,ann\_{\mathrm{avg}}}$ (\textcelsius)有关：
 \begin{equation}
-  GDD _{\mathrm{sum\_{crit}}}=\exp \left(4.8+0.13 \cdot T_{2 m, ann\_{\mathrm{avg}}}\right)
+  {\rm GDD}_{\mathrm{sum\_{crit}}}=\exp \left(4.8+0.13 \cdot T_{2 m, ann\_{\mathrm{avg}}}\right)
 \end{equation}
-当发芽展叶期开始时，积温${GDD}_{\mathrm{sum}}$重设为0，发芽展叶期倒计时重设：
+当发芽展叶期开始时，积温${\rm GDD}_{\mathrm{sum}}$重设为0，发芽展叶期倒计时重设：
 \begin{equation}
   t_{\mathrm{onset}}=86400 \cdot n_{\mathrm{days\_on}}
 \end{equation}
 其中$n_{\mathrm{days\_on}}=30$，代表发芽展叶期倒计时30天。
-同时，发芽展叶期开始的第一个时间步长 $\Delta t$ 内，各营养器官50\% 的存储库($CS_{\mathrm{org,{s}}}$)中的碳进入传输库($CS_{\mathrm{org,{x}}}$)，在公式\eqref{CFs_to_x}和\eqref{NFs_to_x}中，${\mathrm {org}}$ 分别代表叶、细根、活茎、死茎、活粗根，死粗根和生长呼吸存储库，即$\text{org=lf}$, ${\mathrm {fr}}$, ${\mathrm {ls}}$, ${\mathrm {ds}}$, ${\mathrm {lr}}$, ${\mathrm {dr}}$和$gresp\_stor$)：
+同时，发芽展叶期开始的第一个时间步长 $\Delta t$ 内，各营养器官50\% 的存储库($CS_{\mathrm{org,{s}}}$)中的碳进入传输库($CS_{\mathrm{org,{x}}}$)，在公式\eqref{CFs_to_x}和\eqref{NFs_to_x}中，${\mathrm {org}}$ 分别代表叶、细根、活茎、死茎、活粗根，死粗根和生长呼吸存储库，即$\text{org=lf}$, ${\mathrm {fr}}$, ${\mathrm {ls}}$, ${\mathrm {ds}}$, ${\mathrm {lr}}$, ${\mathrm {dr}}$和$\mathrm{gresp\_stor}$)：
 \begin{equation}\label{CFs_to_x}
   CF_{\mathrm{org,{s}}\rightarrow {x}} = 0.5 CS_{\mathrm{org,{s}}}/\Delta t
 \end{equation}
@@ -412,18 +413,18 @@ $GDD_{\mathrm{sum}}^n$ 重设为0直至冬天。当发芽展叶期开始后，30
 
 当温度暖和，干旱成为触发胁迫的主要条件。当上一次落叶期结束后，土壤水分因子$SWI$就开始从0累加：
 \begin{equation}
-  SWI_{\mathrm{sum}}^{n}=\left\{\begin{array}{ll}SWI_{\mathrm{sum}}^{n-1}+f_{\mathrm{d a y}} & \text{ 当 }\ \Psi_{\mathrm{s, 3}} \geqslant -0.6\ \mathrm{MPa} \\
-      SWI_{\mathrm{sum}}^{n} &  \text{ 当 }\ \Psi_{\mathrm{s, 3}}<-0.6\ \mathrm{MPa}
+  SWI_{\mathrm{sum}}^{n}=\left\{\begin{array}{ll}SWI_{\mathrm{sum}}^{n-1}+f_{\mathrm{d a y}} & \text{ 当 }\ \psi_{\mathrm{s, 3}} \geqslant -0.6\ \mathrm{MPa} \\
+      SWI_{\mathrm{sum}}^{n} &  \text{ 当 }\ \psi_{\mathrm{s, 3}}<-0.6\ \mathrm{MPa}
   \end{array}\right.
 \end{equation}
-其中$SWI_{\mathrm{sum}}^n$代表土壤水分因子累加到第$n$个时间步长，$\Psi_{\mathrm{s,3}}$是第三层土壤的水势，当土壤水势高于 -0.6 MPa 时，土壤足够湿润，土壤水分因子就开始累加，$f_{\mathrm{d a y}}$是模拟时间步长，单位：天。
+其中$SWI_{\mathrm{sum}}^n$代表土壤水分因子累加到第$n$个时间步长，$\psi_{\mathrm{s,3}}$是第三层土壤的水势，当土壤水势高于 -0.6 MPa 时，土壤足够湿润，土壤水分因子就开始累加，$f_{\mathrm{d a y}}$是模拟时间步长，单位：天。
 当土壤水分因子高于15，同时过去十天有至少 20 mm 的降水，并且冷温胁迫没有触发，日照时长超过6小时，植被进入发芽展叶期。
 
 
 同时，因为土壤温度过低 ($FD_{\mathrm{sum}}^n>15$)，需要应用冷气候标准
 \begin{equation}
-  FD_{\mathrm{sum}}^{n}=\left\{\begin{array}{ll}FD_{\mathrm{sum}}^{n-1}+f_{\mathrm{day}} &  \text{ 当 }\ T_{\mathrm{s, 3}} > \text{0 \textcelsius} \\
-      FD_{\mathrm{sum}}^{n-1} &  \text{ 当 }\ T_{\mathrm{s, 3}} \leqslant \text{0 \textcelsius}
+  FD_{\mathrm{sum}}^{n}=\left\{\begin{array}{ll}FD_{\mathrm{sum}}^{n-1}+f_{\mathrm{day}} &  \text{ 当 }\ T_{3} > \text{0 \textcelsius} \\
+      FD_{\mathrm{sum}}^{n-1} &  \text{ 当 }\ T_{3} \leqslant \text{0 \textcelsius}
   \end{array}\right.
 \end{equation}
 即当气温低，发芽展叶期的触发需要土壤温度和土壤湿度同时满足条件：
@@ -435,8 +436,8 @@ $SWI_{\mathrm{sum}}>15,\ GDD_{\mathrm{sum}}>GDD_{\mathrm{sum\_crit}}$，和日�
 当持续土壤干旱或持续低温或日照长度低于6小时，胁迫落叶期就将触发。
 土壤干旱用累积落叶土壤水分因子($OSWI_{\mathrm{sum}}^n$)来量化：
 \begin{equation}
-  OSWI_{\mathrm{sum}}^{n}=\left\{\begin{array}{ll}OSWI_{\mathrm{sum}}^{n-1}+f_{\mathrm{d a y}}, &  \text{ 当 }\ \Psi_{\mathrm{s, 3}}<-2\ \mathrm{MPa} \\
-      \max \left(OSWI_{\mathrm{sum}}^{n-1}-f_{\mathrm{d a y}},\ 0\right) &  \text{ 当 }\ \Psi_{\mathrm{s, 3}}>-2\ \mathrm{MPa}
+  OSWI_{\mathrm{sum}}^{n}=\left\{\begin{array}{ll}OSWI_{\mathrm{sum}}^{n-1}+f_{\mathrm{d a y}}, &  \text{ 当 }\ \psi_{\mathrm{s, 3}}<-2\ \mathrm{MPa} \\
+      \max \left(OSWI_{\mathrm{sum}}^{n-1}-f_{\mathrm{d a y}},\ 0\right) &  \text{ 当 }\ \psi_{\mathrm{s, 3}}>-2\ \mathrm{MPa}
   \end{array}\right.
 \end{equation}
 当前面一个发芽展叶期已经完成时，且$OSWI_{\mathrm{sum}}^n\geqslant 15$，即触发落叶期。

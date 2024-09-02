@@ -1453,7 +1453,7 @@ $f_{\mathrm {c}}\rightarrow0$，$S\rightarrow2$，同上述单棵树冠情况一
 \end{equation}
 上式空白处表示0。若一层有多种PFT，其$L_n$计算为：
 \begin{equation}
-  L_{n}=\sum f_{{\mathrm c}i} \varepsilon_{i} \sigma T_{{\mathrm v}i}^{4}
+  L_{n}=\sum f_{{\mathrm c},i} \varepsilon_{i} \sigma T_{{\mathrm v},i}^{4}
 \end{equation}
 $L_{n\downarrow}$计算为：
 \begin{equation}
@@ -1463,7 +1463,7 @@ $L_{n\downarrow}$计算为：
     L_{1 \downarrow} &=\sum \frac{S_{1 i}\left(1-\varepsilon_{1 i}\right)}{S_{1}}\left(L_{4 \rightarrow 1}+L_{3 \rightarrow 1}+L_{2 \rightarrow 1}\right)
   \end{aligned}
 \end{equation}
-上式中$S_{ni}$表示第$n$层植被PFT $i$的阴影面积，$\sum{\frac{S_{ni}\left(1-\varepsilon_{ni}\right)}{S_n}}$为第$n$层的属性，$\varepsilon_{ni}$为第$n$层所包含PFT属性。
+上式中$S_{n,i}$表示第$n$层植被PFT $i$的阴影面积，$\sum{\frac{S_{n,i}\left(1-\varepsilon_{n,i}\right)}{S_n}}$为第$n$层的属性，$\varepsilon_{n,i}$为第$n$层所包含PFT属性。
 先算$L_{3\downarrow}$，然后计算$L_{2\downarrow}$(需要$L_3$的计算结果)，接着计算 $L_{1\downarrow}$，容易计算得到：
 \begin{equation}\label{eq:lvdown}
   L_{\mathrm{v}} ^\downarrow=L_{4 \rightarrow 0}+L_{3 \rightarrow 0}+L_{2 \rightarrow 0}+L_{1 \rightarrow 0} \text {, 即 } \boldsymbol{L}_{\rm dn}[1]
@@ -1519,37 +1519,37 @@ $L_{n\downarrow}$计算为：
 \end{equation}
 单个PFT所吸收的辐射量为：
 \begin{equation}
-  {L_{{\mathrm v} i}}=\frac{S_{ni}}{S_{n}} \varepsilon_{ni} L_{* \rightarrow n}-2 f_{{\mathrm c}i} \varepsilon_{i} \sigma T_{{\mathrm v}i}^{4}
+  {L_{{\mathrm v},i}}=\frac{S_{n,i}}{S_{n}} \varepsilon_{n,i} L_{* \rightarrow n}-2 f_{{\mathrm c},i} \varepsilon_{i} \sigma T_{{\mathrm v},i}^{4}
 \end{equation}
 $L_{\ast\rightarrow n}$即为到达每一层的辐射，即为$L[n]$。注意上式是整个归一化面积上的计算结果，
-或者说是在整个土壤patch上的计算，单位面积上的吸收还需要除以各自的覆盖度$f_{{\mathrm c}i}$。
+或者说是在整个土壤patch上的计算，单位面积上的吸收还需要除以各自的覆盖度$f_{{\mathrm c},i}$。
 
-在湍流迭代求解植被温度时，还需要用到$L_{{\mathrm v}i}$对自身温度的偏导数。PFT吸收的长波辐射来自自身发射的部分可计算如下: \\
+在湍流迭代求解植被温度时，还需要用到$L_{{\mathrm v},i}$对自身温度的偏导数。PFT吸收的长波辐射来自自身发射的部分可计算如下: \\
 %
 对于第1层植被：
 \begin{equation}\label{eq:dlv1}
-  f_{{\mathrm c}i} \varepsilon_{{\mathrm v}i} \sigma T_{{\mathrm v}i}^{4}\left(1-\varepsilon_{\mathrm{g}}\right) S_{i} \varepsilon_{\mathrm{v}i}
+  f_{{\mathrm c},i} \varepsilon_{{\mathrm v},i} \sigma T_{{\mathrm v},i}^{4}\left(1-\varepsilon_{\mathrm{g}}\right) S_{i} \varepsilon_{\mathrm{v},i}
 \end{equation}
 对于第2层植被：
 \begin{equation}\label{eq:dlv2}
-  f_{{\mathrm c}i} \varepsilon_{{\mathrm v}i} \sigma T_{{\mathrm v}i}^{4}\left[\left(1-S_{1}\right)+\sum S_{1 i}\left(1-\varepsilon_{1 i}\right)\right]
-  \left(1-\varepsilon_{\mathrm{g}}\right)\left[\left(1-S_{1}\right)+\sum S_{1 i}\left(1-\varepsilon_{1 i}\right)\right] S_{i} \varepsilon_{\mathrm{v}i}
+  f_{{\mathrm c},i} \varepsilon_{{\mathrm v},i} \sigma T_{{\mathrm v},i}^{4}\left[\left(1-S_{1}\right)+\sum S_{1 i}\left(1-\varepsilon_{1 i}\right)\right]
+  \left(1-\varepsilon_{\mathrm{g}}\right)\left[\left(1-S_{1}\right)+\sum S_{1 i}\left(1-\varepsilon_{1 i}\right)\right] S_{i} \varepsilon_{\mathrm{v},i}
 \end{equation}
 对于第3层植被：
 \begin{equation}\label{eq:dlv3}
   \begin{aligned}
-    f_{\mathrm{c}i} \varepsilon_{\mathrm{v}i} \sigma T_{\mathrm{v}i}^{4}\left[\left(1-S_{1}-S_{2}+S_{1} S_{2}\right)+
+    f_{\mathrm{c},i} \varepsilon_{\mathrm{v},i} \sigma T_{\mathrm{v},i}^{4}\left[\left(1-S_{1}-S_{2}+S_{1} S_{2}\right)+
     \sum S_{2 i}\left(1-\varepsilon_{2 i}\right)\left[\left(1-S_{1}\right)+\sum S_{1 i}\left(1-\varepsilon_{1 i}\right)\right]\right.\\[1ex]
     \left.+\left(1-S_{2}\right) \sum S_{1 i}\left(1-\varepsilon_{1 i}\right)\right]\left(1-\varepsilon_{\mathrm{g}}\right)\left[\left(1-S_{1}-S_{2}+S_{1} S_{2}\right)\right.\\[1ex]
     +\sum S_{1 i}\left(1-\varepsilon_{1 i}\right)\left[\left(1-S_{2}\right)+\sum S_{2 i}\left(1-\varepsilon_{2 i}\right)\right] \\[1ex]
     \left.+\left(1-S_{1}\right)
-    \sum S_{2 i}\left(1-\varepsilon_{2 i}\right)\right] S_{i} \varepsilon_{\mathrm{v}i}
+    \sum S_{2 i}\left(1-\varepsilon_{2 i}\right)\right] S_{i} \varepsilon_{\mathrm{v},i}
   \end{aligned}
 \end{equation}
-同时需要考虑自身发射的长波辐射$-2f_{\mathrm{c}i}\varepsilon_{\mathrm{v}i}\sigma T_{\mathrm{v}i}^4$。
-$L_{\mathrm{v}i}$对于叶温的变化率为以上两者之和对$T_{\mathrm{v}i}$求导，同时需要除以$f_{\mathrm{c}i}$ (转换成在单位面积上的值)。
+同时需要考虑自身发射的长波辐射$-2f_{\mathrm{c},i}\varepsilon_{\mathrm{v},i}\sigma T_{\mathrm{v},i}^4$。
+$L_{\mathrm{v},i}$对于叶温的变化率为以上两者之和对$T_{\mathrm{v},i}$求导，同时需要除以$f_{\mathrm{c},i}$ (转换成在单位面积上的值)。
 植被温度最后一次迭代的改变所包含的能量分配到$L_{\mathrm {v}} ^\downarrow$增加
-$\Sigma4f_{\mathrm{c}i}\varepsilon_{\mathrm{v}i}\sigma T_{\mathrm{v}i}^3\Delta T_{\mathrm{v}i}$，$L_{\mathrm{g}}$增加$\varepsilon_{\mathrm {g}}\Sigma4f_{\mathrm{c}i}\varepsilon_{\mathrm{v}i}\sigma T_{\mathrm{v}i}^3\Delta T_{\mathrm{v}i}$，$L_{\mathrm {v}} ^\uparrow$增加$\Sigma 4 f_{\mathrm{c}i} \varepsilon_{\mathrm{v}i} \sigma T_{\mathrm{v}i}^{3} \Delta T_{\mathrm{v}i}+\left(1-\varepsilon_{\mathrm{g}}\right) \Sigma 4 f_{\mathrm{c}i} \varepsilon_{\mathrm{v}i}\left(1-\varepsilon_{\mathrm{v}i}\right) \sigma T_{\mathrm{v}i}^{3} \Delta T_{\mathrm{v}i}$。
+$\Sigma4f_{\mathrm{c},i}\varepsilon_{\mathrm{v},i}\sigma T_{\mathrm{v},i}^3\Delta T_{\mathrm{v},i}$，$L_{\mathrm{g}}$增加$\varepsilon_{\mathrm {g}}\Sigma4f_{\mathrm{c},i}\varepsilon_{\mathrm{v},i}\sigma T_{\mathrm{v},i}^3\Delta T_{\mathrm{v},i}$，$L_{\mathrm {v}} ^\uparrow$增加$\Sigma 4 f_{\mathrm{c},i} \varepsilon_{\mathrm{v},i} \sigma T_{\mathrm{v},i}^{3} \Delta T_{\mathrm{v},i}+\left(1-\varepsilon_{\mathrm{g}}\right) \Sigma 4 f_{\mathrm{c},i} \varepsilon_{\mathrm{v},i}\left(1-\varepsilon_{\mathrm{v},i}\right) \sigma T_{\mathrm{v},i}^{3} \Delta T_{\mathrm{v},i}$。
 
 
 \section{短波吸收辐射通量}\label{短波吸收辐射通量}
@@ -1564,10 +1564,10 @@ $\Sigma4f_{\mathrm{c}i}\varepsilon_{\mathrm{v}i}\sigma T_{\mathrm{v}i}^3\Delta T
 \end{equation}
 其中等式右边$S$表示太阳短波在不同波段(可见光$\rm vis$、近红外$\rm nir$)和直射/漫射时(${\mathrm {dir}}$/${\mathrm {dif}}$)的辐射通量。阳叶、阴叶辐射通量吸收分别为：
 \begin{equation}
-  S_{\mathrm{s u n}}=S_{\mathrm{vi s, dir}} s_{\mathrm{s u n, vi s, dir}}+S_{\mathrm{vis, dif}} s_{\mathrm{s u n, vis, dif}}+S_{\mathrm{ni r, dir}} s_{\mathrm{s u n, ni r, dir}}+S_{\mathrm{nir, dif}} s_{\mathrm{s u n, nir, dif}}
+  S_{\mathrm{sun}}=S_{\mathrm{vis, dir}} s_{\mathrm{sun, vis, dir}}+S_{\mathrm{vis, dif}} s_{\mathrm{sun, vis, dif}}+S_{\mathrm{nir, dir}} s_{\mathrm{sun, nir, dir}}+S_{\mathrm{nir, dif}} s_{\mathrm{sun, nir, dif}}
 \end{equation}
 \begin{equation}
-  S_{\mathrm{s h a}}=S_{\mathrm{vis, dir}} s_{\mathrm{sun,vis,dir}}+S_{\mathrm{vis, dif}} s_{\mathrm{sun,vis,dif}}+S_{\mathrm{ni r, dir}} s_{\mathrm{sun,nir,dir}}+S_{\mathrm{nir, dif}} s_{\mathrm{sun,nir,dif}}
+  S_{\mathrm{sha}}=S_{\mathrm{vis, dir}} s_{\mathrm{sun,vis,dir}}+S_{\mathrm{vis, dif}} s_{\mathrm{sun,vis,dif}}+S_{\mathrm{nir, dir}} s_{\mathrm{sun,nir,dir}}+S_{\mathrm{nir, dif}} s_{\mathrm{sun,nir,dif}}
 \end{equation}
 植被总的吸收辐射通量为：
 \begin{equation}

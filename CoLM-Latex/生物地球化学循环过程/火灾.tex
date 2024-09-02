@@ -195,11 +195,11 @@ $u_{\mathrm {p}} $ (km s$^{-1}$)为下风区的蔓延速率:
 气候影响因子
 \begin{equation}
   \begin{aligned}
-    f_{\mathrm{c l i, d}}=\max\left[0, \min \left(1, \frac{b_{2}-P_{\rm 60d}}{b_{2}}\right)\right]^{0.5}& \times\max\left[0, \min \left(1, \frac{b_{3}-P_{10 d}}{b_{3}}\right)\right]^{0.5}\\
+    f_{\mathrm{c l i, d}}=\max\left[0, \min \left(1, \frac{b_{2}-p_{\rm 60d}}{b_{2}}\right)\right]^{0.5}& \times\max\left[0, \min \left(1, \frac{b_{3}-p_{\rm 10d}}{b_{3}}\right)\right]^{0.5}\\
     & \times\max\left[0, \min \left(1, \frac{0.25-P}{0.25}\right)\right]^{0.5}
   \end{aligned}
 \end{equation}
-是当前时步降水量 $P$(\unit{mm.d^{-1}}) 和此前 60 天滑动平均降水$P_{\rm 60d}$ (\unit{mm.d^{-1}})及 10 天滑动平均降水$P_{60 d}$ (\unit{mm.d^{-1}})的函数。 $b_2 = b_3$, 对于热带常绿树取 $4.0$ \unit{mm.d^{-1}}，对于热带落叶树取 $1.8$ \unit{mm.d^{-1}}.
+是当前时步降水量 $P$(\unit{mm.d^{-1}}) 和此前 60 天滑动平均降水$p_{\rm 60d}$ (\unit{mm.d^{-1}})及 10 天滑动平均降水$p_{\rm 60d}$ (\unit{mm.d^{-1}})的函数。 $b_2 = b_3$, 对于热带常绿树取 $4.0$ \unit{mm.d^{-1}}，对于热带落叶树取 $1.8$ \unit{mm.d^{-1}}.
 
 
 \section{泥炭火}
@@ -212,7 +212,7 @@ $u_{\mathrm {p}} $ (km s$^{-1}$)为下风区的蔓延速率:
 
 对于热带泥炭火,气候影响因子为:
 \begin{equation}
-  f_{\mathrm{c l i, p}}=\max \left[0, \min \left(1, \frac{4-P_{\rm 60d}}{4}\right)\right]^{2}
+  f_{\mathrm{c l i, p}}=\max \left[0, \min \left(1, \frac{4-p_{\rm 60d}}{4}\right)\right]^{2}
 \end{equation}
 而对于寒带泥炭火,气候影响因子为:
 \begin{equation}

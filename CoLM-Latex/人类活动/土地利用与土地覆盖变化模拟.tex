@@ -93,9 +93,9 @@
 
 2) \textbf{能量守恒}。与能量相关的变量，包括雪层和土壤层的温度$T$，是基于所有来源patch变化到新的温度之后，热量的变化总和为0的假设来计算：
 \begin{equation}
-  T^{n} = \sum_{i = 1}^{\rm np}{\,\left[ T_{i}^{n - 1}\,\cdot\,\frac{C_{\mathrm{v}i}^{n - 1} S_{i}^{n - 1}}{\sum_{i = 1}^{\rm np}{(C_{\mathrm{v}i}^{n - 1} S_{i}^{n - 1})}}\right]}
+  T^{n} = \sum_{i = 1}^{\rm np}{\,\left[ T_{i}^{n - 1}\,\cdot\,\frac{C_{\mathrm{v},i}^{n - 1} S_{i}^{n - 1}}{\sum_{i = 1}^{\rm np}{(C_{\mathrm{v},i}^{n - 1} S_{i}^{n - 1})}}\right]}
 \end{equation}
-其中\(T_{i}^{n - 1}\)是去年来源patch的土壤温度，\(T^{n}\)是今年的patch的土壤温度，\(S_{i}^{n - 1}\)是来源patch的面积百分比，np为来源patch数量，\(C_{\mathrm{v}i}^{n - 1}\)是土壤热容量(单位：\( \rm Jm^{-2}K^{-1}\))，\(C_{\mathrm{v}i}^{n - 1}\)的计算同土壤温度计算(\texttt{MOD\_GroundTemperature.F90})中的方案。因此土壤温度调整的权重为来源patch的面积与土壤热容量的乘积。
+其中\(T_{i}^{n - 1}\)是去年来源patch的土壤温度，\(T^{n}\)是今年的patch的土壤温度，\(S_{i}^{n - 1}\)是来源patch的面积百分比，np为来源patch数量，\(C_{\mathrm{v},i}^{n - 1}\)是土壤热容量(单位：\( \rm Jm^{-2}K^{-1}\))，\(C_{\mathrm{v},i}^{n - 1}\)的计算同土壤温度计算(\texttt{MOD\_GroundTemperature.F90})中的方案。因此土壤温度调整的权重为来源patch的面积与土壤热容量的乘积。
 
 雪层的温度计算与土壤层略有不同，考虑了不同来源patch合并后可能发生的水相态变化。计算过程参考雪层的压实过程(\texttt{MOD\_SnowLayersCombineDivide.F90})中的方案，即新patch的焓与所有来源patch的焓的总和相等，依据焓值即可逐层计算新patch的雪层温度。
 

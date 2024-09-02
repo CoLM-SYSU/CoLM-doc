@@ -20,15 +20,15 @@
 \end{equation}
 其中$p_{\mathrm {snow}} $为固态降水速率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分时间步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{\mathrm{sno}}$更新为
 \begin{equation}
-  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{100 d_{\mathrm{s n o}}^{2}}{2.5 z_{\rm lnd} W_{\mathrm{sno}}}\right)}
+  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{100 z_{\mathrm{s n o}}^{2}}{2.5 z_{\rm lnd} W_{\mathrm{sno}}}\right)}
 \end{equation}
 其中$W_{\mathrm{sno}}$为雪水当量(mm)，$z_{\rm lnd}$ 裸土覆盖时的地表粗糙度，取值为0.01 m。
 
 当植被被积雪掩埋时，已知植被粗糙度$z_{\rm 0mv}$，则被积雪掩埋的植被占总植被的比例计算为
 \begin{equation}
-  wt=\frac{0.1 d_{\mathrm{{sno}}}}{z_{\rm 0mv}+0.1 d_{\mathrm{{sno}}}}
+  wt=\frac{0.1 z_{\mathrm{sno}}}{z_{\rm 0mv}+0.1 z_{\mathrm{sno}}}
 \end{equation}
-其中$d_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-wt\right)f_{\mathrm{veg}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-wt\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
+其中$z_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-wt\right)f_{\mathrm{veg}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-wt\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
 
 
 \section{雪层的建立}\label{sec:雪层的建立}
@@ -288,7 +288,7 @@ $$W_{\mathrm{sno}}=\sum_{i=snl+1}^{i=0} w_{\mathrm{ice},i}$$
 \end{equation}
 其中$h_{\mathrm {c}} =h_1+h_2$为两个雪层合并后的焓，第$i$层的焓$h_i$可通过以下公式得出
 \begin{equation}
-  h_i=\left(C_{\mathrm{ice}}w_{\mathrm{ice},i}+C_{\mathrm{liq}}w_{\mathrm{liq},i}\right)\left(T_i-T_{\mathrm {frz}} \right)+L_{\mathrm f}w_{\mathrm{liq},i}
+  h_i=\left(C_{\mathrm{ice}}w_{\mathrm{ice},i}+C_{\mathrm{liq}}w_{\mathrm{liq},i}\right)\left(T_i-T_{\mathrm {frz}} \right)+\lambda_{\mathrm {fus}}w_{\mathrm{liq},i}
 \end{equation}
 $\lambda_{\mathrm {fus}} $为固态水融化潜热，$C_{\mathrm{liq}}$和$C_{\mathrm{ice}}$分别为液态水和固态水的比热容（表~\ref{tab:物理常数}）。
 
