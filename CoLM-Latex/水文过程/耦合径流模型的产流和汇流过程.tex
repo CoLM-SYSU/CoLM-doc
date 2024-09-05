@@ -35,38 +35,38 @@
 \subsubsection{基于Simple-VIC的地表产流方案}
 \cite{Liang2003Anew}提出的这一参数化方案充分考虑了土壤的物理特性，包括土壤质地、饱和程度和水分深度等关键因素。该方案首先计算土壤的最大入渗能力，我们首先假设最大入渗能力取决于最上面6层土壤的物理状态和属性，即：
 \begin{equation}
-w_{{int}} = \sum_{i=1}^{6}\left( {vol}_{i} \times {dz}_{i} \right)
+w_{\mathrm{{int}}} = \sum_{i=1}^{6}\left( {vol}_{i} \times {{\mathrm {d}} z}_{i} \right)
 \end{equation}
 \begin{equation}
-w_{{satint}} = \sum_{i=1}^{6}\left( {eff}_{i} \times {dz}_{i} \right)
+w_{\mathrm{{satint}}} = \sum_{i=1}^{6}\left( {eff}_{i} \times {{\mathrm {d}} z}_{i} \right)
 \end{equation}
-其中，$w_{{int}}$ 表示前6层土壤中的液态水体积，$w_{{satint}}$ 表示前6层土壤中的饱和水体积。 ${dz}_{i}$ 表示第 $i$ 层土壤厚度， ${vol}_{i}$ 表示第 $i$ 层土壤中液态水体积百分比，${eff}_{i}$ 表示第 $i$ 层有效孔隙度。由此我们可以计算得出土壤饱和分数：
+其中，$w_{\mathrm{{int}}}$ 表示前6层土壤中的液态水体积，$w_{\mathrm{{satint}}}$ 表示前6层土壤中的饱和水体积。 ${{\mathrm {d}} z}_{i}$ 表示第 $i$ 层土壤厚度， ${vol}_{i}$ 表示第 $i$ 层土壤中液态水体积百分比，${eff}_{i}$ 表示第 $i$ 层有效孔隙度。由此我们可以计算得出土壤饱和分数：
 \begin{equation}
-{S}_{{Sf}} = 1 - \left( 1 - \frac{w_{{int}}}{w_{{satint}}} \right)^{{I}_{{ef}}}
+{S}_{\mathrm{{Sf}}} = 1 - \left( 1 - \frac{w_{\mathrm{{int}}}}{w_{\mathrm{{satint}}}} \right)^{{I}_{\mathrm{{ef}}}}
 \end{equation}
-其中，${I}_{{ef}}$ 为渗透指数因子：
+其中，${I}_{\mathrm{{ef}}}$ 为渗透指数因子：
 \begin{equation}
-{I}_{{ef}} = \frac{B_{{VIC}}}{1 + B_{\text{VIC}}}
+{I}_{\mathrm{{ef}}} = \frac{B_{\mathrm{{VIC}}}}{1 + B_{\text{VIC}}}
 \end{equation}
-入渗参数~$B_{{VIC}}$~是用于表示土壤饱和比例的参数，数值介于0-1,其具体取值与Noah-MP保持一致，即由USDA定义的土壤分类计算得来，其主要特性在于随着土壤中的石英含量越高，~$B_{VIC}$~的取值越接近于1。土壤层初始和最大水深计算如下：
+入渗参数~$B_{\mathrm{{VIC}}}$~是用于表示土壤饱和比例的参数，数值介于0-1,其具体取值与Noah-MP保持一致，即由USDA定义的土壤分类计算得来，其主要特性在于随着土壤中的石英含量越高，~$B_{\mathrm{VIC}}$~的取值越接近于1。土壤层初始和最大水深计算如下：
 \begin{equation}
-z_{\mathrm{wt,max}}= \left( 1 + B_{{VIC}} \right) \times w_{{satint}}
+z_{\mathrm{wt,max}}= \left( 1 + B_{\mathrm{{VIC}}} \right) \times w_{\mathrm{{satint}}}
 \end{equation}
 \begin{equation}
-z_{\mathrm{wt,init}} = z_{\mathrm{wt,max}} \times \left( 1 - \left( 1 - {S}_{{sf}} \right)^{\frac{1}{B_{{VIC}}}} \right)
+z_{\mathrm{wt,init}} = z_{\mathrm{wt,max}} \times \left( 1 - \left( 1 - {S}_{\mathrm{{sf}}} \right)^{\frac{1}{B_{\mathrm{{VIC}}}}} \right)
 \end{equation}
 假设到达地表的净水流通量为$G_{\mathrm{wat}}$，则该方案的地表产流$r_{\mathrm{sur}}$考虑三种情况：
 \begin{equation}
 r_{\mathrm{sur}} = 
 \begin{cases}
 G_{\mathrm{wat}} & \text{当 } z_{\mathrm{wt,max}} \leq 0 \\
-G_{\mathrm{wat}} - w_{{satint}} + w_{{int}} & \text{当 } z_{\mathrm{wt,init}} + G_{\mathrm{wat}} > z_{\mathrm{wt,max}} \\
-G_{\mathrm{wat}}- w_{{satint}} + w_{{int}} + w_{{satint}} \times {{I}_{{tmp}}}^{1 + B_{{VIC}}} & \text{其他情况}
+G_{\mathrm{wat}} - w_{\mathrm{{satint}}} + w_{\mathrm{{int}}} & \text{当 } z_{\mathrm{wt,init}} + G_{\mathrm{wat}} > z_{\mathrm{wt,max}} \\
+G_{\mathrm{wat}}- w_{\mathrm{{satint}}} + w_{\mathrm{{int}}} + w_{\mathrm{{satint}}} \times {{I}_{\mathrm{{tmp}}}}^{1 + B_{\mathrm{{VIC}}}} & \text{其他情况}
 \end{cases}
 \end{equation}
 其中：
 \begin{equation}
-{I}_{tmp} = 1 - \frac{\left( z_{\mathrm{wt,init}} + {G}_{\mathrm{wat}} \right)}{z_{\mathrm{wt,max}}}
+{I}_{\mathrm{tmp}} = 1 - \frac{\left( z_{\mathrm{wt,init}} + {G}_{\mathrm{wat}} \right)}{z_{\mathrm{wt,max}}}
 \end{equation}
 最后，入渗量$q_{\mathrm{infl}}$由净水流通量和地表产流量决定：
 \begin{equation}
@@ -101,53 +101,53 @@ G_{\mathrm{wat}}- w_{{satint}} + w_{{int}} + w_{{satint}} \times {{I}_{{tmp}}}^{
 \end{equation}
 其中，$f_{\mathrm{ice,sum}}$为地下水位所在及以下土壤层内总的冰的体积含量（定义为冰的总体积除以土壤层的总体积）。
 
-\subsection{其它可选产流方案}
+\subsection{基于VIC的产流方案}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Hydro\_VIC.F90}、\texttt{MOD\_Hydro\_VIC\_Variables.F90}。
 \end{mymdframed}
 
-CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选方案。VIC（Variable Infiltration Capacity，“可变下渗容量模型”）是基于~\citet{liang1994simple} 的思想研制出的大尺度分布式水文模型。\citet{liang1994simple} 等人将VIC-2L模型的上层分出一个顶薄层，而成为3层。VIC模型的地表径流和基流分别在不同的土壤层中计算。上方两层土壤产生径流，而最下层土壤产生基流。
+CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选方案。VIC（Variable Infiltration Capacity，“可变下渗容量模型”）是基于~\citet{liang1994simple} 的思想研制出的大尺度分布式水文模型。VIC模型的地表径流和基流分别在不同的土壤层中计算。上方两层土壤产生径流，而最下层土壤产生基流。
 
 \begin{enumerate}
   \item 地表径流
 
     VIC模型基于土壤可变下渗能力曲线进行地表径流的计算。当降水量大于土壤下渗能力时，其计算公式为:
     \begin{equation}
-      Q_d\cdot\Delta t=
+      Q_{\mathrm {d}} \cdot\Delta t=
       \begin{cases}
-        P\cdot\Delta t - W_1^c + W_1^-, & i_0 + P\cdot\Delta t \geqslant i_m \\
-        P\cdot\Delta t - W_1^c + W_1^- + W_1^c \left(1-\frac{i_0+P\cdot\Delta t}{i_m} \right)^{1+b}, & i_0 + P\cdot\Delta t \leqslant i_m
+        P\cdot\Delta t - W_1^{\rm c} + W_1^-, & i_0 + P\cdot\Delta t \geqslant i_{\mathrm {m}}  \\
+        P\cdot\Delta t - W_1^{\rm c} + W_1^- + W_1^{\rm c} \left(1-\frac{i_0+P\cdot\Delta t}{i_{\mathrm {m}} } \right)^{1+b}, & i_0 + P\cdot\Delta t \leqslant i_{\mathrm {m}}
       \end{cases}
     \end{equation}
-    其中, $Q_d$ 为地表径流，$P$ 为降雨量，$i_0$ 为时段初的土壤下渗能力, $i_m$ 为土壤的最大下渗能力，$W_1^-$ 为时段初的土壤总含水量, $W_1^c$ 为土壤的最大蓄水容量，其计算公式为：
+    其中, $Q_{\mathrm {d}} $ 为地表径流，$P$ 为降雨量，$i_0$ 为时段初的土壤下渗能力, $i_{\mathrm {m}} $ 为土壤的最大下渗能力，$W_1^-$ 为时段初的土壤总含水量, $W_1^{\rm c}$ 为土壤的最大蓄水容量，其计算公式为：
     \begin{equation}
-      W_1^c = \frac{i_m}{1+b}
+      W_1^{\rm c} = \frac{i_{\mathrm {m}} }{1+b}
     \end{equation}
     其中 $b$ 为下渗能力曲线的形状参数。
 
     水量平衡方程式如下：
     \begin{equation}
-      W_1^+ = W_1^- + (P - Q_d - Q_{12} - E_1)\cdot\Delta t,
+      W_1^+ = W_1^- + (P - Q_{\mathrm {d}}  - Q_{12} - E_1)\cdot\Delta t,
     \end{equation}
     其中 $W_1^+$ 为土壤时段末的含水量, $Q_{12}$ 代表时段内由于重力作用从第二层到第三层土壤的下渗量，$E_1$ 为上两层土壤的蒸发量。$Q_{12}$ 计算公式为:
     \begin{equation}
-      Q_{12} = K_s \left(\frac{W_1-\theta_r}{W_1^c-\theta_r}\right)^{\frac{2}{B_p} + 3},
+      Q_{12} = K_{\mathrm {s}}  \left(\frac{W_1-\theta_{\mathrm {r}} }{W_1^{\rm c}-\theta_{\mathrm {r}} }\right)^{\frac{2}{B_{\mathrm {p}} } + 3},
     \end{equation}
-    式中 $\theta_r$ 为土壤残留水分，$K_s$ 为饱和渗透系数，$B_p$ 为土壤孔隙大小分布指数。
+    式中 $\theta_{\mathrm {r}} $ 为土壤残留水分，$K_{\mathrm {s}} $ 为饱和渗透系数，$B_{\mathrm {p}} $ 为土壤孔隙大小分布指数。
 
   \item 基流
 
     在VIC模型中，基流仅在第三层土壤中形成，应用 Arno 概念模型计算基流：
     \begin{equation}
-      Q_b = 
+      Q_{\mathrm {b}}  = 
       \begin{cases}
-        \frac{D_s D_m}{W_s W_2} W_2^-, & 0 \leqslant W_2^- \leqslant W_s W_2^c \\
-        \frac{D_s D_m}{W_s W_2} W_2^- + \left(D_m - \frac{D_s D_m}{W_s}\right) \left(\frac{W_2^--W_s W_2^c}{W_2^c-W_s W_2^c}\right)^2,  & W_2^- \geqslant W_s W_2^c
+        \frac{D_{\mathrm {s}}  D_{\mathrm {m}} }{W_{\mathrm {s}}  W_2^{\rm c}} W_2^-, & 0 \leqslant W_2^- \leqslant W_{\mathrm {s}}  W_2^{\rm c} \\
+        \frac{D_{\mathrm {s}}  D_{\mathrm {m}} }{W_{\mathrm {s}}  W_2^{\rm c}} W_2^- + \left(D_{\mathrm {m}}  - \frac{D_{\mathrm {s}}  D_{\mathrm {m}} }{W_{\mathrm {s}} }\right) \left(\frac{W_2^--W_{\mathrm {s}}  W_2^{\rm c}}{W_2^{\rm c}-W_{\mathrm {s}}  W_2^{\rm c}}\right)^2,  & W_2^- \geqslant W_{\mathrm {s}}  W_2^{\rm c}
       \end{cases}
     \end{equation}
-    其中，$Q_b$ 为基流量，$D_m$ 是最大日基流量，$D_s$ 是占最大日基流量的比例，$W_2^-$ 是初始时段的下层土壤含水量，$W_2^c$ 是下层土壤的最大含水量，$W_s$ 是占 $W_2^c$ 的比例值，满足 $D_s\leqslant W_s$。下层土壤的水量平衡方程为式：
+    其中，$Q_{\mathrm {b}} $ 为基流量，$D_{\mathrm {m}} $ 是最大日基流量，$D_{\mathrm {s}} $ 是占最大日基流量的比例，$W_2^-$ 是初始时段的下层土壤含水量，$W_2^{\rm c}$ 是下层土壤的最大含水量，$W_{\mathrm {s}} $ 是占 $W_2^{\rm c}$ 的比例值，满足 $D_{\mathrm {s}} \leqslant W_{\mathrm {s}} $。下层土壤的水量平衡方程为式：
     \begin{equation}
-      W_2^+ = W_2^- + (Q_{12} - Q_b -E_2)\cdot\Delta t,
+      W_2^+ = W_2^- + (Q_{12} - Q_{\mathrm {b}}  -E_2)\cdot\Delta t,
     \end{equation}
     式中，$W_2^+$ 为最下层土壤时段末的含水量，$E_2$ 为最下层土壤的蒸发量。
 
@@ -156,9 +156,9 @@ CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选
     决定VIC大尺度水文模型模拟精确度的因素中，除了模型对各个水文过程的精确考虑和详细表达外，最重要的就是对模型参数的最优化选取，即模型参数的率定。VIC模型径流模拟中需要对以下四个参数进行率定（见表~\ref{tab:VIC率定参数}）：
     \begin{enumerate}
       \item 可变下渗曲线参数 $b$，$b$ 增大时会减少下渗量，从而使得模拟的洪峰值增大，取值范围一般为 $0-0.4$ 之间。
-      \item 最大基流流速 $D_m$，与土壤水力传导度有关，一般取值范围为 $1-30$。
-      \item 非线性基流开始时基流值与最大基流值的比值 $D_s$，该值会影响基流，$D_s$ 增大会增加模拟的径流。$D_s$ 与年干燥度呈负相关，一般取值范围为 $0-1$。
-      \item 非线性基流开始时第三层土壤含水量占最大土壤含水量的比值 $W_s$，$W_s$ 值越大将推迟洪峰出现的时间，一般取值范围为 $0-1$。
+      \item 最大基流流速 $D_{\mathrm {m}} $，与土壤水力传导度有关，一般取值范围为 $1-30$。
+      \item 非线性基流开始时基流值与最大基流值的比值 $D_{\mathrm {s}} $，该值会影响基流，$D_{\mathrm {s}} $ 增大会增加模拟的径流。$D_{\mathrm {s}} $ 与年干燥度呈负相关，一般取值范围为 $0-1$。
+      \item 非线性基流开始时第三层土壤含水量占最大土壤含水量的比值 $W_{\mathrm {s}} $，$W_{\mathrm {s}} $ 值越大将推迟洪峰出现的时间，一般取值范围为 $0-1$。
     \end{enumerate}
     {
       \begin{table}[htbp]
@@ -167,30 +167,22 @@ CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选
         \begin{tabular}{ccp{12cm}}
           \toprule
           参数  & 范围    & 含义                                                                                                                                   \\ \midrule
-          $b$   & $0-0.4$ & 下渗能力曲线形状参数。数值越大下渗越小，$Q_d$ 越大                                                                                     \\
-          $D_m$ & $0-30$  & 最底层土壤能产生的最大基流，与土壤水力传导度有关                                                                                       \\
-          $D_s$ & $0-1$   & 基流出现快速非线性增长时占 $D_m$ 的比例。数值越大，$Q_b$ 越大                                                                          \\
-          $W_s$ & $0-1$   & 基流出现快速非线性增长时底层土壤含水量占该层最大土壤含水量的比例。$W_s$ 值越高，快速增加的非线性基流所需的含水量就越高，将延迟径流峰值 \\
+          $b$   & $0-0.4$ & 下渗能力曲线形状参数。数值越大下渗越小，$Q_{\mathrm {d}} $ 越大                                                                                     \\
+          $D_{\mathrm {m}} $ & $0-30$  & 最底层土壤能产生的最大基流，与土壤水力传导度有关                                                                                       \\
+          $D_{\mathrm {s}} $ & $0-1$   & 基流出现快速非线性增长时占 $D_{\mathrm {m}} $ 的比例。数值越大，$Q_{\mathrm {b}} $ 越大                                                                          \\
+          $W_{\mathrm {s}} $ & $0-1$   & 基流出现快速非线性增长时底层土壤含水量占该层最大土壤含水量的比例。$W_{\mathrm {s}} $ 值越高，快速增加的非线性基流所需的含水量就越高，将延迟径流峰值 \\
           \bottomrule
         \end{tabular}
         \label{tab:VIC率定参数}
       \end{table}
     }
 
-  \item VIC与CoLM耦合
+  \item VIC与CoLM耦合 \todo{下面的变量名可与前面章节符号统一。}
 
-    VIC向CoLM传入的变量有土壤层厚度（\texttt{dz\_soi}）、土壤孔隙度（\texttt{porsl}）、残余水分含量（\texttt{theta\_r}）、饱和导水率（\texttt{hksati}）、Clapp-Hornberger参数 $b$(\texttt{bsw})、土壤层中液态水含量（\texttt{wliq\_soisno}）、土壤层中固态水含量（\texttt{wice\_soisno}）、根系从每层土壤中的吸水速率（\texttt{rootflux}）和从冠层到大气的蒸散发（\texttt{fevpg}）。VIC 向 CoLM 返回的变量有地表径流（\texttt{rsur}）和基流（\texttt{rsubst}）。
+    VIC向CoLM传入的变量有土壤层厚度（\texttt{dz\_soi}）、土壤孔隙度（\texttt{porsl}）、残余水分含量（\texttt{theta\_{r}}）、饱和导水率（\texttt{hksati}）、Clapp-Hornberger参数 $b$ (\texttt{bsw})、土壤层中液态水含量（\texttt{wliq\_soisno}）、土壤层中固态水含量（\texttt{wice\_soisno}）、根系从每层土壤中的吸水速率（\texttt{rootflux}）和从冠层到大气的蒸散发（\texttt{fevpg}）。VIC 向 CoLM 返回的变量有地表径流（\texttt{rsur}）和基流（\texttt{rsubst}）。
 
-    VIC中的三层土壤和 CoLM 中的1--3、4--6、7--10层分别进行对应（见图~\ref{fig:VIC和CoLM耦合示意图} 所示）。对变量值做直接加和或者以土壤厚度作为权重进行加权平均。
+    VIC中的三层土壤和 CoLM 中的1--3、4--6、7--10层分别进行对应。对变量值做直接加和或者以土壤厚度作为权重进行加权平均。
 
-    {
-      \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=\textwidth]{Figures/陆地表面的水分循环/VIC说明图中文.pdf}
-        \caption{VIC和CoLM耦合示意图}
-        \label{fig:VIC和CoLM耦合示意图}
-      \end{figure}
-    }
 \end{enumerate}
 
 \section{径流模型CaMa-Flood}
@@ -281,7 +273,7 @@ CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量
 \begin{equation}
   S_{i}^{t+\Delta t}=S_{i}^{t}+\sum_{k}^{Upstream} Q_{k}^{t} \Delta t-Q_{i}^{t} \Delta t+A c_{i} R_{i}^{t} \Delta t
 \end{equation}
-式中$S_{i}^{t}$和$S_{i}^{t+\Delta t}$分别代表单元$i$在时间$t$到时间$t+\Delta t$蓄水量的变化，$Q_i^t$代表在时间$t$该单元河流径流出流量 (河道内+漫滩)，
+式中$S_{i}^{t}$和$S_{i}^{t+\Delta t}$分别代表单元$i$在时间$t$到时间$t+\Delta t$蓄水量的变化，$Q_{i} ^t$代表在时间$t$该单元河流径流出流量 (河道内+漫滩)，
 $Q_k^t$代表在时间 $t$ 该单元从上游(upstream)网格($k$)接收的河流径流流入流量 (河道内+漫滩)，$Ac_i$ 是单元$i$的面积，$R_i^t$ 代表流域单元 $i$ 的产流量。
 
 

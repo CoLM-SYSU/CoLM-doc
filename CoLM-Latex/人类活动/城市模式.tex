@@ -952,7 +952,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 \begin{equation}
   c_{\mathrm{T}} = \frac{1}{r_{\mathrm{d3}}} + \frac{1}{r_{\mathrm{d2}}} + \frac{f_{\mathrm{wsun}}}{r_{\mathrm{wsun}}} + \frac{f_{\mathrm{wsha}}}{r_{\mathrm{wsha}}}
 \end{equation}
-将$T_{2}$分别代回~\eqref{3lay_T1_veg}、~\eqref{3lay_T3_veg}，即可求得$T_{1}$与$T_{3}$。其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，各表面感热对各自温度的变化率分别为：
+将$T_{2}$分别代回公式~\eqref{3lay_T1_veg}、~\eqref{3lay_T3_veg}，即可求得$T_{1}$与$T_{3}$。其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，各表面感热对各自温度的变化率分别为：
 \begin{equation}
   \frac{\partial H_{\mathrm{g}}}{\partial T_{\mathrm{g}}} = \frac{\rho _{\rm a} C_{\mathrm a}}{r_{\mathrm{d1}}} \left(1-\frac{f_{\rm g}}{r_{\mathrm{d1}} \left(\frac{1}{r_{\mathrm{d2}}}+\frac{f_{\rm g}}{r_{\mathrm{d1}}}+\frac{f_{\rm v}}{r_{\rm v}}\right)} - \frac{f_{\rm g} a_{\mathrm{T}}^2}{r_{\mathrm{d1}} c_{\mathrm{T}} \left(1-\frac{a_{\mathrm{T}}}{c_{\mathrm{T}} r_{\mathrm{d2}}}-\frac{b_{\mathrm{T}}}{c_{\mathrm{T}} r_{\mathrm{d3}}}\right)}\right)
 \end{equation}
@@ -1050,7 +1050,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 \begin{equation}
   c_{\mathrm{q}} = \frac{1}{r_{\mathrm{d3}}} + \frac{1}{r_{\mathrm{d2}}}
 \end{equation}
-将$q_{2}$分别代回~\eqref{3lay_q1_veg}、~\eqref{3lay_q3_veg}，即可求得$q_{1}$与$q_{3}$。其后计算城市各表面温度并基于该温度变化对水汽通量进行更新时，各表面水汽通量对各自温度的变化率分别为：
+将$q_{2}$分别代回公式~\eqref{3lay_q1_veg}、~\eqref{3lay_q3_veg}，即可求得$q_{1}$与$q_{3}$。其后计算城市各表面温度并基于该温度变化对水汽通量进行更新时，各表面水汽通量对各自温度的变化率分别为：
 \begin{equation}
   \begin{split}
     \frac{\partial  E_{\mathrm{gper}}}{\partial T_{\mathrm{gper}}} =\frac{\rho _{\rm a}}{r_{\mathrm{d1}}+r_{\mathrm{ss}}} \frac{{\mathrm {d}} q_{\mathrm{gper}}}{{\mathrm {d}} T_{\mathrm{gper}}} &\left(1-\frac{f_{\mathrm{g}}f_{\mathrm{gper}}}{\left(r_{\mathrm{d1}}+r_{\mathrm{ss}}\right) \left(\frac{1}{r_{\mathrm{d2}}} + \frac{f_{\mathrm{g}} f_{\mathrm{gper}}}{r_{\mathrm{d1}} + r_{\mathrm{ss}}} + \frac{f_{\mathrm{wet,gimp}} f_{\mathrm{g}} f_{\mathrm{gimp}}}{r_{\mathrm{d1}}}+\frac{f_{\rm v}}{r_{\mathrm{v}}}\right)}  \right. \\
@@ -1645,7 +1645,7 @@ $T_2$和$T_3$分别表示第二层和第三层空气温度。由于代谢热与�
 \begin{equation}
   c_{\mathrm{T}} = \frac{1}{r_{\mathrm{d3}}} + \frac{1}{r_{\mathrm{d2}}} + \frac{f_{\mathrm{wsun}}}{r_{\mathrm{wsun}}} + \frac{f_{\mathrm{wsha}}}{r_{\mathrm{wsha}}}
 \end{equation}
-将$T_{\mathrm{2}}$分别代回~\eqref{3lay_T1}、~\eqref{3lay_T3}，即可求得$T_{\mathrm{1}}$与$T_{\mathrm{3}}$。其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，各表面感热对各自温度的变化率分别为：
+将$T_{\mathrm{2}}$分别代回公式~\eqref{3lay_T1}、~\eqref{3lay_T3}，即可求得$T_{\mathrm{1}}$与$T_{\mathrm{3}}$。其后计算城市各表面温度并基于该温度变化对感热通量进行更新时，各表面感热对各自温度的变化率分别为：
 \begin{equation}
   \frac{\partial H_{\mathrm{g}}}{\partial T_{\mathrm{g}}} = \frac{\rho _{\rm a} C_{\mathrm a}}{r_{\mathrm{d1}}} \left(1-\frac{f_{\rm g}}{r_{\mathrm{d1}} \left(\frac{1}{r_{\mathrm{d2}}}+\frac{f_{\rm g}}{r_{\mathrm{d1}}}+\frac{f_{\rm v}}{r_{\rm v}}\right)} - \frac{f_{\rm g} a_{\mathrm{T}}^2}{r_{\mathrm{d1}} c_{\mathrm{T}} \left(1-\frac{a_{\mathrm{T}}}{c_{\mathrm{T}} r_{\mathrm{d2}}}-\frac{b_{\mathrm{T}}}{c_{\mathrm{T}} r_{\mathrm{d3}}}\right)}\right)
 \end{equation}
@@ -1743,7 +1743,7 @@ $T_2$和$T_3$分别表示第二层和第三层空气温度。由于代谢热与�
 \begin{equation}
   c_{\mathrm{q}} = \frac{1}{r_{\mathrm{d3}}} + \frac{1}{r_{\mathrm{d2}}}
 \end{equation}
-将$q_{2}$分别代回~\eqref{3lay_q1}、~\eqref{3lay_q3}，即可求得$q_{1}$与$q_{3}$。其后计算城市各表面温度并基于该温度变化对水汽通量进行更新时，各表面水汽通量对各自温度的变化率分别为：
+将$q_{2}$分别代回公式~\eqref{3lay_q1}、~\eqref{3lay_q3}，即可求得$q_{1}$与$q_{3}$。其后计算城市各表面温度并基于该温度变化对水汽通量进行更新时，各表面水汽通量对各自温度的变化率分别为：
 \begin{equation}
   \begin{split}
     \frac{\partial  E_{\mathrm{gper}}}{\partial T_{\mathrm{gper}}} =\frac{\rho _{\rm a}}{r_{\mathrm{d1}}+r_{\mathrm{ss}}} \frac{{\mathrm {d}} q_{\mathrm{gper}}}{{\mathrm {d}} T_{\mathrm{gper}}} &\left(1-\frac{f_{\mathrm{g}}f_{\mathrm{gper}}}{\left(r_{\mathrm{d1}}+r_{\mathrm{ss}}\right) \left(\frac{1}{r_{\mathrm{d2}}} + \frac{f_{\mathrm{g}} f_{\mathrm{gper}}}{r_{\mathrm{d1}} + r_{\mathrm{ss}}} + \frac{f_{\mathrm{wet,gimp}} f_{\mathrm{g}} f_{\mathrm{gimp}}}{r_{\mathrm{d1}}}+\frac{f_{\rm v}}{r_{\mathrm{v}}}\right)}  \right. \\

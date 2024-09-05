@@ -78,7 +78,7 @@ H06表示~\citet{hanasaki2006reservoir}提出的基于入流和需求的调度�
 \end{table}
 
 \subsection{V13方案}
-V13表示~\citet{voisin2013improved}提出的调度方案，在H06方案的基础上增加了防洪期以同时实现防洪和灌溉目标。该方案根据水库多年平均入库流量的季节变化，定义了三个特征时刻：NDFC表示防洪期结束月，为运营期开始前的湿润期的第一个月；STFC表示防洪期开始月，为运营期开始前的枯水期内流量最低的月份；STOp\todo{这里p小写是有什么特殊含义吗？另外两个时间节点都是大写。}表示运营期的开始月，\citet{hanasaki2006reservoir}将运营期的开始定义为长期平均月流量低于长期平均年流量的第一个月。
+V13表示~\citet{voisin2013improved}提出的调度方案，在H06方案的基础上增加了防洪期以同时实现防洪和灌溉目标。该方案根据水库多年平均入库流量的季节变化，定义了三个特征时刻：NDFC表示防洪期结束月，为运营期开始前的湿润期的第一个月；STFC表示防洪期开始月，为运营期开始前的枯水期内流量最低的月份；STOP表示运营期的开始月，\citet{hanasaki2006reservoir}将运营期的开始定义为长期平均月流量低于长期平均年流量的第一个月。
 在STFC到NDFC时段内，V13方案在H06方案的基础上增加额外的出流，从而使水库为汛期的到来留出更多库容，在原V13方案中该时段内每个时刻的额外出流:
 \begin{equation}
   Q_{\rm drop} = \frac{\sum_{i = \text{STFC}}^{\text{NDFC} - 1}{{(Q}_{\text{in}}^{i} - Q_{\mathrm{n}})}}{\left( \text{NDFC} - \text{STFC} \right)}
@@ -87,7 +87,7 @@ V13表示~\citet{voisin2013improved}提出的调度方案，在H06方案的基�
 \begin{equation}
   Q_{\rm drop} = \left| Q_{\text{in}}^{i} - Q_{\mathrm{n}} \right|
 \end{equation}
-在NDFC到STOp时段内，通过只释放年平均流量$Q_{\mathrm{n}}$来确保水库为灌溉季节再次蓄水。
+在NDFC到STOP时段内，通过只释放年平均流量$Q_{\mathrm{n}}$来确保水库为灌溉季节再次蓄水。
 
 \subsection{LIS方案}
 LIS表示LISFLOOD所采用的基于目标库容的分段调度方案(\url{https://ec-jrc.github.io/lisflood-model/3\_03\_optLISFLOOD\_reservoirs/})，计算公式如下：
@@ -205,13 +205,5 @@ H22表示~\citet{hanazaki2022development}提出的调度方案，根据水库入
 \begin{equation}
   S_{i}^{t+\Delta t}=S_{i}^{t}+\sum_{k}^\text{Upstream-2} Q_{k}^{t} \Delta t-Q_{i}^{t} \Delta t+A c_{i} R_{i}^{t} \Delta t
 \end{equation}
-式中Upsteam-2表示在原上游网格的基础上除去大坝上游网格 (例如图~\ref{fig:大坝对下游河道汇流计算方案的影响示意图} 所示)，其他变量含义同章节~\ref{诊断洪泛状态} 所述。
+式中Upsteam-2表示在原上游网格的基础上除去大坝上游网格，其他变量含义同章节~\ref{诊断洪泛状态} 所述。
 
-{
-  \begin{figure}[htbp]
-    \centering
-    \includegraphics{Figures/陆地表面的水分循环/大坝对下游河道汇流计算方案的影响示意图.png}
-    \caption{大坝对下游河道汇流计算方案的影响示意图}
-    \label{fig:大坝对下游河道汇流计算方案的影响示意图}
-  \end{figure}
-}

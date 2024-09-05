@@ -75,38 +75,55 @@ $\lambda_{\mathrm {vap}}$ 为液态水的蒸发潜热（\unit{J.kg^{-1}}）。
 
 
 \subsection{PSY方案}
-PSY (Psychrometric Energy Balance Method) 方案基于以下假设:
-\begin{enumerate}
-\item 在水凝物（液态水或冰晶）表面无限接近处存在一个理想气团，其温度与水凝物相同，且满足Tetens饱和水汽压经验公式；
-\item 该理想气团与周围环境大气之间遵循质量守恒和能量守恒原理，且两者均符合理想气体状态方程；
-\item 水凝物的凝结（或凝华）潜热以及空气导热率与环境温度（\textcelsius）之间存在特定的函数关系。
-\end{enumerate}
-基于上述假设，该方案通过计算水凝物表面空气温度来表征水凝物温度（\textcelsius）。具体计算过程如下：
+PSY (Psychrometric Energy Balance Method) 方案是一种基于干湿能量平衡计算水凝物温度的方法。
+方案的基本假设是在水凝物（液态水或冰晶）表面无限接近处存在一个理想气团，其温度与水凝物相同。这个气团满足Tetens饱和水汽压经验公式，该公式对于水面和冰面有不同的表达式：
 \begin{equation}
-\lambda\frac{\mathrm{d}m}{\mathrm{d}t} = 4\pi Ck_{\mathrm{a}}(T_{\mathrm{ice}} - T)
+e_s = 611 \exp\left(\frac{17.27(T_{\mathrm{air}} - 273.15)}{T_{\mathrm{air}} - 35.86}\right)
 \end{equation}
 \begin{equation}
-\frac{\mathrm{d}m}{\mathrm{d}t} = 4\pi CD_{\mathrm{v}}(\rho - \rho_{\mathrm{ice}})
+e_{si} = 611 \exp\left(\frac{21.87(T_{\mathrm{air}} - 273.15)}{T_{\mathrm{air}} - 7.66}\right)
 \end{equation}
-其中$m$是水凝物质量。简化后得到：
+其中，$e_s$是水面饱和气压 (Pa)，$e_{si}$是冰面饱和气压(Pa)，$T_{\mathrm{air}}$是大气温度（K）。 此外，PSY方案假设这个理想气团与周围环境大气之间遵循质量守恒和能量守恒原理，且均符合理想气体状态方程。空气密度$\rho$与温度和气压的关系可表示为：
+\begin{equation}
+\rho = \frac{p}{287.04 \times T_{\mathrm{air}} }
+\end{equation}
+其中，$p$是气压（Pa）。为了更准确地描述水凝物的物理过程，PSY方案还引入了一些与温度相关的物理参数。水蒸气在空气中的扩散系数$D_v$($m^2 s^{-1}$)、空气的导热率~$k_a$~($J m^{-1} s^{-1} k^{-1}$)以及水蒸气的凝华和蒸发潜热$\lambda$ ~($J kg^{-1}$)都被表示为温度的函数：
+\begin{equation}
+D_v = 2.063 \times 10^{-5} \left(\frac{T_{\mathrm{air}}}{273.15}\right)^{1.75}
+\end{equation}
+
+\begin{equation}
+k_a = 6.3 \times 10^{-5} T_{\mathrm{air}} + 0.00673
+\end{equation}
+对于潜热$\lambda$，当温度高于273.15 K（0°C）时：
+\begin{equation}
+\lambda = 1000\times(2834.1 - 0.29(T_{\mathrm{air}}-273.15) - 0.004(T_{\mathrm{air}}-273.15)^2)
+\end{equation}
+当温度低于或等于273.15 K（0°C）时：
+\begin{equation}
+\lambda = 1000\times(2501.1 - 2.361\times(T_{\mathrm{air}}-273.15))
+\end{equation}
+基于这些假设和参数，PSY方案通过求解以下方程来确定水凝物温度$T_{\mathrm{frz}}$：
 \begin{equation}
 \label{eq:水凝物表面空气温度定义}
-T_{\mathrm{ice}} = T + \frac{D_{\mathrm{v}}}{k_{\mathrm{a}}}\lambda(\rho - \rho_{\mathrm{ice}})
+T_{\mathrm{frz}} = T_{\mathrm{air}} + \frac{D_v}{k_a} \lambda (\rho - \rho_{\mathrm{frz}})
 \end{equation}
-其中：$\lambda$为凝结或凝华潜热，$C$为水凝物形状因子，$k_{\mathrm{a}}$为空气导热率，$T_{\mathrm{ice}}$为水凝物表面空气温度，$T$为环境温度，$D_{\mathrm{v}}$为水汽扩散系数，$\rho$为环境空气密度，$\rho_{\mathrm{ice}}$为水凝物表面空气密度。
-上述方程可通过牛顿迭代法求解，从而得出水凝物表面空气温度。与方程\eqref{eq:湿球温度定义}对湿球温度的等焓假设不同，方程\eqref{eq:水凝物表面空气温度定义}在计算水凝物温度时并未做出类似假设。这两种方法的物理基础存在差异，因此其计算方程不能相互转化。
-
+其中，$\rho_{\mathrm{frz}}$是水凝物表面饱和水汽密度 ($Kg m^{-3}$)。这个方程通过牛顿迭代法求解，具体步骤如下：首先定义函数$f(T_{\mathrm{frz}}) = T_{\mathrm{frz}} - T_{\mathrm{air}} - \frac{D_v}{k_a} \lambda (\rho - \rho_{\mathrm {frz}})$，然后给定初值$T_{\mathrm{frz}}^{(0)} = T_{\mathrm{air}}$，接着进行迭代计算$T_{\mathrm {frz}}^{(i+1)} = T_{\mathrm {frz}}^{(i)} - \frac{f(T_{\mathrm {frz}}^{(i)})}{\frac{df(T_{\mathrm {frz}}^{(i)})}{dT_{\mathrm {frz}}}}$，直到满足收敛条件$|T_{\mathrm {frz}}^{(i+1)} - T_{\mathrm {frz}}^{(i)}| < 0.01$。
 
 由上可得，本方案计算液态降水占比如下：
 \begin{equation}
   f_{\mathrm{pl}}= \begin{cases}
-    1, & \text{当 }\ 5\leqslant T_{\mathrm {ice}} \text{ 时}\\
-    \frac{1}{1 + 2.50286\times 0.125006^{T_{\mathrm{ice}}}}, & \text{当 }\ -5\leqslant T_{\mathrm {ice}} < 5 \text{ 时} \\
-    0, & \text{当 }\ T_{\mathrm {ice}} < -5 \text{ 时}
+    1, & \text{当 }\ 3 < T_{\mathrm {frz}} \text{ 时}\\
+    \frac{1}{1 + 2.50286\times 0.125006^{T_{\mathrm{frz}}}}, & \text{当 }\ -3\leqslant T_{\mathrm {frz}} \leqslant  3 \text{ 时} \\
+    0, & \text{当 }\ T_{\mathrm {frz}} < -3 \text{ 时}
   \end{cases}
 \end{equation}
-值得注意的是，上述Sigmoid函数拟合方法与湿球温度方案有所不同。
+值得注意的是，与方程\eqref{eq:湿球温度定义}对湿球温度的等焓假设不同，方程\eqref{eq:水凝物表面空气温度定义}在计算水凝物温度时并未做出类似假设。这两种方法的物理基础存在差异，因此其计算方程不能相互转化。
 PSY方案的拟合数据来源于降水量（液态水/总降水量），而湿球温度方案的拟合数据则基于降水事件概率（降雨事件/总降水事件）。这种数据来源的差异可能导致两种方法在实际应用中产生不同的结果。
+
+
+
+
 
 
 \subsection{单阈值方案}
