@@ -24,7 +24,7 @@ $L_{\mathrm v}$可计算如下(假设植被叶片部分发射率为1)：
 \begin{equation}
   L_{\mathrm{v}}=\left(1-\tau_{\mathrm{v}}\right)\left(L ^\downarrow+\varepsilon_{\mathrm{g}} \sigma T_{\mathrm{g}}^{4}-2 \sigma T_{\mathrm{v}}^{4}\right) + \left( 1- \varepsilon_{\mathrm{g}} \right )\left(1-\varepsilon_{\mathrm{v}} \right)\varepsilon_{\mathrm{v}} L^\downarrow + \left( 1- \varepsilon_{\mathrm{g}} \right ) \varepsilon_{\mathrm{v}}^2 \sigma T_{\mathrm{v}}^4
 \end{equation}
-即植被吸收的净长波辐射等于植被吸收的来自大气和地表的长波辐射减去植被向大气和地表方向同时发出的长波辐射，其中$L^\downarrow$表示近地面大气下行长波辐射，$\varepsilon_{\mathrm {g}} =0.96$表示地面的长波辐射发射率，$\tau_{\mathrm{v}}$表示长波辐射直接穿过植被冠层的比例(见章节~\ref{长波净辐射通量})，植被整体的发射率可计算为$\varepsilon_{\mathrm v}=1-\tau_{\mathrm v}$。$L_{\mathrm v}$对叶片温度的变化率如下：
+即植被吸收的净长波辐射等于植被吸收的来自大气和地表的长波辐射减去植被向大气和地表方向同时发出的长波辐射，其中$L^\downarrow$表示近地面大气下行长波辐射，$\varepsilon_{\mathrm {g}} =0.96$表示地面的长波辐射发射率，$\tau_{\mathrm{v}}$表示长波辐射直接穿过植被冠层的比例(见章节~\ref{长波净辐射通量})，植被整体的发射率可计算为$\varepsilon_{\mathrm v}=1-\tau_{\mathrm v}$。$L_{\mathrm v}$对叶片温度的变化率如下：\todo{$T_{g}$、$\sigma$这类值需要在某处统一说明含义还是这里也需要介绍}
 \begin{equation}
   \begin{aligned}
     \frac{\partial L_{\mathrm{v}}}{\partial T_{\mathrm{v}}} &= -8 \varepsilon_{\mathrm{v}}\sigma T_{\mathrm{v}}^{3} + 4 \left( 1- \varepsilon_{\mathrm{g}} \right ) \varepsilon_{\mathrm{v}}^2 \sigma T_{\mathrm{v}}^3
@@ -36,7 +36,7 @@ $L_{\mathrm v}$可计算如下(假设植被叶片部分发射率为1)：
 \end{equation}
 上式中变量$c_{\mathrm{*h}}$详见章节~\ref{一维植被湍流交换模型}。
 
-对于水汽通量$E_{\mathrm{v}}$，虽然其表达式也已在章节~\ref{一维植被湍流交换模型} 给出，但这里为了表达上的便利，我们引入对于植被表面蒸散发是否发生的判别因子$\delta$如下：
+对于水汽通量$E_{\mathrm{v}}$，虽然其表达式也已在章节~\ref{一维植被湍流交换模型} 给出，但这里为了表达上的便利，我们引入对于植被表面蒸散发是否发生的判别因子$\delta$如下\todo{$c_{*}$、$r_{*}$，$q_{sat}^{T_v}$介绍涉及几个章节，需要统一修改}：
 \begin{equation}
   \label{delta_cal}
   \delta=

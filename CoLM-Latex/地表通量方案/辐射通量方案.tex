@@ -139,18 +139,18 @@ solution）需要使用到每个雪层和光谱波段的以下光学属性：光
 以及散射不对称性因子($g$)。SNICAR中，体散射光学属性是每种成分$k$的加权函数，针对每个雪层和光谱波段进行计算。
 
 \begin{equation}
-  \tau = \sum_{1}^{k}\tau_{k}
+  \tau = \sum_{1}^{N}\tau_{k}
 \end{equation}
 %
 \begin{equation}
-  \omega = \frac{\sum_{1}^{k}\omega_{k}\tau_{k}}{\sum_{1}^{k}\tau_{k}}
+  \omega = \frac{\sum_{1}^{N}\omega_{k}\tau_{k}}{\sum_{1}^{N}\tau_{k}}
 \end{equation}
 %
 \begin{equation}
-  g = \frac{\sum_{1}^{k}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{k}\omega_{k}\tau_{k}}
+  g = \frac{\sum_{1}^{N}{g_{k}\omega}_{k}\tau_{k}}{\sum_{1}^{N}\omega_{k}\tau_{k}}
 \end{equation}
 
-对于每种成分（冰粒、两种黑碳、两种有机碳、四种沙尘），$\tau$、$g$和质量消光截面$\psi$（\unit{m^2.kg^{-1}}）使用米氏散射近似进行计算。每种成分的光学厚度取决于各自的质量消光截面和各层质量，从而可以得到：
+其中，$N$为所有成分类型的总数。对于每种成分（冰粒、两种黑碳、两种有机碳、四种沙尘），$\tau$、$g$和质量消光截面$\psi$（\unit{m^2.kg^{-1}}）使用米氏散射近似进行计算。每种成分的光学厚度取决于各自的质量消光截面和各层质量，从而可以得到：
 \begin{equation}
   \tau_{k} = \psi_{k}\omega_{k}
 \end{equation}
@@ -1567,7 +1567,7 @@ $\Sigma4f_{\mathrm{c},i}\varepsilon_{\mathrm{v},i}\sigma T_{\mathrm{v},i}^3\Delt
   S_{\mathrm{sun}}=S_{\mathrm{vis, dir}} s_{\mathrm{sun, vis, dir}}+S_{\mathrm{vis, dif}} s_{\mathrm{sun, vis, dif}}+S_{\mathrm{nir, dir}} s_{\mathrm{sun, nir, dir}}+S_{\mathrm{nir, dif}} s_{\mathrm{sun, nir, dif}}
 \end{equation}
 \begin{equation}
-  S_{\mathrm{sha}}=S_{\mathrm{vis, dir}} s_{\mathrm{sun,vis,dir}}+S_{\mathrm{vis, dif}} s_{\mathrm{sun,vis,dif}}+S_{\mathrm{nir, dir}} s_{\mathrm{sun,nir,dir}}+S_{\mathrm{nir, dif}} s_{\mathrm{sun,nir,dif}}
+  S_{\mathrm{sha}}=S_{\mathrm{vis, dir}} s_{\mathrm{sha,vis,dir}}+S_{\mathrm{vis, dif}} s_{\mathrm{sha,vis,dif}}+S_{\mathrm{nir, dir}} s_{\mathrm{sha,nir,dir}}+S_{\mathrm{nir, dif}} s_{\mathrm{sha,nir,dif}}
 \end{equation}
 植被总的吸收辐射通量为：
 \begin{equation}

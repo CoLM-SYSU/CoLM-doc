@@ -60,6 +60,7 @@ $$l_{\mathrm{RH_0}}=1-\max\left[0, \min\left(1, \frac{RH_{\mathrm{0}} - 30}{80-3
 和
 $$l_{\mathrm{RH_{\rm 30d}}}=1-\max\left[0.75, \min\left(1, \frac{RH_{\rm 30d}}{90}\right)\right]$$
 分别是当前时步相对湿度和过去30天滑动平均相对湿度的函数。
+\todo{结合22.6与22.7，这里或许是$f_{\beta}$}
 \begin{equation}
   f_{\mathrm {b}}  = \begin{cases}
     1 & \text{if } \beta < \beta_{\mathrm{low}}\\
@@ -233,7 +234,7 @@ $u_{\mathrm {p}} $ (km s$^{-1}$)为下风区的蔓延速率:
 C_{j}=\left(C_{\mathrm{leaf}}, C_{\mathrm{stem}}, C_{\mathrm{root}}, C_{\mathrm{t s}}\right)
 $是碳库(\unit{g.C.m^{-2}})，包括叶、茎、根、储存库的碳库; $
 C C_{j}=\left(C C_{\mathrm{leaf}}, C C_{\mathrm{stem}}, C C_{\mathrm{root}}, C C_{\mathrm{t s}}\right)_{j}
-$是燃烧完全因子 (表~\ref{tab:burning_factors})。 此外,我们假设 50\%和 28\%的 litter 和 coarse woody debris (CWD)的碳库被燃烧后排放到大气。
+$是燃烧完全因子 (表~\ref{tab:burning_factors})。 此外,我们假设 50\%和 28\%的 litter 和 coarse woody debris (CWD)\todo{建议改成中文，与前文碳氮库结构保持一致}的碳库被燃烧后排放到大气。
 
 
 对于热带泥炭火，泥炭燃烧引起的碳排放(\unit{g.C.s^{-1}.m^{-2}})是泥炭火的燃烧面积率(\unit{s^{-1}})、土壤有机碳(\unit{g.C.m^{-2}})、0.18 的乘积；对于寒带泥炭火，泥炭燃烧引起的碳排放是泥炭火的燃烧面积率(\unit{s^{-1}})与2200 (\unit{g.C.m^{-2}})的乘积。以上常数由已有泥炭火研究数值结果推导而来。
@@ -274,9 +275,8 @@ $ 是植物组织死亡因子,相应的碳由植物碳库转移到 litter 或 CW
 \end{equation}
 其中 $\phi_{j}$ (\unit{g.C.s^{-1}.m^{-2}})为第 $j$ 个 PFT 的火灾引起的碳排放，$E F_{x,j}$为排放因子~\citep{LiF2019}，为单位转化常数。
 
-
 针叶树、其它寒带和温带树木、热带地区树木、灌木和草，燃烧引起的火灾最高排放高度分别为：4.3、3、2.5、2、1 km。
-
+\todo{表中英文改为中文}
 \begin{landscape}
   \begin{table}[htbp]
     \caption{燃烧完全因子及火灾引起的植物组织死亡因子}

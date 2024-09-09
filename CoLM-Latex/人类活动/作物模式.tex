@@ -103,17 +103,17 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 \begin{equation}\label{HUI}
   {\mathrm {HUI}}=\frac{{\rm GDD}_{\mathrm{base}}}{{\rm GDD}_{\mathrm{mat}}}
 \end{equation}
-达到$f_{\mathrm{LE}}$时，开始抽芽。${\rm GDD}_{\mathrm{base}}$是基于陆表气温的积温(\textcelsius\ days):
+达到$f_{\mathrm{LE}}$时\todo{这个变量好像没有定义}，开始抽芽。${\rm GDD}_{\mathrm{base}}$是基于陆表气温的积温(\textcelsius\ days):
 \begin{equation}
   {\rm GDD}_{\mathrm{ {base }}}=\sum_{\mathrm{planting}}^{\rm current\ day} \min \left(0, T_{\mathrm{sa}}-T_{\mathrm{base}}\right)
 \end{equation}
 其中，$T_{\mathrm{sa}}$是日地表气温\todo{需更加明确，与前面相同变量统一符号。}，$T_{\mathrm{base}}$是底温(作物在该温度下停止生长)。
 
 \subsection{灌浆}
-当${\mathrm {HUI}}$达到$f_{\mathrm{GF}}$时，开始灌浆。
+当${\mathrm {HUI}}$达到$f_{\mathrm{GF}}$时\todo{这个变量好像没有定义}，开始灌浆。
 
 \subsection{成熟}
-当${\mathrm {HUI}}$达到1时或生长季达到最长生长季长度${\rm GSL}_{\mathrm{max}}$时，作物成熟。其中，${\rm GDD}_{\mathrm{mat}}$是${\rm GDD}_{\mathrm{base}}$
+当${\mathrm {HUI}}$达到1时或生长季达到最长生长季长度${\rm GSL}_{\mathrm{max}}$时，作物成熟。其中，${\rm GDD}_{\mathrm{mat}}$\todo{在公式25.1第一次出现，可以把定义放在25.1}是${\rm GDD}_{\mathrm{base}}$
 10年滑动平均的一元线性方程(表~\ref{tab:作物物候方案相关参数})。
 \begin{equation}
   {\rm GDD}_{\mathrm{mat}}=a {\rm GDD}_{\rm 10yr}+b
@@ -124,7 +124,7 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 
 
 \section{生理变化}
-作物的碳（C）库和氮（N）库有leaf, live stem, grain, fine root库及相应的transfer和storage库，无dead stem, live coarse root, dead coarse root库及相应的transfer和storage库。由于新加了grain库，相应通量会增加分配到grain的C/N通量，grain到Aproduct及litter的C/N通量。作物的呼吸和周转与草相同。
+作物的碳（C）库和氮（N）库有leaf, live stem, grain, fine root库及相应的transfer和storage库，无dead stem, live coarse root, dead coarse root库及相应的transfer和storage库。由于新加了grain库，相应通量会增加分配到grain的C/N通量，grain到Aproduct\todo{这个单词好像有点奇怪}及litter的C/N通量。作物的呼吸和周转与草相同。
 
 \subsection{光合和气孔导度}
 大豆、小麦、水稻采用C3植物光合方案；玉米采用C4植物光合方案。
@@ -315,7 +315,7 @@ $t$ 时步的$\mathrm{O_3}$通量累积量:
 $D_{\mathrm {p}} $ (\unit{person.km^{-2}}) 及 ${\mathrm {\rm GDP}}$ (\unit{k\ 1995\ US\$.capita^{-1}})
 分别是人口密度和生产总值。
 $f_{\mathrm{crop}}$ 用于判断火发生时间（发生时为1，其余时步为0），
-是输入场，定义为观测播前观测的秸秆焚烧峰值时步。
+是输入场，定义为观测播前观测\todo{不太确定这里是不是有点不通顺}的秸秆焚烧峰值时步。
 观测的秸秆焚烧峰值时步基于GFED4s的3小时数据；播种时间见章节~\ref{sec:播种}。
 
 在得到燃烧面积后，火灾引起的碳排放${\mathrm {CE}}$ (\unit{g.C.m^{-2}.s^{-1}}) 为：
