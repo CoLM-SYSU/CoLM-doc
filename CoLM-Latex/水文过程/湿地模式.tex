@@ -6,28 +6,7 @@
 \section{湿地表面湍流通量计算方案}
 湿地表面湍流通量的计算方案除地表空气比湿计算过程不同，其余过程与雪盖土壤地表的湍流通量计算方案(见章节~\ref{ch:地表湍流通量})一致。
 
-湿地表面可分为被积雪覆盖与未被积雪覆盖两部分。因此在计算湍流通量前，需先计算地表的积雪覆盖比例（$f_{\mathrm{sno}}$）及被积雪掩埋的植被占总植被的比例（$wt$）。
-
-首先根据~\citet{swenson2012new}提供的方法，计算被积雪覆盖的地表面积比例（$f_{\mathrm{sno}}$），其计算包含以下两个过程：
-
-1.在积分开始时，若发生固态降水，则下一时间步数的$f_{\mathrm{sno}}$更新为
-\begin{equation}
-  f^{n+1}_{\mathrm{sno}}=1-\left[1-\tanh{\left(0.1 p_{\mathrm {snow}}  \Delta t\right)}\right]\left(1-f^n_{\mathrm{sno}}\right) \leqslant 1.0
-\end{equation}
-其中$p_{\mathrm {snow}} $表示到达湿地表面的固态降水率（\unit{kg.m^{-2}.s^{-1}}），$\Delta t$为积分的时间步长（s）；
-
-2.在水热过程模拟结束后，考虑积雪融化，$f_{\mathrm{sno}}$更新为
-\begin{equation}
-  f^{n+1}_{\mathrm{sno}}=\tanh \left(\frac{100 d^2_{\mathrm{sno}}}{2.5z_{\mathrm{lnd}} W_{\mathrm{sno}}}\right)
-\end{equation}
-其中$z_{\mathrm{sno}}$为雪盖高度（mm），$W_{\mathrm{sno}}$为雪水当量（mm），$z_{\mathrm{lnd}}$表示裸土地表覆盖时粗糙度，取值为0.01 m。\\
-
-当积雪掩埋植被时，被积雪掩埋的植被占总植被的比例（$wt$）可通过植被粗糙度（$z_{\mathrm{0mv}}$）计算
-\begin{equation}
-  w_{\mathrm {t}} =\frac{0.1 z_{\mathrm{sno}}}{z_{\mathrm{0mv}}+0.1 z_{\mathrm{sno}}}
-\end{equation}
-其中$z_{\mathrm{sno}}$表示积雪厚度（m）。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}} =
-(1 −wt)f_{\mathrm{veg}}$，无植被覆盖比例为 $(1−f_{\mathrm{sig}})$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即SAI=TSAI(1 − $wt$)，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是非积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。\\
+湿地表面可分为被积雪覆盖与未被积雪覆盖两部分。因此在计算湍流通量前，需先计算地表的积雪覆盖比例（$f_{\mathrm{sno}}$）及被积雪掩埋的植被占总植被的比例（$w_{\rm t}$），其计算同陆表积雪覆盖情景，详见章节~\ref{积雪覆盖比例}。
 
 \textbf {(1)当湿地表面无植被覆盖或植被积雪掩埋时}\\
 

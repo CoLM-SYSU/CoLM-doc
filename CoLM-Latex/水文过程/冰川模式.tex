@@ -17,20 +17,7 @@
 \section{冰川表面湍流通量计算方案}
 冰川表面湍流通量的计算方案类似无植被覆盖下的雪盖土壤地表的湍流通量计算方案（见章节~\ref{无植被覆盖地表湍流通量的计算方案}），这里再对计算流程做一个简单说明。
 
-冰川表面可以分为被积雪覆盖和未被积雪覆盖两部分，因此在计算湍流通量前，需先计算地表的积雪覆盖比例$f_{\mathrm{sno}}$，根据~\citet{swenson2012new}，$f_{\mathrm{sno}}$的计算包含以下两个过程：
-
-1.在积分开始时，若发生降雪，则下一时间步数的$f_{\mathrm{sno}}$更新为
-\begin{equation}
-  f^{n+1}_{\mathrm{sno}}=1-\left[1-\tanh{\left(0.1 p_{\mathrm {snow}}  \Delta t\right)}\right]\left(1-f^n_{\mathrm{sno}}\right) \leqslant 1.0
-\end{equation}
-其中$p_{\mathrm {snow}} $表示到达冰川表面的固态降水率（\unit{kg.m^{-2}.s^{-1}}），$\Delta t$为积分的时间步长（s）；
-
-2.在水热过程模拟结束后，考虑积雪融化，$f_{\mathrm{sno}}$更新为
-\begin{equation}
-  f^{n+1}_{\mathrm{sno}}=\tanh \left(\frac{100 d^2_{\mathrm{sno}}}{2.5z_{\mathrm {lnd}} W_{\mathrm{sno}}}\right)
-\end{equation}
-其中$z_{\mathrm{sno}}$为雪盖高度（mm），$W_{\mathrm{sno}}$为雪水当量（mm），$z_{\mathrm {lnd}}$表示裸土地表覆盖时粗糙度，取值为0.01 m。
-
+冰川表面可以分为被积雪覆盖和未被积雪覆盖两部分，因此在计算湍流通量前，需先计算地表的积雪覆盖比例$f_{\mathrm{sno}}$，其计算同陆表积雪覆盖比例（章节~\ref{积雪覆盖比例}）。
 
 由于冰川属于无植被覆盖的陆地表面，因此湍流通量只存在于地面和大气之间，动量通量$\tau$、感热通量$H$和水汽通量$E$分别表达为：
 \begin{align}

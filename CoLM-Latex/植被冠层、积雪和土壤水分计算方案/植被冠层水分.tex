@@ -94,13 +94,13 @@ $K_{\mathrm {p}} $通过叶角分布的经验参数$\chi_{\mathrm {L}} $的变�
     x_{\mathrm{sc}} &= \max\left(0., L_{\mathrm{dew}}-L_{\mathrm {dew,max}}\right)
   \end{aligned}
 \end{equation}
-其中$x_{\mathrm{sc}}$是超过最大树冠储存量的水(mm)，$L_{\mathrm {dew,max}} =0.1\left({\rm LAI}+{\rm SAI}\right)$代表最大蓄水量(mm)。
+其中$x_{\mathrm{sc}}$是超过最大树冠储存量的水(mm)，$L_{\mathrm {dew,max}} =0.1 \cdot{\rm LSAI}$代表最大蓄水量(mm)。
 $x_{\mathrm{sc}}$的相位首先由冠层温度决定。如果冠层温度大于冰点温度，CoLM假定所有过量的水都处于液相，否则处于冰雪相。
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/植被冠层和土壤水分/CoLM冠层截留示意图.jpg}
-    \caption[(a) CoLM中使用的降水面积-总量分布图；(b) CoLM中植被冠层截留降水的动力学过程]{(a) CoLM中使用的降水面积-总量分布图(修改自SiB2)。其中变量$x$为网格面积的比例,变量$I_{\left(x\right)}$为相对降水量。值得注意的是,大尺度降水$I_{\mathrm {l}} \left(x\right)$在网格区几乎是不变的,而对流降水$I_{\mathrm {c}} \left(x\right)$是非均匀分布的；(b) CoLM中植被冠层截留降水的动力学过程。降雨截留前已储存在冠层中的水量被假设是均匀分布在网格区域上的。$xs$是网格区域拦截降雨的比例加上先前存在的树冠蓄水所超过了$L_{\mathrm {dew,max}}$的水量。所有大于$L_{\mathrm {dew,max}}$的水量假设形成树干径流,而低于$L_{\mathrm {dew,max}}$的水量则被保存在冠层之中}
+    \includegraphics[width=0.9\textwidth]{Figures/植被冠层和土壤水分/CoLM冠层截留示意图-new.pdf}
+    \caption[(a) CoLM中使用的降水面积-总量分布图；(b) CoLM中植被冠层截留降水的动力学过程]{(a) CoLM中使用的降水面积-总量分布图(修改自SiB2)。其中变量$x$为网格面积的比例,变量$I_{\left(x\right)}$为相对降水量。值得注意的是,大尺度降水$I_{\mathrm {l}} \left(x\right)$在网格区几乎是不变的,而对流降水$I_{\mathrm {c}} \left(x\right)$是非均匀分布的；(b) CoLM中植被冠层截留降水的动力学过程。降雨截留前已储存在冠层中的水量被假设是均匀分布在网格区域上的。$x_s$是网格区域拦截降雨的比例加上先前存在的树冠蓄水所超过了$L_{\mathrm {dew,max}}$的水量。所有大于$L_{\mathrm {dew,max}}$的水量假设形成树干径流,而低于$L_{\mathrm {dew,max}}$的水量则被保存在冠层之中}
     \label{fig:CoLM冠层截留示意图}
   \end{figure}
 }
@@ -153,7 +153,7 @@ CLM4.5的冠层截留方案~\citep{oleson2013technical}~和CoLM2014的方案非�
 $K_{\mathrm {p}} $在CLM4.5冠层截留方案中取固定值0.5，即：
 %
 \begin{equation}
-  \delta_{\mathrm{p}}=1.0-\alpha \left[1-\exp \left(-0.5  {\rm LSAI}\right)\right]
+  \delta_{\mathrm{p}}=1.0-\alpha \left[1-\exp \left(-0.5  \cdot{\rm LSAI}\right)\right]
 \end{equation}
 则直接穿透量由下式给出：
 \begin{equation}
@@ -185,17 +185,17 @@ CLM5.0的参数化方案与CLM4.5有较大的差别~\citep{lawrence2019community
 \begin{enumerate}
   \item 分别计算固态和液态水在叶片上的最大蓄水量(mm):
     \begin{equation}
-      S_{\mathrm{c,rain}}=0.1({\rm LAI}+{\rm SAI})
+      S_{\mathrm{c,rain}}=0.1\cdot{\rm LSAI}
     \end{equation}
     \begin{equation}
-      S_{\mathrm{c,snow}}=6.0({\rm LAI}+{\rm SAI})
+      S_{\mathrm{c,snow}}=6.0\cdot{\rm LSAI}
     \end{equation}
   \item 分别计算固态和液态降水的直接穿透速率:
     \begin{equation}
-      \delta_{\mathrm{p,rain}}=1.0 - \alpha_{\mathrm{rain}} \tanh({\rm LAI}+{\rm SAI})
+      \delta_{\mathrm{p,rain}}=1.0 - \alpha_{\mathrm{rain}} \tanh({\rm LSAI})
     \end{equation}
     \begin{equation}
-      \delta_{\mathrm{p,snow}}=1.0 - \alpha_{\mathrm{snow}}\left\{1-\exp\left[-0.5({\rm LAI}+{\rm SAI})\right]\right\}
+      \delta_{\mathrm{p,snow}}=1.0 - \alpha_{\mathrm{snow}}\left\{1-\exp\left[-0.5\cdot{\rm LSAI}\right]\right\}
     \end{equation}
     这里$\alpha_{\mathrm{rain}}$和$\alpha_{\mathrm{snow}}$的值与CLM4.5、CoLM的$\alpha$ (0.25)不同,在CLM5中被设定为1.0。穿透速率也被拆分为:
     \begin{equation}
@@ -237,10 +237,10 @@ Noah-MP模型冠层截留方案的计算流程与CoLM2014、CLM4.5和CLM5有较�
 \begin{enumerate}
   \item 分别计算理想状态下固态和液态水在叶片上的最大蓄水量(mm)\\
     \begin{equation}
-      S_{\mathrm{c,rain}}=0.1\left({\rm LAI}+{\rm SAI}\right)\\
+      S_{\mathrm{c,rain}}=0.1\cdot{\rm LSAI}\\
     \end{equation}
     \begin{equation}
-      S_{\mathrm{c,snow}}= 6.6\left(0.27+{\frac{46}{\rho_{\mathrm{sno}}}}\right) \left({\rm LAI}+{\rm SAI}\right)
+      S_{\mathrm{c,snow}}= 6.6\left(0.27+{\frac{46}{\rho_{\mathrm{sno}}}}\right) \cdot{\rm LSAI}
     \end{equation}
     其中$\rho_{\mathrm{sno}}$是降雪堆积密度:
     \begin{equation}
@@ -249,7 +249,7 @@ Noah-MP模型冠层截留方案的计算流程与CoLM2014、CLM4.5和CLM5有较�
 其中$T_{\mathrm{v}}$为植被叶片表面温度（K）。
   \item 计算冠层闭郁度$F_{\mathrm{veg}}$:
     \begin{equation}
-      F_{\mathrm{veg}} = \max\left[0.05,1.0-{\mathrm e}^{-0.52\left({\rm LAI}+{\rm SAI}\right)}\right]
+      F_{\mathrm{veg}} = \max\left[0.05,1.0-{\mathrm e}^{-0.52\cdot{\rm LSAI}}\right]
     \end{equation}
   \item 分别计算固态和液态降水直接穿透速率:
     \begin{equation}
@@ -316,15 +316,15 @@ VIC的冠层截留方案~\citep{liang1994simple,hamman2018variable}主要基于~
   \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)\\
     首先计算雨加上雪的总最大拦截容量为:
     \begin{equation}
-      I_{\mathrm{max}} = 4.0 m ({\rm LAI}+{\rm SAI})
+      I_{\mathrm{max}} = 4.0 \cdot m \cdot{\rm LSAI}
     \end{equation}
     其中$m=0.5$ mm 是根据最大雪拦截容量观测结果确定。
     除了对水总量的储水能力有限制之外，模式还分别对固态和液态水在叶片上的最大蓄水量进行了限制：
     \begin{equation}
-      S_{\mathrm{c,rain}}=0.1\left({\rm LAI}+{\rm SAI}\right)+0.035 L_{\mathrm{dew,snow}}\\
+      S_{\mathrm{c,rain}}=0.1\cdot{\rm LSAI}+0.035 L_{\mathrm{dew,snow}}\\
     \end{equation}
     \begin{equation}
-      S_{\mathrm{c,snow}}=L_{\mathrm {r}}  m ({\rm LAI}+{\rm SAI})
+      S_{\mathrm{c,snow}}=L_{\mathrm {r}}\cdot m \cdot{\rm LSAI}
     \end{equation}
     其中$L_{\mathrm {r}} $是大气强迫温度的函数:
     \begin{equation}
@@ -336,9 +336,9 @@ VIC的冠层截留方案~\citep{liang1994simple,hamman2018variable}主要基于~
     \end{equation}
     以上是基于站点植被截雪观测数据计算得到~\citep{storck2002measurement}。\citet{kobayashi1987snow}~观察到随着气温降低到 $-3$ \textcelsius 以下，较窄表面上的最大雪拦截负荷急剧下降。 \citet{kobayashi1987snow}和~\citet{pfister1999snow}的观测结果表明,当温度低于 $-1$ \textcelsius 时，拦截效率显著下降，当温度低于 $-3$ \textcelsius 时大致恒定，因此导致函数的不连续。
 
-  \item 计算冠层闭郁度$F_{\mathrm{veg}}$：\todo{表达式好像有问题，Fveg值域范围>1，下同。}
+  \item 计算冠层闭郁度$F_{\mathrm{veg}}$
     \begin{equation}
-      F_{\mathrm{veg}} = \max\left[0.0,\ ({\rm LAI}+{\rm SAI})\right]
+      F_{\mathrm{veg}} = \min\left[1.0,\ {\rm LSAI} \right]
     \end{equation}
 
   \item 分别计算固态和液态降水直接穿透速率：
@@ -389,15 +389,15 @@ MATSIRO的冠层截留方案主要基于~\cite{storck2002measurement}在俄勒�
 \begin{enumerate}
   \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)
     \begin{equation}
-      S_{\mathrm{c,rain}}=0.2\left({\rm LAI}+{\rm SAI}\right)
+      S_{\mathrm{c,rain}}=0.2\cdot{\rm LSAI}
     \end{equation}
     \begin{equation}
-      S_{\mathrm{c,snow}}=0.2\left({\rm LAI}+{\rm SAI}\right)
+      S_{\mathrm{c,snow}}=0.2\cdot{\rm LSAI}
     \end{equation}
 
   \item 计算冠层闭郁度$F_{\mathrm{veg}}$
     \begin{equation}
-      F_{\mathrm{veg}} = \max\left[0, \left({\rm LAI}+{\rm SAI}\right)\right]
+      F_{\mathrm{veg}} = \min\left[1,~ {\rm LSAI}\right]
     \end{equation}
 
   \item 分别计算固态和液态降水直接穿透速率：
@@ -462,14 +462,14 @@ JULES的参数化方案与CLM5.0方案较为接近。对雨和雪的截留方案
 \begin{enumerate}
   \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)\\
     \begin{equation}
-      S_{\mathrm{c,rain}}=0.1\left({\rm LAI}+{\rm SAI}\right)\\
+      S_{\mathrm{c,rain}}=0.1\cdot{\rm LSAI}\\
     \end{equation}
     \begin{equation}
-      S_{\mathrm{c,snow}}=4.4\left({\rm LAI}+{\rm SAI}\right)
+      S_{\mathrm{c,snow}}=4.4\cdot{\rm LSAI}
     \end{equation}
   \item 计算冠层闭郁度$F_{\mathrm{veg}}$
     \begin{equation}
-      F_{\mathrm{veg}} = \max\left[0.0,\left({\rm LAI}+{\rm SAI}\right)\right]
+      F_{\mathrm{veg}} = \min\left[1.0,~{\rm LSAI}\right]
     \end{equation}
 
   \item 计算当前冠层水的相态变化，方案和Noah-MP一致。

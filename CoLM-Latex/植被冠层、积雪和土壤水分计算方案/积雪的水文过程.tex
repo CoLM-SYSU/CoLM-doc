@@ -8,7 +8,7 @@
     \label{fig:模式中积雪雪层示意图}
   \end{figure}
 }
-\section{积雪覆盖比例}
+\section{积雪覆盖比例}\label{积雪覆盖比例}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SnowFraction.F90}。
 \end{mymdframed}
@@ -18,17 +18,17 @@
 \begin{equation}
   f_{\mathrm{{sno }}}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{\mathrm{snow}} \Delta t\right)\right]\left(1-f_{\mathrm{{sno }}}^{(n)}\right) \leqslant 1.0
 \end{equation}
-其中$p_{\mathrm {snow}} $为固态降水速率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分时间步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{\mathrm{sno}}$更新为
+其中$p_{\mathrm {snow}} $为固态降水速率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分时间步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{\mathrm{sno}}$的更新采用\citet{niu2007ObservationbasedFormulationSnow}方案，计算为：
 \begin{equation}
-  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{100 z_{\mathrm{s n o}}^{2}}{2.5 z_{\rm lnd} W_{\mathrm{sno}}}\right)}
+  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{z_{\mathrm{sno}}}{2.5 z_{\rm lnd} \left ( \rho_{\mathrm{sno}}/\rho_{\mathrm {sno,new}} \right )^m}\right)}
 \end{equation}
-其中$W_{\mathrm{sno}}$为雪水当量(mm)，$z_{\rm lnd}$ 裸土覆盖时的地表粗糙度，取值为0.01 m。
+其中$z_{\mathrm{sno}}$表示积雪厚度(m)。$\rho_{\mathrm{sno}}$为雪的密度($\unit{kg.m^{-3}}$)，$\rho_{\mathrm {sno,new}}$为新雪密度，取值为100 $\unit{kg.m^{-3}}$。$z_{\rm lnd}$为裸土覆盖时的地表粗糙度，取值为0.01 m。$m$为融雪因子（参数），模型中取值为1。
 
 当植被被积雪掩埋时，已知植被粗糙度$z_{\rm 0mv}$，则被积雪掩埋的植被占总植被的比例计算为
 \begin{equation}
-  wt=\frac{0.1 z_{\mathrm{sno}}}{z_{\rm 0mv}+0.1 z_{\mathrm{sno}}}
+  w_{\rm t}=\frac{0.1 z_{\mathrm{sno}}}{z_{\rm 0mv}+0.1 z_{\mathrm{sno}}}
 \end{equation}
-其中$z_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-wt\right)f_{\mathrm{veg}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-wt\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
+CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-w_{\rm t}\right)f_{\mathrm{veg}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$w_{\rm t}$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-w_{\rm t}\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
 
 
 \section{雪层的建立}\label{sec:雪层的建立}

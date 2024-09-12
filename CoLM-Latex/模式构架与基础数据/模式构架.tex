@@ -57,7 +57,7 @@
   \end{figure}
 }
 
-该工具基于非结构化一致性三角-六边形构建算法 \citep{fatichi2020soil,walko2008ocean,walko_direct_2011}，以准均匀的全局三角形（Delaunay）的网格化方法为理论依据。其中非结构网格构造流程如图~\ref{fig:非结构化网格生成流程图} 所示，具体介绍如下：
+该工具基于非结构化一致性三角-六边形构建算法 \citep{fatichi2020soil,walko2008ocean,walko_direct_2011}，以准均匀的全局三角形（Delaunay）的网格化方法为理论依据。其中非结构网格构造流程如图~\ref{fig:非结构化网格生成流程图} 所示，具体介绍如下：\todo{图2.7请补充说明图中iw，im含义}\todo{图2.8部分变量在题注中也需补充说明}
 {
   \begin{figure}[htbp]
     \centering
@@ -74,17 +74,17 @@
     \label{tab:细化阈值文件}
     \begin{tabular}{@{}ll@{}}
       \toprule
-      变量名         & 具体描述                     \\ \midrule
-      num\_landtypes & 网格包含的土地类型数量       \\
-      f\_mainland    & 网格主导土地类型             \\
-      max\_iter      & 三角形网格最大细化迭代次数   \\
-      lai            & 叶面积指数                   \\
-      slope          & 坡度                         \\
-      k\_s           & 饱和导水率                   \\
-      k\_solids      & 土壤固体导热系数             \\
-      tkdry          & 土壤导热系数（干燥）         \\
-      tksatf         & 土壤导热系数（冻结、饱和）   \\
-      tksatu         & 土壤导热系数（未冻结、饱和） \\ \bottomrule
+      变量名                       & 具体描述                     \\ \midrule
+      ${\rm LCT}_{\rm number}$     & 网格包含的土地类型数量       \\
+      ${\rm LCT}_{\rm dominant}$   & 网格主导土地类型             \\
+      ${\rm iter}_{\rm max}$       & 三角形网格最大细化迭代次数   \\
+      LAI                          & 叶面积指数                   \\
+      slope                        & 坡度                         \\
+      $K_{\rm sat}$                & 饱和导水率                   \\
+      $k_{\rm s}$                  & 土壤固体导热系数             \\
+      $k_{\rm dry}$                & 土壤导热系数（干燥）         \\
+      $k_{\rm sat,frz}$            & 土壤导热系数（冻结、饱和）   \\
+      $k_{\rm sat}$                & 土壤导热系数（未冻结、饱和） \\ \bottomrule
     \end{tabular}
   \end{table}
 }
@@ -227,7 +227,7 @@ Patch是通过使用高分辨率的精细化网格数据，根据网格单元内
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{Figures/模式构架/CoLM次网格结构示意图-v2.jpg}
+    \includegraphics[width=\textwidth]{Figures/模式构架/CoLM次网格结构示意图_v4.png}
     \caption[CoLM次网格结构示意图]{CoLM次网格结构示意图。次网格植被(Sub-grid vegetation)结构提供三种可选方式：LCT, PFT以及PC；当作物模式打开时，每种作物当成一种独立的PFT (CFT)进行模拟；当城市模式打开时，次网格城市(Sub-grid urban)结构提供两种可选方式：NCAR 3种城市分类和LCZ 10种分类}
     \label{fig:次网格结构示意图}
   \end{figure}
@@ -260,7 +260,7 @@ PFT方案是将每一个细网格地表覆盖类型进行拆解，得到其PFT�
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/模式构架/植物群落示意图.png}
+    \includegraphics[width=0.95\textwidth]{Figures/模式构架/植物群落示意图_v2.jpg}
     \caption[CoLM植物群落(PC)次网格概念示意图]{CoLM植物群落(PC)次网格概念示意图。同一植物群落中的PFT环境共享，资源竞争，包括辐射、风速、水热及营养元素等}
     \label{fig:植物群落示意图}
   \end{figure}
@@ -305,7 +305,7 @@ LCT方案所依赖的地表覆盖类型数据可以直接由USGS (章节~\ref{US
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{Figures/模式构架/CoLM模式概念图.jpg}
+    \includegraphics[width=0.9\textwidth]{Figures/模式构架/CoLM模式概念图_v2.jpg}
     \caption[CoLM植被、土壤和积雪垂直分层示意图]{CoLM植被、土壤和积雪垂直分层示意图}
     \label{fig:CoLM垂直分层}
   \end{figure}
@@ -354,7 +354,7 @@ CoLM中每层土壤中心的深度及每层下边界的深度见表~\ref{table:�
   \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/模式构架/积雪分层.jpg}
-    \caption[CoLM积雪分层方案]{CoLM积雪分层方案。当$z_{\mathrm{sno}}<0.01$时不形成积雪层}
+    \caption[CoLM积雪分层方案]{CoLM积雪分层方案。当$z_{\mathrm{sno}}<0.01 \unit{mm}$时不形成积雪层，图中厚度单位为\unit{mm}}
     \label{fig:积雪分层}
   \end{figure}
 }
@@ -373,7 +373,7 @@ $z_{\mathrm{h,0}}=0$为雪盖底层与土壤表层交界处的高度，$\Delta z
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{Figures/模式构架/CoLM计算框图_v5.png}
+    \includegraphics[width=\textwidth]{Figures/模式构架/CoLM计算框图_v6.png}
     \caption{CoLM计算框图}
     \label{fig:CoLM计算框图}
   \end{figure}

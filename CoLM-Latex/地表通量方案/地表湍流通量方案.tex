@@ -202,20 +202,20 @@ $z_{0x}\ (x={\rm m,\ h,\ w})$分别表示动量、感热和水汽的粗糙长度
 \end{equation}
 其中$\psi_{\mathrm{hu}}\left(\zeta\right)=\psi_{\mathrm{wu}}\left(\zeta\right)=2\ln{\left(\frac{1+x}{2}\right)}$，$x={(1-16\zeta)}^{1/2}$。
 
-事实上，$L$的初始猜测可由总体理查德森数$R_{\mathrm{ib}}$与$\zeta$的关系得到\citep{arya2001introduction}。$R_{\mathrm{ib}}$表达为
+事实上，$L$的初始猜测可由总体理查德森数$R_{\mathrm{ib}}$与$\zeta_{\mathrm{a}}$的关系得到\citep{arya2001introduction}。$R_{\mathrm{ib}}$表达为
 \begin{equation}\label{Rib}
   R_{\mathrm{i b}}=\frac{\theta_{\mathrm{a,v}}-\theta_{\mathrm{s,v}}}{\overline{\theta_{\mathrm{a,v}}}} \frac{g\left(z_{\mathrm{a, m}}-d\right)}{V_{\mathrm{a}}^{2}}
 \end{equation}
-$R_{\mathrm{ib}}$与$\zeta$的关系为
+$R_{\mathrm{ib}}$与$\zeta_{\mathrm{a}}$的关系为
 \begin{equation}
-  R_{\mathrm{ib}}=\zeta\left[\ln{\left(\frac{z_{\mathrm{a,h}}-d}{z_{\mathrm{0h}}}\right)-\psi_{\mathrm h}(\zeta)}\right] \left[\ln{\left(\frac{z_{\mathrm{a,m}}-d}{z_{\mathrm{0m}}}\right)-\psi_{\mathrm m}(\zeta)}\right]^{-2}
+  R_{\mathrm{ib}}=\zeta_{\mathrm{a}}\left[\ln{\left(\frac{z_{\mathrm{a,h}}-d}{z_{\mathrm{0h}}}\right)-\psi_{\mathrm h}(\zeta_{\mathrm{a}})}\right] \left[\ln{\left(\frac{z_{\mathrm{a,m}}-d}{z_{\mathrm{0m}}}\right)-\psi_{\mathrm m}(\zeta_{\mathrm{a}})}\right]^{-2}
 \end{equation}
 其中$\psi_{\mathrm m}(\zeta)$与$\psi_{\mathrm h}(\zeta)$由不稳定条件下$\phi_{\mathrm h}\left(\zeta\right)=\phi_{\mathrm m}^2\left(\zeta\right)=\left(1-16\zeta\right)^{-\frac{1}{2}}$
-与稳定条件下$\phi_{\mathrm h}\left(\zeta\right)=\phi_{\mathrm m}\left(\zeta\right)=1+5\zeta$确定，从而可以通过以下反算关系式得到$L$（$L=\frac{z_{\mathrm{a,m}}-d}{\zeta}$）的初始猜测值
+与稳定条件下$\phi_{\mathrm h}\left(\zeta\right)=\phi_{\mathrm m}\left(\zeta\right)=1+5\zeta$确定，从而可以通过以下反算关系式得到$L$的初始猜测值（因$L=\frac{z_{\mathrm{a,m}}-d}{\zeta_{\mathrm{a}}}$）
 \begin{equation}\label{ZetaRib}
-  \zeta=\begin{cases}
-    \frac{R_{\mathrm{i b}} \ln \left(\frac{z_{\mathrm{a, m}}-d}{z_{\mathrm{0 m}}}\right)}{1-5 \min \left(R_{\mathrm{i b}}, 0.19\right)}, \qquad 10^{-6} \leqslant \zeta \leqslant 2, & \text{ 当 }\ R_{\mathrm{i b}} \geqslant 0\ \text{（即中性或稳定条件下）} \\
-    R_{\mathrm{ib}} \ln \left(\frac{z_{\mathrm{a, m}}-d}{z_{\mathrm{0 m}}}\right),  \quad -100 \leqslant \zeta \leqslant-10^{-6}, & \text{ 当 }\ R_{\mathrm{i b}}<0\ \text{（即不稳定条件下）}
+  \zeta_{\mathrm{a}}=\begin{cases}
+    \frac{R_{\mathrm{i b}} \ln \left(\frac{z_{\mathrm{a, m}}-d}{z_{\mathrm{0 m}}}\right)}{1-5 \min \left(R_{\mathrm{i b}}, 0.19\right)}, \qquad 10^{-6} \leqslant \zeta_{\mathrm{a}} \leqslant 2, & \text{ 当 }\ R_{\mathrm{i b}} \geqslant 0\ \text{（即中性或稳定条件下）} \\
+    R_{\mathrm{ib}} \ln \left(\frac{z_{\mathrm{a, m}}-d}{z_{\mathrm{0 m}}}\right),  \quad -100 \leqslant \zeta_{\mathrm{a}} \leqslant-10^{-6}, & \text{ 当 }\ R_{\mathrm{i b}}<0\ \text{（即不稳定条件下）}
   \end{cases}
 \end{equation}
 
@@ -334,23 +334,12 @@ $V_{\mathrm{a}}=\sqrt{u_{\mathrm{a}}^{2}+v_{\mathrm{a}}^{2}+U_{\mathrm{c}}^{2}} 
 当陆地表面没有植被覆盖(裸土、城市和湿地覆盖时)或植被已被积雪掩埋时，湍流通量按照无植被覆盖情形的方案计算。
 对于任一地表类型斑块，已知植被粗糙度$z_{\mathrm{0mv}}$时，则被积雪掩埋的植被占总植被的比例为：
 \begin{equation}
-  {\mathrm {wt}}=\frac{0.1 z_{\mathrm{sno}}}{z_{\mathrm{0mv}}+0.1 z_{\mathrm{sno}}}
+  w_{\mathrm {t}}=\frac{0.1 z_{\mathrm{sno}}}{z_{\mathrm{0mv}}+0.1 z_{\mathrm{sno}}}
 \end{equation}
-其中$z_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-{\mathrm {wt}}\right)f_{\mathrm{c}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$\rm wt$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-{\mathrm {wt}}\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
+其中$z_{\mathrm{sno}}$表示积雪厚度(m)。CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\left(1-w_{\mathrm {w}}\right)f_{\mathrm{c}}$，无植被覆盖比例为$\left(1-f_{\mathrm{sig}}\right)$。CoLM2024版本为了考虑与PFT次网格类型的兼容性，同时认为积雪是通过覆盖或掩埋植被叶面积、茎面积进行影响，将$w_{\rm t}$用于修正被积雪掩盖后的SAI，即${\rm SAI=TSAI}\left(1-w_{\mathrm {t}}\right)$，TSAI为植被“真实”茎面积指数。当采用卫星遥感LAI时，由于其数值已经是积雪覆盖下的绿色叶面部分，故在此不对其进行积雪覆盖调整。
 
 
-陆地表面可分为被积雪覆盖与未被积雪覆盖两部分。根据 \citet{swenson2012new}提供的方法，
-被积雪覆盖的地表面积比例$f_{\mathrm{sno}}$可分为两步计算：在积分开始时若有降雪发生，则新一步的$f_{\mathrm{sno}}$更新为：
-\begin{equation}
-  f_{\mathrm{{sno }}}^{(n+1)}=1-\left[1-\tanh\left(0.1 p_{\mathrm{snow}} \Delta t\right)\right]\left(1-f_{\mathrm{{sno }}}^{(n)}\right) \leqslant 1.0
-\end{equation}
-其中$p_{\mathrm {snow}}$为降雪率(\unit{kg.m^{-2}.s^{-1}})，$\Delta t$为积分步长(s)；在水热过程模拟结束后，若有积雪融化发生，则$f_{\mathrm{sno}}$更新为：
-\begin{equation}
-  f_{\mathrm{sno}}^{(n+1)}=\tanh{\left(\frac{100 z_{\mathrm{s n o}}^{2}}{2.5 z_{\mathrm{lnd}} W_{\mathrm{sno}}}\right)}
-\end{equation}
-其中$W_{\mathrm{sno}}$为雪水当量(mm)，$z_{\mathrm{lnd}}$ 为未被积雪覆盖时的裸土地表粗糙度，取值为0.01 m。
-
-对于无植被覆盖部分的陆地表面，湍流通量只存在于地表与大气之间，此部分动量通量$\tau$、感热通量$H$和水汽通量$E$表达为：
+陆地表面可分为被积雪覆盖与未被积雪覆盖两部分，其被积雪覆盖的地表面积比例$f_{\mathrm{sno}}$的计算参考章节~\ref{积雪覆盖比例}。对于无植被覆盖部分的陆地表面，湍流通量只存在于地表与大气之间，此部分动量通量$\tau$、感热通量$H$和水汽通量$E$表达为：
 \begin{equation}\label{tau_x}
   \tau_{\mathrm{x}}=-\rho_{\mathrm{a}} \frac{u_{\mathrm{a}}}{r_{\mathrm{a m}}}
 \end{equation}
@@ -477,11 +466,11 @@ CoLM2014对阴阳叶分别计算温度和湍流通量。CoLM2024版本为了减�
 \begin{equation}
   H_{\mathrm{v}}=-\rho_{\mathrm{a}} C_{\mathrm{a}}(\text {LAI}+\text {SAI}) \frac{T_{\mathrm{s}}-T_{\mathrm{v}}}{r_{\mathrm{b}}}
 \end{equation}
-其中$T_{\mathrm {v}}$表示叶片温度(K)，$T_{\mathrm {s}}$表示定义在高度$z_{\mathrm{0h}}+d$上的植被冠层顶空气温度(K)，SAI表示茎面积指数，$r_{\mathrm {b}}$表示叶面边界层阻抗(\unit{s.m^{-1}})，$r_{\mathrm{ah}}^\prime$(即$r_{\mathrm {d}}$)表示地表与植被冠层周围空气之间的感热阻抗(\unit{s.m^{-1}})，各部分过程如图~\ref{fig:有植被覆盖部分的陆地表面感热通量示意图} 所示。
+其中$T_{\mathrm {v}}$表示叶片温度(K)，$T_{\mathrm {s}}$表示定义在高度$z_{\mathrm{0h}}+d$上的植被冠层顶空气温度(K)，SAI表示茎面积指数，$r_{\mathrm {b}}$表示叶面边界层阻抗(\unit{s.m^{-1}})，$r_{\mathrm{ah}}^\prime$(即图中$r_{\mathrm {d}}$所示)表示地表与植被冠层周围空气之间的感热阻抗(\unit{s.m^{-1}})，各部分过程如图~\ref{fig:有植被覆盖部分的陆地表面感热通量示意图} 所示。
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\linewidth]{Figures/地表湍流交换过程/有植被感热交换阻抗示意图.png}
+    \includegraphics[width=0.6\linewidth]{Figures/地表湍流交换过程/有植被感热交换阻抗示意图_v2.png}
     \caption{有植被覆盖时的陆地表面感热通量计算示意图}
     \label{fig:有植被覆盖部分的陆地表面感热通量示意图}
   \end{figure}
@@ -512,7 +501,8 @@ CoLM2014对阴阳叶分别计算温度和湍流通量。CoLM2024版本为了减�
   E_{\mathrm{v}}=-\rho_{\mathrm{a}} \frac{q_{\mathrm{s}}-q_{\mathrm{s a t}}^{T v}}{r_{\mathrm{vw}}}
 \end{equation}
 其中$q_{\mathrm{sat}}^{T_{\mathrm v}}$表示叶片温度在$T_{\mathrm v}$下的饱和比湿(\unit{kg.kg^{-1}})，$q_{\mathrm {s}}$为在高度$z_{\mathrm{0w}}+d$上的植被冠层周围空气比湿(\unit{kg.kg^{-1}})，
-$q_{\mathrm {g}}$表示地面空气比湿(\unit{kg.kg^{-1}}，其表达见章节~\ref{无植被覆盖地表湍流通量的计算方案})，$r_{\mathrm{aw}}^\prime$(即$r_{\mathrm {d}}$)表示地面与植被冠层顶空气之间的水汽交换阻抗 (\unit{s.m^{-1}})。
+$q_{\mathrm {g}}$表示地面空气比湿(\unit{kg.kg^{-1}}，其表达见章节~\ref{无植被覆盖地表湍流通量的计算方案})，$r_{\mathrm{aw}}^\prime$(即图中$r_{\mathrm {d}}$所示)表示地面与植被冠层顶空气之间的水汽交换阻抗 (\unit{s.m^{-1}})，并假设其与相应高度之间感热交换阻抗相等（$r_{\mathrm{aw}}^\prime=r_{\mathrm{ah}}^\prime=r_{\mathrm {d}}$）
+。
 $r_{\mathrm{v}}$表示植被表面与植被冠层顶空气之间水汽交换总阻抗 (\unit{s.m^{-1}})，
 它来自叶面边界层阻抗$r_{\mathrm {b}}$和气孔阻抗$r_{\mathrm{s,sun}}\left(r_{\mathrm{s,sha}}\right)$的双重贡献。
 植被冠层与其周围空气之间的水汽交换包含两部分：湿的叶面及茎面的蒸发水汽交换(通过阻抗$r_{\mathrm {b}}$)和干叶表面的蒸腾水汽通量(通过阻抗$r_{\mathrm {b}}$，$r_{\mathrm{s,sun}}$和$r_{\mathrm{s,sha}}$)。
@@ -526,7 +516,7 @@ $r_{\mathrm{v}}$表示植被表面与植被冠层顶空气之间水汽交换总�
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\linewidth]{Figures/地表湍流交换过程/有植被潜热交换阻抗示意图.png}
+    \includegraphics[width=0.6\linewidth]{Figures/地表湍流交换过程/有植被潜热交换阻抗示意图_v2.png}
     \caption{有植被覆盖时的陆地表面水汽通量计算示意图}
     \label{fig:有植被覆盖部分的陆地表面水汽通量示意图}
   \end{figure}
@@ -548,16 +538,38 @@ $r_{\mathrm{v}}$表示植被表面与植被冠层顶空气之间水汽交换总�
   \underbrace{-\rho_{\mathrm{a}} \frac{q_{\mathrm{s}}-q_{\mathrm{s a t}}^{T_{\mathrm{v}}}}{r_{\mathrm{{v }}}}}_{\text{总水汽通量}}
   =\underbrace{-\rho_{\mathrm{a}}
   \frac{q_{\mathrm{s}}-q_{\mathrm{s a t}}^{T_{\mathrm{v}}}}{\frac{r_{\mathrm{b}}}{(\text {LAI}+\text {SAI}) \cdot f_{\mathrm{{wet }}}}}}_{\text{叶片蒸发通量}}
-  \underbrace{-\rho_{\mathrm{a}} \frac{q_{\mathrm{s}}-q_{\mathrm{s a t}}^{T_{\mathrm{v}}}}{\frac{1}{\text {LAI} \cdot \left(1-f_{\mathrm{wet}}\right)\left(\frac{f_{\mathrm{sun}}}{r_{\mathrm{b}}+r_{\mathrm{s,sun}}} + \frac{f_{\mathrm{sha}}}{r_{\mathrm{b}}+r_{\mathrm{s,sha}}}\right)}}}_{\text{叶片蒸腾通量}}
+  \underbrace{-\rho_{\mathrm{a}} \frac{q_{\mathrm{s}}-q_{\mathrm{s a t}}^{T_{\mathrm{v}}}}{\frac{1}{\left(1-f_{\mathrm{wet}}\right)\left(\frac{{\text {LAI}}_{\mathrm{sun}}}{r_{\mathrm{b}}+r_{\mathrm{s,sun}}} + \frac{{\text {LAI}}_{\mathrm{sha}}}{r_{\mathrm{b}}+r_{\mathrm{s,sha}}}\right)}}}_{\text{叶片蒸腾通量}}
 \end{equation}
 于是，
 \begin{equation}
-  c_{\mathrm{vw}}=\frac{1}{r_{\mathrm{vw}}}=\frac{(\text {LAI}+\text {SAI}) \cdot f_{\mathrm{{wet }}}}{r_{\mathrm{b}}}+\text {LAI} \cdot \left(1-f_{\mathrm{wet}}\right)\left(\frac{f_{\mathrm{sun}}}{r_{\mathrm{b}}+r_{\mathrm{s,sun}}} + \frac{f_{\mathrm{sha}}}{r_{\mathrm{b}}+r_{\mathrm{s,sha}}}\right)
+  c_{\mathrm{vw}}=\frac{1}{r_{\mathrm{vw}}}=\frac{(\text {LAI}+\text {SAI}) \cdot f_{\mathrm{{wet }}}}{r_{\mathrm{b}}}+\left(1-f_{\mathrm{wet}}\right)\left(\frac{\text {LAI}_{\mathrm{sun}}}{r_{\mathrm{b}}+r_{\mathrm{s,sun}}} + \frac{\text {LAI}_{\mathrm{sha}}}{r_{\mathrm{b}}+r_{\mathrm{s,sha}}}\right)
 \end{equation}
 当$q_{\mathrm{sat}}^{T_{\mathrm v}}\leqslant q_{\mathrm {s}}$即植被冠层空气中的水蒸气可以发生液化时，
-$-\rho_{\mathrm{a}}\frac{q_{\mathrm {s}}-q_{\mathrm{sat}}^{T_{\mathrm v}}}{r_{\mathrm{v}}}\ =-\rho_{\mathrm{a}} \frac{q_{\mathrm {s}}-q_{\mathrm{sat}}^{T_{\mathrm v}}}{r_{\mathrm {b}}/\left(\text {LAI}+\text {SAI}\right)}$，于是
+$-\rho_{\mathrm{a}}\frac{q_{\mathrm {s}}-q_{\mathrm{sat}}^{T_{\mathrm v}}}{r_{\mathrm{vw}}}\ =-\rho_{\mathrm{a}} \frac{q_{\mathrm {s}}-q_{\mathrm{sat}}^{T_{\mathrm v}}}{r_{\mathrm {b}}/\left(\text {LAI}+\text {SAI}\right)}$，于是
 \begin{equation}
   c_{\mathrm{vw}}=\frac{1}{r_{\mathrm{{vw }}}}=\frac{\text {LAI}+\text {SAI}}{r_{\mathrm{b}}}
+\end{equation}
+
+为了表达上的便利，我们引入对于植被表面蒸散发是否发生的判别因子$\delta$如下：
+\begin{equation}
+  \label{delta_cal}
+  \delta=
+  \begin{cases}
+    1 & \text { 当 }\ q_{\mathrm{s a t}}^{T_{\mathrm{v}}}>q_{\mathrm{s}} \text { 即叶片蒸散发可以发生时 } \\
+    0 & \text { 否则 }
+  \end{cases}
+\end{equation}
+于是$c_{\mathrm{vw}}$可重新表达为如下形式：
+\begin{equation}
+  c_{\mathrm{vw}}=\frac{1}{r_{\mathrm{vw}}}=\frac{\left[1-\delta\left(1-f_{\mathrm{wet}}\right)\right](\text{LAI+SAI})}{r_{\mathrm{b}}}+\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\rm LAI_{\mathrm{sun}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sun}}} + \frac{\rm LAI_{\mathrm{sha}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sha}}} \right)
+\end{equation}
+对于叶片的蒸腾水汽通量计算为：
+\begin{equation}
+  E_{\mathrm{tr}} = -\frac{\rho_{\mathrm{a}}\left(1-f_{\mathrm{w e t}}\right)\delta }{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}}\left( \frac{\rm LAI_{\mathrm{sun}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sun}}} + \frac{\rm LAI_{\mathrm{sha}}}{r_{\mathrm{b}} + r_{\mathrm{s,\rm sha}}} \right) \left[c_{\mathrm{aw}} q_{\mathrm{a}}+c_{\mathrm{gw}} q_{\mathrm{g}}-\left(c_{\mathrm{aw}}+c_{\mathrm{gw}}\right) q_{\mathrm{s a t}}^{T_{\mathrm{v}}}\right]
+\end{equation}
+对于叶片的蒸发水汽通量计算为：
+\begin{equation}
+  E_{\mathrm{va}} = -\frac{\rho_{\mathrm{a}}}{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}} \frac{\left[1-\delta\left(1-f_{\mathrm{w e t}}\right)\right](\text {LAI+SAI)}}{r_{\mathrm{b}}}\left[c_{\mathrm{aw}} q_{\mathrm{a}}+c_{\mathrm{gw}} q_{\mathrm{g}}-\left(c_{\mathrm{aw}}+c_{\mathrm{gw}}\right) q_{\mathrm{sat}}^{T_{\mathrm{v}}}\right]
 \end{equation}
 
 下面给出各个阻抗系数的计算方案。首先，植被冠层周围空气与大气的湍流阻抗系数$r_{\mathrm{am}}$、$r_{\mathrm{ah}}$、$r_{\mathrm{aw}}$的计算方案同章节~\ref{无植被覆盖地表湍流通量的计算方案}，
@@ -587,7 +599,7 @@ $C_{\mathrm {s}}=C_{\mathrm{s,bare}}W+C_{\mathrm{s,dense}}\left(1-W\right)$，�
   \frac{c_{\mathrm{ah}}+c_{\mathrm{vh}}}{c_{\mathrm{ah}}+c_{\mathrm{gh}}+c_{\mathrm{vh}}} \\[2ex]
 %
   \frac{\partial E_{\mathrm{g}}}{\partial T_{\mathrm{g}}} & =
-  \frac{\rho_{\mathrm{a}}}{r_{\mathrm{a w}}^{\prime}} \frac{c_{\mathrm{a}}^{w}+c_{\mathrm{vw}}}{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}} \frac{{\rm d} q_{\mathrm{g}}}{{\rm d} T_{\mathrm{g}}}\label{Eg/Tg_2}
+  \frac{\rho_{\mathrm{a}}}{r_{\mathrm{a w}}^{\prime}} \frac{c_{\mathrm{aw}}+c_{\mathrm{vw}}}{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}} \frac{{\rm d} q_{\mathrm{g}}}{{\rm d} T_{\mathrm{g}}}\label{Eg/Tg_2}
 \end{align}
 %\end{equation}
 其中$\frac{{\rm d}q_{\mathrm {g}}}{{\rm d}T_{\mathrm {g}}}=\left[\left(1-f_{\mathrm{sno}}\right)\alpha_{\mathrm{soil}}+f_{\mathrm{sno}}\right]\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm {g}}}}{{\rm d}T_{\mathrm {g}}}$，
@@ -900,12 +912,12 @@ $u_{\mathrm{comb}}$和$K_{\mathrm{comb}}$同公式 (\ref{ucomb}) 和 (\ref{kcomb
   \frac{\partial E_{\mathrm{tr},i}}{\partial T_{\mathrm{v},i}} = \rho_{\mathrm{a}}\left( 1 - f_{\mathrm{wet}} \right)\delta\left( \frac{\text{LAI}_{\mathrm{sun}}}{r_{\mathrm{b},i} + r_{\mathrm{s},\mathrm{sun},i}} + \frac{\text{LAI}_{\mathrm{sha}}}{r_{\mathrm{b},i} + r_{\mathrm{s,sha},i}} \right)\left( 1 - w_{\mathrm{vq},i} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v},i}}}{{\rm d}T_{\mathrm{v},i}}
 \end{equation}
 %
-叶片蒸发水汽通量相对叶片温度变化导数计算为：\todo{请补充$\delta$的含义}
+叶片蒸发水汽通量相对叶片温度变化导数计算为：
 \begin{equation}
   \frac{\partial E_{\mathrm{va},i}}{\partial T_{\mathrm{v},i}} = \rho_{\mathrm{a}}\left( 1 - \delta\left( 1 - f_{\mathrm{wet}} \right) \right)\frac{\text{LAI} + \text{SAI}}{r_{\mathrm{b},i}}\left( 1 - w_{\mathrm{vq},i} \right)\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm{v},i}}}{{\rm d}T_{\mathrm{v},i}}
 \end{equation}
 %
-地面水汽通量相对温度变化的导数为：
+上式中$\delta$的定义见公式~\eqref{delta_cal}。地面水汽通量相对温度变化的导数为：
 \begin{equation}
   \frac{\partial E_{\mathrm{g}}}{\partial T_{\mathrm{g}}} = \rho_{\mathrm{a}}c_{\mathrm{gw1}}\left( 1 - w_{\mathrm{gq1}} \right)\frac{{\rm d}q_{\mathrm{g}}}{{\rm d}T_{\mathrm{g}}}
 \end{equation}
@@ -915,7 +927,7 @@ $u_{\mathrm{comb}}$和$K_{\mathrm{comb}}$同公式 (\ref{ucomb}) 和 (\ref{kcomb
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=1\linewidth]{Figures/地表湍流交换过程/三层植被湍流交换示意图_v3.jpg}
+    \includegraphics[width=1\linewidth]{Figures/地表湍流交换过程/三层植被湍流交换示意图_v4.jpg}
     \caption{三层植被湍流交换示意图}
     \label{fig:三层植被湍流交换示意图}
   \end{figure}
@@ -1383,7 +1395,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/地表湍流交换过程/土壤阻抗示意图_v4.png}
+    \includegraphics[width=0.95\textwidth]{Figures/地表湍流交换过程/土壤阻抗示意图_v5.jpg}
     \caption[土壤阻抗示意图]{土壤阻抗示意图。其中，\(q_{\mathrm{a}}\)、\(q_{\mathrm{g}}\)、\(q_{\mathrm{soil}}\)分别代表一定高度空气比湿(高度取决于有无植被及采用的阻抗交换网络)、地表比湿和土壤孔隙中水附近的比湿，\(r_{\mathrm{aw}}\)、\(r_{\mathrm{ss}}\)分别代表空气动力学阻抗和土壤阻抗}
     \label{fig:土壤阻抗示意图}
   \end{figure}
@@ -1420,7 +1432,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
         \midrule
         1                                                                                       & \(r_{\mathrm{ss}} = \frac{DSL}{D_{\mathrm{g}}}\)                                                                                                    & 菲克定律                               & \citet{sl2014}, SL14                       \\
         2                                                                                       & \(r_{\mathrm{ss}} = \frac{DSL}{D_{\mathrm{g}}}\)                                                                                                    & 菲克定律                               & \citet{sz2009}, SZ09                       \\
-        3                                                                                       & \(\frac{1}{r_{\mathrm{ss}}} = \frac{1}{r_{\mathrm{g\ }}} + \frac{1}{r_{\mathrm{w\ }}}\)                                                             & 菲克定律, 达西定律                     & \citet{tang2013}, TR13                     \\
+        3                                                                                       & \(\frac{1}{r_{\mathrm{ss}}} = \frac{1}{r_{\mathrm{g}}} + \frac{1}{r_{\mathrm{w}}}\)                                                             & 菲克定律, 达西定律                     & \citet{tang2013}, TR13                     \\
         4                                                                                       & \(\beta_{\mathrm{soil}} = \left\{ \begin{array}{r} \frac{1}{4}{\lbrack 1 - \cos(\frac{\theta_{\mathrm{1}}}{\theta_{\mathrm{fc,1}}}\pi)\rbrack}^{2} \\ 1 \end{array} \right.\ \begin{matrix}  & \theta_{\mathrm{1}} < \theta_{\mathrm{fc}} \\  & \theta_{\mathrm{1}} \geqslant \theta_{\mathrm{fc}}\text{ or }q_{\mathrm{\text{a }}} > q_{\mathrm{soil}} \end{matrix}\) & 经验拟合 & \citet{lp1992}\textsuperscript{a}, LP92 \\
         5                                                                                       & \(r_{\mathrm{ss}} = \exp\left( 8.206 - 6.0\frac{\theta_{\mathrm{1}}}{\theta_{\mathrm{sat,1}}} \right)\)
                                                                                                 & 经验拟合                                                                                                                                            & \citet{s1992}\textsuperscript{b}, S92 \\ \bottomrule
@@ -1443,7 +1455,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
     在SL14方案中，\(r_{\mathrm{ss}}\)是通过参数化土壤干燥层厚度\(DSL\)和水汽分子在土壤中的扩散系数\(D_{\mathrm{g}}\)得到的。其中，\(DSL\)的计算由下式给出
     \begin{equation}
       DSL = \begin{cases}
-        \Delta z_{1} \times \frac{\theta_{\mathrm{init,1\ \ }} - \theta_{1}}{\theta_{\mathrm{init,2\ \ }} - \theta_{\mathrm{a}}} & \theta_{1} < K_{\mathrm{sl}}\theta_{\mathrm{sat,1}} \\
+        \Delta z_{1} \times \frac{\theta_{\mathrm{init,1}} - \theta_{1}}{\theta_{\mathrm{init,2}} - \theta_{\mathrm{a}}} & \theta_{1} < K_{\mathrm{sl}}\theta_{\mathrm{sat,1}} \\
         0   & \theta_{1} \geqslant K_{\mathrm{sl}}\theta_{\mathrm{sat,1}}
       \end{cases}
     \end{equation}
@@ -1456,13 +1468,13 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
     \end{equation}
     \(\theta_{1}\)代表第一层土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{sat,1}}\)为第一层土壤的饱和体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{ice,1}}\)为第一层土壤冰的体积含水量\((\unit{m^{3}.m^{-3}})\)，\(\theta_{\mathrm{a}}\)代表风干后即\(\psi_{\mathrm{a}} = - 10^{7}\) mm时的土壤体积含水量\((\unit{m^{3}.m^{-3}})\)，\(K_{\mathrm{sl}}\)为人为设定的参数，在CoLM中，按照~\citet{sl2014}文章中的测试，$K_{\mathrm{sl}}=0.8$。
 
-    水汽分子在土壤中的扩散系数\(D_{\mathrm{g}}\)则是通过计算水汽分子在空气中的扩散系数\(\ D_{0}\)和水汽穿过土壤基质的路径\(\tau\)得到的，计算如下：
+    水汽分子在土壤中的扩散系数\(D_{\mathrm{g}}\)则是通过计算水汽分子在空气中的扩散系数\(D_{0}\)和水汽穿过土壤基质的路径\(\tau\)得到的，计算如下：
     \begin{equation}
       D_{\mathrm{g}} = D_{0} \times \tau\
     \end{equation}
-    \(D_{0\ }\)代表水汽分子在空气中的扩散系数\((\unit{m^{2}.s^{- 1}})\)，计算如下：
+    \(D_{0}\)代表水汽分子在空气中的扩散系数\((\unit{m^{2}.s^{- 1}})\)，计算如下：
     \begin{equation}
-      D_{0\ } = 2.12 \times 10^{- 5}\left( \frac{T_{1}}{273.15} \right)^{1.75}\
+      D_{0} = 2.12 \times 10^{- 5}\left( \frac{T_{1}}{273.15} \right)^{1.75}\
     \end{equation}
     其中，\(T_{1}\)代表土壤表层的温度(K)。
 
@@ -1477,7 +1489,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
     \begin{equation}
       DSL = \Delta z_{1} \times \frac{{\mathrm e}^{\left( 1 - \frac{\theta_{1}}{\theta_{\mathrm{sat,1}}} \right)^{w_{\mathrm{sz}}}} - 1}{e - 1}\
     \end{equation}
-    其中，\(w_{\mathrm{sz}}\)为人为设定的参数，在CoLM中，按照~\citet{sz2009}中的测试，\(w_{\mathrm{sz}}\)设置为5。\(D_{\mathrm{g}}\)、\(\tau\)和\(D_{0\ }\)的计算与SL14方案相同。
+    其中，\(w_{\mathrm{sz}}\)为人为设定的参数，在CoLM中，按照~\citet{sz2009}中的测试，\(w_{\mathrm{sz}}\)设置为5。\(D_{\mathrm{g}}\)、\(\tau\)和\(D_{0}\)的计算与SL14方案相同。
 
 %\begin{enumerate}
 %\def\labelenumi{\arabic{enumi}.}
@@ -1486,22 +1498,22 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
     TR13方案
 %\end{enumerate}
 
-    与SL14方案和SZ09方案仅仅只考虑土壤干燥层中的水汽扩散不同，TR13方案同时考虑了土壤层中液态水和气态水的扩散。TR13方案计算的\(r_{\mathrm{ss}}\)进一步被划分为\(r_{\mathrm{g\ }}\)代表土壤孔隙中水汽扩散的阻抗 (\unit{s.m^{-1}})和\(r_{\mathrm{w\ }}\)代表液态水挥发阻抗(\unit{s.m^{-1}})。它们的计算如下：
+    与SL14方案和SZ09方案仅仅只考虑土壤干燥层中的水汽扩散不同，TR13方案同时考虑了土壤层中液态水和气态水的扩散。TR13方案计算的\(r_{\mathrm{ss}}\)进一步被划分为\(r_{\mathrm{g}}\)代表土壤孔隙中水汽扩散的阻抗 (\unit{s.m^{-1}})和\(r_{\mathrm{w}}\)代表液态水挥发阻抗(\unit{s.m^{-1}})。它们的计算如下：
     \begin{equation}
-      \frac{1}{r_{\mathrm{\mathrm{g}}}} = \frac{2D_{\mathrm{g\ }}\varepsilon_{1}}
-      {\Delta z_{1}}\ \
+      \frac{1}{r_{\mathrm{\mathrm{g}}}} = \frac{2D_{\mathrm{g}}\varepsilon_{1}}
+      {\Delta z_{1}}
     \end{equation}
     \begin{equation}
       \frac{1}{r_{\mathrm{w}}} = \frac{2D_{\mathrm{w}}Bunsen\theta_{1}}
       {\Delta z_{1}}\
     \end{equation}
-    其中，\(D_{\mathrm{w\ }}\)代表液态水的扩散系数(\unit{m^{2}.s^{- 1}})，\(\varepsilon_{1}\)代表第一层土壤中空气填充的孔隙空间(\unit{m^{3}.m^{-3}})，\(Bunsen\)为Bunsen溶解系数，计算如下：
+    其中，\(D_{\mathrm{w}}\)代表液态水的扩散系数(\unit{m^{2}.s^{- 1}})，\(\varepsilon_{1}\)代表第一层土壤中空气填充的孔隙空间(\unit{m^{3}.m^{-3}})，\(Bunsen\)为Bunsen溶解系数，计算如下：
     \begin{equation}
       D_{\mathrm{w}} = K_{1}\frac{\partial\varphi_{1}}{\partial\theta_{1}}\
     \end{equation}
     在Campbell土壤水力模型中，\(\frac{\partial\varphi_{1}}{\partial\theta_{1}}\)计算为：
     \begin{equation}
-      \frac{\partial\varphi_{1}}{\partial\theta_{1}}\  = - \frac{B_{1}\varphi_{1}}{\theta_{1}}\
+      \frac{\partial\varphi_{1}}{\partial\theta_{1}} = - \frac{B_{1}\varphi_{1}}{\theta_{1}}\
     \end{equation}
     在van Genuchten土壤水力模型中，\(\frac{\partial\varphi_{1}}{\partial\theta_{1}}\)计算为：
     \begin{equation}
@@ -1514,10 +1526,10 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
       \frac{\partial\varphi_{1}}{\partial\theta_{1}} = - \frac{m - 1}{\alpha m\left( \theta_{\mathrm{sat,1}} - \theta_{\mathrm{r,1}} \right)}S_{1}^{- \frac{1}{m}}\left( 1 - S_{1}^{\frac{1}{m}} \right)^{- m}\
     \end{equation}
     \begin{equation}
-      \varepsilon_{1} = \theta_{\mathrm{sat,1}} - \ \theta_{\mathrm{a}}\
+      \varepsilon_{1} = \theta_{\mathrm{sat,1}} - \theta_{\mathrm{a}}\
     \end{equation}
     \begin{equation}
-      Bunsen = \ \frac{\rho_{\mathrm{liq}}}{\rho_{\mathrm{vap}}} = \frac{\rho_{\mathrm{liq}}}{\rho_{\mathrm{a}} \times q_{\mathrm{soil}}}\
+      Bunsen = \frac{\rho_{\mathrm{liq}}}{\rho_{\mathrm{vap}}} = \frac{\rho_{\mathrm{liq}}}{\rho_{\mathrm{a}} \times q_{\mathrm{soil}}}\
     \end{equation}
     其中，\(\rho_{\mathrm{liq}}\)为液态水密度(\unit{{kg}.m^{-3}})，\(\rho_{\mathrm{a}}\)为空气密度(\unit{{kg}.m^{-3}})，$\alpha$、$m$ 和 $n$为曲线参数。
 
@@ -1573,7 +1585,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
   \begin{figure}[htb]
     \centering
     \includegraphics[width=0.7\textwidth]{Figures/地表湍流交换过程/tau方案差异图.png}
-    \caption[\(\ \tau\)方案差异图]{$\tau$方案差异图。参数设置与图~\ref{fig:土壤阻抗方案差异图} 参数设置相同，土壤阻抗方案为SL14方案}
+    \caption[\(\tau\)方案差异图]{$\tau$方案差异图。参数设置与图~\ref{fig:土壤阻抗方案差异图} 参数设置相同，土壤阻抗方案为SL14方案}
     \label{fig:tau方案差异图}
   \end{figure}
 }
@@ -1592,11 +1604,11 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 \begin{equation}
   E_{\mathrm{g}}=-\rho_{\mathrm{a}} \frac{q_{\mathrm{s}}-q_{\mathrm{g}}}{r_{\mathrm{a w}}^{\prime}+r_{\mathrm{ss}}}
 \end{equation}
-$c_{\mathrm {g}}^w=\frac{1}{r_{\mathrm{aw}}^\prime}$修改为$c_{\mathrm {g}}^w=\frac{1}{r_{\mathrm{aw}} ^\prime+r_{\mathrm{ss}}}$，
+$c_{\mathrm {gw}}=\frac{1}{r_{\mathrm{aw}}^\prime}$修改为$c_{\mathrm {gw}}=\frac{1}{r_{\mathrm{aw}} ^\prime+r_{\mathrm{ss}}}$，
 地面蒸发相对地表温度的变化率，即公式~\eqref{Eg/Tg_2} 修改为：
 \begin{equation}
   \frac{\partial E_{\mathrm{g}}}{\partial T_{\mathrm{g}}}=
-  \frac{\rho_{\mathrm{a}}}{r_{\mathrm{a w}}^{\prime} + r_{\mathrm{s s}}} \frac{c_{\mathrm{a}}^{w}+c_{\mathrm{v}}^{w}}{c_{\mathrm{a}}^{w}+c_{\mathrm{g}}^{w}+c_{\mathrm{v}}^{w}} \frac{{\rm d} q_{\mathrm{g}}}{{\rm d} T_{\mathrm{g}}}
+  \frac{\rho_{\mathrm{a}}}{r_{\mathrm{a w}}^{\prime} + r_{\mathrm{s s}}} \frac{c_{\mathrm{aw}}+c_{\mathrm{vw}}}{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}} \frac{{\rm d} q_{\mathrm{g}}}{{\rm d} T_{\mathrm{g}}}
 \end{equation}
 
 当使用土壤阻抗方案4时，在无植被覆盖下水汽通量\(E_{\mathrm{g}}\)，即公式~\eqref{Eg} 修改为：
@@ -1611,9 +1623,9 @@ $c_{\mathrm {g}}^w=\frac{1}{r_{\mathrm{aw}}^\prime}$修改为$c_{\mathrm {g}}^w=
 \begin{equation}
   E_{\mathrm{g}}=-\rho_{\mathrm{a}} \beta_{\mathrm{soil}} \frac{q_{\mathrm{s}}-q_{\mathrm{g}}}{r_{\mathrm{a w}}^{\prime}}
 \end{equation}
-$c_{\mathrm {g}}^w=\frac{1}{r_{\mathrm{aw}}^\prime}$修改为$c_{\mathrm {g}}^w=\frac{\beta_{\mathrm{soil}}}{r_{\mathrm{aw}}^\prime}$，
+$c_{\mathrm {gw}}=\frac{1}{r_{\mathrm{aw}}^\prime}$修改为$c_{\mathrm {gw}}=\frac{\beta_{\mathrm{soil}}}{r_{\mathrm{aw}}^\prime}$，
 地面蒸发相对地面温度的变化率，即公式~\eqref{Eg/Tg_2} 修改为：
 \begin{equation}
   \frac{\partial E_{\mathrm{g}}}{\partial T_{\mathrm{g}}}=
-  \frac{\rho_{\mathrm{a}} \beta_{\mathrm{soil}}}{r_{\mathrm{a w}}^{\prime}} \frac{c_{\mathrm{a}}^{w}+c_{\mathrm{v}}^{w}}{c_{\mathrm{a}}^{w}+c_{\mathrm{g}}^{w}+c_{\mathrm{v}}^{w}} \frac{{\rm d} q_{\mathrm{g}}}{{\rm d} T_{\mathrm{g}}}
+  \frac{\rho_{\mathrm{a}} \beta_{\mathrm{soil}}}{r_{\mathrm{a w}}^{\prime}} \frac{c_{\mathrm{aw}}+c_{\mathrm{vw}}}{c_{\mathrm{aw}}+c_{\mathrm{gw}}+c_{\mathrm{vw}}} \frac{{\rm d} q_{\mathrm{g}}}{{\rm d} T_{\mathrm{g}}}
 \end{equation}
