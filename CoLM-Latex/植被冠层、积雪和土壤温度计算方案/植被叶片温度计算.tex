@@ -12,7 +12,7 @@
   F\left(T_{\mathrm{v}}\right):=S_{\mathrm{v}}+L_{\mathrm{v}}\left(T_{\mathrm{v}}\right)-H_{\mathrm{v}}\left(T_{\mathrm{v}}\right)-\lambda E_{\mathrm{v}}\left(T_{\mathrm{v}}\right)+H_{\mathrm{p r c v}}\left(T_{\mathrm{v}}\right)=0
 \end{equation}
 其中$S_{\mathrm v}$表示叶片吸收的净太阳辐射(见章节~\ref{短波吸收辐射通量})，
-$L_{\mathrm v}$表示叶片吸收的净长波辐射，$H_{\mathrm v}$表示植被感热，$\lambda E_{\mathrm v}$表示植被潜热，$H_{\mathrm{prev}}$表示植被雨水感热。叶片温度$T_{\mathrm v}$可通过对方程 (\ref{FT_V}) 实施牛顿迭代法进行求解，迭代公式为：
+$L_{\mathrm v}$表示叶片吸收的净长波辐射，$H_{\mathrm v}$表示植被感热，$\lambda E_{\mathrm v}$表示植被潜热，$H_{\mathrm{prcv}}$表示植被雨水感热。叶片温度$T_{\mathrm v}$可通过对方程 (\ref{FT_V}) 实施牛顿迭代法进行求解，迭代公式为：
 \begin{equation}
   \Delta T_{\mathrm{v}}=-\frac{F\left(T_{\mathrm{v}}^{(n)}\right)}{F^{\prime}\left(T_{\mathrm{v}}^{(n)}\right)}
 \end{equation}
@@ -131,7 +131,7 @@ $L_{\mathrm v}$可计算如下(假设植被叶片部分发射率为1)：
     \end{equation}
   \item 计算有植被覆盖下的地面感热通量$H_{\mathrm{g}}$和潜热通量$\lambda E_{\mathrm{g}}$及其对地面温度的变化率，
     并给出地表总感热通量$H_{\mathrm {g}} $和潜热通量$\lambda E_{\mathrm {g}} $随地面温度变化率
-  \item 计算植被覆盖下地表吸收的下行长波辐射$L_{\mathrm{v}}^\downarrow$和返回大气的上行长波辐射$L_{\mathrm v} ^\uparrow$：
+  \item 计算植被冠层下行长波辐射$L_{\mathrm{v}}^\downarrow$和返回大气的上行长波辐射$L_{\mathrm v} ^\uparrow$：
     \begin{equation}
       L_{\mathrm{v}} ^\downarrow =  \tau_{\mathrm{v}} L ^\downarrow+\varepsilon_{\mathrm{v}}\sigma \left (T_{\mathrm{v}}^{(n - 1)}\right)^3\left( T_{\mathrm{v}}^{(n - 1)} + 4\Delta T_{\mathrm{v}}^{(n - 1)} \right)\\
     \end{equation}

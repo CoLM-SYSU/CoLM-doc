@@ -108,8 +108,8 @@ G_{\mathrm{wat}}- w_{\mathrm{{satint}}} + w_{\mathrm{{int}}} + w_{\mathrm{{satin
 
 CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选方案。VIC（Variable Infiltration Capacity，“可变下渗容量模型”）是基于~\citet{liang1994simple} 的思想研制出的大尺度分布式水文模型。VIC模型的地表径流和基流分别在不同的土壤层中计算。上方两层土壤产生径流，而最下层土壤产生基流。
 
-\begin{enumerate}
-  \item 地表径流
+%\begin{enumerate}
+\subsubsection{地表径流}
 
     VIC模型基于土壤可变下渗能力曲线进行地表径流的计算。当降水量大于土壤下渗能力时，其计算公式为:
     \begin{equation}
@@ -135,7 +135,7 @@ CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选
     \end{equation}
     式中 $\theta_{\mathrm {r}} $ 为土壤残留水分，$K_{\mathrm {s}} $ 为饱和渗透系数，$B_{\mathrm {p}} $ 为土壤孔隙大小分布指数。
 
-  \item 基流
+\subsubsection{基流}
 
     在VIC模型中，基流仅在第三层土壤中形成，应用 Arno 概念模型计算基流：
     \begin{equation}
@@ -151,7 +151,7 @@ CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选
     \end{equation}
     式中，$W_2^+$ 为最下层土壤时段末的含水量，$E_2$ 为最下层土壤的蒸发量。
 
-  \item 方案可率定参数
+\subsubsection{方案可率定参数}
 
     决定VIC大尺度水文模型模拟精确度的因素中，除了模型对各个水文过程的精确考虑和详细表达外，最重要的就是对模型参数的最优化选取，即模型参数的率定。VIC模型径流模拟中需要对以下四个参数进行率定（见表~\ref{tab:VIC率定参数}）：
     \begin{enumerate}
@@ -177,13 +177,21 @@ CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选
       \end{table}
     }
 
-  \item VIC与CoLM耦合 \todo{下面的变量名可与前面章节符号统一。}
+\subsubsection{VIC与CoLM耦合} %\todo{下面的变量名可与前面章节符号统一。}
 
-    VIC向CoLM传入的变量有土壤层厚度（\texttt{dz\_soi}）、土壤孔隙度（\texttt{porsl}）、残余水分含量（\texttt{theta\_{r}}）、饱和导水率（\texttt{hksati}）、Clapp-Hornberger参数 $b$ (\texttt{bsw})、土壤层中液态水含量（\texttt{wliq\_soisno}）、土壤层中固态水含量（\texttt{wice\_soisno}）、根系从每层土壤中的吸水速率（\texttt{rootflux}）和从冠层到大气的蒸散发（\texttt{fevpg}）。VIC 向 CoLM 返回的变量有地表径流（\texttt{rsur}）和基流（\texttt{rsubst}）。
+    VIC向CoLM传入的变量有土壤层厚度（$\Delta z$）、土壤孔隙度（$\theta_{\text{sat}}$）、残余水分含量（$\theta_\text{r}$）、饱和导水率（$K_{\text{sat}}$）、Clapp-Hornberger参数 $B$、土壤层中液态水含量（$w_{\text{liq}}$）、土壤层中固态水含量（$w_{\text{ice}}$）、根系从每层土壤中的吸水速率（$q_{\text{root}}$）和从冠层到大气的蒸散发（$E$）。VIC 向 CoLM 返回的变量有地表径流（$r_{\text{sur}}$）和基流（$r_{\text{sub}}$）。
 
-    VIC中的三层土壤和 CoLM 中的1--3、4--6、7--10层分别进行对应。对变量值做直接加和或者以土壤厚度作为权重进行加权平均。
+    VIC中的三层土壤和 CoLM 中的1--3、4--6、7--10层分别进行对应（见图~\ref{fig:VIC和CoLM耦合示意图} 所示）。对变量值做直接加和或者以土壤厚度作为权重进行加权平均。
 
-\end{enumerate}
+    {
+      \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=\textwidth]{Figures/陆地表面的水分循环/VIC说明图中文.pdf}
+        \caption{VIC和CoLM耦合示意图}
+        \label{fig:VIC和CoLM耦合示意图}
+      \end{figure}
+    }
+
 
 \section{径流模型CaMa-Flood}
 %\addcontentsline{toc}{chapter}{陆地表面的水分循环}
@@ -302,7 +310,7 @@ $\alpha$是稳定性系数设为0.7，$h_{\mathrm {t}} $是该流域单元在时
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{CoLM-Latex/Figures/陆地表面的水分循环/双向耦合.pdf}
+    \includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/双向耦合.pdf}
     \caption{CaMa-Flood和CoLM双向耦合示意图}
     \label{fig:双向耦合}
   \end{figure}
