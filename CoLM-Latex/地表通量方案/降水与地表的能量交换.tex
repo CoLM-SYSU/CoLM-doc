@@ -1,0 +1,188 @@
+\chapter{降水与地表的能量交换}
+%\addcontentsline{toc}{chapter}{降水与地表的能量交换}
+降水是陆面与大气之间保证水循环以及维持能量平衡的重要过程，CoLM模式通过多个物理参数化方案考虑降水相态分配、水凝物密度计算、雨水与植被/地表之间的能量交换等物理过程。
+
+\begin{mymdframed}{代码}
+  本部分的对应代码为\texttt{MOD\_GroundTemperature.F90}、\texttt{MOD\_RainSnowTemp.F90}和\\
+  \texttt{MOD\_WetBulb.F90}。
+\end{mymdframed}
+
+\section{降水相态}\label{相态分配}
+在CoLM中共有四种基于温、湿参量近似雨水温度来分配降水相态的方法，具体如表~\ref{tab:相态区分方案}~所示。
+
+\begin{table}[]
+  \caption{相态区分方案}
+  \label{tab:相态区分方案}
+  \begin{tabular}[h]{p{1cm}p{5cm}p{10cm}}
+    \toprule
+    选项 & 注释(*代表的是默认方案) & 参考文献                                   \\ \midrule
+    I    & 湿球温度方案            & \citet{Wang-etal_19WetBulb}                \\
+    II*  & CLM5方案                &  CLM5 技术文档 \\
+    III  & PSY方案                 & \citet{harder2013estimating}               \\
+    IV   & 单阈值方案              & \citet{us1956snow}                         \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{湿球温度方案}\label{湿球温度方案}
+
+\citet{anderson1998moored}等人的研究表明，雨水温度与大气湿球温度极为接近。基于这一发现，本方案中采用湿球温度来近似雨水温度。根据湿球温度的定义，可得如下关系式：
+\begin{equation}
+  \label{eq:湿球温度定义}
+  C_{\mathrm{a}}\left(T_{\mathrm{w b}}-T\right)=\lambda_{\mathrm{vap}}\left(r-r_{\mathrm{s a t}}^{T_{\mathrm{w b}}}\right)
+\end{equation}
+式中，$C_{\mathrm{a}}$ 为干空气的比热容（\unit{J.kg^{-1}.K^{-1}}），$T_{\mathrm{wb}}$ 为大气湿球温度（K），
+$T$ 为大气环境温度（K），$r$ 为混合比，$r_{\mathrm{sat}}^{T_{\mathrm{wb}}}$ 为 $T_{\mathrm{wb}}$ 温度下的饱和混合比，
+$\lambda_{\mathrm {vap}}$ 为液态水的蒸发潜热（\unit{J.kg^{-1}}）。
+为求解 $T_{\mathrm{wb}}$，本方案采用迭代法。首先，取 $T_{\mathrm{wb}}$ 的初始值 $T_{\mathrm{wb}}^{\left(0\right)}=T$，
+然后通过以下步骤进行迭代：
+\begin{enumerate}
+\item 利用附录~\ref{饱和水汽压(比湿)及其随温度的变化}中的方法，计算 $T_{\mathrm{wb}}^{\left(n\right)}$ 温度下的饱和比湿 $q_{\mathrm{sat}}^{T_{\mathrm{wb}}^{\left(n\right)}}$；
+\item 运用混合比和比湿（$q$）的转换关系（$r=\frac{q}{1-q}$），计算 $r$ 和 $r_{\mathrm{sat}}^{T_{\mathrm{wb}}^{\left(n\right)}}$；
+\item 根据公式更新湿球温度：$T_{\mathrm{wb}}^{\left(n\right)\ast}=T+\frac{\lambda_{\mathrm {vap}}}{C_{\mathrm{a}}}\left(r-r_{\mathrm{sat}}^{T_{\mathrm{wb}}^{\left(n\right)}}\right)$；
+\item 计算更新前后湿球温度的平均值作为下一步的湿球温度：$T_{\mathrm{wb}}^{\left(n+1\right)}=\left(T_{\mathrm{wb}}^{\left(n\right)}+T_{\mathrm{wb}}^{\left(n\right)\ast}\right)/2.0$。
+\end{enumerate}
+重复上述过程6次（$n=0$, $\ldots$, 5），得到的结果即为最终的湿球温度 $T_{\mathrm{wb}}$。
+本方案将计算得到的湿球温度视为雨水温度，并据此确定液态降水的占比。具体判定标准如下：
+\begin{equation}
+  f_{\mathrm{pl}}= \begin{cases}
+    1, & \text{当 }\ 3 < T_{\mathrm{wb}} - T_{\mathrm{frz}} \text{ 时} \\
+    1 - \frac{1}{1 + 5\times10^{-5}\exp{(T_{\mathrm{wb}} - T_{\mathrm{frz}}+4)}} , & \text{当 }\ -2\leqslant T_{\mathrm{wb}} - T_{\mathrm{frz}} \leqslant 3 \text{ 时} \\
+    0, & \text{当 }\ T_{\mathrm{wb}} - T_{\mathrm{frz}} < -2 \text{ 时}
+  \end{cases}
+\end{equation}
+其中，凝结温度 $T_{\mathrm{frz}}$ 取 273.16 K。
+
+
+
+\subsection{CLM5方案}
+与湿球温度方案不同，CLM5方案将大气环境温度视为雨水温度。此外，CLM5方案还考虑了下垫面类型，特别是对冰川类型进行了单独处理。具体而言：\\
+当地表水体为冰面时（land water type = 3, land ice）:
+\begin{equation}
+  T_{\mathrm{asn}} = T_{\mathrm{frz}} - 2,\quad T_{\mathrm{arn}} = T_{\mathrm{frz}}
+\end{equation}
+对于其他下垫面类型：
+\begin{equation}
+  T_{\mathrm{asn}} = T_{\mathrm{frz}},\quad T_{\mathrm{arn}} = T_{\mathrm{frz}} +2
+\end{equation}
+其中，$T_{\mathrm{asn}}$ 和 $T_{\mathrm{arn}}$ 分别表示雪和雨占比为100\%时的阈值温度。基于 $T_{\mathrm{asn}}$ 和 $T_{\mathrm{arn}}$，液态降水占比 $f_{\mathrm{pl}}$ 可以通过以下分段函数确定：
+\begin{equation*}
+  f_{\mathrm{pl}}= \begin{cases}
+    1, & \text{当 }\ T_{\mathrm{arn}}\leqslant T_{\mathrm {air}} \text{ 时}\\
+    (T_{\mathrm {a}} - T_{\mathrm{asn}})/2, & \text{当 }\  T_{\mathrm{asn}}\leqslant T_{\mathrm {a}} < T_{\mathrm{arn}} \text{ 时} \\
+    0, & \text{当 }\ T_{\mathrm {air}} < T_{\mathrm{asn}} \text{ 时}
+  \end{cases}
+\end{equation*}
+
+
+\subsection{PSY方案}
+PSY (Psychrometric Energy Balance Method) 方案是一种基于干湿能量平衡计算水凝物温度的方法。
+方案的基本假设是在水凝物（液态水或冰晶）表面无限接近处存在一个理想气团，其温度与水凝物相同。这个气团满足Tetens饱和水汽压经验公式，该公式对于水面和冰面有不同的表达式：
+\begin{equation}
+e_s = 611 \exp\left(\frac{17.27(T_{\mathrm{a}} - 273.15)}{T_{\mathrm{a}} - 35.86}\right)
+\end{equation}
+\begin{equation}
+e_{si} = 611 \exp\left(\frac{21.87(T_{\mathrm{a}} - 273.15)}{T_{\mathrm{a}} - 7.66}\right)
+\end{equation}
+其中，$e_s$是水面饱和气压 (Pa)，$e_{si}$是冰面饱和气压(Pa)，$T_{\mathrm{a}}$是大气温度（K）。 此外，PSY方案假设这个理想气团与周围环境大气之间遵循质量守恒和能量守恒原理，且均符合理想气体状态方程。空气密度$\rho_{\mathrm{a}}$与温度和气压的关系可表示为：
+\begin{equation}
+\rho_{\mathrm{a}} = \frac{p_{\mathrm{a}}}{287.04 \times T_{\mathrm{a}} }
+\end{equation}
+其中，$p_{\mathrm{a}}$是气压（Pa）。为了更准确地描述水凝物的物理过程，PSY方案还引入了一些与温度相关的物理参数。水蒸气在空气中的扩散系数~$D_\mathrm{v}$($\unit{m^2 s^{-1}}$)、空气的导热率~$k_a$~($\unit{J m^{-1} s^{-1} k^{-1}}$)以及水蒸气的凝华和蒸发潜热$\lambda$ ~($\unit{J kg^{-1}}$)都被表示为温度的函数：
+\begin{equation}
+D_\mathrm{v}= 2.063 \times 10^{-5} \left(\frac{T_{\mathrm{a}}}{273.15}\right)^{1.75}
+\end{equation}
+
+\begin{equation}
+k_{\mathrm{a}} = 6.3 \times 10^{-5} T_{\mathrm{a}} + 0.00673
+\end{equation}
+对于潜热$\lambda$，当温度高于273.15 K（0°C）时：
+\begin{equation}
+\lambda = 1000\times(2834.1 - 0.29(T_{\mathrm{a}}-273.15) - 0.004(T_{\mathrm{a}}-273.15)^2)
+\end{equation}
+当温度低于或等于273.15 K（0°C）时：
+\begin{equation}
+\lambda = 1000\times(2501.1 - 2.361\times(T_{\mathrm{a}}-273.15))
+\end{equation}
+基于这些假设和参数，PSY方案通过求解以下方程来确定水凝物温度$T_{\mathrm{frzp}}$：
+\begin{equation}
+\label{eq:水凝物表面空气温度定义}
+T_{\mathrm{frzp}} = T_{\mathrm{a}} + \frac{D_{\mathrm{v}}}{k_{\mathrm{a}}} \lambda (\rho - \rho_{\mathrm{frzp}})
+\end{equation}
+其中，$\rho_{\mathrm{frzp}}$是水凝物表面饱和水汽密度 ($\unit{Kg~m^{-3}}$)。这个方程通过牛顿迭代法求解，具体步骤如下：首先定义函数$f(T_{\mathrm{frzp}}) = T_{\mathrm{frzp}} - T_{\mathrm{a}} - \frac{D_v}{k_a} \lambda (\rho - \rho_{\mathrm {frzp}})$，然后给定初值$T_{\mathrm{frzp}}^{(0)} = T_{\mathrm{a}}$，接着进行迭代计算$T_{\mathrm {frzp}}^{(i+1)} = T_{\mathrm {frzp}}^{(i)} - \frac{f(T_{\mathrm {frzp}}^{(i)})}{f^{'}(T_{\mathrm {frzp}}^{(i)})}$，直到满足收敛条件$|T_{\mathrm {frzp}}^{(i+1)} - T_{\mathrm {frzp}}^{(i)}| < 0.01$。
+
+由上可得，本方案计算液态降水占比如下：
+\begin{equation}
+  f_{\mathrm{pl}}= \begin{cases}
+    1, & \text{当 }\ 3 < T_{\mathrm {frzp}} \text{ 时}\\
+    \frac{1}{1 + 2.50286\times 0.125006^{T_{\mathrm{frzp}}}}, & \text{当 }\ -3\leqslant T_{\mathrm {frzp}} \leqslant  3 \text{ 时} \\
+    0, & \text{当 }\ T_{\mathrm {frzp}} < -3 \text{ 时}
+  \end{cases}
+\end{equation}
+值得注意的是，与方程\eqref{eq:湿球温度定义}对湿球温度的等焓假设不同，方程\eqref{eq:水凝物表面空气温度定义}在计算水凝物温度时并未做出类似假设。这两种方法的物理基础存在差异，因此其计算方程不能相互转化。
+PSY方案的拟合数据来源于降水量（液态水/总降水量），而湿球温度方案的拟合数据则基于降水事件概率（降雨事件/总降水事件）。这种数据来源的差异可能导致两种方法在实际应用中产生不同的结果。
+
+
+
+
+
+
+\subsection{单阈值方案}
+单阈值方案就是设定一个关键温度以界定液态降水的占比，假设认为液态降水占比随温度升高逐渐线性增加，在2 \textcelsius 时占40\%，当环境温度高于2 \textcelsius 后全转变为液态降水，过程具体如下：
+\begin{equation}
+  f_{\mathrm{pl}}= \begin{cases}
+    1, & \text{当 }\ T_{\mathrm{frz}}+2 < T_{\mathrm {a}} \text{ 时}\\
+    \max(0,-54.632 + 0.2\times T_{\mathrm {a}}), & \text{当 }\ T_{\mathrm {a}} \leqslant T_{\mathrm{frz}} + 2 \text{ 时} \\
+  \end{cases}
+\end{equation}
+
+
+\section{降水强度}
+CoLM在物理过程计算时使用的降水强度由大气驱动数据或大气模式的降水模拟结果直接提供。由于CoLM中的部分物理过程（如冠层截留过程）需区分大尺度降水和对流性降水，而大气驱动数据往往只提供总降水强度，因此在CoLM中，暂时假设大气驱动数据提供的降水有2/3的比例为大尺度降水，1/3的比例为对流性降水。当与大气模式耦合时，大气模式往往可以直接提供大尺度降水和对流性降水的降水强度模拟结果。
+
+
+\section{降水温度}
+CoLM中使用的雨水温度可由湿球温度近似，计算方案在第~\ref{湿球温度方案} 节给出。同时，雨水温度也需根据降水相态进行调整，具体方案为：当降水全部为液态水时，雨水温度取湿球温度和冻结点温度$T_{\mathrm{frz}}$之间的较大值；当液态降水比例$f_{\mathrm{pl}}$介于0到1之间时，雨水温度计算公式为：$$T_{\mathrm {p}}=T_{\mathrm{frz}}-\sqrt{\frac{1}{f_{\mathrm{pl}}}-1}/100.0$$
+当降水全部为固态水时，雨水温度取湿球温度和冻结点温度$T_{\mathrm{frz}}$之间的较小值。
+
+
+\section{新雪密度}
+雪的密度($\rho_{s}$)影响到地表的雪深、雪的堆积等一系列物理过程，是一个很重要的参量，在CoLM中采用CLM5的方案计算新雪密度，具体过程如下：
+\begin{equation*}
+  \rho_{s}= \begin{cases}
+    50 + 1.7\times 17^{1.5}, & \text{当 }\ 2\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} \text{ 时}\\
+    50 + 1.7(T_{\mathrm {a}} - T_{\mathrm{frz}}+15)^{1.5}, & \text{当 }\ -15\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} < 2 \text{ 时} \\
+    -3.8328(T_{\mathrm {a}} - T_{\mathrm{frz}}) - 0.0333(T_{\mathrm {a}} - T_{\mathrm{frz}})^2, & \text{当 }\ -57.55\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} < -15 \text{ 时} \\
+    110.2898, & \text{当 }\ T_{\mathrm {a}} - T_{\mathrm{frz}} < -57.55 \text{ 时}\\
+  \end{cases}
+\end{equation*}
+
+当风速达到一定阈值时，雪密度在考虑温度后还需要继续考虑风速：
+\begin{equation}
+  V_{\mathrm {a}} = \sqrt{(u^2 + v^2)}
+\end{equation}
+
+当 $V_{\mathrm {a}}$ > 0.1 时
+\begin{equation}
+  \rho_{s,\mathrm{new}} = \rho_{s,\mathrm{old}} + 266.81{\left(\frac{1 + \tanh (\frac{V_{\mathrm {a}}}{5})}{2}\right)}^{8.8}
+\end{equation}
+
+
+\section{降水感热}\label{植被地表的雨水感热}
+雨水与地表/植被之间存在温度差异，当降水发生时，它们之间可发生能量交换(降水感热)。
+\citet{wei2014impact} 表明，虽然在气候尺度上此能量交换的量级很小，但它可通过改变大气环流影响不同地区的气候特征，
+故在气候模式中不可被忽略。感热计算中默认湿球温度为雨水温度$T_{\rm p}$，下面给出雨水感热的计算方案。
+
+当地表有植被覆盖时，植被叶片与雨水的能量交换 (\unit{W.m^{-2}}) 分别计算如下：
+\begin{equation}
+  H_{\mathrm{prcv}}=C_{\mathrm{liq}} q_{\mathrm{intr,rain}}\left(T_{\mathrm{p}}-T_{\mathrm{v}}\right)+C_{\mathrm{ice}} q_{\mathrm{intr,snow}}\left(T_{\mathrm{p}}-T_{\mathrm{v}}\right)
+\end{equation}
+其中$C_{\mathrm{liq}}$与$C_{\mathrm{ice}}$分别表示液态水与固态水的比热容(\unit{J.kg^{-1}.K^{-1}})，
+$q_{\mathrm{intr,rain}}$与$q_{\mathrm{intr,snow}}$分别表示植被冠层对液态水和固态水的截流率(\unit{mm.H_2O.s^{-1}})(计算见第~\ref{植被冠层截留} 章)。
+
+
+地表与雨水的能量交换 (\unit{W.m^{-2}}) 为：
+\begin{equation}
+  H_{\mathrm{p r c g}}=C_{\mathrm{liq}} p_{\mathrm {rain}}\left(T_{\mathrm{p}}-T_{\mathrm{g}}\right)+C_{\mathrm{ice}} p_{\mathrm {snow}}\left(T_{\mathrm{p}}-T_{\mathrm{g}}\right)
+\end{equation}
+其中$p_{\mathrm {rain}}$与$p_{\mathrm {snow}}$分别表示落到地面的液态水与固态水降水率(\unit{mm.H_2O.s^{-1}})，
+当有植被覆盖时，$p_{\mathrm {rain}}$与$p_{\mathrm {snow}}$为直接穿透植被冠层的降水率与沿叶茎流出冠层的降水率之和(计算见第~\ref{植被冠层截留} 章)。

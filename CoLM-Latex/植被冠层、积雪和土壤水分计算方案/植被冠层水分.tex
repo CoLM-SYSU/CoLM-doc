@@ -1,0 +1,507 @@
+% \chapter{植被冠层和土壤水分}
+%\addcontentsline{toc}{chapter}{陆地表面的水分循环}
+
+\chapter{植被冠层水分}\label{植被冠层截留}
+
+% \section{植被冠层截留}\label{植被冠层截留}
+\begin{mymdframed}{代码}
+  本章对应的代码文件为\texttt{MOD\_LeafInterception.F90}。
+\end{mymdframed}
+
+冠层是降水的首要接触层,它对降水的再分配有着重要的作用。CoLM冠层的水量平衡方程主要采用SiB2方案~\citep{sellers1996revised}，基于以下控制方程:
+\begin{equation}\label{eq:冠层水量控制方程}
+  \frac{\partial L_{\mathrm{dew}}}{\partial t} = p-D_{\mathrm{d}}-D_{\mathrm{c}}-E_{\mathrm{va}}
+\end{equation}
+式中$p$为总降水量(\unit{mm.s^{-1}}),分为对流降水和大尺度降水类型:
+\begin{equation}\label{eq:降水类型}
+  p=p_{\mathrm{c}}+p_{\mathrm{l}}=\left(p_{\mathrm{c,rain}}+p_{\mathrm{c,snow}}\right)+\left(p_{\mathrm{l,rain}}+p_{\mathrm{l,snow}}\right)
+\end{equation}
+其中下标$\rm c$和$\rm l$代表对流和大尺度降水类型，$\text{rain}$和$\text{snow}$分别代表降雨率与降雪率(\unit{mm.s^{-1}})。当驱动强迫场中只有总降水可用时，CoLM假设大尺度降水等于$1/3p$，对流降水占$2/3p$。
+$D_{\mathrm {d}} $为降雨穿透速率(\unit{mm.s^{-1}})，即从冠层间隙下落的降水速率，$D_{\mathrm {c}} $为冠层排水速度(\unit{mm.s^{-1}})，$\frac{\partial L_{\mathrm{lew}}}{\partial t}$为冠层蓄水变化率(\unit{mm.s^{-1}})，$E_{\mathrm{va}}$为蒸发速率。
+
+CoLM支持包括CoLM2014、CLM4.5、CLM5.0、VIC、MATSIRO、JULES 和Noah-MP等多种冠层截留计算参数化方案。具体的区别如表~\ref{tab:不同截留方案比较} 所示。
+%
+%\begin{table}[htbp]
+%\caption{不同截留方案的比较}
+%\label{tab:不同截留方案比较}
+%\begin{center}
+%\begin{tabular}{p{2cm}{c}p{1.5cm}{c}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}{c}}
+%\toprule
+%模式 & 叶倾角 & 独立的雨雪过程 & 雪的卸载 & 叶片水的相变 & 可变最大冠层水深 & 降水的形态和网格分布 & 独立叶温计算 & 重力排水\\\midrule
+%CoLM2014 & 是 & 否 & 否 & 否 & 否 & 是 & 否 & 否 \\
+%CLM4.5 & 否 & 否 & 否 & 否 & 否 & 否 & 否 & 否 \\
+%CLM5 & 否 & 是 & 是 & 否 & 否 & 否 & 否 & 否 \\
+%Noah-Mp & 否 & 是 & 否 & 是 & 是 & 是 & 是 & 否 \\
+%VIC & 否 & 是 & 否 & 是 & 是 & 是 & 是 & 否 \\
+%MATSIRO & 否 & 是 & 否 & 是 & 是 & 是 & 否 & 是 \\
+%JULES & 否 & 是 & 否 & 是 & 是 & 是 & 否 & 是 \\
+%\bottomrule
+%\end{tabular}
+%\end{center}
+%\end{table}
+
+\begin{table}[htbp]
+  \centering \renewcommand{\arraystretch}{1.5}
+  \caption{不同截留方案的比较}
+  \label{tab:不同截留方案比较}
+  \begin{tabular}{p{2cm}ccccccc}
+    \toprule
+    模式                 & CoLM2014   & CLM4.5   & CLM5       & Noah-MP    & VIC        & MATSIRO    & JULES      \\ \midrule
+    叶倾角               & \checkmark & $\times$ & $\times$   & $\times$   & $\times$   & $\times$   & $\times$   \\
+    独立的雨雪过程       & \checkmark & $\times$ & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+    雪的卸载             & \checkmark & $\times$ & \checkmark & \checkmark & $\times$   & $\times$   & $\times$   \\
+    叶片水的相变         & \checkmark & $\times$ & $\times$   & \checkmark & \checkmark & \checkmark & \checkmark \\
+    可变最大冠层储水深度 & \checkmark & $\times$ & $\times$   & \checkmark & \checkmark & \checkmark & \checkmark \\
+    降水的形态和网格分布 & \checkmark & $\times$ & $\times$   & \checkmark & \checkmark & \checkmark & \checkmark \\
+    截留是否影响叶温计算 & \checkmark & $\times$ & $\times$   & \checkmark & \checkmark & $\times$   & $\times$   \\
+    重力排水             & $\times$   & $\times$ & $\times$   & $\times$   & $\times$   & \checkmark & \checkmark \\ \bottomrule
+  \end{tabular}
+\end{table}
+以下针对不同方案分别进行详细介绍。
+
+\section{CoLM2014方案}
+在CoLM2014方案中,公式~\eqref{eq:冠层水量控制方程} 中的直接穿透量$D_{\mathrm {d}} $与辐射传输中的光穿透量的计算方法一致,由下式给出:
+\begin{equation}
+  D_{\mathrm{d}}=\delta_{\mathrm{p}} \cdot p=\delta_{\mathrm{p}} \cdot\left(p_{\mathrm{c,rain}}+p_{\mathrm{c,snow}}+p_{\mathrm{l,rain}}+p_{\mathrm{l,snow}}\right)
+\end{equation}
+其中$\delta_{\mathrm {p}} $是冠层穿透系数,等于
+\begin{equation}
+  \delta_{\mathrm{p}}=1.0-\alpha \left[1-\exp \left(-K_{\mathrm{p}}  {\rm LSAI}\right)\right]
+\end{equation}
+该公式中反映叶片集水能力的经验系数$\alpha$被设定为0.25~\citep{lawrence2011parameterization}。
+${\rm LSAI}$是${\rm SAI}$和${\rm LAI}$之和(${\rm LAI}$和${\rm SAI}$分别是叶指数和茎面积指数)；$K_{\mathrm {p}} $是消光系数,与辐射垂直入射冠层时计算相同:
+\begin{equation}\label{eq:消光系数}
+  \begin{aligned}
+    K_{\mathrm{p}} &= \phi_{1}+\phi_{2} \\
+    \phi_{2} &= 0.877\left(1-2 \phi_{1}\right) \\
+    \phi_{1} &= 0.5-0.633 \chi_{\mathrm{L}}-0.33 \chi_{\mathrm{L}}^{2}
+  \end{aligned}
+\end{equation}
+$K_{\mathrm {p}} $通过叶角分布的经验参数$\chi_{\mathrm {L}} $的变化来控制，其中$\chi_{\mathrm {L}} =0$表示球形叶角分布，$\chi_{\mathrm {L}} = 1$表示平面型叶倾角分布，$\chi_{\mathrm {L}} = -1$表示竖直型叶倾角分布。根据植被类型，$\chi_{\mathrm {L}} $的范围在$-0.3\sim0.25$之间。由此计算得出的$\delta_{\mathrm {p}} $的变动范围如图~\ref{fig:穿透系数与叶面积指数} 所示。
+{
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figures/陆地表面的水分循环/穿透系数与叶面积指数.jpg}
+    \caption{穿透系数$\delta_{\mathrm {p}} $与叶面积指数的关系及其变动范围}
+    \label{fig:穿透系数与叶面积指数}
+  \end{figure}
+}
+
+为防止升华或冷凝水超过最大树冠储存量，CoLM在计算冠层截留之前首先更新树叶上的水深($L_{\mathrm{dew}}$) (mm):
+\begin{equation}
+  \begin{aligned}
+    L_{\mathrm{dew}} &= L_{\mathrm{dew}}-x_{\mathrm{sc}} \\
+    x_{\mathrm{sc}} &= \max\left(0., L_{\mathrm{dew}}-L_{\mathrm {dew,max}}\right)
+  \end{aligned}
+\end{equation}
+其中$x_{\mathrm{sc}}$是超过最大树冠储存量的水(mm)，$L_{\mathrm {dew,max}} =0.1 \cdot{\rm LSAI}$代表最大蓄水量(mm)。
+$x_{\mathrm{sc}}$的相位首先由冠层温度决定。如果冠层温度大于冰点温度，CoLM假定所有过量的水都处于液相，否则处于冰雪相。
+{
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/植被冠层和土壤水分/CoLM冠层截留示意图-new.pdf}
+    \caption[(a) CoLM中使用的降水面积-总量分布图；(b) CoLM中植被冠层截留降水的动力学过程]{(a) CoLM中使用的降水面积-总量分布图(修改自SiB2)。其中变量$x$为网格面积的比例,变量$I_{\left(x\right)}$为相对降水量。值得注意的是,大尺度降水$I_{\mathrm {l}} \left(x\right)$在网格区几乎是不变的,而对流降水$I_{\mathrm {c}} \left(x\right)$是非均匀分布的；(b) CoLM中植被冠层截留降水的动力学过程。降雨截留前已储存在冠层中的水量被假设是均匀分布在网格区域上的。$x_s$是网格区域拦截降雨的比例加上先前存在的树冠蓄水所超过了$L_{\mathrm {dew,max}}$的水量。所有大于$L_{\mathrm {dew,max}}$的水量假设形成树干径流,而低于$L_{\mathrm {dew,max}}$的水量则被保存在冠层之中}
+    \label{fig:CoLM冠层截留示意图}
+  \end{figure}
+}
+
+如图~\ref{fig:CoLM冠层截留示意图}a 所示，CoLM假设网格内的降水的分布是不均匀的。其中对流降水面积的网格占比$I_{\mathrm {c}} $可以由下式给出
+\begin{equation}
+  I_{\mathrm{c}}(x)=a_{\mathrm{c}} {\mathrm e}^{-bx}+c_{\mathrm{c}}
+\end{equation}
+其中$a_{\mathrm {c}} =20$，$b=20$和$c_{\mathrm {c}} =0.206\times10^{-8}$是常数。大尺度降水面积的网格占比$I_{\mathrm {l}} $可以用相同的形式表示:
+\begin{equation}
+  I_{\mathrm{l}}(x)=a_{\mathrm{l}} {\mathrm e}^{-b x}+c_{\mathrm{l}}
+\end{equation}
+其中$a_{\mathrm {l}} =0.0001$和$c_{\mathrm {l}} =0.9999$。因此,通过组合这两个方程给出了有效降水占比区域的降雨强度为:
+\begin{equation}
+  p I(x)=\left(a_{\mathrm{l}} p_{\mathrm{l}}+a_{\mathrm{c}} p_{\mathrm{c}}\right) {\mathrm e}^{-b x}+\left(c_{\mathrm{l}} p_{\mathrm{l}}+c_{\mathrm{c}} p_{\mathrm{c}}\right)
+\end{equation}
+如图~\ref{fig:CoLM冠层截留示意图}b 所示，因此，有效降水区域的树冠排水($D_{\mathrm {t,rain}}$)由下式给出:
+\begin{equation}
+  D_{\mathrm {t,rain}}=\int_{0}^{x_{\mathrm{s}}} p I(x){\mathrm { d}} x+L_{\mathrm{dew}} x_{\mathrm{s}}-L_{\mathrm {dew,max}} x_{\mathrm{s}}
+\end{equation}
+其中$x_{\mathrm {s}} $是单位网格中截获降水加上原有冠层蓄水量超过冠层上允许的最大水深($L_{\mathrm {dew,max}}$)的比例\todo{图中仍然使用$S_c$，且为Xs，标题以后后面介绍中为小写x}:
+\begin{equation}
+  x_{\mathrm{s}}=\frac{-1}{b} \log \left[\frac{L_{\mathrm {dew,max}}-L_{\mathrm{dew}}}{a_{\mathrm{p}}\left(p-D_{\mathrm{d}}\right)}-\frac{c_{\mathrm{p}}}{a_{\mathrm{p}}}\right]
+\end{equation}
+即树冠截取的雨量等于或者超过其饱和极限网格面积的比例。其中$a_{\mathrm {p}} =\frac{a_{\mathrm {l}}p_{\mathrm {l}} +a_{\mathrm {c}}p_{\mathrm {c}} }{p}$，$c_{\mathrm {p}} =\frac{c_{\mathrm {l}}p_{\mathrm {l}} +c_{\mathrm {c}}p_{\mathrm {c}} }{p}$。这里假设只有液态水能够被从冠层落下,我们有
+\begin{equation}
+  D_{\mathrm {t,rain}}=\left(p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}}\right)\left(1-\delta_{\mathrm{p}}\right) \frac{a_{\mathrm{p}}}{b}\left(1-{\mathrm e}^{-b x_{\mathrm{s}}}\right)+c_{\mathrm{p}} x_{\mathrm{s}}+L_{\mathrm{dew}} x_{\mathrm{s}}-p_{\mathrm{c,snow}} x_{\mathrm{s}}
+\end{equation}
+在整体网格尺度上$D_{\mathrm {c}} $被更新为
+\begin{equation}
+  D_{\mathrm {c}} =D_{\mathrm {t,r a i n}}+x_{\mathrm{s c}}
+\end{equation}
+因此,保留在树冠上的可用于树冠蒸发(截留蒸发)的蓄水量$L_{\mathrm{dew}}$ (mm)可以由下式进行更新:
+\begin{equation}
+  L_{\mathrm{dew}}={p}-D_{\mathrm{c}}-D_{\mathrm{d}}
+\end{equation}
+在冠层蒸发量的计算上首先需要计算湿叶茎面积占总叶茎面积的比例 ($f_{\mathrm{wet}}$)。CoLM模型采用~\citet{dickinson1993biosphere}提出的经验方法：
+\begin{equation}
+  f_{\mathrm{wet}}=\left(\frac{L_{\mathrm{dew}}}{L_{\mathrm{dew,max}}}\right)^{2 / 3} \leqslant 1.0
+\end{equation}
+其中$L_{\mathrm{dew}}$是上一步计算得出的可用于树冠蒸发的蓄水量 (m)。因此,树冠蒸发量计算如下:
+\begin{equation}
+  E_{\mathrm{va}} =\min \left(\frac{q_{\mathrm{s}}-q_{\mathrm{sat}}^{T_{\mathrm{v}}}}{r_{\mathrm{b}}}\cdot{\rm LSAI}\cdot f_{\mathrm{wet}}, \frac{L_{\mathrm{dew}}}{\Delta t}\right)
+\end{equation}
+这里$r_{\mathrm {b}} $是平均边界层阻力,由冠层顶部的风速和特征叶片尺寸确定；$q_{\mathrm{sat}}^{T_{\mathrm {v}} }$ (\unit{kg.kg^{-1}})是冠层温度下的饱和比湿度；$q_{\mathrm {s}} $为植被周围空气比湿，$\Delta t$为时间步长。
+
+
+\section{CLM4.5方案}
+CLM4.5的冠层截留方案~\citep{oleson2013technical}~和CoLM2014的方案非常类似。主要的区别在于公式~\eqref{eq:消光系数} 中的$K_{\mathrm {p}} $的计算。
+$K_{\mathrm {p}} $在CLM4.5冠层截留方案中取固定值0.5，即：
+%
+\begin{equation}
+  \delta_{\mathrm{p}}=1.0-\alpha \left[1-\exp \left(-0.5  \cdot{\rm LSAI}\right)\right]
+\end{equation}
+则直接穿透量由下式给出：
+\begin{equation}
+  D_{\mathrm{d}}=\delta_{\mathrm{p}} \cdot p=\delta_{\mathrm{p}} \cdot\left(p_{\mathrm{c,rain}}+p_{\mathrm{c,snow}}+p_{\mathrm{l,rain}}+p_{\mathrm{l,snow}}\right)
+\end{equation}
+
+为了保持模型构架的一致性，我们和CoLM2014方案一样在计算冠层截留之前首先更新树叶上的水深 ($L_{\mathrm{dew}}$) (mm)：
+\begin{equation}
+  \begin{aligned}
+    L_{\mathrm{dew}} &= L_{\mathrm{dew}}-x_{\mathrm{sc}} \\
+    x_{\mathrm{s c}} &= \max \left(0., L_{\mathrm{dew}}-L_{\mathrm{dew,max}}\right)
+  \end{aligned}
+\end{equation}
+请注意在原生CLM4.5方案中没有这一步骤。
+
+由于CLM4.5方案中并不考虑网格内部的降水类型和分布（假设降水均匀分布在整个网格上），则降水区域的冠层排水$D_{\mathrm {t}}$：
+\begin{equation}
+  D_{\mathrm {t}}=p\left(1-\delta_{\mathrm{p}}\right)+L_{\mathrm{dew}}-p_{\mathrm{c,snow}}
+\end{equation}
+在整体网格尺度上$D_{\mathrm {c}} $被更新为
+\begin{equation}
+  D_{\mathrm {c}} =D_{\mathrm {t}}+x_{\mathrm{s c}}
+\end{equation}
+其他均与CoLM2014方案保持一致。
+
+\section{CLM5.0方案}
+CLM5.0的参数化方案与CLM4.5有较大的差别~\citep{lawrence2019community}。其中最重要的差别之一是对雨和雪的截留方案的进一步细化,但不考虑网格内部的降水类型和分布。在CLM5中,液态水的降落过程和CoLM、CLM4.5类似。液态降水在通过冠层时要么被树冠截留,要么直接落到雪/土壤表面(穿透)或从植被上滴下(树冠滴流)。固态降水的处理也类似，但需要额外考虑先前截留的雪的卸载(unloading)。具体计算流程如下:
+
+\begin{enumerate}
+  \item 分别计算固态和液态水在叶片上的最大蓄水量(mm):
+    \begin{equation}
+      S_{\mathrm{c,rain}}=0.1\cdot{\rm LSAI}
+    \end{equation}
+    \begin{equation}
+      S_{\mathrm{c,snow}}=6.0\cdot{\rm LSAI}
+    \end{equation}
+  \item 分别计算固态和液态降水的直接穿透速率:
+    \begin{equation}
+      \delta_{\mathrm{p,rain}}=1.0 - \alpha_{\mathrm{rain}} \tanh({\rm LSAI})
+    \end{equation}
+    \begin{equation}
+      \delta_{\mathrm{p,snow}}=1.0 - \alpha_{\mathrm{snow}}\left\{1-\exp\left[-0.5\cdot{\rm LSAI}\right]\right\}
+    \end{equation}
+    这里$\alpha_{\mathrm{rain}}$和$\alpha_{\mathrm{snow}}$的值与CLM4.5、CoLM的$\alpha$ (0.25)不同,在CLM5中被设定为1.0。穿透速率也被拆分为:
+    \begin{equation}
+      D_{\mathrm{d,rain}}=\delta_{\mathrm{p,rain}}(p_{\mathrm {c,rain}} +p_{\mathrm{l,rain}})
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm{d,snow}}=\delta_{\mathrm{p,snow}}(p_{\mathrm {c,rain}} +p_{\mathrm{l,snow}})
+    \end{equation}
+  \item 计算冠层排水速率:
+    \begin{equation}
+      D_{\mathrm {t,rain}}=(p_{\mathrm {c,rain}} +p_{\mathrm{l,rain}})(1-\delta_{\mathrm{p,rain}})+L_{\mathrm{dew,rain}}-S_{\mathrm{c,rain}}
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm {t,snow}}=(p_{\mathrm {c,rain}} +p_{\mathrm{l,snow}})(1-\delta_{\mathrm{p,rain}})+L_{\mathrm{dew,snow}}-S_{\mathrm{c,snow}}
+    \end{equation}
+    CLM5额外考虑了冠层积雪的卸载速率:
+    \begin{equation}\label{q_unl_wind}
+      q_{\mathrm{unload,wind}}=\frac{uL_{\mathrm{dew,snow}}}{1.56\times 10^5}
+    \end{equation}
+    \begin{equation}
+      q_{\mathrm{unload,temp}}=\max\left[0, \frac{L_{\mathrm{dew,snow}}(T-270)}{1.87\times 10^5}\right]
+    \end{equation}
+    \begin{equation}\label{q_unl_tot}
+      q_{\mathrm{unload}}=\min(q_{\mathrm{unload,wind}}+q_{\mathrm{unload,temp}},L_{\mathrm{dew,snow}})
+    \end{equation}
+    固态和液态的排水速率为:
+    \begin{equation}
+      D_{\mathrm{c,rain}}=D_{\mathrm {t,rain}}
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm{c,snow}}=D_{\mathrm {t,snow}}+q_{\mathrm{unload}}
+    \end{equation}
+\end{enumerate}
+其他参数计算均参照CoLM2014方案。
+
+
+\section{Noah-MP方案}
+Noah-MP模型冠层截留方案的计算流程与CoLM2014、CLM4.5和CLM5有较大的区别~\citep{niu2011community,he2023modernizing}。具体介绍如下：
+\begin{enumerate}
+  \item 分别计算理想状态下固态和液态水在叶片上的最大蓄水量(mm)\\
+    \begin{equation}
+      S_{\mathrm{c,rain}}=0.1\cdot{\rm LSAI}\\
+    \end{equation}
+    \begin{equation}
+      S_{\mathrm{c,snow}}= 6.6\left(0.27+{\frac{46}{\rho_{\mathrm{sno}}}}\right) \cdot{\rm LSAI}
+    \end{equation}
+    其中$\rho_{\mathrm{sno}}$是降雪堆积密度:
+    \begin{equation}
+      \rho_{\mathrm{sno}}=67.92+51.25 {\mathrm e}^{\frac{T_{\mathrm{v}}-T_{\mathrm{frz}}}{2.59}}
+    \end{equation}
+其中$T_{\mathrm{v}}$为植被叶片表面温度（K）。
+  \item 计算冠层闭郁度$F_{\mathrm{veg}}$:
+    \begin{equation}
+      F_{\mathrm{veg}} = \max\left[0.05,1.0-{\mathrm e}^{-0.52\cdot{\rm LSAI}}\right]
+    \end{equation}
+  \item 分别计算固态和液态降水直接穿透速率:
+    \begin{equation}
+      D_{\mathrm{d,rain}}=\left(1.0-F_{\mathrm{veg}}\right)  (p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}})
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm{d,snow}}=\left(1.0-F_{\mathrm{veg}}\right)  (p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}})
+    \end{equation}
+  \item 如有积雪，则考虑其积雪的卸载，该方案与CLM5所用的方案完全一致(公式~\eqref{q_unl_wind}--\eqref{q_unl_tot})。
+  \item 计算当前冠层水的相态变化：
+    \begin{enumerate}
+      \item 冠层固态水转变为液态水，如果表面温度高于0度：
+        \begin{equation}
+          \begin{aligned}
+            q_{\mathrm{v, melt}} &=\min \left(\frac{L_{\mathrm{dew,snow}}}{\Delta t},\ \left(T_{\mathrm{v}}-T_{\mathrm{frz}}\right)  \frac{C_{\mathrm{ice}}  L_{\mathrm{dew,snow}}}{\rho_{\mathrm{i c e}}  \lambda_{\mathrm{fus}}  \Delta t}\right) \\
+            L_{\mathrm{dew,snow}} &=\max \left(0.0,\ L_{\mathrm{dew,snow}}-q_{\mathrm{v, melt}}  \Delta t\right) \\
+            L_{\mathrm{dew,rain}} &=\max \left(0.0,\ L_{\mathrm{dew,rain}}-L_{\mathrm{dew,snow}}\right)
+          \end{aligned}
+        \end{equation}
+      \item 冠层液态水转变为固态水，如果表面温度低于0度：
+        \begin{equation}
+          \begin{aligned}
+            q_{\mathrm{v, f r z}} &=\min \left(\frac{L_{\mathrm{dew,rain}}}{\Delta t},\ \left(T_{\mathrm{f r z}}-T_{\mathrm{v}}\right)  \frac{C_{\mathrm{liq}}  L_{\mathrm{dew,rain}}}{\rho_{\mathrm{liq}}  \lambda_{\mathrm{fus}}  \Delta t}\right) \\
+            L_{\mathrm{dew,rain}} &=\max \left(0.0,\ L_{\mathrm{dew,rain}}-q_{\mathrm{v, frz}}  \Delta t\right) \\
+            L_{\mathrm{dew,snow}} &=\max \left(0.0,\ L_{\mathrm{dew,snow}}-L_{\mathrm{dew,rain}}\right)
+          \end{aligned}
+        \end{equation}
+    \end {enumerate}
+  其中$q_{\mathrm{v, melt}}$是固态转换为液态的速率（融化速率），$q_{\mathrm{v, frz}}$是液态转换为固态的速率（凝结速率），$T_{\mathrm{v}}$为叶片温度（K），$T_{\mathrm{frz}}$是相态变化温度（273.16 K)，$C_{\mathrm{ice}}$是冰的比热容(\unit{J.m^{-3}.K^{-1}})，$C_{\mathrm{liq}}$是液态水的比热容（\unit{J.m^{-3}.K^{-1}}），$\Delta t$是时间步长（s），$\lambda_{\mathrm{fus}}$是融合潜热（\unit{J.kg^{-1}}），$\rho_{\mathrm{ice}}$是冰的密度（917 \unit{kg.m^{-3}}），$\rho_{\mathrm{liq}}$是水的密度（1000 \unit{kg.m^{-3}}）。这一步的主要目的是更新$L_{\mathrm{dew,rain}}$和$L_{\mathrm{dew,snow}}$。
+
+\item 如有降水发生，则计算当前降雨条件和闭郁度情况下接触冠层的最大水量（interception capability）：
+  \begin{equation}
+    q_{\mathrm{intr,rain}} =F_{\mathrm{veg}}\left(p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}}\right) {\rm FP}
+  \end{equation}
+  \begin{equation}
+    q_{\mathrm{intr,snow}} =F_{\mathrm{veg}}\left(p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}}\right) {\rm FP}
+  \end{equation}
+  假设对流降水在网格中是不均匀分布的，则${\mathrm {FP}}$（网格中降水发生的比率）计算如下：
+  \begin{equation}
+    {\rm FP} = p/ (10p_{\mathrm{c}} + p_{\mathrm{l}})
+  \end{equation}
+\item 计算当前时刻降水被拦截且被保留的实际网格水量：
+  \begin{equation}
+    q_{\mathrm{intr,rain}} = \min\left[q_{\mathrm{intr,rain}}, \ \frac{(S_{\mathrm{c,rain}} - L_{\mathrm{dew,rain}})}{\Delta{t}}  (1-{\mathrm e}^{-\left(p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}}\right)\Delta{t}/S_{\mathrm{c,rain}}})\right]
+  \end{equation}
+  \begin{equation}
+    q_{\mathrm{intr,snow}} = \min\left[q_{\mathrm{intr,snow}},\ \frac{(S_{\mathrm{c,snow}} - L_{\mathrm{dew,snow}})}{\Delta{t}} (1-{\mathrm e}^{-\left(p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}}\right)\Delta{t}/S_{\mathrm{c,snow}}})\right]
+  \end{equation}
+  其中${\Delta{t}}$是计算时间步长。
+\item 更新当前冠层固态和液态的排水速率，以及冠层的对应水深
+  \begin{equation}
+    D_{\mathrm{c,rain}}=F_{\mathrm{veg}}  (p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}})-q_{\mathrm{intr,rain}}
+  \end{equation}
+  \begin{equation}
+    D_{\mathrm{c,snow}}=F_{\mathrm{veg}}  (p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}})-q_{\mathrm{intr,snow}}
+  \end{equation}
+\end{enumerate}
+其他计算均参照CoLM2014方案。
+
+
+\section{VIC方案}
+VIC的冠层截留方案~\citep{liang1994simple,hamman2018variable}主要基于~\citet{storck2002measurement}在俄勒冈一个山区气候站点的积雪积累和消融观测结果。
+\begin{enumerate}
+  \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)\\
+    首先计算雨加上雪的总最大拦截容量为:
+    \begin{equation}
+      I_{\mathrm{max}} = 4.0 \cdot m \cdot{\rm LSAI}
+    \end{equation}
+    其中$m=0.5$ mm 是根据最大雪拦截容量观测结果确定。
+    除了对水总量的储水能力有限制之外，模式还分别对固态和液态水在叶片上的最大蓄水量进行了限制：
+    \begin{equation}
+      S_{\mathrm{c,rain}}=0.1\cdot{\rm LSAI}+0.035 L_{\mathrm{dew,snow}}\\
+    \end{equation}
+    \begin{equation}
+      S_{\mathrm{c,snow}}=L_{\mathrm {r}}\cdot m \cdot{\rm LSAI}
+    \end{equation}
+    其中$L_{\mathrm {r}} $是大气强迫温度的函数:
+    \begin{equation}
+      L_{\mathrm {r}}  = \begin{cases}
+        4.0, & T_{\mathrm {a}}  > -1 \text{ \textcelsius}\\
+        1.5, & -3 \text{ \textcelsius} < T_{\mathrm {a}}  \leqslant -1 \text{ \textcelsius}\\
+        1.0, & T_{\mathrm {a}}  \leqslant -3 \text{ \textcelsius}
+      \end{cases}
+    \end{equation}
+    以上是基于站点植被截雪观测数据计算得到~\citep{storck2002measurement}。\citet{kobayashi1987snow}~观察到随着气温降低到 $-3$ \textcelsius 以下，较窄表面上的最大雪拦截负荷急剧下降。 \citet{kobayashi1987snow}和~\citet{pfister1999snow}的观测结果表明,当温度低于 $-1$ \textcelsius 时，拦截效率显著下降，当温度低于 $-3$ \textcelsius 时大致恒定，因此导致函数的不连续。
+
+  \item 计算冠层闭郁度$F_{\mathrm{veg}}$
+    \begin{equation}
+      F_{\mathrm{veg}} = \min\left[1.0,\ {\rm LSAI} \right]
+    \end{equation}
+
+  \item 分别计算固态和液态降水直接穿透速率：
+    \begin{equation}
+      D_{\mathrm{d,rain}}=\left(1.0-F_{\mathrm{veg}}\right)  (p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}})
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm{d,snow}}=\left(1.0-F_{\mathrm{veg}}\right)  (p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}})
+    \end{equation}
+
+  \item 计算当前冠层水的相态变化，更新$L_{\mathrm{dew,snow}}$ 和 $L_{\mathrm{dew,rain}}$，这一部分的方案和Noah-MP一致。
+
+  \item 当发生降水，如果降水的形态是固态，且温度小于 $-3$ \textcelsius ，风速大于1 \unit{m.s^{-1}}，则当前时刻冠层积雪的卸载由风速和冠层雪水当量共同决定：
+    \begin{equation}
+      D_{\mathrm{d,snow}} = \min\left[L_{\mathrm{dew,snow}},\ (0.2u-0.2)  L_{\mathrm{dew,snow}}\right]
+    \end{equation}
+
+  \item 冠层排水速率的计算
+    \begin{equation}
+      D_{\mathrm {t,rain}}=\left(p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}}\right)\left(1-\delta_{\mathrm{p,rain}}\right)+L_{\mathrm{dew,rain}}-S_{\mathrm{c,rain}}
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm {t,snow}}=\left(p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}}\right)\left(1-\delta_{\mathrm{p,snow}}\right)+L_{\mathrm{dew,snow}}-S_{\mathrm{c,snow}}+D_{\mathrm{d,snow}}
+    \end{equation}
+
+  \item 如更新排水计算后所得的截留的雨水和积雪的总量（$L_{\mathrm{dew,rain}}+L_{\mathrm{dew,snow}}$）超过了树木的最大承载能力（$I_{\mathrm{max}}$),则需要将最大承载能力按固液比例进行卸载：
+  \begin{equation}
+    L_{\mathrm{dew,overload}}=(L_{\mathrm{dew,rain}}+L_{\mathrm{dew,snow}}-I_{\mathrm{max}})
+  \end{equation}
+  \begin{equation}
+    L_{\mathrm{dew,rain}}=L_{\mathrm{dew,rain}} - L_{\mathrm{dew,overload}}  \frac{L_{\mathrm{dew,rain}}}{L_{\mathrm{dew,rain}}+L_{\mathrm{dew,snow}}}
+  \end{equation}
+  \begin{equation}
+    L_{\mathrm{dew,snow}}=L_{\mathrm{dew,snow}} - L_{\mathrm{dew,overload}}    \frac{L_{\mathrm{dew,snow}}}{L_{\mathrm{dew,rain}}+L_{\mathrm{dew,snow}}}
+  \end{equation}
+  \begin{equation}
+    D_{\mathrm {t,rain}}=D_{\mathrm {t,rain}} + \frac{L_{\mathrm{dew,rain}}}{L_{\mathrm{dew,rain}}+L_{\mathrm{dew,snow}}}
+  \end{equation}
+  \begin{equation}
+    D_{\mathrm {t,snow}}=D_{\mathrm {t,snow}} + \frac{L_{\mathrm{dew,snow}}}{L_{\mathrm{dew,rain}}+L_{\mathrm{dew,snow}}}
+  \end{equation}
+\end{enumerate}
+其他计算均参照CoLM2014方案。
+
+
+\section{MATSIRO方案}
+MATSIRO的冠层截留方案主要基于~\cite{storck2002measurement}在俄勒冈一个山区气候站点的积雪积累和消融观测结果。
+\begin{enumerate}
+  \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)
+    \begin{equation}
+      S_{\mathrm{c,rain}}=0.2\cdot{\rm LSAI}
+    \end{equation}
+    \begin{equation}
+      S_{\mathrm{c,snow}}=0.2\cdot{\rm LSAI}
+    \end{equation}
+
+  \item 计算冠层闭郁度$F_{\mathrm{veg}}$
+    \begin{equation}
+      F_{\mathrm{veg}} = \min\left[1,~ {\rm LSAI}\right]
+    \end{equation}
+
+  \item 分别计算固态和液态降水直接穿透速率：
+    \begin{equation}
+      D_{\mathrm{d,rain}}=\left(1.0-F_{\mathrm{veg}}\right)  (p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}})
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm{d,snow}}=\left(1.0-F_{\mathrm{veg}}\right)  (p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}})
+    \end{equation}
+  \item 计算当前冠层水的相态变化，方案和Noah-MP一致。
+
+  \item 当降水发生时，将网格拆分成强对流区域（Storm area）和大尺度降水区域（Non-Storm area）。其中对流降水面积的比例假设为均匀状态(0.1)，而大尺度降水面积的比例则假设为1。则在强对流区域，固态和液态水在叶片上的蓄水量为：
+    \begin{align}
+      L_{\mathrm{dew,rain,c}} &= L_{\mathrm{dew,rain}}+\left(F_{\mathrm{veg}}\,p_{\mathrm{l,rain}} + F_{\mathrm{veg}}\,p_{\mathrm{c,rain}}/0.1\right)\Delta t \\[2.2ex]
+    %\end{equation}
+    %\begin{equation}
+      L_{\mathrm{dew,snow,c}} &= L_{\mathrm{dew,snow}}+\left(F_{\mathrm{veg}}\,p_{\mathrm{l,snow}} + F_{\mathrm{veg}}\,p_{\mathrm{c,snow}}/0.1\right)\Delta t
+    \end{align}
+    冠层排水速率的计算同时考虑了超过冠层容水量导致的滴水和重力导致的自然滴水：
+    \begin{align}
+      D_{\mathrm{t,rain,c}} &= L_{\mathrm{dew,rain,c}} -S_{\mathrm{c,rain}} + D_{1} \exp\left(D_{2} S_{\mathrm{c,rain}}/1000\right) \\[2.2ex]
+      %
+      D_{\mathrm{t,snow,c}} &= L_{\mathrm{dew,snow,c}} - S_{\mathrm{c,snow}} + D_{1} \exp\left(D_{2} S_{\mathrm{c,snow}}/1000\right)
+    \end{align}
+    下标${\mathrm{c}}$代表对流降水，$D_{1}=1.14 \times 10^{-11}$，$D_{2}=3.7 \times 10^{3}$。在计算完冠层排水之后，再次更新强对流区域的冠层水量。
+
+  \item 而在大尺度降水区域，固态和液态水在叶片上的蓄水量则为：
+    \begin{equation}
+      L_\mathrm{dew,rain,l} = L_\mathrm{dew,rain} + F_\mathrm{veg}\,p_\mathrm{l,rain} \Delta t
+    \end{equation}
+    \begin{equation}
+      L_\mathrm{dew,snow,l} = L_\mathrm{dew,snow} + F_\mathrm{veg}\,p_\mathrm{l,snow} \Delta t
+    \end{equation}
+    下标${\mathrm {l}}$代表大尺度降水。
+    同样冠层排水速率的计算同时考虑了超过冠层容水量导致的滴水和重力导致的自然滴水：
+    %\begin{equation}
+      \begin{align}
+      D_{\mathrm{t,rain,l}} &=L_{\mathrm{dew,rain,l}}-S_{\mathrm{c,rain}}+D_{1} \exp \left(D_{2} S_{\mathrm{c,rain}}/1000\right) \\[2.2ex]
+    %
+      D_{\mathrm{t,snow,l}} &=L_{\mathrm{dew,snow,l}}-S_{\mathrm{c,snow}}+D_{1} \exp \left(D_{2} S_{\mathrm{c,snow}}/1000\right)
+      \end{align}
+    %\end{equation}
+    在计算完冠层排水之后，再次更新大尺度区域的冠层水量。
+
+  \item 由于在拆分强对流和大尺度降水区域计算过程中，网格区域有所重叠（在计算强对流区域截留时同时考虑了大尺度降水），需要进一步进行加权平均得到网格平均：
+%
+    \begin{equation}
+      %\begin{aligned}
+        L_{\mathrm{dew,rain}}  = L_{\mathrm{dew,rain,l}} + 0.1(L_{\mathrm{dew,rain,c}} - L_{\mathrm{dew,rain,l}}) 
+    \end{equation}
+    \begin{equation}
+        L_{\mathrm{dew,snow}}  = L_{\mathrm{dew,snow,l}} + 0.1(L_{\mathrm{dew,snow,c}} - L_{\mathrm{dew,snow,l}}) 
+      %\end{aligned}
+    \end{equation}
+%
+    在整体网格尺度上$D_{\mathrm {c}} $亦被更新。
+
+\end{enumerate}
+
+\section{JULES方案}
+JULES的参数化方案与CLM5.0方案较为接近。对雨和雪的截留方案的进一步细化,但不考虑网格内部的降水类型和分布。
+\begin{enumerate}
+  \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)\\
+    \begin{equation}
+      S_{\mathrm{c,rain}}=0.1\cdot{\rm LSAI}\\
+    \end{equation}
+    \begin{equation}
+      S_{\mathrm{c,snow}}=4.4\cdot{\rm LSAI}
+    \end{equation}
+  \item 计算冠层闭郁度$F_{\mathrm{veg}}$
+    \begin{equation}
+      F_{\mathrm{veg}} = \min\left[1.0,~{\rm LSAI}\right]
+    \end{equation}
+
+  \item 计算当前冠层水的相态变化，方案和Noah-MP一致。
+
+  \item 当有降水发生时，分别计算固态和液态降水直接穿透速率：
+    \begin{equation}
+      D_{\mathrm{d,rain}}=\left(1.0-F_{\mathrm{veg}}\right)  (p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}})
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm{d,snow}}=\left(1.0-F_{\mathrm{veg}}\right)  (p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}})
+    \end{equation}
+  \item 计算当前时刻降水被拦截且被保留的实际网格水量的方法与Noah-MP类似，不同点在于在额外增加了一个拦截效率系数$k$（取值为0.6）：
+    \begin{equation}
+      q_{\mathrm{intr,rain}} = \min\left[q_{\mathrm{intr,rain}},\,  k  \frac{(S_{\mathrm{c,rain}} - L_{\mathrm{dew,rain}})}{\Delta{t}} \left(1-{\mathrm e}^{-\left(p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}}\right)\Delta{t}/S_{\mathrm{c,rain}}}\right)\right]
+    \end{equation}
+    \begin{equation}
+      q_{\mathrm{intr,snow}} = \min\left[q_{\mathrm{intr,snow}},\, k  \frac{(S_{\mathrm{c,snow}} - L_{\mathrm{dew,snow}})}{\Delta{t}}\left(1-{\mathrm e}^{-\left(p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}}\right)\Delta{t}/S_{\mathrm{c,snow}}}\right)\right]
+    \end{equation}
+    其中${\Delta{t}}$是计算时间步长。
+  \item 更新当前冠层固态和液态的排水速率，以及冠层的对应水深
+    \begin{equation}
+      D_{\mathrm{d,rain}}=F_{\mathrm{veg}}  (p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}})-q_{\mathrm{intr,rain}}
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm{d,snow}}=F_{\mathrm{veg}}  (p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}})-q_{\mathrm{intr,snow}}
+    \end{equation}
+  \item 冠层排水速率的计算
+    \begin{equation}
+      D_{\mathrm{c,rain}}=\left(p_{\mathrm{c,rain}}+p_{\mathrm{l,rain}}\right)\left(1-\Delta_{\mathrm{p,rain}}\right)+L_{\mathrm{dew,rain}}-S_{\mathrm{c,rain}}
+    \end{equation}
+    \begin{equation}
+      D_{\mathrm{c,snow}}=\left(p_{\mathrm{c,snow}}+p_{\mathrm{l,snow}}\right)\left(1-\Delta_{\mathrm{p,rain}}\right)+L_{\mathrm{dew,snow}}-S_{\mathrm{c,snow}}
+    \end{equation}
+
+\end{enumerate}

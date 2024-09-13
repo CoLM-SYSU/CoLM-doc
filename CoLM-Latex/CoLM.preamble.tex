@@ -9,13 +9,14 @@
 \usepackage{setspace}
 \usepackage[square]{natbib}
 \usepackage{rotating}
-\usepackage{caption}
+\usepackage[labelfont=bf]{caption}
 \usepackage{subcaption}
 \usepackage{multirow}
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{etoolbox}
 \usepackage{pifont}
+\usepackage[textsize=footnotesize,tickmarkheight=0.2cm]{todonotes}
 
 \makeatletter
 \patchcmd{\NAT@test}{\else\NAT@nm}{\else\NAT@nmfmt{\NAT@nm}}{}{}
@@ -59,6 +60,7 @@
 %    \markright{\CTEXifname{\CTEXthechapter}{}#1}}
 \setlength{\headheight}{15pt}
 \addtolength{\topmargin}{-2.5pt}
+\setlength{\marginparwidth}{2.25cm}
 
 %\input{blocked.sty}
 %\input{uhead.sty}
