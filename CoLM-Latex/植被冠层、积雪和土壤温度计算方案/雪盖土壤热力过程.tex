@@ -35,7 +35,7 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
     50 & \text { 当 }\ T_{\mathrm{a}} \leqslant T_{\mathrm{frz}}-15.0
   \end{cases}
 \end{equation}
-若此时$z_{\mathrm{sno}} \geqslant 0.01$ \unit{m}，则按第~\ref{土壤和积雪的垂直分层} 节方案对积雪进行分层，且每一层雪的温度取为$T_{\mathrm {p}} $，液态水含量取为0，固态水含量按雪层厚度权重分配$W_{\mathrm{sno}}$。若之前已有雪层且此时有降雪发生，则第一层雪的相关物理量作如下更新：
+若此时$z_{\mathrm{sno}} \geqslant 0.01$ \unit{m}，则按第~\ref{土壤和积雪的垂直分层} 节方案对积雪进行分层，且每一层雪的温度取为降水温度$T_{\mathrm {p}} $，液态水含量取为0，固态水含量按雪层厚度权重分配$W_{\mathrm{sno}}$。若之前已有雪层且此时有降雪发生，则第一层雪的相关物理量作如下更新：
 \begin{equation}
   w_{\mathrm{ice},snl+1}=w_{\mathrm{ice},snl+1}+p_{\mathrm{snow}} \Delta t
 \end{equation}
@@ -54,7 +54,7 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
   F_{i}=\lambda\left[z_{\mathrm{h},i}\right] \frac{T_{i}-T_{i+1}}{z_{i}-z_{i+1}}
 \end{equation}
 其中$\lambda\left[z_{\mathrm{h},i}\right]$表示第$i+1$层与第 $i$ 层交界处的热力传导率。求解$\lambda\left[z_{\mathrm{h},i}\right]$时，
-假设从第$i+1$层到第$i$层的热传导通量等于从第$i+1$层到第$i+1$层与第$i$层交界层的热传导通量，又等于从交接层到第$i$层的热传导通量，即
+假设从第$i+1$层到第$i$层的热传导通量等于从第$i+1$层到第$i+1$层与第$i$层交界层的热传导通量，又等于从交界层到第$i$层的热传导通量，即
 \begin{equation}
   \lambda\left[z_{\mathrm{h},i}\right] \frac{T_{i}-T_{i+1}}{z_{i}-z_{i+1}}=\lambda_{i+1} \frac{T_{\mathrm{m}}-T_{i+1}}{z_{\mathrm{h},i}-z_{i+1}}=\lambda_{i} \frac{T_{i}-T_{\mathrm{m}}}{z_{i}-z_{\mathrm{h},i}}
 \end{equation}

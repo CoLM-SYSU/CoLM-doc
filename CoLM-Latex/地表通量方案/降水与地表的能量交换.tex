@@ -146,9 +146,9 @@ CoLM中使用的雨水温度可由湿球温度近似，计算方案在第~\ref{�
 
 
 \section{新雪密度}
-雪的密度($\rho_{s}$)影响到地表的雪深、雪的堆积等一系列物理过程，是一个很重要的参量，在CoLM中采用CLM5的方案计算新雪密度，具体过程如下：
+雪的密度($\rho_{\rm sno}$)影响到地表的雪深、雪的堆积等一系列物理过程，是一个很重要的参量，在CoLM中采用CLM5的方案计算新雪密度，具体过程如下：
 \begin{equation*}
-  \rho_{s}= \begin{cases}
+  \rho_{\rm sno}= \begin{cases}
     50 + 1.7\times 17^{1.5}, & \text{当 }\ 2\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} \text{ 时}\\
     50 + 1.7(T_{\mathrm {a}} - T_{\mathrm{frz}}+15)^{1.5}, & \text{当 }\ -15\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} < 2 \text{ 时} \\
     -3.8328(T_{\mathrm {a}} - T_{\mathrm{frz}}) - 0.0333(T_{\mathrm {a}} - T_{\mathrm{frz}})^2, & \text{当 }\ -57.55\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} < -15 \text{ 时} \\
@@ -163,7 +163,7 @@ CoLM中使用的雨水温度可由湿球温度近似，计算方案在第~\ref{�
 
 当 $V_{\mathrm {a}}$ > 0.1 时
 \begin{equation}
-  \rho_{s,\mathrm{new}} = \rho_{s,\mathrm{old}} + 266.81{\left(\frac{1 + \tanh (\frac{V_{\mathrm {a}}}{5})}{2}\right)}^{8.8}
+  \rho_{\mathrm{sno,new}} = \rho_{\mathrm{sno,old}} + 266.81{\left(\frac{1 + \tanh (\frac{V_{\mathrm {a}}}{5})}{2}\right)}^{8.8}
 \end{equation}
 
 
