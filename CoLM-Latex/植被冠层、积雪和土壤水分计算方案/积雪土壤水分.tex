@@ -433,7 +433,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
       q_{\mathrm{h m}}\left(\Delta z, h_{\mathrm{u}}, h_{\mathrm{l}}\right)=-k_{\mathrm{h m}} \cdot\left(\frac{h_{\mathrm{l}}-h_{\mathrm{u}}}{\Delta z}-1\right)
     \end{equation}
     其中，$\Delta z$为土壤层的厚度，$h_{\mathrm {u}} $,$h_{\mathrm {l}} $分别为土壤层上下两个边界处的土壤水势；
-    $k_{\mathrm{hm}}$为等效水力导度，可变饱和流算法中采用带权重的几何平均，分为三种情况进行计算，对入渗情形($h_{\mathrm {u}} >h_{\mathrm {l}} $)，\todo{是否需要说明ku和kl的含义}
+    $k_{\mathrm{hm}}$为等效水力导度，可变饱和流算法中采用带权重的几何平均，分为三种情况进行计算，对入渗情形($h_{\mathrm {u}} >h_{\mathrm {l}} $)，
     \begin{equation}
       k_{\mathrm{h m}}=\frac{1}{1-\frac{h_{\mathrm{l}}-h_{\mathrm{u}}}{\Delta z}} \cdot\left[k_{\mathrm{u}}+\frac{h_{\mathrm{u}}-h_{\mathrm{l}}}{\Delta z}\left(k_{\mathrm{u}}\right)^{1-r_{0}} \cdot\left(k_{\mathrm{l}}\right)^{r_{0}}\right]
     \end{equation}

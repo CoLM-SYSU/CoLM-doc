@@ -290,11 +290,11 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
 其中，$f_{\mathrm{minerals}}$，$f_{\mathrm{om}}$和$f_{\mathrm{gravel}}$分别表示矿物质土壤、有机质土壤和砾石在固体土壤中的体积分数；$k_{\mathrm{om\_dry}}$和$k_{\mathrm{gravel\_dry}}$分别表示有机质土壤和砾石在干燥状态下的整体导热率，取值为$k_{\mathrm{om\_dry}}=0.05$，$k_{\mathrm{gravel\_dry}}=0.039\theta_{\mathrm {sat}} ^{-2.2}$（$\theta_{\mathrm {sat}} $表示土壤孔隙度）；$k_{\mathrm{minerals\_dry}}$表示矿物质土壤在干燥状态下的导热率，计算为：$$k_{\mathrm{minerals\_dry}}=\frac{0.135\rho_{\mathrm {d}} +0.0647}{2.7-0.947\rho_{\mathrm {d}} }$$
 $\rho_{\mathrm {d}} $表示矿物质土壤的干容重(\unit{g.cm^{-3}})。
 
-饱和土壤导热率$k_{\mathrm{sat}}$由固体土壤各成分导热率和水（冰）导热率基于其体积分数进行几何加权平均得到，计算表达式为：\todo{vm和vom和vg的位置是否正确，需要检查}
+饱和土壤导热率$k_{\mathrm{sat}}$由固体土壤各成分导热率和水（冰）导热率基于其体积分数进行几何加权平均得到，计算表达式为：
 \begin{equation}\label{eq:STC_wet}
   k_{\mathrm{sat}}=k_{\mathrm{minerals\_wet}}^{v_{\mathrm {m}} }k_{\mathrm{om\_wet}}^{v_{\mathrm{om}}}k_{\mathrm{gravel\_wet}}^{v_{\mathrm {g}} }k_{\mathrm {w}} ^{\theta_{\mathrm {sat}} }
 \end{equation}
-其中，$v_{\mathrm {m}} $，$v_{\mathrm{om}}$和$v_{\mathrm {g}} $分别表示矿物质土壤、有机质土壤和砾石在整体土壤柱内的体积分数；$k_{\mathrm{minerals\_wet}}$，$k_{\mathrm{om\_wet}}$和$k_{\mathrm{gravel\_wet}}$分别表示矿物质土壤、有机质土壤和砾石在饱和土壤状态下的整体导热率，$k_{\mathrm {w}} $表示水（冰）的导热率（参见表~\ref{tab:物理常数}）。$k_{\mathrm{om\_wet}}$和$k_{\mathrm{gravel\_wet}}$分别取值为0.25和2.875；$k_{\mathrm{minerals\_wet}}$由矿物质土壤中石英部分导热率$k_{\mathrm {q}} $与非石英部分导热率$k_{\mathrm {o}} $基于其在矿物质土壤中的体积分数进行几何加权平均得到：\todo{vq和1-vq的位置是否正确，需要检查}
+其中，$v_{\mathrm {m}} $，$v_{\mathrm{om}}$和$v_{\mathrm {g}} $分别表示矿物质土壤、有机质土壤和砾石在整体土壤柱内的体积分数；$k_{\mathrm{minerals\_wet}}$，$k_{\mathrm{om\_wet}}$和$k_{\mathrm{gravel\_wet}}$分别表示矿物质土壤、有机质土壤和砾石在饱和土壤状态下的整体导热率，$k_{\mathrm {w}} $表示水（冰）的导热率（参见表~\ref{tab:物理常数}）。$k_{\mathrm{om\_wet}}$和$k_{\mathrm{gravel\_wet}}$分别取值为0.25和2.875；$k_{\mathrm{minerals\_wet}}$由矿物质土壤中石英部分导热率$k_{\mathrm {q}} $与非石英部分导热率$k_{\mathrm {o}} $基于其在矿物质土壤中的体积分数进行几何加权平均得到：
 $$k_{\mathrm{minerals\_wet}}=k_{\mathrm {q}} ^{v_{\mathrm {q}} }k_{\mathrm {o}} ^{1-v_{\mathrm {q}} }$$
 其中，$k_{\mathrm {q}} $取值为7.7，$k_{\mathrm {o}} $依据石英的体积分数$v_{\mathrm {q}} $决定：
 \begin{equation}
@@ -306,7 +306,7 @@ $$k_{\mathrm{minerals\_wet}}=k_{\mathrm {q}} ^{v_{\mathrm {q}} }k_{\mathrm {o}} 
 $v_{\mathrm {q}} $可由~\citet{PL_98}基于12种土壤类型（依据美国农业部USDA的土壤质地分类标准）给出的经验值查表获得。
 
 \subsubsection{\citet{farouki1981thermal}方案}
-\citet{farouki1981thermal}方案作为~\citet{Johansen1975}方案的衍生方案，土壤导热率$k$与干土壤导热率$k_{\mathrm{dry}}$的计算方式完全一致（\eqref{eq:STC} 和~\eqref{eq:STC_dry}）。饱和土壤导热率$k_{\mathrm{sat}}$由固体土壤导热率和水（冰）导热率基于其体积分数进行几何加权平均得到，而固体土壤导热率取值为各成分导热率基于其在固体土壤中的体积分数的算术加权平均值。$k_{\mathrm{sat}}$计算表达式为：\todo{$\theta_{sat}$的位置是否正确，需要检查}
+\citet{farouki1981thermal}方案作为~\citet{Johansen1975}方案的衍生方案，土壤导热率$k$与干土壤导热率$k_{\mathrm{dry}}$的计算方式完全一致（\eqref{eq:STC} 和~\eqref{eq:STC_dry}）。饱和土壤导热率$k_{\mathrm{sat}}$由固体土壤导热率和水（冰）导热率基于其体积分数进行几何加权平均得到，而固体土壤导热率取值为各成分导热率基于其在固体土壤中的体积分数的算术加权平均值。$k_{\mathrm{sat}}$计算表达式为：
 \begin{equation}\label{eq:STC_wet_Farouki}
   k_{\mathrm{sat}}=(f_{\mathrm{minerals}}k_{\mathrm{minerals\_wet}}+f_{\mathrm{om}}k_{\mathrm{om\_wet}}+f_{\mathrm{gravel}}k_{\mathrm{gravel\_wet}})^{1-\theta_{\mathrm {sat}} }k_{\mathrm {w}} ^{\theta_{\mathrm {sat}} }
 \end{equation}
