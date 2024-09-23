@@ -38,8 +38,8 @@ H06表示~\citet{hanasaki2006reservoir}提出的基于入流和需求的调度�
 \begin{equation}
   \begin{cases}
     \text{灌溉水库，} Q_{\mathrm{out}}^{'}= \begin{cases}
-      Q_{\mathrm{n}}+D-\overline{D}, &\quad DPI<(1-M)\\
-      Q_{\mathrm{n}} \times \left(M+\frac{\left(1-M\right)D}{\overline{D}}\right), &\quad DPI \geqslant (1-M)
+      Q_{\mathrm{n}}+D-\overline{D}, &\quad {\rm DPI}<(1-M)\\
+      Q_{\mathrm{n}} \times \left(M+\frac{\left(1-M\right)D}{\overline{D}}\right), &\quad {\rm DPI} \geqslant (1-M)
     \end{cases}\\
     \text{非灌溉水库，} Q_{\mathrm{out}}^{'}=Q_{\mathrm{n}}
   \end{cases}
@@ -61,7 +61,7 @@ H06表示~\citet{hanasaki2006reservoir}提出的基于入流和需求的调度�
       $Q_{\mathrm {n}} $ & 水库多年平均正常流量[参数]                                               & \unit{L^3.T^{-1}} \\
       $\overline{D}$     & 多年平均日需水量[参数]                                                   & \unit{L^3.T^{-1}} \\
       $M$                & 最小需求满足系数[参数]                                                   & -                 \\
-      $DPI$              & 年平均需求量与年平均水库入流量的比值[参数]                               & -                 \\
+      DPI                & 年平均需求量与年平均水库入流量的比值[参数]                               & -                 \\
       $k_{\mathrm{rls}}$ & 释放系数[参数]，$k_{\mathrm{rls}} = \frac{V_0}{\alpha V_{\mathrm {t}} }$ & -                 \\
       $R$                & 需求决定系数[参数]，$R=\min(1, \alpha c)$                                & -                 \\
       $\alpha$           & 无量纲常数[参数]                                                         & -                 \\

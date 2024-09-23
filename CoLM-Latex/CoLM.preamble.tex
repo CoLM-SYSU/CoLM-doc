@@ -29,9 +29,9 @@
   \fancyhf{}
   \fancyhead[RO]{\textnormal{\kaishu\nouppercase\rightorleftmark}}
   \fancyhead[LE]{\textnormal{\kaishu\nouppercase\leftmark}}
-%  \fancyhead[RE,LO]{--\ \thepage\ --}
-%  \fancyhead[CO]{\textnormal{\kaishu\nouppercase\rightmark}}
-%  \fancyhead[CE]{\textnormal{\kaishu\nouppercase\leftmark}}
+% \fancyhead[RE,LO]{--\ \thepage\ --}
+% \fancyhead[CO]{\textnormal{\kaishu\nouppercase\rightmark}}
+% \fancyhead[CE]{\textnormal{\kaishu\nouppercase\leftmark}}
   \fancyfoot[C]{--\ \thepage\ --}
   \renewcommand{\headrulewidth}{0.4pt}
 }
@@ -43,14 +43,14 @@
     \endgroup\leftmark
   \else
     \endgroup\rightmark
-  \fi}
+\fi}
 \makeatother
 
 %Making the pagestyle of part and chapter page fancier
 \fancypagestyle{plain}{%
-   \fancyhf{}
-   \cfoot{--\ \thepage\ --}
-   \renewcommand{\headrulewidth}{0pt}
+  \fancyhf{}
+  \cfoot{--\ \thepage\ --}
+  \renewcommand{\headrulewidth}{0pt}
 }
 %\pagestyle{fancy}
 % \sectionmark 的重定义需要在 \pagestyle 之后生效
@@ -71,17 +71,17 @@
 \usepackage[framemethod=default]{mdframed}
 
 \global\mdfdefinestyle{exampledefault}{%
-linecolor=lightgray,linewidth=1pt,%
-leftmargin=1cm,rightmargin=1cm,%
+  linecolor=lightgray,linewidth=1pt,%
+  leftmargin=1cm,rightmargin=1cm,%
 }
 
 \newenvironment{mymdframed}[1]{%
-\mdfsetup{%
-frametitle={\colorbox{lightgray}{\kaishu\,#1\,}},
-frametitleaboveskip=-0.5\ht\strutbox,
-frametitlealignment=\raggedright
-}%
-\begin{mdframed}[style=exampledefault]
+  \mdfsetup{%
+    frametitle={\colorbox{lightgray}{\kaishu\,#1\,}},
+    frametitleaboveskip=-0.5\ht\strutbox,
+    frametitlealignment=\raggedright
+  }%
+  \begin{mdframed}[style=exampledefault]
 }{\end{mdframed}}
 
 %\setCJKfamilyfont{jamspmi}{MS PMincho}
@@ -184,33 +184,33 @@ frametitlealignment=\raggedright
 
 \newcommand{\Figref}[1]{Figure~\ref{#1}}
 \newcommand{\fig}[3]{
- \begin{figure}[!ht]
- \begin{center}
- \scalebox{#3}{\includegraphics{figs/#1.ps}}
- \vspace{-0.1in}
- \caption[ ]{\label{#1} #2}
- \end{center}
- \end{figure}
+  \begin{figure}[!ht]
+    \begin{center}
+      \scalebox{#3}{\includegraphics{figs/#1.ps}}
+      \vspace{-0.1in}
+      \caption[ ]{\label{#1} #2}
+    \end{center}
+  \end{figure}
 }
 
 \newcommand{\figtwo}[8]{
- \begin{figure}
- \parbox[b]{#4 \textwidth}{
- \begin{center}
- \scalebox{#3}{\includegraphics{figs/#1.ps}}
- \vspace{-0.1in}
- \caption{\label{#1}#2}
- \end{center}
- }
- \hfill
- \parbox[b]{#8 \textwidth}{
- \begin{center}
- \scalebox{#7}{\includegraphics{figs/#5.ps}}
- \vspace{-0.1in}
- \caption{\label{#5}#6}
- \end{center}
- }
- \end{figure}
+  \begin{figure}
+    \parbox[b]{#4 \textwidth}{
+      \begin{center}
+        \scalebox{#3}{\includegraphics{figs/#1.ps}}
+        \vspace{-0.1in}
+        \caption{\label{#1}#2}
+      \end{center}
+    }
+    \hfill
+    \parbox[b]{#8 \textwidth}{
+      \begin{center}
+        \scalebox{#7}{\includegraphics{figs/#5.ps}}
+        \vspace{-0.1in}
+        \caption{\label{#5}#6}
+      \end{center}
+    }
+  \end{figure}
 }
 
 \setlength{\abovedisplayskip}{8pt}

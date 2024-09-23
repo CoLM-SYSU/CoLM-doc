@@ -4,23 +4,23 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[UTF8,heading=true,scheme=chinese]{ctex}
 \ctexset{
-    chapter/number = \arabic{chapter},
-    chapter/numberformat = \color{blue}\zihao{1},
-    appendix={
+  chapter/number = \arabic{chapter},
+  chapter/numberformat = \color{blue}\zihao{1},
+  appendix={
     %   name={附录},
        %numbering=false,
-       number={\Alph{chapter}}
-    }
+    number={\Alph{chapter}}
+  }
 }
 
 \usepackage[nottoc]{tocbibind} % used to add bibliography to toc with correct bookmark and page number
-   
+
 %\usepackage[T1]{fontenc}
 \newcommand{\arial}[1]{{\fontencoding{T1}\usefont{T1}{phv}{m}{n}{#1}}}
 \newcommand{\courier}[1]{{\fontencoding{T1}\usefont{T1}{pcr}{m}{n}{#1}}}
 \newcommand{\Times}[1]{{\fontencoding{T1}\usefont{T1}{ptm}{m}{n}{#1}}}
 \newcommand{\Rom}[1]{{\fontencoding{T1}\usefont{T1}{cmr}{m}{n}{#1}}}
-% \usepackage{wasysym}
+%\usepackage{wasysym}
 
 \input{CoLM.preamble}
 \setlength{\parskip}{0em}
@@ -45,7 +45,7 @@
 \usepackage{siunitx}
 %\PassOptionsToPackage{hyphens}{url}
 \usepackage[%hidelinks
-   citecolor=Blue,linkcolor=Blue,urlcolor=Blue,colorlinks=True,breaklinks=true]{hyperref}
+citecolor=Blue,linkcolor=Blue,urlcolor=Blue,colorlinks=True,breaklinks=true]{hyperref}
 \usepackage{xurl}
 \usepackage{setspace}
 \usepackage{doi}
@@ -57,20 +57,20 @@
 
 \title{\huge {\bf 通用陆面模式 2024}\\[3em]
 %\vspace{2mm}
-\fontsize {22}{24}
-\bf{ Description of The Common Land Model (CoLM2024)}\\[3in]
-\fontsize {20}{23}%\\[3in]
+  \fontsize {22}{24}
+  \bf{ Description of The Common Land Model (CoLM2024)}\\[3in]
+  \fontsize {20}{23}%\\[3in]
 % \vskip 3in
 }
 
 \author{%
- \large{ 中山大学 }\\[0.1in]
- {\bf 大气科学学院}\\[1in]
+  \large{ 中山大学 }\\[0.1in]
+  {\bf 大气科学学院}\\[1in]
 % \vskip 1in
- \upshape
- \large%\\[0.5in]
+  \upshape
+  \large%\\[0.5in]
 % \vskip 0.5in
-2024 年 09 月%
+  2024 年 09 月%
 }
 
 %\normallinespacing
@@ -82,7 +82,11 @@
 %\input{quotes/quotes}
 
 \listoftodos[待核查/修改列表]
+
 \body
+\include{前言/前言}
+\include{致谢/致谢}
+
 \part{引言}
 \include{引言/引言}
 
@@ -108,7 +112,7 @@
 
 \part{水文过程}\label{part:hydro}
 \include{水文过程/耦合径流模型的产流和汇流过程}
-% \include{水文过程/径流模式CaMa-Flood}
+%\include{水文过程/径流模式CaMa-Flood}
 \include{水文过程/基于物理过程的侧向流模拟}
 \include{水文过程/湖泊模式}
 \include{水文过程/冰川模式}
@@ -152,8 +156,8 @@
 \bibliographystyle{agufull08-mod}
 \bibliography{References/References}
 
-\clearpage
-\input{致谢/致谢}
-\addcontentsline{toc}{chapter}{致谢}
+%\clearpage
+%\input{致谢/致谢}
+%\addcontentsline{toc}{chapter}{致谢}
 
 \end{document}

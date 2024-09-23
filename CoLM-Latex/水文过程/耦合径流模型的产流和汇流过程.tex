@@ -272,7 +272,7 @@ CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/蓄水量变化计算流程图.png}
+    \includegraphics[width=0.95\textwidth]{Figures/陆地表面的水分循环/蓄水量变化计算流程图.png}
     \caption{CaMa-Flood~蓄水量变化计算流程图 }
     \label{fig:蓄水量变化计算流程图}
   \end{figure}
@@ -301,7 +301,7 @@ $\alpha$是稳定性系数设为0.7，$h_{\mathrm {t}} $是该流域单元在时
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/自适应时间步长的估算.png}
+    \includegraphics[width=0.9\textwidth]{Figures/陆地表面的水分循环/自适应时间步长的估算.png}
     \caption{CaMa-Flood自适应时间步长的估算案例}
     \label{fig:自适应时间步长的估算}
   \end{figure}
@@ -310,13 +310,13 @@ $\alpha$是稳定性系数设为0.7，$h_{\mathrm {t}} $是该流域单元在时
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/双向耦合.pdf}
+    \includegraphics[width=0.95\textwidth]{Figures/陆地表面的水分循环/双向耦合.pdf}
     \caption{CaMa-Flood和CoLM双向耦合示意图}
     \label{fig:双向耦合}
   \end{figure}
 }
 
-CoLM 和CaMa-Flood已经实现了双向耦合，能够进行对水文过程的完整描述。如图~\ref{fig:双向耦合}所示，其耦合模拟包含一下过程：
+CoLM 和CaMa-Flood已经实现了双向耦合，能够进行对水文过程的完整描述。如图~\ref{fig:双向耦合} 所示，其耦合模拟包含一下过程：
 \begin{enumerate}
   \item CoLM~模拟每个计算网格的地表能量平衡和地表水量平衡(融雪过程等)
   \item CoLM~模拟地表径流、各次表层的土壤含水量和地下水动态变化，并将土壤/地下水动态变化，并将运移结果分别反馈给~CoLM~和~CaMa-Flood~

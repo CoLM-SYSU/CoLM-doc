@@ -17,7 +17,7 @@ GPAM1包含64个作物功能类型（Crop Functional Type, CFT）（表~\ref{tab
     \label{tab:CoLM预设作物功能类型}
     \begin{tabular}{@{}clc|clc@{}}
       \toprule
-      Index & CFT名称            & 打开？     & Index & CFT名称      & 打开？     \\
+      Index & CFT名称            & 是否打开   & Index & CFT名称      & 是否打开   \\
       \midrule
       15    & 无管理的雨养C3作物 &            & 47    & 雨养葡萄     &            \\
       16    & 无管理的灌溉C3作物 &            & 48    & 灌溉葡萄     &            \\
@@ -143,7 +143,7 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
       a_{\mathrm{stem}}=1-a_{\mathrm{grain}}-a_{\mathrm{root}}-a_{\mathrm{leaf}}
   \end{array}\right.
 \end{equation}
-其中，下标$i$和$f$表示该分配系数的初值和终值，$b=0.1$。
+其中，下标i和f表示该分配系数的初值和终值，$b=0.1$。
 
 (2)	物候期3 \\
 \begin{equation}
@@ -230,10 +230,10 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 
 春化响应用于调整${\rm GDD}_{\mathrm{base}}$和粒分配系数
 \begin{equation}
-  {\rm GDD}_{\mathrm{base}}={\rm GDD}_{\mathrm{b a s e,  { unadjusted }}} \times V
+  {\rm GDD}_{\mathrm{base}}={\rm GDD}_{\mathrm{b a s e,  { unadj }}} \times V
 \end{equation}
 \begin{equation}
-  a_{\mathrm{ {grain }}}=a_{\mathrm{ {grain,unadjusted }}} \times V_{\mathrm{f}}
+  a_{\mathrm{ {grain }}}=a_{\mathrm{ {grain,unadj }}} \times V_{\mathrm{f}}
 \end{equation}
 
 
@@ -257,7 +257,7 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 \end{equation}
 $t$ 时步的$\mathrm{O_3}$通量累积量:
 \begin{equation}
-  U_{\mathrm{Y,t}}=\begin{cases}
+  U_{\mathrm{Y},t}=\begin{cases}
     \Delta t\times\max(F_{{\mathrm {O3}},t}-Y, 0) & \text{白天} \\
     0 & \text{其它时间}
   \end{cases},
@@ -278,7 +278,7 @@ $t$ 时步的$\mathrm{O_3}$通量累积量:
 其中，$\Delta t$ 是时步长，$T$是该时步的温度；$T_{\mathrm {c}} $是临界温度：$T_{\mathrm {c}} =34$ \textcelsius (水稻，玉米，冬小麦)，31 \textcelsius (春小麦)，37 \textcelsius (大豆)。
 每个时步考虑了热胁迫后的叶$C_{\mathrm{leaf}}$库为：
 \begin{equation}
-  C_{\mathrm{leaf}}=C_{\mathrm{leaf,  {unadjusted}}} \times (1-l)
+  C_{\mathrm{leaf}}=C_{\mathrm{leaf,  {unadj}}} \times (1-l)
 \end{equation}
 
 
@@ -320,15 +320,15 @@ $f_{\mathrm{crop}}$ 用于判断火发生时间（发生时为1，其余时步�
 
 在得到燃烧面积后，火灾引起的碳排放${\mathrm {CE}}$ (\unit{g.C.m^{-2}.s^{-1}}) 为：
 \begin{equation}
-  {\rm CE}={\rm BAF} \times C_{\mathrm{ab,litter}} \times CC
+  {\rm CE}={\rm BAF} \times C_{\mathrm{ab,litter}} \times {\rm CC}
 \end{equation}
-$C_{\mathrm{ab,litter}}$是地上凋落物碳库， $CC=0.8$是燃烧完全因子。
+$C_{\mathrm{ab,litter}}$是地上凋落物碳库， ${\rm CC}=0.8$是燃烧完全因子。
 
 此后，我们估算火灾引起的33种痕量气体和气溶胶排放。火灾引起的第$i$类痕量气体和气溶胶排放量$E_i$ (\unit{g.species.m^{-2}.s^{-1}})：
 \begin{equation}
-  E_{i}=EF_{i} \times CE /[{C}]
+  E_{i}={\rm EF}_{i} \times {\rm CE} /[{C}]
 \end{equation}
-$EF_i$ (\unit{g.species.(kg.dry\ matter(DM))^{-1}})是排放因子，见表~\ref{tab:秸秆焚烧排放因子取值}。$[C]=$ \qty{0.5e3}{g.C.(kg.DM)^{-1}}是单位转换因子。
+${\rm EF}_i$ (\unit{g.species.(kg.dry\ matter(DM))^{-1}})是排放因子，见表~\ref{tab:秸秆焚烧排放因子取值}。$[C]=$ \qty{0.5e3}{g.C.(kg.DM)^{-1}}是单位转换因子。
 
 
 % Please add the following required packages to your document preamble:
