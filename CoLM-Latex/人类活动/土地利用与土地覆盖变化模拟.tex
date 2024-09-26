@@ -1,10 +1,12 @@
 \chapter{土地利用与土地覆盖变化模拟}\label{土地利用与土地覆盖变化模拟}
+\echapter{Land Use and Land Cover Change}
 %\addcontentsline{toc}{chapter}{土地利用与土地覆盖变化模拟}
 \begin{mymdframed}{代码}
   本章对应代码源文件位于\texttt{main/LULCC/}目录下。
 \end{mymdframed}
 
 \section{模拟方案概述}
+\esection{Scheme Overview}
 土地利用与土地覆盖变化是陆面模拟中重要强迫项之一，对模拟结果具有不可忽视的影响，特别是在局地及区域尺度。
 目前CoLM模式对土地利用与土地覆盖变化的模拟可以分为三种方式：
 \begin{enumerate}
@@ -31,6 +33,7 @@
 
 
 \section{LULCC运行基本流程}
+\esection{LULCC Workflow}
 \begin{mymdframed}{代码}
   本节对应代码文件为\texttt{LULCC/MOD\_Lulcc\_Driver.F90}。
 \end{mymdframed}
@@ -59,6 +62,7 @@
 如图~\ref{fig:LULCC主程序流程图}所示，同类赋值与守恒方案的不同仅在于对状态变量的调整，地表数据的更新方式以及调整前的准备步骤是完全相同的。
 
 \section{同类赋值方案-SAT}
+\esection{Same Type Assignment Scheme}
 \begin{mymdframed}{代码}
   本节对应代码文件为\texttt{MOD\_Lulcc\_Vars\_TimeVariables.F90}。
 \end{mymdframed}
@@ -68,6 +72,7 @@
 该方式实现容易，简单考虑地表数据逐年替换，后续需要新增变量也可很快加入。同类赋值方案比较适合一些快变过程变量模拟，比如反照率、温度模拟等。但对于一些慢变过程(具有较长时间记忆)变量，如土壤水等，建议采用下面守恒方案。
 
 \section{守恒方案-MEC}
+\esection{Mass and Energy Conservation Scheme}
 \begin{mymdframed}{代码}
   本节对应代码文件为\texttt{MOD\_Lulcc\_MassEnergyConserve.F90}。
 \end{mymdframed}

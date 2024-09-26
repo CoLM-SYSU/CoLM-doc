@@ -1,4 +1,5 @@
 \chapter{积雪和土壤中水分的垂直运动}\label{积雪和土壤中水分的垂直运动}
+\echapter{Snow and Soil Water Vertical Movement}
 
 \begin{mymdframed}{代码}
   本章对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}.
@@ -64,6 +65,7 @@ CoLM中地表的水分平衡分为无积雪和有积雪两种情形。
 CoLM中可选两个数值方案进行Richards方程的求解：1. 2014版CoLM中的方案；2. 可变饱和流算法。
 
 \section{2014版Richards方程求解方案}
+\esection{CoLM 2014 Solution for Richards Equation}
 
 {
   \begin{figure}[htb]
@@ -75,6 +77,7 @@ CoLM中可选两个数值方案进行Richards方程的求解：1. 2014版CoLM中
 }
 
 \subsection{基于土壤湿度的Richards方程求解方案}
+\esubsection{Soil Water-Based Solution}
 
 首先建立离散的Richards方程。土壤的具体分层方案见章节~\ref{土壤和积雪的垂直分层}，离散后变量的定义见示意图~\ref{fig:土壤水离散}。在第$i$层上，对Richards方程进行空间上的积分可得
 \begin{equation}
@@ -221,6 +224,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 \end{equation}
 
 \subsection{饱和带和非饱和带的水分交换} \label{sec:exchange_sat_unsat}
+\esubsection{Saturated/Unsaturated Water Exchange}
 模式中使用两个变量$w_{\mathrm {a}} $和$z_{\mathrm{wt}}$来描述饱和含水层的状态，分别代表总水量和地下水位。饱和含水层中的水分可与土壤层中的水分在垂直方向进行交换，也可在水平方向进行流动。其中水平方向的流动被称为地下径流，相关内容见第六部分水文过程。
 
 土壤层与饱和含水层的交换通量定义为土壤层底部的水流通量，
@@ -281,6 +285,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 当$q_{\mathrm{recharge}}<0$时，水分从饱和含水层向上层土壤进行补给，$w_{\mathrm {a}} $减少，$z_{\mathrm{wt}}$增加，除方向相反外，计算过程与从上层土壤向饱和含水层的补给类似，这里不再赘述。
 
 \subsection{由地下产流引起的地下水和土壤水变化}
+\esubsection{Subsurface Flow Effects}
 
 地下产流主要指由地形引起的地下水的侧向流动。当不考虑基于物理过程的侧向流时，模式中通过~\ref{section:rsub_par}节中的参数化方案来计算地下产流的量，这部分水分需从地下水和土壤水中扣除。
 
@@ -308,6 +313,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 \end{equation}
 
 \section{可变饱和流数值算法}
+\esection{Variable Saturated Flow}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{HYDRO/MOD\_Hydro\_SoilWater.F90}.
@@ -334,6 +340,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 
 
 \subsection{土壤水预报方程}
+\esubsection{Soil Water Prognostic Equation}
 在每个土壤层内，可使用三个预报变量来描述土壤中液态水的分布情况。
 土壤体积含水量为第一个预报变量($\theta_i$)。为了追踪土壤中饱和水层的变化(包括地下水、滞水层和入渗情况下由地表向下发展的饱和水层)，
 每层土壤中引入了另外两个潜在的预报变量($w_{\mathrm{f},i}$和$w_{\mathrm{t},i}$)，
@@ -379,6 +386,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 式~\eqref{si_in4}表示了第$i$层内的水量守恒。
 
 \subsection{地表积水的变化}
+\esubsection{Surface Water Dynamics}
 为了预报由入渗所产生的地表水深的变化，地表积水深度($h_{\mathrm{pond}}$)也是算法中的预报变量，其预报方程为
 \begin{equation}\label{hpond}
   h_{\mathrm{ {pond }}}^{n+1}-h_{\mathrm{ {pond }}}^{n}=\Delta t \cdot\left(q_{\mathrm{ {sur }}}^{n+1}-q_{\mathrm{ {infl }}}^{n+1}\right)
@@ -391,6 +399,7 @@ $q_{i+\frac{1}{2}}$为第$i$层和第$i+1$层之间的土壤水通量，$K_{i+\f
 
 
 \subsection{地下水的变化}
+\esubsection{Groundwater Dynamics}
 当地下水位在土壤水计算区域内部时，其位置由$w_{\mathrm{t},i}$进行预报。
 
 当地下水位处于土壤水计算区域之下时，使用预报变量$w_{\mathrm {a}} $来表示计算区域之下蓄水层的蓄水状态。$w_{\mathrm {a}} $定义为
@@ -406,6 +415,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 当地下水位处于土壤水计算区域之下时，$w_{\mathrm {a}} $的预报方程(\ref{wa_n1_n})也加入到土壤水的方程组中，进行统一求解。
 
 \subsection{水流通量的计算}
+\esubsection{Flow Flux Calculation}
 预报方程~\eqref{si_in1}\eqref{si_in2}\eqref{si_in3}\eqref{hpond}\eqref{wa_n1_n}中，右端项中均包含了水流通量，其计算分为以下几种情形，
 \begin{enumerate}
   \item 饱和区域内部的水流通量，使用公式
@@ -433,7 +443,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
       q_{\mathrm{h m}}\left(\Delta z, h_{\mathrm{u}}, h_{\mathrm{l}}\right)=-k_{\mathrm{h m}} \cdot\left(\frac{h_{\mathrm{l}}-h_{\mathrm{u}}}{\Delta z}-1\right)
     \end{equation}
     其中，$\Delta z$为土壤层的厚度，$h_{\mathrm {u}} $,$h_{\mathrm {l}} $分别为土壤层上下两个边界处的土壤水势；
-    $k_{\mathrm{hm}}$为等效水力导度，可变饱和流算法中采用带权重的几何平均，分为三种情况进行计算，对入渗情形($h_{\mathrm {u}} >h_{\mathrm {l}} $)，\todo{是否需要说明ku和kl的含义}
+    $k_{\mathrm{hm}}$为等效水力导度，可变饱和流算法中采用带权重的几何平均，分为三种情况进行计算，对入渗情形($h_{\mathrm {u}} >h_{\mathrm {l}} $)，
     \begin{equation}
       k_{\mathrm{h m}}=\frac{1}{1-\frac{h_{\mathrm{l}}-h_{\mathrm{u}}}{\Delta z}} \cdot\left[k_{\mathrm{u}}+\frac{h_{\mathrm{u}}-h_{\mathrm{l}}}{\Delta z}\left(k_{\mathrm{u}}\right)^{1-r_{0}} \cdot\left(k_{\mathrm{l}}\right)^{r_{0}}\right]
     \end{equation}
@@ -479,6 +489,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 
 
 \subsection{预报方程的求解}
+\esubsection{Solving Prognostic Equation}
 方程(\ref{si_in4})代表了单层土壤内的水量守恒，\eqref{hpond}\eqref{wa_n1_n}分别代表了地表和地下含水层的水量守恒。令包含地表和地下含水层在内，总的计算层数为$A$. 在其中第$\alpha$层内可将~\eqref{si_in4}\eqref{hpond}\eqref{wa_n1_n}简写为
 \begin{equation}\label{m_alpha_x}
   \delta m_{\alpha}(\vec{x})=\Delta t \cdot \delta q_{\alpha}(\vec{x})
@@ -506,6 +517,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 变量转换方法使得问题(\ref{richards_nls})在每一个迭代步都形成了具有$A$个未知量的由$A$个方程组成的线性方程组，且系数矩阵为稀疏矩阵，模式中基于Givens变换对线性方程组进行求解。
 
 \subsection{由地下产流引起的地下水和土壤水变化} \label{sec:change_of_zwt_vsf}
+\esubsection{Subsurface Flow Effects}
 
 地下产流主要指由地形引起的地下水的侧向流动。当不考虑基于物理过程的侧向流时，模式中通过~\ref{section:rsub_par}节中的参数化方案来计算地下产流的量，这部分水分需从地下水和土壤水中扣除。
 
@@ -546,6 +558,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 
 
 \section{蒸腾所需的每层土壤根吸水量}
+\esection{Root Water Uptake for Transpiration}
 
 这里对土壤水方程中的源汇项$S$的主要来源，即根系吸水作用(蒸腾)过程做一简单介绍。植物吸水作用由每层土壤水吸收占比$f_{\mathrm{etr},i}$和叶面蒸腾$E_{\mathrm{tr}}$的乘积来表示\citep{dai2003common}。有效根比例为：
 \begin{equation}
@@ -571,6 +584,7 @@ $w_{\mathrm {a}} $的绝对值表示土壤水计算区域之下的空气的总�
 \end{equation}
 
 \section{土壤水力参数的计算}\label{sec_hydropar}
+\esection{Soil Hydraulic Parameter Calculation}
 土壤水力参数主要涉及CoLM中模拟土壤水分垂直运动使用的~\citet{campbell1974}和~\citet{van1980closed}两种土壤水力特征曲线关系（方程\eqref{eq:SW_CB}、\eqref{eq:Ks_CB}、\eqref{eq:SW_VG}和\eqref{eq:Ks_VG}）中包含的参数，主要有$\theta_{\mathrm {sat}} $（饱和体积含水量）、$\psi_{\mathrm {sat}} $（饱和基质势）、$K_{\mathrm {sat}} $（饱和导水率）、$B=\frac{1}{\lambda}$（孔隙大小分布指数）、$\theta_{\mathrm {r}} $（残余土壤含水量）、$\alpha$（形状参数）、$n$（形状参数）、$L$（孔隙导度参数）。针对上述参数，CoLM采用基于土壤基础数据集GSDE和SoilGrids开发的全球水平方向1 km分辨率、垂直方向分为8层的土壤水热特征参数数据以模拟土壤水热传输过程。数据垂直方向8层的深度分别对应CoLM模式土壤垂直分层中的第2-9层，第1层数据同样也应用于第1层模式，第8层数据同样也应用于第10层模式。两套数据集在全球模拟验证中具有相近的表现~\citep{李文耀2020土壤}。土壤水热特征参数数据的制作方法简述如下。
 
 针对饱和土壤含水量$\theta_{\mathrm {sat}} $，假设其与土壤孔隙度相同，则可采用如下公式计算：

@@ -1,4 +1,5 @@
 \chapter{生物地球化学循环预热加速}\label{生物地球化学循环预热加速}
+\echapter{Biogeochemical Cycle Spin-Up}
 %\addcontentsline{toc}{chapter}{生物地球化学循环预热加速}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_BGC\_CNSASU.F90}。
@@ -14,6 +15,7 @@ CoLM生物地球化学循环模块运用半解析预热方法~\citep{xia2012semi
 
 
 \section{植被生物地球化学循环预热加速}
+\esection{Vegetation Biogeochemical Cycle Spin-Up}
 CoLM植被碳氮循环可以表示为21个碳库和22个氮库的碳氮平衡方程组~\citep{lu2020full}，
 可以写成矩阵形式：
 \begin{equation}
@@ -161,6 +163,7 @@ $A_{\mathrm{phc}}$和$A_{\mathrm{phn}}$分别是碳氮传输系数矩阵，代�
 
 
 \section{土壤凋落物生物地球化学循环预热加速}
+\esection{Soil Litter Biogeochemical Cycle Spin-Up}
 CoLM土壤凋落物的碳氮循环可以表示为7个碳库和7个氮库的碳氮平衡方程组~\citep{lu2020full}，其中每个库在土壤垂直方向分为10层，可以写成矩阵形式：
 \begin{equation}
   \frac{{\mathrm {d}} C_{\text {soil }}}{{\mathrm {d}} t}=I_{\mathrm{C \text { soil }}}+\left[A_{\mathrm{h c}} \xi(t) K_{\mathrm{h}}+V(t)\right] C_{\text {soil }}(t)

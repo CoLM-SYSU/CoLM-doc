@@ -1,9 +1,12 @@
 \chapter{耦合径流模型的产流和汇流过程}
+\echapter{TODO: need to translate}
 
 \section{产流参数化方案}
+\esection{Runoff Parameterization}
 %\addcontentsline{toc}{chapter}{陆地表面的水分循环}
 
 \subsection{地表产流}
+\esubsection{Surface Runoff}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}。
 \end{mymdframed}
@@ -30,10 +33,36 @@
 \begin{equation}
   q_{\mathrm{infl}}={G}_{\mathrm{wat}}-r_{\mathrm{sur}}
 \end{equation}
+
 \subsubsection{基于新安江模型的地表产流方案}
+不同于SIMTOP参数化方案，\cite{RENJUN1992371}提出的新安江方案引入了地形参数($b_\text{topo}$)来确定土壤入渗的水流通量。本文假设入渗能力由土壤顶部6层的物理状态和属性决定。首先，我们定义前6层土壤中的液态水体积 $w_{\mathrm{{int}}}$ 和饱和水体积 $w_{\mathrm{{satint}}}$:
+\begin{equation}
+w_{\mathrm{{int}}} = \sum_{i=1}^{6}\left( {vol}_{i} \times {{\mathrm {d}} z}_{i} \right)
+\end{equation}
+\begin{equation}
+w_{\mathrm{{satint}}} = \sum_{i=1}^{6}\left( {eff}_{i} \times {{\mathrm {d}} z}_{i} \right)
+\end{equation}
+其中，${{\mathrm {d}} z}_{i}$ 表示第 $i$ 层土壤厚度，${vol}_{i}$ 表示第 $i$ 层土壤中液态水体积百分比，${eff}_{i}$ 表示第 $i$ 层有效孔隙度。
+接下来，我们引入一个介于0.01--0.5之间的地形参数 $b_\text{topo}$:
+\begin{equation}
+b_\text{topo}=\frac{{topo}_\text{std}-{sig}_\text{min}}{{sig}_\text{max}-{sig}_\text{min}}
+\end{equation}
+其中，${topo}_\text{std}$ 表示地形高程标准差，${sig}_\text{min}$ 和 ${sig}_\text{max}$ 分别取值为100和1000。
+基于上述参数，我们可以计算地表能够入渗的水流通量 $q_{\mathrm{infl}}$:
+\begin{equation}
+q_{\mathrm{infl}}=w_{\mathrm{{satint}}}-w_{\mathrm{{int}}}-w_{\mathrm{{satint}}} \times w_{\mathrm{{tmp}}}^{b_\text{topo}+1}
+\end{equation}
+其中，$w_\text{tmp}$ 定义为:
+\begin{equation}
+w_\text{tmp}=\left(1-\frac{w_\text{int}}{w_\text{satint}}\right)^\frac{1}{b_\text{topo}+1}-\frac{G_\text{wat}}{\left(b_\text{topo}+1\right)\times w_\text{satint}} 
+\end{equation}
+类似于SIMTOP方案，我们假设在一个模式网格内，饱和区域的地表水全部转化为产流，而非饱和区域的地表水部分入渗到土壤中，剩余部分转化为产流。假设到达地表的净水流通量为 $G_\text{wat}$，则总的地表产流可表示为:
+\begin{equation}
+r_\text{sur}=G_\text{wat}-q_{\mathrm{infl}}
+\end{equation}
 
 \subsubsection{基于Simple-VIC的地表产流方案}
-\cite{Liang2003Anew}提出的这一参数化方案充分考虑了土壤的物理特性，包括土壤质地、饱和程度和水分深度等关键因素。该方案首先计算土壤的最大入渗能力，我们首先假设最大入渗能力取决于最上面6层土壤的物理状态和属性，即：
+\cite{Liang2003Anew}提出的这一参数化方案充分考虑了土壤的物理特性，包括土壤质地、饱和程度和水分深度等关键因素。与新安江方案相同，该方案首先计算土壤的最大入渗能力，我们首先假设最大入渗能力取决于最上面6层土壤的物理状态和属性，即：
 \begin{equation}
 w_{\mathrm{{int}}} = \sum_{i=1}^{6}\left( {vol}_{i} \times {{\mathrm {d}} z}_{i} \right)
 \end{equation}
@@ -79,6 +108,7 @@ G_{\mathrm{wat}}- w_{\mathrm{{satint}}} + w_{\mathrm{{int}}} + w_{\mathrm{{satin
 
 
 \subsection{地下产流} \label{section:rsub_par}
+\esubsection{Subsurface Runoff}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}。
 \end{mymdframed}
@@ -102,6 +132,7 @@ G_{\mathrm{wat}}- w_{\mathrm{{satint}}} + w_{\mathrm{{int}}} + w_{\mathrm{{satin
 其中，$f_{\mathrm{ice,sum}}$为地下水位所在及以下土壤层内总的冰的体积含量（定义为冰的总体积除以土壤层的总体积）。
 
 \subsection{基于VIC的产流方案}
+\esubsection{VIC-Based Runoff}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Hydro\_VIC.F90}、\texttt{MOD\_Hydro\_VIC\_Variables.F90}。
 \end{mymdframed}
@@ -194,6 +225,7 @@ CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选
 
 
 \section{径流模型CaMa-Flood}
+\esection{CaMa-Flood Model}
 %\addcontentsline{toc}{chapter}{陆地表面的水分循环}
 \begin{mymdframed}{代码}
   本节对应的代码文件夹为\texttt{CaMa/src},\\具体关联文件为\texttt{CaMa/src/MOD\_CaMa\_colmCaMa.F90}。
@@ -210,6 +242,7 @@ CaMa-Flood 模型的另一个优势在于它具有极高的模拟计算效率。
 关于CaMa-Flood模型的详细描述可以从相关文献获取\citep{yamazaki2011physically,yamazaki2013improving,yamazaki2014regional,yamazaki2014development}。目前耦合版本陆面过程模式分系统已经包含 CaMa-Flood v4.21 版本，并保持同步更新。
 
 \subsection{诊断洪泛状态}\label{诊断洪泛状态}
+\esubsection{Flood State Diagnosis}
 在 CaMa-Flood 中指定网格的漫滩 (洪泛) 状态是通过计算该网格的蓄水总量得出的。如图~\ref{fig:CaMa-Flood流域单位示意图}
 所示，河流河道蓄水量$S_{\mathrm {r}} $，漫滩蓄水量$S_{\mathrm {f}} $，河道水深度$D_{\mathrm {r}} $, 漫滩淹没深度$D_{\mathrm {f}} $，漫滩面积$A_{\mathrm {f}} $等均通过求解基于总蓄水量的水量方程得出。
 首先，模式中引发当前流域单元洪水蓄水量$S_{\mathrm{ini}}$由如下公式进行确定：
@@ -245,6 +278,7 @@ CaMa-Flood 假设不存在漫滩 (洪泛) 事件，上述参数则通过如下�
 }
 
 \subsection{河道径流流量计算}
+\esubsection{River Flow Calculation}
 CaMa-Flood 分别计算了各流域单元向其下游单元的河流径流量和漫滩流量。
 二者的计算均通过忽略如下 St. Venant 动量方程式第二项，得到径流计算所使用的局部惯性方程~\citep{bates2010}:
 \begin{equation}
@@ -263,16 +297,18 @@ CaMa-Flood 引入限流器的概念：当总出水量大于网格的总库存量
 
 
 \subsection{洪水漫滩流量计算}
+\esubsection{Floodplain Flow Calculation}
 漫滩流量计算与河道径流流量计算方法相同。
 其区别在于漫滩流量包括所使用的水流面积$A$的计算方法是漫滩蓄水量除以河道长度；
 水流深度$h$为漫滩深度；漫滩流量的曼宁系数被设置为$n=0.10$。
 
 
 \subsection{蓄水量变化计算}
+\esubsection{Storage Change Calculation}
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/蓄水量变化计算流程图.png}
+    \includegraphics[width=0.95\textwidth]{Figures/陆地表面的水分循环/蓄水量变化计算流程图.png}
     \caption{CaMa-Flood~蓄水量变化计算流程图 }
     \label{fig:蓄水量变化计算流程图}
   \end{figure}
@@ -286,6 +322,7 @@ $Q_k^t$代表在时间 $t$ 该单元从上游(Upstream)网格($k$)接收的河�
 
 
 \subsection{自适应时间步长的估算}
+\esubsection{Adaptive Time Step Estimation}
 为避免固定时间步长计算所产生的数值振荡，提高数值方案稳定性，
 CaMa-Flood 采用了~\citet{bates2010}提出的基于局部惯性方程并满足 Courant-Friedrichs-Lewy (CFL)
 条件的自适应时间步长 ($DT_{\mathrm{adp}}$) 的估算方法:
@@ -301,22 +338,23 @@ $\alpha$是稳定性系数设为0.7，$h_{\mathrm {t}} $是该流域单元在时
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/自适应时间步长的估算.png}
+    \includegraphics[width=0.9\textwidth]{Figures/陆地表面的水分循环/自适应时间步长的估算.png}
     \caption{CaMa-Flood自适应时间步长的估算案例}
     \label{fig:自适应时间步长的估算}
   \end{figure}
 }
 \subsection{双向耦合过程}
+\esubsection{Two-Way Coupling}
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/陆地表面的水分循环/双向耦合.pdf}
+    \includegraphics[width=0.95\textwidth]{Figures/陆地表面的水分循环/双向耦合.pdf}
     \caption{CaMa-Flood和CoLM双向耦合示意图}
     \label{fig:双向耦合}
   \end{figure}
 }
 
-CoLM 和CaMa-Flood已经实现了双向耦合，能够进行对水文过程的完整描述。如图~\ref{fig:双向耦合}所示，其耦合模拟包含一下过程：
+CoLM 和CaMa-Flood已经实现了双向耦合，能够进行对水文过程的完整描述。如图~\ref{fig:双向耦合} 所示，其耦合模拟包含一下过程：
 \begin{enumerate}
   \item CoLM~模拟每个计算网格的地表能量平衡和地表水量平衡(融雪过程等)
   \item CoLM~模拟地表径流、各次表层的土壤含水量和地下水动态变化，并将土壤/地下水动态变化，并将运移结果分别反馈给~CoLM~和~CaMa-Flood~

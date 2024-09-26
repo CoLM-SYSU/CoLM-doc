@@ -1,4 +1,5 @@
 \chapter{水库模式}\label{水库模式}
+\echapter{Reservoir Model}
 %\addcontentsline{toc}{chapter}{陆地表面的水分循环}
 \begin{mymdframed}{代码}
   本章对应的代码文件为\texttt{CaMa/src/cmf\_ctrl\_damout\_mod.F90}。
@@ -7,6 +8,7 @@
 本模块在CaMa-Flood中实施水库运行方案，通过识别坝体所在的集水区单元，根据水库运行规则计算水库流出量，构建考虑大坝影响的河道汇流参数化方案，以刻画水库对陆面水文循环过程的影响。
 
 \section{水库调度规则参数化方案}
+\esection{Reservoir Regulation Parameterization}
 在大尺度陆面模式中进行水库扰动模拟，需要对水库的调度规则进行一定的假设和概化，现有方案大致可分为三类：基于入流和需求的调度方案、基于目标库容的分段调度方案和基于离线优化的调度方案\citep{yassin2019representation}，其中以前两种方法应用最为广泛。本版本已加入目前陆面模式中采用的主流水库调度参数化方案，如表~\ref{tab:水库模块可选水库调度方案} 所示，可通过相应的方案代码进行调用。
 
 \begin{table}[htbp]
@@ -26,6 +28,7 @@
 \end{table}
 
 \subsection{H06方案}
+\esubsection{H06 Scheme}
 H06表示~\citet{hanasaki2006reservoir}提出的基于入流和需求的调度方案，该方案根据水库用途、水库初始库容、水库最大库容、模拟入流量和下游需水量等信息，分别为灌溉水库和非灌溉水库（除灌溉之外的用途均为非灌溉）设定调度规则，计算公式如下：
 \begin{equation}
   Q_{\mathrm{out}}=\begin{cases}
@@ -38,8 +41,8 @@ H06表示~\citet{hanasaki2006reservoir}提出的基于入流和需求的调度�
 \begin{equation}
   \begin{cases}
     \text{灌溉水库，} Q_{\mathrm{out}}^{'}= \begin{cases}
-      Q_{\mathrm{n}}+D-\overline{D}, &\quad DPI<(1-M)\\
-      Q_{\mathrm{n}} \times \left(M+\frac{\left(1-M\right)D}{\overline{D}}\right), &\quad DPI \geqslant (1-M)
+      Q_{\mathrm{n}}+D-\overline{D}, &\quad {\rm DPI}<(1-M)\\
+      Q_{\mathrm{n}} \times \left(M+\frac{\left(1-M\right)D}{\overline{D}}\right), &\quad {\rm DPI} \geqslant (1-M)
     \end{cases}\\
     \text{非灌溉水库，} Q_{\mathrm{out}}^{'}=Q_{\mathrm{n}}
   \end{cases}
@@ -61,7 +64,7 @@ H06表示~\citet{hanasaki2006reservoir}提出的基于入流和需求的调度�
       $Q_{\mathrm {n}} $ & 水库多年平均正常流量[参数]                                               & \unit{L^3.T^{-1}} \\
       $\overline{D}$     & 多年平均日需水量[参数]                                                   & \unit{L^3.T^{-1}} \\
       $M$                & 最小需求满足系数[参数]                                                   & -                 \\
-      $DPI$              & 年平均需求量与年平均水库入流量的比值[参数]                               & -                 \\
+      DPI                & 年平均需求量与年平均水库入流量的比值[参数]                               & -                 \\
       $k_{\mathrm{rls}}$ & 释放系数[参数]，$k_{\mathrm{rls}} = \frac{V_0}{\alpha V_{\mathrm {t}} }$ & -                 \\
       $R$                & 需求决定系数[参数]，$R=\min(1, \alpha c)$                                & -                 \\
       $\alpha$           & 无量纲常数[参数]                                                         & -                 \\
@@ -78,6 +81,7 @@ H06表示~\citet{hanasaki2006reservoir}提出的基于入流和需求的调度�
 \end{table}
 
 \subsection{V13方案}
+\esubsection{V13 Scheme}
 V13表示~\citet{voisin2013improved}提出的调度方案，在H06方案的基础上增加了防洪期以同时实现防洪和灌溉目标。该方案根据水库多年平均入库流量的季节变化，定义了三个特征时刻：NDFC表示防洪期结束月，为运营期开始前的湿润期的第一个月；STFC表示防洪期开始月，为运营期开始前的枯水期内流量最低的月份；STOP表示运营期的开始月，\citet{hanasaki2006reservoir}将运营期的开始定义为长期平均月流量低于长期平均年流量的第一个月。
 在STFC到NDFC时段内，V13方案在H06方案的基础上增加额外的出流，从而使水库为汛期的到来留出更多库容，在原V13方案中该时段内每个时刻的额外出流:
 \begin{equation}
@@ -90,6 +94,7 @@ V13表示~\citet{voisin2013improved}提出的调度方案，在H06方案的基�
 在NDFC到STOP时段内，通过只释放年平均流量$Q_{\mathrm{n}}$来确保水库为灌溉季节再次蓄水。
 
 \subsection{LIS方案}
+\esubsection{LIS Scheme}
 LIS表示LISFLOOD所采用的基于目标库容的分段调度方案(\url{https://ec-jrc.github.io/lisflood-model/3\_03\_optLISFLOOD\_reservoirs/})，计算公式如下：
 \begin{equation}
   \begin{aligned}
@@ -147,6 +152,7 @@ LIS表示LISFLOOD所采用的基于目标库容的分段调度方案(\url{https:
 \end{table}
 
 \subsection{H22方案}
+\esubsection{H22 Scheme}
 H22表示~\citet{hanazaki2022development}提出的调度方案，根据水库入流量和实时库容大小，调节出库流量以削减汛期峰值流量，控制出库流量不超过防洪流量，且根据汛期发展时段调整出流系数，计算公式如下:
 \begin{equation}
   V_{\mathrm{e}} < V < V_{\mathrm{t}}, \quad Q_{\mathrm{out}} = \max(Q_{\mathrm{f}},\, Q_{\text{in}})\
@@ -194,6 +200,7 @@ H22表示~\citet{hanazaki2022development}提出的调度方案，根据水库入
 \end{table}
 
 \section{考虑大坝影响的河道汇流参数化方案}
+\esection{River Flow with Dam Influence}
 相比自然河道的汇流方案，考虑大坝影响的汇流方案存在以下改动：当河道中存在大坝时，由于水的连续流动和河道的水力连结被切断，在与大坝网格紧连的下游网格处，圣维南动力方程中的局部加速项和静水压力项被忽略，在使用局部惯性方程(CaMa-Flood中使用的默认算法)进行一般计算后，使用运动波动方程重新计算流量。在下一步中，将来自上游河网的所有流出汇总为水库流入，并根据重新计算的流入和蓄水量确定水库流出。
 \begin{equation}
   {\mathrm g} A \frac{\partial z}{\partial x}+\frac{{\mathrm g} n^{2}|Q| Q}{R_{\mathrm{H}}^{4 / 3} A}=0

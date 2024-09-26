@@ -1,4 +1,5 @@
 \chapter{降水与地表的能量交换}
+\echapter{Precipitation and Surface Energy Exchange}
 %\addcontentsline{toc}{chapter}{降水与地表的能量交换}
 降水是陆面与大气之间保证水循环以及维持能量平衡的重要过程，CoLM模式通过多个物理参数化方案考虑降水相态分配、水凝物密度计算、雨水与植被/地表之间的能量交换等物理过程。
 
@@ -8,6 +9,7 @@
 \end{mymdframed}
 
 \section{降水相态}\label{相态分配}
+\esection{Precipitation Phase}
 在CoLM中共有四种基于温、湿参量近似雨水温度来分配降水相态的方法，具体如表~\ref{tab:相态区分方案}~所示。
 
 \begin{table}[]
@@ -24,6 +26,7 @@
 \end{table}
 
 \subsection{湿球温度方案}\label{湿球温度方案}
+\esubsection{Wet Bulb Temperature Scheme}
 
 \citet{anderson1998moored}等人的研究表明，雨水温度与大气湿球温度极为接近。基于这一发现，本方案中采用湿球温度来近似雨水温度。根据湿球温度的定义，可得如下关系式：
 \begin{equation}
@@ -55,6 +58,7 @@ $\lambda_{\mathrm {vap}}$ 为液态水的蒸发潜热（\unit{J.kg^{-1}}）。
 
 
 \subsection{CLM5方案}
+\esubsection{CLM5 Scheme}
 与湿球温度方案不同，CLM5方案将大气环境温度视为雨水温度。此外，CLM5方案还考虑了下垫面类型，特别是对冰川类型进行了单独处理。具体而言：\\
 当地表水体为冰面时（land water type = 3, land ice）:
 \begin{equation}
@@ -75,6 +79,7 @@ $\lambda_{\mathrm {vap}}$ 为液态水的蒸发潜热（\unit{J.kg^{-1}}）。
 
 
 \subsection{PSY方案}
+\esubsection{PSY Scheme}
 PSY (Psychrometric Energy Balance Method) 方案是一种基于干湿能量平衡计算水凝物温度的方法。
 方案的基本假设是在水凝物（液态水或冰晶）表面无限接近处存在一个理想气团，其温度与水凝物相同。这个气团满足Tetens饱和水汽压经验公式，该公式对于水面和冰面有不同的表达式：
 \begin{equation}
@@ -127,6 +132,7 @@ PSY方案的拟合数据来源于降水量（液态水/总降水量），而湿�
 
 
 \subsection{单阈值方案}
+\esubsection{Single Threshold Scheme}
 单阈值方案就是设定一个关键温度以界定液态降水的占比，假设认为液态降水占比随温度升高逐渐线性增加，在2 \textcelsius 时占40\%，当环境温度高于2 \textcelsius 后全转变为液态降水，过程具体如下：
 \begin{equation}
   f_{\mathrm{pl}}= \begin{cases}
@@ -137,18 +143,21 @@ PSY方案的拟合数据来源于降水量（液态水/总降水量），而湿�
 
 
 \section{降水强度}
+\esection{Precipitation Intensity}
 CoLM在物理过程计算时使用的降水强度由大气驱动数据或大气模式的降水模拟结果直接提供。由于CoLM中的部分物理过程（如冠层截留过程）需区分大尺度降水和对流性降水，而大气驱动数据往往只提供总降水强度，因此在CoLM中，暂时假设大气驱动数据提供的降水有2/3的比例为大尺度降水，1/3的比例为对流性降水。当与大气模式耦合时，大气模式往往可以直接提供大尺度降水和对流性降水的降水强度模拟结果。
 
 
 \section{降水温度}
+\esection{Precipitation Temperature}
 CoLM中使用的雨水温度可由湿球温度近似，计算方案在第~\ref{湿球温度方案} 节给出。同时，雨水温度也需根据降水相态进行调整，具体方案为：当降水全部为液态水时，雨水温度取湿球温度和冻结点温度$T_{\mathrm{frz}}$之间的较大值；当液态降水比例$f_{\mathrm{pl}}$介于0到1之间时，雨水温度计算公式为：$$T_{\mathrm {p}}=T_{\mathrm{frz}}-\sqrt{\frac{1}{f_{\mathrm{pl}}}-1}/100.0$$
 当降水全部为固态水时，雨水温度取湿球温度和冻结点温度$T_{\mathrm{frz}}$之间的较小值。
 
 
 \section{新雪密度}
-雪的密度($\rho_{s}$)影响到地表的雪深、雪的堆积等一系列物理过程，是一个很重要的参量，在CoLM中采用CLM5的方案计算新雪密度，具体过程如下：
+\esection{New Snow Density}
+雪的密度($\rho_{\rm sno}$)影响到地表的雪深、雪的堆积等一系列物理过程，是一个很重要的参量，在CoLM中采用CLM5的方案计算新雪密度，具体过程如下：
 \begin{equation*}
-  \rho_{s}= \begin{cases}
+  \rho_{\rm sno}= \begin{cases}
     50 + 1.7\times 17^{1.5}, & \text{当 }\ 2\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} \text{ 时}\\
     50 + 1.7(T_{\mathrm {a}} - T_{\mathrm{frz}}+15)^{1.5}, & \text{当 }\ -15\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} < 2 \text{ 时} \\
     -3.8328(T_{\mathrm {a}} - T_{\mathrm{frz}}) - 0.0333(T_{\mathrm {a}} - T_{\mathrm{frz}})^2, & \text{当 }\ -57.55\leqslant T_{\mathrm {a}} - T_{\mathrm{frz}} < -15 \text{ 时} \\
@@ -163,11 +172,12 @@ CoLM中使用的雨水温度可由湿球温度近似，计算方案在第~\ref{�
 
 当 $V_{\mathrm {a}}$ > 0.1 时
 \begin{equation}
-  \rho_{s,\mathrm{new}} = \rho_{s,\mathrm{old}} + 266.81{\left(\frac{1 + \tanh (\frac{V_{\mathrm {a}}}{5})}{2}\right)}^{8.8}
+  \rho_{\mathrm{sno,new}} = \rho_{\mathrm{sno,old}} + 266.81{\left(\frac{1 + \tanh (\frac{V_{\mathrm {a}}}{5})}{2}\right)}^{8.8}
 \end{equation}
 
 
 \section{降水感热}\label{植被地表的雨水感热}
+\esection{Precipitation Sensible Heat}
 雨水与地表/植被之间存在温度差异，当降水发生时，它们之间可发生能量交换(降水感热)。
 \citet{wei2014impact} 表明，虽然在气候尺度上此能量交换的量级很小，但它可通过改变大气环流影响不同地区的气候特征，
 故在气候模式中不可被忽略。感热计算中默认湿球温度为雨水温度$T_{\rm p}$，下面给出雨水感热的计算方案。

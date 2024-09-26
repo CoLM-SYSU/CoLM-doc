@@ -15,23 +15,356 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{etoolbox}
+\usepackage{fancyhdr}
 \usepackage{pifont}
 \usepackage[textsize=footnotesize,tickmarkheight=0.2cm]{todonotes}
+\usepackage{suffix}
 
 \makeatletter
 \patchcmd{\NAT@test}{\else\NAT@nm}{\else\NAT@nmfmt{\NAT@nm}}{}{}
 \let\NAT@up\itshape
+
+\newcommand\engcontentsname{Contents}
+\newcommand\tableofengcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\engcontentsname
+        \@mkboth{%
+           \MakeUppercase\engcontentsname}{\MakeUppercase\engcontentsname}}%
+    \@starttoc{toe}% !!!!Define a new contents!!!!
+    \if@restonecol\twocolumn\fi
+    }
+\newcommand\addengcontents[2]{%
+    \addcontentsline{toe}{#1}{\protect\numberline{\csname the#1\endcsname}#2}}
+%\makeatother
+
+% redefine \part in order to put both Chinese and English part names together
+\renewcommand\part{%
+   \CTEX@part@break
+   \CTEX@setthispagestyle{part}%
+   \if@twocolumn
+     \onecolumn
+     \@tempswatrue
+   \else
+     \@tempswafalse
+   \fi
+   \CTEX@setheadingskip \CTEX@part@beforeskip
+    \ifodd \CTEX@part@fixskip \CTEX@fixtopskip \fi
+    \vspace*{\CTEX@headingskip}%
+    \secdef\@part\@spart
+}
+
+\def\@part[#1]#2#3{%
+    \ifnum \c@secnumdepth >-2\relax
+       \ifodd \CTEX@part@numbering
+         \CTEX@ifnametrue
+         \refstepcounter{part}%
+       \else
+         \CTEX@ifnamefalse
+         \CTEX@makeanchor{part*}%
+       \fi 
+    \else
+       \CTEX@ifnamefalse
+       \CTEX@makeanchor{part*}%
+    \fi
+    \CTEX@gettitle{#1}%
+    \CTEX@addtocline{part}{#1}%
+    \partmark{#1}%
+    \begingroup
+       \CTEX@heading@format@initial
+       \CTEX@part@format{%
+          \CTEX@headinghang{part}%
+          {\CTEXifname{\CTEX@partname\CTEX@part@aftername}{}}%
+          \CTEX@part@titleformat{#2}%
+          \CTEX@part@aftertitle}\par\par
+     \endgroup
+     \vspace{6ex}
+     \begingroup
+       \ctexset{
+          part={
+               name = {Part~},
+               number = \Roman{part},
+               numberformat = \color{gray}\zihao{1},
+               format+ = \color{gray}%
+          }
+        }
+        \addengcontents{part}{#3}
+        \CTEX@heading@format@initial
+        \CTEX@part@format{%
+          \CTEX@headinghang{part}%
+           {\CTEXifname{\CTEX@partname\CTEX@part@aftername}{}}%
+            \CTEX@part@titleformat{#3}%
+            \CTEX@part@aftertitle}\par
+     \endgroup
+     \@endpart
+}
+
+\def\@spart#1#2{%
+    \CTEX@ifnamefalse
+    \CTEX@makeanchor@spart{part*}%
+    \CTEX@gettitle{#1}%
+    \begingroup
+       \CTEX@heading@format@initial
+       \CTEX@part@format{%
+         \CTEX@headinghang{part}{}%
+         \CTEX@part@titleformat{#1}%
+         \CTEX@part@aftertitle}\par\par
+    \endgroup
+    \vspace{6ex}
+    \begingroup
+       \ctexset{
+          part={
+               name = {Part~},
+               number = \Roman{part},
+               numberformat = \color{gray}\zihao{1},
+               format+ = \color{gray}%
+          }
+        }
+        \CTEX@heading@format@initial
+        \CTEX@part@format{%
+          \CTEX@headinghang{part}{}%
+          \CTEX@part@titleformat{#2}%
+          \CTEX@part@aftertitle}\par
+     \endgroup
+    \@endpart
+}
+
+\newcommand\epart[1]{%
+  \addtocounter{part}{-1}
+  \begingroup
+%    \let\cleardoublepage\relax
+    \renewcommand\addcontentsline[3]{}
+    \ctexset{
+      part={
+        name = {Part~},
+        number = \Roman{part},
+        numberformat = \color{gray}\zihao{1},
+        format+ = \color{gray}%,
+%        beforeskip = -2.5ex plus 0.2ex minus 0.2ex
+%        beforeskip = -50pt
+%        afterskip = 12.0ex plus 0.2ex minus 0.2ex
+      }
+    }
+    \part{#1}
+   \endgroup
+   \addengcontents{part}{#1}
+}
+\WithSuffix\newcommand\epart*[1]{%
+  \begingroup
+    \let\cleardoublepage\relax
+    \ctexset{
+      part={
+        number = \Roman{\thepart},
+%        name = {Chapter~},
+%        numberformat = \color{gray}\zihao{1},
+        format+ = \color{gray}%,
+%        beforeskip = -2.5ex plus 0.2ex minus 0.2ex
+%        afterskip = 12.0ex plus 0.2ex minus 0.2ex
+      }
+    }
+    \part*{#1}
+   \endgroup
+   \addcontentsline{toe}{part}{#1}
+}
+
+\newcommand\echapter[1]{%
+  \addtocounter{chapter}{-1}
+  \begingroup
+     \let\clearpage\relax
+     \renewcommand{\chaptermark}[1]{}
+%    \let\markleft\relax
+%    \let\markright\relax
+%    \let\markboth\relax
+    \renewcommand\addcontentsline[3]{}
+    \ctexset{
+      chapter={
+        name = {Chapter\space},
+        numberformat = \color{gray}\zihao{1},
+        format+ = \color{gray},
+%        beforeskip = -2.5ex plus 0.2ex minus 0.2ex,
+        beforeskip = -55pt
+%        afterskip = 12.0ex plus 0.2ex minus 0.2ex
+      }%,
+%      appendix={
+%        name = {Appendix\space},
+%        number = {\Alph{chapter}}
+%      }
+    }
+    \chapter{#1}
+   \endgroup
+   \addengcontents{chapter}{#1}
+}
+
+\WithSuffix\newcommand\echapter*[1]{%
+  \begingroup
+    \let\clearpage\relax
+    \renewcommand{\chaptermark}[1]{}
+    \ctexset{
+      chapter={
+        format+ = \color{gray},
+%        beforeskip = -2.5ex plus 0.2ex minus 0.2ex,
+        beforeskip = -55pt
+%        afterskip = 12.0ex plus 0.2ex minus 0.2ex
+      },
+      appendix={
+        name = {Appendix\space},
+        number = {\Alph{chapter}}
+      }
+    }
+    \chapter*{#1}
+   \endgroup
+   \addcontentsline{toe}{chapter}{#1}
+}
+
+% new command to change appendix chapater name
+\newcommand\eappendixchapter[1]{%
+  \addtocounter{chapter}{-1}
+  \begingroup
+     \let\clearpage\relax
+     \renewcommand{\chaptermark}[1]{}
+     \renewcommand\addcontentsline[3]{}
+     \ctexset{
+       chapter={
+        name = {Appendix\space},
+        numberformat = \color{gray}\zihao{1},
+        format+ = \color{gray},
+        beforeskip = -55pt
+%        afterskip = 12.0ex plus 0.2ex minus 0.2ex
+      }
+    }
+    \chapter{#1}
+   \endgroup
+   \addengcontents{chapter}{#1}
+}
+
+\newcommand\esection[1]{%
+  \addtocounter{section}{-1}
+  \begingroup
+    \renewcommand\addcontentsline[3]{}
+    \renewcommand{\sectionmark}[1]{}
+    \ctexset{
+      section={
+        format+ = \color{gray},
+        beforeskip = -50pt
+%        afterskip = 2.0ex plus 0.2ex minus 0.2ex
+      }
+    }
+    \newcommand\sectionprelude{%
+      \vspace{-4.5ex}
+    }
+    \newcommand\sectionpostlude{%
+      \vspace{0ex}
+    }
+    \sectionprelude\section{#1}\sectionpostlude
+  \endgroup
+  \addengcontents{section}{#1}
+}
+
+\newcommand\esubsection[1]{%
+  \addtocounter{subsection}{-1}
+  \begingroup
+    \renewcommand\addcontentsline[3]{}
+    \ctexset{
+      subsection={
+        format+ = \color{gray},
+        beforeskip = -30pt
+%        afterskip = 2.0ex plus 0.2ex minus 0.2ex
+      }
+    }
+    \newcommand\subsectionprelude{%
+      \vspace{-4ex}
+    }
+    \newcommand\subsectionpostlude{%
+      \vspace{0ex}
+    }
+    \subsectionprelude\subsection{#1}\subsectionpostlude
+  \endgroup
+  \addengcontents{subsection}{#1}
+}
+
+% Hack the definition of \listoffigures and \listoftables to add an entry to the English table of contents
+\newcommand\elistchapter[1]{%
+  \begingroup
+     \let\clearpage\relax
+     \renewcommand{\chaptermark}[1]{}
+     \renewcommand\addcontentsline[3]{}
+     \ctexset{
+       chapter={
+        format+ = \color{gray},
+        beforeskip = -45pt
+      }
+    }
+    \chapter*{#1}
+   \endgroup
+   \addcontentsline{toe}{chapter}{#1}
+}
+
+\renewcommand\listoffigures{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listfigurename}%
+    \addcontentsline{toc}{chapter}{\listfigurename}
+    \@mkboth{\MakeUppercase\listfigurename}%
+              {\MakeUppercase\listfigurename}%
+    \elistchapter{List of Figures}
+    \@starttoc{lof}%
+    \if@restonecol\twocolumn\fi
+}
+
+\renewcommand\listoftables{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listtablename}%
+    \addcontentsline{toc}{chapter}{\listtablename}
+      \@mkboth{%
+          \MakeUppercase\listtablename}%
+         {\MakeUppercase\listtablename}%
+    \elistchapter{List of Tables}
+    \@starttoc{lot}%
+    \if@restonecol\twocolumn\fi
+}
+
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\bibname}%
+      \addcontentsline{toc}{chapter}{\bibname}
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \echapter*{Bibliography}
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+
 \makeatother
 
 %\usepackage[none]{hyphenat}
-\usepackage{fancyhdr}
 \fancypagestyle{fancy}{%
   \fancyhf{}
   \fancyhead[RO]{\textnormal{\kaishu\nouppercase\rightorleftmark}}
   \fancyhead[LE]{\textnormal{\kaishu\nouppercase\leftmark}}
-%  \fancyhead[RE,LO]{--\ \thepage\ --}
-%  \fancyhead[CO]{\textnormal{\kaishu\nouppercase\rightmark}}
-%  \fancyhead[CE]{\textnormal{\kaishu\nouppercase\leftmark}}
+% \fancyhead[RE,LO]{--\ \thepage\ --}
+% \fancyhead[CO]{\textnormal{\kaishu\nouppercase\rightmark}}
+% \fancyhead[CE]{\textnormal{\kaishu\nouppercase\leftmark}}
   \fancyfoot[C]{--\ \thepage\ --}
   \renewcommand{\headrulewidth}{0.4pt}
 }
@@ -43,14 +376,14 @@
     \endgroup\leftmark
   \else
     \endgroup\rightmark
-  \fi}
+\fi}
 \makeatother
 
 %Making the pagestyle of part and chapter page fancier
 \fancypagestyle{plain}{%
-   \fancyhf{}
-   \cfoot{--\ \thepage\ --}
-   \renewcommand{\headrulewidth}{0pt}
+  \fancyhf{}
+  \cfoot{--\ \thepage\ --}
+  \renewcommand{\headrulewidth}{0pt}
 }
 %\pagestyle{fancy}
 % \sectionmark 的重定义需要在 \pagestyle 之后生效
@@ -71,17 +404,17 @@
 \usepackage[framemethod=default]{mdframed}
 
 \global\mdfdefinestyle{exampledefault}{%
-linecolor=lightgray,linewidth=1pt,%
-leftmargin=1cm,rightmargin=1cm,%
+  linecolor=lightgray,linewidth=1pt,%
+  leftmargin=1cm,rightmargin=1cm,%
 }
 
 \newenvironment{mymdframed}[1]{%
-\mdfsetup{%
-frametitle={\colorbox{lightgray}{\kaishu\,#1\,}},
-frametitleaboveskip=-0.5\ht\strutbox,
-frametitlealignment=\raggedright
-}%
-\begin{mdframed}[style=exampledefault]
+  \mdfsetup{%
+    frametitle={\colorbox{lightgray}{\kaishu\,#1\,}},
+    frametitleaboveskip=-0.5\ht\strutbox,
+    frametitlealignment=\raggedright
+  }%
+  \begin{mdframed}[style=exampledefault]
 }{\end{mdframed}}
 
 %\setCJKfamilyfont{jamspmi}{MS PMincho}
@@ -184,33 +517,33 @@ frametitlealignment=\raggedright
 
 \newcommand{\Figref}[1]{Figure~\ref{#1}}
 \newcommand{\fig}[3]{
- \begin{figure}[!ht]
- \begin{center}
- \scalebox{#3}{\includegraphics{figs/#1.ps}}
- \vspace{-0.1in}
- \caption[ ]{\label{#1} #2}
- \end{center}
- \end{figure}
+  \begin{figure}[!ht]
+    \begin{center}
+      \scalebox{#3}{\includegraphics{figs/#1.ps}}
+      \vspace{-0.1in}
+      \caption[ ]{\label{#1} #2}
+    \end{center}
+  \end{figure}
 }
 
 \newcommand{\figtwo}[8]{
- \begin{figure}
- \parbox[b]{#4 \textwidth}{
- \begin{center}
- \scalebox{#3}{\includegraphics{figs/#1.ps}}
- \vspace{-0.1in}
- \caption{\label{#1}#2}
- \end{center}
- }
- \hfill
- \parbox[b]{#8 \textwidth}{
- \begin{center}
- \scalebox{#7}{\includegraphics{figs/#5.ps}}
- \vspace{-0.1in}
- \caption{\label{#5}#6}
- \end{center}
- }
- \end{figure}
+  \begin{figure}
+    \parbox[b]{#4 \textwidth}{
+      \begin{center}
+        \scalebox{#3}{\includegraphics{figs/#1.ps}}
+        \vspace{-0.1in}
+        \caption{\label{#1}#2}
+      \end{center}
+    }
+    \hfill
+    \parbox[b]{#8 \textwidth}{
+      \begin{center}
+        \scalebox{#7}{\includegraphics{figs/#5.ps}}
+        \vspace{-0.1in}
+        \caption{\label{#5}#6}
+      \end{center}
+    }
+  \end{figure}
 }
 
 \setlength{\abovedisplayskip}{8pt}

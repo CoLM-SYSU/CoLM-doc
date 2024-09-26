@@ -1,4 +1,5 @@
 \chapter{碳氮库结构}\label{碳氮库结构}
+\echapter{Carbon and Nitrogen Pools}
 %\addcontentsline{toc}{chapter}{碳氮库结构}
 \begin{mymdframed}{代码}
   本章对应代码源文件位于\texttt{main/BGC/}目录下。
@@ -19,6 +20,7 @@ PFT次网格结构中，存在植被类型间的土壤无机氮竞争，多个�
 
 
 \section{植被碳氮库结构}\label{植被碳氮库结构}
+\esection{Vegetation Carbon and Nitrogen Pools}
 植被碳库包括叶、细根、活茎、死茎、活粗根和死粗根6个植被营养器官，在接下来章节的公式中，我们用下标${\mathrm {lf}}$, ${\mathrm {fr}}$, ${\mathrm {ls}}$, ${\mathrm {ds}}$, ${\mathrm {lr}}$和${\mathrm {dr}}$分别代表这6个营养器官。每个植被营养器官包含组织结构库、存储库和传输库3个子库，公式中我们用${\mathrm {t}}$, ${\mathrm {s}}$和${\mathrm {x}}$表示。
 因此，每套植被类型有总共18个植被碳库。其中，组织库代表植被营养器官的主要结构组织部分的碳储量，是植被碳库的主要组成部分；存储碳库和传输碳库分别是长期和短期的非结构碳库，为落叶植被萌发初期提供初始碳。
 初始碳供用可以保证植被生长出足够的叶，维持生长季的光合作用。植被氮库除了包含与碳库相对应的18个营养器官氮库之外，还包含1个再利用氮库，公式中我们用${\mathrm {rt}}$代表(retranslocation nitrogen的缩写)，以刻画植被机体在凋落前回收利用氮的生理机能。因此每种植被类型有总共19个植被氮库。
@@ -34,14 +36,16 @@ PFT次网格结构中，存在植被类型间的土壤无机氮竞争，多个�
   \begin{figure}[htbp]
     \centering
     \includegraphics{Figures/碳氮库结构/CoLM植被碳氮循环网络示意图.png}
-    \caption{CoLM植被碳氮循环网络示意图 \citep{lu2020full}}
+    \caption[CoLM植被碳氮循环网络示意图]{CoLM植被碳氮循环网络示意图 \citep{lu2020full}}
     \label{fig:CoLM植被碳氮循环网络示意图}
   \end{figure}
 }
 
 \section{土壤凋落物碳氮库结构}\label{土壤凋落物碳氮库结构}
+\esection{Soil Litter Carbon and Nitrogen Pools}
 土壤凋落物的碳储存同样动态模拟，被按照成分和周转时间的长短进行分类，土壤凋落物碳氮库均具有垂直分层结构的刻画。
 \subsection{碳氮库分类}\label{碳氮库分类}
+\esubsection{Pool Classification}
 土壤凋落物的碳储分为7个有机碳库：代谢凋落物、纤维素凋落物、木质素凋落物、粗木质残体、快速土壤周转库、
 慢速土壤周转库和惰性土壤周转库，在公式中我们分别用${\mathrm {met}}$, ${\mathrm {cel}}$, ${\mathrm {lig}}$, ${\mathrm {cwd}}$, ${\mathrm {fast}}$, ${\mathrm {slow}}$, ${\mathrm {pass}}$来代表。凋落物和快速土壤周转库的周转时间都在几个月到几年之间，粗木质残体、
 慢速土壤周转库和惰性土壤周转库的周转时间范围分布可以从几年到上千年，表现出极大的土壤异质性。
@@ -55,11 +59,12 @@ PFT次网格结构中，存在植被类型间的土壤无机氮竞争，多个�
   \begin{figure}[htbp]
     \centering
     \includegraphics{Figures/碳氮库结构/CoLM土壤凋落物碳氮循环网络示意图.png}
-    \caption{CoLM土壤凋落物碳氮循环网络示意图 \citep{huang2018matrix}  }
+    \caption[CoLM土壤凋落物碳氮循环网络示意图]{CoLM土壤凋落物碳氮循环网络示意图 \citep{huang2018matrix}  }
     \label{fig:CoLM土壤凋落物碳氮循环网络示意图}
   \end{figure}
 }
 \subsection{垂直分层结构}\label{垂直分层结构}
+\esubsection{Vertical Stratification}
 由于土壤水热条件的垂直差异，土壤碳氮存储垂直分布模拟也极其重要，且与土壤水热条件的垂直分布特点联系紧密。
 CoLM模拟土壤和凋落物的碳氮库垂直结构，与土壤水热模拟保持一致，土壤和凋落物的碳氮库垂直方向上也分为10层。
 每层土壤和凋落物分别具有不同的输入(叶片和根系的凋落输入)和输出(分解呼吸)。

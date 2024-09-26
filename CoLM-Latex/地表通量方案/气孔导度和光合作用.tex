@@ -1,4 +1,5 @@
 \chapter{光合作用和气孔导度}
+\echapter{Photosynthesis and Stomatal Conductance}
 %\addcontentsline{toc}{chapter}{光合作用和气孔导度}
 \begin{mymdframed}{代码}
 本节对应的代码文件为\texttt{MOD\_AssimStomataConductance.F90}。
@@ -7,6 +8,7 @@
 %\begin{光合作用和气孔导度}
 
 \section{植物的光合作用}\label{植物的光合作用}
+\esection{Plant Photosynthesis}
 CoLM光合作用模型是建立在冠层尺度、双大叶冠层结构基础上的，即冠层尺度的净光合同化速率($A_{\mathrm{n}}$)等于阳叶冠层的净光合同化速率($A_{\mathrm{n,sun}}$)加上阴叶冠层的净光合同化速率($A_{\mathrm{n,sun}}$)：
 \begin{equation}\label{Ansun_Ansha}
 A_{\mathrm{n}}=A_{\mathrm{n,sun}}+A_{\mathrm{n,sha}}
@@ -136,7 +138,7 @@ R_{\mathrm{d,sun}}=\tau_{\mathrm{{base }}} \cdot V_{\mathrm{cmax 25}} \cdot \fra
 \begin{equation}\label{R_d1_sha}
 R_{\mathrm{d,sha}}=\tau_{\mathrm{{base }}} \cdot V_{\mathrm{cmax 25}} \cdot \frac{2.0^{\frac{T_{\mathrm{v}}-T_{\mathrm{op}}}{10}}}{1+{\mathrm e}^{1.3 \cdot\left(T_{\mathrm{v}}-T_{\mathrm{d m}}\right)}} \cdot f_{\mathrm{w,sha}} \cdot L_{\mathrm{v,sha}}
 \end{equation}
-其中$T_{\mathrm{dm}}$是叶呼吸的高温抑制温度常数，单位 K; $\tau_{\mathrm{base}}$是基础呼吸速率系数\todo{可以给出设定值。}，无量纲。
+其中$T_{\mathrm{dm}}$是叶呼吸的高温抑制温度常数，单位 K; $\tau_{\mathrm{base}}$是基础呼吸速率系数，无量纲。以上参数设置可参考附录表~\ref{tab:USGS植被光合作用参数1}、\ref{tab:IGBP植被光合作用参数1}和\ref{tab:PFT植被光合作用参数1}。
 
 在方程\eqref{An1sun}和\eqref{An1sha}求解最小值的计算中，我们将三值最小问题的求解拆分为两个二值最小问题的求解：
 \begin{equation}\label{min_Ac_Aj_Ae}
@@ -154,9 +156,11 @@ R_{\mathrm{d,sha}}=\tau_{\mathrm{{base }}} \cdot V_{\mathrm{cmax 25}} \cdot \fra
 
 
 \section{气体扩散方程和气孔导度模型}\label{气体扩散方程和气孔导度模型}
+\esection{Gas Diffusion and Conductance Models}
 气孔是植被和大气相互作用的最重要通道，陆地生态系统碳水耦合很大程度取决于气孔的行为。CoLM在净光合同化速率和蒸腾速率计算中，考虑植被气孔的行为，结合气体扩散方程，刻画了碳水通量与浓度梯度之间的重要关系。
 
 \subsection{气体扩散方程}
+\esubsection{Gas Diffusion Equation}
 
 CoLM将CO$_2$和水汽的气体扩散问题类比于电路问题进行建模，利用叶绿体细胞间、叶表和冠层大气的$\rm CO_2$浓度和水汽浓度梯度，来刻画环境对植被碳水通量的驱动力~\eqref{A_n2_sun}--~\eqref{ea_ei_sha}，如图~\ref{fig:叶片气孔光合作用导度模型示意图} 所示。
 %
@@ -187,6 +191,7 @@ E_{\mathrm{tr,sha}}=\left(\frac{e_{\mathrm{a}}-e_{\mathrm{i}}}{P_{\mathrm {a}}}\
 气孔导度理论认为植被根据自身光合同化速率、环境大气水分亏缺以及土壤水分胁迫等因素，主动调控气孔导度。CoLM的气孔导度模型包含最优气孔导度模型和经验气孔导度模型两个选择，默认情况下对C3植被采用基于最优水分利用效率理论的WUE最优气孔导度模型~\citep{Liang2023}，对C4植物仍采用传统的Ball-Berry经验气孔导度模型。
 
 \subsection{WUE最优气孔导度模型}
+\esubsection{WUE Stomatal Model}
 
 最优气孔导度模型假设在无水分胁迫的条件下，气孔总会自我调节使得水分利用效率最大，如果净光合同化速率($ A_{\mathrm{n,sun}}$和$ A_{\mathrm{n,sha}}$)和蒸腾（$ E_{\mathrm{tr,sun}}$和$ E_{\mathrm{tr,sha}}$)都被视为气孔导度的函数，水分利用效率($ A_{\mathrm{n,sun}}/E_{\mathrm{tr,sun}}$和$ A_{\mathrm{n,sha}}/E_{\mathrm{tr,sha}}$)能够取到极值的条件是，净光合同化速率和蒸腾对气孔导度($ g_{\mathrm{s,sun}}$和$ g_{\mathrm{s,sha}}$)偏微分为常数：
 \begin{equation}\label{lambda_sun}
@@ -196,7 +201,7 @@ E_{\mathrm{tr,sha}}=\left(\frac{e_{\mathrm{a}}-e_{\mathrm{i}}}{P_{\mathrm {a}}}\
 \lambda_{\mathrm{sha}}=\frac{\mathrm{d} E_{\mathrm{tr,sha}}/\mathrm{d} g_{\mathrm{s,sha}}}{\mathrm{d} A_{\mathrm{n,sha}}/\mathrm{d} g_{\mathrm{s,sha}}}
 \end{equation}
 
-我们将常数$\lambda_{\mathrm{sun}}$和$\lambda_{\mathrm{sha}}$分别称为阳叶和阴叶的边际水分利用成本，根据扩散方程~\eqref{A_n2_sun}--~\eqref{ea_ei_sha}，边际水分利用效率的计算可以进一步展开，由于阳叶和阴叶的计算方式相同，我们将它的计算合并为一组公式，同时代表阳叶和阴叶的计算，在蒸腾偏微分的计算中~\eqref{dEdgs}，我们忽略了叶片边界层导度：
+我们将常数$\lambda_{\mathrm{sun}}$和$\lambda_{\mathrm{sha}}$分别称为阳叶和阴叶的边际水分利用成本，根据扩散方程~\eqref{A_n2_sun}--\eqref{ea_ei_sha}，边际水分利用效率的计算可以进一步展开，由于阳叶和阴叶的计算方式相同，我们将它的计算合并为一组公式，同时代表阳叶和阴叶的计算，在蒸腾偏微分的计算中~\eqref{dEdgs}，我们忽略了叶片边界层导度：
 \begin{equation}\label{dEdgs}
 \frac{\mathrm{d} E_{\mathrm{tr}}}{\mathrm{d} g_{\mathrm{s}}}=\frac{e_{\mathrm{i}}-e_{\mathrm{a}}}{P_{\mathrm {a}}}
 \end{equation}
@@ -249,7 +254,7 @@ F\left(g_{\mathrm{s}},c_{\mathrm{i}}\right)=1.6P_{\mathrm {a}}A_{\mathrm{n}}\lef
     \end{cases}
 \end{equation}
 
-将胞间$\mathrm {CO_2}$分压~\eqref{R_d1_sha}代入光合作用模块~\eqref{An1sun}-~\eqref{R_d1_sha}，即可计算光合同化速率$A_{\mathrm{n,sun}}$和$A_{\mathrm{n,sha}}$。结合光合同化速率和气体扩散方程就可推导出阳叶和阴叶的气孔导度:
+将胞间$\mathrm {CO_2}$分压~\eqref{R_d1_sha}代入光合作用模块~\eqref{An1sun}--\eqref{R_d1_sha}，即可计算光合同化速率$A_{\mathrm{n,sun}}$和$A_{\mathrm{n,sha}}$。结合光合同化速率和气体扩散方程就可推导出阳叶和阴叶的气孔导度:
 
 \begin{equation}\label{gssolu}
     \begin{cases}
@@ -260,6 +265,7 @@ F\left(g_{\mathrm{s}},c_{\mathrm{i}}\right)=1.6P_{\mathrm {a}}A_{\mathrm{n}}\lef
 
 
 \subsection{Ball-Berry经验气孔导度模型}
+\esubsection{Ball-Berry Model}
 
 
 
@@ -276,21 +282,21 @@ $r_{\mathrm{s,sun}}$和$r_{\mathrm{s,sha}}$代表阳叶和阴叶冠层尺度的�
 
 
 因为气孔控制植被大气气体交换的同时受植被自身的光合能力和土壤水分亏缺的影响，需要联立光合作用模块方程、气体扩散方程，气孔导度模型和土壤水分胁迫方案，在阳叶和阴叶上分别求解冠层尺度气孔导度。
-由方程~\eqref{A_n2_sun}和~\eqref{A_n2_sha} 可知：
+由方程~\eqref{A_n2_sun} 和~\eqref{A_n2_sha} 可知：
 \begin{equation}\label{cs_a1sun}
 c_{\mathrm{s,sun}}=c_{\mathrm{a}}-\frac{1.37 A_{\mathrm{n,sun}}}{g_{\mathrm{b}}} P_{\mathrm {a}}
 \end{equation}
 \begin{equation}\label{cs_a1sha}
 c_{\mathrm{s,sha}}=c_{\mathrm{a}}-\frac{1.37 A_{\mathrm{n,sha}}}{g_{\mathrm{b}}} P_{\mathrm {a}}
 \end{equation}
-由方程~\eqref{ea_ei_sun}和~\eqref{ea_ei_sha}可知：
+由方程~\eqref{ea_ei_sun} 和~\eqref{ea_ei_sha}可知：
 \begin{equation}\label{e_s1sun}
 e_{\mathrm{s,sun}}=\left(\frac{e_{\mathrm{a}}}{g_{\mathrm{s,sun}}}+\frac{e_{\mathrm{i}}}{g_{\mathrm{b}}}\right) /\left(\frac{1}{g_{\mathrm{b}}}+\frac{1}{g_{\mathrm{s,sun}}}\right)
 \end{equation}
 \begin{equation}\label{e_s1sha}
 e_{\mathrm{s,sha}}=\left(\frac{e_{\mathrm{a}}}{g_{\mathrm{s,sha}}}+\frac{e_{\mathrm{i}}}{g_{\mathrm{b}}}\right) /\left(\frac{1}{g_{\mathrm{b}}}+\frac{1}{g_{\mathrm{s,sha}}}\right)
 \end{equation}
-将方程~\eqref{e_s1sun}和~\eqref{e_s1sha}分别代入方程~\eqref{rs_a1sun}和~\eqref{rs_a1sha}中，得到关于$g_{\mathrm{s,sun}}$和$g_{\mathrm{s,sha}}$的两个一元二次方程：
+将方程~\eqref{e_s1sun} 和~\eqref{e_s1sha}分别代入方程~\eqref{rs_a1sun} 和~\eqref{rs_a1sha}中，得到关于$g_{\mathrm{s,sun}}$和$g_{\mathrm{s,sha}}$的两个一元二次方程：
 \begin{equation}\label{ei_cssun}
 \frac{e_{\mathrm{i}} c_{\mathrm{s,sun}}}{m A_{\mathrm{n,sun}} P_{\mathrm {a}}} g_{\mathrm{s,sun}}^{2}+\left(\frac{e_{\mathrm{i}} c_{\mathrm{s,sun}}\left(g_{\mathrm{b}} -b f_{\mathrm{w,sun}}\right)}{m A_{\mathrm{n,sun}} P_{\mathrm {a}}}-e_{\mathrm{i}}\right) g_{\mathrm{s,sun}}
 -e_{\mathrm{a}} g_{\mathrm{b}}+\frac{b f_{\mathrm{w,sun}} g_{\mathrm{b}} e_{\mathrm{i}} c_{\mathrm{s,sun}}}{m A_{\mathrm{n,sun}} P_{\mathrm {a}}}=0
@@ -299,30 +305,33 @@ e_{\mathrm{s,sha}}=\left(\frac{e_{\mathrm{a}}}{g_{\mathrm{s,sha}}}+\frac{e_{\mat
 \frac{e_{\mathrm{i}} c_{\mathrm{s,sha}}}{m A_{\mathrm{n,sha}} P_{\mathrm {a}}} g_{\mathrm{s,sha}}^{2}+\left(\frac{e_{\mathrm{i}} c_{\mathrm{s,sha}}\left(g_{\mathrm{b}} -b f_{\mathrm{w,sha}}\right)}{m A_{\mathrm{n,sha}} P_{\mathrm {a}}}-e_{\mathrm{i}}\right) g_{\mathrm{s,sha}}
 -e_{\mathrm{a}} g_{\mathrm{b}}+\frac{b f_{\mathrm{w,sha}} g_{\mathrm{b}} e_{\mathrm{i}} c_{\mathrm{s,sha}}}{m A_{\mathrm{n,sha}} P_{\mathrm {a}}}=0
 \end{equation}
-冠层尺度的气孔导度 ($g_{\mathrm{s,sun}}$和$g_{\mathrm{s,sha}}$) 的解即为一元二次方程\eqref{ei_cssun}和\eqref{ei_cssha}的正根，其中叶片表层$\mathrm{CO_2}$分压 ($c_{\mathrm{s,sun}}$和$c_{\mathrm{s,sha}}$) 由方程~\eqref{cs_a1sun}和~\eqref{cs_a1sha} 得出，$A_{\mathrm{n,sun}}$和$A_{\mathrm{n,sha}}$由光合作用模块公式~\eqref{An1sun}和~\eqref{An1sha} 得出，
-但仍然包含未知变量阳叶和阴叶的胞间 $\mathrm{CO_2}$ 分压 ($c_{\mathrm{i,sun}}$和$c_{\mathrm{i,sha}}$)，完整求解光合气孔模式还需根据$\mathrm{CO_2}$气体扩散方程~\eqref{A_n2_sun}和~\eqref{A_n2_sha} 得出：
+冠层尺度的气孔导度 ($g_{\mathrm{s,sun}}$和$g_{\mathrm{s,sha}}$) 的解即为一元二次方程~\eqref{ei_cssun} 和~\eqref{ei_cssha}的正根，其中叶片表层$\mathrm{CO_2}$分压 ($c_{\mathrm{s,sun}}$和$c_{\mathrm{s,sha}}$) 由方程~\eqref{cs_a1sun} 和~\eqref{cs_a1sha} 得出，$A_{\mathrm{n,sun}}$和$A_{\mathrm{n,sha}}$由光合作用模块公式~\eqref{An1sun} 和~\eqref{An1sha} 得出，
+但仍然包含未知变量阳叶和阴叶的胞间 $\mathrm{CO_2}$ 分压 ($c_{\mathrm{i,sun}}$和$c_{\mathrm{i,sha}}$)，完整求解光合气孔模式还需根据$\mathrm{CO_2}$气体扩散方程~\eqref{A_n2_sun} 和~\eqref{A_n2_sha} 得出：
 \begin{equation}\label{ci_1sun}
 c_{\mathrm{i,sun}}=c_{\mathrm{s,sun}}-\frac{1.6 A_{\mathrm{n,sun}} P_{\mathrm {a}}}{g_{\mathrm{s,sun}}}
 \end{equation}
 \begin{equation}\label{ci_1sha}
 c_{\mathrm{i,sha}}=c_{\mathrm{s,sha}}-\frac{1.6 A_{\mathrm{n,sha}} P_{\mathrm {a}}}{g_{\mathrm{s,sha}}}
 \end{equation}
-气孔导度-光合作用耦合问题可以被数学地抽象为求解非线性方程组问题，即联立方程~\eqref{An1sun}, ~\eqref{An1sha}, \eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ei_cssun}--%
+气孔导度-光合作用耦合问题可以被数学地抽象为求解非线性方程组问题，即联立方程~\eqref{An1sun}、\eqref{An1sha}、 \eqref{cs_a1sun}、 \eqref{cs_a1sha} 和~ \eqref{ei_cssun}--%
 %, \eqref{ei_cssha}, \eqref{ci_1sun}和
-\eqref{ci_1sha}，求解未知变量 $g_{\mathrm{s,sun}}$, $g_{\mathrm{s,sha}}$, $c_{\mathrm{i,sun}}$, $c_{\mathrm{i,sha}}$, $c_{\mathrm{s,sun}}$, $c_{\mathrm{s,sha}}$, $A_{\mathrm{n,sun}}$和 $A_{\mathrm{n,sha}}$。详细求解方案见章节~\ref{光合气孔耦合模型的数值计算方案}。
+\eqref{ci_1sha}，求解未知变量 $g_{\mathrm{s,sun}}$、$g_{\mathrm{s,sha}}$、$c_{\mathrm{i,sun}}$、$c_{\mathrm{i,sha}}$、$c_{\mathrm{s,sun}}$、$c_{\mathrm{s,sha}}$、$A_{\mathrm{n,sun}}$和 $A_{\mathrm{n,sha}}$。详细求解方案见章节~\ref{光合气孔耦合模型的数值计算方案}。
 
 
 \section{光合气孔耦合模型的数值计算方案}\label{光合气孔耦合模型的数值计算方案}
+\esection{Numerical Schemes for Photosynthetic Coupling}
 
 \subsection{最优气孔导度模型的计算方案}
+\esubsection{Optimal Conductance Scheme}
 
-由于最优气孔导度模型的胞间$\mathrm {CO_2}$分压可以直接被环境变量和边际水分利用成本参数所显示表达~\eqref{cisolu}，光合同化速率~\eqref{An1sun}-~\eqref{R_d1_sha}和气孔导度~\eqref{gssolu}也相应可以被胞间$\mathrm {CO_2}$分压显示表达，所以，最优气孔导度模型的计算不需要依赖于任何数值求解。
+由于最优气孔导度模型的胞间$\mathrm {CO_2}$分压可以直接被环境变量和边际水分利用成本参数所显示表达~\eqref{cisolu}，光合同化速率~\eqref{An1sun}--\eqref{R_d1_sha} 和气孔导度~\eqref{gssolu} 也相应可以被胞间$\mathrm {CO_2}$分压显示表达，所以，最优气孔导度模型的计算不需要依赖于任何数值求解。
 
 \subsection{经验气孔导度模型的数值计算方案}
+\esubsection{Empirical Conductance Scheme}
 
 但由于胞间$\mathrm {CO_2}$分压不能被经验气孔导度模型所显式表达，且光合作用Farquhar模型具有强非线性，只能联立气体扩散方程和气孔导度方程进行数值求解，CoLM采用割线法和抛物线法的混合方法对气孔导度-光合作用耦合问题进行数值求解。上一节已经介绍过关于气孔导度--光合作用耦合问题需联立求解的8个方程~\eqref{An1sun}, \eqref{An1sha}, \eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ei_cssun}--%
 %, \eqref{ei_cssha}, \eqref{ci_1sun}和
-\eqref{ci_1sha}。其中，胞间$\mathrm{CO_2}$浓度是连接气孔导度模型和光合作用模型的关键，胞间$\mathrm{CO_2}$分压既是Farquhar光合作用模型的输入，即方程~\eqref{An1sun}和~\eqref{An1sha}的自变量，又是气体扩散方程的输入，即方程~\eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ci_1sun} 和~\eqref{ci_1sha} 的自变量。同时，胞间$\mathrm{CO_2}$分压($c_{\mathrm{i}}$)和叶表$\mathrm{CO_2}$分压($c_{\mathrm{s}}$)之间的梯度也是刻画净光合同化速率($A_{\mathrm{n}}$)及气孔导度关系的重要变量。因此原方程组可简化为两个零点方程$f_1(c_{\mathrm{i,sun}})=0$和$f_2(c_{\mathrm{i,sha}})=0$。方程组的求解问题可等价为对目标函数$f_1(c_{\mathrm{i,sun}})$和$f_2(c_{\mathrm{i,sha}})$的零点搜索问题，具体目标函数可化为：
+\eqref{ci_1sha}。其中，胞间$\mathrm{CO_2}$浓度是连接气孔导度模型和光合作用模型的关键，胞间$\mathrm{CO_2}$分压既是Farquhar光合作用模型的输入，即方程~\eqref{An1sun} 和~\eqref{An1sha}的自变量，又是气体扩散方程的输入，即方程~\eqref{cs_a1sun}, \eqref{cs_a1sha}, \eqref{ci_1sun} 和~\eqref{ci_1sha} 的自变量。同时，胞间$\mathrm{CO_2}$分压($c_{\mathrm{i}}$)和叶表$\mathrm{CO_2}$分压($c_{\mathrm{s}}$)之间的梯度也是刻画净光合同化速率($A_{\mathrm{n}}$)及气孔导度关系的重要变量。因此原方程组可简化为两个零点方程$f_1(c_{\mathrm{i,sun}})=0$和$f_2(c_{\mathrm{i,sha}})=0$。方程组的求解问题可等价为对目标函数$f_1(c_{\mathrm{i,sun}})$和$f_2(c_{\mathrm{i,sha}})$的零点搜索问题，具体目标函数可化为：
 \begin{align}\label{f1_cisun}
 f_{\mathrm{1}}\left(c_{\mathrm{i,sun}}\right)=&\,c_{\mathrm{i,sun}}-c_{\mathrm{s,sun}}\big(A_{\mathrm{n,sun}}\left(c_{\mathrm{i,sun}}\right)\big) \nonumber \\[1ex]
 +& \, \frac{1.6A_{\mathrm{n,sun}}\left(c_{\mathrm{i,sun}}\right)P_{\mathrm {a}} }{g_{\mathrm{s,sun}}\Big(A_{\mathrm{n,sun}}\left(c_{\mathrm{i,sun}}\right),c_{\mathrm{s,sun}}\big(A_{\mathrm{n,sun}}\left(c_{\mathrm{i,sun}}\right)\big)\Big)}
