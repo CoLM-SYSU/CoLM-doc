@@ -1,7 +1,5 @@
-% \chapter{植被冠层和土壤水分}
-%\addcontentsline{toc}{chapter}{陆地表面的水分循环}
-
 \chapter{植被冠层水分}\label{植被冠层截留}
+\echapter{Canopy Water}
 
 % \section{植被冠层截留}\label{植被冠层截留}
 \begin{mymdframed}{代码}
@@ -60,6 +58,7 @@ CoLM支持包括CoLM2014、CLM4.5、CLM5.0、VIC、MATSIRO、JULES 和Noah-MP等
 以下针对不同方案分别进行详细介绍。
 
 \section{CoLM2014方案}
+\esection{CoLM 2014 Scheme}
 在CoLM2014方案中,公式~\eqref{eq:冠层水量控制方程} 中的直接穿透量$D_{\mathrm {d}} $与辐射传输中的光穿透量的计算方法一致,由下式给出:
 \begin{equation}
   D_{\mathrm{d}}=\delta_{\mathrm{p}} \cdot p=\delta_{\mathrm{p}} \cdot\left(p_{\mathrm{c,rain}}+p_{\mathrm{c,snow}}+p_{\mathrm{l,rain}}+p_{\mathrm{l,snow}}\right)
@@ -149,6 +148,7 @@ $x_{\mathrm{sc}}$的相位首先由冠层温度决定。如果冠层温度大于
 
 
 \section{CLM4.5方案}
+\esection{CLM4.5 Scheme}
 CLM4.5的冠层截留方案~\citep{oleson2013technical}~和CoLM2014的方案非常类似。主要的区别在于公式~\eqref{eq:消光系数} 中的$K_{\mathrm {p}} $的计算。
 $K_{\mathrm {p}} $在CLM4.5冠层截留方案中取固定值0.5，即：
 %
@@ -180,6 +180,7 @@ $K_{\mathrm {p}} $在CLM4.5冠层截留方案中取固定值0.5，即：
 其他均与CoLM2014方案保持一致。
 
 \section{CLM5.0方案}
+\esection{CLM5.0 Scheme}
 CLM5.0的参数化方案与CLM4.5有较大的差别~\citep{lawrence2019community}。其中最重要的差别之一是对雨和雪的截留方案的进一步细化,但不考虑网格内部的降水类型和分布。在CLM5中,液态水的降落过程和CoLM、CLM4.5类似。液态降水在通过冠层时要么被树冠截留,要么直接落到雪/土壤表面(穿透)或从植被上滴下(树冠滴流)。固态降水的处理也类似，但需要额外考虑先前截留的雪的卸载(unloading)。具体计算流程如下:
 
 \begin{enumerate}
@@ -233,6 +234,7 @@ CLM5.0的参数化方案与CLM4.5有较大的差别~\citep{lawrence2019community
 
 
 \section{Noah-MP方案}
+\esection{Noah-MP Scheme}
 Noah-MP模型冠层截留方案的计算流程与CoLM2014、CLM4.5和CLM5有较大的区别~\citep{niu2011community,he2023modernizing}。具体介绍如下：
 \begin{enumerate}
   \item 分别计算理想状态下固态和液态水在叶片上的最大蓄水量(mm)\\
@@ -311,6 +313,7 @@ Noah-MP模型冠层截留方案的计算流程与CoLM2014、CLM4.5和CLM5有较�
 
 
 \section{VIC方案}
+\esection{VIC Scheme}
 VIC的冠层截留方案~\citep{liang1994simple,hamman2018variable}主要基于~\citet{storck2002measurement}在俄勒冈一个山区气候站点的积雪积累和消融观测结果。
 \begin{enumerate}
   \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)\\
@@ -385,6 +388,7 @@ VIC的冠层截留方案~\citep{liang1994simple,hamman2018variable}主要基于~
 
 
 \section{MATSIRO方案}
+\esection{MATSIRO Scheme}
 MATSIRO的冠层截留方案主要基于~\cite{storck2002measurement}在俄勒冈一个山区气候站点的积雪积累和消融观测结果。
 \begin{enumerate}
   \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)
@@ -458,6 +462,7 @@ MATSIRO的冠层截留方案主要基于~\cite{storck2002measurement}在俄勒�
 \end{enumerate}
 
 \section{JULES方案}
+\esection{JULES Scheme}
 JULES的参数化方案与CLM5.0方案较为接近。对雨和雪的截留方案的进一步细化,但不考虑网格内部的降水类型和分布。
 \begin{enumerate}
   \item 分别计算固态和液态水在叶片上的最大蓄水量(mm)\\

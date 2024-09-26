@@ -1,4 +1,5 @@
 \chapter{火灾}\label{ch:火灾}
+\echapter{Fire}
 \begin{mymdframed}{代码}
   本章对应代码源文件位于\texttt{main/BGC/}目录下。
 \end{mymdframed}
@@ -6,12 +7,14 @@
 CoLM 里采用 Li 火灾参数化方案~\citep{LiF2012,LiF2013,LiF2017,LiF2019}。它包括四个部分:热带密闭林区由砍伐引起的火灾、农业火、泥炭火、以及农田和热带密闭林以外的非泥炭火。其中,前三部分是简单的经验统计方程;而第四部分是中等复杂程度的过程模式,是该火灾方案的主体。燃烧面积由天气气候、植被特征(组成和生物量)、人类活动决定。在燃烧面积计算完成后,我们估计火灾影响。
 
 \section{农田和热带密闭林区以外的非泥炭火}
+\esection{Non-Peat Fires}
 格点燃烧面积 $A_{\mathrm {b}} $ (\unit{km^2.s^{-1}})是着火数$N_{\mathrm {f}} $ (\unit{count.s^{-1}})以及每个火的平均蔓延面积$a$ (\unit{km^2.count^{-1}})的乘积:
 \begin{equation}
   A_{\mathrm {b}}  = N_{\mathrm {f}}  a
 \end{equation}
 
 \subsection{火发生}
+\esubsection{Fire Occurrence}
 格点的着火数是格点点火数 $N_{\mathrm {i}} $ ($\text{count}~\text{s}^{-1}$),燃料供给率 $f_{\mathrm {b}} $, 燃料可燃性 $f_{\mathrm {m}} $,以及未被人为抑制的比例 $f_{\mathrm{se,o}}$ 的乘积:
 \begin{equation}
   N_{\mathrm {f}}  = N_{\mathrm {i}}  f_{\mathrm {b}}  f_{\mathrm {m}}  f_{\mathrm{se,o}}
@@ -98,6 +101,7 @@ $$l_{\mathrm{RH_{\rm 30d}}}=1-\max\left[0.75, \min\left(1, \frac{RH_{\rm 30d}}{9
 
 
 \subsection{火蔓延}
+\esubsection{Fire Spread}
 每个火的平均蔓延面积为:
 \begin{equation}
   a = a^* F_{\mathrm{se}}
@@ -156,6 +160,7 @@ $u_{\mathrm {p}} $ (km s$^{-1}$)为下风区的蔓延速率:
 
 
 \subsection{农业火}
+\esubsection{Agricultural Fires}
 
 农田上发生的火灾燃烧面积为:
 \begin{equation}
@@ -181,6 +186,7 @@ $u_{\mathrm {p}} $ (km s$^{-1}$)为下风区的蔓延速率:
 
 
 \section{热带密闭林区由人类砍伐引起的火灾}
+\esection{Human-Induced Fires}
 热带密闭林区(树覆盖率高于 60\%)由人类砍伐引起的火灾即包括发生在砍伐区的火灾(deforestation fires)也包括不受控制蔓延到砍伐区以外的(degradation fires)。其燃烧面积由下列公式计算:
 \begin{equation}
   A_{\mathrm{b}}=b f_{\mathrm{l u}} f_{\mathrm{c l i, d}} f_{\mathrm{b}} A_{\mathrm{g}}
@@ -204,6 +210,7 @@ $u_{\mathrm {p}} $ (km s$^{-1}$)为下风区的蔓延速率:
 
 
 \section{泥炭火}
+\esection{Peat Fires}
 
 泥炭火燃烧面积为:
 \begin{equation}
@@ -222,7 +229,9 @@ $u_{\mathrm {p}} $ (km s$^{-1}$)为下风区的蔓延速率:
 其中, $\theta_{\text{17cm}}$ 为表层 17 cm 土壤湿度。
 
 \section{火灾影响}
+\esection{Fire Impacts}
 \subsection{燃烧引起的碳排放}
+\esubsection{Carbon Emissions}
 
 对于过火区,第 $j$ 个 PFT 生物量燃烧引起的碳排放${\phi}_{j} $(\unit{g.C.s^{-1}.m^{-2}})为:
 %
@@ -243,6 +252,7 @@ $是燃烧完全因子 (表~\ref{tab:burning_factors})。 此外,我们假设 50
 
 
 \subsection{火灾引起的植物组织死亡}
+\esubsection{Vegetation Mortality}
 
 对于燃烧后剩余的碳库部分，即
 \begin{equation}
@@ -268,6 +278,7 @@ $ 是植物组织死亡因子,相应的碳由植物碳库转移到 litter 或 CW
 
 
 \subsection{火灾引起的痕量气体和气溶胶排放}
+\esubsection{Trace Gas and Aerosol Emissions}
 
 对于第$j$个PFT和第$x$种痕量气体和气溶胶,其排放量 (\unit{g.species.s^{-1}})为:
 \begin{equation}

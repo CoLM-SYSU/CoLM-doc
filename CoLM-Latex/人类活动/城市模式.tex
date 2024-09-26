@@ -1,4 +1,5 @@
 \chapter{城市模式}\label{城市模式}
+\echapter{Urban Model}
 %\addcontentsline{toc}{chapter}{城市模式}
 \begin{mymdframed}{代码}
   本章对应代码源文件位于\texttt{main/URBAN/}目录下。
@@ -20,6 +21,7 @@ CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等�
 }
 
 \section{CoLM城市模式结构与功能}
+\esection{CoLM Urban Model Structure and Functions}
 不同于传统的城市街谷假设模型，CoLM采用由单栋建筑物组成的建筑群落来表征城市，如图~\ref{fig:CoLM城市模式结构和功能示意图} 所示。
 建筑物随机分布，包括建筑物位置及朝向。城市几何参数包括建筑物覆盖度$f_{\rm b}$(即屋顶覆盖面积占比$f_{\mathrm{roof}}$)，地面(透水、不透水面)覆盖度$f_{\rm g}$ ($f_{\mathrm{gimp}}$，$f_{\mathrm{gper}}$)，建筑物高度${\mathrm {H}}$，建筑物高度与建筑物平均边长比$\rm H/L$ (建筑物底面考虑为正方形，边长记为$\rm L$)，植被冠层中心高度$h_{\rm v}$，城市树木叶面积指数 LAI 及茎面积指数 SAI，植被(树)覆盖面积比例记为$f_{\rm v}$。
 其中$f_{\rm b}+f_{\rm g}=1$，$f_{\mathrm{gimp}}+f_{\mathrm{gper}}=1$。城市水体覆盖单独表征，其过程考虑为等效湖泊进行计算。
@@ -55,11 +57,13 @@ $S$表示阴影，$\rm H/W$在推导过程中表示为$\rm HW$，$\rm H/L$表示
 
 
 \section{短波辐射传输}\label{短波辐射传输}
+\esection{Shortwave Radiation Transfer}
 \begin{mymdframed}{代码}
   本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Shortwave.F90}。
 \end{mymdframed}
 
 \subsection{无植被覆盖时短波辐射传输}\label{无植被覆盖时短波辐射传输}
+\esubsection{Without Vegetation}
 \begin{mymdframed}{代码}
   本部分对应代码为\texttt{URBAN/MOD\_Urban\_Shortwave.F90}文件中\texttt{UrbanOnlyShortwave}函数。
 \end{mymdframed}
@@ -184,6 +188,7 @@ $F_{\mathrm{sw}}f_{\mathrm{wsun}}$，$F_{\mathrm{sw}}f_{\mathrm{wsha}}$，$F_{\m
 单位面积的辐射吸收和城市反照率计算同公式(\ref{s_wsun_wsha_gimp_gper_2})、(\ref{alpha_u})和(\ref{alpha_u2})，在此不再列出。
 
 \subsection{有植被覆盖时短波辐射传输}\label{有植被覆盖时短波辐射传输}
+\esubsection{With Vegetation}
 \begin{mymdframed}{代码}
   本部分对应代码为\texttt{URBAN/MOD\_Urban\_Shortwave.F90}文件中\texttt{UrbanVegShortwave}函数。
 \end{mymdframed}
@@ -335,7 +340,9 @@ $F_{\mathrm{sw}}^\prime f_{\mathrm{wsha}}$，$F_{\mathrm{sg}}^\prime f_{\mathrm{
 漫射入射辐射的传输矩阵同直射入射辐射情景。其求逆后的结果可以直接用于漫射入射辐射，各组分的辐射吸收和反照率计算过程在此不再赘述。
 
 \section{长波辐射传输}
+\esection{Longwave Radiation Transfer}
 \subsection{无植被覆盖时长波辐射传输}
+\esubsection{Without Vegetatioin}
 \begin{mymdframed}{代码}
   本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Longwave.F90}。
 \end{mymdframed}
@@ -398,6 +405,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
 
 
 \subsection{有植被覆盖时长波辐射传输}\label{有植被覆盖时长波辐射传输}
+\esubsection{With Vegetation}
 \begin{mymdframed}{代码}
   本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Longtwave.F90}和\texttt{URBAN/MOD\_Urban\_\allowbreak Flux.F90}。
 \end{mymdframed}
@@ -447,6 +455,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
   L^{\uparrow}=L_{\mathrm{wsun}}^{\uparrow} F_{\mathrm{ws}}^{\prime}+L_{\mathrm{wsha}}^{\uparrow} F_{\mathrm{ws}}^{\prime}+L_{\mathrm{gimp}}^{\uparrow} F_{\mathrm{gs}}^{\prime}+L_{\mathrm{gper}}^{\uparrow} F_{\mathrm{gs}}^{\prime}+L_{\mathrm{v}}^{\uparrow} F_{\mathrm{v s}}
 \end{equation}
 \section{湍流交换过程}\label{城市湍流过程}
+\esection{Turbulent Exchange Processes}
 \begin{mymdframed}{代码}
   本章节对应代码包含于\texttt{URBAN/MOD\_Urban\_Flux.F90}。
 \end{mymdframed}
@@ -455,6 +464,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
 下面就无植被覆盖和有植被覆盖时对不同于自然植被湍流交换过程的部分进行简要说明。
 
 \subsection{无植被覆盖时湍流交换过程}\label{无植被覆盖时湍流交换过程}
+\esubsection{Without Vegetation}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}中\texttt{UrbanOnlyFlux()}函数。
 \end{mymdframed}
@@ -665,6 +675,7 @@ $T_2$和$T_3$分别表示第二层和第三层空气温度，$T_{\mathrm{g}}$为
 \end{equation}
 
 \subsection{有植被覆盖时湍流交换过程}
+\esubsection{With Vegetation}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}中\texttt{UrbanVegFlux()}函数。
 \end{mymdframed}
@@ -1093,9 +1104,11 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\eqref{delta_cal}。
 
 \section{城市温度传导计算}
+\esection{Urban Temperature}
 城市内透水面、不透水面(地面)、墙面和屋顶的温度传导计算以自然地表土壤温度传导计算为基础，基本计算过程一致，下面主要介绍城市的不同之处。
 
 \subsection{透水面温度计算}
+\esubsection{Pervious Ground Temperature}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Urban\_PerviousTemperature.F90}。
 \end{mymdframed}
@@ -1103,6 +1116,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 城市透水面即为土壤，与自然地表土壤的热传递过程计算一致 ，考虑10层土壤和最多5层积雪，分层方案与土壤(积雪)一致，考虑相变过程，土壤热力参数从全球数据中读取。不同之处在于表面接收的短波、长波辐射及湍流交换通量(感热、潜热)由城市相应模块求解得到。
 
 \subsection{不透水面温度计算}
+\esubsection{Impervious Ground Temperature}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Urban\_ImperviousTemperature.F90}。
 \end{mymdframed}
@@ -1111,6 +1125,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 另外在有雪、冰和水存在时，需要对第一层不透水面的热容进行订正。不透水面不考虑水在地表以下的传输，相变过程只考虑第一层不透水面(地表积水/冰)及以上积雪覆盖层。
 
 \subsection{墙面温度计算}
+\esubsection{Wall Temperature}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Urban\_WallTemperature.F90}。
@@ -1123,6 +1138,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 
 
 \subsection{屋顶温度计算}
+\esubsection{Roof Temperature}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Urban\_RoofTemperature.F90}。
@@ -1133,6 +1149,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 
 
 \section{城市水文过程}
+\esection{Urban Hydrological Processes}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Urban\_Hydrology.F90}。
@@ -1146,8 +1163,10 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 
 
 \section{城市人为热模拟}
+\esection{Anthropogenic Heat}
 
 \subsection{建筑能耗模型}\label{建筑能耗模型}
+\esubsection{Building Energy Model}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Urban\_BEM.F90}。
@@ -1270,6 +1289,7 @@ $T_{\mathrm{roof}}$、$T_{\mathrm{wsun,n}}$、$T_{\mathrm{wsha,n}}$为最里层(
 $F_{\mathrm{hac}}, F_{\mathrm{wst}}$和$F_{\mathrm{ach}}$作为感热项 (源项) 加入到城市湍流交换平衡方程中，参考图~\ref{fig:建筑能耗模型示意图}。
 
 \subsection{人体代谢热}
+\esubsection{Human Metabolic Heat}
 
 \begin{mymdframed}{代码}
   本节及下节对应的代码文件为\texttt{MOD\_Urban\_LUCY.F90}。
@@ -1297,6 +1317,7 @@ $F_{\mathrm{hac}}, F_{\mathrm{wst}}$和$F_{\mathrm{ach}}$作为感热项 (源项
 \end{table}
 
 \subsection{交通热}
+\esubsection{Traffic Heat}
 \begin{mymdframed}{代码}
   本节及下节对应的代码文件为\texttt{MOD\_Urban\_LUCY.F90}。
 \end{mymdframed}
@@ -1321,6 +1342,7 @@ $P$为格点内人口密度 (\unit{pop.km^{-2}})，由LandScan数据得到；$D$
 \end{table}
 
 \subsection{考虑人为热时城市内部湍流交换}
+\esubsection{Urban Turbulent Exchange with Anthropogenic Heat}
 
 \begin{mymdframed}{代码}
   本节及下节对应的代码文件为\texttt{MOD\_Urban\_Flux.F90}。

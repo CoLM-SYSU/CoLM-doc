@@ -1,8 +1,10 @@
 \chapter{冰川模式}
+\echapter{Glacier Model}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_Glacier.F90}。
 \end{mymdframed}
 \section{冰川模式结构}
+\esection{Glacier Model Structure}
 冰川模式的结构类似于雪盖土壤层，区别在于冰川模式将土壤层替换为了冰层。即在CoLM中，冰川分为上部的雪盖层和下部的冰川冰层（图~\ref{fig:模式中雪盖土壤和雪盖冰川的分层对比}）。雪盖根据雪盖高度$z_{\mathrm{sno}}$被分为最多五层，从上到下分别用$i=-4,-3,-2,-1,0$编号。$i=0$表示底层，与冰面相邻，$i=snl+1$表示顶层，$snl$表示雪层总数的相反数（$-5\leqslant snl\leqslant 0$）。冰川冰的分层规则和土壤一致，默认分为10层，具体分层规则见章节~\ref{土壤和积雪的垂直分层}。雪盖冰川层的厚度表示为$\Delta z_i$（m），每一层的深度$z_i$（m）取为其上边界深度 $z_{\mathrm{h},i-1}$和下边界深度$z_{\mathrm{h},i}$的中点\todo{好像表述有问题}。冰川模式的物理方案均遵从无植被覆盖下的雪盖土壤层的计算方案来设定\todo{意思不太明确}。
 
 {
@@ -15,6 +17,7 @@
 }
 
 \section{冰川表面湍流通量计算方案}
+\esection{Glacier Turbulent Flux Scheme}
 冰川表面湍流通量的计算方案类似无植被覆盖下的雪盖土壤地表的湍流通量计算方案（见章节~\ref{无植被覆盖地表湍流通量的计算方案}），这里再对计算流程做一个简单说明。
 
 冰川表面可以分为被积雪覆盖和未被积雪覆盖两部分，因此在计算湍流通量前，需先计算地表的积雪覆盖比例$f_{\mathrm{sno}}$，其计算同陆表积雪覆盖比例（章节~\ref{积雪覆盖比例}）。
@@ -56,6 +59,7 @@
 \end{enumerate}
 
 \section{冰川温度计算方案}
+\esection{Glacier Temperature Scheme}
 冰川垂直层温度的计算方案同样类似于雪盖土壤层的垂直层温度计算方案。假设冰川无水平物质能量交换，则垂直方向上的一维能量平衡方程如下：
 \begin{equation}\label{eq:GlacierThermalCons}
   c \frac{\partial T}{\partial t}=-\frac{\partial F}{\partial z},  \quad F=-\lambda \frac{\partial T}{\partial z}
@@ -197,6 +201,7 @@ $\lambda_{\mathrm {sub}} $和$\lambda_{\mathrm {vap}} $分别为固态水升华�
 
 
 \section{冰川的水文过程计算方案}
+\esection{Glacier Hydrological Processes}
 在CoLM的冰川系统中，冰层的厚度与质量始终固定不变，故水文过程主要发生在冰层之上的雪盖层。采用这种处理方法的原因是，冰川通常位于水的冻结温度以下，CoLM假定冰层的融水会滞留在原地等待重新冻结，即使在较为温暖的一些区域，冰层融化的液态水也被认为永久滞留在冰层之中，不与外界进行水通量的交换。
 
 对于仅需考虑的雪盖水文过程，按以下流程进行计算，其中每个部分在前文均有完整介绍，读者可自行翻阅。

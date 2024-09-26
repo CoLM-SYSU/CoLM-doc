@@ -1,8 +1,10 @@
 \chapter{地表湍流通量方案}\label{ch:地表湍流通量}
+\echapter{Surface Turbulent Flux Schemes}
 %\addcontentsline{toc}{chapter}{地表湍流交换过程}
 
 %\begin{地表湍流交换过程}
 \section{基本理论}\label{基本理论}
+\esection{Fundamental Theory}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_FrictionVelocity.F90}。
 \end{mymdframed}
@@ -257,6 +259,7 @@ $R_{\mathrm{ib}}$与$\zeta_{\mathrm{a}}$的关系为
 
 
 \section{考虑大涡影响的新理论}\label{考虑大涡影响的新理论}
+\esection{New Theory with Large Eddy Effects}
 \begin{mymdframed}{代码}
 本节对应的代码文件为\texttt{MOD\_TurbulenceLEddy.F90}。
 \end{mymdframed}
@@ -327,6 +330,7 @@ $V_{\mathrm{a}}=\sqrt{u_{\mathrm{a}}^{2}+v_{\mathrm{a}}^{2}+U_{\mathrm{c}}^{2}} 
 
 
 \section{无植被覆盖地表湍流通量的计算方案}\label{无植被覆盖地表湍流通量的计算方案}
+\esection{Turbulent Flux for Bare Surfaces}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_GroundFluxes.F90}，部分代码包含于\texttt{MOD\_Thermal.F90}和\texttt{MOD\_SnowFraction.F90}。
 \end{mymdframed}
@@ -419,6 +423,7 @@ $\theta_{\mathrm{sat,1}}$表示表层土壤体积含水量(即孔隙度，\unit{
 
 
 \section{一维植被湍流交换模型}\label{一维植被湍流交换模型}
+\esection{1-D Vegetation Turbulent Model}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_LeafTemperature.F90、MOD\_Thermal.F90}。
 \end{mymdframed}
@@ -607,6 +612,7 @@ $\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm {g}}}}{{\rm d}T_{\mathrm {g}}}$的计
 
 
 \section{三维植被湍流交换模型}\label{三维植被湍流}
+\esection{3-D Vegetation Turbulent Model}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_LeafTemperaturePC.F90}。
 \end{mymdframed}
@@ -615,6 +621,7 @@ $\frac{{\rm d}q_{\mathrm{sat}}^{T_{\mathrm {g}}}}{{\rm d}T_{\mathrm {g}}}$的计
 
 
 \subsection{100\%覆盖植被情景}\label{百分百植被覆盖湍流}
+\esubsection{100\% Coverage Case}
 CoLM2014假设$d$和$z_0$与植被高度成固定比例，即$d=\frac{2}{3}h$，$z_0=\frac{1}{10}h$，其中$h$表示树高。
 这对于稀疏植被可能并不成立~\citep{zeng2007consistent}。在本版本，$d$的计算采用~\citet{choudhury1988}的方案，
 是通过拟合~\citet{shaw1982aerodynamic}二阶闭合理论结果得到：
@@ -680,6 +687,7 @@ $r_{\mathrm {b}}$是对植被冠层内风速廓线的积分：
 其中$z_{\mathrm{0hg}}$表示用于潜热/感热交换计算的粗糙度\citep{zeng1998effect}。
 
 \subsection{考虑稳定度影响的植被粗糙度方案}\label{考虑稳定度粗糙度方案}
+\esubsection{Roughness Scheme with Stability Consideration}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_RoughnessLength.F90}。
 \end{mymdframed}
@@ -783,6 +791,7 @@ $r_{\mathrm {b}}$是对植被冠层内风速廓线的积分：
 
 
 \subsection{单层植被湍流交换}\label{单层植被湍流交换}
+\esubsection{One-Layer Canopy Turbulence Exchange}
 单层植被不同于100\%植被覆盖假设，而是考虑植被树冠之间可能存在空隙，
 即植被树冠存在一定的水平分布，树冠覆盖度可介于0$\sim$100\%之间。这种植被结果假设与三维植被辐射模型假设一致。
 
@@ -924,6 +933,7 @@ $u_{\mathrm{comb}}$和$K_{\mathrm{comb}}$同公式 (\ref{ucomb}) 和 (\ref{kcomb
 
 
 \subsection{多层植被湍流交换}\label{多层植被湍流交换}
+\esubsection{Multi-Layer Canopy Turbulence Exchange}
 {
   \begin{figure}[htbp]
     \centering
@@ -1386,6 +1396,7 @@ $r_{\mathrm {b}}$和$r_{\mathrm {d}}$的计算都是对$u$和$K$廓线的积分�
 \end{equation}
 
 \section{土壤阻抗计算}
+\esection{Soil Resistance}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SoilSurfaceResistance.F90}。
 \end{mymdframed}

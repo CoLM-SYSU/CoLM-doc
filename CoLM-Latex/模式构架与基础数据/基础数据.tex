@@ -1,9 +1,11 @@
 \chapter{基础数据}\label{基础数据}
+\echapter{Fundamental Datasets}
 %\addcontentsline{toc}{chapter}{地表输入数据}
 
 陆面模式需要多种地表数据作为输入参数，包括地表覆盖数据、土壤数据、植被数据、地形数据、水文数据、城市数据、作物数据和生物地球化学数据。其中部分数据是作为可选数据用来运行一些功能模块。本章节对CoLM所需的数据进行分类简要介绍，说明其在模式中的作用，同时列出目前模式版本所用的数据及其特性。详细的数据信息及相关数据制作方法请参见《通用陆面模式2024数据系统》。
 
 \section{地表覆盖数据}\label{地表覆盖数据}
+\esection{Land Cover Data}
 
 地表覆盖数据是刻画陆表异质性主要数据之一，在模式中用来确定地表下垫面模拟对象。地表覆盖数据的主要作用之一是从其高分辨细网格数据进行同覆盖类型网格聚合，从而生成模式网格中的次网格面积占比，并根据次网格类型进行相应的地表属性赋值。因此，地表覆盖数据是陆面模式不可或缺的数据类型。地表覆盖数据一般采用高分辨率（10--10\textsuperscript{3}m）作为原始数据进行聚合。CoLM提供多种地表覆盖数据供用户选择，如表~\ref{tab:地表覆盖数据} 所示。
 
@@ -33,6 +35,7 @@
 \end{table}
 
 \subsection{USGS地表覆盖数据}\label{USGS地表覆盖数据}
+\esubsection{USGS Land Cover Data}
 USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global Land Cover Characterization (GLCC) database Version 2.0
 (\url{https://www.usgs.gov/centers/eros/science/usgs-eros-archive-land-cover-products-global-land-cover-characterization-glcc})。
 数据为全球 \ang{;;30} (约1公里) 分辨率，经纬度网格，单时次数据，划分类型如表~\ref{tab:USGS覆盖类型} 所示。如采用USGS地表覆盖类型进行模拟 (LCT方案)，其不同类型相关参数请参考附录~\ref{USGS地表覆盖类型相关参数}。
@@ -74,6 +77,7 @@ USGS地表覆盖数据来自美国地质调查局(USGS)，数据全称为Global 
 \end{table}
 
 \subsection{MODIS IGBP地表覆盖数据}\label{IGBP地表覆盖数据}
+\esubsection{MODIS IGBP Land Cover Data}
 IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging Spectroradiometer
 （MODIS）MCD12Q1 Version 6（The Terra and Aqua combined MODIS Land Cover Type data product）
 的数据（\url{https://lpdaac.usgs.gov/products/mcd12q1v006/}），该数据（LC\_Type1）是Terra和Aqua两种卫星数据结合产生~\citep{Friedl2019}。数据为全球 \ang{;;15}（约500 m）分辨率，经纬度网格(对原始数据做了投影转换)，每年一幅数据，时间范围从2001至今，分类如表~\ref{tab:IGBP覆盖类型} 所示。
@@ -106,6 +110,7 @@ IGBP地表覆盖数据来自美国宇航局（NASA）Moderate Resolution Imaging
 \end{table}
 
 \subsection{ESA CCI地表覆盖数据}\label{ESA地表覆盖数据}
+\esubsection{ESA CCI Land Cover Data}
 ESA CCI地表覆盖产品是由欧洲宇航局(ESA)的气候变化计划(CCI)提供(\url{http://maps.elie.ucl.ac.be})，全球覆盖，空间分辨率300 m，时间覆盖1992--2020年。采用联合国粮食及农业组织地表覆盖分类系统(UNLCCS)，共分为36个土地覆盖类别(包括22种一级分类，14种二级分类)，如表~\ref{tab:ESA覆盖类型} 所示。
 
 \begin{table}[htbp]
@@ -155,6 +160,7 @@ ESA CCI地表覆盖产品是由欧洲宇航局(ESA)的气候变化计划(CCI)提
 \end{table}
 
 \subsection{GLC FCS30地表覆盖数据}\label{GLC FCS30地表覆盖数据}
+\esubsection{GLC FCS30 Land Cover Data}
 GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地表覆盖数据，该数据空间分辨率为30m，采用了气候变化倡议土地覆盖数据集(CCI LC)分类系统，包含16个一级土地覆盖类型以及35个细分土地覆盖类型。GLC FCS30产品覆盖1985-2022年，其中1985-2000年数据为每五年更新一次，2000-2022则逐年更新。GLC FCS30分类与IGBP分类的对应关系如表~\ref{tab:GLC FCS30与IGBP分类对应关系} 所示。
 \begin{table}[htbp]
   \fontsize{9.5}{9.5}\selectfont
@@ -225,6 +231,7 @@ GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地�
 
 
 \section{土壤数据}\label{土壤数据}
+\esection{Soil Data}
 
 土壤数据包括对土壤组成、水热性质、土壤厚度和辐射特性等相关的描述，是陆面模式中不可或缺的数据类型。CoLM 的土壤数据包括土壤基础属性数据（GSDE 或 SoilGrids）、土壤水热特征参数、基岩深度数据和土壤颜色数据，如表~\ref{tab:土壤数据} 所示。
 
@@ -248,6 +255,7 @@ GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地�
 \end{table}
 
 \subsection{土壤基础属性}\label{土壤基础属性}
+\esubsection{Soil Properties}
 土壤基础属性数据采用Global Soil Dataset for Earth System Modeling（GSDE，\url{http://globalchange.bnu.edu.cn/research/soilw}）~\citep{shangguan2014global}
 和SoilGrids（\url{https://www.soilgrids.org/}）\citep{poggio2021soilgrids} 两套数据。GSDE采用土壤连接法融合了世界土壤图和多个区域级或国家级的土壤数据库，基于土壤剖面和土壤类型图生成。其空间分辨率为1公里。其垂直层次为8层 （0--0.045, 0.045--0.091, 0.091--0.166, 0.166--0.289, 0.289--0.493, 0.493--0.829, 0.829--1.383, 1.383--2.296 m），这一分层方案与CoLM一致（第一层对应CoLM第一和第二层）。SoilGrids基于土壤剖面和数百个环境协变量图层采用基于机器学习的数字土壤制图方法生成，空间分辨率为250 m。其垂直层次为6层（0--0.05，0.05--0.15，0.15--0.3，0.3--0.6，0.6--1，1--2 m）。对两个数据按CoLM的土壤分层方案采用深度加权方法进行了标准化处理。其中第十层无数据，用第九层填补。土壤基础属性数据如表~\ref{tab:土壤基础数据}所示，主要用于计算土壤水力热力参数。
 
@@ -277,6 +285,7 @@ GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地�
 
 
 \subsection{土壤水热特征参数数据}\label{土壤水热特征参数数据}
+\esubsection{Soil Thermal and Hydraulic Parameters}
 基于土壤基础数据集GSDE和SoilGrids，CoLM团队开发了全球1 km分辨率土壤水热特征参数数据供陆面模式土壤水热传输过程模拟直接使用，如表~\ref{tab:土壤水热特征参数数据}所示。
 在土壤热力参数方面（详见第~\ref{sec_thermalpar} 节），CoLM提供了八种土壤导热率计算方案以供选择，分别为~\citet{farouki1981thermal}方案，\citet{Johansen1975} 方案，
 \citet{cote2005} 方案，\citet{balland2005}方案，\citet{lu2007improved} 方案，\citet{Yan2019thermal}方案，\citet{tarnawski2012series} 方案和~\citet{de1963thermal} 方案。
@@ -315,17 +324,19 @@ GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地�
 \end{table}
 
 \subsection{基岩深度}\label{基岩深度}
+\esubsection{Depth to Bedrock}
 
 基岩深度数据来自Global Depth to Bedrock Dataset for Earth System Modeling (GDBDESM，\url{http://globalchange.bnu.edu.cn/research/dtb.jsp}, \citet{shangguan2017mapping})。该数据集基于土壤剖面、地质钻孔和环境协变量图层采用机器学习的数字土壤制图方法生成，空间分辨率为1公里。基岩深度数据可以用于确认模式的土壤分层数目。
 
 
 \subsection{土壤颜色数据}\label{土壤颜色}
-
+\esubsection{Soil Color}
 目前土壤颜色数据采用 CLM 4.5，全球 20 种颜色分类数据，
 包括干土和湿土的可见光波段和近红外波段。漫射光与直射光相应波段反射率查找表数值一致。该查找表是~\citet{lawrence2007representing}通过二流近似植被辐射传输模型与卫星遥感观测反照率数据拟合得到。
 
 
 \section{植被数据}\label{植被数据}
+\esection{Vegetation Data}
 
 植被覆盖显著影响地表动量、能量、水分和气体通量交换，其结构相关数据是陆表重要特征参量，包括叶面积指数数据、植被功能型相关数据和植被形态结构数据。
 
@@ -335,6 +346,7 @@ GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地�
 
 
 \subsection{叶面积指数数据}\label{叶面积指数数据}
+\esubsection{Leaf Area Index}
 
 \begin{table}[htbp]
   \begin{threeparttable}
@@ -360,6 +372,7 @@ GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地�
 FLUXNET 站点 LAI 数据集是通过提取滤波处理后的第 6.1 版 MODIS LAI 数据得到的。提取过程中对 MODIS 遥感地表覆盖产品与站点地表覆盖类型进行了匹配，并对可能存在识别偏移的情况进行校正，制作了 259 个站点的 LAI 数据集以及站点通量源区内的平均 LAI 数据集。
 
 \subsection{植被功能型数据}\label{植被功能型数据}
+\esubsection{Plant Functional Type Dataset}
 
 当模式运行设置为PFT或者PC次网格类型时，需要格点的PFT组成类型及面积占比、PFT LAI和SAI数据（表~\ref{tab:PFT数据}）。这些数据是对网格植被结构的进一步刻画。
 
@@ -410,6 +423,7 @@ PFT和PC次网格方案采用同样的植被功能型分类，如表~\ref{tab:PF
 \end{table}
 
 \subsection{植被形态结构数据}\label{植被形态结构数据}
+\esubsection{Vegetation Structure Data}
 %
 CoLM主要通过三种参数——树高、树冠深度以及树冠宽度，来对植被结构进行描述。
 
@@ -462,6 +476,7 @@ CoLM主要通过三种参数——树高、树冠深度以及树冠宽度，来�
 
 
 \section{地形数据}
+\esection{Topographic Data}
 
 地形数据主要包含高程数据，即地表的海拔高度。利用高程数据，可以计算地形相关的参数，列入坡度、坡向及遮蔽因子等参数，可用于河道径流相关数据生成和地表入射辐射通量计算。
 
@@ -485,15 +500,18 @@ CoLM主要通过三种参数——树高、树冠深度以及树冠宽度，来�
 
 
 \section{水文数据}\label{水文数据}
+\esection{Hydrological Data}
 
 CoLM中的水文数据包括水文学基础数据、河网数据、水库数据以及湖泊数据。其中水文学基础数据和河网数据是运行径流模式所需的输入数据；水库和湖泊数据是运行水库调度模式和湖泊模式所需的输入数据。
 
 \subsection{水文学基础数据}
+\esubsection{Basic Hydrological Data}
 水文学基础数据主要用于流域单元网格，CoLM中使用高程、水流方向、集水面积和湖泊范围等变量。
 
 水流方向和集水面积数据来自MERIT Hydro~\citep{yamazaki2019merit}。 MERIT Hydro为全球格点数据，分辨率为3弧秒（赤道处约90米），由高程数据（MERIT DEM）和水体数据集（G1WBM、GSWO和OpenStreetMap）融合生成。MERIT Hydro使用算法识别和分辨实际的内陆流域和高程数据中误差引起的伪洼地，可近于自动地提取河网。除自动算法外，也进行了一定量的人工检查和编辑。评估结果表明，MERIT Hydro构建的水文学数据在集水面积和流域形状方面与其他经过质量控制的河网数据集显示出良好的一致性。
 
 \subsection{河网}
+\esubsection{River Networks}
 CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米超高精细分辨率的水文基础数据集 MERIT-Hydro ~\citep{yamazaki2019merit}，
 水文调整高程DEM数据 ~\citep{yamazaki2017high,yamazaki2012analysis}，以及河宽数据~\citep{yamazaki2014development};
 使用 \citet{yamazaki2009deriving} 开发的升尺度模式 Flexible Location of Waterways (FLOW) 计算得出。目前CaMa-Flood已经制备了01min（弧分）、03min、05min、06min、15min、30min和60min下运行所需的河网基础数据。具体而言，除了需要陆面模式计算得出的产流量 (runoff) 之外，CaMa-Flood模块还需要包括流域面积 ($A_{\mathrm {s}} $)，河道长度 ($L$)，河道宽度 ($W$) 及深度 ($B$) 以及用于计算平均漫滩水深的漫滩高程剖面等相关的次网格地形数据。除了河道横截面的宽度和深度数据以外，其他地形相关参数均可由 MERIT-hydro 直接计算得出。数据文件内容如表~\ref{tab:河网图及地形参数文件列表} 和表~\ref{tab:河网图及地形参数文件列表2} 所示。 
@@ -568,6 +586,7 @@ CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米�
 
 
 \subsection{水库}
+\esubsection{Reservoirs}
 模式中水库调度模块所用的水库基础数据主要包括：全球水库基本属性数据(GRanD)、全球水库水面面积数据(GRSAD)和全球水库几何数据(ReGeom)，如表~\ref{tab:水库模块所用的水库基础数据} 所示，根据这些数据可以进一步得到：
 \begin{enumerate}
   \item 与不同分辨率河网数据相匹配的水库位置信息；
@@ -604,12 +623,14 @@ CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米�
 
 
 \subsection{湖泊}
+\esubsection{Lakes}
 湖泊数据主要用于湖泊模式。HydroLAKES提供了全球所有面积大于10公顷的湖泊或水库岸线多边形数据\citep{messager2016nc}。
 
 湖泊深度数据来自Lake-depth data set Version 2.0~\citep{kourzeneva2012global}，数据为全球\ang{;;30} (约1公里)分辨率，经纬度网格，单时次数据。
 
 
 \section{城市数据}\label{城市数据}
+\esection{Urban Data}
 
 城市数据用于城市模式，所需基础数据主要包含城市覆盖、城市类型、建筑形态、辐射与热力属性、生态数据以及人类活动相关数据，通过以上数据刻画城市的结构以及物理性质。CoLM2024城市模式所用基础数据如表~\ref{tab:城市数据分类及来源} 所示。
 
@@ -659,11 +680,13 @@ CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米�
 }
 
 \subsection{城市覆盖}\label{城市覆盖}
+\esubsection{Urban Cover}
 城市地表覆盖数据采用MODIS-IGBP地表覆盖数据(章节~\ref{IGBP地表覆盖数据})中的城市覆盖类型作为判别依据。
 模式利用该数据集区分不同年份网格城市覆盖类型，获得城市在网格中的覆盖度，反应不同年份的城市覆盖变化。
 
 
 \subsection{城市类型}\label{城市类型}
+\esubsection{Urban Types}
 模式对城市覆盖地区不同城市类型进行细分。城市类型分类数据目前采取两种方案：
 \begin{enumerate}
   \item 传统的3类城市——高建筑街区 (Tall Building Distinct, TBD)、高密度(High Density, HD) 和中密度 (Medium Density, MD);
@@ -674,13 +697,14 @@ CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米�
   \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{Figures/基础数据/LCZ分类图示.jpg}
-    \caption{LCZ分类示意图~\citep{demuzere2020combining,stewart2012local}}
+    \caption[LCZ分类示意图]{LCZ分类示意图~\citep{demuzere2020combining,stewart2012local}}
     \label{fig:LCZ分类图示}
   \end{figure}
 }
 
 
 \subsection{建筑形态数据}\label{建筑形态数据}
+\esubsection{Urban Geometry}
 建筑形态数据主要用于城市模式描述城市次网格建筑形态，包括建筑高度、建筑比例、城市内透水面/不透水面占比、街谷高宽比以及屋顶与墙体的厚度，通过以上参数描述城市内部的形态特征。
 
 \subsubsection{建筑高度与建筑比例数据}\label{建筑高度与比例}
@@ -726,6 +750,7 @@ LCZ同样根据LCZ类型查找表，形态参数设置参考~\citet{stewart2014e
 }
 
 \subsection{建筑辐射及热力数据}\label{建筑辐射及热力数据}
+\esubsection{Urban Radiation and Thermal Data}
 建筑辐射与热力数据用于城市模式描述城市次网格建筑、透水面/不透水面的辐射与热力传导属性。
 对于传统城市分类，建筑辐射及热力参数目前根据\citet{oleson2020parameterization}基于\citet{jackson2010parameterization}的建筑数据开发的NCAR城市工具
 (Toolbox for Human-Earth SystemIntegration \& Scaling (THESIS) toolset, \url{http://www.cgd.ucar.edu/iam/projects/thesis/thesis-urbanproperties-tool.html})得到，该工具通过不同地区建筑材料构成为全球33个分区及3类城市生成建筑辐射及热力参数表。
@@ -744,6 +769,7 @@ LCZ分类建筑辐射参数参考~\citet{stewart2014evaluation}，热力参数�
 建筑热导率同建筑比热容，包括屋顶、墙壁和不透水面，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsection{城市生态数据}\label{城市生态数据}
+\esubsection{Urban Ecological Data}
 城市中的生态元素对城市局地气候起着非常重要的作用。CoLM城市生态数据包括树木LAI/SAI数据、树高数据、树木覆盖度和水体覆盖度数据。
 
 \subsubsection{城市LAI/SAI数据}\label{城市LAISAI数据}
@@ -767,6 +793,7 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 
 
 \subsection{城市人类活动数据}\label{城市人类活动数据}
+\esubsection{Human Activity Data}
 
 城市人类活动数据包括人口密度数据、LUCY国家分类数据~\citep{allen2011}，主要用于城市人为热计算。
 
@@ -778,6 +805,7 @@ LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国�
 
 
 \section{作物数据}
+\esection{Crop Data}
 
 作物数据主要用于作物模式，包括作物种类分布数据、施肥数据、播种时间数据、灌溉方式方式数据（表~\ref{tab:作物数据}）。
 
@@ -800,19 +828,24 @@ LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国�
 \end{table}
 
 \subsection{作物种类分布数据}\label{作物种类分布数据}
+\esubsection{Crop Distribution Data}
 64种作物相对分布数据来自CTSM 5.2陆表数据集。然后按此比例，放入CoLM作物总的覆盖率中，得到每种作物时空变化的分布。
 
 \subsection{施肥数据}\label{施肥数据}
+\esubsection{Crop Fertilization Data}
 格点工业肥施肥率 (\unit{m^2.(g\ N)^{-1}.yr^{-1}}) 数据来自 LUH2 数据~\citep{hurtt2011harmonization}，每年变化。\citet{lawrence2016land} 将其转换为每种作物类型的施肥率。
 
 \subsection{播种时间数据}\label{播种时间数据}
+\esubsection{Sowing Time Data}
 播种日数据采用 GGCMI phase 3 全球作物播种日数据集~\citep{jagermeyr2021climate}。为当前多年平均的播种日数据，无时间变化，空间分辨率为 0.5\textdegree。
 
 \subsection{灌溉方式数据}\label{灌溉方式数据}
+\esubsection{Irrigation Methods Data}
 灌溉模拟所需的灌溉方式数据来源于~\citet{yao2022Irrigation}全球灌溉方式地图数据，数据中共包括了32种灌溉作物的灌溉方式分布，每种作物在数据网格中仅考虑一种灌溉方式（滴灌、喷灌、漫灌）。~\citet{jagermeyr2015irrigation}采用决策树算法对AQUASTAT数据\citep{fao2014aquastat}进行了重处理，该算法根据不同作物灌溉面积、土壤类型、作物特性、社会经济等要素，划分了全球14种CFT的灌溉方式 (每种作物在网格上均可有3种不同的灌溉方式)，分辨率为0.5\textdegree。\citet{yao2022Irrigation} 则进一步将该数据中14种CFT与CLM5中的32种灌溉作物CFT进行匹配，并对数据进行重采样，得到新的全球灌溉方式数据。
 
 
 \section{生物地球化学数据}
+\esection{Biogeochemical Data}
 
 生物地球化学数据包括氮沉降数据、土壤含氧量数据、闪电频率数据、国民生产总值数据、泥炭地比例数据以及火灾峰值月份数据，用于生物地球化学循环和火灾相关功能模块的数据输入（表~\ref{tab:生物地球化学数据}）。
 
@@ -837,30 +870,37 @@ LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国�
 \end{table}
 
 \subsection{氮沉降数据}\label{氮沉降数据}
+\esubsection{Nitrogen Deposition Data}
 氮沉降是陆地生态系统的重要氮输入之一。近几十年来，人类活动造成大气氮沉降增加对生态系统生物地球化学循环产生了重要影响。由于区域地表氮沉降数据尚无法利用卫星直接观测得到，目前生物地球化学循环模式更多地利用大气模式或地球系统模式模拟得出。CoLM生物地球化学循环模块的氮沉降输入是$\mathrm{NO_y}$和$\mathrm{NH_x}$的总和，数据来源于CESM-WACCM的CMIP6历史时期和未来SSP情景模拟的集合平均。氮沉降历史时期数据包含1849年到2013年的时空变化，氮沉降未来时期数据包含1849--2101年的时空变化，未来情景包括SSP126，SSP245，SSP370和SSP585四种情景的预测模拟结果。数据的空间分辨率为0.9375\textdegree$\times$1.25\textdegree，数据在月尺度上刻画大气氮沉降的季节和年际变化。
 
 
 \subsection{土壤含氧量数据}\label{土壤含氧量数据}
+\esubsection{Soil Oxygen Content Data}
 土壤含氧量数据包括非淹没区域的土壤氧气浓度数据和土壤呼吸氧气消耗数据，用于硝化和反硝化反应的速率计算。其数据来源于2005--2017年CLM5的历史时期全球模拟，是全球分辨率2.5\textdegree$\times$1.875\textdegree 和土壤垂直10层分层的气候态数据，其时间分辨率为月尺度。
 
 
 \subsection{闪电频率数据}\label{闪电频率数据}
+\esubsection{Lightning Frequency Data}
 闪电频率数据用于火灾发生频率的预测。闪电频率数据提供了3小时气候态的全球数据(单位：\unit{flashes. km^{-2}.hr^{-1}})，空间分辨率是1.875\textdegree$\times$1.915\textdegree，是对1995--2011年NASA LIS/OTD 2小时2.5\textdegree{}格点产品(版本v2.2)进行线性插值而得到(\url{http://ghrc.msfc.nasa.gov})。
 
 
 \subsection{国民生产总值数据}\label{国民生产总值数据}
+\esubsection{GDP Data}
 国民生产总值数据同样用于火灾模型中对火灾发生频率的预测。国民生产总值数据来源于IPCC-SRES的基准年份GDP数据~\citep{van2007downscaling}，根据国家层面的世界银行世界发展指数计算得出~\citep{WorldBank2004,UNSTAT2005}。
 
 
 \subsection{泥炭地比例数据}\label{泥炭地比例数据}
+\esubsection{Peatland Proportion Data}
 泥炭地面积比例数据用于火灾模型中泥炭地火灾过火面积的计算。泥炭地面积比例数据的分辨率是全球0.5\textdegree，来源于三个矢量数据集：1.印度尼西亚和马来西亚婆罗洲泥炭地数据集~\citep{olson2001terrestrial}；2.加拿大泥炭地数据集~\citep{tarnocai2000peatlands}；3.北方区域(加拿大以外 45\textdegree N 以北区域)泥炭地数据集，来源于全球湖泊湿地数据库(GLWD)~\citep{lehner2004development}。
 
 
 \subsection{火灾峰值月份数据}\label{火灾峰值月份数据}
+\esubsection{Fire Peak Month Data}
 火灾峰值月份数据同样用于火灾模型，其空间分辨率是0.5\textdegree，来源于全球火灾排放数据库，版本3 (GFED3)，由CASA模型、MODIS和TRMM等卫星遥感数据产品综合计算得出~\citep{van2010global}。
 
 
 \section{土地利用土地覆盖变化数据}
+\esection{Land Use Land Cover Change Data}
 
 土地利用与土地覆盖变化是陆面模拟中重要强迫项之一，对模拟结果具有不可忽视的影响，特别是在局地及区域尺度。目前模式提供的地表覆盖数据有两种（表~\ref{tab:LULCC数据}），一种是默认的基于MODIS地表覆盖的2001--2022年地表输入数据，分辨率为500 m；另一种是准30 m分辨率地表数据。
 
@@ -885,6 +925,7 @@ LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国�
 
 
 \section{站点地表数据}
+\esection{Site Data}
 
 数据集共包含 90 个经过质量控制的高质量通量塔站点及其地表属性数据。属性数据包括通量塔站点的植被、土壤以及参考测量高度信息，这些数据均来自站点现场测量。该数据集旨在为陆面模式单点模拟提供更准确的地表属性数据，降低单点模拟的不确定性，提高单点校准、验证和评估的可靠性。
 

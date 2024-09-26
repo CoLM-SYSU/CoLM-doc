@@ -1,4 +1,5 @@
 \chapter{辐射通量方案}
+\echapter{Radiation Flux Schemes}
 %\addcontentsline{toc}{chapter}{辐射通量方案}
 
 \begin{mymdframed}{代码}
@@ -7,6 +8,7 @@
 
 
 \section{土壤反照率}\label{sec:土壤反照率}
+\esection{Soil Albedo}
 土壤反照率采用陆面模式BATS方案 \citep{dickinson1986biosphere,dickinson1993biosphere}，利用土壤颜色和土壤表层含水量计算得到，公式如下：
 \begin{equation}\label{eq:soil_albedo1}
   \alpha_{\mathrm{soi,vis,dir}}=\alpha_{\mathrm{soi,vis,dif}}=\min\left(\alpha_{\mathrm{sat, vis}}+\max\left(0,0.11-0.40 \theta_1\right), \alpha_{\mathrm{dry, vis}}\right)
@@ -19,6 +21,7 @@
 
 
 \section{永久性冰川反照率}\label{sec:永久性冰川反照率}
+\esection{Glacier Albedo}
 对于永久性冰川覆盖地表，简单将可见光波段反照率设置为0.8，近红外波段设置为0.55，直射光与漫射光一致，即：
 \begin{equation}
   \alpha_{\mathrm{ice,vis,dir}}=\alpha_{\mathrm{ice,vis,dif}}=0.8
@@ -29,6 +32,7 @@
 \end{equation}
 
 \section{内陆水体反照率}
+\esection{Inland Water Albedo}
 对于液态水在直射入射辐射情况下，反照率为太阳天顶角余弦值$\mu$的函数，计算为$\frac{0.05}{\mu+0.15}$；漫射入射辐射时，设置为常数0.1，可见光与近红外波段一致，即：
 %
 \begin{equation}
@@ -50,10 +54,12 @@
 \end{equation}
 
 \section{积雪反照率}
+\esection{Snow Albedo}
 
 CoLM提供两种积雪反照率方案可供选择：1) BATS积雪反照率方案(章节~\ref{BATS积雪反照率})；2) SNICAR积雪反照率方案(章节~\ref{SNICAR积雪反照率})。
 
 \subsection{BATS积雪反照率方案}\label{BATS积雪反照率}
+\esubsection{BATS Snow Albedo Scheme}
 
 CoLM2014以及之前版本采用 \citet{dickinson1986biosphere} BATS方案，当不打开SNICAR积雪反照率模块时采用，主要考虑太阳高度角和雪龄 (snow age) 两个主要参数，计算如下：
 \begin{equation}
@@ -109,6 +115,7 @@ $\tau_{\mathrm{sno}}$表示无量纲雪龄，是一预报变量，它随时间�
 其中等式右边$\alpha_{\mathrm{g}}$表示土壤、冰川或水体地表覆盖时的反照率，等式左边$\alpha_{\mathrm{g}}$表示考虑积雪覆盖订正后的地表反照率。对直射光/漫射光，可见光/近红外波段均按上式计算。
 
 \subsection{SNICAR积雪反照率方案}\label{SNICAR积雪反照率}
+\esubsection{SNICAR Snow Albedo Scheme}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SnowSnicar.F90}。
 \end{mymdframed}
@@ -128,7 +135,7 @@ CoLM另一种积雪反照率及其对太阳辐射吸收的模拟，采用雪、�
   \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\columnwidth]{Figures/辐射过程及辐射通量计算/SNICAR模型计算流程图_v2.png}
-    \caption{SNICAR积雪反照率计算流程图\citep{he2020SnowAlbedoRadiative}}
+    \caption[SNICAR积雪反照率计算流程图]{SNICAR积雪反照率计算流程图\citep{he2020SnowAlbedoRadiative}}
     \label{fig:SNICAR模型流程图}
   \end{figure}
 }
@@ -471,6 +478,7 @@ Adding-Doubling方案。在$\delta$函数调整后，再应用二流近似（Edd
 \end{table}
 
 \section{海洋反照率}\label{海洋反照率}
+\esection{Ocean Albedo}
 \begin{mymdframed}{代码}
   对应代码为\texttt{MOD\_Albedo.F90}文件中\texttt{albocean()}函数。
 \end{mymdframed}
@@ -533,6 +541,7 @@ Adding-Doubling方案。在$\delta$函数调整后，再应用二流近似（Edd
 \end{equation}
 
 \section{植被反照率---二流近似模型}\label{植被反照率二流近似模型}
+\esection{Vegetation Albedo---Two-Stream Model}
 \begin{mymdframed}{代码}
   对应代码为\texttt{MOD\_Albedo.F90}文件中\texttt{twostream()}函数。
 \end{mymdframed}
@@ -832,6 +841,7 @@ $L_{\mathrm{AI}}$在后续章节中也写成${\rm LAI}$。总的阴叶比例可�
 %同样，以上公式适用于可见光和近红外波段，以及直射和漫射入射辐射情况。
 
 \section{改进的二流近似植被辐射传输模型}\label{sec:改进的二流近似植被辐射传输模型}
+\esection{Improved Two-Stream Model}
 \begin{mymdframed}{代码}
   对应代码为\texttt{MOD\_Albedo.F90}文件中\texttt{twostream\_mod()}函数。
 \end{mymdframed}
@@ -934,6 +944,7 @@ $L_{\mathrm{AI}}$在后续章节中也写成${\rm LAI}$。总的阴叶比例可�
 
 
 \section{三维植被辐射传输模型}\label{三维植被辐射传输模型}
+\esection{3-D Vegetation Radiative Transfer Model}
 \begin{mymdframed}{代码}
   本章节对应的代码为\texttt{MOD\_3DCanopyRadiation.F90}。
 \end{mymdframed}
@@ -951,6 +962,7 @@ $L_{\mathrm{AI}}$在后续章节中也写成${\rm LAI}$。总的阴叶比例可�
 
 
 \subsection{单棵树冠模型}
+\esubsection{Single Tree Crown Model}
 单棵树冠模型基本假设是把植被树冠看成一个个的圆形球体，
 叶片在其中均一分布，且叶倾角为球形分布(即$G$函数为1/2，$G$函数为单位体积叶面在某方向上的平均投影面积)。
 首先考虑太阳辐射垂直入射，计算单棵球形树冠的直射透射率$T_{\mathrm{d,s}}\left(\tau\right)$：
@@ -1017,6 +1029,7 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
 
 
 \subsection{单层植被模型}
+\esubsection{One-Layer Model}
 单层植被模型假设球形树冠在水平方向上随机分布，但垂直投影不重叠。在植被覆盖率为$f_{\mathrm {c}}$时，不考虑重叠的植被阴影面积为：
 \begin{equation}
   S_{0}=f_{\mathrm{c}} / \mu
@@ -1145,6 +1158,7 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
 
 
 \subsection{三层植被模型}
+\esubsection{Three-Layer Model}
 三层植被模型的假设在单株植物模型和单层植被模型的基础上，认为层与层之间的树冠垂直投影不重叠，
 每层植被（PFT）树冠半径$(R$)、树冠中心高度($h$)相同(图~\ref{fig:三层植被结构示意图})。
 若某层植被含有多种PFT，则该层的$f_{\mathrm {c}}$为所含PFT各自$f_{\mathrm {c}}$的累加，
@@ -1288,6 +1302,7 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
 其中下标${\rm abd}, {\rm abi}$分别表示入射直射光和漫射光情况，下标$N$表示层数，$i$表示PFT编号。以上公式中省略了波段信息。
 
 \subsection{阴阳叶辐射吸收比例}
+\esubsection{Sunlit/Shaded Leaf Absorption}
 对于阳叶辐射吸收比例计算，\citet{yuan20143d}表3给出了一种计算阳叶以漫射辐射形式吸收量简单方法。在直射光入射情况下，假设随着冠层深度的增加所吸收漫射辐射通量密度函数为\(\frac{{\mathrm e}^{- Kx}}{\int_{0}^{{\rm LAI}}{{\mathrm e}^{- Kx}\mathrm{d}x}}\)，于是阳叶吸收漫射辐射比例为：
 %
 \begin{equation}
@@ -1330,6 +1345,7 @@ $\Phi_{3+}$为归一化结果(除以$0.25\omega^2/\pi$)。通过累加得到总�
 
 
 \section{三维植被长波辐射传输}\label{三维植被长波辐射传输}
+\esection{3-D Vegetation Longwave Radiative Transfer Model}
 \begin{mymdframed}{代码}
   本小节对应的代码包含于\texttt{MOD\_LeafTemperaturePC.F90}。
 \end{mymdframed}
@@ -1553,6 +1569,7 @@ $\Sigma4f_{\mathrm{c},i}\varepsilon_{\mathrm{v},i}\sigma T_{\mathrm{v},i}^3\Delt
 
 
 \section{短波吸收辐射通量}\label{短波吸收辐射通量}
+\esection{Shortwave Radiation Absorption}
 \begin{mymdframed}{代码}
   本章节对应代码为\texttt{MOD\_NetSolar.F90}。
 \end{mymdframed}
@@ -1587,6 +1604,7 @@ $\Sigma4f_{\mathrm{c},i}\varepsilon_{\mathrm{v},i}\sigma T_{\mathrm{v},i}^3\Delt
 
 
 \section{长波净辐射通量}\label{长波净辐射通量}
+\esection{Net Longwave Radiation}
 \begin{mymdframed}{代码}
   本章节对应代码包含于\texttt{MOD\_GroundTemperature.F90, MOD\_LeafTemperature.F90}。
 \end{mymdframed}
@@ -1628,6 +1646,7 @@ $\Sigma4f_{\mathrm{c},i}\varepsilon_{\mathrm{v},i}\sigma T_{\mathrm{v},i}^3\Delt
 以上计算是针对一维植被情景，对于三维植被净长波辐射计算见章节~\ref{三维植被长波辐射传输}。
 
 \section{太阳天顶角}\label{太阳天顶角}
+\esection{Solar Zenith Angle}
 \begin{mymdframed}{代码}
   本章节对应代码为\texttt{MOD\_OrbCoszen.F90}。
 \end{mymdframed}

@@ -1,4 +1,5 @@
 \chapter{植被生物地球化学循环过程}\label{植被生物地球化学循环过程}
+\echapter{Vegetation Biogeochemical Cycles}
 %\addcontentsline{toc}{chapter}{植被生物地球化学循环过程}
 \begin{mymdframed}{代码}
   本章对应代码源文件位于\texttt{main/BGC/}目录下。
@@ -12,6 +13,7 @@ CoLM植被生物地球化学循环模块存在复杂的碳氮循环网络，植�
 植被碳氮库的周转由物候过程和植被自然死亡过程共同控制。
 经过物候过程和植被自然死亡过程，植被凋落物进入土壤进一步进行地下生物地球化学循环。
 \section{植被自养呼吸}\label{植被自养呼吸}
+\esection{Vegetation Biogeochemical Cycles}
 
 CoLM的自养呼吸$CF_{\mathrm{ar,total}}$计算包括维持呼吸$CF_{\mathrm{mr,total}}$和生长呼吸$CF_{\mathrm{gr,total}}$，
 模型对他们分别进行模拟 \citep{lavigne1997growth,sprugel1995respiration}。
@@ -20,6 +22,7 @@ CoLM的自养呼吸$CF_{\mathrm{ar,total}}$计算包括维持呼吸$CF_{\mathrm{
   CF_{\mathrm{ar,total}}=CF_{\mathrm{mr, total}}+CF_{\mathrm{gr,total}}
 \end{equation}
 \subsection{维持呼吸}
+\esubsection{Maintenance Respiration}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_CNMResp.F90}。
 \end{mymdframed}
@@ -44,6 +47,7 @@ $R_{\mathrm{q10}}$是维持呼吸的温度敏感性参数，$T_{\mathrm {2m}}$�
   CF_{\mathrm{mr,total}}=R_{\mathrm{d}}+CF_{\mathrm{ls}}+CF_{\mathrm{lr}}+CF_{\mathrm{fr}}
 \end{equation}
 \subsection{生长呼吸}\label{生长呼吸}
+\esubsection{Growth Respiration}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_CNGResp.F90}。
 \end{mymdframed}
@@ -57,10 +61,12 @@ $R_{\mathrm{q10}}$是维持呼吸的温度敏感性参数，$T_{\mathrm {2m}}$�
 
 
 \section{植被碳氮分配}\label{植被碳氮分配}
+\esection{Carbon and Nitrogen Allocation}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_NutrientCompetition.F90}。
 \end{mymdframed}
 \subsection{维持呼吸的碳消耗}
+\esubsection{Maintenance Carbon Consumption}
 CoLM碳分配首先满足维持呼吸($CF_{\mathrm{mr,total}}$)的需求，其次碳分配需要填补由于夜间或冬天光合作用少于维持呼吸所造成的碳存储亏缺，
 最后剩余碳分配才能用于植被各营养器官库的生长。所以由光合作用支持的维持呼吸碳供给($CF_{\mathrm{GPP,mr}}$)可以表达为：
 \begin{equation}\label{F_GPP_mr}
@@ -79,6 +85,7 @@ CoLM碳分配首先满足维持呼吸($CF_{\mathrm{mr,total}}$)的需求，其�
 
 
 \subsection{用于植被呼吸的碳储存库}
+\esubsection{Carbon Storage for Respiration}
 植被呼吸的碳储存库($CS_{\mathrm{xs}}$)会根据光合作用对维持呼吸的亏缺和补充进行更新，其每个时间步长的变化量($\Delta CS_{\mathrm{xs}}$)可表示为：
 \begin{equation}
   \Delta CS_{\mathrm{xs}}=\left(CF_{\mathrm{GPP, xs}}-CF_{\mathrm{xs, mr}}\right) \cdot \Delta t
@@ -96,6 +103,7 @@ $\Delta t$代表模型时间步长，$CF_{\mathrm{GPP,xs}}$是光合作用对植
 
 
 \subsection{植被的碳氮生长分配比例}\label{植被的碳氮生长分配比例}
+\esubsection{Growth Allocation Ratios}
 用于植被生长的碳收入，即可分配碳($CF_{\mathrm{avail\_alloc}}$)，是光合作用碳通量($CF_{\mathrm{GPP}}$)扣除维持呼吸($CF_{\mathrm{GPP,mr}}$)和对植被呼吸碳存储的补充($CF_{\mathrm{GPP,xs}}$)后的剩余碳收入：
 \begin{equation}
   CF_{\mathrm{ {avail\_alloc }}}=CF_{\mathrm{GPP}}-CF_{\mathrm{GPP, mr}}-CF_{\mathrm{GPP, xs}}
@@ -141,6 +149,7 @@ $CN_{\mathrm{lf}}$，$CN_{\mathrm{fr}}$，$CN_{\mathrm{lw}}$ 和 $CN_{\mathrm{dw
 
 
 \subsection{植被氮重利用}\label{植被氮重利用}
+\esubsection{Nitrogen Reuse}
 植被营养器官在凋落前通常会回收部分氮用于新组织的生长，
 被称为植被氮的重利用 \citep{magill1997biogeochemical,oikawa2005dynamics,son1991aboveground}。
 被氮重利用($NF_{\mathrm{avail\_rt}}$)的计算依赖于植被去年氮重利用库的峰值($NS_{\mathrm{rt\_{annmax}}}$)，GPP和上一年的年均GPP：
@@ -154,6 +163,7 @@ $CN_{\mathrm{lf}}$，$CN_{\mathrm{fr}}$，$CN_{\mathrm{lw}}$ 和 $CN_{\mathrm{dw
 
 
 \subsection{土壤无机氮摄取}\label{土壤无机氮摄取}
+\esubsection{Inorganic Soil N Uptake}
 由于植被氮的重利用，植被对土壤的无机氮的潜在需求 ($NF_{\mathrm{pot\_{pd}}}$) 需从总需求$NF_{\mathrm{pot\_{alloc}}}$中减去植被氮的重利用部分($NF_{\mathrm{rt\_{alloc}}}$)：
 \begin{equation}\label{NF_plant_demand_soil}
   NF_{\mathrm{pot\_{pd}}} = NF_{\mathrm{pot\_{alloc}}} - NF_{\mathrm{rt\_alloc}}
@@ -166,6 +176,7 @@ $CN_{\mathrm{lf}}$，$CN_{\mathrm{fr}}$，$CN_{\mathrm{lw}}$ 和 $CN_{\mathrm{dw
 
 
 \subsection{植被的碳氮生长分配}\label{植被的碳氮生长分配}
+\esubsection{Carbon and Nitrogen Growth Allocation}
 通过公式 \eqref{NF_sminn_alloc}, \eqref{NF_rt_alloc} 和 \eqref{NF_actual_alloc}，实际氮供给 ($NF_{\mathrm{actual\_alloc}}$) 可以被模型计算，
 再联立公式 \eqref{C_allom} 和 \eqref{N_allom}，实际植被碳生长 ($CF_{\mathrm{actual\_alloc}}$) 可以被计算：
 \begin{equation}
@@ -211,6 +222,7 @@ $f_{\mathrm{cur}}$是碳分配到组织库或存储库的指示系数，取值0�
 
 
 \section{植被物候过程的耦合预报方案}\label{植被物候过程的耦合预报方案}
+\esection{Plant Phenology Coupling Scheme}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_BGC\_Veg\_CNPhenology.F90}。
 \end{mymdframed}
@@ -219,6 +231,7 @@ CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，�
 
 
 \subsection{模型中的基本物候变量和概念}\label{模型中的基本物候变量和概念}
+\esubsection{Basic Phenology Variables and Concept}
 
 \begin{enumerate}
     \renewcommand{\theenumi}{\alph{enumi}}
@@ -295,7 +308,7 @@ CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，�
       \begin{figure}[htbp]
         \centering
         \includegraphics{Figures/植被生物地球化学循环过程/CoLM物候示意图.png}
-        \caption{CoLM物候示意图~\citep{lawrence2018} }
+        \caption[CoLM物候示意图]{CoLM物候示意图~\citep{lawrence2018} }
         \label{fig:CoLM物候示意图}
       \end{figure}
     }
@@ -337,6 +350,7 @@ CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，�
 
 
 \subsection{常绿植被的物候}\label{常绿植被的物候}
+\esubsection{Evergreen Phenology}
 常绿植被功能型假设光合作用的净碳收入以及从土壤中的氮摄取直接分配给叶、细根、活茎和活粗茎的组织库。
 代表非结构碳库的存储库和传输库将不会有任何碳存储。常绿植被功能型不存在特别的发芽展叶期和落叶期，
 叶碳储量存在不随时间变化的固定碳周转速率：
@@ -364,6 +378,7 @@ CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，�
 
 
 \subsection{季节落叶植被的物候}\label{季节落叶植被的物候}
+\esubsection{Deciduous Phenology}
 季节落叶植被功能型根据积温计算植被物候的发芽展叶期和落叶期，CoLM定义季节性落叶植被功能型仅存在于纬度大于19.5\textdegree 非赤道区域。
 季节性落叶植被功能型假设植被每年仅存在一次发芽展叶期和落叶期。由于南北半球冬夏反季，
 所以，通过白昼时长的变化判断冬季转变节点，积温(${\mathrm {GDD}}$)的计算在冬季转变节点开始累积\citep{white1997continental}：
@@ -406,6 +421,7 @@ $GDD_{\mathrm{sum}}^n$ 重设为0直至冬天。当发芽展叶期开始后，30
 
 
 \subsection{胁迫落叶植被的物候}
+\esubsection{Stress-Induced Phenology}
 
 胁迫落叶植被功能型包括草地和热带干旱落叶树等可以既响应干旱又响应温度胁迫。
 当胁迫不存在时，该植被类型的物候还可以转变为常绿树的物候。当胁迫触发时，传输库的碳很快转变为组织库的碳。
@@ -488,6 +504,7 @@ $n_{\mathrm{days\_{active}}}$ 是植被只从上次发芽开始的天数。
 
 
 \subsection{物候凋落物}\label{物候凋落物}
+\esubsection{Phenological Litterfall}
 物候的凋落物主要来源于叶和细根的组织结构库，其中叶和细根凋落物都将进入代谢凋落物、
 纤维素凋落物和木质素凋落物，其速率为$CF\_P_{\mathrm{org,t\rightarrow lit,pat}}$，其中，${\mathrm {CFP}}$指物候过程引起生态系统碳传输，${\mathrm {org}}$是指凋落过程来源于植物的器官，在公式\eqref{CFpfttopat}和\eqref{NFpfttopat}中，特指叶和细根($\text{org=lf}$或${\mathrm {fr}}$)，存储碳库假设在物候凋落前已回收，${\mathrm {lit}}$代表掉落过程的传输目的地，即三个凋落物库，在公式\eqref{CFpfttopat}和\eqref{NFpfttopat}中，代谢凋落物，纤维素凋落物和木质素凋落物($\text{lit=met}$，${\mathrm {cel}}$ 和${\mathrm {lig}}$)，${\mathrm {pat}}$指patch尺度上的变量，即多个pft的均值或总和，${\mathrm {pft}}$指该通量基于植被功能型尺度：
 \begin{equation}\label{CFpfttopat}
@@ -502,6 +519,7 @@ $n_{\mathrm{days\_{active}}}$ 是植被只从上次发芽开始的天数。
 $NFP_{\mathrm{org,t \rightarrow exit,pft}}$代表pft尺度因物候凋落过程离开叶或细根组织结构库的氮速率。
 
 \subsection{植被的自然死亡}\label{植被的自然死亡}
+\esubsection{Natural Vegetation Mortality}
 植被的整体自然死亡率被假设为2\%每年。
 所有的叶、细根、活茎、死茎、或粗根和死粗根的组织库、存储库和传输库的凋落速率受死亡率的控制，
 其凋落物碳氮通量为$CFM_{\mathrm{org,pool\rightarrow exit,pft}}$和$NF_{\mathrm{org,pool\rightarrow exit,pft}}$, 在公式\eqref{CFMexit}，\eqref{NFMexit}中，${\mathrm {org}}$是指凋落物来源于某个植物器官，即叶，细根，活茎，死茎，活粗根和死粗根，即$\text{org=lf}$, ${\mathrm {fr}}$, ${\mathrm {ls}}$, ${\mathrm {ds}}$, ${\mathrm {lr}}$和${\mathrm {dr}}$，${\mathrm {pool}}$指凋落物来源于植物器官的子库，即组织结构库，存储库和临时传输库，即$\text{pool=t}$,${\mathrm {s}}$和${\mathrm {x}}$：

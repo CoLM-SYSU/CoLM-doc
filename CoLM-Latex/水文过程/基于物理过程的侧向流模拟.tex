@@ -1,4 +1,5 @@
 \chapter{基于物理过程的侧向流模拟}\label{ch:侧向流模拟}
+\echapter{Lateral Flow}
 
 CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下水侧向流的模拟方案（图~\ref{fig:主要水文过程}）。
 
@@ -18,6 +19,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
 地下水的侧向流动包含三个级别：流域单元之间、高度带单元之间以及次网格单元之间。在模拟高度带单元之间的地下水侧向流时，通过将河道作为最低处的单元，实现了对河道径流和地下水侧向流的相互作用的描述。
 
 \section{坡面流、河道径流}
+\esection{Hillslope Flow and River Routing}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{HYDRO/MOD\_Hydro\_HillslopeFlow.F90} \\
@@ -35,6 +37,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
 
 对坡面流和河道径流的模拟基于完整的浅水波方程.
 \subsection{浅水波方程}
+\esubsection{Shallow Wave Equation}
 质量方程
 \begin{equation}
   \frac{\partial h}{\partial t} + \frac{\partial \left(uh\right)}{\partial s} = 0
@@ -47,6 +50,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
 
 
 \subsection{数值离散格式}
+\esubsection{Numerical Scheme}
 坡面流是指在一个流域单元内部地表水的流动，它主要描述地表水从集水区域到河道的过程，即产流的过程。CoLM中将一个流域单元划分为多个面积相近的高度带单元，作为计算坡面流的基本离散单元。一般情况下，水流由地势较高的单元流向地势较低的单元，发生洪水时，也可由河道向上淹没地势较高的区域。浅水波方程的预报变量水深$h$和水流速度$u$定义在高度带单元上（图~\ref{fig:坡面流和河道径流}）。
 
 河道径流是指流域单元之间地表水的流动，主要沿河道进行。CoLM基于水文学数据划分流域单元，与流域单元关联的分段河道之间有明确的上下游关系，为计算河道径流的基本离散单元。一般情况下，水流由地势较高的河道流向地势较低的河道，可经过湖泊或者水库，最后汇流入海，或者终止于内陆洼地。浅水波方程的预报变量水深$h$和水流速度$u$定义在分段河道上（图~\ref{fig:坡面流和河道径流}）。
@@ -84,7 +88,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
   \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.6\textwidth]{Figures/侧向流/水深重构.pdf}
-    \caption{浅水波方程求解方案中对水深的重构（公式见~\ref{formula:water_depth_reconstruction}）}
+    \caption[浅水波方程求解方案中对水深的重构]{浅水波方程求解方案中对水深的重构（公式见~\ref{formula:water_depth_reconstruction}）}
     \label{fig:水深重构}
   \end{figure}
 }
@@ -175,6 +179,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
 \end{equation}
 
 \subsection{自适应时间步长方法}
+\esubsection{Adaptive Time Step Method}
 对时间步长的约束包含三个，$\Delta t = \min \Delta t_i \quad (i=1, \ldots, N)$，
 \begin{enumerate}
   \item CFL条件
@@ -196,6 +201,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
 \end{enumerate}
 
 \subsection{数值算法在模式中的实现}
+\esubsection{Model Implementation}
 
 \subsubsection{参数的计算}
 离散算法中需要的参数有平均水流路径的长度$D_i$，两个单元的边界线的长度$L_{ij}$，单元的面积$A_i$和单元表面的高度$z_{\mathrm{b},i}$，以及曼宁系数$n$.
@@ -240,6 +246,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
 目前模式中未考虑湖泊水体的动量的变化。
 
 \section{地下水侧向流}
+\esection{Groundwater Lateral Flow}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{HYDRO/MOD\_Hydro\_SubsurfaceFlow.F90}.
@@ -257,6 +264,7 @@ CoLM中计算三个等级上的单元之间的地下水侧向流：流域单元�
 }
 
 \subsection{方程及数值算法}
+\esubsection{Equations and Algorithms}
 \subsubsection{坡面蓄水型Boussinesq方程}
 坡面蓄水型Boussinesq方程为
 \begin{equation}

@@ -1,4 +1,5 @@
 \chapter{雪盖土壤热力过程}
+\echapter{Snow and Soil Thermal Processes}
 %\addcontentsline{toc}{chapter}{雪盖土壤热力过程}
 
 %\begin{雪盖土壤热力过程}
@@ -14,6 +15,7 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
 
 
 \section{温度求解的数值格式}\label{温度求解的数值格式}
+\esection{Numerical Solution}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_GroundTemperature.F90}。
@@ -170,6 +172,7 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
 
 
 \section{温度的相态变化调整}\label{sec:温度的相态变化调整}
+\esection{Phase Change}
 
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_PhaseChange.F90}。
@@ -240,6 +243,7 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
 
 
 \section{雪盖土壤热力参数的计算方案}\label{sec_thermalpar}
+\esection{Thermal Parameters}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SoilThermalParameters.F90}。
 \end{mymdframed}
@@ -247,6 +251,7 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
 雪盖土壤的热力参数是完成雪盖土壤热力过程数值模拟、求解前文所述垂直方向能量平衡方程的必要输入参数，主要包含两类：雪盖土壤的体积热容量和导热率。下面就这两类参数给出在CoLM中的计算方案。
 
 \subsection{雪盖土壤的体积热容量}
+\esubsection{Volumetric Heat Capacity}
 
 体积热容量的计算较为简单。根据 \citet{de1963thermal}，土壤体积热容量由固体土壤、液态水和固态水的热容量基于各自的体积百分比加权平均得到，表达为：
 \begin{equation}
@@ -266,6 +271,7 @@ $F$表示垂直方向的热传导通量(\unit{W.m^{-2}})，方向向上为正，
 其中，液态水和固态水的热容量可参见表~\ref{tab:物理常数}。
 
 \subsection{雪盖土壤的导热率}
+\esubsection{Thermal Conductivity}
 
 在CoLM中，土壤导热率(\unit{W.m^{-1}.K^{-1}})引入了8种计算方案供用户选择，分别为：\citet{Johansen1975}方案及其5个衍生方案(\citet{farouki1981thermal}, \citet{cote2005}, \citet{balland2005}，\citet{lu2007improved}和~\citet{Yan2019thermal})，一个经验方案(\citet{tarnawski2012series})和一个理论方案(\citet{de1963thermal})。以上方案均在各自原始方案基础上，假设固体土壤由矿物质土壤、有机质土壤和砾石组成的前提下进行了改进。根据\citep{dai2019evaluation}在一定观测样本下的评估结果，\citet{balland2005}方案的模拟性能相对较优，故设为默认方案。下面将给出以上8种方案的具体计算方法。
 

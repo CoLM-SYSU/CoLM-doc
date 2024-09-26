@@ -1,4 +1,5 @@
 \chapter{湖泊模式}\label{ch:湖泊模式}
+\echapter{Lake Model}
 %\addcontentsline{toc}{chapter}{湖泊模式}
 \begin{mymdframed}{代码}
   本章对应的代码文件为\texttt{MOD\_Lake.F90}。
@@ -17,13 +18,14 @@
   \begin{figure}[htbp]
     \centering
     \includegraphics{Figures/湖泊模式/湖泊系统垂直分层示意图.png}
-    \caption{湖泊系统垂直分层示意图 \citep{subin2012improved}}
+    \caption[湖泊系统垂直分层示意图]{湖泊系统垂直分层示意图 \citep{subin2012improved}}
     \label{fig:湖泊系统垂直分层示意图}
   \end{figure}
 }
 
 
 \section{湖泊模式结构}
+\esection{Lake Model Structure}
 湖泊模式由三部分组成：雪层、湖泊层和淤泥层。湖泊层位于雪层和淤泥层之间，
 共分为10层。湖泊深度可随降水量、蒸发量、与湖泊连接的河流的流入流出量等发生变化(见~\ref{湖泊水文}~节)。在初始时刻，默认湖深$d$为50 m，每层湖泊的厚度$\Delta z_{\mathrm{lake},i}$从上到下分别为0.1, 1, 2, 3, 4, 5, 7, 7, 10.45, 10.45 m，
 中心深度$z_{\mathrm{lake},i}$为每层湖泊的中间位置所在深度，分别为0.05, 0.6, 2.1, 4.6, 8.1, 12.6, 18.6, 25.6, 34.325, 44.775 m。
@@ -35,6 +37,7 @@
 
 
 \section{降水与湖泊表面的相互作用}
+\esection{Precipitation-Lake Interaction}
 降水到达湖泊表面可发生能量转移与相态变化等一系列过程。此过程可改变湖泊表面条件，尤其当降雪存在时，对于湖泊之上雪层的形成起到决定性作用。
 
 
@@ -242,11 +245,13 @@ C. 	第一层湖泊完全融化($I_1<0.001$)
 
 
 \section{湖泊温度计算方案}
+\esection{Lake Temperature Scheme}
 湖泊温度的计算方案整体上与无植被覆盖下的雪盖土壤温度的计算方案类似。
 首先，求解湖泊表面的能量通量，同时湖泊表面温度($T_{\mathrm {g}} $)作为湖泊顶层与大气底层的交界面温度被同时求出。
 然后，雪层、湖泊层和淤泥层温度作为一个系统被同时求解，其上边界条件来自湖泊表面的地表热通量。具体方案描述如下。
 
 \subsection{湖泊表面能量通量与温度的计算}\label{湖泊表面能量通量与温度的计算}
+\esubsection{Surface Energy and Temperature}
 湖泊表面的能量平衡关系可表达为：
 \begin{equation}
   \beta S_{\mathrm{g}}+L_{\mathrm{g}}\left(T_{\mathrm{g}}\right)-H_{\mathrm{g}}\left(T_{\mathrm{g}}\right)-\lambda E_{\mathrm{g}}\left(T_{\mathrm{g}}\right)-G\left(T_{\mathrm{g}}\right)+H_{\mathrm{in}}-H_{\mathrm{out}}=0
@@ -417,6 +422,7 @@ $T_{\mathrm {g}} ^{\left(n+1\right)}-T_{\mathrm {g}} ^{\left(n\right)}$表示$T_
 \end{enumerate}
 
 \section{雪层、湖泊层、淤泥层温度的计算}\label{雪层湖泊层淤泥层温度的计算}
+\esection{Snow, Lake, and Sediment Temperature}
 在湖泊系统中，雪层、湖泊层、淤泥层被作为一个整体同时求解温度，
 其控制方程与求解雪盖土壤温度的控制方程非常类似，表达如下：
 \begin{equation}
@@ -562,6 +568,7 @@ $F_i$的定义如下：对于顶层，$F_{i-1}=G$，$a_i=0$，$G$表示湖泊顶
 \end{equation}
 用追赶法解此三对角形式方程组即可快速同时求得湖泊系统中每一层雪盖、湖泊、淤泥的温度$T_i^{n+1}$。
 \section{湖水相态变化}\label{湖水相态变化}
+\esection{Lake Phase Change}
 与雪盖土壤温度的计算类似，湖泊系统温度计算之后，需根据每一层介质的温度与固液态水含量进行相态变化调整。
 当某一层介质的温度高于凝结点$T_{\mathrm {frz}} $而固态水存在，则融化过程发生；当温度低于凝结点$T_{\mathrm {frz}} $而液态水存在，则冻结过程发生。
 
@@ -624,6 +631,7 @@ $F_i$的定义如下：对于顶层，$F_{i-1}=G$，$a_i=0$，$G$表示湖泊顶
 \end{equation}
 
 \section{基于湖泊层稳定性的垂直对流混合}
+\esection{Stability-Based Vertical Convection}
 基于稳定性的湖泊对流混合方案来自于~\citet{hostetler1993interactive,hostetler1994lake} 在其提出的湖泊大气耦合模型中采用的方案：
 在热传导过程与相态变化过程模拟结束后，湖泊温度应再次调整，使得湖泊具有稳定的层结结构：
 即湖泊上层密度应不大于下层密度。具体操作为，对于完全非冻结状态的湖泊，
@@ -673,6 +681,7 @@ $I_j$与$T_{\mathrm{lake},j}$的计算将按照如下方式进行，记${Z_j}=\s
 
 
 \section{湖泊模式的水文过程}\label{湖泊水文}
+\esection{Lake Hydrological Processes}
 在湖泊系统中，由于湖泊层的厚度与质量固定不变，故湖泊层之间可视为无水流通量交换，
 湖泊系统的水文过程主要集中于湖泊之上的雪层和湖泊之下的淤泥层。
 湖泊系统的质量守恒关系可表达如下：

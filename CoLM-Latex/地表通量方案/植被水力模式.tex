@@ -1,4 +1,5 @@
 \chapter{植被水力模式}
+\echapter{Plant Hydraulic Model}
 %\addcontentsline{toc}{chapter}{植被水力模式}
 \begin{mymdframed}{代码}
   本章节对应的代码文件为\texttt{MOD\_PlantHydraulic.F90}。
@@ -13,6 +14,7 @@ CoLM植被水力模式中的植物水分传输源于土壤、根、茎、叶和�
 
 
 \section{植物水势动态}\label{植物水势动态}
+\esection{Plant Water Potential Dynamics}
 地上部分包括在阳叶、阴叶、茎和地表根四个节点间的水势 ($\psi_{\mathrm{sun}}$，$\psi_{\mathrm{sha}}$，$\psi_{\mathrm{stem}}$，$\psi_{\mathrm{root,0}}$)
 %
 模拟；地下部分包括地表根以及$n$层地下根 $n+1$个节点的水势 ($\psi_{\mathrm{root},i}$，$i=0,1,2,\ldots,n$) 模拟。地上、地下两部分通过对地表根水势
@@ -65,6 +67,7 @@ $E_{\mathrm{tr,sun}}$代表阳叶蒸腾速率，$E_{\mathrm{tr,sha}}$代表阴�
 
 
 \section{植被水力导度的衰减}\label{植被水力导度的衰减}
+\esection{Hydraulic Conductance Decline}
 植物水势下降导致的空穴现象会严重降低水分在植物内部的传导能力。我们将实验上观测到水力导度随水势变化的S型脆弱性曲线
 \citep{sperry1988method,gentine2016allometry,neufeld1992genotypic,pammenter1998mathematical,plaut2012hydraulic}
 引入到模型，对植被水力栓塞进行参数化，得到节点间的水力导度$k_{i\gets j}$或阻抗$r_{i\gets j}$ (从节点$j$到$i$的传输)：
@@ -85,6 +88,7 @@ $E_{\mathrm{tr,sun}}$代表阳叶蒸腾速率，$E_{\mathrm{tr,sha}}$代表阴�
 
 
 \section{地下植被水力过程}\label{地下植被水力过程}
+\esection{Subsurface Plant Hydraulic Processes}
 地下植被水力过程主要体现在水力重分配过程上，水力重分配描述了水分通过地下根系从湿润土壤层向干燥土壤层传输的过程。
 是一个受水势梯度所驱动的生物物理过程。CoLM引入了Amenu水力重分配模型\citep{amenu2008,zhu2017incorporating}，
 并将地下植被水力过程和地上植被水力过程相耦合~\citep{li2021new}，考虑刻画除根、茎和叶等地上节点外的
@@ -133,6 +137,7 @@ $q_{\mathrm{rad},i}$代表相应的根吸水速率，$\psi_{\mathrm{soil},i}$代
 
 
 \section{气孔导度的水分胁迫}\label{气孔导度的水分胁迫}
+\esection{Stomatal Water Stress}
 土壤水分亏缺对植物的影响主要表现在对植被生理过程的限制，通常用水分胁迫因子来量化，CoLM中的水分胁迫因子作为取值 $0\sim 1$ 的无量纲变量，限制气孔导度和光合羧化能力，见公式~\eqref{V_cmaxsun_a}--\eqref{R_d1_sha}。
 
 植被水力模式关闭时(土壤水分胁迫方案SMS)，水分胁迫因子 ($f_{\mathrm {w}}$) 取决于根的垂直分布比例和土壤水势：
@@ -211,6 +216,7 @@ $cf$为导度的单位转换系数(\unit{\mu mol.m^{-3}})，将 \unit{\mu mol.m^
 
 
 \section{数值计算方案}\label{数值计算方案}
+\esection{Numerical Scheme}
 求解植物水势、水分胁迫、气孔导度和叶片蒸腾速率，需要耦合植被水力模式、光合气孔模式和地表冠层参数化方案。
 耦合描述植物水势变化的动力方程组(公式~\eqref{q_sunstem}--\eqref{q_stemroot}、\eqref{Esun_psi} 和~\eqref{Esha_psi})，
 地表冠层参数化方案 (公式~\eqref{E_sunmax}--\eqref{cvsha_gsmax})，
