@@ -47,8 +47,8 @@ $k_{\mathrm{sun \leftarrow stem}}$，$k_{\mathrm{sha \leftarrow stem }}$，$k_{\
 及根总吸水速率 ($q_{\mathrm{root,0}}$) 的函数，由地下植被水力过程所计算 (详见章节~\ref{地下植被水力过程})：
 \begin{equation}\label{Psi_root_0}
   \psi_{\mathrm{root, 0}}=R\left(\psi_{\mathrm{ {soil }}, i}, q_{\mathrm{root, 0}}\right)
-\end{equation}\todo{上式中的R好像没有说明。}
-$q_{\mathrm{sun \leftarrow stem}}$，$q_{\mathrm{sha \leftarrow stem }}$，$q_{\mathrm{stem \leftarrow root }}$分别代表茎到阳叶的水流通量、茎到阴叶的水流通量和根到茎的水流通量。
+\end{equation}
+$R$是基于达西定律的根吸水逆函数，即根据各层土壤水势和根总吸水量反推表层根水势，详细计算见~\ref{地下植被水力过程}。$q_{\mathrm{sun \leftarrow stem}}$，$q_{\mathrm{sha \leftarrow stem }}$，$q_{\mathrm{stem \leftarrow root }}$分别代表茎到阳叶的水流通量、茎到阴叶的水流通量和根到茎的水流通量。
 水流通量在各节点由于稳恒流假设，满足水分守恒方程：
 \begin{equation}
   E_{\mathrm{tr,sun}}=q_{\mathrm{sun \leftarrow  stem}}
@@ -133,7 +133,11 @@ $q_{\mathrm{rad},i}$代表相应的根吸水速率，$\psi_{\mathrm{soil},i}$代
   q_{\mathrm{ax,1}}+q_{\mathrm{rad, 1}}=q_{\mathrm{root,0}}
 \end{equation}
 将方程~\eqref{k_axi} 和~\eqref{k_radi} 代入~\eqref{q_axi} 和~\eqref{q_ax1}，则得到关于$ \psi_{\mathrm{root},i}$的$n$个线性方程组。
-这$n$个线性方程组描述了在植物地下水力网络中，根水势的动态变化。CoLM地下植被水力过程的输入包括土壤水势垂直分布 ($\psi_{\mathrm{soil},i}$)和根总吸水速率 ($q_{\mathrm{root,0}}$)，输出包括根水势垂直分布($\psi_{\mathrm{root},i}$)和根吸水速率的垂直分布 ($q_{\mathrm{rad},i}$)。因此，地下植被水力过程可以概括地表达为土壤水势和总吸水速率的函数，如方程~\eqref{Psi_root_0}。
+这$n$个线性方程组描述了在植物地下水力网络中，根水势的动态变化。CoLM地下植被水力过程总的来说，根据土壤水势垂直分布 ($\psi_{\mathrm{soil},i;i=1,2,3...n}$)和根总吸水速率 ($q_{\mathrm{root,0}}$)，计算出根水势的垂直分布($\psi_{\mathrm{root},i;i=1,2,3...n}$)和根吸水速率的垂直分布 ($q_{\mathrm{rad},i;i=1,2,3...n}$)。假设表层根水势和第一层根水势相等，即可求解方程~\eqref{Psi_root_0}：
+\begin{equation}\label{Rfunc}
+    \psi_{\mathrm{root,0}}=R\left(\psi_{\mathrm{ {soil }}, i;i=1,2,3...n}, q_{\mathrm{root, 0}}\right)=\psi_{\mathrm{root,1}}
+\end{equation}
+
 
 
 \section{气孔导度的水分胁迫}\label{气孔导度的水分胁迫}

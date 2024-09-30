@@ -22,8 +22,8 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
 \esection{Hillslope Flow and River Routing}
 
 \begin{mymdframed}{代码}
-  本节对应的代码文件为\texttt{HYDRO/MOD\_Hydro\_HillslopeFlow.F90} \\
-  和\texttt{HYDRO/MOD\_Hydro\_RiverLakeFlow.F90}.
+  本节对应的代码文件为\texttt{HYDRO/MOD\_Catch\_HillslopeFlow.F90} \\
+  和\texttt{HYDRO/MOD\_Catch\_RiverLakeFlow.F90}.
 \end{mymdframed}
 
 {
@@ -136,18 +136,18 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
   Q_{ij} = L_{ij} \cdot \left\{
     \begin{aligned}
       & Q_{ij-}, && \mbox{if} \quad 0\leqslant S_{ij-} \\
-      & \frac{S_{ij+} Q_{ij-} - S_{ij-} Q_{ij+} + S_{ij-} S_{ij+} \left(h_{ij+} - h_{ij-}\right)}{S_{ij+}-S_{ij-}} , && \mbox{if} \quad S_{ij-} \leqslant 0\leqslant S_j\\
+      & \frac{S_{ij+} Q_{ij-} - S_{ij-} Q_{ij+} + S_{ij-} S_{ij+} \left(h_{ij+} - h_{ij-}\right)}{S_{ij+}-S_{ij-}} , && \mbox{if} \quad S_{ij-} \leqslant 0\leqslant S_{ij+}\\
       & Q_{ij+}, && \mbox{if} \quad 0\geqslant S_{ij+}
   \end{aligned}\right.
 \end{equation}
 
 \begin{equation}
-  F_{ij} = L_{ij} \cdot
-  \begin{cases}
-    F_{ij-}, & \mbox{if} \quad 0\leqslant S_{ij-} \\
-    \frac{S_{ij+} F_{ij-} - S_{ij-} F_{ij+} + S_{ij-} S_{ij+} \left(q_{ij+} - q_{ij-}\right)}{S_{ij+}-S_{ij-}} , & \mbox{if} \quad S_{ij-} \leqslant 0\leqslant S_{ij+}\\
-    F_{ij+}, & \mbox{if} \quad 0\geqslant S_{ij+}
-  \end{cases}
+  F_{ij} = L_{ij} \cdot \left\{
+  \begin{aligned}
+   & F_{ij-}, && \mbox{if} \quad 0\leqslant S_{ij-} \\
+   & \frac{S_{ij+} F_{ij-} - S_{ij-} F_{ij+} + S_{ij-} S_{ij+} \left(q_{ij+} - q_{ij-}\right)}{S_{ij+}-S_{ij-}} , && \mbox{if} \quad S_{ij-} \leqslant 0\leqslant S_{ij+}\\
+   & F_{ij+}, && \mbox{if} \quad 0\geqslant S_{ij+}
+  \end{aligned}\right.
 \end{equation}
 其中，$L_{ij}$为单元$C_i$与$C_j$之间交界线的长度，边界两侧的重构量
 \begin{align*}
@@ -193,7 +193,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
       \Delta t_i \leqslant \frac{h^n_i\cdot A_i}{\sum_{j\in K_i} Q_{ij}}
     \end{equation}
   \item 动量限制：
-    当$q^n_i \cdot \left[ \frac{1}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G^n_{ij} \right)\right] > 0$ 且 $\mathrm{abs}\left(q^n_i\right) > q_{min}$时，
+    当$q^n_i \cdot \left[ \frac{1}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G^n_{ij} \right)\right] > 0$ 且 $\mathrm{abs}\left(q^n_i\right) > q_{\mathrm{min}}$时，
     \begin{equation}
       \Delta t_i \leqslant \frac{q^n_i}{\frac{1}{A_i}\sum_{j\in K_i} \left(F^n_{ij} - G^n_{ij} \right)}
     \end{equation}
@@ -249,7 +249,7 @@ CoLM中基于流域单元网格，发展了对坡面流、河道径流和地下�
 \esection{Groundwater Lateral Flow}
 
 \begin{mymdframed}{代码}
-  本节对应的代码文件为\texttt{HYDRO/MOD\_Hydro\_SubsurfaceFlow.F90}.
+  本节对应的代码文件为\texttt{HYDRO/MOD\_Catch\_SubsurfaceFlow.F90}.
 \end{mymdframed}
 
 CoLM中计算三个等级上的单元之间的地下水侧向流：流域单元之间、高度带单元之间以及次网格单元之间（图~\ref{fig:地下水侧向流}）。模型基于坡面蓄水型Boussinesq方程。
@@ -310,12 +310,10 @@ $$q=-w\cdot \left(\int^\infty_{\mathrm{z_{wt}}} k\ \mathrm{d}z\right)\frac{\part
 公式~\eqref{formula:subsurface_lateral_flow}应用于流域单元之间和高度带单元之间的地下水侧向流计算中。对$C_i$与所有相邻单元之间的水流通量进行叠加，即可得到$C_i$单元上的地下水总量的变化。
 
 \subsubsection{参数的计算}
-\begin{itemize}
-  \item 导水率的计算（来自TOPMODEL）
+导水率的计算（来自TOPMODEL）
     \begin{equation}
       k(z) = K_0\exp{(- z/b)},\quad \int^\infty_{\mathrm{z_{wt}}} k\ \mathrm{d}z = b K_0\exp{(-z_{\mathrm{wt}}/b)}
     \end{equation}
-\end{itemize}
 
 \subsubsection{次网格单元之间的地下水交换}
 第$i$个高度带单元内部第$p$个patch的地下水侧向流通量为

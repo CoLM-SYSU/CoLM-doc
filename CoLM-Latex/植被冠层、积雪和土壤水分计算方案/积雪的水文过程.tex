@@ -1,6 +1,6 @@
 \chapter{积雪的水文过程}
 \echapter{Snow Hydrological Processes}
-在模式中，覆盖在地表的积雪根据雪盖高度$z_{\mathrm{sno}}$被分为最多五层，这种情况下，雪层从上到下分别用$i = −4, −3, −2, −1, 0$编号。编号$i = 0$表示底层，与土壤相邻，$i = snl + 1$表示顶层，其中变量$snl$是雪盖总层数的相反数（$-5\leqslant snl\leqslant 0$）。雪层的厚度表示为$\Delta z_i$（m），雪层的深度$z_i$（m）取为其上边界深度$z_{\mathrm{h},i-1}$和下边界深度$z_{\mathrm{h},i}$的中点（由于土壤表面被定义为深度0值，且向下为正，因此雪盖部分的“深度”实际为高度的负值，见图~\ref{fig:模式中积雪雪层示意图}）。
+在模式中，覆盖在地表的积雪根据雪盖高度$z_{\mathrm{sno}}$被分为最多五层，这种情况下，雪层从上到下分别用$i = −4, −3, −2, −1, 0$编号。编号$i = 0$表示底层，与土壤相邻，$i = snl + 1$表示顶层，其中变量$snl$是雪盖总层数的相反数（$-5\leqslant snl\leqslant 0$）。雪层的厚度表示为$\Delta z_i$（m），雪层的深度$z_i$（m）取为其上边界深度$z_{\mathrm{h},i-1}$和下边界深度$z_{\mathrm{h},i}$的中点（图~\ref{fig:模式中积雪雪层示意图}）。注意，由于土壤表面被定义为深度0值，且向下为正，因此雪盖部分的“深度”实际为高度的负值。
 {
   \begin{figure}[htbp]
     \centering
@@ -34,7 +34,7 @@ CoLM2014及以前版本计算斑块中的有效植被比例$f_{\mathrm{sig}}=\le
 
 
 \section{雪层的建立}\label{sec:雪层的建立}
-\esection{Snow Layer Formation}
+\esection{Initialization of Snow Layer}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_NewSnow.F90}。
 \end{mymdframed}
@@ -92,14 +92,15 @@ $S_{\mathrm {r}} =0.033$称为束缚水饱和度（由于毛细管的滞留作�
 \begin{equation}\label{eq:SnowWater}
   w_{\mathrm{liq},i}^{n+1}=w_{\mathrm{liq},i}^n+\left(q_{i-1}-q_i\right)\Delta t
 \end{equation}
-对于每个时间步长，依次从雪盖顶层到底层计算式~\eqref{eq:SnowWater}。到达土壤层的液态水即为$q_{\mathrm{liq,0}}$，被用于地表径流和土壤层的下渗计算当中。
+对于每个时间步长，依次从雪盖顶层到底层计算式~\eqref{eq:SnowWater}。到达土壤层的液态水即为$q_{\mathrm{liq,0}}$，将被用于地表径流和土壤层的下渗计算当中。
 
 \section{雪盖的黑碳、有机碳和矿物粉尘}
-\esection{Black Carbon and Dust in Snow}
+\esection{Black and organic carbon and mineral dust within snow}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}。
 \end{mymdframed}
-由于大气的气溶胶沉降，积雪中会存在一定的颗粒物，影响雪盖的辐射传输。雪中颗粒物含量仅以质量守恒作为简单约束，这部分的计算均被定义在SNICAR模型中。对于每个雪层，该模型包括了以下八种颗粒物的含量，亲水性黑碳、疏水性黑碳、亲水性有机碳、疏水性有机碳和四种矿物粉尘（颗粒半径分别为0.1-1.0，1.0-2.5，2.5-5.0，5.0-10.0 \unit{\mu m}）。每种颗粒物都具有不同的光学属性和融水清除率。
+
+由于大气的气溶胶沉降，积雪中会存在一定的颗粒物，影响雪盖的辐射传输。雪中颗粒物含量仅受到质量守恒的约束，这部分的计算均被定义在SNICAR模型中。对于每个雪层，该模型包括了以下八种颗粒物的含量，亲水性黑碳、疏水性黑碳、亲水性有机碳、疏水性有机碳和四种矿物粉尘（颗粒半径分别为0.1-1.0，1.0-2.5，2.5-5.0，5.0-10.0 \unit{\mu m}）。每种颗粒物都具有不同的光学属性和融水清除率。
 
 黑碳和有机碳的沉降率被分为以下四类
 \begin{align}
@@ -111,7 +112,7 @@ $S_{\mathrm {r}} =0.033$称为束缚水饱和度（由于毛细管的滞留作�
 
 假定沉降的颗粒物立即在表面雪层中均匀混合，并在计算雪层层间液态水通量之后添加，以使沉降后的一些气溶胶颗粒位于顶层，并且在进行反照率相关的计算之前不会被冲走。对于每个时间步长，在进行雪层间液态水的垂直运动以及雪层的合并和再分层计算中，都将根据质量守恒更新每层颗粒物含量。每种颗粒物的质量变化$\Delta m_{\mathrm{sp},i}$为
 \begin{equation}
-  \Delta m_{\mathrm{sp},i}=\left[k_{\mathrm{sp}}\left(q_{\mathrm{liq},i-1} c_{\mathrm{sp},i-1}-q_{\mathrm{liq},i} c_i\right)+D_{\mathrm{sp}}\right] \Delta t
+  \Delta m_{\mathrm{sp},i}=\left[k_{\mathrm{sp}}\left(q_{\mathrm{liq},i-1} c_{\mathrm{sp},i-1}-q_{\mathrm{liq},i} c_{\mathrm{sp},i}\right)+D_{\mathrm{sp}}\right] \Delta t
 \end{equation}
 其中$k_{\mathrm{sp}}$表示每种颗粒物的融水清除率，具体参见表~\ref{lab:融水清除率}。$c_{\mathrm{sp},i-1}$和$c_{\mathrm{sp},i}$分别表示$i-1$层和$i$层的颗粒物质量混合比（\unit{kg.kg^{-1}}），$D_{\mathrm{sp}}$表示大气气溶胶沉降率（仅在$snl+1$层考虑）。颗粒物质量混合比为
 \begin{equation}
@@ -172,7 +173,7 @@ $k_{\mathrm{sp}}$的具体值根据~\citet{Conway2012}等人的实验得出。�
 
 
 \subsection{破坏变质引起的压实}
-\esubsection{Metamorphism-Induced Compaction}
+\esubsection{Destructive Metamorphism Compaction}
 雪在到达地面后，随即快速变化。在热力作用的影响下，单个雪花原有的树状结构发生破裂，向球状结构演变。这些雪花又会和其他雪花融合生长，使雪粒之间结合得更加紧密，最终发生沉降堆积。对于密度小于 \qty{100}{kg.m^{-3}} 的新雪来说，破坏变质引起的沉降非常重要。雪粒的树状结构会使它们之间产生一种类似于“齿轮咬合”的作用，从而具有一定的强度，这种强度在破坏变质的过程中会逐渐减弱。\citet{anderson1976point}对这一阶段的压实过程提出了以下经验函数：
 \begin{equation}\label{eq:DestruciveCompact}
   C_{\mathrm{R1},i}=\left[\frac{1}{\Delta {z_i}} \frac{\partial \Delta {z_i}}{\partial {t}}\right]_{\text {destructive}}=-2.777 \times 10^{-6} {c}_{3} {c}_{4} {e}^{-0.04\left(T_{\mathrm {frz}} -T\right)}
@@ -190,10 +191,10 @@ $k_{\mathrm{sp}}$的具体值根据~\citet{Conway2012}等人的实验得出。�
     2 &\qquad \quad \qquad \quad \;\text{当}\ \frac{w_{\mathrm{liq},i}}{\Delta z_i}>0.01 \;\unit{kg.m^{-3}}\text{ 时}
   \end{cases}
 \end{equation}
-这两个系数表明，当雪层中固态水的体积密度超过 \qty{100}{kg.m^{-3}} 时，破环变质的速率会有所降低;当雪层中存在一定液态水时，破坏变质的速率将成倍增加。
+这两个系数表明，当雪层中固态水的体积密度超过 \qty{100}{kg.m^{-3}} 时，破坏变质的速率会有所降低;当雪层中存在一定液态水时，破坏变质的速率将成倍增加。
 
 \subsection{雪层负重引起的压实}
-\esubsection{Load-Induced Compaction}
+\esubsection{Overburden Pressure Compaction}
 随着积雪的累积，上覆积雪的自重会进一步地压实雪层。上覆雪产生的压力（负重）使雪粒粘结生长速度加快，形成更加有效的堆积形状。在经过前一过程的压实后，这一阶段的压实速率会减慢，主要和雪层的负重压力有关。在低压力范围的季节性积雪内，这一阶段的压实率是负重的线性函数\citep{anderson1976point}，即
 \begin{equation}\label{eq:OverburdenCompact}
   C_{\mathrm{R2},i}=\left[\frac{1}{\Delta {z_i}} \frac{\partial \Delta {z_i}}{\partial {t}}\right]_{\text {overburden}}=-\frac{P_{\mathrm{s},i}}{\eta}
@@ -214,7 +215,7 @@ $k_{\mathrm{sp}}$的具体值根据~\citet{Conway2012}等人的实验得出。�
 系数$f_2$则与雪层中棱状雪粒（angular grains）的含量有关，目前的计算中固定$f_2=4$。
 
 \subsection{雪层融化引起的压实}
-\esubsection{Melt-Induced Compaction}
+\esubsection{Compaction by Melt}
 在融雪过程的后期（积雪经过多次冻融循环后），融雪水的出流导致雪堆更加致密，雪层产生压实。这一阶段的压实率取决于雪层融化过程中前后两个时间步数固态水的变化率
 \begin{equation}
   C_{\mathrm{R3},i}=\left[\frac{1}{\Delta {z_i}} \frac{\partial \Delta {z_i}}{\partial {t}}\right]_{\text{melt}}=-\frac{1}{\Delta {t}}\max\left(0,\frac{{f}_{\mathrm{{ice},i}}^{n}-{f}_{\mathrm{{ice},i}}^{n+1}}{{f}_{\mathrm{ice},i}^{n}}\right)
@@ -222,7 +223,7 @@ $k_{\mathrm{sp}}$的具体值根据~\citet{Conway2012}等人的实验得出。�
 其中$f_{\mathrm{ice},i}=w_{\mathrm{ice},i}/\left({w_{\mathrm{ice},i}+w_{\mathrm{liq},i}}\right)$为雪层中固态水占全部水含量的比例。
 
 \subsection{风吹雪引起的压实}
-\esubsection{Wind-Induced Compaction}
+\esubsection{Compaction by Drifting Snow}
 在高纬的冰原地区，低温使破坏变质的过程发生缓慢，此时高速的下降风将占据主导，气流使雪粒的树状结构破碎，引发雪粒堆积，产生压实。在这种情况下，引入风吹雪压实的参数化方案~\citep{Vionnet2012}:
 \begin{equation}
   C_{\mathrm{R4},i}=\left[\frac{1}{\Delta z_i}\frac{\partial \Delta z_i}{\partial t}\right]_{\text{drift}}=-\frac{\max \left(0,\rho_{\text{max}}-\rho_i\right)}{\tau_i}
@@ -249,7 +250,9 @@ $$F\left(\rho\right)=1.25-0.0042 \cdot \\\left[\max \left(\rho_{\mathrm{min}},\r
   本节对应的代码文件为\texttt{MOD\_SnowLayersCombineDivide.F90}。
 \end{mymdframed}
 
-雪层的合并包括以下两种情况：1.考虑固态水的含量。当任何一层几近融化（即$w_{\mathrm{ice},i} \leqslant 0.1$ \unit{kg.m^{-2}}）时，移除该雪层，且将其液态水和固态水含量分配到与之相邻的下层中：
+雪层的合并包括以下两种情况：
+
+(1) 考虑固态水的含量。当任何一层几近融化（即$w_{\mathrm{ice},i} \leqslant 0.1$ \unit{kg.m^{-2}}）时，移除该雪层，且将其液态水和固态水含量分配到与之相邻的下层中：
 \begin{equation}
   w_{\mathrm{liq},i+1} = w_{\mathrm{liq},i+1} + w_{\mathrm{liq},i}
 \end{equation}
@@ -269,11 +272,11 @@ $$F\left(\rho\right)=1.25-0.0042 \cdot \\\left[\max \left(\rho_{\mathrm{min}},\r
 $$W_{\mathrm{sno}}=\sum_{i=snl+1}^{i=0} w_{\mathrm{ice},i}$$
 将仅计算雪盖固态水含量，雪盖液态水含量$\sum_{i=snl+1}^{i=0} w_{\mathrm{liq},i}$将分配给土壤层顶层。
 
-2.考虑雪层的厚度。当某一雪层的厚度$\Delta z_i$小于规定的最小值$\Delta z_{\mathrm{min}}$时，则将该雪层与相邻雪层合并。如果该雪层：
+(2) 考虑雪层的厚度。当某一雪层的厚度$\Delta z_i$小于规定的最小值$\Delta z_{\mathrm{min}}$时，则将该雪层与相邻雪层合并。如果该雪层：
 \begin{enumerate}
   \item 为顶层，则与相邻的下层雪层合并；
   \item 为底层（与土壤相邻），则与相邻的上层雪层合并；
-  \item 为中间层，则与厚度较薄的相邻雪层合并。
+  \item 为中间层，则与相邻的厚度较薄的雪层合并。
 \end{enumerate}
 
 五个雪层（从顶层到底层）规定的厚度最小值$\Delta z_{\mathrm{min}}$分别为 0.010、0.015、0.025、0.055 和 0.115 \unit{m}。
@@ -314,11 +317,12 @@ $\lambda_{\mathrm {fus}} $为固态水融化潜热，$C_{\mathrm{liq}}$和$C_{\m
 
 
 \section{雪层的再分层}\label{雪层的再分层}
-\esection{Snow Layer Re-formation}
+\esection{Snow Layer Subdivision}
 \begin{mymdframed}{代码}
   本节对应的代码文件为\texttt{MOD\_SnowLayersCombineDivide.F90}。
 \end{mymdframed}
-当某一雪层的厚度$\Delta z_i$大于规定的最大值$\Delta z_{\mathrm{max}}$时，该雪层将被再分。最大厚度$\Delta z_{\mathrm{max}}$和雪盖的层数有关。例如，如果雪盖只被分为一层，那么顶层（也就是该层）的最大厚度将为0.03 \unit{m}；如果雪盖被分为多层，那么顶层的最大厚度则为0.02 \unit{m}。不同情况雪层的最大厚度如图~\ref{fig:不同情况下雪层的最大厚度}所示。
+
+当某一雪层的厚度$\Delta z_i$大于规定的最大值$\Delta z_{\mathrm{max}}$时，该雪层将被再分。最大厚度$\Delta z_{\mathrm{max}}$和雪盖的层数有关。例如，如果雪盖只被分为一层，那么顶层（也就是该层）的最大厚度将为0.03 \unit{m}；如果雪盖被分为多层，那么顶层的最大厚度则为0.02 \unit{m}。不同情况雪层的最大厚度如图~\ref{fig:不同情况下雪层的最大厚度} 所示。
 
 {
   \begin{figure}[htbp]
@@ -329,9 +333,9 @@ $\lambda_{\mathrm {fus}} $为固态水融化潜热，$C_{\mathrm{liq}}$和$C_{\m
   \end{figure}
 }
 
-如果被再分的雪层为底层，则将该雪层等分为厚度相等的两层，并均分液态水含量和固态水含量，温度和原雪层保持一致，此时雪盖总层数将增加1（即$snl$将减少1）。如果被再分的雪层不为底层，先将该层分为上下两层，其中上层雪层的厚度限为该层的规定最大厚度$\Delta z_{\mathrm{max}}$，下层雪层的厚度则为$\Delta z_i - \Delta z_{\mathrm{max}}$，原雪层的液态水含量和固态水含量按厚度比例分配给上下两个雪层，温度在再分前后保持不变，再将下层雪层作为多余部分根据式~\eqref{eq:SnowCombThick} -~\eqref{eq:SnowCombTemp}和原雪层的相邻下层雪层合并，从而保证雪盖总层数不变。
+如果被再分的雪层为底层，则将该雪层等分为厚度相等的两层，并均分液态水含量和固态水含量，温度和原雪层保持一致，此时雪盖总层数将增加1（即$snl$将减少1）。如果被再分的雪层不为底层，先将该层分为上下两层，其中上层雪层的厚度限为该层的规定最大厚度$\Delta z_{\mathrm{max}}$，下层雪层的厚度则为$\Delta z_i - \Delta z_{\mathrm{max}}$，原雪层的液态水含量和固态水含量按厚度比例分配给上下两个雪层，温度在再分前后保持不变，再将下层雪层作为多余部分根据式~\eqref{eq:SnowCombThick} -~\eqref{eq:SnowCombTemp} 和原雪层的相邻下层雪层合并，从而保证雪盖总层数不变。
 
-如图~\ref{fig:以三层为例雪层再分层的方法}，假设某一时间步，模式中包含三层雪层，其厚度从上至下分别为0.02、0.08和0.17 m，参考图~\ref{fig:不同情况下雪层的最大厚度}中三层情况下的最大厚度标准考虑，则第$i=-1$层厚度$\Delta z_{-1}=0.08 > \Delta z_{\mathrm{max,-1}}=0.05 $，此时将其厚度截取0.03 m分配至相邻下层雪盖，使其厚度减少为$\Delta z_{-1}=0.05$，刚好满足最大阈值。这时，底层雪盖厚度将增加为$\Delta z_{0}=0.20$，同样超过了$\Delta z_{\mathrm{max,0}}=0.18$，则将该层再次划分为厚度相等的两层，均为0.10 m。于是，总雪盖层数便增加至四层，每层厚度如图中所标注，之后的计算则以四层为标准。
+如图~\ref{fig:以三层为例雪层再分层的方法}，假设某一时间步，模式中包含三层雪层，其厚度从上至下分别为0.02、0.08和0.17 m，参考图~\ref{fig:不同情况下雪层的最大厚度} 中三层情况下的最大厚度标准考虑，则第$i=-1$层厚度$\Delta z_{-1}=0.08 > \Delta z_{\mathrm{max,-1}}=0.05 $，此时将其厚度截取0.03 m分配至相邻下层雪盖，使其厚度减少为$\Delta z_{-1}=0.05$，刚好满足最大阈值。这时，底层雪盖厚度将增加为$\Delta z_{0}=0.20$，同样超过了$\Delta z_{\mathrm{max,0}}=0.18$，则将该层再次划分为厚度相等的两层，均为0.10 m。于是，总雪盖层数便增加至四层，每层厚度如图中所标注，之后的计算则以四层为标准。
 
 {
   \begin{figure}[htbp]

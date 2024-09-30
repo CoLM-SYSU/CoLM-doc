@@ -353,10 +353,12 @@ CoLM植被物候过程的耦合预报方案通过对叶片碳的收支控制，�
 \esubsection{Evergreen Phenology}
 常绿植被功能型假设光合作用的净碳收入以及从土壤中的氮摄取直接分配给叶、细根、活茎和活粗茎的组织库。
 代表非结构碳库的存储库和传输库将不会有任何碳存储。常绿植被功能型不存在特别的发芽展叶期和落叶期，
-叶碳储量存在不随时间变化的固定碳周转速率：
+叶碳储量存在不随时间变化的固定碳周转速率，$r_{\mathrm{bglf}}$，单位：$\mathrm{s}^{-1}$：
 \begin{equation}
-  \tau_{\mathrm{bglf}}=\frac{1}{\tau_{\mathrm{lf}} \cdot 365 \cdot 86400}
-\end{equation}\todo{可以对$\tau_{\rm lf}$进行说明，下面$r_*$同。}
+  r_{\mathrm{bglf}}=\frac{1}{\tau_{\mathrm{lf}} \cdot 365 \cdot 86400}
+\end{equation}
+其中，$\tau_{\mathrm{lf}}$是叶片寿命，单位：年。
+
 因此，叶面积指数的季节变化将主要由光合作用净碳收入的季节变化引起。
 叶和细根由于物候过程的碳凋落通量($CFP_{\mathrm{lf\rightarrow exit,pft}}$，$CFP_{\mathrm{fr\rightarrow exit,pft}}$)为：
 \begin{equation}

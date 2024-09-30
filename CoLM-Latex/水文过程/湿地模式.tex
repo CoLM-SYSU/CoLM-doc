@@ -68,7 +68,7 @@
 由于此时湍流通量与叶片温度耦合紧密，故阻抗系数$r_{\mathrm{am}}$、$r_{\mathrm{ah}}$、$r_{\mathrm{aw}}$与植被冠层周围($d+z_{\mathrm{0mx}}$)空气温度$T_{\mathrm {s}} $和比湿$q_{\mathrm {s}} $将随叶片温度一起采用牛顿迭代法进行求解(见章节~\ref{植被叶片温度计算})。其感热与水汽通量求解与一维植被湍流交换模型计算过程完全相同，具体计算过程请读者参见章节~\ref{一维植被湍流交换模型}。
 
 \section{湿地温度计算方案}
-\esection{Wetland Turbulent Flux Scheme}
+\esection{Wetland Temperature Scheme}
 湿地垂直层温度的计算方案同样类似于有植被覆盖的雪盖土壤层的垂直层温度计算方案。
 
 对于有植被覆盖部分的湿地，需先计算植被叶片温度（见章节~\ref{植被叶片温度计算}），其后计算雪盖土壤层。无植被覆盖部分则直接计算雪盖土壤层的垂直层温度即可。\\
@@ -293,7 +293,7 @@ $\lambda_{\mathrm {sub}} $和$\lambda_{\mathrm {vap}} $分别为固态水升华�
 
 
 \section{湿地的水文过程计算方案}
-\esection{Wetland Hydrological Processe}
+\esection{Wetland Hydrological Processes}
 湿地的水文过程计算方案同样类似于雪盖土壤层，区别在于湿地的土壤水默认为饱和状态。故水文过程主要发生在土壤层之上的雪盖层和土壤层顶层。
 
 对于雪盖的水文过程，其计算方案除雪层的建立外与章节~\ref{积雪和土壤中水分的垂直运动}基本一致。而在土壤层的水文过程中，同样认为土壤中含有饱和土壤水，采用CoLM2014中的方案和用可变饱和流数值算法求解Richards方程时有少许不同。

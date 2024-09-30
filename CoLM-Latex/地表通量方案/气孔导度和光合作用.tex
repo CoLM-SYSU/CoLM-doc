@@ -15,7 +15,7 @@ A_{\mathrm{n}}=A_{\mathrm{n,sun}}+A_{\mathrm{n,sha}}
 \end{equation}
 
 阳叶和阴叶冠层尺度的净光合同化速率模拟是通过对叶片尺度的光合作用模型进行升尺度计算得到。C3植物叶片尺度的光合作用模拟是基于Farquhar光合作用模型~\citep{farquhar1980biochemical}，
-C4植物则是基于~\citet{collatz1992} 的光合作用改进模型。卡尔文循环是高等植物光合作用中的重要途径之一，CO$_2$和1,5-二磷酸核酮糖(RuBP)在1,5-二磷酸核酮糖羧化酶(Rubisco)的催化下产生羧化反应，生成3-磷酸甘油酸(PGA)，并被还原为3-磷酸甘油醛(PGAL)，PGA经过一系列转变再次形成RuBP，这被称为RuBP的再生阶段，完成卡尔文循环。当RuBP充足,卡尔文循环稳定时，多余的PGAL才会合成蔗糖和淀粉，作为光合作用的产物存储在植物内。Farquhar模型认为卡尔文循环中的Rubisco酶限制($A_{\mathrm{c}}$)和RuBP的再生速率($A_{\mathrm{j}}$)是限制是光合羧化速率的两个关键限制因子，CoLM光合作用模块在此基础上增加了蔗糖和淀粉产物合成的速率限制($A_{\mathrm{p}}$)。叶片净光合同化速率 ($A_{\mathrm{n}}$) 综合考虑以上限制影响,即三个限制的最小值减去叶片暗呼吸速率 ($R_{\mathrm {d}}$)，在阴叶和阳叶冠层分别有：
+C4植物则是基于~\citet{collatz1992} 的光合作用改进模型。卡尔文循环是高等植物光合作用中的重要途径之一，CO$_2$和1,5-二磷酸核酮糖(RuBP)在1,5-二磷酸核酮糖羧化酶(Rubisco)的催化下产生羧化反应，生成3-磷酸甘油酸(PGA)，并被还原为3-磷酸甘油醛(PGAL)，PGA经过一系列转变再次形成RuBP，这被称为RuBP的再生阶段，完成卡尔文循环。当RuBP充足,卡尔文循环稳定时，多余的PGAL才会合成蔗糖和淀粉，作为光合作用的产物存储在植物内。Farquhar模型认为卡尔文循环中的Rubisco酶($A_{\mathrm{c}}$)和RuBP的再生速率($A_{\mathrm{j}}$)是光合羧化速率的两个关键限制因子，CoLM光合作用模块在此基础上增加了蔗糖和淀粉产物合成的限制($A_{\mathrm{p}}$)。叶片净光合同化速率 ($A_{\mathrm{n}}$) 综合考虑以上限制影响,即三个限制的最小值减去叶片暗呼吸速率 ($R_{\mathrm {d}}$)，在阴叶和阳叶冠层分别有：
 \begin{equation}\label{An1sun}
 A_{\mathrm{n,sun}}=\min \left(A_{\mathrm{c,sun}}, A_{\mathrm{j,sun}}, A_{\mathrm{p,sun}}\right)-R_{\mathrm{d,sun}}
 \end{equation}
@@ -181,10 +181,10 @@ A_{\mathrm{n,sun}}=\left(\frac{c_{\mathrm{a}}-c_{\mathrm{i,sun}}}{P_{\mathrm {a}
 A_{\mathrm{n,sha}}=\left(\frac{c_{\mathrm{a}}-c_{\mathrm{i,sha}}}{P_{\mathrm {a}}}\right) /\left(\frac{1.37}{g_{\mathrm{b}}} +\frac{1.6}{g_{\mathrm{s,sha}}}\right)=\left(\frac{c_{\mathrm{s,sha}}-c_{\mathrm{i,sha}}}{P_{\mathrm {a}}}\right) /\left(\frac{1.6}{g_{\mathrm{s,sha}}}\right)
 \end{equation}
 \begin{equation}\label{ea_ei_sun}
-E_{\mathrm{tr,sun}}=\left(\frac{e_{\mathrm{a}}-e_{\mathrm{i}}}{P_{\mathrm {a}}}\right) /\left(\frac{1}{g_{\mathrm{b}}}+\frac{1}{g_{\mathrm{s,sun}}}\right)=\left(\frac{e_{\mathrm{s,sun}}-e_{\mathrm{i}}}{P_{\mathrm {a}}}\right) / \frac{1}{g_{\mathrm{s,sun}}}
+E_{\mathrm{tr,sun}}=\left(\frac{e_{\mathrm{i}}-e_{\mathrm{a}}}{P_{\mathrm {a}}}\right) /\left(\frac{1}{g_{\mathrm{b}}}+\frac{1}{g_{\mathrm{s,sun}}}\right)=\left(\frac{e_{\mathrm{i}}-e_{\mathrm{s,sun}}}{P_{\mathrm {a}}}\right) / \frac{1}{g_{\mathrm{s,sun}}}
 \end{equation}
 \begin{equation}\label{ea_ei_sha}
-E_{\mathrm{tr,sha}}=\left(\frac{e_{\mathrm{a}}-e_{\mathrm{i}}}{P_{\mathrm {a}}}\right) /\left(\frac{1}{g_{\mathrm{b}}}+\frac{1}{g_{\mathrm{s,sha}}}\right)=\left(\frac{e_{\mathrm{s,sha}}-e_{\mathrm{i}}}{P_{\mathrm {a}}}\right) / \frac{1}{g_{\mathrm{s,sha}}}
+E_{\mathrm{tr,sha}}=\left(\frac{e_{\mathrm{i}}-e_{\mathrm{a}}}{P_{\mathrm {a}}}\right) /\left(\frac{1}{g_{\mathrm{b}}}+\frac{1}{g_{\mathrm{s,sha}}}\right)=\left(\frac{e_{\mathrm{i}}-e_{\mathrm{s,sha}}}{P_{\mathrm {a}}}\right) / \frac{1}{g_{\mathrm{s,sha}}}
 \end{equation}
 其中，$c_{\mathrm{i,sun}}$和$c_{\mathrm{i,sha}}$是阳叶和阴叶的胞间CO$_2$分压，$c_{\mathrm{s,sun}}$和$c_{\mathrm{s,sha}}$是阳叶和阴叶的叶表CO$_2$分压，$c_{\mathrm {a}}$是冠层大气$\rm CO_2$分压，单位: Pa；$e_{\mathrm{s,sun}}$和$e_{\mathrm{s,sha}}$是阳叶和阴叶的叶表水汽分压，$e_{\mathrm {a}}$是冠层大气水汽分压，$e_{\mathrm {i}}$是胞间水汽分压，单位: Pa，通常假定为饱和水汽压，$g_{\mathrm {b}}$是冠层尺度的叶边界层导度，$g_{\mathrm{s,sun}}$和$g_{\mathrm{s,sha}}$是阳叶和阴叶的冠层尺度叶气孔导度，单位: \unit{mol.m^{-2}.s^{-1}}。
 
@@ -245,7 +245,7 @@ F\left(g_{\mathrm{s}},c_{\mathrm{i}}\right)=1.6P_{\mathrm {a}}A_{\mathrm{n}}\lef
 \end{cases}
 \end{equation}
 
-假设胞间$\mathrm {CO_2}$分压远远小于Michaelis-Menten常数，即$c_{\mathrm{i}}\ll K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)$；大气$\mathrm {CO_2}$分压远大于补偿点分压，即$c_{\mathrm{a}}\gg\Gamma^*$；$\frac{1.6\left(e_{\mathrm{i}}-e_{\mathrm{a}}\right)}{\lambda}$不远小于1 \todo{不远小于1-意思不太明确}，即$c_{\mathrm{a}}\gg\frac{1.6\left(e_{\mathrm{i}}-e_{\mathrm{a}}\right)\Gamma^*}{\lambda}$，可以从~\eqref{cieqn}中解出胞间$\mathrm {CO_2}$分压$c_{\mathrm{i}}$：
+假设胞间$\mathrm {CO_2}$分压远远小于Michaelis-Menten常数，即$c_{\mathrm{i}}\ll K_{\mathrm{c}}\left(1+\frac{o_{\mathrm{i}}}{K_{\mathrm{o}}}\right)$；大气$\mathrm {CO_2}$分压远大于补偿点分压，即$c_{\mathrm{a}}\gg\Gamma^*$；$\frac{1.6\left(e_{\mathrm{i}}-e_{\mathrm{a}}\right)}{\lambda}$的数量级大约在$10^{-1}\sim 10^{2}$左右，所以$c_{\mathrm{a}}\gg\frac{1.6\left(e_{\mathrm{i}}-e_{\mathrm{a}}\right)\Gamma^*}{\lambda}$，可以从~\eqref{cieqn}中解出胞间$\mathrm {CO_2}$分压$c_{\mathrm{i}}$：
 
 \begin{equation}\label{cisolu}
     \begin{cases}

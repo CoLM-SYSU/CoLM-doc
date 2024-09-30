@@ -4,6 +4,9 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[UTF8,heading=true,scheme=chinese]{ctex}
 \ctexset{
+  contentsname=目 录,
+  listtablename=表 格,
+  listfigurename=插 图,
   part={
     pagestyle = empty
   },
@@ -88,7 +91,7 @@ citecolor=Blue,linkcolor=Blue,urlcolor=Blue,colorlinks=True,breaklinks=true]{hyp
 %\input{dedication/dedication}
 %\input{quotes/quotes}
 
-\listoftodos[待核查/修改列表]
+%\listoftodos[待核查/修改列表]
 
 \body
 \include{前言/前言}
@@ -163,7 +166,7 @@ citecolor=Blue,linkcolor=Blue,urlcolor=Blue,colorlinks=True,breaklinks=true]{hyp
 \addtocontents{toc}{\bigskip}
 
 \clearpage
-\renewcommand{\bibname}{参考文献}
+%\renewcommand{\bibname}{参考文献}
 \addtocontents{toe}{\bigskip}
 %\addcontentsline{toe}{chapter}{Bibliography}
 \bibliographystyle{agufull08-mod}

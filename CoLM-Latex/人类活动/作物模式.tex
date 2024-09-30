@@ -69,7 +69,7 @@ GPAM1包含64个作物功能类型（Crop Functional Type, CFT）（表~\ref{tab
 
 \section{物候}
 \esection{Phenology}
-GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(grain fill); (3)灌浆到成熟/收割。所涉及的参数取值见表~\ref{tab:作物物候方案相关参数}。
+GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(grain fill); (3)灌浆到成熟/收割。所涉及的参数作物底温${T}_{\mathrm{base}}$，抽芽点$f_{\mathrm{LE}}$，抽芽点$f_{\mathrm{LE}}$，成熟积温点${\rm GDD}_{\mathrm{mat}}$和最长生长季长度${\rm GSL}_{\mathrm{max}}$取值见表~\ref{tab:作物物候方案相关参数}。
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -92,7 +92,7 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 \subsection{播种}\label{sec:播种}
 \esubsection{Sowing}
   播种日期是给定的，采用全球播种日再分析数据~\citep{jagermeyr2021climate})，并结合陆表数据中的作物分布制作而成，% (图~\ref{fig:GPAM1播种日空间分布})
-  为GPAM1的输入场。
+  为GPAM1的输入场。播种日期以后，作物进入第一个阶段，从播种期到抽芽期。
 
 %{
 %\begin{figure}[htbp]
@@ -105,36 +105,35 @@ GPAM1的物候包括三个阶段: (1)播种到抽芽; (2)抽芽到开始灌浆(g
 
 \subsection{抽芽}
 \esubsection{Germination}
-当热单元指数(Heat Unit Index, ${\mathrm {HUI}}$)：
+通过每日积温达到成熟积温的比例，我们计算得到热单元指数(Heat Unit Index, ${\mathrm {HUI}}$)：
 \begin{equation}\label{HUI}
   {\mathrm {HUI}}=\frac{{\rm GDD}_{\mathrm{base}}}{{\rm GDD}_{\mathrm{mat}}}
 \end{equation}
-达到$f_{\mathrm{LE}}$时\todo{这个变量好像没有定义}，开始抽芽。${\rm GDD}_{\mathrm{base}}$是基于陆表气温的积温(\textcelsius\ days):
+当${\mathrm{HUI}}$达到抽芽点$f_{\mathrm{LE}}$时，作物进入第二个阶段，从抽芽期到灌浆期。${\rm GDD}_{\mathrm{base}}$是基于陆表气温的积温(\textcelsius\ days):
 \begin{equation}
-  {\rm GDD}_{\mathrm{ {base }}}=\sum_{\mathrm{planting}}^{\rm current\ day} \min \left(0, T_{\mathrm{sa}}-T_{\mathrm{base}}\right)
+  {\rm GDD}_{\mathrm{ {base }}}=\sum_{\mathrm{planting}}^{\rm current\ day} \min \left(0, T_{\mathrm{2m,daily}}-T_{\mathrm{base}}\right)
 \end{equation}
-其中，$T_{\mathrm{sa}}$是日地表气温\todo{需更加明确，与前面相同变量统一符号。}，$T_{\mathrm{base}}$是底温(作物在该温度下停止生长)。
+其中，$T_{\mathrm{2m,daily}}$是日均地表气温，$T_{\mathrm{base}}$是底温(作物在该温度下停止生长)。
 
 \subsection{灌浆}
 \esubsection{Grain Filling}
-当${\mathrm {HUI}}$达到$f_{\mathrm{GF}}$时\todo{这个变量好像没有定义}，开始灌浆。
+当${\mathrm {HUI}}$达到灌浆点$f_{\mathrm{GF}}$时，作物进入第三个阶段，从灌浆期到成熟收获期。
 
 \subsection{成熟}
 \esubsection{Maturity}
-当${\mathrm {HUI}}$达到1时或生长季达到最长生长季长度${\rm GSL}_{\mathrm{max}}$时，作物成熟。其中，${\rm GDD}_{\mathrm{mat}}$\todo{在公式25.1第一次出现，可以把定义放在25.1}是${\rm GDD}_{\mathrm{base}}$
-10年滑动平均的一元线性方程(表~\ref{tab:作物物候方案相关参数})。
+当${\mathrm {HUI}}$达到1时，即积温达到成熟积温时$\left(\mathrm{GDD}_{\mathrm{base}}=\mathrm{GDD}_{\mathrm{mat}}\right)$或生长季达到最长生长季长度${\rm GSL}_{\mathrm{max}}$时，作物成熟可收获。通过经验拟合，我们得到成熟积温${\rm GDD}_{\mathrm{mat}}$和10年滑动平均积温${\rm GDD}_{\mathrm{10yr}}$的线性关系，经验系数a和b的具体取值见表~\ref{tab:作物物候方案相关参数}。
 \begin{equation}
   {\rm GDD}_{\mathrm{mat}}=a {\rm GDD}_{\rm 10yr}+b
 \end{equation}
 
 \subsection{收割}
 \esubsection{Harvesting}
-假设达到成熟的时步收割。
+假设收割发生在达到成熟的时步。
 
 
 \section{生理变化}
 \esection{Physiological Changes}
-作物的碳（C）库和氮（N）库有leaf, live stem, grain, fine root库及相应的transfer和storage库，无dead stem, live coarse root, dead coarse root库及相应的transfer和storage库。由于新加了grain库，相应通量会增加分配到grain的C/N通量，grain到Aproduct\todo{这个单词好像有点奇怪}及litter的C/N通量。作物的呼吸和周转与草相同。
+作物的碳（C）库和氮（N）库有叶, 活茎, 谷物, 细根库及相应的存储库和传输库，无死茎, 活粗根, 死粗根库及相应的存储和传输库。由于新加了谷粒库，相应通量会增加分配到谷粒的C、N通量，谷粒到产物及凋落物的C、N通量。作物的呼吸和周转速率与草地相同。
 
 \subsection{光合和气孔导度}
 \esubsection{Photosynthesis and Conductance}
@@ -335,9 +334,9 @@ $t$ 时步的$\mathrm{O_3}$通量累积量:
 \end{equation}
 $D_{\mathrm {p}} $ (\unit{person.km^{-2}}) 及 ${\mathrm {\rm GDP}}$ (\unit{k\ 1995\ US\$.capita^{-1}})
 分别是人口密度和生产总值。
-$f_{\mathrm{crop}}$ 用于判断火发生时间（发生时为1，其余时步为0），
-是输入场，定义为观测播前观测\todo{不太确定这里是不是有点不通顺}的秸秆焚烧峰值时步。
-观测的秸秆焚烧峰值时步基于GFED4s的3小时数据；播种时间见章节~\ref{sec:播种}。
+$f_{\mathrm{crop}}$ 是秸秆焚烧发生标识，用于判断秸秆焚烧何时发生（发生时为1，其余时步为0），
+是输入场，$f_{\mathrm{crop}}$ 反应了观测的秸秆焚烧峰值时步。
+它是基于GFED4s的3小时数据。
 
 在得到燃烧面积后，火灾引起的碳排放${\mathrm {CE}}$ (\unit{g.C.m^{-2}.s^{-1}}) 为：
 \begin{equation}

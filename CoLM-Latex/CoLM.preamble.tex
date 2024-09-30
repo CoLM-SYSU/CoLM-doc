@@ -24,6 +24,7 @@
 \patchcmd{\NAT@test}{\else\NAT@nm}{\else\NAT@nmfmt{\NAT@nm}}{}{}
 \let\NAT@up\itshape
 
+% Add an English Table of Contents
 \newcommand\engcontentsname{Contents}
 \newcommand\tableofengcontents{%
     \if@twocolumn
@@ -289,6 +290,7 @@
 \newcommand\elistchapter[1]{%
   \begingroup
      \let\clearpage\relax
+     %\renewcommand{\chaptermark}[1]{}
      \renewcommand{\chaptermark}[1]{}
      \renewcommand\addcontentsline[3]{}
      \ctexset{
@@ -302,28 +304,35 @@
    \addcontentsline{toe}{chapter}{#1}
 }
 
+\renewcommand{\contentsname}{目~录}
+
 \renewcommand\listoffigures{%
+%    \let\origaddvspace\addvspace
+    \renewcommand{\addvspace}[1]{}
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
       \@restonecolfalse
     \fi
-    \chapter*{\listfigurename}%
+    \chapter*{插~图}%
     \addcontentsline{toc}{chapter}{\listfigurename}
     \@mkboth{\MakeUppercase\listfigurename}%
               {\MakeUppercase\listfigurename}%
     \elistchapter{List of Figures}
     \@starttoc{lof}%
     \if@restonecol\twocolumn\fi
+%    \renewcommand{\addvspace}[1]{\origaddvspace{#1}}
 }
 
 \renewcommand\listoftables{%
+%    \let\origaddvspace\addvspace
+    \renewcommand{\addvspace}[1]{}
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
       \@restonecolfalse
     \fi
-    \chapter*{\listtablename}%
+    \chapter*{表~格}%
     \addcontentsline{toc}{chapter}{\listtablename}
       \@mkboth{%
           \MakeUppercase\listtablename}%
@@ -331,29 +340,37 @@
     \elistchapter{List of Tables}
     \@starttoc{lot}%
     \if@restonecol\twocolumn\fi
+%    \renewcommand{\addvspace}[1]{\origaddvspace{#1}}
 }
 
-\renewenvironment{thebibliography}[1]
-     {\chapter*{\bibname}%
-      \addcontentsline{toc}{chapter}{\bibname}
-      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
-      \echapter*{Bibliography}
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-           {\settowidth\labelwidth{\@biblabel{#1}}%
-            \leftmargin\labelwidth
-            \advance\leftmargin\labelsep
-            \@openbib@code
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-      \sloppy
-      \clubpenalty4000
-      \@clubpenalty \clubpenalty
-      \widowpenalty4000%
-      \sfcode`\.\@m}
-     {\def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
+
+% Let natbib handle the specific bibliogrphy format
+\renewenvironment{thebibliography}[1]{%
+ \bibsection
+ \echapter*{Bibliography}
+ \parindent\z@
+ \bibpreamble
+ \bibfont
+ \list{\@biblabel{\the\c@NAT@ctr}}{\@bibsetup{#1}\global\c@NAT@ctr\z@}%
+ \ifNAT@openbib
+   \renewcommand\newblock{\par}%
+ \else
+   \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
+ \fi
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.\@m
+ \let\NAT@bibitem@first@sw\@firstoftwo
+    \let\citeN\cite \let\shortcite\cite
+    \let\citeasnoun\cite
+}{%
+ \bibitem@fin
+ \bibpostamble
+ \def\@noitemerr{%
+  \PackageWarning{natbib}{Empty `thebibliography' environment}%
+ }%
+ \endlist
+ \bibcleanup
+}%
 
 \makeatother
 
@@ -416,6 +433,24 @@
   }%
   \begin{mdframed}[style=exampledefault]
 }{\end{mdframed}}
+
+\newcommand{\EngTitlePage}{%
+   \clearpage
+   \thispagestyle{empty}
+   \vspace*{1in}
+   \begin{center}
+   \fontsize{22.5}{20}\selectfont {\bf Description of the Common Land Model\\[2ex] (CoLM 2024)}
+   \end{center}
+   \vskip 1in
+   \textbf{\Large Coordinating Lead Authors:}\\
+   {\large Hua Yuan, Yongjiu Dai} \\[3ex]
+
+   \noindent\textbf{\Large Lead Authors:}\\
+   {\large Fang Li, Lu Li, Xianxiang Li, Shaofeng Liu, Xingjie Lu, Nan Wei, Zhongwang Wei, Xiaodong Zeng, Shulei Zhang, Shupeng Zhang} \\[3ex]
+
+   \noindent\textbf{\Large Contributing Authors:}\\
+   {\large Wenzhong Dong, Hanwen Fan, Shuyang Guo, Zulong Huang, Hongbin Liang, Wanyi Lin, Zhuo Liu, Jiahao Shi, Aobo Tan, Xionghui Xu}
+}
 
 %\setCJKfamilyfont{jamspmi}{MS PMincho}
 %\setCJKfamilyfont{jaIPAmi}{IPAMincho}
