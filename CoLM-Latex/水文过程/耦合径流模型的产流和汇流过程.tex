@@ -1,5 +1,5 @@
 \chapter{耦合径流模型的产流和汇流过程}
-\echapter{TODO: need to translate}
+\echapter{Runoff and Integrated River Routing}
 
 \section{产流参数化方案}
 \esection{Runoff Parameterization}
@@ -8,7 +8,7 @@
 \subsection{地表产流}
 \esubsection{Surface Runoff}
 \begin{mymdframed}{代码}
-  本节对应的代码文件为\texttt{MOD\_SoilSnowHydrology.F90}。
+  本节对应的代码文件为\texttt{MOD\_Runoff.F90}。
 \end{mymdframed}
 \subsubsection{基于SIMTOP参数化方案}
 地表径流的参数化方案~\citep{niu2005simple}考虑了地形、地下水位、降水和入渗速度等因素。
@@ -37,20 +37,20 @@
 \subsubsection{基于新安江模型的地表产流方案}
 不同于SIMTOP参数化方案，\cite{RENJUN1992371}提出的新安江方案引入了地形参数($b_\text{topo}$)来确定土壤入渗的水流通量。本文假设入渗能力由土壤顶部6层的物理状态和属性决定。首先，我们定义前6层土壤中的液态水体积 $w_{\mathrm{{int}}}$ 和饱和水体积 $w_{\mathrm{{satint}}}$:
 \begin{equation}
-w_{\mathrm{{int}}} = \sum_{i=1}^{6}\left( {vol}_{i} \times {{\mathrm {d}} z}_{i} \right)
+w_{\mathrm{{int}}} = \sum_{i=1}^{6}\left( {\rm vol}_{i} \times {{\mathrm {d}} z}_{i} \right)
 \end{equation}
 \begin{equation}
-w_{\mathrm{{satint}}} = \sum_{i=1}^{6}\left( {eff}_{i} \times {{\mathrm {d}} z}_{i} \right)
+w_{\mathrm{{satint}}} = \sum_{i=1}^{6}\left( {\rm eff}_{i} \times {{\mathrm {d}} z}_{i} \right)
 \end{equation}
-其中，${{\mathrm {d}} z}_{i}$ 表示第 $i$ 层土壤厚度，${vol}_{i}$ 表示第 $i$ 层土壤中液态水体积百分比，${eff}_{i}$ 表示第 $i$ 层有效孔隙度。
+其中，${{\mathrm {d}} z}_{i}$ 表示第 $i$ 层土壤厚度，${\rm vol}_{i}$ 表示第 $i$ 层土壤中液态水体积百分比，${\rm eff}_{i}$ 表示第 $i$ 层有效孔隙度。
 接下来，我们引入一个介于0.01--0.5之间的地形参数 $b_\text{topo}$:
 \begin{equation}
-b_\text{topo}=\frac{{topo}_\text{std}-{sig}_\text{min}}{{sig}_\text{max}-{sig}_\text{min}}
+b_\text{topo}=\frac{{\rm topo}_\text{std}-{\rm sig}_\text{min}}{{\rm topo}_\text{std}+{\rm sig}_\text{max}}
 \end{equation}
-其中，${topo}_\text{std}$ 表示地形高程标准差，${sig}_\text{min}$ 和 ${sig}_\text{max}$ 分别取值为100和1000。
+其中，${\rm topo}_\text{std}$ 表示地形高程标准差~(m)，${\rm sig}_\text{min}$ 和 ${\rm sig}_\text{max}$ 分别取值为100~m和1000~m。
 基于上述参数，我们可以计算地表能够入渗的水流通量 $q_{\mathrm{infl}}$:
 \begin{equation}
-q_{\mathrm{infl}}=w_{\mathrm{{satint}}}-w_{\mathrm{{int}}}-w_{\mathrm{{satint}}} \times w_{\mathrm{{tmp}}}^{b_\text{topo}+1}
+q_{\mathrm{infl}}=w_{\mathrm{{satint}}}-w_{\mathrm{{int}}}-w_{\mathrm{{satint}}} \times \left[\max\left(w_{\mathrm{{tmp}},0}\right)\right]^{b_\text{topo}+1}
 \end{equation}
 其中，$w_\text{tmp}$ 定义为:
 \begin{equation}
@@ -64,12 +64,12 @@ r_\text{sur}=G_\text{wat}-q_{\mathrm{infl}}
 \subsubsection{基于Simple-VIC的地表产流方案}
 \cite{Liang2003Anew}提出的这一参数化方案充分考虑了土壤的物理特性，包括土壤质地、饱和程度和水分深度等关键因素。与新安江方案相同，该方案首先计算土壤的最大入渗能力，我们首先假设最大入渗能力取决于最上面6层土壤的物理状态和属性，即：
 \begin{equation}
-w_{\mathrm{{int}}} = \sum_{i=1}^{6}\left( {vol}_{i} \times {{\mathrm {d}} z}_{i} \right)
+w_{\mathrm{{int}}} = \sum_{i=1}^{6}\left( {\rm vol}_{i} \times {{\mathrm {d}} z}_{i} \right)
 \end{equation}
 \begin{equation}
-w_{\mathrm{{satint}}} = \sum_{i=1}^{6}\left( {eff}_{i} \times {{\mathrm {d}} z}_{i} \right)
+w_{\mathrm{{satint}}} = \sum_{i=1}^{6}\left( {\rm eff}_{i} \times {{\mathrm {d}} z}_{i} \right)
 \end{equation}
-其中，$w_{\mathrm{{int}}}$ 表示前6层土壤中的液态水体积，$w_{\mathrm{{satint}}}$ 表示前6层土壤中的饱和水体积。 ${{\mathrm {d}} z}_{i}$ 表示第 $i$ 层土壤厚度， ${vol}_{i}$ 表示第 $i$ 层土壤中液态水体积百分比，${eff}_{i}$ 表示第 $i$ 层有效孔隙度。由此我们可以计算得出土壤饱和分数：
+其中，$w_{\mathrm{{int}}}$ 表示前6层土壤中的液态水体积，$w_{\mathrm{{satint}}}$ 表示前6层土壤中的饱和水体积。 ${{\mathrm {d}} z}_{i}$ 表示第 $i$ 层土壤厚度， ${\rm vol}_{i}$ 表示第 $i$ 层土壤中液态水体积百分比，${\rm eff}_{i}$ 表示第 $i$ 层有效孔隙度。由此我们可以计算得出土壤饱和分数：
 \begin{equation}
 {S}_{\mathrm{{Sf}}} = 1 - \left( 1 - \frac{w_{\mathrm{{int}}}}{w_{\mathrm{{satint}}}} \right)^{{I}_{\mathrm{{ef}}}}
 \end{equation}
@@ -129,7 +129,11 @@ G_{\mathrm{wat}}- w_{\mathrm{{satint}}} + w_{\mathrm{{int}}} + w_{\mathrm{{satin
     \exp \left(-f_{\mathrm{drai}}  z_{\mathrm{wt}}\right)
   \end{aligned}
 \end{equation}
-其中，$f_{\mathrm{ice,sum}}$为地下水位所在及以下土壤层内总的冰的体积含量（定义为冰的总体积除以土壤层的总体积）。
+其中，$f_{\mathrm{ice,sum}}$为地下水位所在及以下土壤层内冰的平均体积含量，定义为
+\begin{equation}
+    f_{\mathrm{ice,sum}} = \frac{\sum_{i=i_{\mathrm{wt}}}^{n_{\mathrm{soil}}} \left(f_{\mathrm{ice},i}\cdot \Delta z_i\right)}{\sum_{i=i_{\mathrm{wt}}}^{n_{\mathrm{soil}}} \Delta z_i}
+\end{equation}
+此处，$i_{\mathrm{wt}}$为地下水位所在土壤层数，$n_{\mathrm{soil}}$为土壤总层数，$f_{\mathrm{ice},i}$表示第 i 层中冰占土壤孔隙的体积百分比，$\Delta z_i$为第i层土壤的厚度。
 
 \subsection{基于VIC的产流方案}
 \esubsection{VIC-Based Runoff}
@@ -212,16 +216,17 @@ CoLM2024进一步耦合了VIC模型的产流方案，作为产流计算的可选
 
     VIC向CoLM传入的变量有土壤层厚度（$\Delta z$）、土壤孔隙度（$\theta_{\text{sat}}$）、残余水分含量（$\theta_\text{r}$）、饱和导水率（$K_{\text{sat}}$）、Clapp-Hornberger参数 $B$、土壤层中液态水含量（$w_{\text{liq}}$）、土壤层中固态水含量（$w_{\text{ice}}$）、根系从每层土壤中的吸水速率（$q_{\text{root}}$）和从冠层到大气的蒸散发（$E$）。VIC 向 CoLM 返回的变量有地表径流（$r_{\text{sur}}$）和基流（$r_{\text{sub}}$）。
 
-    VIC中的三层土壤和 CoLM 中的1--3、4--6、7--10层分别进行对应（见图~\ref{fig:VIC和CoLM耦合示意图} 所示）。对变量值做直接加和或者以土壤厚度作为权重进行加权平均。
-
-    {
-      \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=\textwidth]{Figures/陆地表面的水分循环/VIC说明图中文.pdf}
-        \caption{VIC和CoLM耦合示意图}
-        \label{fig:VIC和CoLM耦合示意图}
-      \end{figure}
-    }
+    VIC中的三层土壤和 CoLM 中的1--3、4--6、7--10层分别进行对应。%（见图~\ref{fig:VIC和CoLM耦合示意图} 所示）。
+    对变量值做直接加和或者以土壤厚度作为权重进行加权平均。
+%
+%    {
+%      \begin{figure}[htbp]
+%        \centering
+%        \includegraphics[width=\textwidth]{Figures/陆地表面的水分循环/VIC说明图中文.pdf}
+%        \caption{VIC和CoLM耦合示意图}
+%        \label{fig:VIC和CoLM耦合示意图}
+%      \end{figure}
+%    }
 
 
 \section{径流模型CaMa-Flood}

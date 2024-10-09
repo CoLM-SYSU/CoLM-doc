@@ -62,7 +62,7 @@
   \end{figure}
 }
 
-该工具基于非结构化一致性三角-六边形构建算法 \citep{fatichi2020soil,walko2008ocean,walko_direct_2011}，以准均匀的全局三角形（Delaunay）的网格化方法为理论依据。其中非结构网格构造流程如图~\ref{fig:非结构化网格生成流程图} 所示，具体介绍如下：\todo{图2.7请补充说明图中iw，im含义}\todo{图2.8部分变量在题注中也需补充说明}
+该工具基于非结构化一致性三角-六边形构建算法 \citep{fatichi2020soil,walko2008ocean,walko_direct_2011}，以准均匀的全局三角形（Delaunay）的网格化方法为理论依据。其中非结构网格构造流程如图~\ref{fig:非结构化网格生成流程图} 所示，具体介绍如下：
 {
   \begin{figure}[htbp]
     \centering
@@ -98,7 +98,7 @@
   \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{Figures/模式构架/三角形网格简易细化.png}
-    \caption{三角形网格简易细化}
+    \caption{三角形网格简易细化,其中iw为三角网格的顶点，iv为三角网格各边的中点，im为三角网格的重心。}
     \label{fig:三角形网格简易细化}
   \end{figure}
 }
@@ -129,7 +129,7 @@
       \begin{figure}[htbp]
         \centering
         \includegraphics[width=\textwidth]{Figures/模式构架/多阈值非结构网格细化.png}
-        \caption{多阈值非结构网格细化示例}
+        \caption{多阈值非结构网格细化示例。其中num\_landtypes(nlt)代表基于土地利用类型的数量阈值细化的网格，LAI代表基于叶面积指数阈值细化的网格，slope代表基于坡度阈值细化的网格，undfined代表不满足上述细化阈值的网格，nlt，LAI代表同时满足基于土地利用类型的数量阈值和基于叶面积指数阈值细化的网格（依此类推）。}
         \label{fig:多阈值非结构网格细化}
       \end{figure}
     }
@@ -326,8 +326,8 @@ CoLM植被、土壤和积雪的垂直分层如图~\ref{fig:CoLM垂直分层} 所
 
 CoLM可根据次网格类型(章节~\ref{sec:植被次网格})将植被按照单层或最多三层进行模拟。对于单层植被(LCT和PFT植被次网格)，采用双大叶模型进行模拟\citep{dai2004two};对于多层植被(PC植被次网格)，每层植被的各PFT采用三维植被模型(章节~\ref{三维植被辐射传输模型} 和~\ref{三维植被湍流})，并结合双大叶模型进行模拟。
 
-CoLM默认将土壤分为10层，每一层土壤的中心深度$z_i$~(m)定义为：
-\begin{equation}
+CoLM默认将土壤分为10层，每一层土壤的节点深度$z_i$~(m)定义为：
+\begin{equation}\label{eq:z_soi}
   z_{i} = f_{\mathrm{s}}\left\{ \exp{\left\lbrack 0.5(i - 0.5) \right\rbrack} - 1 \right\}
 \end{equation}
 其中尺度因子$f_{\mathrm {s}}=0.025$. 因为土壤水热梯度在接近土壤与大气的交界面时往往较大，采用指数定义可以保证土壤接近表面时得到更细的分层。每一层土壤的厚度$\Delta z_i$~(m)计算为：
@@ -359,13 +359,13 @@ CoLM中每层土壤中心的深度及每层下边界的深度见表~\ref{table:�
 
 雪盖位于土壤之上，可根据其厚度划分为至多5层。为与土壤层编号一致，
 这里与土壤表层相邻的雪层记为第0层，逐渐向上依次记为第 -1 层直至至多为第 -4 层。
-记$snl$为划分的雪层总层数的相反数，则最上层雪层即为第$snl+1$层。记雪层的厚度为$z_{\mathrm{sno}}$，当$z_{\mathrm{sno}}<0.01$时，这时积雪较少，不单独划分为层，$snl=0$，当$z_{\mathrm{sno}}\geqslant 0.01$时，积雪分层的方案见图~\ref{fig:积雪分层}。
+记$snl$为划分的雪层总层数的相反数，则最上层雪层即为第$snl+1$层。记雪层的厚度为$z_{\mathrm{sno}}$，当$z_{\mathrm{sno}}<0.01$~(m)时，这时积雪较少，不单独划分为层，$snl=0$，当$z_{\mathrm{sno}}\geqslant 0.01$~(m)时，积雪分层的方案见图~\ref{fig:积雪分层}。
 
 {
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/模式构架/积雪分层.jpg}
-    \caption[CoLM积雪分层方案]{CoLM积雪分层方案。当$z_{\mathrm{sno}}<0.01 \unit{mm}$时不形成积雪层，图中厚度单位为\unit{mm}}
+    \includegraphics[width=0.95\textwidth]{Figures/模式构架/积雪分层.pdf}
+    \caption[CoLM积雪分层方案]{CoLM积雪分层方案。当$z_{\mathrm{sno}}<0.01 \unit{m}$时不形成积雪层，图中厚度单位为~\unit{m}}
     \label{fig:积雪分层}
   \end{figure}
 }
