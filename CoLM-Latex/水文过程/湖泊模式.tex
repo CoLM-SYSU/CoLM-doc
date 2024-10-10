@@ -756,3 +756,206 @@ $E_{\mathrm {g}} $表示湖泊表面与大气的水汽通量(\unit{kg.m^{-2}.s^{
   I_{1}=\frac{a+b-c}{d}
 \end{equation}
 以上两种情况由于雪层已全部融化，雪水当量($W_{\mathrm{sno}}$)、积雪厚度($z_{\mathrm{sno}}$)与雪层数($snl$)更新为0。
+%
+\section{其他湖泊模型}\label{其他湖泊模型}
+\esection{Other Lake Model}
+\begin{mymdframed}{代码}
+  本节对应的代码文件位于\texttt{main/LAKE}。
+\end{mymdframed}
+
+目前，一维湖泊模型大致可以分为三类：
+\begin{enumerate}
+  \item 多层涡流扩散模型，如CoLM-Lake模型~\citep{daiLakeSchemeCommon2018}，使用半经验参数化方法来估计涡流扩散系数;
+  \item 一维湍流闭合模型，如Simstrat模型~\citep{goudsmit2002application}和XOML模型~\citep{ling2015multilevel}，直接量化湍流动能在整个水柱中的生成、传输和耗散；
+  \item 两层参数化模型，如FLake模型~\citep{mironovCOSMOTechnicalReport2008a}，基于自相似理论定义上层混合层和下层温跃层。
+\end{enumerate}
+这些模型由于采用不同的参数化方案，其适用性各有差异。
+
+为使研究者能够根据具体的研究需求和湖泊特征灵活选择最适合的模型，我们将Simstrat模型、XOML模型和FLake模型等三个一维湖泊模型与CoLM进行了耦合，作为处理湖泊过程的可选方案。这些模型与CoLM-Lake模型共享相同的湖泊模式结构和表面通量计算方法，主要区别在于温度的求解方式。此外，需要注意的是，Simstrat模型和XOML模型都不考虑湖底淤泥层的影响。
+%
+\subsection{Simstrat模型}\label{Simstrat模型}
+\esubsection{Simstrat Model}\label{Simstrat Model}
+
+Simstrat模型由\citet{goudsmit2002application}开发，是一个基于浮力扩展的双方程$k-\epsilon$湍流闭合模型。其独特之处在于，通过分离风能来参数化由盆地尺度内波引发的湍流。此外，Simstrat模型在湖泊能量方程的计算中考虑了湖泊水平横截面积的深度变化，而动量方程则包含了科里奥利力和垂直粘度的影响。其对湖泊内部湍流动能的生成与耗散的详细描述，为深湖动力学模拟提供了一个可靠且精确的模型选择，尤其适用于对湖泊内部复杂物理过程的高精度模拟。总体而言，该模型的湖泊层温度的控制方程与CoLM-Lake的控制方程相似，具体表达如下：
+\begin{equation}
+    \frac{\partial T}{\partial t}=\frac{1}{A_{\mathrm{z}}} \frac{\partial}{\partial z}\left(A_{\mathrm{z}} \tau \frac{\partial T}{\partial z}\right)+\frac{1}{\rho_{\mathrm{liq}} C_{\mathrm{liq}}} \frac{\partial \phi}{\partial z}
+\end{equation}
+其中，$A_{\mathrm{z}}$表示湖泊在深度$z$处的横截面积(\unit{m^2})，其他变量的含义与CoLM-Lake中的一致。热力传导率$\tau$表达式为：
+\begin{equation}
+    \tau = v^{\mathrm{'}}_{\mathrm{t}} + k_{\mathrm{m}}
+\end{equation}
+其中，$k_{\mathrm{m}}$表示液态水分子热扩散率(\unit{m^2.s^{-1}})，取值与CoLM-Lake相同。$v^{\mathrm{'}}_{\mathrm{t}}$表示湍流扩散率(\unit{m^2.s^{-1}})，其表达式为：
+\begin{equation}
+    v^{\mathrm{'}}_{\mathrm{t}} = c^{\mathrm{'}}_{\mathrm{\mu}}\frac{k^\mathrm{2}}{\epsilon}
+\end{equation}
+其中，$c^{\mathrm{'}}_{\mathrm{\mu}}=0.072$是无量纲常数，$k$表示单位质量的湍流动能(\unit{J.kg^{-1}})，$\epsilon$表示湍流动能耗散率(\unit{W.kg^{-1}})。$k$和$\epsilon$的控制方程分别为：
+\begin{equation}
+    \frac{\partial k}{\partial t} = \frac{1}{A_{\mathrm{z}}}\frac{\partial}{\partial z}\left(A_{\mathrm{z}} v_{\mathrm{k}} \frac{\partial k}{\partial z}\right) + P + P_{\mathrm{seiche}} + B - \epsilon
+\end{equation}
+\begin{equation}
+    \frac{\partial \epsilon}{\partial t} = \frac{1}{A_{\mathrm{z}}}\frac{\partial}{\partial z}\left(A_{\mathrm{z}} v_{\mathrm{\epsilon}} \frac{\partial \epsilon}{\partial z}\right) + \frac{\epsilon}{k}\left[c_{\mathrm{\epsilon 1}} \left(P + P_{\mathrm{seiche}}\right) + c_{\mathrm{\epsilon 3}} B - c_{\mathrm{\epsilon 2}} \epsilon\right]
+\end{equation}
+其中，$P$表示由于剪切应力而产生的湍流动能(\unit{W.kg^{-1}})，$P_{\mathrm{seiche}}$表示由于湖泊内波而产生的湍流动能(\unit{W.kg^{-1}})。$B$=-$v^{\mathrm{'}}_{\mathrm{t}} N^2$表示浮力通量(\unit{W.kg^{-1}})。$v_{\mathrm{k}}$和$v_{\mathrm{\epsilon}}$分别表示$k$和$\epsilon$的湍流扩散率(\unit{m^2.s^{-1}})，是基于前一时间步长的$k$和$\epsilon$计算得出的，计算方法如下：
+\begin{equation}
+    v_{\mathrm{k}} = \frac{c_{\mathrm{\mu}}}{\sigma_{\mathrm{k}}}\frac{k^2}{\epsilon}
+\end{equation}
+\begin{equation}
+    v_{\mathrm{\epsilon}} = \frac{c_{\mathrm{\mu}}}{\sigma_{\mathrm{\epsilon}}}\frac{k^2}{\epsilon}
+\end{equation}
+上述等式中，$c_{\mathrm{\mu}}$、$\sigma_{\mathrm{k}}$、$\sigma_{\mathrm{\epsilon}}$、$c_{\mathrm{\epsilon 1}}$、$c_{\mathrm{\epsilon 2}}$和$c_{\mathrm{\epsilon 3}}$均为无量纲常数，取值分别为$c_{\mathrm{\mu}}=0.09$、$\sigma_{\mathrm{k}}=1.00$、$\sigma_{\mathrm{\epsilon}}=1.30$、 $c_{\mathrm{\epsilon 1}}=1.44$、$c_{\mathrm{\epsilon 2}}=1.92$，$c_{\mathrm{\epsilon 3}}$的值取决于浮力通量方向：
+\begin{equation}
+  c_{\mathrm{\epsilon 3}}=\left\{\begin{array}{ll}0.4 & B<0  \\ 1 & B \geqslant 0 \end{array}\right.
+\end{equation}
+
+由剪切应力和湖泊内波引发的湍流动能生成分别被表示为：
+\begin{equation}
+    P = v_{\mathrm{t}} \left[\left(\frac{\partial u_{\mathrm{liq}}}{\partial z}\right)^2 + \left(\frac{\partial v_{\mathrm{liq}}}{\partial z}\right)^2 \right]
+\end{equation}
+\begin{equation}
+    P_{\mathrm{seiche}} = \alpha A_{\mathrm{surf}} \rho_{\mathrm{a}} C_{\mathrm{10}} u^{\mathrm{3}}_{\mathrm{10}}
+\end{equation}
+其中，$v_{\mathrm{t}}$表示湍流粘度(\unit{m^2.s^{-1}})，其计算方式与湍流扩散率$v^{\mathrm{'}}_{\mathrm{t}}$相近，表达式为：$v_{\mathrm{t}}=c_{\mathrm{\mu}} \frac{k^2}{\epsilon}$。$u_{\mathrm{10}}$表示10\unit{m}处的平均风速(\unit{m.s^{-1}})，$A_{\mathrm{surf}}$表示湖泊表面积(\unit{m^2})，$\rho_{\mathrm{a}}$表示大气密度(\unit{kg.m^{-3}})。$C_{\mathrm{10}}$为风阻系数，取值为1。$\alpha$表示风能转化为湖泊内波的效率，取值为0.002。$u_{\mathrm{liq}}$和$A_{\mathrm{surf}}$分别为$x$方向和$y$方向的水流速度(\unit{m.s^{-1}})，其控制方程分别为：
+\begin{equation}
+    \frac{\partial u_{\mathrm{liq}}}{\partial t} = \frac{1}{A_{\mathrm{z}}} \frac{\partial}{\partial z} \left[A_{\mathrm{z}} \left(v_{\mathrm{t}} + k_{\mathrm{v}} \right) \frac{\partial u_{\mathrm{liq}}}{\partial z}\right] + f v_{\mathrm{liq}}
+\end{equation}
+\begin{equation}
+    \frac{\partial v_{\mathrm{liq}}}{\partial t} = \frac{1}{A_{\mathrm{z}}} \frac{\partial}{\partial z} \left[A_{\mathrm{z}} \left(v_{\mathrm{t}} + k_{\mathrm{v}} \right] \frac{\partial v_{\mathrm{liq}}}{\partial z}\right) - f u_{\mathrm{liq}}
+\end{equation}
+其中，$k_{\mathrm{v}}=1.5×10^{-6}$表示分子动能扩散率(\unit{m^2.s^{-1}})，$f=2 \Omega \mathrm{sin}⁡\theta$为科里奥利参数。在此，$\Omega=7.29×10^{-5}$为地球自转角速度(\unit{s^{-1}})，$\theta$为地理纬度。
+
+关于Simstrat模型更详细的描述，可参见\citet{goudsmit2002application}和\citet{gaudardOptimizingParameterizationDeep2017}。
+
+\subsection{XOML模型}\label{XOML模型}
+\esubsection{XOML Model}\label{XOML Model}
+
+XOML模型由\citet{ling2015multilevel}开发，采用单方程$k$湍流闭合方案，借鉴了\citet{noh2002simulation,noh2011prediction}提出的二阶湍流海洋模型。与Simstrat相比，XOML使用了更简化的参数化方式，并且特别注重湖泊的日循环变化，对模拟湖泊昼夜分层现象具有更强的模拟能力。XOML的湖泊层控制方程与Simstrat相似，但其未考虑湖泊水平横截面积随深度的变化及分子扩散率。具体方程如下:
+\begin{equation}
+    \frac{\partial T}{\partial t} = \frac{\partial}{\partial z} \left( \tau \frac{\partial T}{\partial z} \right) + \frac{1}{\rho_{\mathrm{liq}} C_{\mathrm{liq}}} \frac{\partial \phi}{\partial z}
+\end{equation}
+\begin{equation}
+    \frac{\partial k}{\partial t} = \frac{\partial}{\partial z} \left( v_{\mathrm{k}} \frac{\partial k}{\partial z} \right) + P + B - \epsilon
+\end{equation}
+\begin{equation}
+    \frac{\partial u_{\mathrm{liq}}}{\partial t} = \frac{\partial}{\partial z} \left( v_{\mathrm{t}} \frac{\partial u_{\mathrm{liq}}}{\partial z} \right) + f v_{\mathrm{liq}}
+\end{equation}
+\begin{equation}
+    \frac{\partial v_{\mathrm{liq}}}{\partial t} = \frac{\partial}{\partial z} \left( v_{\mathrm{t}} \frac{\partial v_{\mathrm{liq}}}{\partial z} \right) - f u_{\mathrm{liq}}
+\end{equation}
+
+与Simstrat采用湍流动能和动能耗散率计算扩散率的方式不同，XOML通过湍流速度尺度和长度尺度来参数化扩散率，具体公式为，$\tau = \frac{c_{\mathrm{q}}}{0.8} q l$，$v_{\mathrm{k}} = \frac{c_{\mathrm{q}}}{1.95} q l$，$v_{\mathrm{t}} = c_{\mathrm{q}} q l$，这里，$c_{\mathrm{q}}$的计算通过考虑湍流理查德数($R_{\mathrm{t}}$)来反映湖泊的分层效应，计算公式如下：
+\begin{equation}
+    c_{\mathrm{q}} = 0.39(1 + \varrho R_{\mathrm{t}})^{-1/2}
+\end{equation}
+其中，$\varrho$为经验参数，取值为120。$R_{\mathrm{t}}$的计算方法为：
+\begin{equation}
+    R_{\mathrm{t}} = \left( \frac{N l}{q} \right)^2
+\end{equation}
+其中，$q$和$l$分别表示湍流速度尺度和长度尺度，它们的计算方式如下：
+\begin{equation}
+    q = \sqrt{2k}
+\end{equation}
+\begin{equation}
+    l = \frac{1}{\left[ \frac{1}{\kappa(z + z_{\mathrm{0m}})} + \frac{1}{h} \right]}
+\end{equation}
+在此，$\kappa$为von K\'arman常数(见表~\ref{tab:物理常数})，$z$为湖泊深度(\unit{m})，$z_{\mathrm{0m}}$表示动量粗糙度(\unit{m})。$h$表示湖泊混合层深度(\unit{m})，可以通过温度梯度和密度梯度的阈值来确定。
+
+关于XOML模型更详细的描述，可参见\citet{ling2015multilevel}和\citet{noh2002simulation, noh2011prediction}。
+
+\subsection{FLake模型}\label{FLake模型}
+\esubsection{FLake Model}\label{FLake Model}
+
+FLake是基于温跃层结构自相似性概念而开发的一维湖泊模型~\citep{mironovCOSMOTechnicalReport2008a}。该模型将湖泊分为上层和下层。上层称为混合层，保持均匀的温度，并假定混合良好。下层位于混合层和湖底之间，代表温跃层。根据自相似理论，下层厚度的变化不会改变其温度曲线的基本特征，即：
+\begin{equation}\label{flaketmp}
+    T_{\mathrm{(z)}}=\left\{\begin{array}{ll} T_{\mathrm{s}} & 0 \leqslant z \leqslant h  \\ T_{\mathrm{s}} - \left(T_{\mathrm{s}}-T_{\mathrm{b}} \right) \Phi_{\mathrm{T}} \left(\zeta \right) & h < z \leqslant d \end{array}\right.
+\end{equation}
+其中，$T_{\mathrm{(z)}}$表示湖泊在深度$z$处的湖泊温度，$T_{\mathrm{s}}$和$T_{\mathrm{b}}$分别表示湖泊上层和下层水温。$h$表示混合层深度，$d$代表湖泊深度。$\Phi_{\mathrm{T}} \left(\zeta \right)$表示温跃层中的无量纲温度分布曲线，可以使用深度的四阶多项式函数进行参数化：
+\begin{equation}
+    \Phi_{\mathrm{T}} \left(\zeta \right) = \left( \frac{40}{3} C_{\mathrm{T}} - \frac{20}{3} \right) \zeta + (18 - 30 C_{\mathrm{T}}) \zeta^2 + (20 C_{\mathrm{T}} - 12) \zeta^3 + \left( \frac{5}{3} - \frac{10}{3} C_{\mathrm{T}} \right) \zeta^4
+\end{equation}
+$C_{\mathrm{T}}$是形状因子，计算方式为：
+\begin{equation}
+    \frac{\mathrm{d} C_{\mathrm{T}}}{\mathrm{d} t} = \mathrm{sign} \left( \frac{\mathrm{d} h}{\mathrm{d} t} \right) \frac{ \left( C_{\mathrm{T}}^{\mathrm{max}} - C_{\mathrm{T}}^{\mathrm{min}} \right) }{t_{\mathrm{rc}}}, \quad C_{\mathrm{T}}^{\min} \leq C_{\mathrm{T}} \leq C_{\mathrm{T}}^{\mathrm{max}}
+\end{equation}
+其中，$C_{\mathrm{T}}^{\text{max}}$ 和 $C_{\mathrm{T}}^{\text{min}}$取值为0.8和0.5，$t_{\mathrm{rc}} = \frac{\left( d - h \right) ^ {\mathrm{2}} \overline{N}}{C_{\mathrm{rc}} u_{\mathrm{T}} ^ {\mathrm{2}}}$表示松弛时间。在此，$\overline{N}$表示温跃层中的均方浮力频率。$u_{\mathrm{T}}=\mathrm{max}\left(w_*, u_* \right)$，其中$w_*$和$u_*$分别表示对流速度尺度(计算方式见公式\eqref{flakews})和表面摩擦速度(计算方式见章节\ref{湖泊表面能量通量与温度的计算})。$C_{\mathrm{rc}} = 0.003$是无量纲常数。无量纲深度$\zeta$的计算方式为：
+\begin{equation}
+    \zeta \equiv \frac{\left( z - h \right)}{\Delta h}
+\end{equation}
+
+根据公式\eqref{flaketmp}，$h$、$d$、$T_{\mathrm{s}}$、$T_{\mathrm{b}}$与整个水柱的平均温度$\overline{T}$之间的关系可以表示为：
+\begin{equation}\label{flakemeanT}
+    \overline{T} = T_{\mathrm{s}} - C_{\mathrm{T}} \left( 1 - \frac{h}{d} \right) \left( T_{\mathrm{s}} - T_{\mathrm{b}} \right)
+\end{equation}
+
+湖泊总热量收支方程为:
+\begin{equation}\label{flakedmeanT}
+    d \frac{\mathrm{d} \overline{T}}{\mathrm{d}t} = \frac{1}{\rho_{\mathrm{liq}} C_{\mathrm{liq}}} \left[ Q_{\mathrm{s}} - Q_{\mathrm{b}} + \phi_{\mathrm{s}} - \phi(d) \right]
+\end{equation}
+式中，$Q_{\mathrm{b}}$表示通过湖底的热通量(\unit{W.m^{2}})，$Q_{\mathrm{s}}$表示空气-水界面的感热通量、潜热通量以及净长波辐射通量之和(\unit{W.m^{2}})。$\phi_{\mathrm{s}} - \phi(d)$表示湖泊吸收的总太阳短波辐射。
+湖泊上层(混合层)热量收支方程为：
+\begin{equation}\label{flakedTs}
+    h \frac{\mathrm{d} T_{\mathrm{s}}}{\mathrm{d}t} = \frac{1}{\rho_{\mathrm{liq}} C_{\mathrm{liq}}} \left[ Q_{\mathrm{s}} - Q_{\mathrm{h}} + \phi_{\mathrm{s}} - \phi \left( h \right) \right]
+\end{equation}
+式中，$Q_{\mathrm{h}}$为混合层底部的热通量(\unit{W.m^{2}})。
+
+在使用CoLM-Lake的表面通量方案给定$Q_{\mathrm{s}}$和$\phi_{\mathrm{s}}$(见章节\ref{湖泊表面能量通量与温度的计算})，以及短波辐射通量的衰减规律(见章节\ref{雪层湖泊层淤泥层温度的计算})后，公式\eqref{flakemeanT}、\eqref{flakedmeanT}和\eqref{flakedTs}中包含6个未知数，即 $h$、$\overline{T}$、$T_{\mathrm{s}}$、$T_{\mathrm{b}}$、$Q_{\mathrm{h}}$、$Q_{\mathrm{b}}$。为计算$Q_{\mathrm{h}}$和$Q_{\mathrm{b}}$，FLake假设在上层(混合层)加深的情况下，即$\frac{\mathrm{d} h}{\mathrm{d} t} > 0$，温跃层垂直湍流热通量剖面可以用自相似的形式表示:
+\begin{equation}\label{flakeQ}
+    Q = Q_{\mathrm{h}} - (Q_{\mathrm{h}} - Q_{\mathrm{b}}) \Phi_{\mathrm{Q}} (\zeta), \quad h < z \leq d
+\end{equation}
+其中，形状曲线$\Phi_{\mathrm{Q}}$满足边界条件$\Phi_{\mathrm{Q}}(0) = 0$和$\Phi_{\mathrm{Q}}(1) = 1$，并与$\Phi_{\mathrm{T}}(\zeta)$的关系如下：
+\begin{equation}
+    \Phi_{\mathrm{Q}}(\zeta) = C_{\mathrm{T}} ^ {\mathrm{-1}} \left[ \left( 1 - \zeta \right) \Phi_{\mathrm{T}}(\zeta) + \int_{\mathrm{0}} ^ {\zeta} \Phi_{\mathrm{T}}(\zeta') \mathrm{d} \zeta' \right]
+\end{equation}
+
+在公式\eqref{flaketmp}中温度分布应该满足传热方程：
+\begin{equation}\label{flakedrhocT}
+    \frac{\partial}{\partial t} \left( \rho_{\mathrm{liq}} C_{\mathrm{liq}} T \right) = -\frac{\partial}{\partial z} \left( Q + \phi \right)
+\end{equation}
+在上式中考虑公式\eqref{flaketmp}和\eqref{flakeQ}，并对$z'$从$h$到$z > h$积分，然后对积分结果的$z$从$h$到$d$进行积分，可以得到：
+\begin{equation}\label{flakennnn}
+\begin{split}
+    &\frac{1}{2} (d - h)^{\mathrm{2}} \frac{\mathrm{d} T_{\mathrm{s}}}{\mathrm{d} t} - \frac{\mathrm{d} \left[ C_{\mathrm{TT}} (d - h)^{\mathrm{2}} (T_{\mathrm{s}} - T_{\mathrm{b}}) \right]} {\mathrm{d} t}  \\
+    &= \frac{1}{\rho_{\mathrm{liq}} C_{\mathrm{liq}}} \left[ C_{\mathrm{Q}} (d - h)(Q_{\mathrm{h}} - Q_{\mathrm{b}}) + (d - h) \phi(h) - \int_{\mathrm{h}} ^ {\mathrm{d}} \phi(z) {\mathrm{d}} z \right]
+\end{split}
+\end{equation}
+式中$C_{\mathrm{Q}}$是热流量的形状因子，表达式为：
+\begin{equation}
+    C_{\mathrm{Q}} = \frac{2 C_{\mathrm{TT}}}{C_{\mathrm{T}}}
+\end{equation}
+$C_{\mathrm{TT}}$是与$C_{\mathrm{T}}$相关的无量纲参数：
+\begin{equation}
+    C_{\mathrm{TT}} = \frac{11}{18} C_{\mathrm{T}} - \frac{7}{45}
+\end{equation}
+
+在混合层稳定或减退情况下，即$\frac{\mathrm{d} h}{\mathrm{d} t} \leqslant 0$，公式\eqref{flakeQ}不成立。此时假定底部温度为处于恒定状态，即$\frac{\mathrm{d} T_{\mathrm{b}}}{\mathrm{d} t} = 0$。而当$h = d$时，$T_{\mathrm{s}} = T_{\mathrm{b}} = \overline{T}$并使用公式\eqref{flakedmeanT}计算湖泊平均温度。
+
+FLake模型中，混合层深度$h$的计算需要考虑对流和稳定分层的情况。当浮力通量$B_* = \frac{\beta}{\rho_{\mathrm{liq}} C_{\mathrm{liq}}}$为负时，表明湍流动能由对流不稳定性产生，此时混合层的加深由夹卷方程计算。其中$\beta = g \cdot 1.6509 \times 10^{-5}$为浮力参数。夹卷比$A$定义为混合层底部的热通量$Q_{\mathrm{h}}$与一个适当热通量尺度$Q_*$的负比。为考虑辐射加热的垂直分布，使用广义对流热通量尺度：
+\begin{equation}
+    Q_* = Q_{\mathrm{s}} + \phi_{\mathrm{s}} + \phi(h) - 2h^{\mathrm{-1}} \int_{\mathrm{0}} ^ \mathrm{h} \phi(z) \mathrm{d} z
+\end{equation}
+对流速度尺度和夹带比定义为：
+\begin{equation}\label{flakews}
+    w_* = \left[-\frac{h \beta(T_{\mathrm{s}}) Q_*}{\rho_{\mathrm{liq}} C_{\mathrm{liq}}}\right]^{1/3}, \quad A = -\frac{Q_{\mathrm{h}}}{Q_*}
+\end{equation}
+采用夹带方程的形式指定$A$：
+\begin{equation}\label{flakeA}
+    A + \frac{C_{\mathrm{c2}}}{w_*} \frac{\mathrm{d} h}{\mathrm{d} t} = C_{\mathrm{c1}}
+\end{equation}
+其中，$C_{\mathrm{c1}} = 0.17$和 $C_{\mathrm{c2}} = 1.0$是无量纲常数。公式\eqref{flakeA}的第二项是自旋修正项，当混合层较浅时，该项可防止$h$过快增长。如果自旋项很小，方程简化为$A = C_{\mathrm{c1}}$。结合上述公式即可计算对流情况下的混合层深度。
+
+在稳定分层时，利用松弛型速率方程来计算稳定或中性分层风混合层的深度$h$：
+\begin{equation}
+    \frac{\mathrm{d} h}{\mathrm{d} t} = \frac{(h_{\mathrm{e}} - h)}{t_{\mathrm{rh}}}
+\end{equation}
+其中，$h_{\mathrm{e}}$为平衡混合层深度，$t_{\mathrm{rh}}$为松弛时间标度：
+\begin{equation}
+    t_{\mathrm{rh}} = \frac{h_{\mathrm{e}}}{C_{\mathrm{rh}} u_*}
+\end{equation}
+式中$C_{\mathrm{rh}} = 0.03$为无量纲常数。平衡混合层深度$h_\mathrm{e}$由以下方程给出：
+\begin{equation}
+    \left( \frac{f h_{\mathrm{e}}}{C_{\mathrm{n}} u_*} \right)^2 + \frac{h_{\mathrm{e}}}{C_{\mathrm{s}} L} + \frac{N h_{\mathrm{e}}}{C_{\mathrm{i}} u_*} = 1
+\end{equation}
+其中，$L$为奥布霍夫长度，$C_{\mathrm{n}}$、$C_{\mathrm{s}}$和$C_{\mathrm{i}}$为无量纲常数，分别取为：0.5、10、20。$f$和$N$分别为科里奥利参数和混合层以下浮力频率。
+
+最后，上述自相似性概念还用于参数化FLake模型湖底淤泥层的温度，以确保下边界的热通量平衡。需要注意的是，由于模型采用双层热结构，未包含深湖中温跃层与湖底之间常见的湖泊底层，因此对湖泊的适用深度有所限制。在CoLM中，我们遵循\citet{perroud2009simulation}的设置，对于深度超过60\unit{m}的湖泊，设置了一个虚拟深度。并且为与CoLM-Lake的湖泊分层结构保持一致，FLake在计算完成后，将根据每个湖泊层中点的深度计算该层的湖泊温度(计算方法见公式\eqref{flaketmp})。
+
+关于FLake模型更详细的描述，可参见\citet{mironovCOSMOTechnicalReport2008a}。
