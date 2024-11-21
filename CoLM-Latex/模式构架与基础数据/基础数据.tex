@@ -246,7 +246,7 @@ GLC FSC30地表覆盖产品是由~\citet{zhang2023glc_fcs30d}提供的全球地�
       \midrule
       1    & GSDE土壤基础属性数据      & 1 km     & 单时次   & \cite{shangguan2014global}  \\
       2    & SoilGrids土壤基础属性数据 & 250 m    & 单时次   & \cite{poggio2021soilgrids}  \\
-      3    & 土壤水热特征参数数据      & 1 km     & 单时次   & \cite{dai2019global}        \\
+      3    & 土壤水热特征参数数据      & 1 km     & 单时次   & \cite{dai2019parameters}    \\
       4    & GDBDESM 基岩深度数据      & 1 km     & 单时次   & \cite{shangguan2017mapping} \\
       5    & 土壤颜色（反照率）数据    & 1 km     & 单时次   & CLM4.5                      \\
       \bottomrule
@@ -667,11 +667,11 @@ CaMa-Flood水文水动力模拟所需的相关次网格地形参数是由90米�
           & 城市水体覆盖度                   & 30m              & 2000,2010,2020            & \citet{chen2015global}                                                                  \\
           \hline
           \multirow{2}*{城市人类活动数据}   & LandScan人口密度                 & 1km              & 2000--2020 \newline 每年  & \citet{brightLandScanGlobal20002001}                                                    \\
-          & LUCY国家分类                     & 5km              & /                         & \citet{allen2011}                                                                       \\
+          & LUCY地区分类                     & 5km              & /                         & \citet{allen2011}                                                                       \\
           \bottomrule
         \end{tabular}
         \begin{tablenotes}
-        \item [a] 除LUCY国家分类外，其他非500m原始分辨率均已转为500m分辨率
+        \item [a] 除LUCY地区分类外，其他非500m原始分辨率均已转为500m分辨率
         \item [b] 可根据其他数据计算出1975-2030年每五年数据
         \end{tablenotes}
       \end{threeparttable}
@@ -731,14 +731,14 @@ GHSL2023中，建筑高度分为两种：
 %
 
 \subsubsection{透水面占比}\label{透水面占比}
-对于传统城市分类，城市的透水面占比通过33个国家/地区分类以及3种城市类型查找表获得，国家/地区分类由~\citet{oleson2020parameterization}数据得到，其全球分类如图~\ref{fig:地区分类} 所示。
+对于传统城市分类，城市的透水面占比通过33个地区分类以及3种城市类型查找表获得，地区分类由~\citet{oleson2020parameterization}数据得到，其全球分类如图~\ref{fig:地区分类} 所示。
 LCZ同样根据LCZ类型查找表，形态参数设置参考~\citet{stewart2014evaluation}，如表~\ref{tab:lcz局地气候区建筑属性参数} 所示。
 
 \subsubsection{街谷高宽比}\label{街谷高宽比}
-同透水面占比，传统城市分类通过33个国家/地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+同透水面占比，传统城市分类通过33个地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
-\subsubsection{屋顶/墙体厚度}\label{屋顶/墙体厚度}
-屋顶/墙体厚度同样基于查找表，传统城市分类通过33个国家/地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+\subsubsection{屋顶和墙体厚度}\label{屋顶和墙体厚度}
+屋顶和墙体厚度同样基于查找表，传统城市分类通过33个地区分类以及3种城市类型查找表获得，LCZ分类则根据LCZ类型查找表设置(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 {
   \begin{figure}[htbp]
@@ -757,16 +757,16 @@ LCZ同样根据LCZ类型查找表，形态参数设置参考~\citet{stewart2014e
 LCZ分类建筑辐射参数参考~\citet{stewart2014evaluation}，热力参数则参考WRF设置，如附录表~\ref{tab:lcz局地气候区建筑属性参数} 所示。
 
 \subsubsection{建筑反照率}\label{建筑反照率}
-对于传统城市分类，反照率(包括屋顶、墙面、不透水面和透水面)通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+对于传统城市分类，反照率(包括屋顶、墙面、不透水面和透水面)通过33个地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsubsection{建筑发射率}\label{建筑发射率}
-反射率设置同反照率，包括屋顶、墙面、不透水面和透水面，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+反射率设置同反照率，包括屋顶、墙面、不透水面和透水面，对于传统城市分类，建筑反照率通过33个地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsubsection{建筑比热容}\label{建筑比热容}
-建筑比热容(包括屋顶、墙壁和不透水面)同样基于查找表，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+建筑比热容(包括屋顶、墙壁和不透水面)同样基于查找表，对于传统城市分类，建筑反照率通过33个地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsubsection{建筑热导率}\label{建筑热导率}
-建筑热导率同建筑比热容，包括屋顶、墙壁和不透水面，对于传统城市分类，建筑反照率通过33个国家/地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
+建筑热导率同建筑比热容，包括屋顶、墙壁和不透水面，对于传统城市分类，建筑反照率通过33个地区分类以及3种城市类型查找表获得；LCZ分类则根据LCZ类型查找表(附录表~\ref{tab:lcz局地气候区建筑属性参数})。
 
 \subsection{城市生态数据}\label{城市生态数据}
 \esubsection{Urban Ecological Data}
@@ -795,13 +795,13 @@ GFCC Tree Cover (\url{https://lpdaac.usgs.gov/products/gfcc30tcv003/}) 提供了
 \subsection{城市人类活动数据}\label{城市人类活动数据}
 \esubsection{Human Activity Data}
 
-城市人类活动数据包括人口密度数据、LUCY国家分类数据~\citep{allen2011}，主要用于城市人为热计算。
+城市人类活动数据包括人口密度数据、LUCY地区分类数据~\citep{allen2011}，主要用于城市人为热计算。
 
 \subsubsection{人口密度数据}\label{人口密度数据}
 人口密度数据目前使用由美国能源部橡树岭国家实验室(ORNL)发布的LandScan数据~\citep{brightLandScanGlobal20002001}，该数据采用地理信息系统与遥感影相结合的创新方法，在1km网格分辨率范围内，获取24小时内平均人口分布状况，LandScan是常用的全球人口动态统计分析数据集之一，该数据空间分辨率为1km，时间覆盖2000--2022年。
 
-\subsubsection{LUCY国家分类}\label{LUCY国家分类}
-LUCY国家分类数据来自~\citet{allen2011}，根据该数据分配不同国家的汽车拥有量以及不同时刻的交通流量，用于交通热模拟，该数据分辨率为5km，单时次数据。
+\subsubsection{LUCY地区分类}\label{LUCY地区分类}
+LUCY地区分类数据来自~\citet{allen2011}，根据该数据分配不同地区的汽车拥有量以及不同时刻的交通流量，用于交通热模拟，该数据分辨率为5km，单时次数据。
 
 
 \section{作物数据}
