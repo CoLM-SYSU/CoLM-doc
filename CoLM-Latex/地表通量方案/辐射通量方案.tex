@@ -617,11 +617,11 @@ $G(\mu) / \mu$函数采用 \citet{goudriaan1977crop} 方案，它使用一个参
 \end{equation}
 方程的解为：
 \begin{equation}\label{eq:2s_dir_up}
-  I^{\uparrow}=h_{1} {\mathrm e}^{-K x / \sigma}+h_{2} {\mathrm e}^{-h x}+h_{3} {\mathrm e}^{h x}
+  I^{\uparrow}=\frac {h_{1}}{\sigma} {\mathrm e}^{-K x}+h_{2} {\mathrm e}^{-h x}+h_{3} {\mathrm e}^{h x}
 \end{equation}
 %
 \begin{equation}\label{eq:2s_dir_dw}
-  I^{\downarrow}=h_{4} {\mathrm e}^{-K x / \sigma}+h_{5} {\mathrm e}^{-h x}+h_{6} {\mathrm e}^{h x}
+  I^{\downarrow}=\frac {h_{4}}{\sigma} {\mathrm e}^{-K x}+h_{5} {\mathrm e}^{-h x}+h_{6} {\mathrm e}^{h x}
 \end{equation}
 因此可以得到在冠层顶部的漫射辐射通量(即反照率)为：
 \begin{equation}
@@ -629,7 +629,7 @@ $G(\mu) / \mu$函数采用 \citet{goudriaan1977crop} 方案，它使用一个参
 \end{equation}
 通过植被向下的辐射通量，即到达地面的辐射通量为：
 \begin{equation}
-  \tau_{\mathrm{veg, dir}}=I^{\downarrow}\left(L_{\rm AI}\right)=\frac{h_{4}}{\sigma} {\mathrm e}^{-K} L_{\rm AI}+h_{5} {\mathrm e}^{-h L_{\rm AI}}+h_{6} {\mathrm e}^{h L_{\rm AI}}
+  \tau_{\mathrm{veg, dir}}=I^{\downarrow}\left(L_{\rm AI}\right)=\frac{h_{4}}{\sigma} {\mathrm e}^{-K L_{\rm AI}} +h_{5} {\mathrm e}^{-h L_{\rm AI}}+h_{6} {\mathrm e}^{h L_{\rm AI}}
 \end{equation}
 
 漫射入射辐射时，边界条件为：
