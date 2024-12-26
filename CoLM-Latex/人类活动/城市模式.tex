@@ -150,7 +150,7 @@ $E_{\mathrm{wsun}}\alpha_{\rm w}$，$E_{\mathrm{wsha}}\alpha_{\rm w}$，$E_{\mat
   \mathbf{A x}=\mathbf{B}
 \end{equation}
 $\mathbf{A}$为辐射传输矩阵，$\mathbf{B}$为向量($E_{\mathrm{wsun}}\alpha_{\rm w}$, $E_{\mathrm{wsha}}\alpha_{\rm w}$, $E_{\mathrm{gimp}}\alpha_{\mathrm{gimp}}$, $E_{\mathrm{gper}}\alpha_{\mathrm{gper}}$)，
-即太阳辐射初始到达墙面和地面射辐射通量(未经散射)。$\mathbf{x}$为求解变量组成的向量(\allowbreak$M_{\mathrm{wsun}}$, \allowbreak$M_{\mathrm{wsha}}$, \allowbreak$M_{\mathrm{gimp}}$, \allowbreak$M_{\mathrm{gper}}$)，
+即太阳辐射到达墙面和地面后第一次反射的辐射通量。$\mathbf{x}$为求解变量组成的向量(\allowbreak$M_{\mathrm{wsun}}$, \allowbreak$M_{\mathrm{wsha}}$, \allowbreak$M_{\mathrm{gimp}}$, \allowbreak$M_{\mathrm{gper}}$)，
 计算为：
 \begin{equation}\label{mathbf_X}
   \mathbf{x}=\mathbf{A}^{-1} \mathbf{B}
@@ -182,8 +182,8 @@ $\mathbf{A}$为辐射传输矩阵，$\mathbf{B}$为向量($E_{\mathrm{wsun}}\alp
 
 \textit{2. 漫射入射太阳辐射}
 
-对于漫射情况，计算过程与直射入射辐射基本类似，同样采用公式(\ref{城市无植被辐射传输方程})所示的矩阵形式进行求解，不同之处在于初始到达墙面和地面的辐射通量，分别计算为：
-$F_{\mathrm{sw}}f_{\mathrm{wsun}}$，$F_{\mathrm{sw}}f_{\mathrm{wsha}}$，$F_{\mathrm{sg}}f_{\mathrm{gimp}}$，$F_{\mathrm{sg}}f_{\mathrm{gper}}$，即公式(\ref{mathbf_AX})中的$\mathbf{B}$。
+对于漫射情况，计算过程与直射入射辐射基本类似，同样采用公式(\ref{城市无植被辐射传输方程})所示的矩阵形式进行求解，不同之处在于初始到达墙面和地面后第一次反射的辐射通量，分别计算为：
+$F_{\mathrm{sw}}f_{\mathrm{wsun}}\alpha_{\rm w}$，$F_{\mathrm{sw}}f_{\mathrm{wsha}}\alpha_{\rm w}$，$F_{\mathrm{sg}}f_{\mathrm{gimp}}\alpha_{\rm gimp}$，$F_{\mathrm{sg}}f_{\mathrm{gper}}\alpha_{\rm gper}$，即公式(\ref{mathbf_AX})中的$\mathbf{B}$。
 漫射入射辐射的传输矩阵同直射入射辐射情景，即$\mathbf{A}$。其求逆后的结果可以直接用于漫射入射辐射，利用公式(\ref{mathbf_X})计算得到墙面和地面的辐射出射通量。
 单位面积的辐射吸收和城市反照率计算同公式(\ref{s_wsun_wsha_gimp_gper_2})、(\ref{alpha_u})和(\ref{alpha_u2})，在此不再列出。
 
@@ -357,8 +357,8 @@ $F_{\mathrm{sw}}^\prime f_{\mathrm{wsha}}$，$F_{\mathrm{sg}}^\prime f_{\mathrm{
 \end{equation}
 上式中$\varepsilon$表示发射率，$\varepsilon_{\rm w}$，$\varepsilon_{\mathrm{gimp}}$，$\varepsilon_{\mathrm{gper}}$为已知变量。各组分表面向外发射的长波辐射量为：
 \begin{equation}
-  \left(\begin{array}{c}4 f_{\mathrm{wsun}} \mathrm{HL} \cdot \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \cdot \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsun}}^{4} \\
-    4 f_{\mathrm{wsha}} \mathrm{HL} \cdot \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \cdot \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsha}}^{4} \\
+  \left(\begin{array}{c}4 f_{\mathrm{wsun}} \mathrm{HL}  \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}}  \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsun}}^{4} \\
+    4 f_{\mathrm{wsha}} \mathrm{HL}  \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}}  \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsha}}^{4} \\
     \sigma \varepsilon_{\mathrm{gimp}} T_{\mathrm{gimp}}^{4} f_{\mathrm{gimp}} \\
   \sigma \varepsilon_{\mathrm{gper}} T_{\mathrm{gper}}^{4} f_{\mathrm{gper}}\end{array}\right)
 \end{equation}
@@ -377,7 +377,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
     \begin{aligned}
       \left(\begin{matrix}1-F_{\mathrm{ww}}f_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{ww}}f_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{gw}}f_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{gw}}f_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)\\-F_{\mathrm{ww}}f_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)&1-F_{\mathrm{ww}}f_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{gw}}f_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{gw}}f_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)\\-F_{\mathrm{wg}}f_{\mathrm{gimp}}\left(1-\varepsilon_{\mathrm{gimp}}\right)&-F_{\mathrm{wg}}f_{\mathrm{gimp}}\left(1-\varepsilon_{\mathrm{gimp}}\right)&1&0\\-F_{\mathrm{wg}}f_{\mathrm{gper}}\left(1-\varepsilon_{\mathrm{gper}}\right)&-F_{\mathrm{wg}}f_{\mathrm{gper}}\left(1-\varepsilon_{\mathrm{gper}}\right)&0&1\\\end{matrix}\right)
       \left(\begin{matrix}L_{\mathrm{wsun}}^\uparrow\\L_{\mathrm{wsha}}^\uparrow\\L_{\mathrm{gimp}}^\uparrow\\L_{\mathrm{gper}}^\uparrow\\\end{matrix}\right)\\
-      =\left(\begin{matrix}I_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)+2f_{\mathrm{wsun}}\frac{\sigma\varepsilon_{\rm w}T_{\mathrm{wsun}}^4H}{W}\\I_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)+2f_{\mathrm{wsha}}\frac{\sigma\varepsilon_{\rm w}T_{\mathrm{wsha}}^4H}{W}\\I_{\mathrm{gimp}}\left(1-\varepsilon_{\mathrm{gimp}}\right)+\sigma\varepsilon_{\mathrm{gimp}}T_{\mathrm{gimp}}^4f_{\mathrm{gimp}}\\I_{\mathrm{gper}}\left(1-\varepsilon_{\mathrm{gper}}\right)+\sigma\varepsilon_{\mathrm{gper}}T_{\mathrm{gper}}^4f_{\mathrm{gper}}\\\end{matrix}\right)
+      =\left(\begin{matrix}I_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)+4f_{\mathrm{wsun}} {\rm HL} \frac{f_{\rm b}}{f_{\rm g}} \sigma\varepsilon_{\rm w}T_{\mathrm{wsun}}^4\\I_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)+4f_{\mathrm{wsha}} {\rm HL} \frac{f_{\rm b}}{f_{\rm g}} \sigma\varepsilon_{\rm w}T_{\mathrm{wsha}}^4\\I_{\mathrm{gimp}}\left(1-\varepsilon_{\mathrm{gimp}}\right)+\sigma\varepsilon_{\mathrm{gimp}}T_{\mathrm{gimp}}^4f_{\mathrm{gimp}}\\I_{\mathrm{gper}}\left(1-\varepsilon_{\mathrm{gper}}\right)+\sigma\varepsilon_{\mathrm{gper}}T_{\mathrm{gper}}^4f_{\mathrm{gper}}\\\end{matrix}\right)
     \end{aligned}
   \end{equation}
 \end{landscape}
@@ -389,7 +389,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
 求解以上方程得到$\mathbf{x}$，各组分表面长波净辐射量为：
 \begin{equation}\label{L_wsun_wsha_gimp_pger_1}
   \begin{aligned}
-    L_{\mathrm{wsun}} &=\frac{\varepsilon L_{\mathrm{wsun}}^{\uparrow}-4 f_{\mathrm{wsun}} \mathrm{HL} \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsun}}^{4}}{1-\varepsilon_{\mathrm{w}}} \\ L_{\mathrm{wsha}} &=\frac{\varepsilon L_{\mathrm{wsha}}^{\uparrow}-4 f_{\mathrm{wsha}} \mathrm{HL} \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsha}}^{4}}{1-\varepsilon_{\mathrm{w}}} \\ L_{\mathrm{gimp}} &=\frac{\varepsilon L_{\mathrm{w gimp}}^{\uparrow}-\sigma \varepsilon_{\mathrm{gimp}} T_{\mathrm{gimp}}^{4} f_{\mathrm{gimp}}}{1-\varepsilon_{\mathrm{gimp}}} \\ L_{\mathrm{p g e r}} &=\frac{\varepsilon L_{\mathrm{w gper}}^{\uparrow}-\sigma \varepsilon_{\mathrm{gper}} T_{\mathrm{gper}}^{4} f_{\mathrm{gper}}}{1-\varepsilon_{\mathrm{gper}}}
+    L_{\mathrm{wsun}} &=\frac{\varepsilon L_{\mathrm{wsun}}^{\uparrow}-4 f_{\mathrm{wsun}} \mathrm{HL} \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsun}}^{4}}{1-\varepsilon_{\mathrm{w}}} \\ L_{\mathrm{wsha}} &=\frac{\varepsilon L_{\mathrm{wsha}}^{\uparrow}-4 f_{\mathrm{wsha}} \mathrm{HL} \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsha}}^{4}}{1-\varepsilon_{\mathrm{w}}} \\ L_{\mathrm{gimp}} &=\frac{\varepsilon L_{\mathrm{w gimp}}^{\uparrow}-\sigma \varepsilon_{\mathrm{gimp}} T_{\mathrm{gimp}}^{4} f_{\mathrm{gimp}}}{1-\varepsilon_{\mathrm{gimp}}} \\ L_{\mathrm{gper}} &=\frac{\varepsilon L_{\mathrm{w gper}}^{\uparrow}-\sigma \varepsilon_{\mathrm{gper}} T_{\mathrm{gper}}^{4} f_{\mathrm{gper}}}{1-\varepsilon_{\mathrm{gper}}}
   \end{aligned}
 \end{equation}
 转化为单位面积净辐射时上式修订为：
@@ -1122,7 +1122,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 \end{mymdframed}
 
 不透水面的温度传导计算与透水面最大的不同之处在于需要使用不透水面层的热力属性(导热率和热容)替换所在层的土壤热力属性。
-另外在有雪、冰和水存在时，需要对第一层不透水面的热容进行订正。不透水面不考虑水在地表以下的传输，相变过程只考虑第一层不透水面(地表积水/冰)及以上积雪覆盖层。
+另外在有雪、冰和水存在时，但还未形成雪层，需要对第一层不透水面的热容进行订正。不透水面不考虑水在地表以下的传输，相变过程只考虑第一层不透水面(地表积水/冰)及以上积雪覆盖层。
 
 \subsection{墙面温度计算}
 \esubsection{Wall Temperature}
