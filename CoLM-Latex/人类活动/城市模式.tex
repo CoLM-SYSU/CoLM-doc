@@ -1199,13 +1199,13 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
   \begin{equation}
     \begin{array}{l}
       \begin{split}
-        0.5 h_{\mathrm{cv,{roof }}}\left(t_{\mathrm{{roof }}, { in }}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{roof }}}\left(t_{\mathrm{{roof,in }}}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,{roof}}}\left(T_{\mathrm{{roof }}, n}-T_{\mathrm{{roof }}, { in }}\right)+0.5 h_{\mathrm{tk,{roof }}}\left(T_{\mathrm{{roof }}, n}-T_{\mathrm{{roof,in }}}^{\prime}\right) \\
-        0.5 h_{\mathrm{cv,{wsun}}}\left(t_{\mathrm{{wsun,in }}}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{wsun}}}\left(t_{\mathrm{wsun, i n}}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,{wsun}}}\left(T_{\mathrm{{wsun, }} n}-T_{\mathrm{{wsun,in }}}\right)+0.5 h_{\mathrm{tk,{roof}}}\left(T_{\mathrm{{wsun, }} n}-T_{\mathrm{{wsun,in }}}^{\prime}\right)\\
-        0.5 h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha, i n}}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha, i n}}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,wsha}}\left(T_{\mathrm{wsha, n}}-T_{\mathrm{{roof }}, i n}\right)+0.5 h_{\mathrm{tk,wsha}}\left(T_{\mathrm{wsha, n}}-T_{\mathrm{wsha, i n}}^{\prime}\right)\\
+        0.5 h_{\mathrm{cv,{roof }}}\left(T_{\mathrm{{roof }}, { in }}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{roof }}}\left(T_{\mathrm{{roof,in }}}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,{roof}}}\left(T_{\mathrm{{roof }}, n}-T_{\mathrm{{roof }}, { in }}\right)+0.5 h_{\mathrm{tk,{roof }}}\left(T_{\mathrm{{roof }}, n}-T_{\mathrm{{roof,in }}}^{\prime}\right) \\
+        0.5 h_{\mathrm{cv,{wsun}}}\left(T_{\mathrm{{wsun,in }}}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{wsun}}}\left(T_{\mathrm{wsun, i n}}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,{wsun}}}\left(T_{\mathrm{{wsun, }} n}-T_{\mathrm{{wsun,in }}}\right)+0.5 h_{\mathrm{tk,{roof}}}\left(T_{\mathrm{{wsun, }} n}-T_{\mathrm{{wsun,in }}}^{\prime}\right)\\
+        0.5 h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha, i n}}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha, i n}}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,wsha}}\left(T_{\mathrm{wsha, n}}-T_{\mathrm{{roof }}, i n}\right)+0.5 h_{\mathrm{tk,wsha}}\left(T_{\mathrm{wsha, n}}-T_{\mathrm{wsha, i n}}^{\prime}\right)\\
         H \rho_{\mathrm{a}} C_{\mathrm{a}} \frac{T_{\mathrm{{room }}}^{\prime}-T_{\mathrm{{room }}}}{\Delta t}
-        =\frac{\mathrm {ACH}}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}}\left(T_{\mathrm{a f}}-T_{\mathrm{{room }}}^{\prime}\right)+0.5 h_{\mathrm{cv,{roof}}}\left(t_{\mathrm{{roof }}, { in }}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{roof }}}\left(t_{\mathrm{{roof }}, { in }}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right)\\
-        +0.5 h_{\mathrm{cv,wsun}}\left(t_{\mathrm{wsun, i n}}-t_{\mathrm{{room }}}\right) f_{\mathrm{{wsun }}}+0.5 h_{\mathrm{cv,wsun}}\left(t_{\mathrm{wsun, i n}}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right) f_{\mathrm{wsun}} \\
-        +0.5 h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha, i n}}-t_{\mathrm{{room }}}\right) f_{\mathrm{wsha}}+0.5 h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha, i n}}^{\prime}-t_{\mathrm{r o o m}}^{\prime}\right) f_{\mathrm{wsha}}
+        =\frac{\mathrm {ACH}}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}}\left(T_{\mathrm{a f}}-T_{\mathrm{{room }}}^{\prime}\right)+0.5 h_{\mathrm{cv,{roof}}}\left(T_{\mathrm{{roof }}, { in }}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{roof }}}\left(T_{\mathrm{{roof }}, { in }}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right)\\
+        +0.5 h_{\mathrm{cv,wsun}}\left(T_{\mathrm{wsun, i n}}-T_{\mathrm{{room }}}\right) f_{\mathrm{{wsun }}}+0.5 h_{\mathrm{cv,wsun}}\left(T_{\mathrm{wsun, i n}}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right) f_{\mathrm{wsun}} \\
+        +0.5 h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha, i n}}-T_{\mathrm{{room }}}\right) f_{\mathrm{wsha}}+0.5 h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha, i n}}^{\prime}-T_{\mathrm{r o o m}}^{\prime}\right) f_{\mathrm{wsha}}
       \end{split}
     \end{array}
   \end{equation}
@@ -1217,14 +1217,14 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
       \left(\begin{array}{cccc}0.5 h_{\mathrm{cv,roof}}+0.5 h_{\mathrm{tk,roof}} & 0 & 0 & -0.5 h_{\mathrm{cv,roof}} \\ 0 & 0.5 h_{\mathrm{cv,wsun}}+0.5 h_{\mathrm{tk,wsun}} & 0 & -0.5 h_{\mathrm{cv,wsun}} \\ 0 & 0 & 0.5 h_{\mathrm{cv,wsha}}+0.5 h_{\mathrm{tk,wsha}} & -0.5 h_{\mathrm{cv,wsha}} \\ -0.5 h_{\mathrm{cv,roof}} & -0.5 h_{\mathrm{cv,wsun}} f_{\mathrm{wsun}} & -0.5 h_{\mathrm{cv,wsha}} f_{\mathrm{wsha}} & \xi + \frac{H \rho_{\mathrm{a}} C_{\mathrm{a}}}{\Delta t}+\frac{{ \mathrm {ACH} }}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}}\end{array}\right)
       \left(\begin{array}{c}T_{\mathrm{{roof,in }}}^{\prime} \\ T_{\mathrm{wsun, i n}}^{\prime} \\ T_{\mathrm{wsha, i n}}^{\prime} \\ T_{\mathrm{{room }}}^{\prime}\end{array}\right)=
       \\
-      \left(\begin{array}{c}-0.5h_{\mathrm{cv,roof}}\left(t_{\mathrm{roof,in}}-t_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,roof}}\left(T_{\mathrm{roof,n}}-T_{\mathrm{roof,in}}\right)+0.5h_{\mathrm{tk,roof}}T_{\mathrm{roof,n}}\\
-          -0.5h_{\mathrm{cv,wsun}}\left(t_{\mathrm{wsun,in}}-t_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,wsun}}\left(T_{\mathrm{wsun,n}}-T_{\mathrm{wsun,in}}\right)+0.5h_{\mathrm{tk,wsun}}T_{\mathrm{wsun,n}}\\
-          -0.5h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha,in}}-t_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,wsun}}\left(T_{\mathrm{wsun,n}}-T_{\mathrm{wsun,in}}\right)+0.5h_{\mathrm{tk,wsha}}T_{\mathrm{wsun,n}}\\
-          \frac{H \rho_{\mathrm{a}} C_{\mathrm{a}} T_{\mathrm{{room }}}}{\Delta T}+\frac{\mathrm {ACH}}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}} T_{\mathrm{a f}}+0.5 h_{\mathrm{{cv,roof}}}\left(t_{\mathrm{{roof,in }}}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{{cv,wsun}}}\left(t_{\mathrm{{wsun,in }}}-t_{\mathrm{{room }}}\right) f_{\mathrm{{wsun }}}+0.5 h_{\mathrm{{cv,wsha}}}\left(t_{\mathrm{wsha, i n}}-t_{\mathrm{{room }}}\right) f_{\mathrm{{wsha }}}
+      \left(\begin{array}{c}-0.5h_{\mathrm{cv,roof}}\left(T_{\mathrm{roof,in}}-T_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,roof}}\left(T_{\mathrm{roof,n}}-T_{\mathrm{roof,in}}\right)+0.5h_{\mathrm{tk,roof}}T_{\mathrm{roof,n}}\\
+          -0.5h_{\mathrm{cv,wsun}}\left(T_{\mathrm{wsun,in}}-T_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,wsun}}\left(T_{\mathrm{wsun,n}}-T_{\mathrm{wsun,in}}\right)+0.5h_{\mathrm{tk,wsun}}T_{\mathrm{wsun,n}}\\
+          -0.5h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha,in}}-T_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,wsun}}\left(T_{\mathrm{wsun,n}}-T_{\mathrm{wsun,in}}\right)+0.5h_{\mathrm{tk,wsha}}T_{\mathrm{wsun,n}}\\
+          \frac{H \rho_{\mathrm{a}} C_{\mathrm{a}} T_{\mathrm{{room }}}}{\Delta T}+\frac{\mathrm {ACH}}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}} T_{\mathrm{a f}}+0.5 h_{\mathrm{{cv,roof}}}\left(T_{\mathrm{{roof,in }}}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{{cv,wsun}}}\left(T_{\mathrm{{wsun,in }}}-T_{\mathrm{{room }}}\right) f_{\mathrm{{wsun }}}+0.5 h_{\mathrm{{cv,wsha}}}\left(T_{\mathrm{wsha, i n}}-T_{\mathrm{{room }}}\right) f_{\mathrm{{wsha }}}
       \end{array}\right)
     \end{split}
   \end{equation}
-  注：上式中$\xi = 0.5 h_{\mathrm{cv,roof}} + 0.5 h_{\mathrm{cv,wsun}}f_{\mathrm{wsun}} + 0.5 h_{\mathrm{cv,wsha}} f_{\mathrm{wsha}} $。
+  注：上式中$\xi = 0.5 h_{\mathrm{cv,roof}} + 0.5 h_{\mathrm{cv,wsun}}f_{\mathrm{wsun}} + 0.5 h_{\mathrm{cv,wsha}} f_{\mathrm{wsha}}$,$f_{\mathrm{wsun}}$和$f_{\mathrm{wsha}} $为单位建筑面积阳/阴面墙比例，乘积因子$4{\rm HL}$均省略。
 \end{landscape}
 \noindent 上式可简写为以下矩阵形式：
 \begin{equation}
@@ -1234,7 +1234,7 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
 $T_{\mathrm{roof,in}}$、$T_{\mathrm{wsun,in}}$、$T_{\mathrm{wsha,in}}$、$T_{\mathrm{room}}$分别为上一时刻相应温度，$T_{\mathrm{af}}$为建筑室外空气温度。
 $h_{\mathrm{cv,roof}}$、$h_{\mathrm{cv,wsun}}$、$h_{\mathrm{cv,wsha}}$分别为室内屋顶表面空气、阳面、阴面墙表面空气与室内空气温度热交换系数，参考CLM5.0~\citep{oleson2020parameterization}，$h_{\mathrm{cv,roof}}=4.04$，$h_{\mathrm{cv,wsun}}=h_{\mathrm{cv,wsha}}=3.076$。$\mathrm {ACH}$为室内外空气热交换系数，设置为0.3。
 $T_{\mathrm{roof}}$、$T_{\mathrm{wsun,n}}$、$T_{\mathrm{wsha,n}}$为最里层(用$n$表示)
-屋顶、阴面墙、阳面墙的温度，为$h_{\mathrm{tk,roof}}$、$h_{\mathrm{tk,wsun}}$、$h_{\mathrm{tk,wsha}}$为其与各自室内表面空气温度热交换系数，通过墙壁导热率和厚度计算得到。
+屋顶、阴面墙、阳面墙的温度，$h_{\mathrm{tk,roof}}$、$h_{\mathrm{tk,wsun}}$、$h_{\mathrm{tk,wsha}}$为其与各自室内表面空气温度热交换系数，通过墙壁导热率和厚度计算得到。
 以上方程组可通过矩阵求逆的方式进行求解，计算得到$T_{\mathrm{roof,in}}^\prime$、$T_{\mathrm{wsun,in}}^\prime$、$T_{\mathrm{wsha,in}}^\prime$、$T_{\mathrm{room}}^\prime$。
 
 当$T_{\mathrm{room,min}}\leqslant T_{\mathrm{room}}^\prime \leqslant T_{\mathrm{room,max}} $ ($T_{\mathrm{room,min}}$和$T_{\mathrm{room,max}}$为预设屋内最低/最高温度，从外部数据读取)时，室内空调不开启，仅考虑室内外热交换通量$F_{\mathrm{ach}}$，计算为：
