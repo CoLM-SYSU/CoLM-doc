@@ -43,7 +43,7 @@ CoLM城市模式第二个特点是高分辨率城市覆盖、植被、水体等�
 %
 对于同一所在地城市覆盖，单栋建筑物几何参数一致，目前未显式考虑建筑物之间的几何差异，即以上参数代表统计平均值。
 
-在以下分模块公式推导中，变量下标约定如下：天空($\rm {s}$)，地面($\rm {g}$，包括透水面$\rm{gper}$和不透水面$\rm{gimp}$)，墙面($\rm{w}$，包括阳面墙$\rm{wsun}$和阴面墙$\rm{wsha}$)，植被($\rm{v}$)和屋顶$(\rm{r}$)。$F$表示可视因子，例如$F_{\mathrm{gs}}$表示从地面到天空的可视因子。
+在以下分模块公式推导中，变量下标约定如下：天空($\rm {s}$)，地面($\rm {g}$，包括透水面$\rm{gper}$和不透水面$\rm{gimp}$)，墙面($\rm{w}$，包括阳面墙$\rm{wsun}$和阴面墙$\rm{wsha}$)，植被($\rm{v}$)和屋顶$(\rm{roof}$)。$F$表示可视因子，例如$F_{\mathrm{gs}}$表示从地面到天空的可视因子。
 $S$表示阴影面积占比，$\rm H/W$在推导过程中表示为$\rm HW$，$\rm H/L$表示为$\rm HL$，总的直射入射和漫射入射太阳辐射能量通量采用单位能量1表示。
 
 {
@@ -150,7 +150,7 @@ $E_{\mathrm{wsun}}\alpha_{\rm w}$，$E_{\mathrm{wsha}}\alpha_{\rm w}$，$E_{\mat
   \mathbf{A x}=\mathbf{B}
 \end{equation}
 $\mathbf{A}$为辐射传输矩阵，$\mathbf{B}$为向量($E_{\mathrm{wsun}}\alpha_{\rm w}$, $E_{\mathrm{wsha}}\alpha_{\rm w}$, $E_{\mathrm{gimp}}\alpha_{\mathrm{gimp}}$, $E_{\mathrm{gper}}\alpha_{\mathrm{gper}}$)，
-即太阳辐射初始到达墙面和地面射辐射通量(未经散射)。$\mathbf{x}$为求解变量组成的向量(\allowbreak$M_{\mathrm{wsun}}$, \allowbreak$M_{\mathrm{wsha}}$, \allowbreak$M_{\mathrm{gimp}}$, \allowbreak$M_{\mathrm{gper}}$)，
+即太阳辐射到达墙面和地面后第一次反射的辐射通量。$\mathbf{x}$为求解变量组成的向量(\allowbreak$M_{\mathrm{wsun}}$, \allowbreak$M_{\mathrm{wsha}}$, \allowbreak$M_{\mathrm{gimp}}$, \allowbreak$M_{\mathrm{gper}}$)，
 计算为：
 \begin{equation}\label{mathbf_X}
   \mathbf{x}=\mathbf{A}^{-1} \mathbf{B}
@@ -182,8 +182,8 @@ $\mathbf{A}$为辐射传输矩阵，$\mathbf{B}$为向量($E_{\mathrm{wsun}}\alp
 
 \textit{2. 漫射入射太阳辐射}
 
-对于漫射情况，计算过程与直射入射辐射基本类似，同样采用公式(\ref{城市无植被辐射传输方程})所示的矩阵形式进行求解，不同之处在于初始到达墙面和地面的辐射通量，分别计算为：
-$F_{\mathrm{sw}}f_{\mathrm{wsun}}$，$F_{\mathrm{sw}}f_{\mathrm{wsha}}$，$F_{\mathrm{sg}}f_{\mathrm{gimp}}$，$F_{\mathrm{sg}}f_{\mathrm{gper}}$，即公式(\ref{mathbf_AX})中的$\mathbf{B}$。
+对于漫射情况，计算过程与直射入射辐射基本类似，同样采用公式(\ref{城市无植被辐射传输方程})所示的矩阵形式进行求解，不同之处在于初始到达墙面和地面后第一次反射的辐射通量，分别计算为：
+$F_{\mathrm{sw}}f_{\mathrm{wsun}}\alpha_{\rm w}$，$F_{\mathrm{sw}}f_{\mathrm{wsha}}\alpha_{\rm w}$，$F_{\mathrm{sg}}f_{\mathrm{gimp}}\alpha_{\rm gimp}$，$F_{\mathrm{sg}}f_{\mathrm{gper}}\alpha_{\rm gper}$，即公式(\ref{mathbf_AX})中的$\mathbf{B}$。
 漫射入射辐射的传输矩阵同直射入射辐射情景，即$\mathbf{A}$。其求逆后的结果可以直接用于漫射入射辐射，利用公式(\ref{mathbf_X})计算得到墙面和地面的辐射出射通量。
 单位面积的辐射吸收和城市反照率计算同公式(\ref{s_wsun_wsha_gimp_gper_2})、(\ref{alpha_u})和(\ref{alpha_u2})，在此不再列出。
 
@@ -357,8 +357,8 @@ $F_{\mathrm{sw}}^\prime f_{\mathrm{wsha}}$，$F_{\mathrm{sg}}^\prime f_{\mathrm{
 \end{equation}
 上式中$\varepsilon$表示发射率，$\varepsilon_{\rm w}$，$\varepsilon_{\mathrm{gimp}}$，$\varepsilon_{\mathrm{gper}}$为已知变量。各组分表面向外发射的长波辐射量为：
 \begin{equation}
-  \left(\begin{array}{c}4 f_{\mathrm{wsun}} \mathrm{HL} \cdot \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \cdot \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsun}}^{4} \\
-    4 f_{\mathrm{wsha}} \mathrm{HL} \cdot \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \cdot \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsha}}^{4} \\
+  \left(\begin{array}{c}4 f_{\mathrm{wsun}} \mathrm{HL}  \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}}  \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsun}}^{4} \\
+    4 f_{\mathrm{wsha}} \mathrm{HL}  \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}}  \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsha}}^{4} \\
     \sigma \varepsilon_{\mathrm{gimp}} T_{\mathrm{gimp}}^{4} f_{\mathrm{gimp}} \\
   \sigma \varepsilon_{\mathrm{gper}} T_{\mathrm{gper}}^{4} f_{\mathrm{gper}}\end{array}\right)
 \end{equation}
@@ -377,7 +377,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
     \begin{aligned}
       \left(\begin{matrix}1-F_{\mathrm{ww}}f_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{ww}}f_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{gw}}f_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{gw}}f_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)\\-F_{\mathrm{ww}}f_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)&1-F_{\mathrm{ww}}f_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{gw}}f_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)&-F_{\mathrm{gw}}f_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)\\-F_{\mathrm{wg}}f_{\mathrm{gimp}}\left(1-\varepsilon_{\mathrm{gimp}}\right)&-F_{\mathrm{wg}}f_{\mathrm{gimp}}\left(1-\varepsilon_{\mathrm{gimp}}\right)&1&0\\-F_{\mathrm{wg}}f_{\mathrm{gper}}\left(1-\varepsilon_{\mathrm{gper}}\right)&-F_{\mathrm{wg}}f_{\mathrm{gper}}\left(1-\varepsilon_{\mathrm{gper}}\right)&0&1\\\end{matrix}\right)
       \left(\begin{matrix}L_{\mathrm{wsun}}^\uparrow\\L_{\mathrm{wsha}}^\uparrow\\L_{\mathrm{gimp}}^\uparrow\\L_{\mathrm{gper}}^\uparrow\\\end{matrix}\right)\\
-      =\left(\begin{matrix}I_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)+2f_{\mathrm{wsun}}\frac{\sigma\varepsilon_{\rm w}T_{\mathrm{wsun}}^4H}{W}\\I_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)+2f_{\mathrm{wsha}}\frac{\sigma\varepsilon_{\rm w}T_{\mathrm{wsha}}^4H}{W}\\I_{\mathrm{gimp}}\left(1-\varepsilon_{\mathrm{gimp}}\right)+\sigma\varepsilon_{\mathrm{gimp}}T_{\mathrm{gimp}}^4f_{\mathrm{gimp}}\\I_{\mathrm{gper}}\left(1-\varepsilon_{\mathrm{gper}}\right)+\sigma\varepsilon_{\mathrm{gper}}T_{\mathrm{gper}}^4f_{\mathrm{gper}}\\\end{matrix}\right)
+      =\left(\begin{matrix}I_{\mathrm{wsun}}\left(1-\varepsilon_{\rm w}\right)+4f_{\mathrm{wsun}} {\rm HL} \frac{f_{\rm b}}{f_{\rm g}} \sigma\varepsilon_{\rm w}T_{\mathrm{wsun}}^4\\I_{\mathrm{wsha}}\left(1-\varepsilon_{\rm w}\right)+4f_{\mathrm{wsha}} {\rm HL} \frac{f_{\rm b}}{f_{\rm g}} \sigma\varepsilon_{\rm w}T_{\mathrm{wsha}}^4\\I_{\mathrm{gimp}}\left(1-\varepsilon_{\mathrm{gimp}}\right)+\sigma\varepsilon_{\mathrm{gimp}}T_{\mathrm{gimp}}^4f_{\mathrm{gimp}}\\I_{\mathrm{gper}}\left(1-\varepsilon_{\mathrm{gper}}\right)+\sigma\varepsilon_{\mathrm{gper}}T_{\mathrm{gper}}^4f_{\mathrm{gper}}\\\end{matrix}\right)
     \end{aligned}
   \end{equation}
 \end{landscape}
@@ -389,7 +389,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
 求解以上方程得到$\mathbf{x}$，各组分表面长波净辐射量为：
 \begin{equation}\label{L_wsun_wsha_gimp_pger_1}
   \begin{aligned}
-    L_{\mathrm{wsun}} &=\frac{\varepsilon L_{\mathrm{wsun}}^{\uparrow}-4 f_{\mathrm{wsun}} \mathrm{HL} \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsun}}^{4}}{1-\varepsilon_{\mathrm{w}}} \\ L_{\mathrm{wsha}} &=\frac{\varepsilon L_{\mathrm{wsha}}^{\uparrow}-4 f_{\mathrm{wsha}} \mathrm{HL} \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsha}}^{4}}{1-\varepsilon_{\mathrm{w}}} \\ L_{\mathrm{gimp}} &=\frac{\varepsilon L_{\mathrm{w gimp}}^{\uparrow}-\sigma \varepsilon_{\mathrm{gimp}} T_{\mathrm{gimp}}^{4} f_{\mathrm{gimp}}}{1-\varepsilon_{\mathrm{gimp}}} \\ L_{\mathrm{p g e r}} &=\frac{\varepsilon L_{\mathrm{w gper}}^{\uparrow}-\sigma \varepsilon_{\mathrm{gper}} T_{\mathrm{gper}}^{4} f_{\mathrm{gper}}}{1-\varepsilon_{\mathrm{gper}}}
+    L_{\mathrm{wsun}} &=\frac{\varepsilon L_{\mathrm{wsun}}^{\uparrow}-4 f_{\mathrm{wsun}} \mathrm{HL} \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsun}}^{4}}{1-\varepsilon_{\mathrm{w}}} \\ L_{\mathrm{wsha}} &=\frac{\varepsilon L_{\mathrm{wsha}}^{\uparrow}-4 f_{\mathrm{wsha}} \mathrm{HL} \frac{f_{\mathrm{b}}}{f_{\mathrm{g}}} \sigma \varepsilon_{\mathrm{w}} T_{\mathrm{wsha}}^{4}}{1-\varepsilon_{\mathrm{w}}} \\ L_{\mathrm{gimp}} &=\frac{\varepsilon L_{\mathrm{w gimp}}^{\uparrow}-\sigma \varepsilon_{\mathrm{gimp}} T_{\mathrm{gimp}}^{4} f_{\mathrm{gimp}}}{1-\varepsilon_{\mathrm{gimp}}} \\ L_{\mathrm{gper}} &=\frac{\varepsilon L_{\mathrm{w gper}}^{\uparrow}-\sigma \varepsilon_{\mathrm{gper}} T_{\mathrm{gper}}^{4} f_{\mathrm{gper}}}{1-\varepsilon_{\mathrm{gper}}}
   \end{aligned}
 \end{equation}
 转化为单位面积净辐射时上式修订为：
@@ -504,7 +504,7 @@ $T$表示温度，$\sigma$为斯蒂芬-玻尔兹曼常数。类似于短波辐�
 同多层植被湍流交换计算一样，对上图所示的屋顶和墙面等效交换高度建立感热和潜热通量守恒方程，迭代求解其高度处的空气温度、湿度以及相似性理论交换长度(即空气不稳定程度)。
 
 %感热通量
-湍流交换过程在迭代计算时，需要求解城市建筑屋顶（第三层）、墙面（第二层）等效交换高度的温度(比湿) $T_3$($q_3$)与$T_2$($q_2$)，以计算不同城市表面的湍流通量交换，在不考虑城市植被时，只存在地面(透水面$\rm gper$与不透水面$\rm gimp$)、阳面墙($\rm wsun$)、阴面墙($\rm wsha$)以及屋顶($\rm roof$)的交换过程，其中地面、墙体均在第二层交换，屋顶则在第三层交换，如图~\ref{fig:无植被覆盖时城市湍流交换阻抗示意图}所示，在多层湍流交换方案中，层与层之间的通量交换保持平衡，通过建立不同层的通量交换方程即可求解$T_3$($q_3$)与$T_2$($q_2$)，进而计算得到不同表面的感热/潜热通量。
+湍流交换过程在迭代计算时，需要求解城市建筑屋顶（第三层）、墙面（第二层）等效交换高度的温度(比湿) $T_3$($q_3$)与$T_2$($q_2$)，以计算不同城市表面的湍流通量交换，在不考虑城市植被时，只存在地面(透水面$\rm gper$与不透水面$\rm gimp$)、阳面墙($\rm wsun$)、阴面墙($\rm wsha$)以及屋顶($\rm roof$)的交换过程，其中地面、墙体均在第二层交换，屋顶则在第三层交换，如图~\ref{fig:无植被覆盖时城市湍流交换阻抗示意图} 所示，在多层湍流交换方案中，层与层之间的通量交换保持平衡，通过建立不同层的通量交换方程即可求解$T_3$($q_3$)与$T_2$($q_2$)，进而计算得到不同表面的感热/潜热通量。
 
 对于感热而言，在不考虑城市植被时，其不同层的感热通量$H$可表达为：
 \begin{equation}\label{2lays_noveg_H_layer2}
@@ -883,7 +883,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 \end{equation}
 %
 \begin{equation}
-  H_{3} = H_{1}+H_{\mathrm{wsun}}+H_{\mathrm{wsha}}
+  H_{3} = H_{2}+H_{\mathrm{wsun}}+H_{\mathrm{wsha}}
 \end{equation}
 %
 \begin{equation}
@@ -1122,7 +1122,7 @@ $\delta$为判断蒸腾是否发生的判别因子，其计算可参考公式~\e
 \end{mymdframed}
 
 不透水面的温度传导计算与透水面最大的不同之处在于需要使用不透水面层的热力属性(导热率和热容)替换所在层的土壤热力属性。
-另外在有雪、冰和水存在时，需要对第一层不透水面的热容进行订正。不透水面不考虑水在地表以下的传输，相变过程只考虑第一层不透水面(地表积水/冰)及以上积雪覆盖层。
+另外在有雪、冰和水存在时，但还未形成雪层，需要对第一层不透水面的热容进行订正。不透水面不考虑水在地表以下的传输，相变过程只考虑第一层不透水面(地表积水/冰)及以上积雪覆盖层。
 
 \subsection{墙面温度计算}
 \esubsection{Wall Temperature}
@@ -1199,13 +1199,13 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
   \begin{equation}
     \begin{array}{l}
       \begin{split}
-        0.5 h_{\mathrm{cv,{roof }}}\left(t_{\mathrm{{roof }}, { in }}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{roof }}}\left(t_{\mathrm{{roof,in }}}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,{roof}}}\left(T_{\mathrm{{roof }}, n}-T_{\mathrm{{roof }}, { in }}\right)+0.5 h_{\mathrm{tk,{roof }}}\left(T_{\mathrm{{roof }}, n}-T_{\mathrm{{roof,in }}}^{\prime}\right) \\
-        0.5 h_{\mathrm{cv,{wsun}}}\left(t_{\mathrm{{wsun,in }}}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{wsun}}}\left(t_{\mathrm{wsun, i n}}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,{wsun}}}\left(T_{\mathrm{{wsun, }} n}-T_{\mathrm{{wsun,in }}}\right)+0.5 h_{\mathrm{tk,{roof}}}\left(T_{\mathrm{{wsun, }} n}-T_{\mathrm{{wsun,in }}}^{\prime}\right)\\
-        0.5 h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha, i n}}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha, i n}}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,wsha}}\left(T_{\mathrm{wsha, n}}-T_{\mathrm{{roof }}, i n}\right)+0.5 h_{\mathrm{tk,wsha}}\left(T_{\mathrm{wsha, n}}-T_{\mathrm{wsha, i n}}^{\prime}\right)\\
+        0.5 h_{\mathrm{cv,{roof }}}\left(T_{\mathrm{{roof }}, { in }}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{roof }}}\left(T_{\mathrm{{roof,in }}}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,{roof}}}\left(T_{\mathrm{{roof }}, n}-T_{\mathrm{{roof }}, { in }}\right)+0.5 h_{\mathrm{tk,{roof }}}\left(T_{\mathrm{{roof }}, n}-T_{\mathrm{{roof,in }}}^{\prime}\right) \\
+        0.5 h_{\mathrm{cv,{wsun}}}\left(T_{\mathrm{{wsun,in }}}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{wsun}}}\left(T_{\mathrm{wsun, i n}}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,{wsun}}}\left(T_{\mathrm{{wsun, }} n}-T_{\mathrm{{wsun,in }}}\right)+0.5 h_{\mathrm{tk,{roof}}}\left(T_{\mathrm{{wsun, }} n}-T_{\mathrm{{wsun,in }}}^{\prime}\right)\\
+        0.5 h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha, i n}}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha, i n}}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right)=0.5 h_{\mathrm{tk,wsha}}\left(T_{\mathrm{wsha, n}}-T_{\mathrm{{roof }}, i n}\right)+0.5 h_{\mathrm{tk,wsha}}\left(T_{\mathrm{wsha, n}}-T_{\mathrm{wsha, i n}}^{\prime}\right)\\
         H \rho_{\mathrm{a}} C_{\mathrm{a}} \frac{T_{\mathrm{{room }}}^{\prime}-T_{\mathrm{{room }}}}{\Delta t}
-        =\frac{\mathrm {ACH}}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}}\left(T_{\mathrm{a f}}-T_{\mathrm{{room }}}^{\prime}\right)+0.5 h_{\mathrm{cv,{roof}}}\left(t_{\mathrm{{roof }}, { in }}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{roof }}}\left(t_{\mathrm{{roof }}, { in }}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right)\\
-        +0.5 h_{\mathrm{cv,wsun}}\left(t_{\mathrm{wsun, i n}}-t_{\mathrm{{room }}}\right) f_{\mathrm{{wsun }}}+0.5 h_{\mathrm{cv,wsun}}\left(t_{\mathrm{wsun, i n}}^{\prime}-t_{\mathrm{{room }}}^{\prime}\right) f_{\mathrm{wsun}} \\
-        +0.5 h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha, i n}}-t_{\mathrm{{room }}}\right) f_{\mathrm{wsha}}+0.5 h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha, i n}}^{\prime}-t_{\mathrm{r o o m}}^{\prime}\right) f_{\mathrm{wsha}}
+        =\frac{\mathrm {ACH}}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}}\left(T_{\mathrm{a f}}-T_{\mathrm{{room }}}^{\prime}\right)+0.5 h_{\mathrm{cv,{roof}}}\left(T_{\mathrm{{roof }}, { in }}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{cv,{roof }}}\left(T_{\mathrm{{roof }}, { in }}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right)\\
+        +0.5 h_{\mathrm{cv,wsun}}\left(T_{\mathrm{wsun, i n}}-T_{\mathrm{{room }}}\right) f_{\mathrm{{wsun }}}+0.5 h_{\mathrm{cv,wsun}}\left(T_{\mathrm{wsun, i n}}^{\prime}-T_{\mathrm{{room }}}^{\prime}\right) f_{\mathrm{wsun}} \\
+        +0.5 h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha, i n}}-T_{\mathrm{{room }}}\right) f_{\mathrm{wsha}}+0.5 h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha, i n}}^{\prime}-T_{\mathrm{r o o m}}^{\prime}\right) f_{\mathrm{wsha}}
       \end{split}
     \end{array}
   \end{equation}
@@ -1217,14 +1217,14 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
       \left(\begin{array}{cccc}0.5 h_{\mathrm{cv,roof}}+0.5 h_{\mathrm{tk,roof}} & 0 & 0 & -0.5 h_{\mathrm{cv,roof}} \\ 0 & 0.5 h_{\mathrm{cv,wsun}}+0.5 h_{\mathrm{tk,wsun}} & 0 & -0.5 h_{\mathrm{cv,wsun}} \\ 0 & 0 & 0.5 h_{\mathrm{cv,wsha}}+0.5 h_{\mathrm{tk,wsha}} & -0.5 h_{\mathrm{cv,wsha}} \\ -0.5 h_{\mathrm{cv,roof}} & -0.5 h_{\mathrm{cv,wsun}} f_{\mathrm{wsun}} & -0.5 h_{\mathrm{cv,wsha}} f_{\mathrm{wsha}} & \xi + \frac{H \rho_{\mathrm{a}} C_{\mathrm{a}}}{\Delta t}+\frac{{ \mathrm {ACH} }}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}}\end{array}\right)
       \left(\begin{array}{c}T_{\mathrm{{roof,in }}}^{\prime} \\ T_{\mathrm{wsun, i n}}^{\prime} \\ T_{\mathrm{wsha, i n}}^{\prime} \\ T_{\mathrm{{room }}}^{\prime}\end{array}\right)=
       \\
-      \left(\begin{array}{c}-0.5h_{\mathrm{cv,roof}}\left(t_{\mathrm{roof,in}}-t_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,roof}}\left(T_{\mathrm{roof,n}}-T_{\mathrm{roof,in}}\right)+0.5h_{\mathrm{tk,roof}}T_{\mathrm{roof,n}}\\
-          -0.5h_{\mathrm{cv,wsun}}\left(t_{\mathrm{wsun,in}}-t_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,wsun}}\left(T_{\mathrm{wsun,n}}-T_{\mathrm{wsun,in}}\right)+0.5h_{\mathrm{tk,wsun}}T_{\mathrm{wsun,n}}\\
-          -0.5h_{\mathrm{cv,wsha}}\left(t_{\mathrm{wsha,in}}-t_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,wsun}}\left(T_{\mathrm{wsun,n}}-T_{\mathrm{wsun,in}}\right)+0.5h_{\mathrm{tk,wsha}}T_{\mathrm{wsun,n}}\\
-          \frac{H \rho_{\mathrm{a}} C_{\mathrm{a}} T_{\mathrm{{room }}}}{\Delta T}+\frac{\mathrm {ACH}}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}} T_{\mathrm{a f}}+0.5 h_{\mathrm{{cv,roof}}}\left(t_{\mathrm{{roof,in }}}-t_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{{cv,wsun}}}\left(t_{\mathrm{{wsun,in }}}-t_{\mathrm{{room }}}\right) f_{\mathrm{{wsun }}}+0.5 h_{\mathrm{{cv,wsha}}}\left(t_{\mathrm{wsha, i n}}-t_{\mathrm{{room }}}\right) f_{\mathrm{{wsha }}}
+      \left(\begin{array}{c}-0.5h_{\mathrm{cv,roof}}\left(T_{\mathrm{roof,in}}-T_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,roof}}\left(T_{\mathrm{roof,n}}-T_{\mathrm{roof,in}}\right)+0.5h_{\mathrm{tk,roof}}T_{\mathrm{roof,n}}\\
+          -0.5h_{\mathrm{cv,wsun}}\left(T_{\mathrm{wsun,in}}-T_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,wsun}}\left(T_{\mathrm{wsun,n}}-T_{\mathrm{wsun,in}}\right)+0.5h_{\mathrm{tk,wsun}}T_{\mathrm{wsun,n}}\\
+          -0.5h_{\mathrm{cv,wsha}}\left(T_{\mathrm{wsha,in}}-T_{\mathrm{room}}\right)+0.5h_{\mathrm{tk,wsun}}\left(T_{\mathrm{wsun,n}}-T_{\mathrm{wsun,in}}\right)+0.5h_{\mathrm{tk,wsha}}T_{\mathrm{wsun,n}}\\
+          \frac{H \rho_{\mathrm{a}} C_{\mathrm{a}} T_{\mathrm{{room }}}}{\Delta T}+\frac{\mathrm {ACH}}{3600} H \rho_{\mathrm{a}} C_{\mathrm{a}} T_{\mathrm{a f}}+0.5 h_{\mathrm{{cv,roof}}}\left(T_{\mathrm{{roof,in }}}-T_{\mathrm{{room }}}\right)+0.5 h_{\mathrm{{cv,wsun}}}\left(T_{\mathrm{{wsun,in }}}-T_{\mathrm{{room }}}\right) f_{\mathrm{{wsun }}}+0.5 h_{\mathrm{{cv,wsha}}}\left(T_{\mathrm{wsha, i n}}-T_{\mathrm{{room }}}\right) f_{\mathrm{{wsha }}}
       \end{array}\right)
     \end{split}
   \end{equation}
-  注：上式中$\xi = 0.5 h_{\mathrm{cv,roof}} + 0.5 h_{\mathrm{cv,wsun}}f_{\mathrm{wsun}} + 0.5 h_{\mathrm{cv,wsha}} f_{\mathrm{wsha}} $。
+  注：上式中$\xi = 0.5 h_{\mathrm{cv,roof}} + 0.5 h_{\mathrm{cv,wsun}}f_{\mathrm{wsun}} + 0.5 h_{\mathrm{cv,wsha}} f_{\mathrm{wsha}}$,$f_{\mathrm{wsun}}$和$f_{\mathrm{wsha}} $为单位建筑面积阳/阴面墙比例，乘积因子$4{\rm HL}$均省略。
 \end{landscape}
 \noindent 上式可简写为以下矩阵形式：
 \begin{equation}
@@ -1234,7 +1234,7 @@ CoLM建筑物能耗模型如图~\ref{fig:建筑能耗模型示意图} 所示，�
 $T_{\mathrm{roof,in}}$、$T_{\mathrm{wsun,in}}$、$T_{\mathrm{wsha,in}}$、$T_{\mathrm{room}}$分别为上一时刻相应温度，$T_{\mathrm{af}}$为建筑室外空气温度。
 $h_{\mathrm{cv,roof}}$、$h_{\mathrm{cv,wsun}}$、$h_{\mathrm{cv,wsha}}$分别为室内屋顶表面空气、阳面、阴面墙表面空气与室内空气温度热交换系数，参考CLM5.0~\citep{oleson2020parameterization}，$h_{\mathrm{cv,roof}}=4.04$，$h_{\mathrm{cv,wsun}}=h_{\mathrm{cv,wsha}}=3.076$。$\mathrm {ACH}$为室内外空气热交换系数，设置为0.3。
 $T_{\mathrm{roof}}$、$T_{\mathrm{wsun,n}}$、$T_{\mathrm{wsha,n}}$为最里层(用$n$表示)
-屋顶、阴面墙、阳面墙的温度，为$h_{\mathrm{tk,roof}}$、$h_{\mathrm{tk,wsun}}$、$h_{\mathrm{tk,wsha}}$为其与各自室内表面空气温度热交换系数，通过墙壁导热率和厚度计算得到。
+屋顶、阴面墙、阳面墙的温度，$h_{\mathrm{tk,roof}}$、$h_{\mathrm{tk,wsun}}$、$h_{\mathrm{tk,wsha}}$为其与各自室内表面空气温度热交换系数，通过墙壁导热率和厚度计算得到。
 以上方程组可通过矩阵求逆的方式进行求解，计算得到$T_{\mathrm{roof,in}}^\prime$、$T_{\mathrm{wsun,in}}^\prime$、$T_{\mathrm{wsha,in}}^\prime$、$T_{\mathrm{room}}^\prime$。
 
 当$T_{\mathrm{room,min}}\leqslant T_{\mathrm{room}}^\prime \leqslant T_{\mathrm{room,max}} $ ($T_{\mathrm{room,min}}$和$T_{\mathrm{room,max}}$为预设屋内最低/最高温度，从外部数据读取)时，室内空调不开启，仅考虑室内外热交换通量$F_{\mathrm{ach}}$，计算为：
